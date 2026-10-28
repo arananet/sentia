@@ -2,16 +2,25 @@
 """Command executor target that runs the ANVIL builder packet through GPT-6 Astra.
 
 Runtime choice, and why: the UI model is OpenAI's GPT-6 Astra, reachable
-only through the Cloudflare AI Gateway OpenAI compat route
-(https://gateway.ai.cloudflare.com/v1/<account>/<gateway>/compat). Claude
-Code cannot speak that route for an OpenAI model, so the builder runs on
-OpenCode, the agent CLI Cloudflare's own AI Gateway docs configure against
-the gateway (opencode.json in this repo declares the cloudflare-ai-gateway
-provider with the compat base URL and the cf-aig-authorization header; the
-token arrives through the CF_AIG_TOKEN environment variable and is never
-read or printed here). Codex with a custom model provider was the fallback
-candidate and was not needed: OpenCode runs headless (run --auto) and edits
-the working tree.
+only through the Cloudflare AI Gateway. Claude Code cannot speak to the
+gateway for an OpenAI model, so the builder runs on OpenCode, the agent
+CLI Cloudflare's own AI Gateway docs configure against the gateway
+(opencode.json in this repo declares the cloudflare-ai-gateway provider;
+the token arrives through the CF_AIG_TOKEN environment variable and is
+never read or printed here). Codex with a custom model provider was the
+fallback candidate and was not needed.
+
+Provider shape, learned from the first wiring attempt (Actions runs
+40784202699 and 40784209336, 2026-10-28): with the @ai-sdk/openai-compatible
+package against the gateway /compat endpoint, the gateway auth and the
+OpenAI provider credentials both worked (OpenAI itself answered), but
+OpenAI rejected the request: "Unsupported parameter: 'max_tokens' is not
+supported with this model. Use 'max_completion_tokens' instead." A local
+stub capture reproduced it: the openai-compatible SDK sends max_tokens.
+The shipped config therefore uses the @ai-sdk/openai package against the
+gateway provider native OpenAI endpoint (baseURL .../openai), which calls
+the Responses API (max_output_tokens, no max_tokens). That request shape
+was verified against the same local stub before the second run.
 
 The dispatcher (tools/anvil_station.py) passes the station's configured
 model from anvil.yaml as argv[3]. MODEL_MAP translates the ANVIL model name

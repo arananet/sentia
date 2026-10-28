@@ -8,7 +8,7 @@ name: anvil-execute
 #
 # Model routing for this run (ANVIL policy, recorded in anvil.yaml):
 # the builder station runs GPT-6 Astra through OpenCode against the
-# Cloudflare AI Gateway OpenAI compat route; spec writer, test writer and
+# Cloudflare AI Gateway OpenAI endpoint; spec writer, test writer and
 # the four reviewers run claude-sonnet-5-5 through Claude Code against the
 # gateway Anthropic route. tools/anvil_station.py dispatches per station.
 # There is no fallback from Astra to another model for the builder: if the
@@ -96,7 +96,7 @@ jobs:
             tail -c 3000 ~/.local/share/opencode/log/*.log 2>/dev/null || echo "(no opencode log file found)"
             exit 1
           fi
-          echo "Astra smoke passed: gpt-6-astra answered through the gateway OpenAI compat endpoint."
+          echo "Astra smoke passed: gpt-6-astra answered through the gateway OpenAI endpoint."
 
       - name: Run the ANVIL sdlc-default line in execute mode
         id: line
@@ -187,7 +187,7 @@ jobs:
               "",
               "Honest note: this run EXECUTED its agent stations with per station model routing. "
               "The builder (the UI work) ran GPT-6 Astra through OpenCode against the Cloudflare AI Gateway "
-              "OpenAI compat route; spec writer, test writer and the four reviewers ran claude-sonnet-5-5 "
+              "OpenAI endpoint; spec writer, test writer and the four reviewers ran claude-sonnet-5-5 "
               "through Claude Code against the gateway Anthropic route. Both routes passed an exact reply "
               "smoke gate before the line ran. The deployer station stayed a packet on purpose: deployment "
               "for this work order happens outside the line, by the operator, after approval.",
