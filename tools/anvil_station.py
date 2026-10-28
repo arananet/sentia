@@ -8,7 +8,7 @@ this dispatcher reads the station id from the packet and the station's
 configured model from anvil.yaml, then routes by model family:
 
 - gpt-* models (the UI model, GPT-6 Astra) run through tools/astra_station.py
-  (OpenCode against the Cloudflare AI Gateway OpenAI compat route).
+  (Codex, custom model provider, against the Cloudflare AI Gateway).
 - claude-* models run through tools/claude_station.py (Claude Code against
   the gateway Anthropic route).
 - Any other model value fails loudly. There is no silent substitution and

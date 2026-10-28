@@ -1,151 +1,178 @@
 #!/usr/bin/env python3
-"""Command executor target that runs the ANVIL builder packet through GPT-6 Astra.
+"""ANVIL executed station wrapper for the GPT-6 Astra UI builder station.
+
+ANVIL's command executor calls this script as:
+
+    python3 tools/anvil_station.py {packet} {output}
+
+but the dispatcher (tools/anvil_station.py) sends the builder station here
+because anvil.yaml configures its model as gpt-6-astra.
 
 Runtime choice, and why: the UI model is OpenAI's GPT-6 Astra, reachable
 only through the Cloudflare AI Gateway. Claude Code cannot speak to the
-gateway for an OpenAI model, so the builder runs on OpenCode, the agent
-CLI Cloudflare's own AI Gateway docs configure against the gateway
-(opencode.json in this repo declares the cloudflare-ai-gateway provider;
-the token arrives through the CF_AIG_TOKEN environment variable and is
-never read or printed here). Codex with a custom model provider was the
-fallback candidate and was not needed.
+gateway for an OpenAI model. This station runs on Codex (OpenAI's agent
+CLI) with a custom model provider pointing at the gateway's provider
+native OpenAI endpoint:
 
-Provider shape, learned from the first wiring attempt (Actions runs
-40784202699 and 40784209336, 2026-10-28): with the @ai-sdk/openai-compatible
-package against the gateway /compat endpoint, the gateway auth and the
-OpenAI provider credentials both worked (OpenAI itself answered), but
-OpenAI rejected the request: "Unsupported parameter: 'max_tokens' is not
-supported with this model. Use 'max_completion_tokens' instead." A local
-stub capture reproduced it: the openai-compatible SDK sends max_tokens.
-The shipped config therefore uses the @ai-sdk/openai package against the
-gateway provider native OpenAI endpoint (baseURL .../openai), which calls
-the Responses API (max_output_tokens, no max_tokens). That request shape
-was verified against the same local stub before the second run.
+    https://gateway.ai.cloudflare.com/v1/693ae9c587f1f2c34328bb47447366b0/arananet-ai-gateway/openai
 
-The dispatcher (tools/anvil_station.py) passes the station's configured
-model from anvil.yaml as argv[3]. MODEL_MAP translates the ANVIL model name
-to the gateway catalog id OpenCode must send. An unmapped model fails
-loudly: there is no fallback to another model for UI work, ever.
+Codex sends Authorization: Bearer <token> from the provider env_key and,
+through env_http_headers, cf-aig-authorization: Bearer <token>, the same
+dual header pattern that is proven to work for the Anthropic route through
+this gateway. The token itself is read from the CF_AIG_TOKEN environment
+variable at runtime; it is never printed and never written to any file
+(the generated Codex config references environment variables only).
 
-    opencode run <packet> -m cloudflare-ai-gateway/openai/gpt-6-astra --format json --auto
+Why not OpenCode, which was wired first: two genuine attempts in GitHub
+Actions (runs 40784202699, 40784209336 and 40784825553, 2026-10-28) failed
+in the AI SDK provider layer, not at the gateway credentials. With
+@ai-sdk/openai-compatible against the gateway /compat endpoint, gateway
+auth and the OpenAI provider credentials both worked (OpenAI itself
+answered) but OpenAI rejected the request: "Unsupported parameter:
+'max_tokens' is not supported with this model. Use 'max_completion_tokens'
+instead." With @ai-sdk/openai against the provider endpoint, the request
+reached OpenAI without a usable Authorization header and failed with
+"Missing bearer token or basic authentication in header". Codex builds
+its own request: against a local stub server it was verified to POST
+/responses with a Responses API body (no max_tokens), both auth headers
+present, exit 0, exact reply. Current Codex no longer offers a chat
+completions wire API, so the Responses route through the provider native
+endpoint is the Codex route; the workflow's Astra smoke gate is the proof
+it works end to end.
 
-Output handling: with --format json, OpenCode emits one JSON event per
-line. This wrapper collects the assistant text events as the station
-output, treats any error event as a failure even if the exit code is 0
-(the CLI can exit 0 while reporting an error event), and appends one JSON
-line, {"model": <model>, "runtime": "opencode"}, the runtime reporting the
-model it dispatched, which the runner records as executed_model.
-
-Failure behavior: non-zero exit, an error event, a timeout, or no usable
-output (no text and no working tree change) all exit non-zero so the
-runner marks the step failed. A local probe during wiring showed the CLI
-can churn silently for a long time on a bad gateway token (SDK retries),
-so every invocation is bounded by an explicit timeout.
+Behavior: the packet body (everything after the "# Task packet:" header
+line) becomes the Codex prompt. Codex runs in exec mode with the
+workspace-write sandbox at the repository root, so the builder edits the
+tree directly. The final message is written to the output file, followed
+by a JSON line naming the executed model, so ANVIL's provenance rule can
+record executed_model from the station's own output. A station counts as
+executed when Codex exits 0 and produced a final message or changed the
+working tree. There is no fallback model: if Astra cannot run, this
+wrapper fails and the run reports it.
 """
 
+from __future__ import annotations
+
 import json
+import os
 import subprocess
 import sys
-from pathlib import Path
+import tempfile
 
-PROVIDER = "cloudflare-ai-gateway"
-MODEL_MAP = {"gpt-6-astra": "openai/gpt-6-astra"}
+# ANVIL configured model -> model string Codex sends to the gateway.
+MODEL_MAP = {
+    "gpt-6-astra": "openai/gpt-6-astra",
+}
+
+GATEWAY_BASE_URL = (
+    "https://gateway.ai.cloudflare.com/v1/"
+    "693ae9c587f1f2c34328bb47447366b0/arananet-ai-gateway/openai"
+)
+
+CONFIG_TEMPLATE = """model = "{model}"
+model_provider = "cloudflare"
+[model_providers.cloudflare]
+name = "Cloudflare AI Gateway"
+base_url = "{base_url}"
+env_key = "CF_AIG_TOKEN"
+wire_api = "responses"
+env_http_headers = {{ "cf-aig-authorization" = "CF_AIG_AUTH" }}
+"""
+
 TIMEOUT_SECONDS = 1500
 
 
-def station_of(packet_text):
-    for line in packet_text.splitlines():
-        if line.startswith("# Task packet:"):
-            return line.split(":", 1)[1].strip()
-    return "unknown"
-
-
-def tree_changed(repo_root):
-    try:
-        proc = subprocess.run(["git", "status", "--porcelain"], cwd=str(repo_root),
-                              capture_output=True, text=True, timeout=30)
-        return bool(proc.stdout.strip())
-    except Exception:
-        return False
-
-
-def main():
+def main() -> int:
     if len(sys.argv) != 4:
         print("usage: astra_station.py <packet> <output> <model>", file=sys.stderr)
         return 64
-    packet_path = Path(sys.argv[1])
-    output_path = Path(sys.argv[2])
-    model = sys.argv[3]
-    packet_text = packet_path.read_text(encoding="utf-8")
-    station = station_of(packet_text)
-
-    gateway_model = MODEL_MAP.get(model)
+    packet_path, output_path, configured_model = sys.argv[1], sys.argv[2], sys.argv[3]
+    if os.path.exists(output_path):
+        os.unlink(output_path)
+    with open(packet_path, encoding="utf-8") as handle:
+        packet = handle.read()
+    lines = packet.splitlines()
+    task = "\n".join(lines[1:]).strip() if lines else packet.strip()
+    if not task:
+        print("astra wrapper: empty task in packet", file=sys.stderr)
+        return 65
+    gateway_model = MODEL_MAP.get(configured_model)
     if gateway_model is None:
-        print(f"astra_station: no gateway mapping for configured model {model!r}; "
-              "refusing to substitute another model", file=sys.stderr)
+        print(
+            f"astra wrapper: no gateway mapping for configured model {configured_model!r}; "
+            "refusing to substitute another model",
+            file=sys.stderr,
+        )
         return 6
-
-    # Never let a previous run's output survive into this one.
-    try:
-        output_path.unlink()
-    except FileNotFoundError:
-        pass
-
-    repo_root = Path(__file__).resolve().parent.parent
-    command = [
-        "opencode", "run", packet_text,
-        "-m", f"{PROVIDER}/{gateway_model}",
-        "--format", "json",
-        "--auto",
-    ]
-    try:
-        proc = subprocess.run(command, cwd=str(repo_root), capture_output=True,
-                              text=True, timeout=TIMEOUT_SECONDS)
-    except subprocess.TimeoutExpired:
-        print(f"astra_station: station {station} timed out after {TIMEOUT_SECONDS}s",
-              file=sys.stderr)
-        return 4
-    except FileNotFoundError:
-        print("astra_station: the opencode CLI is not on PATH", file=sys.stderr)
+    token = os.environ.get("CF_AIG_TOKEN", "")
+    if not token:
+        print("astra wrapper: CF_AIG_TOKEN is not set in the environment", file=sys.stderr)
         return 5
 
-    texts = []
-    errors = []
-    for line in (proc.stdout or "").splitlines():
-        line = line.strip()
-        if not line.startswith("{"):
-            continue
+    prompt = (
+        "You are executing an ANVIL station packet inside this repository. "
+        "Follow the packet exactly, edit the files it asks for, and finish "
+        "with a brief plain text summary of what you changed.\n\n"
+        + task
+    )
+    env = dict(os.environ)
+    env["CF_AIG_AUTH"] = "Bearer " + token
+    with tempfile.TemporaryDirectory(prefix="anvil-codex-home-") as codex_home:
+        with open(os.path.join(codex_home, "config.toml"), "w", encoding="utf-8") as handle:
+            handle.write(CONFIG_TEMPLATE.format(model=gateway_model, base_url=GATEWAY_BASE_URL))
+        env["CODEX_HOME"] = codex_home
+        last_message = os.path.join(codex_home, "last-message.txt")
+        command = [
+            "codex", "exec",
+            "--skip-git-repo-check",
+            "--sandbox", "workspace-write",
+            "--output-last-message", last_message,
+            prompt,
+        ]
         try:
-            event = json.loads(line)
-        except json.JSONDecodeError:
-            continue
-        if event.get("type") == "text":
-            part = event.get("part") or {}
-            if part.get("text"):
-                texts.append(part["text"])
-        elif event.get("type") == "error":
-            errors.append(json.dumps(event.get("error") or event)[:1000])
-
-    if proc.returncode != 0 or errors:
-        detail = (" | ".join(errors) or (proc.stderr or "").strip())[:2000]
-        print(f"astra_station: opencode failed for station {station} "
-              f"(exit {proc.returncode}): {detail}", file=sys.stderr)
+            proc = subprocess.run(
+                command,
+                stdin=subprocess.DEVNULL,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                timeout=TIMEOUT_SECONDS,
+                env=env,
+            )
+        except FileNotFoundError:
+            print("astra wrapper: codex CLI not found on PATH", file=sys.stderr)
+            return 5
+        except subprocess.TimeoutExpired:
+            print(f"astra wrapper: codex timed out after {TIMEOUT_SECONDS}s", file=sys.stderr)
+            return 4
+        text = ""
+        if os.path.exists(last_message):
+            with open(last_message, encoding="utf-8") as handle:
+                text = handle.read().strip()
+    status = subprocess.run(
+        ["git", "status", "--porcelain"], capture_output=True, text=True
+    )
+    tree_changed = bool(status.stdout.strip())
+    if proc.returncode != 0:
+        print(
+            f"astra wrapper: codex exited {proc.returncode}; output tail:\n"
+            + (proc.stdout or "")[-3000:],
+            file=sys.stderr,
+        )
         return 2
-
-    output = "\n".join(texts).strip()
-    if not output and not tree_changed(repo_root):
-        print(f"astra_station: opencode produced no output and no tree change "
-              f"for station {station}", file=sys.stderr)
+    if not text and not tree_changed:
+        print(
+            "astra wrapper: codex produced no final message and no working tree change; "
+            "output tail:\n" + (proc.stdout or "")[-3000:],
+            file=sys.stderr,
+        )
         return 3
-    if not output:
-        output = (f"The {station} station (GPT-6 Astra via OpenCode) completed and "
-                  "changed the working tree without a text summary.")
-
-    report = json.dumps({"model": model, "runtime": "opencode"})
-    output_path.write_text(output.rstrip() + "\n\n" + report + "\n", encoding="utf-8")
-    print(output)
+    body = text or "(codex changed the working tree without a final message)"
+    provenance = json.dumps({"model": configured_model, "runtime": "codex"})
+    with open(output_path, "w", encoding="utf-8") as handle:
+        handle.write(body.rstrip() + "\n\n" + provenance + "\n")
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    raise SystemExit(main())

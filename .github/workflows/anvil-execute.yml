@@ -7,12 +7,15 @@ name: anvil-execute
 # trigger branch) and execute mode stays opt in per work order.
 #
 # Model routing for this run (ANVIL policy, recorded in anvil.yaml):
-# the builder station runs GPT-6 Astra through OpenCode against the
-# Cloudflare AI Gateway OpenAI endpoint; spec writer, test writer and
-# the four reviewers run claude-sonnet-5-5 through Claude Code against the
-# gateway Anthropic route. tools/anvil_station.py dispatches per station.
-# There is no fallback from Astra to another model for the builder: if the
-# Astra smoke gate fails, this job stops before the line runs.
+# the builder station runs GPT-6 Astra through Codex (custom model
+# provider) against the Cloudflare AI Gateway OpenAI endpoint; spec
+# writer, test writer and the four reviewers run claude-sonnet-5-5
+# through Claude Code against the gateway Anthropic route.
+# tools/anvil_station.py dispatches per station. There is no fallback
+# from Astra to another model for the builder: if the Astra smoke gate
+# fails, this job stops before the line runs. (OpenCode was wired first
+# and failed twice in the AI SDK provider layer; see
+# tools/astra_station.py for the full record.)
 #
 # Deployment is deliberately NOT part of this run: anvil.yaml carries no
 # deploy config, so the deployer station stays a packet. The operator
@@ -66,12 +69,12 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Install Claude Code and OpenCode
+      - name: Install Claude Code and Codex
         run: |
           npm install -g @anthropic-ai/claude-code
-          npm install -g opencode-ai@1.19.5
+          npm install -g @openai/codex
           claude --version
-          opencode --version
+          codex --version
 
       - name: Anthropic smoke gate (claude-sonnet-5-5 through the gateway)
         id: smoke_anthropic
@@ -88,15 +91,25 @@ jobs:
       - name: Astra smoke gate (gpt-6-astra through the gateway OpenAI route)
         id: smoke_astra
         run: |
-          timeout 420 opencode run "Reply with exactly: ASTRA_OK" -m cloudflare-ai-gateway/openai/gpt-6-astra > astra-smoke.txt 2>&1 || true
+          export CODEX_HOME="$(mktemp -d)"
+          cat > "${CODEX_HOME}/config.toml" <<'EOF'
+          model = "openai/gpt-6-astra"
+          model_provider = "cloudflare"
+          [model_providers.cloudflare]
+          name = "Cloudflare AI Gateway"
+          base_url = "https://gateway.ai.cloudflare.com/v1/693ae9c587f1f2c34328bb47447366b0/arananet-ai-gateway/openai"
+          env_key = "CF_AIG_TOKEN"
+          wire_api = "responses"
+          env_http_headers = { "cf-aig-authorization" = "CF_AIG_AUTH" }
+          EOF
+          export CF_AIG_AUTH="Bearer ${CF_AIG_TOKEN}"
+          timeout 420 codex exec --skip-git-repo-check --sandbox read-only --output-last-message astra-last.txt "Reply with exactly: ASTRA_OK" < /dev/null > astra-smoke.txt 2>&1 || true
           tail -c 3000 astra-smoke.txt || true
-          if ! grep -q "ASTRA_OK" astra-smoke.txt; then
-            echo "ASTRA SMOKE FAILED: the output above does not contain ASTRA_OK. The gateway OpenAI route did not answer with gpt-6-astra. Stopping here: no fallback to another model for UI work. The raw output is in astra-smoke.txt and in the uploaded artifacts."
-            echo "OpenCode log tail for diagnosis:"
-            tail -c 3000 ~/.local/share/opencode/log/*.log 2>/dev/null || echo "(no opencode log file found)"
+          if ! grep -q "ASTRA_OK" astra-last.txt 2>/dev/null; then
+            echo "ASTRA SMOKE FAILED: codex did not return ASTRA_OK from gpt-6-astra through the gateway OpenAI route. The raw output above is the exact error. Stopping here: no fallback to another model for UI work. The raw output is in astra-smoke.txt and in the uploaded artifacts."
             exit 1
           fi
-          echo "Astra smoke passed: gpt-6-astra answered through the gateway OpenAI endpoint."
+          echo "Astra smoke passed: gpt-6-astra answered through the gateway OpenAI endpoint (Codex, Responses API)."
 
       - name: Run the ANVIL sdlc-default line in execute mode
         id: line
@@ -127,7 +140,7 @@ jobs:
             exit 0
           fi
           VERDICT=$(python3 -c "import json; print(json.load(open('runs/wo-gh-1/report.json'))['verdict'])" 2>/dev/null || echo "no-report")
-          git commit -m "ANVIL execute run wo-gh-1 (issue 1): verdict ${VERDICT}" -m "Builder station executed by GPT-6 Astra (OpenCode) through the Cloudflare AI Gateway; spec, test and reviewer stations executed by Claude Code (claude-sonnet-5-5). Run evidence in runs/wo-gh-1/."
+          git commit -m "ANVIL execute run wo-gh-1 (issue 1): verdict ${VERDICT}" -m "Builder station executed by GPT-6 Astra (Codex) through the Cloudflare AI Gateway; spec, test and reviewer stations executed by Claude Code (claude-sonnet-5-5). Run evidence in runs/wo-gh-1/."
           git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: Comment the run report on issue 1
@@ -186,8 +199,9 @@ jobs:
           lines += [
               "",
               "Honest note: this run EXECUTED its agent stations with per station model routing. "
-              "The builder (the UI work) ran GPT-6 Astra through OpenCode against the Cloudflare AI Gateway "
-              "OpenAI endpoint; spec writer, test writer and the four reviewers ran claude-sonnet-5-5 "
+              "The builder (the UI work) ran GPT-6 Astra through Codex (custom model provider, "
+              "Responses API) against the Cloudflare AI Gateway OpenAI endpoint; spec writer, test "
+              "writer and the four reviewers ran claude-sonnet-5-5 "
               "through Claude Code against the gateway Anthropic route. Both routes passed an exact reply "
               "smoke gate before the line ran. The deployer station stayed a packet on purpose: deployment "
               "for this work order happens outside the line, by the operator, after approval.",
