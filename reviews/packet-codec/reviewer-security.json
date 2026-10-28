@@ -1,0 +1,9 @@
+{
+  "station": "reviewer-security",
+  "slug": "packet-codec",
+  "work_order": "wo-sentia-001",
+  "verdict": "pass",
+  "findings": [
+    "The codec authenticates payloads by crc only, which detects corruption, not forgery. That matches the spec for a concept build; the site copy states digests are encrypted on real hardware, and encryption is a firmware concern outside this repo. No keys or secrets in code."
+  ]
+}

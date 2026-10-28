@@ -1,0 +1,9 @@
+{
+  "station": "reviewer-tests",
+  "slug": "live-demo",
+  "work_order": "wo-sentia-001",
+  "verdict": "pass",
+  "findings": [
+    "The browser codec is loaded in a vm context for these tests, so the exact bytes served to visitors are what is tested, including the parity test against the server codec."
+  ]
+}

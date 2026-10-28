@@ -1,0 +1,9 @@
+{
+  "station": "reviewer-architecture",
+  "slug": "packet-codec",
+  "work_order": "wo-sentia-001",
+  "verdict": "pass",
+  "findings": [
+    "Single module src/codec.js is the one definition of both wire formats. The browser twin is served as text and pinned to the server codec by a byte parity test, so the demo cannot drift from production decoding."
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "station": "reviewer-architecture",
+  "slug": "dashboard-data",
+  "work_order": "wo-sentia-001",
+  "verdict": "pass",
+  "findings": [
+    "One data flow: API to tiles, charts, alerts and fleet table, all re-fetched on wearer switch. No duplicated state on the client beyond the alerts cache used for filtering."
+  ]
+}

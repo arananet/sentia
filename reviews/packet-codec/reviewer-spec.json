@@ -1,0 +1,9 @@
+{
+  "station": "reviewer-spec",
+  "slug": "packet-codec",
+  "work_order": "wo-sentia-001",
+  "verdict": "pass",
+  "findings": [
+    "All five scenarios S1 to S5 have named tests in tests/codec.test.js, written before the implementation (evidence/red.txt shows the failing run, evidence/green.txt the pass). Byte layout matches the spec exactly: 16 byte digest, 19 byte LoRaWAN frame, crc8 poly 0x07."
+  ]
+}

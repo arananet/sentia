@@ -1,0 +1,9 @@
+{
+  "station": "reviewer-architecture",
+  "slug": "core-worker",
+  "work_order": "wo-sentia-001",
+  "verdict": "pass",
+  "findings": [
+    "One Worker, no build step. Routing in src/index.js stays thin; page, data, MCP and SEO text are separate modules generated from one FACTS source."
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "station": "reviewer-security",
+  "slug": "core-worker",
+  "work_order": "wo-sentia-001",
+  "verdict": "pass",
+  "findings": [
+    "No secrets anywhere in the repo; wrangler.toml carries no credentials. All routes are read only over seeded demo data. Accepted for this concept scope: a production build would need authentication on /mcp and signed ingestion webhooks before real wearer data is involved."
+  ]
+}

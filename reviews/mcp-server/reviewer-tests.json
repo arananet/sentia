@@ -1,0 +1,9 @@
+{
+  "station": "reviewer-tests",
+  "slug": "mcp-server",
+  "work_order": "wo-sentia-001",
+  "verdict": "pass",
+  "findings": [
+    "The simulated uplink test decodes the returned payload with the independent codec functions rather than trusting the decoded field in the same response, which keeps the test honest."
+  ]
+}

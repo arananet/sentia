@@ -1,0 +1,9 @@
+{
+  "station": "reviewer-tests",
+  "slug": "packet-codec",
+  "work_order": "wo-sentia-001",
+  "verdict": "pass",
+  "findings": [
+    "Round trips, crc corruption, flag bits, clamping, a known crc8 vector (0xF4 for 123456789) and a browser parity test all pass. Temperature precision is exact to two decimals including negatives."
+  ]
+}

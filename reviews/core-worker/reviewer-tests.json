@@ -1,0 +1,9 @@
+{
+  "station": "reviewer-tests",
+  "slug": "core-worker",
+  "work_order": "wo-sentia-001",
+  "verdict": "pass",
+  "findings": [
+    "Suite runs green locally with node --test (31 tests). Core worker scenarios are exercised through the real fetch handler, not mocks of it."
+  ]
+}

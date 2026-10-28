@@ -1,0 +1,9 @@
+{
+  "station": "reviewer-spec",
+  "slug": "dashboard-data",
+  "work_order": "wo-sentia-001",
+  "verdict": "pass",
+  "findings": [
+    "S1 to S3 are covered at the contract level the interface renders: status values untransformed, 96 chart points for 24 h, and per wearer alert filtering with no leakage. The client fetches only the public API."
+  ]
+}

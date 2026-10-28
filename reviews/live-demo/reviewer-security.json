@@ -1,0 +1,9 @@
+{
+  "station": "reviewer-security",
+  "slug": "live-demo",
+  "work_order": "wo-sentia-001",
+  "verdict": "pass",
+  "findings": [
+    "The simulation runs entirely in the visitor browser over the published codec; it holds no credentials and calls no network API except the dashboard fetches."
+  ]
+}

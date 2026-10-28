@@ -1,0 +1,9 @@
+{
+  "station": "reviewer-architecture",
+  "slug": "live-demo",
+  "work_order": "wo-sentia-001",
+  "verdict": "pass",
+  "findings": [
+    "Simulation state, drift model and latency model live in the served browser codec module; the page client only renders. Emission cadence is 4.2 s in the page, close to the spec's few seconds, with a slow 2.6 s packet drift per the brand motion rules."
+  ]
+}

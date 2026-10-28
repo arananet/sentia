@@ -1,0 +1,9 @@
+{
+  "station": "reviewer-tests",
+  "slug": "ingestion-api",
+  "work_order": "wo-sentia-001",
+  "verdict": "pass",
+  "findings": [
+    "Determinism is asserted by deep equality of two calls; alert assertions check the rule set membership and fleet referential integrity rather than counting exact alerts, so the tests survive seed tuning."
+  ]
+}

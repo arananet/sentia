@@ -1,0 +1,9 @@
+{
+  "station": "reviewer-spec",
+  "slug": "live-demo",
+  "work_order": "wo-sentia-001",
+  "verdict": "pass",
+  "findings": [
+    "S1 to S3 covered in tests/demo.test.js: city payloads are 16 byte base64 digests, rural payloads are 38 character hex frames, latencies stay inside 2..20 s (Find My network) and 1..3 s (LoRaWAN) over 200 samples, and decoded feed values equal the simulated readings."
+  ]
+}

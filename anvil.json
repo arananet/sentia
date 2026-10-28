@@ -1,0 +1,5 @@
+{
+  "pipeline": "greenfield",
+  "project": "Sentia",
+  "blueprint": "cloudflare-worker"
+}

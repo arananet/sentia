@@ -1,0 +1,9 @@
+{
+  "station": "reviewer-architecture",
+  "slug": "ingestion-api",
+  "work_order": "wo-sentia-001",
+  "verdict": "pass",
+  "findings": [
+    "The data layer is pure functions of (patch seed, time slot): no storage, no cache, identical outputs for the API, the dashboard and the MCP server. Alert rules read the same series the API serves."
+  ]
+}

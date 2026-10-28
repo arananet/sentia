@@ -1,0 +1,9 @@
+{
+  "station": "reviewer-spec",
+  "slug": "core-worker",
+  "work_order": "wo-sentia-001",
+  "verdict": "pass",
+  "findings": [
+    "S1 and S2 are covered by named tests in tests/api.test.js: the homepage serves with one h1 and the wordmark, and unknown API routes return 404 JSON. Copy makes no diagnosis claims and the footer states the product is not a medical device."
+  ]
+}

@@ -1,0 +1,44 @@
+
+> sentia@0.1.0 test
+> node --test tests/*.test.js
+
+✔ core-worker S1: GET / serves the site with wordmark, demo and dashboard (9.777206ms)
+✔ core-worker S2: API healthy, unknown API route is a 404 JSON error (3.682942ms)
+✔ ingestion-api S1: fleet lists exactly 3 patches with battery and last sync path (3.049471ms)
+✔ ingestion-api S2: patch status carries current values, unknown id is 404 JSON (1.479032ms)
+✔ ingestion-api S3: measurements are deterministic, inside 24 h, 15 minute spacing (7.555809ms)
+✔ ingestion-api S4: alerts follow the rule set and reference real patches (3.044874ms)
+✔ ingestion-api S5: network stats count both paths positively (2.00425ms)
+✔ dashboard-data S1: status endpoint values are the tile values, untransformed (0.934253ms)
+✔ dashboard-data S2: the 24 h chart window carries exactly 96 points (1.526853ms)
+✔ dashboard-data S3: alerts can be filtered per wearer with no leakage (1.756529ms)
+✔ seo: robots, sitemap and llms endpoints respond with the right shapes (2.277621ms)
+✔ geo: JSON-LD graph parses and carries the five entity types (0.54551ms)
+✔ seo: homepage carries canonical, OG and the llms Link header (1.219532ms)
+✔ regression: wear start is never frozen at module load (Workers epoch clock) (1.673504ms)
+✔ packet-codec S1: digest round trip preserves every field at 16 bytes (1.720614ms)
+✔ packet-codec S2: a flipped payload byte is rejected by crc (0.667052ms)
+✔ packet-codec S3: flag bits survive the wire (0.223485ms)
+✔ packet-codec S4: LoRaWAN frame carries sweat rate and posture at 38 hex chars (0.563437ms)
+✔ packet-codec S5: bad magic and bad crc are rejected on the LoRaWAN frame (0.602535ms)
+✔ packet-codec: digest rejects wrong length and wrong version (0.314393ms)
+✔ packet-codec: hydration and battery clamp to 0..100, temperature keeps two decimals (0.993031ms)
+✔ packet-codec: crc8 is stable for a known vector (0.210025ms)
+✔ live-demo S1: city emissions are 16 byte digests labelled findmy (1.682978ms)
+✔ live-demo S2: rural emissions are 38 character LoRaWAN hex labelled lora (0.576446ms)
+✔ live-demo S3: latencies stay inside the plausible range per path (4.774962ms)
+✔ parity: browser codec and server codec produce identical bytes (1.764841ms)
+✔ mcp-server S1: initialize returns the protocol version and server name (6.769238ms)
+✔ mcp-server S2: tools/list returns exactly the 6 tools with schemas (3.256611ms)
+✔ mcp-server S3: get_patch_status returns the patch and its battery (2.883551ms)
+✔ mcp-server S4: simulate_uplink round trips on both paths (3.802151ms)
+✔ mcp-server S5: errors are proper JSON-RPC errors, notifications get 202 empty (1.564229ms)
+✔ mcp-server: ping returns an empty result (0.694223ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 579.335166

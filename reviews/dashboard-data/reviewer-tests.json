@@ -1,0 +1,9 @@
+{
+  "station": "reviewer-tests",
+  "slug": "dashboard-data",
+  "work_order": "wo-sentia-001",
+  "verdict": "pass",
+  "findings": [
+    "Browser rendering itself is not unit tested; the data contract it depends on is. Chart drawing accepts the exact point arrays the endpoint returns, asserted in tests/demo.test.js and tests/api.test.js."
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "station": "reviewer-spec",
+  "slug": "ingestion-api",
+  "work_order": "wo-sentia-001",
+  "verdict": "pass",
+  "findings": [
+    "S1 to S5 covered in tests/api.test.js: three patch fleet, status with 404 JSON, deterministic 96 point series at 900 s spacing, rule based alerts, and positive counts on both network paths."
+  ]
+}

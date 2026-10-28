@@ -1,0 +1,9 @@
+{
+  "station": "reviewer-architecture",
+  "slug": "mcp-server",
+  "work_order": "wo-sentia-001",
+  "verdict": "pass",
+  "findings": [
+    "The MCP layer wraps the same data module as the REST API and the same codec as the firmware format. Tool definitions live beside the handlers in src/mcp.js and are imported by the site, so the published tool list cannot drift from the served one."
+  ]
+}

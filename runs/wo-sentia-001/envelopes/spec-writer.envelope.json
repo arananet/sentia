@@ -1,0 +1,10 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "spec-writer",
+  "to_station": "test-writer",
+  "work_order_id": "wo-sentia-001",
+  "artifact_path": "/home/hatch/workspace/sentia/runs/wo-sentia-001/spec-writer.packet.md",
+  "status": "packet_ready",
+  "created_at": "2026-10-28T18:05:51.902191+00:00",
+  "configured_model": "reasoning-strong"
+}
