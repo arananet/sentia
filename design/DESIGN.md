@@ -1,8 +1,8 @@
-# Sentia design system v2
+# Sentia design system v2.1
 
 Identity is governed by brand/BRAND.md. This system applies that identity to
 the launch page: imagery is the primary art direction, with a small physical
-instrument rendered at exhibition scale.
+instrument surrounded by generous empty space at true 38 mm scale.
 Sentia Patch One is the object; Sentia Cloud receives its measurements; the
 Sentia MCP Server makes those measurements available to assistants.
 
@@ -14,7 +14,8 @@ and the Find My network and LoRaWAN paths. Coral #FF6B4A is reserved for the
 status LED and alert dots. Soft mint #EFF4EE is a rare panel fill; hairline
 #DFE7DF divides information. Body text uses #4A5D54; secondary labels use
 #53685C for legibility on paper. White is reserved for the physical patch.
-No decorative gradients. One diffuse shadow beneath the hero object only.
+No decorative gradients. Only the soft contact shadow baked into each product
+render is allowed; the page adds no shadow or tinted backdrop.
 
 ## Type scale
 
@@ -49,6 +50,32 @@ widths. Flat inline SVG is demoted to small supporting diagrams only; it
 must not carry the hero, hardware or connectivity art direction. The logo,
 functional live demo graphics and dashboard charts stay.
 
+## Composition and accessibility
+
+The brand sheet wins every conflict with the design knowledge pack. Use calm
+tactile softness from render scale and whitespace, never pastel or blue
+palettes, shadowed surfaces or decorative cards. A 12 column grid aligns the
+hero headline across seven columns and the object across five. Supporting
+text and chips complete that system; one value proposition strip follows,
+using the existing tagline. Measured facts (38 mm, 14 days, IP67 and network
+behaviour) establish trust before the hardware detail. State plainly here
+that Sentia Patch One is not a medical device. No invented proof, testimonials,
+customer logos or unsupported claims.
+
+Alternate generous statement sections (128 px / 8rem padding) with denser
+technical sections (96 px). Use hairline divided feature grids and recurring
+numbered mono section labels. Keep the existing modular type scale, pushing
+the desktop display toward 144 px without crowding the render. Use the 8 px
+spacing scale throughout. Load fonts with font-display swap and reserve image
+space using exact intrinsic dimensions to avoid image layout shift.
+
+Text contrast is at least 4.5:1; body text aims for 7:1 on paper. The primary
+CTA uses paper on ink (about 15.9:1); the second action remains a text link.
+Use semantic sections, one h1, a skip link to focusable main content, visible
+3 px focus rings, and touch targets at least 44 px with at least 8 px gaps.
+Keep below-fold images lazy and the hero eager. Review at mobile widths and
+zoom, with keyboard navigation, no script, and prefers-reduced-motion.
+
 ## Asset inventory
 
 All four operator-supplied WebP renders come from src/images.js. Serve the
@@ -58,7 +85,7 @@ original export bytes without editing, replacing or generating imagery.
 | --- | --- | --- |
 | PATCH_HERO_WEBP_B64 | /img/patch-hero.webp | Hero, primary object beside the headline |
 | PATCH_EXPLODED_WEBP_B64 | /img/patch-exploded.webp | #patch, beside the six-layer factual list |
-| PATCH_ON_SKIN_WEBP_B64 | /img/patch-on-skin.webp | #patch, second visual with the upper-arm and 14 day wear story |
+| PATCH_ON_SKIN_WEBP_B64 | /img/patch-on-skin.webp | #patch, second visual with the inner forearm close-up and 14 day wear story |
 | NETWORK_SCENE_WEBP_B64 | /img/network-scene.webp | #how, before the five relay steps |
 
 The exploded render groups the hardware into four visible assemblies; the
@@ -72,7 +99,18 @@ with dotted teal paths. It does not replace the live packet visualization.
 
 Place renders directly on paper, with no frames, borders, rounded cards,
 filters or added drop shadows. The supplied soft grounding shadow provides
-physical presence; do not add another. Preserve original aspect ratios and
+physical presence; do not add another.
+Hero, exploded and network backgrounds are exactly paper #FAFAF6, uniform
+to every corner and edge: no gradient, vignette, backdrop or floor line.
+Final WebP corner and edge samples may differ by at most 3 per RGB channel
+from (250, 250, 246) due to lossy encoding. The operator verifies the bytes.
+The on-skin exception is a strict inner forearm close-up filling the frame:
+no torso, no chest, no shoulder, no upper arm, no face, no dominating hands,
+no clothing and no background visible. The patch spans about half the forearm width.
+True 38 mm scale governs every scale-bearing render: the hero disc occupies
+a quarter of its frame width or less, and the network patch remains small
+among the devices. Never crop or enlarge the disc into a plate sized centerpiece.
+Preserve original aspect ratios and
 show complete images without cropping or stretching. Use responsive full
 width images, with the hero capped at 640 px, the wear image at 640 px, and
 the network scene spanning the content width. Give each visual generous
@@ -84,8 +122,10 @@ eagerly with high priority; lazy-load the three lower-page renders.
 ## Motion
 
 Existing reveal hooks stay intact. Fades and small rises use 800 ms ease-out.
-No scale animation, bounce, glow or perpetual hero movement. Hover changes
-are small color or hairline changes. Reduced motion disables CSS reveals
+No scale animation, bounce, glow or perpetual hero movement. Hover feedback
+uses opacity or a rise under 2 px over 180 ms.
+Stagger up to eight children per section in 40 ms steps, capped at 280 ms.
+Reduced motion disables CSS reveals
 and smooth scrolling, and hides the moving packet dot; the measurements
 and existing controls continue to operate. Static content must remain
 readable without JavaScript through a noscript style override. With scripting
@@ -103,8 +143,8 @@ both the initial and revealed states visible and stationary.
   simulation control and dashboard action. Measurements keep their units.
 - At 320 px and at browser zoom, text wraps without page overflow; wide
   technical data scrolls in its own region. Keyboard focus is visible.
-- V2 S3: Implementation touches src/page.js, this document and src/index.js
-  for exactly four image/webp routes, using the /og.png cache header style.
+- V2.1 S9: Implementation touches only src/page.js and this document.
+  Preserve the four image/webp routes and operator supplied src/images.js.
   API, MCP, codec, data and all other routing behavior stay unchanged.
 - S5: Keep the existing calm copy and exact product and network names.
   Wellness framing and the medical disclaimer remain visible.

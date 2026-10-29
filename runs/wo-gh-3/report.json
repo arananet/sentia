@@ -1,0 +1,262 @@
+{
+  "work_order_id": "wo-gh-3",
+  "pipeline": "sdlc-default",
+  "title": "Design v2.1: corrected render set and design knowledge pack recomposition",
+  "kind": "feature",
+  "steps": [
+    {
+      "station": "intake",
+      "status": "completed",
+      "detail": "Work order normalized",
+      "duration_ms": 0.021,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-3/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "spec-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-3/spec-writer.output.md",
+      "duration_ms": 38635.288,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-3/spec-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "test-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-3/test-writer.output.md",
+      "duration_ms": 112661.701,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-3/test-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "builder",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-3/builder.output.md",
+      "duration_ms": 67796.26,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-3/builder.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-spec",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-3/reviewer-spec.output.md",
+      "duration_ms": 24226.876,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-3/reviewer-spec.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-security",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-3/reviewer-security.output.md",
+      "duration_ms": 11982.946,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-3/reviewer-security.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-tests",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-3/reviewer-tests.output.md",
+      "duration_ms": 32961.693,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-3/reviewer-tests.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-architecture",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-3/reviewer-architecture.output.md",
+      "duration_ms": 19285.642,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-3/reviewer-architecture.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-design",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-3/reviewer-design.output.md",
+      "duration_ms": 26573.941,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-3/reviewer-design.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "approver",
+      "status": "completed",
+      "detail": "Approver verdict: changes_requested",
+      "duration_ms": 0.048,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-3/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "approver",
+      "status": "loopback",
+      "return_to": "builder",
+      "detail": "Loopback to builder: S8/AC4: design/DESIGN.md now states the exact paper background rule (#FAFAF6, uniform to corners and edges, within 3 per channel, contact shadow only). It also states the true 38 mm scale rule (hero disc a quarter of the frame width or less), the strict inner forearm rule for on-skin, and the knowledge pack rules (grid, type and spacing, motion, accessibility), with the brand sheet winning conflicts.; S5: src/page.js adds no border, frame, filter, CSS shadow or tinted backdrop to the renders. I did not re-sample the pixels; the operator's recorded samples are the evidence for that part.; S6: the on-skin img tag is 1200x600, matching the served WebP header (1200x600), and its alt text now describes an inner forearm. The other three img tags (1600x893, 1200x1200, 1600x900) also match their served WebP dimensions.; S9: src/images.js is unmodified in the working tree. The full suite passes (75 tests: 74 pass, 0 fail, 1 skipped). Model routing and the five-review count are outside my inputs, so I did not verify them.; Non-blocking: the lede at src/page.js:418 still says \"worn on the upper arm or torso\", next to a forearm-only render. Copy is frozen from v2, so this follows the spec, but Edu may want to confirm that wording.; Non-blocking: I did not trace the one skipped test to see whether it relates to this change.; Review file written to runs/wo-gh-3/reviewer-spec.output.md.; The src/page.js diff is CSS, static markup (skip link, value strip, numbered kickers) and img attributes. It adds no script, inline handler, fetch or eval.; The new interpolations (FACTS.tagline, FACTS.product) come from the constant FACTS object, not from request input, so they add no injection path.; No new third-party origin or asset URL was added. The only external origin is the existing Google Fonts link, which has no SRI. That was already the case and is out of scope.; src/images.js is unmodified. The API, MCP server, codec and data layer are untouched. The diff contains no secrets and adds no routes.; The skip link is a same-page anchor to #main, and <main tabindex=-1> is a safe focus target.; The review is written to runs/wo-gh-3/reviewer-security.output.md.; `npm test` gives 75 tests, 74 pass, 0 fail and 1 skipped. The skip is 'ui-elevation S4: codec, data, mcp and index are untouched' (no main ref to diff against). It is unrelated to wo-gh-3. By hand, `git status` shows only the spec, design/DESIGN.md and src/page.js modified, so src/images.js and the frozen layers are untouched.; tests/design-v2-1-corrections.test.js maps to scenarios S5-S9 and AC1-AC5. The S5 pixel tests ran, because headless Chromium is present and they were not skipped. They decode the served WebP bytes and check 4 corners and 4 edge midpoints for hero, exploded and network within 3 per channel of (250,250,246).; S5 also asserts that the page adds no border, frame, CSS shadow, filter or tinted wrapper around renders. S6 checks the on-skin alt text says forearm and that the corner samples are warm skin tones, not paper. S7 checks the hero is at least 1600 px wide and capped at 640 px. S8 checks DESIGN.md for the paper background rule, the 38 mm scale rule and the knowledge pack items. S9 checks width/height against the WebP dimensions, hero eager and the rest lazy, reduced-motion and noscript fallbacks, skip link, focus-visible, one h1, and the not-a-medical-device statement.; Non-blocking gap: forearm-only framing and patch scale (about 24 percent of the hero frame, about half the forearm width on skin) are not asserted from pixels. They rest on the operator verification record in the spec.; Non-blocking gap: the S9 run facts (builder on gpt-6-astra, five reviews counted with reviewer-design among them) are not covered by unit tests. They belong to the run verdict.; The review is written to runs/wo-gh-3/reviewer-tests.output.md.; Scope: the code change is confined to src/page.js (CSS and markup), design/DESIGN.md and the spec delta. src/images.js, the routes, the JSON API, the MCP server, the codec, the data layer and src/seo.js are untouched, so the v2 frozen boundaries hold.; Module shape: page.js still renders from FACTS. The new value strip reuses FACTS.tagline and FACTS.product, and its 'not a medical device' line matches the existing facts and SEO wording, so no copy fact is invented.; Structure: moving id=top from main to a sibling div keeps the #top brand anchor working. main gets id=main plus a skip link, an additive accessibility change that touches no routes. Section anchors are unchanged.; Input gap: brain/decisions does not exist (brain has only project.md, glossary.md, learnings.md and worklog.md), so I could not check against recorded decisions. I used the brand sheet, DESIGN.md and the frozen-scope list in the work order instead.; Non-blocking: .cta a:first-child is restyled as a filled ink button, and the .nav nav gap and breakpoint change. These are presentation only. The CSS is appended as a v2.1 block that overrides earlier rules (the repeated .cta a, the later section padding), so the stylesheet has some duplication. Merging it later would be a cleanup, not a blocker.; Non-blocking: the lede still says 'upper arm or torso' beside a forearm-only render. This is frozen copy, so it is a question for Edu rather than a defect.; Typography: design/DESIGN.md specifies 11 px mono labels with 0.16em tracking. src/page.js:84 uses 0.18em, and the mobile overrides reduce the hero kicker and caption to 10 px. Use the documented label size and tracking at all widths.; Palette: design/DESIGN.md reserves white for the physical patch. src/page.js:172 applies background:#fff to every .node .disc, including the passing-phone relay illustration. Scope white to the patch node and use paper for the relay node.",
+      "reason": "S8/AC4: design/DESIGN.md now states the exact paper background rule (#FAFAF6, uniform to corners and edges, within 3 per channel, contact shadow only). It also states the true 38 mm scale rule (hero disc a quarter of the frame width or less), the strict inner forearm rule for on-skin, and the knowledge pack rules (grid, type and spacing, motion, accessibility), with the brand sheet winning conflicts.; S5: src/page.js adds no border, frame, filter, CSS shadow or tinted backdrop to the renders. I did not re-sample the pixels; the operator's recorded samples are the evidence for that part.; S6: the on-skin img tag is 1200x600, matching the served WebP header (1200x600), and its alt text now describes an inner forearm. The other three img tags (1600x893, 1200x1200, 1600x900) also match their served WebP dimensions.; S9: src/images.js is unmodified in the working tree. The full suite passes (75 tests: 74 pass, 0 fail, 1 skipped). Model routing and the five-review count are outside my inputs, so I did not verify them.; Non-blocking: the lede at src/page.js:418 still says \"worn on the upper arm or torso\", next to a forearm-only render. Copy is frozen from v2, so this follows the spec, but Edu may want to confirm that wording.; Non-blocking: I did not trace the one skipped test to see whether it relates to this change.; Review file written to runs/wo-gh-3/reviewer-spec.output.md.; The src/page.js diff is CSS, static markup (skip link, value strip, numbered kickers) and img attributes. It adds no script, inline handler, fetch or eval.; The new interpolations (FACTS.tagline, FACTS.product) come from the constant FACTS object, not from request input, so they add no injection path.; No new third-party origin or asset URL was added. The only external origin is the existing Google Fonts link, which has no SRI. That was already the case and is out of scope.; src/images.js is unmodified. The API, MCP server, codec and data layer are untouched. The diff contains no secrets and adds no routes.; The skip link is a same-page anchor to #main, and <main tabindex=-1> is a safe focus target.; The review is written to runs/wo-gh-3/reviewer-security.output.md.; `npm test` gives 75 tests, 74 pass, 0 fail and 1 skipped. The skip is 'ui-elevation S4: codec, data, mcp and index are untouched' (no main ref to diff against). It is unrelated to wo-gh-3. By hand, `git status` shows only the spec, design/DESIGN.md and src/page.js modified, so src/images.js and the frozen layers are untouched.; tests/design-v2-1-corrections.test.js maps to scenarios S5-S9 and AC1-AC5. The S5 pixel tests ran, because headless Chromium is present and they were not skipped. They decode the served WebP bytes and check 4 corners and 4 edge midpoints for hero, exploded and network within 3 per channel of (250,250,246).; S5 also asserts that the page adds no border, frame, CSS shadow, filter or tinted wrapper around renders. S6 checks the on-skin alt text says forearm and that the corner samples are warm skin tones, not paper. S7 checks the hero is at least 1600 px wide and capped at 640 px. S8 checks DESIGN.md for the paper background rule, the 38 mm scale rule and the knowledge pack items. S9 checks width/height against the WebP dimensions, hero eager and the rest lazy, reduced-motion and noscript fallbacks, skip link, focus-visible, one h1, and the not-a-medical-device statement.; Non-blocking gap: forearm-only framing and patch scale (about 24 percent of the hero frame, about half the forearm width on skin) are not asserted from pixels. They rest on the operator verification record in the spec.; Non-blocking gap: the S9 run facts (builder on gpt-6-astra, five reviews counted with reviewer-design among them) are not covered by unit tests. They belong to the run verdict.; The review is written to runs/wo-gh-3/reviewer-tests.output.md.; Scope: the code change is confined to src/page.js (CSS and markup), design/DESIGN.md and the spec delta. src/images.js, the routes, the JSON API, the MCP server, the codec, the data layer and src/seo.js are untouched, so the v2 frozen boundaries hold.; Module shape: page.js still renders from FACTS. The new value strip reuses FACTS.tagline and FACTS.product, and its 'not a medical device' line matches the existing facts and SEO wording, so no copy fact is invented.; Structure: moving id=top from main to a sibling div keeps the #top brand anchor working. main gets id=main plus a skip link, an additive accessibility change that touches no routes. Section anchors are unchanged.; Input gap: brain/decisions does not exist (brain has only project.md, glossary.md, learnings.md and worklog.md), so I could not check against recorded decisions. I used the brand sheet, DESIGN.md and the frozen-scope list in the work order instead.; Non-blocking: .cta a:first-child is restyled as a filled ink button, and the .nav nav gap and breakpoint change. These are presentation only. The CSS is appended as a v2.1 block that overrides earlier rules (the repeated .cta a, the later section padding), so the stylesheet has some duplication. Merging it later would be a cleanup, not a blocker.; Non-blocking: the lede still says 'upper arm or torso' beside a forearm-only render. This is frozen copy, so it is a question for Edu rather than a defect.; Typography: design/DESIGN.md specifies 11 px mono labels with 0.16em tracking. src/page.js:84 uses 0.18em, and the mobile overrides reduce the hero kicker and caption to 10 px. Use the documented label size and tracking at all widths.; Palette: design/DESIGN.md reserves white for the physical patch. src/page.js:172 applies background:#fff to every .node .disc, including the passing-phone relay illustration. Scope white to the patch node and use paper for the relay node.",
+      "duration_ms": 0.0,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": null,
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "triage-human",
+      "status": "completed",
+      "detail": "Human review: required",
+      "duration_ms": 0.006,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "deployer",
+      "status": "packet_ready",
+      "detail": "Packet written to runs/wo-gh-3/deployer.packet.md",
+      "duration_ms": 0.096,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-3/deployer.packet.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "observer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-3/observer.output.md",
+      "duration_ms": 25515.345,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-3/observer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    }
+  ],
+  "verdict": "changes_requested",
+  "human_required": true,
+  "max_loopbacks": 2,
+  "loopbacks": 1,
+  "deployment_status": null,
+  "verify_results": [],
+  "risk_hints": [],
+  "decision": {
+    "approver": {
+      "reviews_counted": [
+        {
+          "station": "reviewer-spec",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-security",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-tests",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-architecture",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-design",
+          "verdict": "changes_requested"
+        }
+      ],
+      "reviews_expected": [
+        "reviewer-spec",
+        "reviewer-security",
+        "reviewer-tests",
+        "reviewer-architecture",
+        "reviewer-design"
+      ],
+      "rule": "Reviewer reviewer-design requested changes."
+    },
+    "human_gate": {
+      "required": true,
+      "rule": "Verdict is changes_requested, not approved, so a human is required.",
+      "hints_matched": []
+    }
+  },
+  "warnings": []
+}

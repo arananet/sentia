@@ -85,15 +85,15 @@ a:hover{text-decoration:underline;text-underline-offset:3px}
 .kicker{color:var(--teal)}
 .muted{color:var(--soft)}
 header.site{position:absolute;top:0;left:0;right:0;z-index:5}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:32px 0}
+.nav{display:flex;align-items:center;justify-content:space-between;padding-top:32px;padding-bottom:32px;gap:24px}
 .brand{display:flex;align-items:center;gap:16px;color:var(--ink)}
 .brand:hover{text-decoration:none}
 .brand svg{display:block}
 .wordmark{font:500 21px 'Space Grotesk',sans-serif;letter-spacing:0.01em}
-.nav nav{display:flex;gap:32px}
+.nav nav{display:flex;gap:16px}
 .nav nav a{color:var(--soft);font-size:17px}
 .nav nav a:hover{color:var(--ink);text-decoration:none}
-@media(max-width:820px){.nav nav{display:none}}
+@media(max-width:1100px){.nav nav{display:none}}
 section{padding:clamp(96px,12vw,160px) 0;border-top:1px solid var(--line)}
 section:first-of-type{border-top:none}
 h1{font:300 clamp(56px,8.4vw,144px)/0.96 'Space Grotesk',sans-serif;letter-spacing:-0.055em;max-width:12ch;text-wrap:balance}
@@ -104,16 +104,18 @@ h3{font:500 19px/1.4 'Space Grotesk',sans-serif}
 .rv.in{opacity:1;transform:none}
 /* hero */
 .hero{padding-top:160px;position:relative}
-.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);column-gap:48px;align-items:start}
+.hero .wrap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;align-items:start}
 .hero .kicker{grid-column:1/-1;margin-bottom:16px;max-width:60ch}
-.hero h1{grid-column:1;grid-row:2}
-.hero .lede{grid-column:1;grid-row:3;margin-top:40px}
+.hero h1{grid-column:1/8;grid-row:2;font-size:clamp(56px,9.6vw,144px)}
+.hero .lede{grid-column:1/8;grid-row:3;margin-top:40px}
 .chips{display:flex;flex-wrap:wrap;gap:16px 24px;margin-top:32px;grid-column:1/-1}
 .chip{border-top:1px solid var(--line);padding:16px 0;font:500 11px/1.5 ui-monospace,Menlo,monospace;letter-spacing:0.16em;text-transform:uppercase;color:var(--soft)}
 .cta{display:flex;flex-wrap:wrap;gap:24px 32px;margin-top:24px;grid-column:1/-1}
 .cta a{font-size:17px;border-bottom:1px solid var(--teal);padding-bottom:8px}
-.cta a:hover{text-decoration:none;border-color:var(--ink);color:var(--ink)}
-.hero-visual{grid-column:2;grid-row:2/4;align-self:center;text-align:center;min-width:0}
+.cta a:hover{text-decoration:none;opacity:.85;transform:translateY(-1px)}
+.cta a:first-child{background:var(--ink);color:var(--paper);border:0;padding:16px 24px}
+.cta a{display:inline-flex;align-items:center;min-height:44px;transition:opacity 180ms ease-out,transform 180ms ease-out}
+.hero-visual{grid-column:8/13;grid-row:2/4;align-self:center;text-align:center;min-width:0}
 .product-render{display:block;width:100%;height:auto;object-fit:contain}
 .hero-render{max-width:640px;margin:auto}
 .svg-note{fill:#53685C}
@@ -121,10 +123,10 @@ h3{font:500 19px/1.4 'Space Grotesk',sans-serif}
 @media(max-width:999px){
   .hero{padding-top:144px}
   .hero .wrap{grid-template-columns:minmax(0,1fr)}
-  .hero h1{max-width:15ch;font-size:clamp(56px,10vw,96px)}
+  .hero h1{grid-column:1;max-width:15ch;font-size:clamp(56px,10vw,96px)}
   .hero-visual{grid-column:1;grid-row:3;margin-top:48px}
   .hero-render{max-width:640px}
-  .hero .lede{grid-row:4;margin-top:48px}
+  .hero .lede{grid-column:1;grid-row:4;margin-top:48px}
 }
 /* patch section */
 .wear-story{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center;margin-top:96px}
@@ -233,7 +235,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 64px;color:var(--soft);fo
 footer .cols{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:flex-start}
 footer p{max-width:52ch}
 /* Responsive containment and keyboard access preserve the existing hooks. */
-:focus-visible{outline:2px solid var(--teal);outline-offset:5px}
+:focus-visible{outline:3px solid var(--teal);outline-offset:4px}
 section{scroll-margin-top:32px}
 .split>*{min-width:0}
 .spec-strip div{padding:32px 16px}
@@ -270,6 +272,31 @@ section{scroll-margin-top:32px}
   html{scroll-behavior:auto}
   .rv,.feed-row{opacity:1;transform:none;transition:none}
   #packetDot{visibility:hidden}
+}
+/* v2.1: factual hierarchy, bounded motion and accessible controls. */
+.value-strip{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;padding-top:32px;padding-bottom:32px;border-top:1px solid var(--line)}
+.value-strip p:first-child{font:300 clamp(24px,3vw,40px)/1.2 'Space Grotesk',sans-serif;max-width:24ch}
+.value-strip p:last-child{max-width:32ch;align-self:center}
+#patch,#how{padding-top:128px;padding-bottom:128px}
+#demo,#dashboard,#mcp,#specs,#faq{padding-top:96px;padding-bottom:96px}
+section>.wrap>.rv:nth-child(2){transition-delay:40ms}
+section>.wrap>.rv:nth-child(3){transition-delay:80ms}
+section>.wrap>.rv:nth-child(4){transition-delay:120ms}
+section>.wrap>.rv:nth-child(5){transition-delay:160ms}
+section>.wrap>.rv:nth-child(6){transition-delay:200ms}
+section>.wrap>.rv:nth-child(7){transition-delay:240ms}
+section>.wrap>.rv:nth-child(8){transition-delay:280ms}
+.nav a,footer a{display:inline-flex;align-items:center;min-height:44px}
+footer a{margin-right:8px}
+button,.text-btn{min-height:44px;min-width:44px}
+.toggle{gap:8px;overflow:visible}
+.wearer-tabs{gap:8px;padding:8px}
+.skip-link{position:fixed;top:8px;left:8px;z-index:10;padding:16px 24px;background:var(--ink);color:var(--paper);transform:translateY(-160%)}
+.skip-link:focus{transform:none}
+@media(prefers-reduced-motion:reduce){
+  .cta a{transition:none}
+  .cta a:hover{transform:none}
+  section>.wrap>.rv{transition-delay:0ms}
 }
 footer .fine{margin-top:24px;color:var(--faint);font-size:13px}
 `;
@@ -332,6 +359,7 @@ ${jsonLd(origin)}
 <noscript><style>.rv{opacity:1;transform:none}</style></noscript>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 <header class="site">
   <div class="wrap nav">
     <a class="brand" href="#top" aria-label="Sentia home">
@@ -343,7 +371,8 @@ ${jsonLd(origin)}
     </nav>
   </div>
 </header>
-<main id="top">
+<div id="top"></div>
+<main id="main" tabindex="-1">
 
 <section class="hero" aria-label="Introduction">
   <div class="wrap">
@@ -366,9 +395,14 @@ ${jsonLd(origin)}
   </div>
 </section>
 
+<div class="wrap value-strip">
+  <p>${FACTS.tagline}</p>
+  <p class="muted">${FACTS.product} is not a medical device.</p>
+</div>
+
 <section id="patch" aria-label="The patch">
   <div class="wrap">
-    <p class="mono kicker rv">The patch</p>
+    <p class="mono kicker rv"><span aria-hidden="true">01 / </span>The patch</p>
     <h2 class="rv">Six layers, 4.2 mm thin.</h2>
     <div class="split" style="margin-top:clamp(48px,6vh,64px)">
       <div class="rv"><img class="product-render" src="/img/patch-exploded.webp" width="1200" height="1200" loading="lazy" alt="Sentia Patch One, exploded view with four separated assemblies above the adhesive base."></div>
@@ -380,7 +414,7 @@ ${layerItems}
 ${sensorCards}
     </div>
     <div class="wear-story">
-      <img class="product-render rv" src="/img/patch-on-skin.webp" width="1200" height="1200" loading="lazy" alt="Sentia Patch One worn on the upper arm, a 38 mm adhesive disc for up to 14 days of wear.">
+      <img class="product-render rv" src="/img/patch-on-skin.webp" width="1200" height="600" loading="lazy" alt="Sentia Patch One on an inner forearm, a 38 mm adhesive disc for up to 14 days of wear.">
     <p class="lede rv">A flexible adhesive disc worn on the upper arm or torso for up to ${FACTS.wearDays} days. Everything it needs is inside: sensors, two radios, and a printed battery sized for the whole wear.</p>
     </div>
     <div class="spec-strip rv">
@@ -396,10 +430,10 @@ ${sensorCards}
 
 <section id="how" aria-label="How it works">
   <div class="wrap">
-    <p class="mono kicker rv">How it works</p>
+    <p class="mono kicker rv"><span aria-hidden="true">02 / </span>How it works</p>
     <h2 class="rv">Sense. Whisper. Relay.</h2>
     <p class="lede rv">The patch never looks for a network. It speaks quietly, on a schedule, and lets the networks that already surround us do the carrying.</p>
-    <img class="product-render network-render rv" src="/img/network-scene.webp" width="1600" height="893" loading="lazy" alt="Sentia Patch One beside a phone, relay domes and a LoRaWAN gateway, linked by dotted teal signal paths.">
+    <img class="product-render network-render rv" src="/img/network-scene.webp" width="1600" height="900" loading="lazy" alt="Sentia Patch One beside a phone, relay domes and a LoRaWAN gateway, linked by dotted teal signal paths.">
     <ol class="journey">
       <li class="rv"><span class="mono step">Step 1</span><h3>Sense</h3><p>Every few minutes the patch samples skin temperature, hydration, movement, posture and sweat, and builds one small encrypted measurement digest.</p></li>
       <li class="rv"><span class="mono step">Step 2</span><h3>Whisper</h3><p>In the city it broadcasts the digest inside rotating Bluetooth Low Energy advertisements, following the Find My network accessory pattern. Out of coverage it sends a fuller LoRaWAN frame instead.</p></li>
@@ -416,7 +450,7 @@ ${sensorCards}
 
 <section id="demo" aria-label="Live demo">
   <div class="wrap">
-    <p class="mono kicker rv">Live demo</p>
+    <p class="mono kicker rv"><span aria-hidden="true">03 / </span>Live demo</p>
     <h2 class="rv">Watch a packet travel.</h2>
     <p class="lede rv">A simulated patch, running in your browser with the same packet codec as the server. Choose where the wearer is, and watch each reading take its path.</p>
     <div style="margin-top:32px" class="rv">
@@ -452,7 +486,7 @@ ${sensorCards}
 
 <section id="dashboard" aria-label="Dashboard">
   <div class="wrap">
-    <p class="mono kicker rv">Dashboard</p>
+    <p class="mono kicker rv"><span aria-hidden="true">04 / </span>Dashboard</p>
     <h2 class="rv">${FACTS.platform}, quietly.</h2>
     <p class="lede rv">The product interface. Three patches from the demonstration fleet, served live by the same API an assistant would use.</p>
     <div class="wearer-tabs rv" id="wearerTabs" role="tablist" aria-label="Choose a wearer"></div>
@@ -490,7 +524,7 @@ ${sensorCards}
 
 <section id="mcp" aria-label="MCP server">
   <div class="wrap">
-    <p class="mono kicker rv">For assistants</p>
+    <p class="mono kicker rv"><span aria-hidden="true">05 / </span>For assistants</p>
     <h2 class="rv">The ${FACTS.mcpServer}.</h2>
     <p class="lede rv">Sentia ships an MCP server, so an AI assistant can answer plain questions about a patch: how did hydration trend today, which patches are low on battery, what just arrived and how. It speaks JSON-RPC 2.0 and reads the same data as this page.</p>
     <div class="endpoint rv">POST ${mcpUrl}</div>
@@ -516,7 +550,7 @@ ${toolItems}
 
 <section id="specs" aria-label="Specifications">
   <div class="wrap">
-    <p class="mono kicker rv">Specifications</p>
+    <p class="mono kicker rv"><span aria-hidden="true">06 / </span>Specifications</p>
     <h2 class="rv">${FACTS.product}, in numbers.</h2>
     <table aria-label="Sentia Patch One specifications">
       <tbody>
@@ -528,7 +562,7 @@ ${specRows}
 
 <section id="faq" aria-label="Frequently asked questions">
   <div class="wrap">
-    <p class="mono kicker rv">Questions</p>
+    <p class="mono kicker rv"><span aria-hidden="true">07 / </span>Questions</p>
     <h2 class="rv">Asked, answered.</h2>
     <div style="margin-top:24px">
 ${faqItems}
