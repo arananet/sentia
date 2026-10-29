@@ -39,3 +39,37 @@ The ui-elevation work (wo-gh-1) made the launch page typographically strong and 
 
 ### Scenario: The UI model built it
 - S4: Given the executed run, when the run report is read, then the builder step shows configured model gpt-6-astra, reviewer-design is among the counted reviews, and the page and design diffs are the builder station output.
+
+## Correction v2.1: asset replacement (wo-gh-3)
+
+Edu reviewed the deployed v2 page and rejected the render set on three points. The v2 page composition, placements, routes and copy stand; this correction replaces the four operator supplied renders in src/images.js and amends the imagery rules in design/DESIGN.md where the new language is needed. The builder does not edit src/images.js and does not generate imagery, exactly as in v2. src/page.js may be touched only for presentation adjustments the new assets require.
+
+### The three corrections
+
+1. Seamless paper background. The v2 renders carry their own warm studio backgrounds, so each image sits on the page as a visible rectangle. Corrected renders sit on a background of exactly the page paper tone #FAFAF6, uniform to the corners and edges, with no visible tone step where the image meets the page, no gradient, no vignette, no backdrop and no floor line. The only shadow allowed is the one soft contact shadow under the product itself, per BRAND.md. The operator verifies the final WebP files by sampling corners and edges against #FAFAF6 before the run and records the samples with the run inputs.
+2. On-skin framing. The v2 on-skin render framed an upper arm and a bare torso. The corrected render is a strict inner forearm close-up: the forearm fills the frame, the patch adhered on the forearm, and nothing else appears: no torso, no chest, no shoulder, no upper arm, no face, no hands dominating the frame, no clothing, no background visible.
+3. True 38 mm scale. The patch is a 38 mm disc and reads small in every asset where scale is implied: on the forearm it spans roughly a large coin's width of the arm (about half the forearm width), and in the hero and the network scene it reads as a small precise object with generous empty space around it, not a plate sized centerpiece. In the hero it occupies about a quarter of the frame width or less.
+
+### Acceptance criteria for this correction
+
+- AC1: The three product renders (hero, exploded, network scene) have corner and edge samples at #FAFAF6 within a small tolerance in the served WebP bytes, and no background structure (gradient, backdrop, floor line) is visible in any of them.
+- AC2: The on-skin render shows only an inner forearm and the patch; no other body part or background appears anywhere in the frame.
+- AC3: The patch reads at true 38 mm scale: about a quarter of the frame width or less in the hero, small among the devices in the network scene, and about half the forearm width on skin.
+- AC4: design/DESIGN.md imagery rules carry the background rule (renders sit on exact page paper #FAFAF6, uniform, contact shadow only) and the scale rule (the patch reads at true 38 mm scale), so future asset work inherits both.
+- AC5: Frozen from v2: placements, routes, copy, behavior, API, MCP, codec, data and SEO/GEO outputs; the test suite stays green and its image route tests pass against the new bytes.
+
+### Design knowledge pack (operator supplied)
+
+This run carries an operator supplied design knowledge pack, matched to a consumer health wearable launch page and distilled here so the builder and reviewer-design packets contain it. The pack raises the ambition of the page inside the locked brand; BRAND.md and this spec win every conflict, and any resolution is stated in the DESIGN.md revision where one was needed.
+
+Style direction: a calm, tactile softness layered on a strict grid. Depth comes from scale, spacing and the renders, not from decorated surfaces: the only shadow is the one soft shadow the brand already allows, hairlines and whitespace do the structuring, and nothing is framed in cards for decoration's sake. The pack's softer shadowed surface styles and its pastel and blue leaning palettes are not adopted: the brand's flat paper, ink green, teal and coral are the palette, and they already carry the calm, health and trust associations the pack asks for.
+
+Composition and hierarchy: a 12 to 16 column grid under everything; one dominant hero composed as a system (kicker, oversized display headline, the render, metric chips) rather than stacked blocks; a single value proposition strip after the hero; proof from measured facts early (the patch's own numbers: 38 mm, 14 days, IP67, the network behaviour), before deep features; one idea per viewport; section rhythm that alternates density deliberately; hairline divided feature grids instead of boxed cards; numbered mono section labels as a recurring detail. No invented proof: no testimonials, no logos, no claims beyond the facts layer.
+
+Type and spacing scale: a consistent modular type scale with the display size pushed to the top of the brand range, tight leading on display, quiet body text; a systematic spacing scale on the existing 8 px rhythm with statement sections taking very generous padding (up to 8rem); text contrast at least 4.5 to 1 everywhere, body text aiming at 7 to 1 where the palette allows.
+
+Motion: reveal on scroll as fades with a small rise (8 to 16 px), staggered across a section's children with small delays and a cap of about eight children; hover feedback as transform or opacity only, displacement under 2 px, 150 to 200 ms; no continuous decorative animation; no parallax on the hero. Brand timing wins on duration: the brand's slow physical fades (600 to 900 ms, ease out) set the timing, and the pack contributes the pattern (small offsets, stagger discipline, transform and opacity only). Every motion has a reduced motion path: under prefers-reduced-motion the final state renders statically, and content is never invisible by default without a no script fallback.
+
+UX rules for the category: accessibility is mandatory, not a final pass: visible focus states (3 to 4 px rings), touch targets at least 44 px with at least 8 px gaps, semantic structure and a skip link; one primary call to action with its label contrast verified against its fill; below fold images lazy loaded (the hero stays eager, as DESIGN.md already states); fonts loaded with font-display swap and no layout shift; trust stated plainly and early, including the brand's own plain statement that Sentia Patch One is not a medical device.
+
+Scope note for this correction: against DESIGN.md as revised (imagery rules plus this pack), the builder recomposes src/page.js for composition, hierarchy, spacing and motion. That is presentation work only: sections, copy facts, behaviour, the JSON API, the MCP server, the packet codec, the data layer and the SEO/GEO layer stay frozen, and the suite stays green.
