@@ -1,0 +1,1527 @@
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-l3c00rxk"))
+Reading additional input from stdin...
+OpenAI Codex v0.165.0
+--------
+workdir: /home/runner/work/sentia/sentia
+model: openai/gpt-6-astra
+provider: cloudflare
+approval: never
+sandbox: danger-full-access
+reasoning effort: none
+reasoning summaries: none
+session id: 01a185e8-d6da-79e0-af2f-a55225472f28
+--------
+user
+You are executing an ANVIL station packet inside this repository. Follow the packet exactly, edit the files it asks for, and finish with a brief plain text summary of what you changed.
+
+## Station prompt
+
+# Builder
+
+## Role
+Implement the spec so the scenario tests pass.
+
+## Inputs
+- spec
+- tests
+
+## Outputs
+- code change
+
+## Rules
+- Work only from the inputs listed above and the work order in the packet.
+- Produce the output as a file in the repo, not as chat text.
+- If the inputs are not enough, say what is missing instead of guessing.
+- Never approve your own work. Approval belongs to a different station.
+- Keep the change small and mapped to a spec scenario where one applies.
+
+
+## Work order
+
+- id: wo-gh-2
+- kind: feature
+- title: Design v2: imagery first recomposition (isometric and 3D product renders)
+- source: github-issue
+- description: Problem: Edu reviewed the deployed wo-gh-1 page and rejected its art direction. Flat inline SVG reads poor for a hardware product; flagship hardware pages (Apple Watch, Whoop, Oura, Nothing) lead with product imagery. The v1 line optimized compliance with a design system whose imagery ambition was too low. V2 fixes the ambition in the design system and in this work order, not by hand editing the page.
+
+Governing identity: brand/BRAND.md. Sentia Patch One, Sentia Cloud, Sentia MCP Server. Paper #FAFAF6, ink green #12211C, signal teal #0E7C66, coral #FF6B4A as micro accents only. Space Grotesk display, Inter body, system mono labels. Calm, precise, metric first voice. No hype words.
+
+Inputs committed by the operator before the run: src/images.js, four product renders generated with Magnific (Mystic, realism model) against the locked product description (round 38 mm patch, matte paper-white top disc, deep ink-green edge ring, one tiny coral LED dot, thin profile) and visually verified by the operator: PATCH_HERO_WEBP_B64 (hero render), PATCH_EXPLODED_WEBP_B64 (four layer exploded view), PATCH_ON_SKIN_WEBP_B64 (patch worn on an upper arm), NETWORK_SCENE_WEBP_B64 (patch, phone, relay domes and LoRaWAN gateway with dotted teal signal paths). The builder does not edit src/images.js and does not generate or substitute imagery.
+
+First deliverable: design/DESIGN.md revised to v2, with imagery as the primary art direction: an asset inventory naming each render with its route and page placement, image treatment rules, and flat SVG demoted to small supporting diagrams only (the demo and dashboard functional graphics stay). The builder then recomposes src/page.js against DESIGN.md v2: hero render as the hero object replacing the large inline SVG drawing, exploded view in the hardware section (#patch), on-skin with the wear story, network scene in the connectivity section (#how). src/index.js gains exactly four routes mirroring the /og.png mechanism: /img/patch-hero.webp, /img/patch-exploded.webp, /img/patch-on-skin.webp, /img/network-scene.webp, served as image/webp. The governing spec is .openspec/specs/design-v2-imagery/spec.md.
+
+Frozen: copy facts and sections, the JSON API, the MCP server, the packet codec, the data layer, the SEO/GEO layer, demo and dashboard behavior. The test suite must stay green and gain tests for the four image routes.
+
+Model routing for this run: builder and reviewer-design on GPT-6 Astra (gpt-6-astra) through the Cloudflare AI Gateway; spec writer, test writer and the other reviewer stations on claude-sonnet-5-5 through the same gateway. No fallback to another model for the builder.
+
+Deployment happens outside the line, by the operator, only on Edu's word at the human gate after the run.
+
+Done criteria: design/DESIGN.md revised to v2 by the executed builder and followed by the page; the src/page.js and src/index.js diffs produced by the executed Astra builder; run verdict approved with all five expected reviews counted, reviewer-design among them; full test suite green.
+
+GitHub issue: https://github.com/arananet/sentia/issues/2
+- risk_hints: 
+- status: new
+
+## Upstream steps
+
+- intake: completed
+- spec-writer: executed
+- test-writer: executed
+
+## Project design
+codex
+I’ll read the governing spec and scenario tests, then update the design document, page composition, and image routes within the packet’s scope.
+exec
+/bin/bash -lc "pwd && rg --files -g 'AGENTS.md' -g '*spec*' -g '*test*' -g 'DESIGN.md' -g 'BRAND.md' -g 'package.json' -g 'page.js' -g 'index.js' -g 'images.js' -g '"'!node_modules'"' -g '"'!package-lock.json'"'" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+/home/runner/work/sentia/sentia
+tests/ui-elevation.test.js
+tests/api.test.js
+tests/design-v2-imagery.test.js
+tests/demo.test.js
+tests/mcp.test.js
+tests/codec.test.js
+src/index.js
+src/page.js
+src/images.js
+design/DESIGN.md
+brand/BRAND.md
+.openspec/specs/ui-elevation/spec.md
+.openspec/specs/design-v2-imagery/spec.md
+.openspec/specs/live-demo/spec.md
+.openspec/specs/mcp-server/spec.md
+.openspec/specs/ingestion-api/spec.md
+.openspec/specs/dashboard-data/spec.md
+.openspec/specs/core-worker/spec.md
+.openspec/specs/packet-codec/spec.md
+package.json
+runs/wo-gh-1/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-1/reviewer-spec.output.md
+runs/wo-gh-1/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-1/envelopes/spec-writer.envelope.json
+runs/wo-gh-1/envelopes/test-writer.envelope.json
+runs/wo-gh-1/reviewer-tests.packet.md
+runs/wo-gh-1/reviewer-spec.packet.md
+runs/wo-gh-1/reviewer-tests.output.md
+runs/wo-gh-1/spec-writer.output.md
+runs/wo-gh-1/test-writer.packet.md
+runs/wo-gh-1/spec-writer.packet.md
+runs/wo-gh-1/test-writer.output.md
+runs/wo-sentia-001/test-writer.packet.md
+runs/wo-sentia-001/spec-writer.packet.md
+runs/wo-sentia-001/envelopes/reviewer-tests.envelope.json
+runs/wo-sentia-001/envelopes/reviewer-spec.envelope.json
+runs/wo-sentia-001/envelopes/spec-writer.envelope.json
+runs/wo-sentia-001/envelopes/test-writer.envelope.json
+runs/wo-sentia-001/reviewer-tests.packet.md
+runs/wo-sentia-001/reviewer-spec.packet.md
+runs/wo-gh-2/envelopes/spec-writer.envelope.json
+runs/wo-gh-2/envelopes/test-writer.envelope.json
+runs/wo-gh-2/spec-writer.output.md
+runs/wo-gh-2/test-writer.packet.md
+runs/wo-gh-2/spec-writer.packet.md
+runs/wo-gh-2/test-writer.output.md
+reviews/live-demo/reviewer-spec.json
+reviews/live-demo/reviewer-tests.json
+reviews/mcp-server/reviewer-spec.json
+reviews/mcp-server/reviewer-tests.json
+reviews/ingestion-api/reviewer-spec.json
+reviews/ingestion-api/reviewer-tests.json
+reviews/packet-codec/reviewer-spec.json
+reviews/packet-codec/reviewer-tests.json
+reviews/core-worker/reviewer-spec.json
+reviews/core-worker/reviewer-tests.json
+reviews/dashboard-data/reviewer-tests.json
+reviews/dashboard-data/reviewer-spec.json
+
+exec
+/bin/bash -lc 'git status --short && cat .openspec/specs/design-v2-imagery/spec.md tests/design-v2-imagery.test.js design/DESIGN.md brand/BRAND.md package.json' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+?? runs/wo-gh-2/
+?? tests/design-v2-imagery.test.js
+# Sentia Design V2: Imagery First
+
+Status: draft
+Slug: design-v2-imagery
+
+## Roles
+- implementer: builds the change described here
+- reviewer: checks the change against this spec
+- qa: checks the scenarios below with tests
+- product_owner: owns the purpose and accepts the result
+
+## Purpose
+The ui-elevation work (wo-gh-1) made the launch page typographically strong and compliant with a design system whose art direction was flat inline SVG. Edu reviewed the deployed page and rejected that direction for a hardware product: flagship hardware pages lead with product imagery, not drawings. V2 raises the ambition in the design system first, then recomposes the page around a generated isometric and 3D render set. The brand sheet (brand/BRAND.md) governs identity; this spec governs the v2 change only. The builder and reviewer-design run on GPT-6 Astra; the spec writer, test writer and the other reviewers run on claude-sonnet-5-5, per ANVIL policy.
+
+## Requirements
+- First deliverable: design/DESIGN.md is revised to v2 before the page change is judged. In v2, imagery is the primary art direction. The revised document carries an asset inventory naming every render file by file (module export, route, page placement), image treatment rules, and an explicit demotion of flat inline SVG to small supporting diagrams only. The functional graphics of the live demo and the dashboard are not decoration and stay.
+- The render set is an operator supplied input, committed before the run as src/images.js (base64 WebP, mirroring src/og.js): PATCH_HERO_WEBP_B64, PATCH_EXPLODED_WEBP_B64, PATCH_ON_SKIN_WEBP_B64, NETWORK_SCENE_WEBP_B64. The builder does not edit src/images.js, does not substitute other imagery, and does not generate images.
+- src/index.js gains exactly four routes mirroring the /og.png mechanism and its cache header style: /img/patch-hero.webp, /img/patch-exploded.webp, /img/patch-on-skin.webp, /img/network-scene.webp, served as image/webp from the src/images.js exports. A small webp response helper beside the existing png helper is the expected shape. No other index.js behavior changes.
+- The page (src/page.js) is recomposed around the imagery:
+  - Hero: /img/patch-hero.webp is the hero object at exhibition scale, replacing the large inline SVG patch drawing that held that role in v1. Headline, kicker, chips and supporting copy stay.
+  - Hardware section (#patch): /img/patch-exploded.webp presents the layer stack the section copy describes.
+  - Wear placement: /img/patch-on-skin.webp appears with the wear story (the 14 day wear facts), as the second visual of the patch section or where DESIGN.md v2 places it inside that section's flow.
+  - Connectivity section (#how): /img/network-scene.webp presents the relay story. The live demo section keeps its functional packet visualization; the scene does not replace it.
+- Image treatment follows BRAND.md: the renders sit on the page paper with no frames, no borders and no drop shadows beyond the one soft shadow the brand already allows; whitespace stays the design; one idea per viewport. Every image carries alt text in the calm, metric first brand voice.
+- Frozen behavior: same sections, same copy facts, same SEO and GEO layer (title, meta, JSON-LD, llms files), same demo and dashboard behavior and client hooks, same API responses, same MCP tools, same packet codec and data layer. The v1 quality bars that are not about art medium still hold (type minimums, the 8 px spacing rhythm, palette tokens, white reserved for the physical patch in drawn diagrams).
+- The full test suite passes after the change, and gains tests proving the four image routes answer 200 with image/webp and non-empty bodies, and that the served page references all four image paths.
+- No hype words from the brand sheet appear in new copy or alt text; naming follows BRAND.md exactly (Sentia Patch One, Sentia Cloud, Sentia MCP Server, Find My network, LoRaWAN).
+
+## Scenarios
+
+### Scenario: Design system v2 precedes the page
+- S1: Given the work order, when the builder finishes, then design/DESIGN.md is the v2 revision (imagery primary, asset inventory with routes and placements, treatment rules, SVG demoted to supporting diagrams), and src/page.js follows it.
+
+### Scenario: Imagery leads the page
+- S2: Given the recomposed page, when it is served, then the hero's primary visual is /img/patch-hero.webp rather than the former large inline SVG drawing, the hardware section presents /img/patch-exploded.webp, the wear story presents /img/patch-on-skin.webp, and the connectivity section presents /img/network-scene.webp.
+
+### Scenario: Frozen behavior and green suite
+- S3: Given the change, when the test suite runs, then all tests pass, including new tests for the four image routes, and the API, MCP, codec, data and SEO outputs are unchanged.
+
+### Scenario: The UI model built it
+- S4: Given the executed run, when the run report is read, then the builder step shows configured model gpt-6-astra, reviewer-design is among the counted reviews, and the page and design diffs are the builder station output.
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync, existsSync } from 'node:fs';
+import worker from '../src/index.js';
+import { renderPage } from '../src/page.js';
+import * as images from '../src/images.js';
+
+const ORIGIN = 'https://sentia.test';
+const html = renderPage(ORIGIN);
+const get = (p) => worker.fetch(new Request(ORIGIN + p));
+const DESIGN = new URL('../design/DESIGN.md', import.meta.url);
+
+const ROUTES = [
+  { path: '/img/patch-hero.webp', exp: 'PATCH_HERO_WEBP_B64' },
+  { path: '/img/patch-exploded.webp', exp: 'PATCH_EXPLODED_WEBP_B64' },
+  { path: '/img/patch-on-skin.webp', exp: 'PATCH_ON_SKIN_WEBP_B64' },
+  { path: '/img/network-scene.webp', exp: 'NETWORK_SCENE_WEBP_B64' },
+];
+const HYPE = ['revolutionary', 'cutting edge', 'game changer', 'seamless', 'supercharge', 'unlock'];
+
+const section = (id) => {
+  const start = html.indexOf(`id="${id}"`);
+  assert.ok(start >= 0, `section #${id} exists`);
+  const next = html.indexOf('<section', start);
+  return html.slice(start, next < 0 ? undefined : next);
+};
+
+// design-v2-imagery S1: design system v2 precedes the page
+
+test('design-v2-imagery S1: DESIGN.md v2 makes imagery primary with inventory, treatment rules and SVG demotion', () => {
+  assert.ok(existsSync(DESIGN), 'design/DESIGN.md must exist');
+  const d = readFileSync(DESIGN, 'utf8');
+  assert.match(d, /v2/i);
+  assert.match(d, /imagery/i);
+  assert.match(d, /asset inventory/i);
+  assert.match(d, /treatment/i);
+  assert.match(d, /supporting diagram/i);
+  for (const r of ROUTES) {
+    assert.ok(d.includes(r.path), `DESIGN.md names ${r.path}`);
+    assert.ok(d.includes(r.exp), `DESIGN.md names ${r.exp}`);
+  }
+});
+
+// design-v2-imagery S2: imagery leads the page
+
+test('design-v2-imagery S2: operator render set exports four non-empty base64 strings', () => {
+  for (const r of ROUTES) {
+    assert.equal(typeof images[r.exp], 'string');
+    assert.ok(images[r.exp].length > 100);
+  }
+});
+
+for (const r of ROUTES) {
+  test(`design-v2-imagery S3: ${r.path} answers 200 image/webp with the export bytes`, async () => {
+    const res = await get(r.path);
+    assert.equal(res.status, 200);
+    assert.equal(res.headers.get('content-type'), 'image/webp');
+    assert.ok(res.headers.get('cache-control'));
+    const buf = Buffer.from(await res.arrayBuffer());
+    assert.ok(buf.length > 0);
+    assert.deepEqual(buf, Buffer.from(images[r.exp], 'base64'));
+    assert.equal(buf.subarray(0, 4).toString('ascii'), 'RIFF');
+    assert.equal(buf.subarray(8, 12).toString('ascii'), 'WEBP');
+  });
+}
+
+test('design-v2-imagery S2: served page references all four image paths', async () => {
+  const served = await (await get('/')).text();
+  for (const r of ROUTES) assert.ok(served.includes(r.path), `page references ${r.path}`);
+});
+
+test('design-v2-imagery S2: hero, #patch, wear story and #how carry their renders', () => {
+  const hero = html.slice(0, html.indexOf('id="patch"'));
+  assert.ok(hero.includes('/img/patch-hero.webp'), 'hero uses patch-hero');
+  const patch = section('patch');
+  assert.ok(patch.includes('/img/patch-exploded.webp'), '#patch uses exploded view');
+  assert.ok(patch.includes('/img/patch-on-skin.webp'), '#patch carries on-skin with wear story');
+  assert.ok(section('how').includes('/img/network-scene.webp'), '#how uses network scene');
+});
+
+test('design-v2-imagery S2: every render is an <img> with calm, hype-free alt text', () => {
+  for (const r of ROUTES) {
+    const tag = html.match(new RegExp(`<img[^>]*${r.path.replace(/[.]/g, '\\.')}[^>]*>`));
+    assert.ok(tag, `<img> for ${r.path}`);
+    const alt = tag[0].match(/alt="([^"]+)"/);
+    assert.ok(alt && alt[1].length >= 20, `alt text on ${r.path}`);
+    for (const w of HYPE) assert.ok(!alt[1].toLowerCase().includes(w), `no "${w}" in alt`);
+    assert.ok(!/border|box-shadow/i.test(tag[0]), 'no inline frame or shadow on image');
+  }
+});
+
+test('design-v2-imagery S2: the live demo keeps its functional packet visualization', () => {
+  const demo = section('demo');
+  assert.ok(/<svg[\s>]|<canvas|id="[^"]*(packet|flow|viz)[^"]*"/i.test(demo));
+  assert.ok(!demo.includes('/img/network-scene.webp'), 'scene does not replace the demo');
+});
+
+// design-v2-imagery S3: frozen behavior
+
+test('design-v2-imagery S3: no other new routes; unknown /img path is not served as webp', async () => {
+  const res = await get('/img/nope.webp');
+  assert.notEqual(res.headers.get('content-type'), 'image/webp');
+  assert.notEqual(res.status, 200);
+});
+
+test('design-v2-imagery S3: existing png routes and SEO layer are unchanged', async () => {
+  const og = await get('/og.png');
+  assert.equal(og.status, 200);
+  assert.equal(og.headers.get('content-type'), 'image/png');
+  assert.ok(html.includes('application/ld+json'));
+  assert.ok(html.includes('<title>'));
+  assert.ok(html.includes('og:image'));
+});
+
+test('design-v2-imagery S3: new copy keeps brand naming and avoids hype words', () => {
+  const lower = html.toLowerCase();
+  for (const w of HYPE) assert.ok(!lower.includes(w), `no "${w}"`);
+  assert.ok(html.includes('Sentia Patch One'));
+});
+# Sentia design system
+
+Identity is governed by brand/BRAND.md. This system applies that identity to
+the launch page: a small physical instrument, drawn at architectural scale.
+Sentia Patch One is the object; Sentia Cloud receives its measurements; the
+Sentia MCP Server makes those measurements available to assistants.
+
+## Tokens
+
+Paper #FAFAF6 occupies roughly 90 percent of the surface. Ink green #12211C
+forms text and instrument outlines. Signal teal #0E7C66 marks links, labels
+and the Find My network and LoRaWAN paths. Coral #FF6B4A is reserved for the
+status LED and alert dots. Soft mint #EFF4EE is a rare panel fill; hairline
+#DFE7DF divides information. Body text uses #4A5D54; secondary labels use
+#53685C for legibility on paper. White is reserved for the physical patch.
+No decorative gradients. One diffuse shadow beneath the hero object only.
+
+## Type scale
+
+Space Grotesk at weight 300 is the display face. The hero runs from 56 to
+144 px with 0.96 leading and -0.055 em tracking. Section titles run from
+40 to 88 px with 1.04 leading and -0.04 em tracking, limited to 18 characters
+per line where space permits. Data values run from 32 to 56 px. Inter body
+text is 17 px with 1.65 leading; introductory text is 18–20 px, at most
+54 characters per line. System mono labels are 11 px, uppercase, with
+0.16 em tracking. Never shrink body copy to fit a composition.
+
+## Spacing rhythm
+
+Use an 8 px base: 8, 16, 24, 32, 48, 64, 96, 128, 160. The page container
+is at most 1440 px wide, with fluid 24–80 px gutters. Sections have 96–160 px
+vertical padding. A title, its introduction and its illustration form one
+idea; detailed lists follow with generous separation. Hairlines provide
+structure without enclosing every item in a card. Technical examples and
+tables remain dense enough to scan, with scrolling contained locally.
+Fixed margins, padding and gaps use multiples of 8 px, including the bounds
+of fluid spacing. One-pixel border overlaps and diagram coordinates are
+optical geometry rather than content spacing.
+
+## Hero art direction
+
+Place the existing headline at large scale on the left and a 38 mm disc
+at exhibition scale on the right. Keep introductory copy beneath the
+headline. The patch is paper white, concentric, precise: fine rings,
+radial registration marks, a small coral LED and a dimension line. A
+single soft grounding shadow gives it physical presence. The caption is
+an engineering annotation. No invented features or decorative circuitry.
+Below 1000 px, stack the headline, object and supporting copy. At narrow
+widths, preserve the whole object and give text the full available width.
+The exploded view and network paths remain quiet technical drawings.
+
+## Motion
+
+Existing reveal hooks stay intact. Fades and small rises use 800 ms ease-out.
+No scale animation, bounce, glow or perpetual hero movement. Hover changes
+are small color or hairline changes. Reduced motion disables CSS reveals
+and smooth scrolling, and hides the moving packet dot; the measurements
+and existing controls continue to operate. Static content must remain
+readable without JavaScript through a noscript style override. With scripting
+enabled, reveal elements begin at zero opacity and 16 px below their final
+position; the existing observer adds the visible state. Reduced motion keeps
+both the initial and revealed states visible and stationary.
+
+## Launch page quality bars
+
+- S1: This document precedes implementation. CSS implements its palette,
+  type hierarchy, spacing and physical hero composition.
+- The first view has one focal object and a headline substantially larger
+  than body copy. The page has breathing room at 1440, 1024, 768 and 375 px.
+- S2: Preserve every section, content fact, SEO/GEO output, client hook,
+  simulation control and dashboard action. Measurements keep their units.
+- At 320 px and at browser zoom, text wraps without page overflow; wide
+  technical data scrolls in its own region. Keyboard focus is visible.
+- S4: Implementation touches only src/page.js and this document. API, MCP,
+  codec, routing and data behavior are outside the presentation scope.
+- S5: Keep the existing calm copy and exact product and network names.
+  Wellness framing and the medical disclaimer remain visible.
+- Run the full scenario suite. Visual quality and S3 model provenance are
+  assessed by the independent review stations; passing tests is not approval.
+- S6: At small widths retain a 56 px hero minimum and 17 px body minimum.
+  Use #53685C for SVG annotations and paper for the simulation toggle.
+  Check the hidden reveal state, 800 ms ease-out transition and motion fallback.
+# Sentia brand
+
+One page of rules. Everything Sentia publishes follows it: the site, the dashboard, API field names, MCP tool descriptions, README, llms.txt and the social card.
+
+## Naming
+
+- The product is always **Sentia Patch One**. Never "SentiaPatch", never "the Sentia patch" in headings, never "Patch One" alone on first mention.
+- The platform is always **Sentia Cloud**.
+- The assistant interface is always the **Sentia MCP Server**. Its endpoint is /mcp and its server name is sentia-mcp.
+- Networks are written **Find My network** and **LoRaWAN**. Never "LoRa" alone when the network is meant, never "Apple network" or "iTag network".
+- Measurements keep one name and one unit everywhere: skin temperature in °C, hydration index from 0 to 100, activity in steps equivalent, sweat rate in µL/min, battery in percent.
+- API and MCP field names follow the same words: temperatureC, hydrationIndex, activitySteps, sweatRateUlMin, batteryPercent.
+
+## Tagline
+
+"Measurements that find their own way home."
+
+Definition sentence, used verbatim where a one line definition is needed:
+"Sentia Patch One is a 38 mm adhesive sensor patch that measures skin temperature, hydration and activity for up to 14 days without a phone."
+
+## Palette
+
+- Paper: #FAFAF6 (the background, roughly 90 percent of every surface)
+- Ink green: #12211C (text and the patch drawing)
+- Signal teal: #0E7C66 (structural accents only: links, labels, network path lines)
+- Coral: #FF6B4A (micro accents only: the patch LED, an alert dot, at most one word in the hero)
+- Soft mint: #EFF4EE (rare panel fill), hairline: #DFE7DF
+
+No gradients except a barely visible radial warmth behind the hero patch. No drop shadows except one very soft, wide shadow under the patch visual.
+
+## Typography
+
+- Display: Space Grotesk, light weights, very large, tight leading.
+- Body: Inter, quiet gray green.
+- Data and labels: system mono, small, uppercase, wide tracking.
+- Whitespace is the design. One idea per viewport. If a section feels full, remove elements until it breathes.
+
+## Voice
+
+Calm, precise, metric first. Short declarative sentences. State what the thing is and what it does, with numbers.
+Never use hype words: revolutionary, cutting edge, game changer, seamless, supercharge, unlock.
+Wellness and monitoring framing only. Sentia Patch One is not a medical device, and copy says so plainly in the FAQ and the footer.
+
+## Logo mark
+
+A plain disc: one thin ink circle, a smaller concentric ring, and a single coral point at the upper right edge for the LED. No letters inside the mark. The wordmark is the name "Sentia" set in Space Grotesk next to it.
+
+## Motion
+
+Slow and physical. Fades and rises of 600 to 900 ms, ease out. The demo packet drifts like a pulse. Nothing bounces, nothing glows, hover states barely darken a hairline.
+{
+  "name": "sentia",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  }
+}
+
+exec
+/bin/bash -lc "cat src/index.js tests/ui-elevation.test.js && rg -n 'hero|patch|how|svg|wear|layer' src/page.js" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+// Sentia: one Cloudflare Worker serving the site, the JSON API and the
+// Sentia MCP Server. No build step, no secrets in code.
+
+import { renderPage } from './page.js';
+import { BROWSER_CODEC_JS } from './browser-codec.js';
+import { CLIENT_JS } from './client.js';
+import { OG_PNG_B64, ICON_PNG_B64 } from './og.js';
+import { robotsTxt, sitemapXml, llmsTxt, llmsFullTxt } from './seo.js';
+import { fleet, patchStatus, measurements, alerts, networkStats, getPatch } from './data.js';
+import { handleMcp } from './mcp.js';
+
+function json(obj, status = 200) {
+  return new Response(JSON.stringify(obj), {
+    status,
+    headers: { 'content-type': 'application/json' },
+  });
+}
+
+function text(body, contentType, extra = {}) {
+  return new Response(body, { headers: { 'content-type': contentType, ...extra } });
+}
+
+function png(b64) {
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return new Response(bytes, {
+    headers: { 'content-type': 'image/png', 'cache-control': 'public, max-age=86400' },
+  });
+}
+
+function handleApi(path, url) {
+  const seg = path.split('/').filter(Boolean); // ['api', ...]
+  if (seg[1] === 'patches' && seg.length === 2) {
+    return json({ patches: fleet() });
+  }
+  if (seg[1] === 'patches' && seg.length === 3) {
+    const patch = getPatch(seg[2]);
+    if (!patch) return json({ error: 'patch not found', id: seg[2] }, 404);
+    return json(patchStatus(patch));
+  }
+  if (seg[1] === 'patches' && seg.length === 4 && seg[3] === 'measurements') {
+    const patch = getPatch(seg[2]);
+    if (!patch) return json({ error: 'patch not found', id: seg[2] }, 404);
+    const hours = Math.min(24, Math.max(1, Number(url.searchParams.get('hours')) || 24));
+    return json({ patchId: patch.id, hours, points: measurements(patch, hours) });
+  }
+  if (seg[1] === 'alerts' && seg.length === 2) {
+    return json({ alerts: alerts() });
+  }
+  if (seg[1] === 'network' && seg[2] === 'stats' && seg.length === 3) {
+    return json(networkStats());
+  }
+  return json({ error: 'route not found', path }, 404);
+}
+
+export default {
+  async fetch(request) {
+    const url = new URL(request.url);
+    const path = url.pathname;
+    const origin = url.origin;
+
+    if (path === '/mcp') {
+      if (request.method !== 'POST') return json({ error: 'method not allowed, use POST' }, 405);
+      return handleMcp(request);
+    }
+    if (path.startsWith('/api/')) {
+      if (request.method !== 'GET') return json({ error: 'method not allowed' }, 405);
+      return handleApi(path, url);
+    }
+    if (path === '/' || path === '/index.html') {
+      return text(renderPage(origin), 'text/html; charset=utf-8', {
+        link: `<${origin}/llms.txt>; rel="describedby"; type="text/plain"`,
+      });
+    }
+    if (path === '/browser-codec.js') return text(BROWSER_CODEC_JS, 'application/javascript; charset=utf-8', { 'cache-control': 'public, max-age=3600' });
+    if (path === '/client.js') return text(CLIENT_JS, 'application/javascript; charset=utf-8', { 'cache-control': 'public, max-age=3600' });
+    if (path === '/og.png') return png(OG_PNG_B64);
+    if (path === '/apple-touch-icon.png') return png(ICON_PNG_B64);
+    if (path === '/robots.txt') return text(robotsTxt(origin), 'text/plain; charset=utf-8');
+    if (path === '/sitemap.xml') return text(sitemapXml(origin), 'application/xml; charset=utf-8');
+    if (path === '/llms.txt') return text(llmsTxt(origin), 'text/plain; charset=utf-8');
+    if (path === '/llms-full.txt') return text(llmsFullTxt(origin), 'text/plain; charset=utf-8');
+    if (path === '/favicon.ico') return png(ICON_PNG_B64);
+    return new Response('Not found', { status: 404, headers: { 'content-type': 'text/plain; charset=utf-8' } });
+  },
+};
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync, existsSync } from 'node:fs';
+import { execSync } from 'node:child_process';
+import { renderPage } from '../src/page.js';
+import { FACTS } from '../src/facts.js';
+
+const ORIGIN = 'https://sentia.test';
+const html = renderPage(ORIGIN);
+const DESIGN = new URL('../design/DESIGN.md', import.meta.url);
+const HYPE = ['revolutionary', 'cutting edge', 'game changer', 'seamless', 'supercharge', 'unlock'];
+
+const designText = () => {
+  assert.ok(existsSync(DESIGN), 'design/DESIGN.md must exist');
+  return readFileSync(DESIGN, 'utf8');
+};
+
+// ui-elevation S1: design system precedes the page
+
+test('ui-elevation S1: DESIGN.md has tokens, type scale, spacing, hero, motion and quality bars', () => {
+  const d = designText();
+  for (const re of [/token/i, /type scale/i, /spacing/i, /hero/i, /motion/i, /quality bar/i]) {
+    assert.match(d, re);
+  }
+  for (const hex of ['#FAFAF6', '#12211C', '#0E7C66', '#FF6B4A']) {
+    assert.ok(d.toUpperCase().includes(hex), `DESIGN.md names ${hex}`);
+  }
+  for (const font of ['Space Grotesk', 'Inter']) assert.ok(d.includes(font));
+});
+
+test('ui-elevation S1: page follows DESIGN.md tokens and typefaces', () => {
+  const upper = html.toUpperCase();
+  for (const hex of ['#FAFAF6', '#12211C', '#0E7C66']) assert.ok(upper.includes(hex), `page uses ${hex}`);
+  assert.ok(html.includes('Space Grotesk'));
+  assert.ok(html.includes('Inter'));
+  assert.ok(/<svg[\s>]/.test(html), 'inline SVG art direction remains');
+});
+
+// ui-elevation S2: facts and behavior preserved
+
+test('ui-elevation S2: sections, demo/dashboard hooks and single h1 are preserved', () => {
+  const ids = [
+    'top', 'patch', 'how', 'demo', 'dashboard', 'mcp', 'specs', 'faq',
+    'alertsList', 'chartHyd', 'chartTemp', 'demoPause', 'demoToggleCity', 'demoToggleRural',
+    'feedList', 'fleetBody', 'hydRange', 'liveChart', 'packetDot', 'payloadCard', 'payloadMeta',
+    'relayKind', 'relayName', 'roAct', 'roBatt', 'roHyd', 'roTemp', 'tempRange',
+    'tileAct', 'tileBatt', 'tileHyd', 'tileSync', 'tileTemp', 'tileVia', 'wearerTabs',
+  ];
+  for (const id of ids) assert.ok(html.includes(`id="${id}"`), `missing #${id}`);
+  assert.equal((html.match(/<h1/g) || []).length, 1);
+});
+
+test('ui-elevation S2: content facts and SEO/GEO layer are preserved', () => {
+  for (const l of FACTS.layers) assert.ok(html.includes(l.name), `layer ${l.name}`);
+  for (const [k, v] of FACTS.specs) {
+    assert.ok(html.includes(k) && html.includes(String(v)), `spec row ${k}`);
+  }
+  assert.ok(html.includes('application/ld+json'));
+  assert.ok(html.includes('rel="canonical"'));
+  assert.ok(html.includes('property="og:image"'));
+  assert.ok(html.includes(ORIGIN + '/mcp'));
+});
+
+// ui-elevation S4: only the presentation layer changes
+
+test('ui-elevation S4: codec, data, mcp and index are untouched by the run', (t) => {
+  let changed;
+  try {
+    const base = ['origin/main', 'main']
+      .map((r) => {
+        try { return execSync(`git merge-base HEAD ${r}`, { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim(); }
+        catch { return null; }
+      })
+      .find(Boolean);
+    if (!base) return t.skip('no main ref to diff against');
+    changed = execSync(`git diff --name-only ${base}`, { stdio: ['ignore', 'pipe', 'ignore'] })
+      .toString().split('\n').filter(Boolean);
+  } catch {
+    return t.skip('git unavailable');
+  }
+  for (const f of ['src/codec.js', 'src/data.js', 'src/mcp.js', 'src/index.js']) {
+    assert.ok(!changed.includes(f), `${f} must not change`);
+  }
+});
+
+// ui-elevation S5: brand voice holds
+
+test('ui-elevation S5: no hype words in page or DESIGN.md', () => {
+  const texts = [['page', html.toLowerCase()], ['DESIGN.md', designText().toLowerCase()]];
+  for (const [name, text] of texts) {
+    for (const w of HYPE) assert.ok(!text.includes(w), `${w} found in ${name}`);
+  }
+});
+
+test('ui-elevation S5: product names match BRAND.md exactly', () => {
+  const d = designText();
+  for (const text of [html, d]) {
+    assert.ok(!/SentiaPatch/.test(text));
+  }
+  assert.ok(html.includes('Sentia Patch One'));
+  assert.ok(html.includes('Sentia MCP Server'));
+});
+
+// ui-elevation S6: round 4 corrections land (C1 to C4)
+
+const css = (html.match(/<style[^>]*>([\s\S]*?)<\/style>/g) || []).join('\n');
+const pageCss = (html.match(/<style[^>]*>([\s\S]*?)<\/style>/) || [, ''])[1];
+
+// Flat list of { media, selector, body } rules; media is the @media condition or ''.
+const rules = (() => {
+  const out = [];
+  const walk = (src, media) => {
+    const re = /([^{}]+)\{([^{}]*)\}|(@[^{]+)\{((?:[^{}]*\{[^{}]*\})*[^{}]*)\}/g;
+    let m;
+    while ((m = re.exec(src))) {
+      if (m[3]) {
+        if (/^@media/.test(m[3].trim())) walk(m[4], m[3].trim());
+      } else {
+        out.push({ media, selector: m[1].trim(), body: m[2] });
+      }
+    }
+  };
+  walk(pageCss.replace(/\/\*[\s\S]*?\*\//g, ''), '');
+  return out;
+})();
+
+// Smallest px value a font-size / font shorthand / clamp() can produce.
+const minPx = (value) => {
+  const clamp = value.match(/clamp\(\s*([\d.]+)px/);
+  if (clamp) return Number(clamp[1]);
+  const px = value.match(/([\d.]+)px/);
+  return px ? Number(px[1]) : null;
+};
+const fontSizes = (selectorRe) => rules
+  .filter((r) => selectorRe.test(r.selector))
+  .flatMap((r) => {
+    const size = r.body.match(/font-size:\s*([^;}]+)/);
+    const shorthand = r.body.match(/(?:^|;)\s*font:\s*(?:\d+\s+)?(clamp\([^)]*\)|[\d.]+px)/);
+    const v = size ? size[1] : shorthand ? shorthand[1] : null;
+    return v && minPx(v) != null ? [{ ...r, px: minPx(v) }] : [];
+  });
+
+test('ui-elevation S6 C1: hero type never drops below 56 px at any width', () => {
+  const hero = fontSizes(/(^|[\s,])(\.hero\s+)?h1$/);
+  assert.ok(hero.length >= 2, 'h1 sizes are declared, including small width overrides');
+  for (const r of hero) assert.ok(r.px >= 56, `${r.selector} ${r.media} is ${r.px}px`);
+  assert.ok(hero.some((r) => /max-width:\s*600px/.test(r.media)), 'a 600 px rule sets the small width hero');
+});
+
+test('ui-elevation S6 C1: body copy never drops below 17 px', () => {
+  const body = fontSizes(/(^|[\s,])(\.lede|\.layer-list p|\.sensor p|\.journey p|\.alert-msg|\.tools p|\.faq-item p|p)$/);
+  assert.ok(body.length > 0);
+  for (const r of body) assert.ok(r.px >= 17, `${r.selector} ${r.media} is ${r.px}px`);
+});
+
+test('ui-elevation S6 C2: spacing avoids the off-rhythm 30, 15, 28 and 26 px values', () => {
+  const props = /^(margin|padding|gap|row-gap|column-gap|top|right|bottom|left|inset)(-[a-z]+)?$/;
+  const bad = /(?<![\d.])(30|15|28|26)px/;
+  const found = [];
+  for (const r of rules) {
+    for (const d of r.body.split(';')) {
+      const [p, ...v] = d.split(':');
+      if (p && props.test(p.trim()) && bad.test(v.join(':'))) found.push(`${r.selector} { ${d.trim()} }`);
+    }
+  }
+  for (const m of html.matchAll(/style="([^"]*)"/g)) {
+    for (const d of m[1].split(';')) {
+      const [p, ...v] = d.split(':');
+      if (p && props.test(p.trim()) && bad.test(v.join(':'))) found.push(`inline { ${d.trim()} }`);
+    }
+  }
+  assert.deepEqual(found, []);
+});
+
+test('ui-elevation S6 C3: SVG annotations use #53685C and the toggle has no white background', () => {
+  assert.ok(!/#5C6F66/i.test(html), '#5C6F66 must be gone');
+  assert.ok(/\.svg-note\{[^}]*fill:#53685C/i.test(html), '.svg-note fills with #53685C');
+  const toggle = rules.filter((r) => /^\.toggle$/.test(r.selector));
+  assert.ok(toggle.length > 0, '.toggle rule exists');
+  for (const r of toggle) {
+    assert.ok(!/background(-color)?:\s*(#fff(fff)?\b|white\b|rgb\(\s*255)/i.test(r.body), '.toggle background is not white');
+  }
+});
+
+test('ui-elevation S6 C4: .rv starts hidden and reveals over 800 ms ease-out', () => {
+  const rv = rules.filter((r) => r.selector === '.rv' && !r.media);
+  assert.ok(rv.length > 0, '.rv base rule exists');
+  const body = rv.map((r) => r.body).join(';');
+  assert.match(body, /opacity:\s*0(?![.\d])/, '.rv starts with opacity 0');
+  assert.match(body, /transform:\s*[^;]*(translate|scale)/, '.rv starts displaced');
+  assert.match(body, /transition:[^;]*opacity\s+(\.8s|0\.8s|800ms)\s+ease-out/);
+  assert.match(body, /transition:[^;]*transform\s+(\.8s|0\.8s|800ms)\s+ease-out/);
+  const shown = rules.find((r) => r.selector === '.rv.in');
+  assert.ok(shown && /opacity:\s*1/.test(shown.body) && /transform:\s*none/.test(shown.body), '.rv.in reveals');
+  const reduced = rules.find((r) => /prefers-reduced-motion/.test(r.media) && /\.rv/.test(r.selector));
+  assert.ok(reduced && /opacity:\s*1/.test(reduced.body), 'reduced motion keeps .rv visible');
+});
+9:  'data:image/svg+xml,' +
+11:    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="none" stroke="#12211C" stroke-width="3"/><circle cx="32" cy="32" r="17" fill="none" stroke="#12211C" stroke-width="2"/><circle cx="50" cy="14" r="5" fill="#FF6B4A"/></svg>'
+30:      category: 'Wearable sensor patch',
+36:        { '@type': 'PropertyValue', name: 'Battery', value: 'Printed flexible battery, full wear period' },
+50:        'The Sentia Cloud dashboard: live patch status, 24 hour skin temperature and hydration series, alerts and fleet view for Sentia Patch One wearers.',
+72:export function patchTopSvg() {
+73:  return `<svg class="patch-top" viewBox="0 0 480 480" role="img" aria-label="Sentia Patch One, top view: a 38 mm disc with concentric sensor rings and one coral status LED">
+74:  <defs><filter id="patch-shadow" x="-30%" y="-150%" width="160%" height="400%"><feGaussianBlur stdDeviation="9"/></filter></defs>
+75:  <ellipse cx="240" cy="435" rx="150" ry="12" fill="#12211C" opacity="0.12" filter="url(#patch-shadow)"/>
+94:</svg>`;
+98:  const layers = FACTS.layers;
+100:  const parts = layers
+107:    <text x="466" y="${y - 2}" class="svg-name">${l.name}</text>
+108:    <text x="466" y="${y + 16}" class="svg-note">${shorten(l.detail)}</text>
+112:  return `<svg class="plate" viewBox="0 0 980 560" role="img" aria-label="Exploded view of Sentia Patch One showing its six layers">
+113:  <style>.svg-name{font:500 15px Inter,sans-serif;fill:#12211C}.svg-note{font:12px ui-monospace,Menlo,monospace;fill:#53685C}</style>
+115:  <text x="215" y="540" text-anchor="middle" class="svg-note">DIAMETER 38 MM · TOTAL THICKNESS 4.2 MM</text>
+116:</svg>`;
+124:  return `<svg class="plate" viewBox="0 0 1120 320" role="img" aria-label="Two paths from the patch to Sentia Cloud: through phones on the Find My network in the city, and through a LoRaWAN gateway out of coverage">
+125:  <style>.svg-name{font:500 15px Inter,sans-serif;fill:#12211C}.svg-note{font:11px ui-monospace,Menlo,monospace;fill:#53685C;letter-spacing:0.14em}.svg-teal{font:11px ui-monospace,Menlo,monospace;fill:#0E7C66;letter-spacing:0.14em}</style>
+129:  <text x="90" y="222" text-anchor="middle" class="svg-name">The patch</text>
+133:  <text x="648" y="182" text-anchor="middle" class="svg-name">A passing phone</text>
+134:  <text x="648" y="202" text-anchor="middle" class="svg-note">IPHONE · IPAD · MAC</text>
+140:  <text x="648" y="308" text-anchor="middle" class="svg-name">A LoRaWAN gateway</text>
+143:  <text x="1029" y="152" text-anchor="middle" class="svg-name">Sentia</text>
+144:  <text x="1029" y="172" text-anchor="middle" class="svg-name">Cloud</text>
+145:  <text x="380" y="52" text-anchor="middle" class="svg-teal">IN THE CITY · FIND MY NETWORK · 16 BYTE DIGEST</text>
+146:  <text x="380" y="292" text-anchor="middle" class="svg-teal">OUT OF COVERAGE · LORAWAN · 19 BYTE FRAME</text>
+147:</svg>`;
+169:.brand svg{display:block}
+183:/* hero */
+184:.hero{padding-top:160px;position:relative}
+185:.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);column-gap:48px;align-items:start}
+186:.hero .kicker{grid-column:1/-1;margin-bottom:16px;max-width:60ch}
+187:.hero h1{grid-column:1;grid-row:2}
+188:.hero .lede{grid-column:1;grid-row:3;margin-top:40px}
+194:.hero-visual{grid-column:2;grid-row:2/4;align-self:center;text-align:center;min-width:0}
+195:.patch-top{width:100%;max-width:640px;height:auto;display:block;margin:auto}
+198:  .hero{padding-top:144px}
+199:  .hero .wrap{grid-template-columns:minmax(0,1fr)}
+200:  .hero h1{max-width:15ch;font-size:clamp(56px,10vw,96px)}
+201:  .hero-visual{grid-column:1;grid-row:3;margin-top:48px}
+202:  .patch-top{max-width:520px}
+203:  .hero .lede{grid-row:4;margin-top:48px}
+205:/* patch section */
+209:.layer-list{list-style:none}
+210:.layer-list li{padding:16px 0;border-bottom:1px solid var(--line)}
+211:.layer-list li:first-child{border-top:1px solid var(--line)}
+212:.layer-list .n{color:var(--teal);font:500 11px ui-monospace,Menlo,monospace;letter-spacing:0.16em}
+213:.layer-list h3{margin:8px 0 8px;font-size:16.5px}
+214:.layer-list p{color:var(--soft);font-size:17px}
+225:/* how */
+265:.wearer-tabs{display:flex;gap:32px;border-bottom:1px solid var(--line);margin-top:40px}
+266:.wearer-tab{background:none;border:none;padding:0 0 16px;font:500 16px 'Space Grotesk',sans-serif;color:var(--faint);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+267:.wearer-tab.on{color:var(--ink);border-color:var(--teal)}
+320:.wearer-tabs{overflow-x:auto;padding-top:8px}
+321:.wearer-tab{flex-shrink:0;min-height:44px}
+324:  .hero{padding-top:128px}
+325:  .hero .kicker{font-size:10px}
+326:  .hero h1{font-size:clamp(56px,12vw,72px)}
+355:  const layerItems = FACTS.layers
+379:<meta name="description" content="Sentia Patch One is a 38 mm adhesive sensor patch that measures skin temperature, hydration and activity for up to 14 days, sending encrypted digests through the Find My network and LoRaWAN to Sentia Cloud. No phone, no cellular radio.">
+388:<meta property="og:description" content="A 38 mm adhesive sensor patch. Skin temperature, hydration and activity, relayed by the Find My network in the city and by LoRaWAN out of coverage.">
+395:<meta name="twitter:description" content="A 38 mm adhesive sensor patch that whispers through the Find My network and LoRaWAN.">
+410:      <svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29" fill="none" stroke="#12211C" stroke-width="3"/><circle cx="32" cy="32" r="17" fill="none" stroke="#12211C" stroke-width="2"/><circle cx="50" cy="14" r="5" fill="#FF6B4A"/></svg>
+414:      <a href="#patch">Patch</a><a href="#how">How it works</a><a href="#demo">Live demo</a><a href="#dashboard">Dashboard</a><a href="#mcp">MCP</a><a href="#specs">Specs</a><a href="#faq">FAQ</a>
+420:<section class="hero" aria-label="Introduction">
+423:    <h1 class="rv" style="margin-top:24px">A patch that whispers through networks that already exist.</h1>
+434:    <div class="hero-visual rv">
+435:      ${patchTopSvg()}
+441:<section id="patch" aria-label="The patch">
+443:    <p class="mono kicker rv">The patch</p>
+444:    <h2 class="rv">Six layers, 4.2 mm thin.</h2>
+445:    <p class="lede rv">A flexible adhesive disc worn on the upper arm or torso for up to ${FACTS.wearDays} days. Everything it needs is inside: sensors, two radios, and a printed battery sized for the whole wear.</p>
+448:      <ol class="layer-list rv">
+449:${layerItems}
+466:<section id="how" aria-label="How it works">
+470:    <p class="lede rv">The patch never looks for a network. It speaks quietly, on a schedule, and lets the networks that already surround us do the carrying.</p>
+472:      <li class="rv"><span class="mono step">Step 1</span><h3>Sense</h3><p>Every few minutes the patch samples skin temperature, hydration, movement, posture and sweat, and builds one small encrypted measurement digest.</p></li>
+474:      <li class="rv"><span class="mono step">Step 3</span><h3>Relay</h3><p>A passing iPhone, iPad or Mac forwards the opaque digest it cannot read. A LoRaWAN gateway forwards the frame to its network server. Neither learns anything about the wearer.</p></li>
+476:      <li class="rv"><span class="mono step">Step 5</span><h3>You</h3><p>The wearer, or a care circle they choose, sees the result in the dashboard, through the API, or by asking an assistant through the ${FACTS.mcpServer}.</p></li>
+481:      <p>Identifiers rotate with every broadcast window, so a digest cannot be followed across a day. Relay devices see ciphertext and contribute their own location context, never the patch contents. The patch carries no GPS receiver. Only ${FACTS.platform} holds the keys that link a digest to a wearer and decode it. Battery logic is equally plain: Bluetooth Low Energy first, LoRaWAN only when no relay has carried a digest for a while, and high value alerts, a fall impact for example, escalate at once.</p>
+490:    <p class="lede rv">A simulated patch, running in your browser with the same packet codec as the server. Choose where the wearer is, and watch each reading take its path.</p>
+492:      <span class="toggle" role="group" aria-label="Where is the wearer">
+501:        <div class="node"><div class="disc"></div><h3>The patch</h3><p>Upper arm</p></div>
+526:    <p class="lede rv">The product interface. Three patches from the demonstration fleet, served live by the same API an assistant would use.</p>
+527:    <div class="wearer-tabs rv" id="wearerTabs" role="tablist" aria-label="Choose a wearer"></div>
+552:      <table aria-label="All patches in the fleet">
+564:    <p class="lede rv">Sentia ships an MCP server, so an AI assistant can answer plain questions about a patch: how did hydration trend today, which patches are low on battery, what just arrived and how. It speaks JSON-RPC 2.0 and reads the same data as this page.</p>
+578:      <p class="muted" style="margin-bottom:8px">An assistant asks the server to demonstrate the whisper for Marina Soler's patch. Request:</p>
+
+exec
+/bin/bash -lc "sed -n '68,155p' src/page.js && sed -n '183,240p' src/page.js && sed -n '420,486p' src/page.js && rg -n 'patchTopSvg|explodedSvg|networkSvg' tests && git branch -a" in /home/runner/work/sentia/sentia
+ exited 1 in 0ms:
+  ];
+  return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2);
+}
+
+export function patchTopSvg() {
+  return `<svg class="patch-top" viewBox="0 0 480 480" role="img" aria-label="Sentia Patch One, top view: a 38 mm disc with concentric sensor rings and one coral status LED">
+  <defs><filter id="patch-shadow" x="-30%" y="-150%" width="160%" height="400%"><feGaussianBlur stdDeviation="9"/></filter></defs>
+  <ellipse cx="240" cy="435" rx="150" ry="12" fill="#12211C" opacity="0.12" filter="url(#patch-shadow)"/>
+  <circle cx="240" cy="240" r="196" fill="#FFFFFF" stroke="#12211C" stroke-width="1.4"/>
+  <circle cx="240" cy="240" r="158" fill="none" stroke="#12211C" stroke-width="0.8" opacity="0.55"/>
+  <circle cx="240" cy="240" r="112" fill="none" stroke="#0E7C66" stroke-width="0.8" opacity="0.65"/>
+  <circle cx="240" cy="240" r="64" fill="#EFF4EE" stroke="#12211C" stroke-width="0.8"/>
+  <circle cx="240" cy="240" r="10" fill="none" stroke="#12211C" stroke-width="1"/>
+  <g stroke="#12211C" stroke-width="0.8" opacity="0.5">
+    <line x1="240" y1="52" x2="240" y2="76"/><line x1="240" y1="404" x2="240" y2="428"/>
+    <line x1="52" y1="240" x2="76" y2="240"/><line x1="404" y1="240" x2="428" y2="240"/>
+  </g>
+  <g fill="none" stroke="#12211C" stroke-width="0.6" opacity="0.35">
+    <circle cx="240" cy="240" r="188"/>
+    <path d="M101 101l12 12m254 254 12 12M101 379l12-12m254-254 12-12"/>
+  </g>
+  <circle cx="352" cy="128" r="7" fill="#FF6B4A"/>
+  <g stroke="#0E7C66" stroke-width="0.7" fill="none">
+    <path d="M44 444v22m392-22v22M44 456h160m72 0h160"/>
+  </g>
+  <text x="240" y="460" text-anchor="middle" fill="#0E7C66" font-family="ui-monospace,Menlo,monospace" font-size="11" letter-spacing="1">38 MM</text>
+</svg>`;
+}
+
+export function explodedSvg() {
+  const layers = FACTS.layers;
+  const step = 76;
+  const parts = layers
+    .map((l, i) => {
+      const y = 58 + i * step;
+      const fill = i % 2 === 0 ? '#FFFFFF' : '#EFF4EE';
+      return `<g>
+    <ellipse cx="215" cy="${y}" rx="148" ry="24" fill="${fill}" stroke="#12211C" stroke-width="1"/>
+    <line x1="363" y1="${y}" x2="452" y2="${y}" stroke="#DFE7DF" stroke-width="1"/>
+    <text x="466" y="${y - 2}" class="svg-name">${l.name}</text>
+    <text x="466" y="${y + 16}" class="svg-note">${shorten(l.detail)}</text>
+  </g>`;
+    })
+    .join('\n');
+  return `<svg class="plate" viewBox="0 0 980 560" role="img" aria-label="Exploded view of Sentia Patch One showing its six layers">
+  <style>.svg-name{font:500 15px Inter,sans-serif;fill:#12211C}.svg-note{font:12px ui-monospace,Menlo,monospace;fill:#53685C}</style>
+  ${parts}
+  <text x="215" y="540" text-anchor="middle" class="svg-note">DIAMETER 38 MM · TOTAL THICKNESS 4.2 MM</text>
+</svg>`;
+}
+
+function shorten(s) {
+  return s.length > 62 ? s.slice(0, 60).trimEnd() + '…' : s;
+}
+
+export function pathsSvg() {
+  return `<svg class="plate" viewBox="0 0 1120 320" role="img" aria-label="Two paths from the patch to Sentia Cloud: through phones on the Find My network in the city, and through a LoRaWAN gateway out of coverage">
+  <style>.svg-name{font:500 15px Inter,sans-serif;fill:#12211C}.svg-note{font:11px ui-monospace,Menlo,monospace;fill:#53685C;letter-spacing:0.14em}.svg-teal{font:11px ui-monospace,Menlo,monospace;fill:#0E7C66;letter-spacing:0.14em}</style>
+  <circle cx="90" cy="160" r="34" fill="#FFFFFF" stroke="#12211C" stroke-width="1.2"/>
+  <circle cx="90" cy="160" r="18" fill="none" stroke="#12211C" stroke-width="0.8"/>
+  <circle cx="114" cy="136" r="4" fill="#FF6B4A"/>
+  <text x="90" y="222" text-anchor="middle" class="svg-name">The patch</text>
+  <path d="M 128 148 C 320 60, 480 60, 620 96" fill="none" stroke="#0E7C66" stroke-width="1.4"/>
+  <path d="M 128 176 C 320 262, 480 262, 620 224" fill="none" stroke="#0E7C66" stroke-width="1.4"/>
+  <rect x="622" y="66" width="52" height="88" rx="9" fill="#FFFFFF" stroke="#12211C" stroke-width="1.1"/>
+  <text x="648" y="182" text-anchor="middle" class="svg-name">A passing phone</text>
+  <text x="648" y="202" text-anchor="middle" class="svg-note">IPHONE · IPAD · MAC</text>
+  <path d="M 676 104 C 800 92, 880 108, 968 138" fill="none" stroke="#0E7C66" stroke-width="1.4"/>
+  <g stroke="#12211C" stroke-width="1.1" fill="none">
+    <path d="M 648 226 L 612 292 M 648 226 L 648 292 M 648 226 L 684 292"/>
+    <circle cx="648" cy="222" r="5" fill="#12211C"/>
+  </g>
+  <text x="648" y="308" text-anchor="middle" class="svg-name">A LoRaWAN gateway</text>
+  <path d="M 688 238 C 800 246, 890 226, 968 186" fill="none" stroke="#0E7C66" stroke-width="1.4"/>
+  <rect x="970" y="106" width="118" height="104" rx="10" fill="#EFF4EE" stroke="#12211C" stroke-width="1.1"/>
+  <text x="1029" y="152" text-anchor="middle" class="svg-name">Sentia</text>
+  <text x="1029" y="172" text-anchor="middle" class="svg-name">Cloud</text>
+  <text x="380" y="52" text-anchor="middle" class="svg-teal">IN THE CITY · FIND MY NETWORK · 16 BYTE DIGEST</text>
+  <text x="380" y="292" text-anchor="middle" class="svg-teal">OUT OF COVERAGE · LORAWAN · 19 BYTE FRAME</text>
+</svg>`;
+}
+
+const CSS = `
+:root{
+  --paper:#FAFAF6; --ink:#12211C; --soft:#4A5D54; --faint:#53685C;
+  --teal:#0E7C66; --coral:#FF6B4A; --mint:#EFF4EE; --line:#DFE7DF;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+/* hero */
+.hero{padding-top:160px;position:relative}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);column-gap:48px;align-items:start}
+.hero .kicker{grid-column:1/-1;margin-bottom:16px;max-width:60ch}
+.hero h1{grid-column:1;grid-row:2}
+.hero .lede{grid-column:1;grid-row:3;margin-top:40px}
+.chips{display:flex;flex-wrap:wrap;gap:16px 24px;margin-top:32px;grid-column:1/-1}
+.chip{border-top:1px solid var(--line);padding:16px 0;font:500 11px/1.5 ui-monospace,Menlo,monospace;letter-spacing:0.16em;text-transform:uppercase;color:var(--soft)}
+.cta{display:flex;flex-wrap:wrap;gap:24px 32px;margin-top:24px;grid-column:1/-1}
+.cta a{font-size:17px;border-bottom:1px solid var(--teal);padding-bottom:8px}
+.cta a:hover{text-decoration:none;border-color:var(--ink);color:var(--ink)}
+.hero-visual{grid-column:2;grid-row:2/4;align-self:center;text-align:center;min-width:0}
+.patch-top{width:100%;max-width:640px;height:auto;display:block;margin:auto}
+.caption{margin-top:24px;color:var(--faint)}
+@media(max-width:999px){
+  .hero{padding-top:144px}
+  .hero .wrap{grid-template-columns:minmax(0,1fr)}
+  .hero h1{max-width:15ch;font-size:clamp(56px,10vw,96px)}
+  .hero-visual{grid-column:1;grid-row:3;margin-top:48px}
+  .patch-top{max-width:520px}
+  .hero .lede{grid-row:4;margin-top:48px}
+}
+/* patch section */
+.plate{width:100%;height:auto;display:block}
+.split{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(32px,5vw,72px);align-items:start}
+@media(max-width:900px){.split{grid-template-columns:1fr}}
+.layer-list{list-style:none}
+.layer-list li{padding:16px 0;border-bottom:1px solid var(--line)}
+.layer-list li:first-child{border-top:1px solid var(--line)}
+.layer-list .n{color:var(--teal);font:500 11px ui-monospace,Menlo,monospace;letter-spacing:0.16em}
+.layer-list h3{margin:8px 0 8px;font-size:16.5px}
+.layer-list p{color:var(--soft);font-size:17px}
+.spec-strip{display:flex;flex-wrap:wrap;gap:0;margin-top:clamp(48px,7vh,72px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.spec-strip div{flex:1 1 150px;padding:24px 16px 16px;border-left:1px solid var(--line)}
+.spec-strip div:first-child{border-left:none}
+.spec-strip .v{font:300 clamp(32px,3vw,48px) 'Space Grotesk',sans-serif}
+.spec-strip .k{color:var(--faint);margin-top:8px}
+.sensors{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(32px,5vw,72px);margin-top:clamp(48px,6vh,64px)}
+@media(max-width:760px){.sensors{grid-template-columns:1fr}}
+.sensor{padding:24px 0;border-top:1px solid var(--line)}
+.sensor h3{font-size:17px;margin-bottom:8px}
+.sensor p{color:var(--soft);font-size:17px}
+/* how */
+.journey{list-style:none;margin-top:clamp(40px,6vh,64px)}
+.journey li{display:grid;grid-template-columns:110px 180px 1fr;gap:16px;padding:24px 0;border-top:1px solid var(--line);align-items:baseline}
+@media(max-width:760px){.journey li{grid-template-columns:60px 1fr}.journey li p{grid-column:2}}
+.journey .step{color:var(--teal)}
+.journey h3{font-size:18px}
+.journey p{color:var(--soft);font-size:17px;max-width:62ch}
+.privacy{margin-top:clamp(48px,6vh,64px);background:var(--mint);border-radius:0;padding:clamp(32px,5vw,64px)}
+.privacy h3{margin-bottom:8px}
+.privacy p{color:var(--soft);max-width:70ch}
+/* demo */
+.toggle{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--paper)}
+.toggle button{border:none;background:transparent;padding:8px 24px;font:500 12px ui-monospace,Menlo,monospace;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft);cursor:pointer}
+.toggle button.on{background:var(--ink);color:var(--paper)}
+.stage{position:relative;margin-top:clamp(48px,6vh,64px);padding:32px 0 8px}
+.stage-nodes{display:flex;justify-content:space-between;text-align:center}
+<section class="hero" aria-label="Introduction">
+  <div class="wrap">
+    <p class="mono kicker rv">Sentia Patch One · Skin temperature · Hydration · Activity</p>
+    <h1 class="rv" style="margin-top:24px">A patch that whispers through networks that already exist.</h1>
+    <p class="lede rv">${FACTS.definition} It has no cellular radio and no GPS. Its measurements ride passing phones on the Find My network, or a LoRaWAN gateway kilometres away, into ${FACTS.platform}.</p>
+    <div class="chips rv">
+      <span class="chip">Find My network · BLE relay</span>
+      <span class="chip">LoRaWAN · Gateway uplink</span>
+      <span class="chip">14 days · IP67</span>
+    </div>
+    <div class="cta rv">
+      <a href="#demo">Watch the live demo</a>
+      <a href="#dashboard">Open the dashboard</a>
+    </div>
+    <div class="hero-visual rv">
+      ${patchTopSvg()}
+      <p class="mono caption">Sentia Patch One · Ø 38 mm · 4.2 mm thick</p>
+    </div>
+  </div>
+</section>
+
+<section id="patch" aria-label="The patch">
+  <div class="wrap">
+    <p class="mono kicker rv">The patch</p>
+    <h2 class="rv">Six layers, 4.2 mm thin.</h2>
+    <p class="lede rv">A flexible adhesive disc worn on the upper arm or torso for up to ${FACTS.wearDays} days. Everything it needs is inside: sensors, two radios, and a printed battery sized for the whole wear.</p>
+    <div class="split" style="margin-top:clamp(48px,6vh,64px)">
+      <div class="rv">${explodedSvg()}</div>
+      <ol class="layer-list rv">
+${layerItems}
+      </ol>
+    </div>
+    <div class="sensors">
+${sensorCards}
+    </div>
+    <div class="spec-strip rv">
+      <div><p class="v">38 mm</p><p class="mono k">Diameter</p></div>
+      <div><p class="v">4.2 mm</p><p class="mono k">Thickness</p></div>
+      <div><p class="v">14 days</p><p class="mono k">Wear time</p></div>
+      <div><p class="v">3.1 g</p><p class="mono k">Weight</p></div>
+      <div><p class="v">IP67</p><p class="mono k">Water resistance</p></div>
+      <div><p class="v">2 radios</p><p class="mono k">BLE 5.0 · LoRaWAN</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="how" aria-label="How it works">
+  <div class="wrap">
+    <p class="mono kicker rv">How it works</p>
+    <h2 class="rv">Sense. Whisper. Relay.</h2>
+    <p class="lede rv">The patch never looks for a network. It speaks quietly, on a schedule, and lets the networks that already surround us do the carrying.</p>
+    <ol class="journey">
+      <li class="rv"><span class="mono step">Step 1</span><h3>Sense</h3><p>Every few minutes the patch samples skin temperature, hydration, movement, posture and sweat, and builds one small encrypted measurement digest.</p></li>
+      <li class="rv"><span class="mono step">Step 2</span><h3>Whisper</h3><p>In the city it broadcasts the digest inside rotating Bluetooth Low Energy advertisements, following the Find My network accessory pattern. Out of coverage it sends a fuller LoRaWAN frame instead.</p></li>
+      <li class="rv"><span class="mono step">Step 3</span><h3>Relay</h3><p>A passing iPhone, iPad or Mac forwards the opaque digest it cannot read. A LoRaWAN gateway forwards the frame to its network server. Neither learns anything about the wearer.</p></li>
+      <li class="rv"><span class="mono step">Step 4</span><h3>Server</h3><p>${FACTS.platform} retrieves and decrypts the payloads addressed to it, decodes both formats with one codec, stores the time series and evaluates the alert rules.</p></li>
+      <li class="rv"><span class="mono step">Step 5</span><h3>You</h3><p>The wearer, or a care circle they choose, sees the result in the dashboard, through the API, or by asking an assistant through the ${FACTS.mcpServer}.</p></li>
+    </ol>
+    <div class="rv" style="margin-top:clamp(48px,6vh,64px)">${pathsSvg()}</div>
+    <div class="privacy rv">
+      <h3>Private by construction</h3>
+      <p>Identifiers rotate with every broadcast window, so a digest cannot be followed across a day. Relay devices see ciphertext and contribute their own location context, never the patch contents. The patch carries no GPS receiver. Only ${FACTS.platform} holds the keys that link a digest to a wearer and decode it. Battery logic is equally plain: Bluetooth Low Energy first, LoRaWAN only when no relay has carried a digest for a while, and high value alerts, a fall impact for example, escalate at once.</p>
+    </div>
+  </div>
+</section>
+
+<section id="demo" aria-label="Live demo">
+
+codex
+The spec places all four supplied renders and keeps the existing copy facts and functional demo intact. One legacy test still forbids any routing-file change, which conflicts with v2’s required image routes; I’ll leave that test unchanged and report its result.
+exec
+/bin/bash -lc "python3 - <<'PY'
+from pathlib import Path
+p=Path('design/DESIGN.md')
+s=p.read_text().replace('# Sentia design system','# Sentia design system v2').replace('the launch page: a small physical instrument, drawn at architectural scale.','the launch page: imagery is the primary art direction, with a small physical\\ninstrument rendered at exhibition scale.')
+a=s.index('Place the existing headline'); b=s.index('## Motion',a)
+s=s[:a]+'''Place the existing headline at large scale on the left and the supplied
+hero render on the right. Keep the kicker, chips and introductory copy.
+The round 38 mm patch has a matte paper-white top disc, deep ink-green edge
+ring, one tiny coral LED dot and a thin profile. Below 1000 px, stack the
+headline, object and supporting copy. Preserve the whole object at narrow
+widths. Flat inline SVG is demoted to small supporting diagrams only; it
+must not carry the hero, hardware or connectivity art direction. The logo,
+functional live demo graphics and dashboard charts stay.
+
+## Asset inventory
+
+All four operator-supplied WebP renders come from src/images.js. Serve the
+original export bytes without editing, replacing or generating imagery.
+
+| Module export | Route | Page placement |
+| --- | --- | --- |
+| PATCH_HERO_WEBP_B64 | /img/patch-hero.webp | Hero, primary object beside the headline |
+| PATCH_EXPLODED_WEBP_B64 | /img/patch-exploded.webp | #patch, beside the six-layer factual list |
+| PATCH_ON_SKIN_WEBP_B64 | /img/patch-on-skin.webp | #patch, second visual with the upper-arm and 14 day wear story |
+| NETWORK_SCENE_WEBP_B64 | /img/network-scene.webp | #how, before the five relay steps |
+
+The exploded render groups the hardware into four visible assemblies; the
+six-layer list remains the source for the individual layer names and facts.
+The on-skin render follows the layer and sensor details, paired with the
+existing wear paragraph and followed by the dimensional and wear metrics.
+The network scene presents the patch, phone, relay domes and LoRaWAN gateway
+with dotted teal paths. It does not replace the live packet visualization.
+
+## Image treatment
+
+Place renders directly on paper, with no frames, borders, rounded cards,
+filters or added drop shadows. The supplied soft grounding shadow provides
+physical presence; do not add another. Preserve original aspect ratios and
+show complete images without cropping or stretching. Use responsive full
+width images, with the hero capped at 640 px, the wear image at 640 px, and
+the network scene spanning the content width. Give each visual generous
+space on the 8 px rhythm. Stack the wear image and copy below 900 px.
+Use descriptive, calm alt text with the exact product and network names.
+Reserve intrinsic image space to prevent layout shifts. Load the hero
+eagerly with high priority; lazy-load the three lower-page renders.
+
+'''+s[b:]
+s=s.replace('- S4: Implementation touches only src/page.js and this document. API, MCP,\\n  codec, routing and data behavior are outside the presentation scope.','- V2 S3: Implementation touches src/page.js, this document and src/index.js\\n  for exactly four image/webp routes, using the /og.png cache header style.\\n  API, MCP, codec, data and all other routing behavior stay unchanged.')
+p.write_text(s)
+PY" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+exec
+/bin/bash -lc "node --input-type=module - <<'JS'
+import * as images from './src/images.js';
+for (const [name,b64] of Object.entries(images)) {
+const b=Buffer.from(b64,'base64');
+console.log(name,b.length,b.toString('ascii',12,16),b.subarray(20,40).toString('hex'));
+}
+JS
+ git branch -a" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+NETWORK_SCENE_WEBP_B64 17428 VP8  906d029d012a40067d033e6d369a49a4232e2d21
+PATCH_EXPLODED_WEBP_B64 15216 VP8  d015029d012ab004b0043e6d369749a422a22aa0
+PATCH_HERO_WEBP_B64 12442 VP8  b003029d012a40067d033e6d369a49a42322a8a0
+PATCH_ON_SKIN_WEBP_B64 16468 VP8  30ae029d012ab004b0043e6d36964932292f2ca1
+* anvil/run-design-v2
+  remotes/origin/anvil/run-design-v2
+
+exec
+/bin/bash -lc "python3 - <<'PY'
+from pathlib import Path
+p=Path('src/index.js');s=p.read_text();s=s.replace(\"import { OG_PNG_B64, ICON_PNG_B64 } from './og.js';\", \"import { OG_PNG_B64, ICON_PNG_B64 } from './og.js';\\nimport { PATCH_HERO_WEBP_B64, PATCH_EXPLODED_WEBP_B64, PATCH_ON_SKIN_WEBP_B64, NETWORK_SCENE_WEBP_B64 } from './images.js';\")
+a=s.index('function handleApi')
+s=s[:a]+'''function webp(b64) {
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return new Response(bytes, {
+    headers: { 'content-type': 'image/webp', 'cache-control': 'public, max-age=86400' },
+  });
+}
+
+'''+s[a:]
+s=s.replace(\"    if (path === '/og.png')\", \"    if (path === '/img/patch-hero.webp') return webp(PATCH_HERO_WEBP_B64);\\n    if (path === '/img/patch-exploded.webp') return webp(PATCH_EXPLODED_WEBP_B64);\\n    if (path === '/img/patch-on-skin.webp') return webp(PATCH_ON_SKIN_WEBP_B64);\\n    if (path === '/img/network-scene.webp') return webp(NETWORK_SCENE_WEBP_B64);\\n    if (path === '/og.png')\")
+p.write_text(s)
+p=Path('src/page.js');s=p.read_text();a=s.index('export function patchTopSvg()');b=s.index('const CSS',a);s=s[:a]+s[b:]
+s=s.replace('.patch-top{width:100%;max-width:640px;height:auto;display:block;margin:auto}', '.product-render{display:block;width:100%;height:auto;object-fit:contain}\\n.hero-render{max-width:640px;margin:auto}\\n.svg-note{fill:#53685C}')
+s=s.replace('.patch-top{max-width:520px}', '.hero-render{max-width:640px}')
+s=s.replace('.plate{width:100%;height:auto;display:block}', '.wear-story{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center;margin-top:96px}\\n.wear-story .product-render{max-width:640px;margin:auto}\\n.wear-story .lede{margin-top:0}\\n.network-render{margin-top:64px}\\n@media(max-width:900px){.wear-story{grid-template-columns:minmax(0,1fr)}}')
+s=s.replace('"'${patchTopSvg()}'"', '<img class=\"product-render hero-render\" src=\"/img/patch-hero.webp\" width=\"1600\" height=\"893\" fetchpriority=\"high\" alt=\"Sentia Patch One, a 38 mm disc with a matte paper-white top, ink-green edge ring and one coral LED.\">')
+s=s.replace('"'${explodedSvg()}'"', '<img class=\"product-render\" src=\"/img/patch-exploded.webp\" width=\"1200\" height=\"1200\" loading=\"lazy\" alt=\"Sentia Patch One, exploded view with four separated assemblies above the adhesive base.\">')
+wear='    <p class=\"lede rv\">A flexible adhesive disc worn on the upper arm or torso for up to "'${FACTS.wearDays} days. Everything it needs is inside: sensors, two radios, and a printed battery sized for the whole wear.</p>'"'
+s=s.replace(wear+'\\n','')
+s=s.replace('    <div class=\"spec-strip rv\">', '''    <div class=\"wear-story\">
+      <img class=\"product-render rv\" src=\"/img/patch-on-skin.webp\" width=\"1200\" height=\"1200\" loading=\"lazy\" alt=\"Sentia Patch One worn on the upper arm, a 38 mm adhesive disc for up to 14 days of wear.\">
+'''+wear+'''
+    </div>
+    <div class=\"spec-strip rv\">''')
+s=s.replace('    <ol class=\"journey\">', '''    <img class=\"product-render network-render rv\" src=\"/img/network-scene.webp\" width=\"1600\" height=\"893\" loading=\"lazy\" alt=\"Sentia Patch One beside a phone, relay domes and a LoRaWAN gateway, linked by dotted teal signal paths.\">
+    <ol class=\"journey\">''')
+s=s.replace('    <div class=\"rv\" style=\"margin-top:clamp(48px,6vh,64px)\">"'${pathsSvg()}</div>'"\\n','')
+p.write_text(s)
+PY
+npm test" in /home/runner/work/sentia/sentia
+ succeeded in 312ms:
+
+> sentia@0.1.0 test
+> node --test tests/*.test.js
+
+TAP version 13
+# Subtest: core-worker S1: GET / serves the site with wordmark, demo and dashboard
+ok 1 - core-worker S1: GET / serves the site with wordmark, demo and dashboard
+  ---
+  duration_ms: 32.014813
+  type: 'test'
+  ...
+# Subtest: core-worker S2: API healthy, unknown API route is a 404 JSON error
+ok 2 - core-worker S2: API healthy, unknown API route is a 404 JSON error
+  ---
+  duration_ms: 3.312831
+  type: 'test'
+  ...
+# Subtest: ingestion-api S1: fleet lists exactly 3 patches with battery and last sync path
+ok 3 - ingestion-api S1: fleet lists exactly 3 patches with battery and last sync path
+  ---
+  duration_ms: 3.878908
+  type: 'test'
+  ...
+# Subtest: ingestion-api S2: patch status carries current values, unknown id is 404 JSON
+ok 4 - ingestion-api S2: patch status carries current values, unknown id is 404 JSON
+  ---
+  duration_ms: 2.077575
+  type: 'test'
+  ...
+# Subtest: ingestion-api S3: measurements are deterministic, inside 24 h, 15 minute spacing
+ok 5 - ingestion-api S3: measurements are deterministic, inside 24 h, 15 minute spacing
+  ---
+  duration_ms: 4.320144
+  type: 'test'
+  ...
+# Subtest: ingestion-api S4: alerts follow the rule set and reference real patches
+ok 6 - ingestion-api S4: alerts follow the rule set and reference real patches
+  ---
+  duration_ms: 3.947114
+  type: 'test'
+  ...
+# Subtest: ingestion-api S5: network stats count both paths positively
+ok 7 - ingestion-api S5: network stats count both paths positively
+  ---
+  duration_ms: 2.433182
+  type: 'test'
+  ...
+# Subtest: dashboard-data S1: status endpoint values are the tile values, untransformed
+ok 8 - dashboard-data S1: status endpoint values are the tile values, untransformed
+  ---
+  duration_ms: 1.068617
+  type: 'test'
+  ...
+# Subtest: dashboard-data S2: the 24 h chart window carries exactly 96 points
+ok 9 - dashboard-data S2: the 24 h chart window carries exactly 96 points
+  ---
+  duration_ms: 1.434154
+  type: 'test'
+  ...
+# Subtest: dashboard-data S3: alerts can be filtered per wearer with no leakage
+ok 10 - dashboard-data S3: alerts can be filtered per wearer with no leakage
+  ---
+  duration_ms: 1.954356
+  type: 'test'
+  ...
+# Subtest: seo: robots, sitemap and llms endpoints respond with the right shapes
+ok 11 - seo: robots, sitemap and llms endpoints respond with the right shapes
+  ---
+  duration_ms: 2.178621
+  type: 'test'
+  ...
+# Subtest: geo: JSON-LD graph parses and carries the five entity types
+ok 12 - geo: JSON-LD graph parses and carries the five entity types
+  ---
+  duration_ms: 0.357151
+  type: 'test'
+  ...
+# Subtest: seo: homepage carries canonical, OG and the llms Link header
+ok 13 - seo: homepage carries canonical, OG and the llms Link header
+  ---
+  duration_ms: 0.938416
+  type: 'test'
+  ...
+# Subtest: regression: wear start is never frozen at module load (Workers epoch clock)
+ok 14 - regression: wear start is never frozen at module load (Workers epoch clock)
+  ---
+  duration_ms: 2.098373
+  type: 'test'
+  ...
+# Subtest: packet-codec S1: digest round trip preserves every field at 16 bytes
+ok 15 - packet-codec S1: digest round trip preserves every field at 16 bytes
+  ---
+  duration_ms: 1.745119
+  type: 'test'
+  ...
+# Subtest: packet-codec S2: a flipped payload byte is rejected by crc
+ok 16 - packet-codec S2: a flipped payload byte is rejected by crc
+  ---
+  duration_ms: 0.661785
+  type: 'test'
+  ...
+# Subtest: packet-codec S3: flag bits survive the wire
+ok 17 - packet-codec S3: flag bits survive the wire
+  ---
+  duration_ms: 1.786576
+  type: 'test'
+  ...
+# Subtest: packet-codec S4: LoRaWAN frame carries sweat rate and posture at 38 hex chars
+ok 18 - packet-codec S4: LoRaWAN frame carries sweat rate and posture at 38 hex chars
+  ---
+  duration_ms: 0.591504
+  type: 'test'
+  ...
+# Subtest: packet-codec S5: bad magic and bad crc are rejected on the LoRaWAN frame
+ok 19 - packet-codec S5: bad magic and bad crc are rejected on the LoRaWAN frame
+  ---
+  duration_ms: 0.613666
+  type: 'test'
+  ...
+# Subtest: packet-codec: digest rejects wrong length and wrong version
+ok 20 - packet-codec: digest rejects wrong length and wrong version
+  ---
+  duration_ms: 0.516707
+  type: 'test'
+  ...
+# Subtest: packet-codec: hydration and battery clamp to 0..100, temperature keeps two decimals
+ok 21 - packet-codec: hydration and battery clamp to 0..100, temperature keeps two decimals
+  ---
+  duration_ms: 0.357933
+  type: 'test'
+  ...
+# Subtest: packet-codec: crc8 is stable for a known vector
+ok 22 - packet-codec: crc8 is stable for a known vector
+  ---
+  duration_ms: 0.246496
+  type: 'test'
+  ...
+# Subtest: live-demo S1: city emissions are 16 byte digests labelled findmy
+ok 23 - live-demo S1: city emissions are 16 byte digests labelled findmy
+  ---
+  duration_ms: 1.962752
+  type: 'test'
+  ...
+# Subtest: live-demo S2: rural emissions are 38 character LoRaWAN hex labelled lora
+ok 24 - live-demo S2: rural emissions are 38 character LoRaWAN hex labelled lora
+  ---
+  duration_ms: 1.903783
+  type: 'test'
+  ...
+# Subtest: live-demo S3: latencies stay inside the plausible range per path
+ok 25 - live-demo S3: latencies stay inside the plausible range per path
+  ---
+  duration_ms: 3.028705
+  type: 'test'
+  ...
+# Subtest: parity: browser codec and server codec produce identical bytes
+ok 26 - parity: browser codec and server codec produce identical bytes
+  ---
+  duration_ms: 2.040967
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S1: DESIGN.md v2 makes imagery primary with inventory, treatment rules and SVG demotion
+ok 27 - design-v2-imagery S1: DESIGN.md v2 makes imagery primary with inventory, treatment rules and SVG demotion
+  ---
+  duration_ms: 1.943586
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S2: operator render set exports four non-empty base64 strings
+ok 28 - design-v2-imagery S2: operator render set exports four non-empty base64 strings
+  ---
+  duration_ms: 0.386515
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: /img/patch-hero.webp answers 200 image/webp with the export bytes
+ok 29 - design-v2-imagery S3: /img/patch-hero.webp answers 200 image/webp with the export bytes
+  ---
+  duration_ms: 46.599291
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: /img/patch-exploded.webp answers 200 image/webp with the export bytes
+ok 30 - design-v2-imagery S3: /img/patch-exploded.webp answers 200 image/webp with the export bytes
+  ---
+  duration_ms: 1.807104
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: /img/patch-on-skin.webp answers 200 image/webp with the export bytes
+ok 31 - design-v2-imagery S3: /img/patch-on-skin.webp answers 200 image/webp with the export bytes
+  ---
+  duration_ms: 1.062345
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: /img/network-scene.webp answers 200 image/webp with the export bytes
+ok 32 - design-v2-imagery S3: /img/network-scene.webp answers 200 image/webp with the export bytes
+  ---
+  duration_ms: 1.029275
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S2: served page references all four image paths
+ok 33 - design-v2-imagery S2: served page references all four image paths
+  ---
+  duration_ms: 1.27522
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S2: hero, \#patch, wear story and \#how carry their renders
+ok 34 - design-v2-imagery S2: hero, \#patch, wear story and \#how carry their renders
+  ---
+  duration_ms: 0.266363
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S2: every render is an <img> with calm, hype-free alt text
+ok 35 - design-v2-imagery S2: every render is an <img> with calm, hype-free alt text
+  ---
+  duration_ms: 0.812804
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S2: the live demo keeps its functional packet visualization
+ok 36 - design-v2-imagery S2: the live demo keeps its functional packet visualization
+  ---
+  duration_ms: 0.544087
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: no other new routes; unknown /img path is not served as webp
+ok 37 - design-v2-imagery S3: no other new routes; unknown /img path is not served as webp
+  ---
+  duration_ms: 0.437099
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: existing png routes and SEO layer are unchanged
+ok 38 - design-v2-imagery S3: existing png routes and SEO layer are unchanged
+  ---
+  duration_ms: 2.39386
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: new copy keeps brand naming and avoids hype words
+ok 39 - design-v2-imagery S3: new copy keeps brand naming and avoids hype words
+  ---
+  duration_ms: 1.323639
+  type: 'test'
+  ...
+# Subtest: mcp-server S1: initialize returns the protocol version and server name
+ok 40 - mcp-server S1: initialize returns the protocol version and server name
+  ---
+  duration_ms: 42.127898
+  type: 'test'
+  ...
+# Subtest: mcp-server S2: tools/list returns exactly the 6 tools with schemas
+ok 41 - mcp-server S2: tools/list returns exactly the 6 tools with schemas
+  ---
+  duration_ms: 2.144087
+  type: 'test'
+  ...
+# Subtest: mcp-server S3: get_patch_status returns the patch and its battery
+ok 42 - mcp-server S3: get_patch_status returns the patch and its battery
+  ---
+  duration_ms: 3.533168
+  type: 'test'
+  ...
+# Subtest: mcp-server S4: simulate_uplink round trips on both paths
+ok 43 - mcp-server S4: simulate_uplink round trips on both paths
+  ---
+  duration_ms: 5.590455
+  type: 'test'
+  ...
+# Subtest: mcp-server S5: errors are proper JSON-RPC errors, notifications get 202 empty
+ok 44 - mcp-server S5: errors are proper JSON-RPC errors, notifications get 202 empty
+  ---
+  duration_ms: 3.930403
+  type: 'test'
+  ...
+# Subtest: mcp-server: ping returns an empty result
+ok 45 - mcp-server: ping returns an empty result
+  ---
+  duration_ms: 1.234655
+  type: 'test'
+  ...
+# Subtest: ui-elevation S1: DESIGN.md has tokens, type scale, spacing, hero, motion and quality bars
+ok 46 - ui-elevation S1: DESIGN.md has tokens, type scale, spacing, hero, motion and quality bars
+  ---
+  duration_ms: 4.8308
+  type: 'test'
+  ...
+# Subtest: ui-elevation S1: page follows DESIGN.md tokens and typefaces
+ok 47 - ui-elevation S1: page follows DESIGN.md tokens and typefaces
+  ---
+  duration_ms: 4.801753
+  type: 'test'
+  ...
+# Subtest: ui-elevation S2: sections, demo/dashboard hooks and single h1 are preserved
+ok 48 - ui-elevation S2: sections, demo/dashboard hooks and single h1 are preserved
+  ---
+  duration_ms: 1.058959
+  type: 'test'
+  ...
+# Subtest: ui-elevation S2: content facts and SEO/GEO layer are preserved
+ok 49 - ui-elevation S2: content facts and SEO/GEO layer are preserved
+  ---
+  duration_ms: 0.434514
+  type: 'test'
+  ...
+# Subtest: ui-elevation S4: codec, data, mcp and index are untouched by the run
+ok 50 - ui-elevation S4: codec, data, mcp and index are untouched by the run # SKIP no main ref to diff against
+  ---
+  duration_ms: 13.943785
+  type: 'test'
+  ...
+# Subtest: ui-elevation S5: no hype words in page or DESIGN.md
+ok 51 - ui-elevation S5: no hype words in page or DESIGN.md
+  ---
+  duration_ms: 0.619486
+  type: 'test'
+  ...
+# Subtest: ui-elevation S5: product names match BRAND.md exactly
+ok 52 - ui-elevation S5: product names match BRAND.md exactly
+  ---
+  duration_ms: 0.463478
+  type: 'test'
+  ...
+# Subtest: ui-elevation S6 C1: hero type never drops below 56 px at any width
+ok 53 - ui-elevation S6 C1: hero type never drops below 56 px at any width
+  ---
+  duration_ms: 1.068898
+  type: 'test'
+  ...
+# Subtest: ui-elevation S6 C1: body copy never drops below 17 px
+ok 54 - ui-elevation S6 C1: body copy never drops below 17 px
+  ---
+  duration_ms: 0.915114
+  type: 'test'
+  ...
+# Subtest: ui-elevation S6 C2: spacing avoids the off-rhythm 30, 15, 28 and 26 px values
+ok 55 - ui-elevation S6 C2: spacing avoids the off-rhythm 30, 15, 28 and 26 px values
+  ---
+  duration_ms: 2.730492
+  type: 'test'
+  ...
+# Subtest: ui-elevation S6 C3: SVG annotations use \#53685C and the toggle has no white background
+ok 56 - ui-elevation S6 C3: SVG annotations use \#53685C and the toggle has no white background
+  ---
+  duration_ms: 0.616391
+  type: 'test'
+  ...
+# Subtest: ui-elevation S6 C4: .rv starts hidden and reveals over 800 ms ease-out
+ok 57 - ui-elevation S6 C4: .rv starts hidden and reveals over 800 ms ease-out
+  ---
+  duration_ms: 0.716566
+  type: 'test'
+  ...
+1..57
+# tests 57
+# suites 0
+# pass 56
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 284.971812
+
+codex
+The page now uses all four supplied renders, and the four routes serve their original WebP bytes with the existing PNG cache policy. Tests finished with 56 passed, zero failed, and one legacy check skipped because this checkout has no main ref.
+exec
+/bin/bash -lc 'git diff --check && git diff --stat && git status --short' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+ design/DESIGN.md |  59 +++++++++++++++++++++++++-------
+ src/index.js     |  14 ++++++++
+ src/page.js      | 101 +++++++++----------------------------------------------
+ 3 files changed, 76 insertions(+), 98 deletions(-)
+ M design/DESIGN.md
+ M src/index.js
+ M src/page.js
+?? runs/wo-gh-2/
+?? tests/design-v2-imagery.test.js
+
+codex
+Revised design/DESIGN.md to v2, recomposed src/page.js around the four supplied renders, and added four WebP routes in src/index.js. Left src/images.js unchanged.
+
+Tests: 56 passed, 0 failed, 1 skipped because no main ref exists. Independent approval remains pending.
+tokens used
+39,135
+Revised design/DESIGN.md to v2, recomposed src/page.js around the four supplied renders, and added four WebP routes in src/index.js. Left src/images.js unchanged.
+
+Tests: 56 passed, 0 failed, 1 skipped because no main ref exists. Independent approval remains pending.

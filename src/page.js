@@ -69,84 +69,6 @@ export function jsonLd(origin) {
   return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2);
 }
 
-export function patchTopSvg() {
-  return `<svg class="patch-top" viewBox="0 0 480 480" role="img" aria-label="Sentia Patch One, top view: a 38 mm disc with concentric sensor rings and one coral status LED">
-  <defs><filter id="patch-shadow" x="-30%" y="-150%" width="160%" height="400%"><feGaussianBlur stdDeviation="9"/></filter></defs>
-  <ellipse cx="240" cy="435" rx="150" ry="12" fill="#12211C" opacity="0.12" filter="url(#patch-shadow)"/>
-  <circle cx="240" cy="240" r="196" fill="#FFFFFF" stroke="#12211C" stroke-width="1.4"/>
-  <circle cx="240" cy="240" r="158" fill="none" stroke="#12211C" stroke-width="0.8" opacity="0.55"/>
-  <circle cx="240" cy="240" r="112" fill="none" stroke="#0E7C66" stroke-width="0.8" opacity="0.65"/>
-  <circle cx="240" cy="240" r="64" fill="#EFF4EE" stroke="#12211C" stroke-width="0.8"/>
-  <circle cx="240" cy="240" r="10" fill="none" stroke="#12211C" stroke-width="1"/>
-  <g stroke="#12211C" stroke-width="0.8" opacity="0.5">
-    <line x1="240" y1="52" x2="240" y2="76"/><line x1="240" y1="404" x2="240" y2="428"/>
-    <line x1="52" y1="240" x2="76" y2="240"/><line x1="404" y1="240" x2="428" y2="240"/>
-  </g>
-  <g fill="none" stroke="#12211C" stroke-width="0.6" opacity="0.35">
-    <circle cx="240" cy="240" r="188"/>
-    <path d="M101 101l12 12m254 254 12 12M101 379l12-12m254-254 12-12"/>
-  </g>
-  <circle cx="352" cy="128" r="7" fill="#FF6B4A"/>
-  <g stroke="#0E7C66" stroke-width="0.7" fill="none">
-    <path d="M44 444v22m392-22v22M44 456h160m72 0h160"/>
-  </g>
-  <text x="240" y="460" text-anchor="middle" fill="#0E7C66" font-family="ui-monospace,Menlo,monospace" font-size="11" letter-spacing="1">38 MM</text>
-</svg>`;
-}
-
-export function explodedSvg() {
-  const layers = FACTS.layers;
-  const step = 76;
-  const parts = layers
-    .map((l, i) => {
-      const y = 58 + i * step;
-      const fill = i % 2 === 0 ? '#FFFFFF' : '#EFF4EE';
-      return `<g>
-    <ellipse cx="215" cy="${y}" rx="148" ry="24" fill="${fill}" stroke="#12211C" stroke-width="1"/>
-    <line x1="363" y1="${y}" x2="452" y2="${y}" stroke="#DFE7DF" stroke-width="1"/>
-    <text x="466" y="${y - 2}" class="svg-name">${l.name}</text>
-    <text x="466" y="${y + 16}" class="svg-note">${shorten(l.detail)}</text>
-  </g>`;
-    })
-    .join('\n');
-  return `<svg class="plate" viewBox="0 0 980 560" role="img" aria-label="Exploded view of Sentia Patch One showing its six layers">
-  <style>.svg-name{font:500 15px Inter,sans-serif;fill:#12211C}.svg-note{font:12px ui-monospace,Menlo,monospace;fill:#53685C}</style>
-  ${parts}
-  <text x="215" y="540" text-anchor="middle" class="svg-note">DIAMETER 38 MM · TOTAL THICKNESS 4.2 MM</text>
-</svg>`;
-}
-
-function shorten(s) {
-  return s.length > 62 ? s.slice(0, 60).trimEnd() + '…' : s;
-}
-
-export function pathsSvg() {
-  return `<svg class="plate" viewBox="0 0 1120 320" role="img" aria-label="Two paths from the patch to Sentia Cloud: through phones on the Find My network in the city, and through a LoRaWAN gateway out of coverage">
-  <style>.svg-name{font:500 15px Inter,sans-serif;fill:#12211C}.svg-note{font:11px ui-monospace,Menlo,monospace;fill:#53685C;letter-spacing:0.14em}.svg-teal{font:11px ui-monospace,Menlo,monospace;fill:#0E7C66;letter-spacing:0.14em}</style>
-  <circle cx="90" cy="160" r="34" fill="#FFFFFF" stroke="#12211C" stroke-width="1.2"/>
-  <circle cx="90" cy="160" r="18" fill="none" stroke="#12211C" stroke-width="0.8"/>
-  <circle cx="114" cy="136" r="4" fill="#FF6B4A"/>
-  <text x="90" y="222" text-anchor="middle" class="svg-name">The patch</text>
-  <path d="M 128 148 C 320 60, 480 60, 620 96" fill="none" stroke="#0E7C66" stroke-width="1.4"/>
-  <path d="M 128 176 C 320 262, 480 262, 620 224" fill="none" stroke="#0E7C66" stroke-width="1.4"/>
-  <rect x="622" y="66" width="52" height="88" rx="9" fill="#FFFFFF" stroke="#12211C" stroke-width="1.1"/>
-  <text x="648" y="182" text-anchor="middle" class="svg-name">A passing phone</text>
-  <text x="648" y="202" text-anchor="middle" class="svg-note">IPHONE · IPAD · MAC</text>
-  <path d="M 676 104 C 800 92, 880 108, 968 138" fill="none" stroke="#0E7C66" stroke-width="1.4"/>
-  <g stroke="#12211C" stroke-width="1.1" fill="none">
-    <path d="M 648 226 L 612 292 M 648 226 L 648 292 M 648 226 L 684 292"/>
-    <circle cx="648" cy="222" r="5" fill="#12211C"/>
-  </g>
-  <text x="648" y="308" text-anchor="middle" class="svg-name">A LoRaWAN gateway</text>
-  <path d="M 688 238 C 800 246, 890 226, 968 186" fill="none" stroke="#0E7C66" stroke-width="1.4"/>
-  <rect x="970" y="106" width="118" height="104" rx="10" fill="#EFF4EE" stroke="#12211C" stroke-width="1.1"/>
-  <text x="1029" y="152" text-anchor="middle" class="svg-name">Sentia</text>
-  <text x="1029" y="172" text-anchor="middle" class="svg-name">Cloud</text>
-  <text x="380" y="52" text-anchor="middle" class="svg-teal">IN THE CITY · FIND MY NETWORK · 16 BYTE DIGEST</text>
-  <text x="380" y="292" text-anchor="middle" class="svg-teal">OUT OF COVERAGE · LORAWAN · 19 BYTE FRAME</text>
-</svg>`;
-}
-
 const CSS = `
 :root{
   --paper:#FAFAF6; --ink:#12211C; --soft:#4A5D54; --faint:#53685C;
@@ -192,18 +114,24 @@ h3{font:500 19px/1.4 'Space Grotesk',sans-serif}
 .cta a{font-size:17px;border-bottom:1px solid var(--teal);padding-bottom:8px}
 .cta a:hover{text-decoration:none;border-color:var(--ink);color:var(--ink)}
 .hero-visual{grid-column:2;grid-row:2/4;align-self:center;text-align:center;min-width:0}
-.patch-top{width:100%;max-width:640px;height:auto;display:block;margin:auto}
+.product-render{display:block;width:100%;height:auto;object-fit:contain}
+.hero-render{max-width:640px;margin:auto}
+.svg-note{fill:#53685C}
 .caption{margin-top:24px;color:var(--faint)}
 @media(max-width:999px){
   .hero{padding-top:144px}
   .hero .wrap{grid-template-columns:minmax(0,1fr)}
   .hero h1{max-width:15ch;font-size:clamp(56px,10vw,96px)}
   .hero-visual{grid-column:1;grid-row:3;margin-top:48px}
-  .patch-top{max-width:520px}
+  .hero-render{max-width:640px}
   .hero .lede{grid-row:4;margin-top:48px}
 }
 /* patch section */
-.plate{width:100%;height:auto;display:block}
+.wear-story{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center;margin-top:96px}
+.wear-story .product-render{max-width:640px;margin:auto}
+.wear-story .lede{margin-top:0}
+.network-render{margin-top:64px}
+@media(max-width:900px){.wear-story{grid-template-columns:minmax(0,1fr)}}
 .split{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(32px,5vw,72px);align-items:start}
 @media(max-width:900px){.split{grid-template-columns:1fr}}
 .layer-list{list-style:none}
@@ -432,7 +360,7 @@ ${jsonLd(origin)}
       <a href="#dashboard">Open the dashboard</a>
     </div>
     <div class="hero-visual rv">
-      ${patchTopSvg()}
+      <img class="product-render hero-render" src="/img/patch-hero.webp" width="1600" height="893" fetchpriority="high" alt="Sentia Patch One, a 38 mm disc with a matte paper-white top, ink-green edge ring and one coral LED.">
       <p class="mono caption">Sentia Patch One · Ø 38 mm · 4.2 mm thick</p>
     </div>
   </div>
@@ -442,15 +370,18 @@ ${jsonLd(origin)}
   <div class="wrap">
     <p class="mono kicker rv">The patch</p>
     <h2 class="rv">Six layers, 4.2 mm thin.</h2>
-    <p class="lede rv">A flexible adhesive disc worn on the upper arm or torso for up to ${FACTS.wearDays} days. Everything it needs is inside: sensors, two radios, and a printed battery sized for the whole wear.</p>
     <div class="split" style="margin-top:clamp(48px,6vh,64px)">
-      <div class="rv">${explodedSvg()}</div>
+      <div class="rv"><img class="product-render" src="/img/patch-exploded.webp" width="1200" height="1200" loading="lazy" alt="Sentia Patch One, exploded view with four separated assemblies above the adhesive base."></div>
       <ol class="layer-list rv">
 ${layerItems}
       </ol>
     </div>
     <div class="sensors">
 ${sensorCards}
+    </div>
+    <div class="wear-story">
+      <img class="product-render rv" src="/img/patch-on-skin.webp" width="1200" height="1200" loading="lazy" alt="Sentia Patch One worn on the upper arm, a 38 mm adhesive disc for up to 14 days of wear.">
+    <p class="lede rv">A flexible adhesive disc worn on the upper arm or torso for up to ${FACTS.wearDays} days. Everything it needs is inside: sensors, two radios, and a printed battery sized for the whole wear.</p>
     </div>
     <div class="spec-strip rv">
       <div><p class="v">38 mm</p><p class="mono k">Diameter</p></div>
@@ -468,6 +399,7 @@ ${sensorCards}
     <p class="mono kicker rv">How it works</p>
     <h2 class="rv">Sense. Whisper. Relay.</h2>
     <p class="lede rv">The patch never looks for a network. It speaks quietly, on a schedule, and lets the networks that already surround us do the carrying.</p>
+    <img class="product-render network-render rv" src="/img/network-scene.webp" width="1600" height="893" loading="lazy" alt="Sentia Patch One beside a phone, relay domes and a LoRaWAN gateway, linked by dotted teal signal paths.">
     <ol class="journey">
       <li class="rv"><span class="mono step">Step 1</span><h3>Sense</h3><p>Every few minutes the patch samples skin temperature, hydration, movement, posture and sweat, and builds one small encrypted measurement digest.</p></li>
       <li class="rv"><span class="mono step">Step 2</span><h3>Whisper</h3><p>In the city it broadcasts the digest inside rotating Bluetooth Low Energy advertisements, following the Find My network accessory pattern. Out of coverage it sends a fuller LoRaWAN frame instead.</p></li>
@@ -475,7 +407,6 @@ ${sensorCards}
       <li class="rv"><span class="mono step">Step 4</span><h3>Server</h3><p>${FACTS.platform} retrieves and decrypts the payloads addressed to it, decodes both formats with one codec, stores the time series and evaluates the alert rules.</p></li>
       <li class="rv"><span class="mono step">Step 5</span><h3>You</h3><p>The wearer, or a care circle they choose, sees the result in the dashboard, through the API, or by asking an assistant through the ${FACTS.mcpServer}.</p></li>
     </ol>
-    <div class="rv" style="margin-top:clamp(48px,6vh,64px)">${pathsSvg()}</div>
     <div class="privacy rv">
       <h3>Private by construction</h3>
       <p>Identifiers rotate with every broadcast window, so a digest cannot be followed across a day. Relay devices see ciphertext and contribute their own location context, never the patch contents. The patch carries no GPS receiver. Only ${FACTS.platform} holds the keys that link a digest to a wearer and decode it. Battery logic is equally plain: Bluetooth Low Energy first, LoRaWAN only when no relay has carried a digest for a while, and high value alerts, a fall impact for example, escalate at once.</p>

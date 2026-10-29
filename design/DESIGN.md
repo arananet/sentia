@@ -1,7 +1,8 @@
-# Sentia design system
+# Sentia design system v2
 
 Identity is governed by brand/BRAND.md. This system applies that identity to
-the launch page: a small physical instrument, drawn at architectural scale.
+the launch page: imagery is the primary art direction, with a small physical
+instrument rendered at exhibition scale.
 Sentia Patch One is the object; Sentia Cloud receives its measurements; the
 Sentia MCP Server makes those measurements available to assistants.
 
@@ -39,15 +40,46 @@ optical geometry rather than content spacing.
 
 ## Hero art direction
 
-Place the existing headline at large scale on the left and a 38 mm disc
-at exhibition scale on the right. Keep introductory copy beneath the
-headline. The patch is paper white, concentric, precise: fine rings,
-radial registration marks, a small coral LED and a dimension line. A
-single soft grounding shadow gives it physical presence. The caption is
-an engineering annotation. No invented features or decorative circuitry.
-Below 1000 px, stack the headline, object and supporting copy. At narrow
-widths, preserve the whole object and give text the full available width.
-The exploded view and network paths remain quiet technical drawings.
+Place the existing headline at large scale on the left and the supplied
+hero render on the right. Keep the kicker, chips and introductory copy.
+The round 38 mm patch has a matte paper-white top disc, deep ink-green edge
+ring, one tiny coral LED dot and a thin profile. Below 1000 px, stack the
+headline, object and supporting copy. Preserve the whole object at narrow
+widths. Flat inline SVG is demoted to small supporting diagrams only; it
+must not carry the hero, hardware or connectivity art direction. The logo,
+functional live demo graphics and dashboard charts stay.
+
+## Asset inventory
+
+All four operator-supplied WebP renders come from src/images.js. Serve the
+original export bytes without editing, replacing or generating imagery.
+
+| Module export | Route | Page placement |
+| --- | --- | --- |
+| PATCH_HERO_WEBP_B64 | /img/patch-hero.webp | Hero, primary object beside the headline |
+| PATCH_EXPLODED_WEBP_B64 | /img/patch-exploded.webp | #patch, beside the six-layer factual list |
+| PATCH_ON_SKIN_WEBP_B64 | /img/patch-on-skin.webp | #patch, second visual with the upper-arm and 14 day wear story |
+| NETWORK_SCENE_WEBP_B64 | /img/network-scene.webp | #how, before the five relay steps |
+
+The exploded render groups the hardware into four visible assemblies; the
+six-layer list remains the source for the individual layer names and facts.
+The on-skin render follows the layer and sensor details, paired with the
+existing wear paragraph and followed by the dimensional and wear metrics.
+The network scene presents the patch, phone, relay domes and LoRaWAN gateway
+with dotted teal paths. It does not replace the live packet visualization.
+
+## Image treatment
+
+Place renders directly on paper, with no frames, borders, rounded cards,
+filters or added drop shadows. The supplied soft grounding shadow provides
+physical presence; do not add another. Preserve original aspect ratios and
+show complete images without cropping or stretching. Use responsive full
+width images, with the hero capped at 640 px, the wear image at 640 px, and
+the network scene spanning the content width. Give each visual generous
+space on the 8 px rhythm. Stack the wear image and copy below 900 px.
+Use descriptive, calm alt text with the exact product and network names.
+Reserve intrinsic image space to prevent layout shifts. Load the hero
+eagerly with high priority; lazy-load the three lower-page renders.
 
 ## Motion
 
@@ -71,8 +103,9 @@ both the initial and revealed states visible and stationary.
   simulation control and dashboard action. Measurements keep their units.
 - At 320 px and at browser zoom, text wraps without page overflow; wide
   technical data scrolls in its own region. Keyboard focus is visible.
-- S4: Implementation touches only src/page.js and this document. API, MCP,
-  codec, routing and data behavior are outside the presentation scope.
+- V2 S3: Implementation touches src/page.js, this document and src/index.js
+  for exactly four image/webp routes, using the /og.png cache header style.
+  API, MCP, codec, data and all other routing behavior stay unchanged.
 - S5: Keep the existing calm copy and exact product and network names.
   Wellness framing and the medical disclaimer remain visible.
 - Run the full scenario suite. Visual quality and S3 model provenance are
