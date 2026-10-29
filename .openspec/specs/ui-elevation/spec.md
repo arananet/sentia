@@ -36,3 +36,15 @@ Elevate the Sentia launch page from clean and basic to flagship product standard
 
 ### Scenario: Brand voice holds in new copy
 - S5: Given the elevated page and DESIGN.md, when their text is searched, then none of revolutionary, cutting edge, game changer, seamless, supercharge or unlock appears, and product names match BRAND.md exactly.
+
+## Corrections (round 4, loopback)
+
+Round 3 executed and produced design/DESIGN.md plus the elevated page, and reviewer-design requested changes against DESIGN.md itself. The human gate accepted those findings. This round the builder corrects the page against the following acceptance criteria, which override any conflicting round 3 output:
+
+- C1: Small width type minimums hold. At small widths the hero type does not drop below 56 px and body copy does not drop below 17 px, as DESIGN.md documents. Round 3 shipped 48 px hero type and 14.5 to 15.5 px body copy at small widths.
+- C2: Spacing follows the documented 8 px rhythm. The off-rhythm values 30 px, 15 px, 28 px and 26 px are removed in favor of rhythm values.
+- C3: Palette fidelity holds. SVG annotations use the documented #53685C, not #5C6F66, and the simulation toggle does not use a white background, because DESIGN.md reserves white for the physical patch.
+- C4: The reveal motion plays again. The .rv elements carry their hidden initial state so the 800 ms ease-out reveal described in DESIGN.md actually runs.
+
+### Scenario: Round 4 corrections land
+- S6: Given the round 4 run, when src/page.js is read at small widths and across its spacing, palette and motion rules, then the hero type is at least 56 px, body copy is at least 17 px, spacing values sit on the 8 px rhythm, SVG annotations use #53685C, the simulation toggle has no white background, and .rv elements start hidden and reveal over 800 ms ease-out.
