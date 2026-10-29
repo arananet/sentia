@@ -5,16 +5,15 @@
   "work_order_id": "wo-gh-1",
   "artifact_path": "runs/wo-gh-1/reviewer-security.output.md",
   "status": "executed",
-  "created_at": "2026-10-29T01:26:54.859640+00:00",
+  "created_at": "2026-10-29T03:54:45.899225+00:00",
   "review": {
     "station": "reviewer-security",
     "verdict": "pass",
     "findings": [
-      "The src/page.js diff touches only CSS and static inline SVG. It adds no script, inline event handlers, new network calls or new external origins.",
-      "The diff adds no new template interpolations. The only added SVG strings are the static `patch-shadow` filter id and the \"38 MM\" label, so there is no injection surface. The origin, jsonLd and FACTS interpolation paths are unchanged.",
-      "No changes to the JSON API, MCP server, codec or data layer.",
-      "The Google Fonts preconnect and stylesheet link in src/page.js were already there. They are a third-party request, and self-hosting the fonts would remove it. This is not a blocker for this change.",
-      "The prefers-reduced-motion and :focus-visible additions are safe defaults.",
+      "The src/page.js diff touches only presentation. It changes CSS values, inline SVG fill colours (for example #5C6F66 to #53685C) and inline margin values. It adds no script, event handler, external URL or new third-party origin.",
+      "The `${...}` interpolations in the changed lines (FACTS.definition, FACTS.product, pathsSvg()) were already in the file. They come from the static facts layer, not from user input, so the diff adds no injection surface.",
+      "The JSON API, MCP server, codec and data layer are not in the diff. Only src/page.js and tests/ui-elevation.test.js changed under src and tests.",
+      "Pre-existing and out of scope for this change: the Google Fonts stylesheet link has no SRI, and the page sets no CSP. Both could be tracked as separate hardening work.",
       "The review is written to runs/wo-gh-1/reviewer-security.output.md."
     ]
   },

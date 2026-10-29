@@ -100,3 +100,98 @@ test('ui-elevation S5: product names match BRAND.md exactly', () => {
   assert.ok(html.includes('Sentia Patch One'));
   assert.ok(html.includes('Sentia MCP Server'));
 });
+
+// ui-elevation S6: round 4 corrections land (C1 to C4)
+
+const css = (html.match(/<style[^>]*>([\s\S]*?)<\/style>/g) || []).join('\n');
+const pageCss = (html.match(/<style[^>]*>([\s\S]*?)<\/style>/) || [, ''])[1];
+
+// Flat list of { media, selector, body } rules; media is the @media condition or ''.
+const rules = (() => {
+  const out = [];
+  const walk = (src, media) => {
+    const re = /([^{}]+)\{([^{}]*)\}|(@[^{]+)\{((?:[^{}]*\{[^{}]*\})*[^{}]*)\}/g;
+    let m;
+    while ((m = re.exec(src))) {
+      if (m[3]) {
+        if (/^@media/.test(m[3].trim())) walk(m[4], m[3].trim());
+      } else {
+        out.push({ media, selector: m[1].trim(), body: m[2] });
+      }
+    }
+  };
+  walk(pageCss.replace(/\/\*[\s\S]*?\*\//g, ''), '');
+  return out;
+})();
+
+// Smallest px value a font-size / font shorthand / clamp() can produce.
+const minPx = (value) => {
+  const clamp = value.match(/clamp\(\s*([\d.]+)px/);
+  if (clamp) return Number(clamp[1]);
+  const px = value.match(/([\d.]+)px/);
+  return px ? Number(px[1]) : null;
+};
+const fontSizes = (selectorRe) => rules
+  .filter((r) => selectorRe.test(r.selector))
+  .flatMap((r) => {
+    const size = r.body.match(/font-size:\s*([^;}]+)/);
+    const shorthand = r.body.match(/(?:^|;)\s*font:\s*(?:\d+\s+)?(clamp\([^)]*\)|[\d.]+px)/);
+    const v = size ? size[1] : shorthand ? shorthand[1] : null;
+    return v && minPx(v) != null ? [{ ...r, px: minPx(v) }] : [];
+  });
+
+test('ui-elevation S6 C1: hero type never drops below 56 px at any width', () => {
+  const hero = fontSizes(/(^|[\s,])(\.hero\s+)?h1$/);
+  assert.ok(hero.length >= 2, 'h1 sizes are declared, including small width overrides');
+  for (const r of hero) assert.ok(r.px >= 56, `${r.selector} ${r.media} is ${r.px}px`);
+  assert.ok(hero.some((r) => /max-width:\s*600px/.test(r.media)), 'a 600 px rule sets the small width hero');
+});
+
+test('ui-elevation S6 C1: body copy never drops below 17 px', () => {
+  const body = fontSizes(/(^|[\s,])(\.lede|\.layer-list p|\.sensor p|\.journey p|\.alert-msg|\.tools p|\.faq-item p|p)$/);
+  assert.ok(body.length > 0);
+  for (const r of body) assert.ok(r.px >= 17, `${r.selector} ${r.media} is ${r.px}px`);
+});
+
+test('ui-elevation S6 C2: spacing avoids the off-rhythm 30, 15, 28 and 26 px values', () => {
+  const props = /^(margin|padding|gap|row-gap|column-gap|top|right|bottom|left|inset)(-[a-z]+)?$/;
+  const bad = /(?<![\d.])(30|15|28|26)px/;
+  const found = [];
+  for (const r of rules) {
+    for (const d of r.body.split(';')) {
+      const [p, ...v] = d.split(':');
+      if (p && props.test(p.trim()) && bad.test(v.join(':'))) found.push(`${r.selector} { ${d.trim()} }`);
+    }
+  }
+  for (const m of html.matchAll(/style="([^"]*)"/g)) {
+    for (const d of m[1].split(';')) {
+      const [p, ...v] = d.split(':');
+      if (p && props.test(p.trim()) && bad.test(v.join(':'))) found.push(`inline { ${d.trim()} }`);
+    }
+  }
+  assert.deepEqual(found, []);
+});
+
+test('ui-elevation S6 C3: SVG annotations use #53685C and the toggle has no white background', () => {
+  assert.ok(!/#5C6F66/i.test(html), '#5C6F66 must be gone');
+  assert.ok(/\.svg-note\{[^}]*fill:#53685C/i.test(html), '.svg-note fills with #53685C');
+  const toggle = rules.filter((r) => /^\.toggle$/.test(r.selector));
+  assert.ok(toggle.length > 0, '.toggle rule exists');
+  for (const r of toggle) {
+    assert.ok(!/background(-color)?:\s*(#fff(fff)?\b|white\b|rgb\(\s*255)/i.test(r.body), '.toggle background is not white');
+  }
+});
+
+test('ui-elevation S6 C4: .rv starts hidden and reveals over 800 ms ease-out', () => {
+  const rv = rules.filter((r) => r.selector === '.rv' && !r.media);
+  assert.ok(rv.length > 0, '.rv base rule exists');
+  const body = rv.map((r) => r.body).join(';');
+  assert.match(body, /opacity:\s*0(?![.\d])/, '.rv starts with opacity 0');
+  assert.match(body, /transform:\s*[^;]*(translate|scale)/, '.rv starts displaced');
+  assert.match(body, /transition:[^;]*opacity\s+(\.8s|0\.8s|800ms)\s+ease-out/);
+  assert.match(body, /transition:[^;]*transform\s+(\.8s|0\.8s|800ms)\s+ease-out/);
+  const shown = rules.find((r) => r.selector === '.rv.in');
+  assert.ok(shown && /opacity:\s*1/.test(shown.body) && /transform:\s*none/.test(shown.body), '.rv.in reveals');
+  const reduced = rules.find((r) => /prefers-reduced-motion/.test(r.media) && /\.rv/.test(r.selector));
+  assert.ok(reduced && /opacity:\s*1/.test(reduced.body), 'reduced motion keeps .rv visible');
+});

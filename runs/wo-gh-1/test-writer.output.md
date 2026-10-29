@@ -1,22 +1,21 @@
-I wrote the tests in `tests/ui-elevation.test.js`, mapped to spec scenarios S1, S2, S4 and S5. The suite currently has 35 passing and 3 failing. The 3 failures are the tests that need `design/DESIGN.md`, which doesn't exist yet.
+I added five round 4 tests (S6) to `tests/ui-elevation.test.js`, and all five fail against the current `src/page.js`, which is what should happen before the builder corrects it. The full suite is 38 passing, 5 failing (the new tests) and 1 skipped. I didn't commit anything.
 
-- **S1:**
-  - One test checks that `design/DESIGN.md` has tokens, type scale, spacing, hero, motion and quality bars. It also checks that the file names the four brand hex colors and both fonts.
-  - A second test checks that the page CSS uses the paper, ink green and teal colors, both fonts, and still has inline SVG.
-- **S2:** Checks that all 8 section ids and the demo and dashboard hook ids are still present, and that there is exactly one `<h1>`. It also checks that the layer names and spec rows from `FACTS` are present, along with the canonical link, the OG image, the JSON-LD and the MCP URL.
-- **S4:** Checks that `src/codec.js`, `src/data.js`, `src/mcp.js` and `src/index.js` aren't in the git diff against the merge-base with main. It skips if no main ref or git is available.
-- **S5:** Checks that none of the six hype words appear in the page or in `DESIGN.md`. It also checks that `SentiaPatch` doesn't appear, and that the page uses "Sentia Patch One" and "Sentia MCP Server".
+The tests read the CSS in the rendered page and check small-width rules as well as base rules.
 
-**Not covered:**
-- **S3:** The model and run-report scenario is about the run report, not the code, so I didn't write a test for it.
-- **S4 limitation:** The test only forbids changes to the four listed source files. It does not check that the changed files are limited to `src/page.js` and `design/DESIGN.md`.
-- **Uncommitted file:** `tests/ui-elevation.test.js` is uncommitted and untracked, so the S4 diff doesn't flag it.
+| Test | What it checks | Current result |
+|---|---|---|
+| C1, hero type | Every `h1` size is at least 56 px, and a 600 px rule exists | Fails: 48 px at 600 px |
+| C1, body copy | Prose selectors such as `.lede` and `.layer-list p` are at least 17 px | Fails: `.layer-list p` is 14.5 px |
+| C2, spacing | 30, 15, 28 and 26 px don't appear in margin, padding, gap or position properties, in CSS or inline styles | Fails on one or more of the four values |
+| C3, palette | `#5C6F66` is gone, `.svg-note` uses `#53685C`, and `.toggle` has no white background | Fails: `#5C6F66` is still present |
+| C4, reveal | `.rv` starts at opacity 0 and displaced, transitions over 0.8 s ease-out, `.rv.in` restores it, and reduced motion keeps it visible | Fails: `.rv` has no hidden start state |
 
-The three current failures are:
-- `ui-elevation S1: DESIGN.md has tokens, type scale, spacing, hero, motion and quality bars`
-- `ui-elevation S5: no hype words in page or DESIGN.md`
-- `ui-elevation S5: product names match BRAND.md exactly`
+`src/client.js` already adds the `.in` class, so C4 needs no client change.
 
-They should pass once the builder creates `design/DESIGN.md`.
+- **Body copy selectors:** The spec doesn't say which selectors count as body copy. I used the prose ones and left out mono labels, `.caption` and the diagram's `.node p`. If those should also be 17 px, the selector list needs widening.
+- **8 px rhythm:** The C2 test only forbids the four named values. It doesn't prove every spacing value sits on the 8 px rhythm.
+- **S3 and S4:** S3 is about the run report, so no code test applies. S4 still only forbids changes to `src/codec.js`, `src/data.js`, `src/mcp.js` and `src/index.js`. It doesn't check that the diff is limited to `src/page.js` and `design/DESIGN.md`.
+
+The write-up is in `runs/wo-gh-1/test-writer.output.md`.
 
 {"model": "claude-sonnet-5-5", "runtime": "claude-code"}

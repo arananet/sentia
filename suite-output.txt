@@ -6,243 +6,273 @@ TAP version 13
 # Subtest: core-worker S1: GET / serves the site with wordmark, demo and dashboard
 ok 1 - core-worker S1: GET / serves the site with wordmark, demo and dashboard
   ---
-  duration_ms: 47.507392
+  duration_ms: 21.931741
   type: 'test'
   ...
 # Subtest: core-worker S2: API healthy, unknown API route is a 404 JSON error
 ok 2 - core-worker S2: API healthy, unknown API route is a 404 JSON error
   ---
-  duration_ms: 4.481899
+  duration_ms: 2.365639
   type: 'test'
   ...
 # Subtest: ingestion-api S1: fleet lists exactly 3 patches with battery and last sync path
 ok 3 - ingestion-api S1: fleet lists exactly 3 patches with battery and last sync path
   ---
-  duration_ms: 3.827281
+  duration_ms: 1.956812
   type: 'test'
   ...
 # Subtest: ingestion-api S2: patch status carries current values, unknown id is 404 JSON
 ok 4 - ingestion-api S2: patch status carries current values, unknown id is 404 JSON
   ---
-  duration_ms: 3.852358
+  duration_ms: 2.371899
   type: 'test'
   ...
 # Subtest: ingestion-api S3: measurements are deterministic, inside 24 h, 15 minute spacing
 ok 5 - ingestion-api S3: measurements are deterministic, inside 24 h, 15 minute spacing
   ---
-  duration_ms: 4.677707
+  duration_ms: 3.061511
   type: 'test'
   ...
 # Subtest: ingestion-api S4: alerts follow the rule set and reference real patches
 ok 6 - ingestion-api S4: alerts follow the rule set and reference real patches
   ---
-  duration_ms: 4.771111
+  duration_ms: 2.391147
   type: 'test'
   ...
 # Subtest: ingestion-api S5: network stats count both paths positively
 ok 7 - ingestion-api S5: network stats count both paths positively
   ---
-  duration_ms: 2.534145
+  duration_ms: 1.789284
   type: 'test'
   ...
 # Subtest: dashboard-data S1: status endpoint values are the tile values, untransformed
 ok 8 - dashboard-data S1: status endpoint values are the tile values, untransformed
   ---
-  duration_ms: 1.15699
+  duration_ms: 0.776512
   type: 'test'
   ...
 # Subtest: dashboard-data S2: the 24 h chart window carries exactly 96 points
 ok 9 - dashboard-data S2: the 24 h chart window carries exactly 96 points
   ---
-  duration_ms: 1.672548
+  duration_ms: 1.13285
   type: 'test'
   ...
 # Subtest: dashboard-data S3: alerts can be filtered per wearer with no leakage
 ok 10 - dashboard-data S3: alerts can be filtered per wearer with no leakage
   ---
-  duration_ms: 2.17421
+  duration_ms: 1.453056
   type: 'test'
   ...
 # Subtest: seo: robots, sitemap and llms endpoints respond with the right shapes
 ok 11 - seo: robots, sitemap and llms endpoints respond with the right shapes
   ---
-  duration_ms: 2.545126
+  duration_ms: 2.894023
   type: 'test'
   ...
 # Subtest: geo: JSON-LD graph parses and carries the five entity types
 ok 12 - geo: JSON-LD graph parses and carries the five entity types
   ---
-  duration_ms: 0.380293
+  duration_ms: 0.300025
   type: 'test'
   ...
 # Subtest: seo: homepage carries canonical, OG and the llms Link header
 ok 13 - seo: homepage carries canonical, OG and the llms Link header
   ---
-  duration_ms: 1.148785
+  duration_ms: 0.685547
   type: 'test'
   ...
 # Subtest: regression: wear start is never frozen at module load (Workers epoch clock)
 ok 14 - regression: wear start is never frozen at module load (Workers epoch clock)
   ---
-  duration_ms: 2.26528
+  duration_ms: 1.210075
   type: 'test'
   ...
 # Subtest: packet-codec S1: digest round trip preserves every field at 16 bytes
 ok 15 - packet-codec S1: digest round trip preserves every field at 16 bytes
   ---
-  duration_ms: 1.935722
+  duration_ms: 1.250795
   type: 'test'
   ...
 # Subtest: packet-codec S2: a flipped payload byte is rejected by crc
 ok 16 - packet-codec S2: a flipped payload byte is rejected by crc
   ---
-  duration_ms: 0.77842
+  duration_ms: 0.482616
   type: 'test'
   ...
 # Subtest: packet-codec S3: flag bits survive the wire
 ok 17 - packet-codec S3: flag bits survive the wire
   ---
-  duration_ms: 2.099829
+  duration_ms: 1.088174
   type: 'test'
   ...
 # Subtest: packet-codec S4: LoRaWAN frame carries sweat rate and posture at 38 hex chars
 ok 18 - packet-codec S4: LoRaWAN frame carries sweat rate and posture at 38 hex chars
   ---
-  duration_ms: 0.612269
+  duration_ms: 0.433894
   type: 'test'
   ...
 # Subtest: packet-codec S5: bad magic and bad crc are rejected on the LoRaWAN frame
 ok 19 - packet-codec S5: bad magic and bad crc are rejected on the LoRaWAN frame
   ---
-  duration_ms: 0.701436
+  duration_ms: 0.459312
   type: 'test'
   ...
 # Subtest: packet-codec: digest rejects wrong length and wrong version
 ok 20 - packet-codec: digest rejects wrong length and wrong version
   ---
-  duration_ms: 0.534142
+  duration_ms: 0.321466
   type: 'test'
   ...
 # Subtest: packet-codec: hydration and battery clamp to 0..100, temperature keeps two decimals
 ok 21 - packet-codec: hydration and battery clamp to 0..100, temperature keeps two decimals
   ---
-  duration_ms: 0.385022
+  duration_ms: 0.279365
   type: 'test'
   ...
 # Subtest: packet-codec: crc8 is stable for a known vector
 ok 22 - packet-codec: crc8 is stable for a known vector
   ---
-  duration_ms: 0.268684
+  duration_ms: 0.154679
   type: 'test'
   ...
 # Subtest: live-demo S1: city emissions are 16 byte digests labelled findmy
 ok 23 - live-demo S1: city emissions are 16 byte digests labelled findmy
   ---
-  duration_ms: 2.575833
+  duration_ms: 1.350913
   type: 'test'
   ...
 # Subtest: live-demo S2: rural emissions are 38 character LoRaWAN hex labelled lora
 ok 24 - live-demo S2: rural emissions are 38 character LoRaWAN hex labelled lora
   ---
-  duration_ms: 2.187825
+  duration_ms: 1.416922
   type: 'test'
   ...
 # Subtest: live-demo S3: latencies stay inside the plausible range per path
 ok 25 - live-demo S3: latencies stay inside the plausible range per path
   ---
-  duration_ms: 2.948522
+  duration_ms: 2.085573
   type: 'test'
   ...
 # Subtest: parity: browser codec and server codec produce identical bytes
 ok 26 - parity: browser codec and server codec produce identical bytes
   ---
-  duration_ms: 2.421773
+  duration_ms: 1.509389
   type: 'test'
   ...
 # Subtest: mcp-server S1: initialize returns the protocol version and server name
 ok 27 - mcp-server S1: initialize returns the protocol version and server name
   ---
-  duration_ms: 39.151973
+  duration_ms: 27.050634
   type: 'test'
   ...
 # Subtest: mcp-server S2: tools/list returns exactly the 6 tools with schemas
 ok 28 - mcp-server S2: tools/list returns exactly the 6 tools with schemas
   ---
-  duration_ms: 3.097244
+  duration_ms: 1.549148
   type: 'test'
   ...
 # Subtest: mcp-server S3: get_patch_status returns the patch and its battery
 ok 29 - mcp-server S3: get_patch_status returns the patch and its battery
   ---
-  duration_ms: 3.197389
+  duration_ms: 2.599316
   type: 'test'
   ...
 # Subtest: mcp-server S4: simulate_uplink round trips on both paths
 ok 30 - mcp-server S4: simulate_uplink round trips on both paths
   ---
-  duration_ms: 5.258045
+  duration_ms: 4.278967
   type: 'test'
   ...
 # Subtest: mcp-server S5: errors are proper JSON-RPC errors, notifications get 202 empty
 ok 31 - mcp-server S5: errors are proper JSON-RPC errors, notifications get 202 empty
   ---
-  duration_ms: 2.89454
+  duration_ms: 2.465918
   type: 'test'
   ...
 # Subtest: mcp-server: ping returns an empty result
 ok 32 - mcp-server: ping returns an empty result
   ---
-  duration_ms: 1.235047
+  duration_ms: 0.912263
   type: 'test'
   ...
 # Subtest: ui-elevation S1: DESIGN.md has tokens, type scale, spacing, hero, motion and quality bars
 ok 33 - ui-elevation S1: DESIGN.md has tokens, type scale, spacing, hero, motion and quality bars
   ---
-  duration_ms: 5.155122
+  duration_ms: 1.539554
   type: 'test'
   ...
 # Subtest: ui-elevation S1: page follows DESIGN.md tokens and typefaces
 ok 34 - ui-elevation S1: page follows DESIGN.md tokens and typefaces
   ---
-  duration_ms: 4.634455
+  duration_ms: 0.522835
   type: 'test'
   ...
 # Subtest: ui-elevation S2: sections, demo/dashboard hooks and single h1 are preserved
 ok 35 - ui-elevation S2: sections, demo/dashboard hooks and single h1 are preserved
   ---
-  duration_ms: 1.10315
+  duration_ms: 0.792876
   type: 'test'
   ...
 # Subtest: ui-elevation S2: content facts and SEO/GEO layer are preserved
 ok 36 - ui-elevation S2: content facts and SEO/GEO layer are preserved
   ---
-  duration_ms: 0.378791
+  duration_ms: 0.30992
   type: 'test'
   ...
 # Subtest: ui-elevation S4: codec, data, mcp and index are untouched by the run
 ok 37 - ui-elevation S4: codec, data, mcp and index are untouched by the run # SKIP no main ref to diff against
   ---
-  duration_ms: 13.151565
+  duration_ms: 11.075458
   type: 'test'
   ...
 # Subtest: ui-elevation S5: no hype words in page or DESIGN.md
 ok 38 - ui-elevation S5: no hype words in page or DESIGN.md
   ---
-  duration_ms: 0.718989
+  duration_ms: 0.568163
   type: 'test'
   ...
 # Subtest: ui-elevation S5: product names match BRAND.md exactly
 ok 39 - ui-elevation S5: product names match BRAND.md exactly
   ---
-  duration_ms: 0.434896
+  duration_ms: 0.367855
   type: 'test'
   ...
-1..39
-# tests 39
+# Subtest: ui-elevation S6 C1: hero type never drops below 56 px at any width
+ok 40 - ui-elevation S6 C1: hero type never drops below 56 px at any width
+  ---
+  duration_ms: 0.805845
+  type: 'test'
+  ...
+# Subtest: ui-elevation S6 C1: body copy never drops below 17 px
+ok 41 - ui-elevation S6 C1: body copy never drops below 17 px
+  ---
+  duration_ms: 0.866595
+  type: 'test'
+  ...
+# Subtest: ui-elevation S6 C2: spacing avoids the off-rhythm 30, 15, 28 and 26 px values
+ok 42 - ui-elevation S6 C2: spacing avoids the off-rhythm 30, 15, 28 and 26 px values
+  ---
+  duration_ms: 2.136979
+  type: 'test'
+  ...
+# Subtest: ui-elevation S6 C3: SVG annotations use \#53685C and the toggle has no white background
+ok 43 - ui-elevation S6 C3: SVG annotations use \#53685C and the toggle has no white background
+  ---
+  duration_ms: 0.518089
+  type: 'test'
+  ...
+# Subtest: ui-elevation S6 C4: .rv starts hidden and reveals over 800 ms ease-out
+ok 44 - ui-elevation S6 C4: .rv starts hidden and reveals over 800 ms ease-out
+  ---
+  duration_ms: 0.500322
+  type: 'test'
+  ...
+1..44
+# tests 44
 # suites 0
-# pass 38
+# pass 43
 # fail 0
 # cancelled 0
 # skipped 1
 # todo 0
-# duration_ms 227.914114
+# duration_ms 181.802207

@@ -33,6 +33,9 @@ vertical padding. A title, its introduction and its illustration form one
 idea; detailed lists follow with generous separation. Hairlines provide
 structure without enclosing every item in a card. Technical examples and
 tables remain dense enough to scan, with scrolling contained locally.
+Fixed margins, padding and gaps use multiples of 8 px, including the bounds
+of fluid spacing. One-pixel border overlaps and diagram coordinates are
+optical geometry rather than content spacing.
 
 ## Hero art direction
 
@@ -53,7 +56,10 @@ No scale animation, bounce, glow or perpetual hero movement. Hover changes
 are small color or hairline changes. Reduced motion disables CSS reveals
 and smooth scrolling, and hides the moving packet dot; the measurements
 and existing controls continue to operate. Static content must remain
-readable even before reveal initialization.
+readable without JavaScript through a noscript style override. With scripting
+enabled, reveal elements begin at zero opacity and 16 px below their final
+position; the existing observer adds the visible state. Reduced motion keeps
+both the initial and revealed states visible and stationary.
 
 ## Launch page quality bars
 
@@ -71,3 +77,6 @@ readable even before reveal initialization.
   Wellness framing and the medical disclaimer remain visible.
 - Run the full scenario suite. Visual quality and S3 model provenance are
   assessed by the independent review stations; passing tests is not approval.
+- S6: At small widths retain a 56 px hero minimum and 17 px body minimum.
+  Use #53685C for SVG annotations and paper for the simulation toggle.
+  Check the hidden reveal state, 800 ms ease-out transition and motion fallback.

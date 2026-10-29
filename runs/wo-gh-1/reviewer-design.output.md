@@ -1,3 +1,12 @@
-{"station":"reviewer-design","verdict":"changes_requested","findings":["Typography: design/DESIGN.md:20–26 requires a minimum 56px hero and 17px body copy. src/page.js:326 reduces the hero to 48px at 375px and 320px widths; lines 214, 224, 231 and 299 reduce descriptive paragraphs to 14.5–15.5px. Restore the documented sizes.","Spacing: design/DESIGN.md:30 requires an 8px spacing rhythm. src/page.js uses off-rhythm values including 30px navigation gaps (171), 15px layer-list padding (210), 28px wearer-tab gaps (265), and a 26px inline hero headline margin (422). Align these with the documented spacing scale.","Palette: design/DESIGN.md:14–15 specifies #53685C for secondary labels and reserves white for the physical patch. src/page.js:113 and 125 use #5C6F66 for SVG annotations, while line 236 gives the simulation toggle a white background. Apply the documented secondary-label color and paper background."]}
+{
+  "station": "reviewer-design",
+  "verdict": "changes_requested",
+  "findings": [
+    "Spacing: src/page.js:166 sets .nav padding to 32px 0, overriding the horizontal gutters inherited from .wrap. The mobile override changes only vertical padding. Preserve the documented 24–80px horizontal gutters required by design/DESIGN.md:31.",
+    "Typography: src/page.js:346 renders footer prose at 13px, violating the 17px body minimum in design/DESIGN.md:80. Increase .fine body copy to at least 17px.",
+    "Label tokens: src/page.js:162 uses 0.18em tracking, while lines 325–327 reduce hero labels and captions to 10px with caption tracking of 0.12em. Apply the documented 11px mono label size and 0.16em tracking from design/DESIGN.md:25–26.",
+    "Palette: src/page.js:132 fills the passing-phone illustration white, and line 242 applies white to the demo relay disc. design/DESIGN.md:15 reserves white for the physical patch. Use paper or another documented permitted fill for these non-patch elements."
+  ]
+}
 
 {"model": "gpt-6-astra", "runtime": "codex"}

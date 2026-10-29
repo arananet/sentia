@@ -110,7 +110,7 @@ export function explodedSvg() {
     })
     .join('\n');
   return `<svg class="plate" viewBox="0 0 980 560" role="img" aria-label="Exploded view of Sentia Patch One showing its six layers">
-  <style>.svg-name{font:500 15px Inter,sans-serif;fill:#12211C}.svg-note{font:12px ui-monospace,Menlo,monospace;fill:#5C6F66}</style>
+  <style>.svg-name{font:500 15px Inter,sans-serif;fill:#12211C}.svg-note{font:12px ui-monospace,Menlo,monospace;fill:#53685C}</style>
   ${parts}
   <text x="215" y="540" text-anchor="middle" class="svg-note">DIAMETER 38 MM · TOTAL THICKNESS 4.2 MM</text>
 </svg>`;
@@ -122,7 +122,7 @@ function shorten(s) {
 
 export function pathsSvg() {
   return `<svg class="plate" viewBox="0 0 1120 320" role="img" aria-label="Two paths from the patch to Sentia Cloud: through phones on the Find My network in the city, and through a LoRaWAN gateway out of coverage">
-  <style>.svg-name{font:500 15px Inter,sans-serif;fill:#12211C}.svg-note{font:11px ui-monospace,Menlo,monospace;fill:#5C6F66;letter-spacing:0.14em}.svg-teal{font:11px ui-monospace,Menlo,monospace;fill:#0E7C66;letter-spacing:0.14em}</style>
+  <style>.svg-name{font:500 15px Inter,sans-serif;fill:#12211C}.svg-note{font:11px ui-monospace,Menlo,monospace;fill:#53685C;letter-spacing:0.14em}.svg-teal{font:11px ui-monospace,Menlo,monospace;fill:#0E7C66;letter-spacing:0.14em}</style>
   <circle cx="90" cy="160" r="34" fill="#FFFFFF" stroke="#12211C" stroke-width="1.2"/>
   <circle cx="90" cy="160" r="18" fill="none" stroke="#12211C" stroke-width="0.8"/>
   <circle cx="114" cy="136" r="4" fill="#FF6B4A"/>
@@ -164,12 +164,12 @@ a:hover{text-decoration:underline;text-underline-offset:3px}
 .muted{color:var(--soft)}
 header.site{position:absolute;top:0;left:0;right:0;z-index:5}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:32px 0}
-.brand{display:flex;align-items:center;gap:12px;color:var(--ink)}
+.brand{display:flex;align-items:center;gap:16px;color:var(--ink)}
 .brand:hover{text-decoration:none}
 .brand svg{display:block}
 .wordmark{font:500 21px 'Space Grotesk',sans-serif;letter-spacing:0.01em}
-.nav nav{display:flex;gap:30px}
-.nav nav a{color:var(--soft);font-size:14.5px}
+.nav nav{display:flex;gap:32px}
+.nav nav a{color:var(--soft);font-size:17px}
 .nav nav a:hover{color:var(--ink);text-decoration:none}
 @media(max-width:820px){.nav nav{display:none}}
 section{padding:clamp(96px,12vw,160px) 0;border-top:1px solid var(--line)}
@@ -178,7 +178,7 @@ h1{font:300 clamp(56px,8.4vw,144px)/0.96 'Space Grotesk',sans-serif;letter-spaci
 h2{font:300 clamp(40px,6.2vw,88px)/1.04 'Space Grotesk',sans-serif;letter-spacing:-0.04em;margin:24px 0 32px;max-width:18ch;text-wrap:balance}
 h3{font:500 19px/1.4 'Space Grotesk',sans-serif}
 .lede{font-size:clamp(18px,1.5vw,20px);color:var(--soft);max-width:54ch}
-.rv{transition:opacity .8s ease-out,transform .8s ease-out}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .8s ease-out,transform .8s ease-out}
 .rv.in{opacity:1;transform:none}
 /* hero */
 .hero{padding-top:160px;position:relative}
@@ -187,9 +187,9 @@ h3{font:500 19px/1.4 'Space Grotesk',sans-serif}
 .hero h1{grid-column:1;grid-row:2}
 .hero .lede{grid-column:1;grid-row:3;margin-top:40px}
 .chips{display:flex;flex-wrap:wrap;gap:16px 24px;margin-top:32px;grid-column:1/-1}
-.chip{border-top:1px solid var(--line);padding:12px 0;font:500 11px/1.5 ui-monospace,Menlo,monospace;letter-spacing:0.16em;text-transform:uppercase;color:var(--soft)}
+.chip{border-top:1px solid var(--line);padding:16px 0;font:500 11px/1.5 ui-monospace,Menlo,monospace;letter-spacing:0.16em;text-transform:uppercase;color:var(--soft)}
 .cta{display:flex;flex-wrap:wrap;gap:24px 32px;margin-top:24px;grid-column:1/-1}
-.cta a{font-size:15.5px;border-bottom:1px solid var(--teal);padding-bottom:8px}
+.cta a{font-size:17px;border-bottom:1px solid var(--teal);padding-bottom:8px}
 .cta a:hover{text-decoration:none;border-color:var(--ink);color:var(--ink)}
 .hero-visual{grid-column:2;grid-row:2/4;align-self:center;text-align:center;min-width:0}
 .patch-top{width:100%;max-width:640px;height:auto;display:block;margin:auto}
@@ -204,105 +204,105 @@ h3{font:500 19px/1.4 'Space Grotesk',sans-serif}
 }
 /* patch section */
 .plate{width:100%;height:auto;display:block}
-.split{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(30px,5vw,70px);align-items:start}
+.split{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(32px,5vw,72px);align-items:start}
 @media(max-width:900px){.split{grid-template-columns:1fr}}
 .layer-list{list-style:none}
-.layer-list li{padding:15px 0;border-bottom:1px solid var(--line)}
+.layer-list li{padding:16px 0;border-bottom:1px solid var(--line)}
 .layer-list li:first-child{border-top:1px solid var(--line)}
 .layer-list .n{color:var(--teal);font:500 11px ui-monospace,Menlo,monospace;letter-spacing:0.16em}
-.layer-list h3{margin:4px 0 3px;font-size:16.5px}
-.layer-list p{color:var(--soft);font-size:14.5px}
+.layer-list h3{margin:8px 0 8px;font-size:16.5px}
+.layer-list p{color:var(--soft);font-size:17px}
 .spec-strip{display:flex;flex-wrap:wrap;gap:0;margin-top:clamp(48px,7vh,72px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.spec-strip div{flex:1 1 150px;padding:20px 18px 18px;border-left:1px solid var(--line)}
+.spec-strip div{flex:1 1 150px;padding:24px 16px 16px;border-left:1px solid var(--line)}
 .spec-strip div:first-child{border-left:none}
 .spec-strip .v{font:300 clamp(32px,3vw,48px) 'Space Grotesk',sans-serif}
-.spec-strip .k{color:var(--faint);margin-top:4px}
-.sensors{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(30px,5vw,70px);margin-top:clamp(44px,6vh,64px)}
+.spec-strip .k{color:var(--faint);margin-top:8px}
+.sensors{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(32px,5vw,72px);margin-top:clamp(48px,6vh,64px)}
 @media(max-width:760px){.sensors{grid-template-columns:1fr}}
-.sensor{padding:20px 0;border-top:1px solid var(--line)}
-.sensor h3{font-size:17px;margin-bottom:4px}
-.sensor p{color:var(--soft);font-size:15px}
+.sensor{padding:24px 0;border-top:1px solid var(--line)}
+.sensor h3{font-size:17px;margin-bottom:8px}
+.sensor p{color:var(--soft);font-size:17px}
 /* how */
-.journey{list-style:none;margin-top:clamp(40px,6vh,60px)}
-.journey li{display:grid;grid-template-columns:110px 180px 1fr;gap:18px;padding:20px 0;border-top:1px solid var(--line);align-items:baseline}
+.journey{list-style:none;margin-top:clamp(40px,6vh,64px)}
+.journey li{display:grid;grid-template-columns:110px 180px 1fr;gap:16px;padding:24px 0;border-top:1px solid var(--line);align-items:baseline}
 @media(max-width:760px){.journey li{grid-template-columns:60px 1fr}.journey li p{grid-column:2}}
 .journey .step{color:var(--teal)}
 .journey h3{font-size:18px}
-.journey p{color:var(--soft);font-size:15.5px;max-width:62ch}
-.privacy{margin-top:clamp(44px,6vh,64px);background:var(--mint);border-radius:0;padding:clamp(32px,5vw,64px)}
-.privacy h3{margin-bottom:10px}
+.journey p{color:var(--soft);font-size:17px;max-width:62ch}
+.privacy{margin-top:clamp(48px,6vh,64px);background:var(--mint);border-radius:0;padding:clamp(32px,5vw,64px)}
+.privacy h3{margin-bottom:8px}
 .privacy p{color:var(--soft);max-width:70ch}
 /* demo */
-.toggle{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:#fff}
-.toggle button{border:none;background:transparent;padding:10px 22px;font:500 12px ui-monospace,Menlo,monospace;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft);cursor:pointer}
+.toggle{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--paper)}
+.toggle button{border:none;background:transparent;padding:8px 24px;font:500 12px ui-monospace,Menlo,monospace;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft);cursor:pointer}
 .toggle button.on{background:var(--ink);color:var(--paper)}
-.stage{position:relative;margin-top:clamp(44px,6vh,64px);padding:34px 0 8px}
+.stage{position:relative;margin-top:clamp(48px,6vh,64px);padding:32px 0 8px}
 .stage-nodes{display:flex;justify-content:space-between;text-align:center}
 .node{width:180px}
-.node .disc{width:64px;height:64px;margin:0 auto 12px;border:1.2px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff;position:relative}
+.node .disc{width:64px;height:64px;margin:0 auto 16px;border:1.2px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff;position:relative}
 .node .disc::after{content:"";width:26px;height:26px;border:0.8px solid var(--ink);border-radius:50%;opacity:0.55}
 .node.server .disc{border-radius:14px;background:var(--mint)}
 .node.server .disc::after{border-radius:5px}
 .node h3{font-size:16px}
-.node p{color:var(--faint);font-size:12.5px}
+.node p{color:var(--faint);font-size:17px}
 .stage-track{position:absolute;left:6%;right:6%;top:66px;height:1px;background:var(--line)}
 #packetDot{position:absolute;top:62px;left:4%;width:9px;height:9px;border-radius:50%;background:var(--teal);opacity:0;transform:translateX(-50%)}
-.payload{margin-top:30px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0}
+.payload{margin-top:32px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0}
 .payload pre{font:12.5px/1.7 ui-monospace,Menlo,monospace;color:var(--ink);word-break:break-all;white-space:pre-wrap;margin-top:8px}
-.readouts{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:30px;border-bottom:1px solid var(--line)}
+.readouts{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:32px;border-bottom:1px solid var(--line)}
 @media(max-width:760px){.readouts{grid-template-columns:repeat(2,1fr)}}
-.readouts div{padding:16px 14px 18px;border-left:1px solid var(--line)}
+.readouts div{padding:16px 16px 16px;border-left:1px solid var(--line)}
 .readouts div:first-child{border-left:none}
 .readouts .v{font:300 clamp(32px,3.6vw,48px) 'Space Grotesk',sans-serif}
-.readouts .k{color:var(--faint);margin-top:3px}
-.live-chart{width:100%;height:150px;display:block;margin-top:26px}
+.readouts .k{color:var(--faint);margin-top:8px}
+.live-chart{width:100%;height:150px;display:block;margin-top:24px}
 .feed{list-style:none;margin-top:24px}
-.feed-row{padding:9px 0;border-bottom:1px solid var(--line);font:12.5px ui-monospace,Menlo,monospace;color:var(--soft);opacity:0;transform:translateY(6px);transition:opacity .8s ease-out,transform .8s ease-out}
+.feed-row{padding:8px 0;border-bottom:1px solid var(--line);font:12.5px ui-monospace,Menlo,monospace;color:var(--soft);opacity:0;transform:translateY(6px);transition:opacity .8s ease-out,transform .8s ease-out}
 .feed-row.in{opacity:1;transform:none}
-.text-btn{margin-top:22px;background:none;border:none;border-bottom:1px solid var(--teal);color:var(--teal);font-size:15px;padding:0 0 2px;cursor:pointer}
+.text-btn{margin-top:24px;background:none;border:none;border-bottom:1px solid var(--teal);color:var(--teal);font-size:17px;padding:0 0 8px;cursor:pointer}
 .text-btn:hover{color:var(--ink);border-color:var(--ink)}
 /* dashboard */
-.wearer-tabs{display:flex;gap:28px;border-bottom:1px solid var(--line);margin-top:36px}
-.wearer-tab{background:none;border:none;padding:0 0 12px;font:500 16px 'Space Grotesk',sans-serif;color:var(--faint);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.wearer-tabs{display:flex;gap:32px;border-bottom:1px solid var(--line);margin-top:40px}
+.wearer-tab{background:none;border:none;padding:0 0 16px;font:500 16px 'Space Grotesk',sans-serif;color:var(--faint);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
 .wearer-tab.on{color:var(--ink);border-color:var(--teal)}
 .tiles{display:grid;grid-template-columns:repeat(3,1fr);margin-top:8px}
 @media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
-.tiles div{padding:22px 16px 20px;border-bottom:1px solid var(--line)}
+.tiles div{padding:24px 16px 24px;border-bottom:1px solid var(--line)}
 .tiles .v{font:300 clamp(32px,4vw,56px) 'Space Grotesk',sans-serif}
-.tiles .k{color:var(--faint);margin-top:4px}
-.charts{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,56px);margin-top:clamp(40px,6vh,56px)}
+.tiles .k{color:var(--faint);margin-top:8px}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,4vw,56px);margin-top:clamp(40px,6vh,56px)}
 @media(max-width:760px){.charts{grid-template-columns:1fr}}
 .charts canvas{width:100%;height:180px;display:block}
-.chart-cap{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:10px}
-.alert-row{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+.chart-cap{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:8px}
+.alert-row{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);align-items:flex-start}
 .alert-dot{width:8px;height:8px;border-radius:50%;margin-top:8px;flex:none;background:var(--faint)}
 .alert-dot.sev-critical{background:var(--coral)}
 .alert-dot.sev-warning{background:var(--teal)}
 .alert-head{font:500 12px ui-monospace,Menlo,monospace;letter-spacing:0.14em;text-transform:uppercase}
-.alert-msg{color:var(--soft);font-size:15px}
-.calm{color:var(--soft);padding:14px 0}
-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:15px}
-th{font:500 11px ui-monospace,Menlo,monospace;letter-spacing:0.16em;text-transform:uppercase;color:var(--faint);text-align:left;padding:10px 12px;border-bottom:1px solid var(--ink)}
-td{padding:13px 12px;border-bottom:1px solid var(--line);color:var(--soft)}
+.alert-msg{color:var(--soft);font-size:17px}
+.calm{color:var(--soft);padding:16px 0}
+table{width:100%;border-collapse:collapse;margin-top:16px;font-size:17px}
+th{font:500 11px ui-monospace,Menlo,monospace;letter-spacing:0.16em;text-transform:uppercase;color:var(--faint);text-align:left;padding:8px 16px;border-bottom:1px solid var(--ink)}
+td{padding:16px 16px;border-bottom:1px solid var(--line);color:var(--soft)}
 td:first-child{color:var(--ink)}
 tbody tr{cursor:pointer}
 tbody tr.on td{background:var(--mint)}
-.sub{margin-top:clamp(48px,7vh,68px)}
-.sub h3{font:300 clamp(32px,3.6vw,48px) 'Space Grotesk',sans-serif;margin-bottom:12px}
+.sub{margin-top:clamp(48px,7vh,72px)}
+.sub h3{font:300 clamp(32px,3.6vw,48px) 'Space Grotesk',sans-serif;margin-bottom:16px}
 /* mcp */
-.endpoint{font:13px ui-monospace,Menlo,monospace;background:transparent;border:1px solid var(--line);border-radius:0;padding:16px 20px;margin-top:26px;word-break:break-all}
-pre.code{font:12.5px/1.75 ui-monospace,Menlo,monospace;background:transparent;border:1px solid var(--line);border-radius:0;padding:20px 22px;overflow-x:auto;margin-top:14px;color:var(--ink)}
-.tools{list-style:none;margin-top:10px}
-.tools li{display:grid;grid-template-columns:210px 1fr;gap:18px;padding:14px 0;border-bottom:1px solid var(--line)}
+.endpoint{font:13px ui-monospace,Menlo,monospace;background:transparent;border:1px solid var(--line);border-radius:0;padding:16px 24px;margin-top:24px;word-break:break-all}
+pre.code{font:12.5px/1.75 ui-monospace,Menlo,monospace;background:transparent;border:1px solid var(--line);border-radius:0;padding:24px 24px;overflow-x:auto;margin-top:16px;color:var(--ink)}
+.tools{list-style:none;margin-top:8px}
+.tools li{display:grid;grid-template-columns:210px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
 @media(max-width:760px){.tools li{grid-template-columns:1fr}}
 .tools .tn{font:13px ui-monospace,Menlo,monospace;color:var(--teal)}
-.tools p{color:var(--soft);font-size:15px}
+.tools p{color:var(--soft);font-size:17px}
 /* faq */
-.faq-item{padding:26px 0;border-top:1px solid var(--line)}
+.faq-item{padding:24px 0;border-top:1px solid var(--line)}
 .faq-item h3{font-size:20px;margin-bottom:8px}
 .faq-item p{color:var(--soft);max-width:68ch}
-footer{border-top:1px solid var(--line);padding:54px 0 64px;color:var(--soft);font-size:14.5px}
-footer .cols{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:flex-start}
+footer{border-top:1px solid var(--line);padding:56px 0 64px;color:var(--soft);font-size:17px}
+footer .cols{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:flex-start}
 footer p{max-width:52ch}
 /* Responsive containment and keyboard access preserve the existing hooks. */
 :focus-visible{outline:2px solid var(--teal);outline-offset:5px}
@@ -313,7 +313,7 @@ section{scroll-margin-top:32px}
 .journey h3{font-size:24px}
 .faq-item{padding:32px 0}
 #specs th{width:32%;line-height:1.6}
-#specs td{padding:24px 12px}
+#specs td{padding:24px 16px}
 #dashboard .sub:has(table){overflow-x:auto}
 #dashboard table{min-width:640px}
 .tiles .v{overflow-wrap:anywhere}
@@ -323,17 +323,17 @@ section{scroll-margin-top:32px}
   .nav{padding-top:24px;padding-bottom:24px}
   .hero{padding-top:128px}
   .hero .kicker{font-size:10px}
-  .hero h1{font-size:clamp(48px,12vw,72px)}
+  .hero h1{font-size:clamp(56px,12vw,72px)}
   .caption{font-size:10px;letter-spacing:0.12em}
   .spec-strip div{flex-basis:50%}
   .spec-strip div:nth-child(odd){border-left:none}
   .stage .node{width:31%}
   .node h3{font-size:14px}
-  .node p{font-size:11px}
+  .node p{font-size:17px}
   .readouts div{padding:24px 8px}
   .tiles div{padding:24px 8px}
   .mono{overflow-wrap:anywhere}
-  .journey li{gap:12px;grid-template-columns:52px minmax(0,1fr)}
+  .journey li{gap:16px;grid-template-columns:52px minmax(0,1fr)}
   .tools li{gap:8px}
   #specs th{width:38%;letter-spacing:0.08em;padding-left:0}
   #specs td{overflow-wrap:anywhere}
@@ -343,7 +343,7 @@ section{scroll-margin-top:32px}
   .rv,.feed-row{opacity:1;transform:none;transition:none}
   #packetDot{visibility:hidden}
 }
-footer .fine{margin-top:26px;color:var(--faint);font-size:13px}
+footer .fine{margin-top:24px;color:var(--faint);font-size:13px}
 `;
 
 export function renderPage(origin) {
@@ -401,6 +401,7 @@ export function renderPage(origin) {
 ${jsonLd(origin)}
 </script>
 <style>${CSS}</style>
+<noscript><style>.rv{opacity:1;transform:none}</style></noscript>
 </head>
 <body>
 <header class="site">
@@ -419,7 +420,7 @@ ${jsonLd(origin)}
 <section class="hero" aria-label="Introduction">
   <div class="wrap">
     <p class="mono kicker rv">Sentia Patch One · Skin temperature · Hydration · Activity</p>
-    <h1 class="rv" style="margin-top:26px">A patch that whispers through networks that already exist.</h1>
+    <h1 class="rv" style="margin-top:24px">A patch that whispers through networks that already exist.</h1>
     <p class="lede rv">${FACTS.definition} It has no cellular radio and no GPS. Its measurements ride passing phones on the Find My network, or a LoRaWAN gateway kilometres away, into ${FACTS.platform}.</p>
     <div class="chips rv">
       <span class="chip">Find My network · BLE relay</span>
@@ -442,7 +443,7 @@ ${jsonLd(origin)}
     <p class="mono kicker rv">The patch</p>
     <h2 class="rv">Six layers, 4.2 mm thin.</h2>
     <p class="lede rv">A flexible adhesive disc worn on the upper arm or torso for up to ${FACTS.wearDays} days. Everything it needs is inside: sensors, two radios, and a printed battery sized for the whole wear.</p>
-    <div class="split" style="margin-top:clamp(44px,6vh,64px)">
+    <div class="split" style="margin-top:clamp(48px,6vh,64px)">
       <div class="rv">${explodedSvg()}</div>
       <ol class="layer-list rv">
 ${layerItems}
@@ -474,7 +475,7 @@ ${sensorCards}
       <li class="rv"><span class="mono step">Step 4</span><h3>Server</h3><p>${FACTS.platform} retrieves and decrypts the payloads addressed to it, decodes both formats with one codec, stores the time series and evaluates the alert rules.</p></li>
       <li class="rv"><span class="mono step">Step 5</span><h3>You</h3><p>The wearer, or a care circle they choose, sees the result in the dashboard, through the API, or by asking an assistant through the ${FACTS.mcpServer}.</p></li>
     </ol>
-    <div class="rv" style="margin-top:clamp(44px,6vh,64px)">${pathsSvg()}</div>
+    <div class="rv" style="margin-top:clamp(48px,6vh,64px)">${pathsSvg()}</div>
     <div class="privacy rv">
       <h3>Private by construction</h3>
       <p>Identifiers rotate with every broadcast window, so a digest cannot be followed across a day. Relay devices see ciphertext and contribute their own location context, never the patch contents. The patch carries no GPS receiver. Only ${FACTS.platform} holds the keys that link a digest to a wearer and decode it. Battery logic is equally plain: Bluetooth Low Energy first, LoRaWAN only when no relay has carried a digest for a while, and high value alerts, a fall impact for example, escalate at once.</p>
@@ -487,7 +488,7 @@ ${sensorCards}
     <p class="mono kicker rv">Live demo</p>
     <h2 class="rv">Watch a packet travel.</h2>
     <p class="lede rv">A simulated patch, running in your browser with the same packet codec as the server. Choose where the wearer is, and watch each reading take its path.</p>
-    <div style="margin-top:30px" class="rv">
+    <div style="margin-top:32px" class="rv">
       <span class="toggle" role="group" aria-label="Where is the wearer">
         <button id="demoToggleCity" class="on" type="button">City</button>
         <button id="demoToggleRural" type="button">Rural</button>
@@ -574,9 +575,9 @@ ${toolItems}
     </div>
     <div class="sub rv">
       <h3>A real exchange</h3>
-      <p class="muted" style="margin-bottom:6px">An assistant asks the server to demonstrate the whisper for Marina Soler's patch. Request:</p>
+      <p class="muted" style="margin-bottom:8px">An assistant asks the server to demonstrate the whisper for Marina Soler's patch. Request:</p>
       <pre class="code">${JSON.stringify(ex.request, null, 2)}</pre>
-      <p class="muted" style="margin:18px 0 6px">Response, trimmed to the essentials:</p>
+      <p class="muted" style="margin:16px 0 8px">Response, trimmed to the essentials:</p>
       <pre class="code">${JSON.stringify(ex.response, null, 2)}</pre>
     </div>
   </div>
@@ -598,7 +599,7 @@ ${specRows}
   <div class="wrap">
     <p class="mono kicker rv">Questions</p>
     <h2 class="rv">Asked, answered.</h2>
-    <div style="margin-top:20px">
+    <div style="margin-top:24px">
 ${faqItems}
     </div>
   </div>
@@ -610,11 +611,11 @@ ${faqItems}
     <div class="cols">
       <div>
         <p><strong style="color:var(--ink)">Sentia</strong> · ${FACTS.tagline}</p>
-        <p style="margin-top:10px">${FACTS.definition}</p>
+        <p style="margin-top:8px">${FACTS.definition}</p>
       </div>
       <div>
         <p><a href="#demo">Live demo</a> · <a href="#dashboard">Dashboard</a> · <a href="#mcp">MCP</a> · <a href="${REPO_URL}">Source</a></p>
-        <p style="margin-top:10px">Wellness monitoring, not diagnosis. ${FACTS.product} is not a medical device.</p>
+        <p style="margin-top:8px">Wellness monitoring, not diagnosis. ${FACTS.product} is not a medical device.</p>
       </div>
     </div>
     <p class="fine">Sentia is a concept product, designed and built end to end by <a href="${GITHUB_URL}">ANVIL</a>, an open source software factory.</p>

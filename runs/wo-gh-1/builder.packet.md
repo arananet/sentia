@@ -53,3 +53,6 @@ GitHub issue: https://github.com/arananet/sentia/issues/1
 - intake: completed
 - spec-writer: executed
 - test-writer: executed
+
+## Project design
+
