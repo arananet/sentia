@@ -1,0 +1,264 @@
+{
+  "work_order_id": "wo-gh-1",
+  "pipeline": "sdlc-default",
+  "title": "Elevate the launch page to flagship product standard (UI built by Astra)",
+  "kind": "feature",
+  "steps": [
+    {
+      "station": "intake",
+      "status": "completed",
+      "detail": "Work order normalized",
+      "duration_ms": 0.018,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "spec-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-1/spec-writer.output.md",
+      "duration_ms": 13795.486,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/spec-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "test-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-1/test-writer.output.md",
+      "duration_ms": 34441.899,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/test-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "builder",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-1/builder.output.md",
+      "duration_ms": 56194.702,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/builder.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-spec",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-1/reviewer-spec.output.md",
+      "duration_ms": 20440.076,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/reviewer-spec.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-security",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-1/reviewer-security.output.md",
+      "duration_ms": 14896.38,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/reviewer-security.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-tests",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-1/reviewer-tests.output.md",
+      "duration_ms": 14833.322,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/reviewer-tests.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-architecture",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-1/reviewer-architecture.output.md",
+      "duration_ms": 16650.871,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/reviewer-architecture.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-design",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-1/reviewer-design.output.md",
+      "duration_ms": 15627.829,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/reviewer-design.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "approver",
+      "status": "completed",
+      "detail": "Approver verdict: changes_requested",
+      "duration_ms": 0.04,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "approver",
+      "status": "loopback",
+      "return_to": "builder",
+      "detail": "Loopback to builder: S1 met: design/DESIGN.md has tokens, type scale, spacing rhythm, hero art direction, motion rules and quality bars. The src/page.js CSS follows it: h1 clamp(56px,8.4vw,144px) at 0.96 leading and -0.055em tracking, h2 up to 88px, 1440px wrap, 96-160px section padding, and a two-column hero with the 38 mm disc, coral LED and dimension line.; S2 met: all section ids, demo and dashboard hooks, JSON-LD, canonical and og tags are preserved. The full suite ran 39 tests with 38 pass, 0 fail and 1 skip.; S3: the builder envelope shows configured_model and executed_model gpt-6-astra. Reviewer envelopes are not present yet, which is expected while review is in progress.; S4: among source files, git status shows only src/page.js changed. The S4 test skipped because no main ref was available, so it gave no assurance and I checked by git status instead.; S5 met: no hype words appear in the page or DESIGN.md, and product names are exact.; Non-blocking: .rv no longer sets opacity:0 and a translateY, so the reveal fade and rise described in DESIGN.md Motion (800 ms ease-out) no longer plays. The hooks remain, but the effect is gone. Either restore a hidden initial state under a JS-enabled guard, or reword DESIGN.md.; Note: .openspec/specs/ui-elevation/spec.md is modified in the tree (S4 and S5 added). That change belongs to the spec-writer station and is outside the S4 file list.; Review written to runs/wo-gh-1/reviewer-spec.output.md.; The src/page.js diff touches only CSS and static inline SVG. It adds no script, inline event handlers, new network calls or new external origins.; The diff adds no new template interpolations. The only added SVG strings are the static `patch-shadow` filter id and the \"38 MM\" label, so there is no injection surface. The origin, jsonLd and FACTS interpolation paths are unchanged.; No changes to the JSON API, MCP server, codec or data layer.; The Google Fonts preconnect and stylesheet link in src/page.js were already there. They are a third-party request, and self-hosting the fonts would remove it. This is not a blocker for this change.; The prefers-reduced-motion and :focus-visible additions are safe defaults.; The review is written to runs/wo-gh-1/reviewer-security.output.md.; The full suite ran 39 tests: 38 pass, 0 fail, 1 skipped. The new tests in tests/ui-elevation.test.js are real and named by scenario for S1, S2, S4 and S5.; The S4 test skips in this checkout with 'no main ref to diff against', so it verified nothing here. I checked by hand: `git diff --name-only HEAD` lists only src/page.js and the spec file. src/codec.js, src/data.js, src/mcp.js and src/index.js are untouched. design/DESIGN.md is untracked, so it does not show in that diff.; S3 (builder configured as gpt-6-astra) has no test. It is a run-report check, so the run verdict has to cover it.; The S4 test only asserts that four files are unchanged. It does not assert that changes are limited to src/page.js and design/DESIGN.md, which is what the scenario says. This weakness does not block the pass.; The S5 product-name check only rejects the string 'SentiaPatch', and the other names are not asserted. The S1 'page follows DESIGN.md' check only compares shared hex tokens and font names. Both are weak but acceptable.; The review is written to runs/wo-gh-1/reviewer-tests.output.md.; Layering holds. The diff touches only src/page.js (CSS and static inline SVG). src/codec.js, src/data.js, src/mcp.js and src/index.js are untouched. The SEO/GEO, JSON-LD and client hook code paths are unchanged. The only other modified tracked file is the spec file, which belongs to the spec-writer station.; brain/decisions does not exist, so only brain/project.md could be checked as the decision record. It holds no decision that conflicts with this change. I checked nothing beyond that, and the missing decisions input is a gap in the inputs.; design/DESIGN.md is a new file in its own directory and is consistent with the brand/BRAND.md tokens. The one deviation is --faint, which moves from #71837A to #53685C for legibility. DESIGN.md documents it.; Non-blocking: .rv no longer sets opacity:0 or a translateY. The 800 ms reveal described in DESIGN.md Motion therefore never plays, and the .in hooks only trigger a transition between identical states. DESIGN.md allows this by saying content must be readable before reveal initialization. Either restore a JS-guarded hidden initial state or reword the motion rule.; Non-blocking: the S4 test skips in this checkout because there is no main ref. Changed-file scope was checked by hand with `git diff --name-only HEAD`, which lists only src/page.js and the spec file.; The full suite ran 39 tests: 38 pass, 0 fail, 1 skip. The review is written to runs/wo-gh-1/reviewer-architecture.output.md.; No design system exists for this project. The project must define design/DESIGN.md and design/tokens.json before interface output can be reviewed against design standards.",
+      "reason": "S1 met: design/DESIGN.md has tokens, type scale, spacing rhythm, hero art direction, motion rules and quality bars. The src/page.js CSS follows it: h1 clamp(56px,8.4vw,144px) at 0.96 leading and -0.055em tracking, h2 up to 88px, 1440px wrap, 96-160px section padding, and a two-column hero with the 38 mm disc, coral LED and dimension line.; S2 met: all section ids, demo and dashboard hooks, JSON-LD, canonical and og tags are preserved. The full suite ran 39 tests with 38 pass, 0 fail and 1 skip.; S3: the builder envelope shows configured_model and executed_model gpt-6-astra. Reviewer envelopes are not present yet, which is expected while review is in progress.; S4: among source files, git status shows only src/page.js changed. The S4 test skipped because no main ref was available, so it gave no assurance and I checked by git status instead.; S5 met: no hype words appear in the page or DESIGN.md, and product names are exact.; Non-blocking: .rv no longer sets opacity:0 and a translateY, so the reveal fade and rise described in DESIGN.md Motion (800 ms ease-out) no longer plays. The hooks remain, but the effect is gone. Either restore a hidden initial state under a JS-enabled guard, or reword DESIGN.md.; Note: .openspec/specs/ui-elevation/spec.md is modified in the tree (S4 and S5 added). That change belongs to the spec-writer station and is outside the S4 file list.; Review written to runs/wo-gh-1/reviewer-spec.output.md.; The src/page.js diff touches only CSS and static inline SVG. It adds no script, inline event handlers, new network calls or new external origins.; The diff adds no new template interpolations. The only added SVG strings are the static `patch-shadow` filter id and the \"38 MM\" label, so there is no injection surface. The origin, jsonLd and FACTS interpolation paths are unchanged.; No changes to the JSON API, MCP server, codec or data layer.; The Google Fonts preconnect and stylesheet link in src/page.js were already there. They are a third-party request, and self-hosting the fonts would remove it. This is not a blocker for this change.; The prefers-reduced-motion and :focus-visible additions are safe defaults.; The review is written to runs/wo-gh-1/reviewer-security.output.md.; The full suite ran 39 tests: 38 pass, 0 fail, 1 skipped. The new tests in tests/ui-elevation.test.js are real and named by scenario for S1, S2, S4 and S5.; The S4 test skips in this checkout with 'no main ref to diff against', so it verified nothing here. I checked by hand: `git diff --name-only HEAD` lists only src/page.js and the spec file. src/codec.js, src/data.js, src/mcp.js and src/index.js are untouched. design/DESIGN.md is untracked, so it does not show in that diff.; S3 (builder configured as gpt-6-astra) has no test. It is a run-report check, so the run verdict has to cover it.; The S4 test only asserts that four files are unchanged. It does not assert that changes are limited to src/page.js and design/DESIGN.md, which is what the scenario says. This weakness does not block the pass.; The S5 product-name check only rejects the string 'SentiaPatch', and the other names are not asserted. The S1 'page follows DESIGN.md' check only compares shared hex tokens and font names. Both are weak but acceptable.; The review is written to runs/wo-gh-1/reviewer-tests.output.md.; Layering holds. The diff touches only src/page.js (CSS and static inline SVG). src/codec.js, src/data.js, src/mcp.js and src/index.js are untouched. The SEO/GEO, JSON-LD and client hook code paths are unchanged. The only other modified tracked file is the spec file, which belongs to the spec-writer station.; brain/decisions does not exist, so only brain/project.md could be checked as the decision record. It holds no decision that conflicts with this change. I checked nothing beyond that, and the missing decisions input is a gap in the inputs.; design/DESIGN.md is a new file in its own directory and is consistent with the brand/BRAND.md tokens. The one deviation is --faint, which moves from #71837A to #53685C for legibility. DESIGN.md documents it.; Non-blocking: .rv no longer sets opacity:0 or a translateY. The 800 ms reveal described in DESIGN.md Motion therefore never plays, and the .in hooks only trigger a transition between identical states. DESIGN.md allows this by saying content must be readable before reveal initialization. Either restore a JS-guarded hidden initial state or reword the motion rule.; Non-blocking: the S4 test skips in this checkout because there is no main ref. Changed-file scope was checked by hand with `git diff --name-only HEAD`, which lists only src/page.js and the spec file.; The full suite ran 39 tests: 38 pass, 0 fail, 1 skip. The review is written to runs/wo-gh-1/reviewer-architecture.output.md.; No design system exists for this project. The project must define design/DESIGN.md and design/tokens.json before interface output can be reviewed against design standards.",
+      "duration_ms": 0.0,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": null,
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "triage-human",
+      "status": "completed",
+      "detail": "Human review: required",
+      "duration_ms": 0.006,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "deployer",
+      "status": "packet_ready",
+      "detail": "Packet written to runs/wo-gh-1/deployer.packet.md",
+      "duration_ms": 0.09,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/deployer.packet.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "observer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-1/observer.output.md",
+      "duration_ms": 17561.682,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/observer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    }
+  ],
+  "verdict": "changes_requested",
+  "human_required": true,
+  "max_loopbacks": 2,
+  "loopbacks": 1,
+  "deployment_status": null,
+  "verify_results": [],
+  "risk_hints": [],
+  "decision": {
+    "approver": {
+      "reviews_counted": [
+        {
+          "station": "reviewer-spec",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-security",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-tests",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-architecture",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-design",
+          "verdict": "changes_requested"
+        }
+      ],
+      "reviews_expected": [
+        "reviewer-spec",
+        "reviewer-security",
+        "reviewer-tests",
+        "reviewer-architecture",
+        "reviewer-design"
+      ],
+      "rule": "Reviewer reviewer-design requested changes."
+    },
+    "human_gate": {
+      "required": true,
+      "rule": "Verdict is changes_requested, not approved, so a human is required.",
+      "hints_matched": []
+    }
+  },
+  "warnings": [
+    "Missing design system: This pipeline includes interface-producing stations, but the project has no design/DESIGN.md. Define the design system to enable design review."
+  ]
+}

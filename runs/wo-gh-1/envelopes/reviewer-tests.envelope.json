@@ -1,0 +1,27 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-tests",
+  "to_station": "reviewer-architecture",
+  "work_order_id": "wo-gh-1",
+  "artifact_path": "runs/wo-gh-1/reviewer-tests.output.md",
+  "status": "executed",
+  "created_at": "2026-10-29T01:27:09.693177+00:00",
+  "review": {
+    "station": "reviewer-tests",
+    "verdict": "pass",
+    "findings": [
+      "The full suite ran 39 tests: 38 pass, 0 fail, 1 skipped. The new tests in tests/ui-elevation.test.js are real and named by scenario for S1, S2, S4 and S5.",
+      "The S4 test skips in this checkout with 'no main ref to diff against', so it verified nothing here. I checked by hand: `git diff --name-only HEAD` lists only src/page.js and the spec file. src/codec.js, src/data.js, src/mcp.js and src/index.js are untouched. design/DESIGN.md is untracked, so it does not show in that diff.",
+      "S3 (builder configured as gpt-6-astra) has no test. It is a run-report check, so the run verdict has to cover it.",
+      "The S4 test only asserts that four files are unchanged. It does not assert that changes are limited to src/page.js and design/DESIGN.md, which is what the scenario says. This weakness does not block the pass.",
+      "The S5 product-name check only rejects the string 'SentiaPatch', and the other names are not asserted. The S1 'page follows DESIGN.md' check only compares shared hex tokens and font names. Both are weak but acceptable.",
+      "The review is written to runs/wo-gh-1/reviewer-tests.output.md."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}
