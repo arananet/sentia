@@ -9,36 +9,51 @@ but the dispatcher (tools/anvil_station.py) sends the builder station here
 because anvil.yaml configures its model as gpt-6-astra.
 
 Runtime choice, and why: the UI model is OpenAI's GPT-6 Astra, reachable
-only through the Cloudflare AI Gateway. Claude Code cannot speak to the
-gateway for an OpenAI model. This station runs on Codex (OpenAI's agent
-CLI) with a custom model provider pointing at the gateway's provider
-native OpenAI endpoint:
+for this project through Cloudflare AI Gateway. Claude Code cannot speak
+to an OpenAI model route. This station runs on Codex (OpenAI's agent CLI)
+with a custom model provider pointing at the Cloudflare unified AI
+endpoint family on api.cloudflare.com:
 
-    https://gateway.ai.cloudflare.com/v1/693ae9c587f1f2c34328bb47447366b0/arananet-ai-gateway/openai
+    https://api.cloudflare.com/client/v4/accounts/693ae9c587f1f2c34328bb47447366b0/ai/v1
 
-Codex sends Authorization: Bearer <token> from the provider env_key and,
-through env_http_headers, cf-aig-authorization: Bearer <token>, the same
-dual header pattern that is proven to work for the Anthropic route through
-this gateway. The token itself is read from the CF_AIG_TOKEN environment
-variable at runtime; it is never printed and never written to any file
-(the generated Codex config references environment variables only).
+with the request header cf-aig-gateway-id: arananet-ai-gateway selecting
+the gateway, wire_api "responses", and env_key CF_AI_API_TOKEN carrying
+the Authorization bearer. The gateway id is not a secret, so it is a
+literal http_headers entry in the generated Codex config. The token is a
+dedicated account API token named "sentia-ci-ai-gateway", scoped to this
+Cloudflare account only with the Workers AI Write permission group, stored
+in this repository as the Actions secret CF_AI_API_TOKEN. It is read from
+the environment at runtime; it is never printed and never written to any
+file (the generated Codex config references the environment variable only).
 
-Why not OpenCode, which was wired first: two genuine attempts in GitHub
-Actions (runs 40784202699, 40784209336 and 40784825553, 2026-10-28) failed
-in the AI SDK provider layer, not at the gateway credentials. With
-@ai-sdk/openai-compatible against the gateway /compat endpoint, gateway
-auth and the OpenAI provider credentials both worked (OpenAI itself
-answered) but OpenAI rejected the request: "Unsupported parameter:
-'max_tokens' is not supported with this model. Use 'max_completion_tokens'
-instead." With @ai-sdk/openai against the provider endpoint, the request
-reached OpenAI without a usable Authorization header and failed with
-"Missing bearer token or basic authentication in header". Codex builds
-its own request: against a local stub server it was verified to POST
-/responses with a Responses API body (no max_tokens), both auth headers
-present, exit 0, exact reply. Current Codex no longer offers a chat
-completions wire API, so the Responses route through the provider native
-endpoint is the Codex route; the workflow's Astra smoke gate is the proof
-it works end to end.
+Why the unified endpoints and not the gateway's classic provider
+endpoints: the first Codex wiring pointed at the classic provider endpoint
+(gateway.ai.cloudflare.com/v1/<account>/<gateway>/openai). In GitHub
+Actions (runs 40784202699, 40784209336, 40784825553 and 40785786103,
+2026-10-28) OpenAI answered 401 "Missing bearer token or basic
+authentication in header": the classic provider endpoint family requires a
+stored provider key (BYOK) on the gateway and does NOT fall back to
+Cloudflare Unified Billing, and this gateway holds no OpenAI provider key.
+The unified /ai endpoint family on api.cloudflare.com DOES serve
+Cloudflare managed credentials, so Unified Billing applies there. Proven
+by direct API test on 2026-10-28 before this rewiring: POST
+/accounts/<account>/ai/v1/responses with the header cf-aig-gateway-id and
+an account API token as bearer returned HTTP 200, model
+"openai/gpt-6-astra", exact reply ASTRA_OK; the same held for
+/ai/v1/chat/completions. The dedicated token above passed the identical
+ASTRA_OK test at minting time (after allowing for account token
+propagation, which takes on the order of tens of seconds). The workflow's
+Astra smoke gate remains the end to end proof on every run.
+
+Why not OpenCode, which was wired before Codex: two genuine attempts in
+GitHub Actions failed in the AI SDK provider layer. With
+@ai-sdk/openai-compatible against the gateway /compat endpoint, OpenAI
+rejected the request: "Unsupported parameter: 'max_tokens' is not
+supported with this model. Use 'max_completion_tokens' instead." With
+@ai-sdk/openai against the provider endpoint, the request reached OpenAI
+without a usable Authorization header. Codex builds its own request and
+current Codex no longer offers a chat completions wire API, so the
+Responses route is the Codex route.
 
 Behavior: the packet body (everything after the "# Task packet:" header
 line) becomes the Codex prompt. Codex runs in exec mode with the
@@ -59,24 +74,26 @@ import subprocess
 import sys
 import tempfile
 
-# ANVIL configured model -> model string Codex sends to the gateway.
+# ANVIL configured model -> model string Codex sends to the endpoint.
 MODEL_MAP = {
     "gpt-6-astra": "openai/gpt-6-astra",
 }
 
-GATEWAY_BASE_URL = (
-    "https://gateway.ai.cloudflare.com/v1/"
-    "693ae9c587f1f2c34328bb47447366b0/arananet-ai-gateway/openai"
+UNIFIED_BASE_URL = (
+    "https://api.cloudflare.com/client/v4/accounts/"
+    "693ae9c587f1f2c34328bb47447366b0/ai/v1"
 )
+
+GATEWAY_ID = "arananet-ai-gateway"
 
 CONFIG_TEMPLATE = """model = "{model}"
 model_provider = "cloudflare"
 [model_providers.cloudflare]
-name = "Cloudflare AI Gateway"
+name = "Cloudflare Unified AI (AI Gateway: {gateway_id})"
 base_url = "{base_url}"
-env_key = "CF_AIG_TOKEN"
+env_key = "CF_AI_API_TOKEN"
 wire_api = "responses"
-env_http_headers = {{ "cf-aig-authorization" = "CF_AIG_AUTH" }}
+http_headers = {{ "cf-aig-gateway-id" = "{gateway_id}" }}
 """
 
 TIMEOUT_SECONDS = 1500
@@ -104,9 +121,9 @@ def main() -> int:
             file=sys.stderr,
         )
         return 6
-    token = os.environ.get("CF_AIG_TOKEN", "")
+    token = os.environ.get("CF_AI_API_TOKEN", "")
     if not token:
-        print("astra wrapper: CF_AIG_TOKEN is not set in the environment", file=sys.stderr)
+        print("astra wrapper: CF_AI_API_TOKEN is not set in the environment", file=sys.stderr)
         return 5
 
     prompt = (
@@ -116,10 +133,13 @@ def main() -> int:
         + task
     )
     env = dict(os.environ)
-    env["CF_AIG_AUTH"] = "Bearer " + token
     with tempfile.TemporaryDirectory(prefix="anvil-codex-home-") as codex_home:
         with open(os.path.join(codex_home, "config.toml"), "w", encoding="utf-8") as handle:
-            handle.write(CONFIG_TEMPLATE.format(model=gateway_model, base_url=GATEWAY_BASE_URL))
+            handle.write(
+                CONFIG_TEMPLATE.format(
+                    model=gateway_model, base_url=UNIFIED_BASE_URL, gateway_id=GATEWAY_ID
+                )
+            )
         env["CODEX_HOME"] = codex_home
         last_message = os.path.join(codex_home, "last-message.txt")
         command = [

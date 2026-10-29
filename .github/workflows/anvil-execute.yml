@@ -8,13 +8,19 @@ name: anvil-execute
 #
 # Model routing for this run (ANVIL policy, recorded in anvil.yaml):
 # the builder station runs GPT-6 Astra through Codex (custom model
-# provider) against the Cloudflare AI Gateway OpenAI endpoint; spec
-# writer, test writer and the four reviewers run claude-sonnet-5-5
-# through Claude Code against the gateway Anthropic route.
+# provider) against the Cloudflare unified AI endpoints on
+# api.cloudflare.com (base /client/v4/accounts/<account>/ai/v1, header
+# cf-aig-gateway-id selecting arananet-ai-gateway), authenticated with
+# the dedicated account API token held in the CF_AI_API_TOKEN secret;
+# Unified Billing covers the OpenAI provider on that endpoint family.
+# Spec writer, test writer and the four reviewers run claude-sonnet-5-5
+# through Claude Code against the gateway Anthropic route (CF_AIG_TOKEN).
 # tools/anvil_station.py dispatches per station. There is no fallback
 # from Astra to another model for the builder: if the Astra smoke gate
-# fails, this job stops before the line runs. (OpenCode was wired first
-# and failed twice in the AI SDK provider layer; see
+# fails, this job stops before the line runs. (The gateway's classic
+# provider endpoints were wired first and failed with 401: they require
+# a stored BYOK provider key and do not apply Unified Billing fallback.
+# OpenCode also failed twice in the AI SDK provider layer. See
 # tools/astra_station.py for the full record.)
 #
 # Deployment is deliberately NOT part of this run: anvil.yaml carries no
@@ -48,6 +54,7 @@ jobs:
       ANTHROPIC_API_KEY: ${{ secrets.CF_AIG_TOKEN }}
       ANTHROPIC_CUSTOM_HEADERS: "cf-aig-authorization: Bearer ${{ secrets.CF_AIG_TOKEN }}"
       CF_AIG_TOKEN: ${{ secrets.CF_AIG_TOKEN }}
+      CF_AI_API_TOKEN: ${{ secrets.CF_AI_API_TOKEN }}
       CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1"
     steps:
       - name: Check out this repository
@@ -88,7 +95,7 @@ jobs:
           fi
           echo "Anthropic smoke passed: claude-sonnet-5-5 answered through the gateway Anthropic endpoint."
 
-      - name: Astra smoke gate (gpt-6-astra through the gateway OpenAI route)
+      - name: Astra smoke gate (gpt-6-astra through the unified /ai endpoints)
         id: smoke_astra
         run: |
           export CODEX_HOME="$(mktemp -d)"
@@ -96,20 +103,19 @@ jobs:
           model = "openai/gpt-6-astra"
           model_provider = "cloudflare"
           [model_providers.cloudflare]
-          name = "Cloudflare AI Gateway"
-          base_url = "https://gateway.ai.cloudflare.com/v1/693ae9c587f1f2c34328bb47447366b0/arananet-ai-gateway/openai"
-          env_key = "CF_AIG_TOKEN"
+          name = "Cloudflare Unified AI (AI Gateway: arananet-ai-gateway)"
+          base_url = "https://api.cloudflare.com/client/v4/accounts/693ae9c587f1f2c34328bb47447366b0/ai/v1"
+          env_key = "CF_AI_API_TOKEN"
           wire_api = "responses"
-          env_http_headers = { "cf-aig-authorization" = "CF_AIG_AUTH" }
+          http_headers = { "cf-aig-gateway-id" = "arananet-ai-gateway" }
           EOF
-          export CF_AIG_AUTH="Bearer ${CF_AIG_TOKEN}"
           timeout 420 codex exec --skip-git-repo-check --sandbox read-only --output-last-message astra-last.txt "Reply with exactly: ASTRA_OK" < /dev/null > astra-smoke.txt 2>&1 || true
           tail -c 3000 astra-smoke.txt || true
           if ! grep -q "ASTRA_OK" astra-last.txt 2>/dev/null; then
-            echo "ASTRA SMOKE FAILED: codex did not return ASTRA_OK from gpt-6-astra through the gateway OpenAI route. The raw output above is the exact error. Stopping here: no fallback to another model for UI work. The raw output is in astra-smoke.txt and in the uploaded artifacts."
+            echo "ASTRA SMOKE FAILED: codex did not return ASTRA_OK from gpt-6-astra through the unified /ai endpoints on api.cloudflare.com. The raw output above is the exact error. Stopping here: no fallback to another model for UI work. The raw output is in astra-smoke.txt and in the uploaded artifacts."
             exit 1
           fi
-          echo "Astra smoke passed: gpt-6-astra answered through the gateway OpenAI endpoint (Codex, Responses API)."
+          echo "Astra smoke passed: gpt-6-astra answered through the unified /ai endpoint (Codex, Responses API, AI Gateway header)."
 
       - name: Run the ANVIL sdlc-default line in execute mode
         id: line
@@ -200,7 +206,9 @@ jobs:
               "",
               "Honest note: this run EXECUTED its agent stations with per station model routing. "
               "The builder (the UI work) ran GPT-6 Astra through Codex (custom model provider, "
-              "Responses API) against the Cloudflare AI Gateway OpenAI endpoint; spec writer, test "
+              "Responses API) against the Cloudflare unified AI endpoints on api.cloudflare.com "
+              "with the cf-aig-gateway-id header selecting the AI Gateway (Unified Billing covers "
+              "the OpenAI provider there); spec writer, test "
               "writer and the four reviewers ran claude-sonnet-5-5 "
               "through Claude Code against the gateway Anthropic route. Both routes passed an exact reply "
               "smoke gate before the line ran. The deployer station stayed a packet on purpose: deployment "
