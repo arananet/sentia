@@ -1,0 +1,59 @@
+# Task packet: builder
+
+## Station prompt
+
+# Builder
+
+## Role
+Implement the spec so the scenario tests pass.
+
+## Inputs
+- spec
+- tests
+
+## Outputs
+- code change
+
+## Rules
+- Work only from the inputs listed above and the work order in the packet.
+- Produce the output as a file in the repo, not as chat text.
+- If the inputs are not enough, say what is missing instead of guessing.
+- Never approve your own work. Approval belongs to a different station.
+- Keep the change small and mapped to a spec scenario where one applies.
+
+
+## Work order
+
+- id: wo-gh-4
+- kind: feature
+- title: Credit line: add Developed by Eduardo Arana to the footer sentence
+- source: github-issue
+- description: Problem: the page footer credit line names ANVIL alone. Edu ordered the credit to also name the author, with exact text.
+
+The change: the sentence "Sentia is a concept product, designed and built end to end by ANVIL, an open source software factory." becomes "Sentia is a concept product, designed and built end to end by ANVIL, an open source software factory. Developed by Eduardo Arana."
+
+Occurrence record, verified by the operator against the production tree (branch anvil/run-design-v2-1 at 11007a1): the old sentence occurs exactly once, in the footer rendered by src/page.js, where the word ANVIL is wrapped in a link to the ANVIL repository and the rendered sentence is byte exact the old text. Every occurrence of the old sentence in the production tree gets the new text. Two related sentences are not this sentence and stay unchanged: the description sentence built in src/seo.js ("Sentia Patch One is a concept product from a mock startup, designed and built end to end by ANVIL, an open source software factory"), and the README.md line ("Sentia is a concept product built end to end with ANVIL"). The live llms.txt does not carry the old sentence.
+
+Base tree: production runs branch anvil/run-design-v2-1 at 11007a1, deployed on the human gate word after wo-gh-3 and never merged. Main does not contain the v2.1 page. This run branches from anvil/run-design-v2-1 at 11007a1, never from main.
+
+Scope: copy only. The expected production change is the footer line in src/page.js: append the sentence "Developed by Eduardo Arana." after "an open source software factory." inside the same footer paragraph, keeping the ANVIL link as it is. No layout change, no style change, no behaviour change, no other copy change. The governing spec is .openspec/specs/site-credit/spec.md.
+
+Model routing for this run: builder and reviewer-design on GPT-6 Astra (gpt-6-astra) through the Cloudflare AI Gateway; spec writer, test writer and the other reviewer stations on claude-sonnet-5-5 through the same gateway. No fallback to another model for the builder.
+
+Deployment happens outside the line, by the operator, and only if the verdict is approved and the final production diff is exactly this copy change: Edu ordered this exact text for the live site, so an approved run with exactly this diff deploys without a second gate round.
+
+Done criteria: the served footer sentence is byte exact the new text; the production diff touches only the credit line; run verdict approved with all five expected reviews counted, reviewer-design among them; full test suite green.
+
+
+GitHub issue: https://github.com/arananet/sentia/issues/4
+- risk_hints: 
+- status: new
+
+## Upstream steps
+
+- intake: completed
+- spec-writer: executed
+- test-writer: executed
+
+## Project design
+

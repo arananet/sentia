@@ -1,0 +1,27 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-spec",
+  "to_station": "reviewer-security",
+  "work_order_id": "wo-gh-4",
+  "artifact_path": "runs/wo-gh-4/reviewer-spec.output.md",
+  "status": "executed",
+  "created_at": "2026-10-29T12:48:32.435813+00:00",
+  "review": {
+    "station": "reviewer-spec",
+    "verdict": "pass",
+    "findings": [
+      "S1 met: the footer paragraph in src/page.js now ends 'an open source software factory. Developed by Eduardo Arana.' inside the same <p class=\"fine\">. The ANVIL link (<a href=\"${GITHUB_URL}\">ANVIL</a>) is unchanged. tests/site-credit.test.js checks the exact string and checks that it occurs once.",
+      "S2 met: the production diff is one line in src/page.js. src/seo.js and README.md are untouched and keep their different sentences. The tests check /llms.txt (200, no old or new credit sentence) and the four image routes (200, image/webp, 7838/9318/20098/13098 bytes).",
+      "Scope is copy only: no layout, style, route or behaviour change in the diff.",
+      "Full suite ran with npm test: 83 tests, 82 pass, 0 fail, 1 skipped. The skipped test is not one of the site-credit tests.",
+      "S3 cannot be decided at this station. The approved verdict and the count of all five reviews, with reviewer-design among them, come from the run report. I did not check them.",
+      "The review is written to runs/wo-gh-4/reviewer-spec.output.md. I did not approve the run; approval belongs to a different station."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

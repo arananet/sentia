@@ -1,0 +1,26 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-security",
+  "to_station": "reviewer-tests",
+  "work_order_id": "wo-gh-4",
+  "artifact_path": "runs/wo-gh-4/reviewer-security.output.md",
+  "status": "executed",
+  "created_at": "2026-10-29T12:48:45.128188+00:00",
+  "review": {
+    "station": "reviewer-security",
+    "verdict": "pass",
+    "findings": [
+      "The only production change is one static string in the footer of src/page.js, which appends 'Developed by Eduardo Arana.'. The text is a literal with no user-controlled input, so it adds no injection or XSS surface.",
+      "The ANVIL link still uses `${GITHUB_URL}` from src/facts.js and is unchanged. The diff adds no new link, script, header, route, dependency or config.",
+      "tests/site-credit.test.js only calls the worker in-process and reads local files (src/seo.js, README.md). It adds no network access, secrets or unsafe defaults.",
+      "Not checked: the diff against the production base anvil/run-design-v2-1 at 11007a1. I reviewed the diff as it appears on the current run branch.",
+      "The review is written to runs/wo-gh-4/reviewer-security.output.md."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}
