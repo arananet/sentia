@@ -9,12 +9,13 @@ configured model from anvil.yaml, then routes by model family:
 
 - gpt-* models (the UI model, GPT-6 Astra) run through tools/astra_station.py
   (Codex, custom model provider, against the Cloudflare AI Gateway). The
-  dispatcher passes the station id to that wrapper: the builder gets the
-  workspace-write sandbox, while reviewer stations (reviewer-design, the
-  design reviewer the factory added to sdlc-default) get the wrapper's
-  read-only reviewer mode with the review JSON output contract, per the
-  model policy that design stations run on Astra and reviewers never get
-  write tools.
+  dispatcher passes the station id to that wrapper: the builder runs Codex
+  with full access, while reviewer stations (reviewer-design, the design
+  reviewer the factory added to sdlc-default) get the wrapper's reviewer
+  mode with the review JSON output contract. Codex's bubblewrap sandbox
+  cannot run on GitHub hosted runners, so reviewer read only is enforced
+  by the wrapper's before and after worktree diff, not by the sandbox;
+  see tools/astra_station.py for the full record.
 - claude-* models run through tools/claude_station.py (Claude Code against
   the gateway Anthropic route).
 - Any other model value fails loudly. There is no silent substitution and

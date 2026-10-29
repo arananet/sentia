@@ -8,13 +8,32 @@ ANVIL's command executor calls this script through the dispatcher as:
 Two kinds of stations run here, per the ANVIL model policy (design
 stations on Astra):
 
-- builder: the UI builder station. Codex runs with the workspace-write
-  sandbox at the repository root and edits the tree directly.
+- builder: the UI builder station. Codex runs with full access
+  (--dangerously-bypass-approvals-and-sandbox) at the repository root and
+  edits the tree directly, the same trust posture the Claude stations in
+  this workflow already run with (--dangerously-skip-permissions).
 - reviewer-design (any station id starting with "reviewer"): a design
-  reviewer. Codex runs with the read-only sandbox, so it can read the
-  tree it judges but never change it, and its prompt carries the same
-  review JSON output contract that tools/claude_station.py appends for
-  its reviewers, so the runner can parse the review.
+  reviewer. Codex also runs with full access at the CLI level (see the
+  sandbox note below), so read only is NOT enforced by Codex here. This
+  wrapper enforces it instead: it fingerprints the working tree before
+  and after the reviewer run (git status porcelain plus a sha256 of every
+  tracked file's contents) and fails the station loudly, recording the
+  changed paths, if anything differs. Its prompt carries the same review
+  JSON output contract that tools/claude_station.py appends for its
+  reviewers, so the runner can parse the review.
+
+Sandbox note (repaired after run 40799301315): Codex's sandbox is
+bubblewrap, and bubblewrap cannot run on GitHub hosted runners. In that
+run both Astra stations executed the model but every command inside the
+station died with "bwrap: loopback: Failed RTM_NEWADDR: Operation not
+permitted". The builder therefore changed nothing (no design/DESIGN.md,
+no src diff) and reviewer-design judged from the packet alone; the five
+reviewers correctly rejected the empty change. The Claude stations never
+hit this because Claude Code does not sandbox its commands on this
+workflow. So both Codex modes now run without bubblewrap: the builder
+with full access by design, and the reviewer with full access at the CLI
+level but read only enforced by this wrapper's before and after diff,
+which is a verification, not a sandbox, and is documented as such.
 
 Runtime choice, and why: the UI and design model is OpenAI's GPT-6
 Astra, reachable for this project through Cloudflare AI Gateway. Claude
@@ -71,7 +90,10 @@ exact exception was unrecoverable from the run record. This version
 therefore: creates the Codex home with tempfile.mkdtemp and never deletes
 it here (CI runners are ephemeral); captures Codex's full stdout and
 stderr to a sidecar evidence file next to the station output
-(<output>.codex.log), which the workflow commits with the run evidence;
+(<output>.codex.txt; the .txt suffix matters because this repo's
+.gitignore eats *.log, which silently dropped the .codex.log sidecars
+from the evidence commits), which the workflow commits with the run
+evidence;
 always writes the station output file, on failure with the failure detail
 in it; and catches any unexpected exception in the wrapper itself,
 recording the full traceback in the sidecar and the output file before
@@ -83,6 +105,7 @@ cannot run, this wrapper fails and the run reports it.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import subprocess
@@ -125,6 +148,55 @@ REVIEW_SUFFIX = (
 )
 
 
+def worktree_snapshot(exclude: set) -> dict:
+    """Fingerprint the working tree for the reviewer read only check.
+
+    Combines git status porcelain (catches new, deleted and renamed
+    paths, tracked or not) with a sha256 of every tracked file's
+    contents (catches in place edits that keep the same status letter).
+    Paths in exclude (the station output and its sidecar, both owned by
+    this wrapper) are left out so the wrapper never trips on itself.
+    """
+    snap = {}
+    status = subprocess.run(
+        ["git", "status", "--porcelain"], capture_output=True, text=True
+    )
+    entries = []
+    for line in status.stdout.splitlines():
+        if any(ex in line for ex in exclude):
+            continue
+        entries.append(line)
+    snap["__status__"] = "\n".join(sorted(entries))
+    listed = subprocess.run(["git", "ls-files"], capture_output=True, text=True)
+    for rel in listed.stdout.splitlines():
+        if rel in exclude:
+            continue
+        try:
+            with open(rel, "rb") as handle:
+                snap[rel] = hashlib.sha256(handle.read()).hexdigest()
+        except OSError:
+            snap[rel] = "<unreadable>"
+    return snap
+
+
+def snapshot_changes(before: dict, after: dict) -> list:
+    """Human readable list of what differs between two snapshots."""
+    changed = []
+    for key in sorted(set(before) | set(after)):
+        if before.get(key) == after.get(key):
+            continue
+        if key == "__status__":
+            before_lines = set(before.get(key, "").splitlines())
+            after_lines = set(after.get(key, "").splitlines())
+            for line in sorted(after_lines - before_lines):
+                changed.append("git status: " + line)
+            for line in sorted(before_lines - after_lines):
+                changed.append("git status (gone): " + line)
+        else:
+            changed.append(key)
+    return changed
+
+
 def main() -> int:
     if len(sys.argv) not in (4, 5):
         print("usage: astra_station.py <packet> <output> <model> [station]", file=sys.stderr)
@@ -132,7 +204,7 @@ def main() -> int:
     packet_path, output_path, configured_model = sys.argv[1], sys.argv[2], sys.argv[3]
     station = sys.argv[4] if len(sys.argv) == 5 else "unknown"
     reviewer = station.startswith("reviewer")
-    sidecar_path = output_path + ".codex.log"
+    sidecar_path = output_path + ".codex.txt"
 
     def fail(code: int, detail: str) -> int:
         # The station output file always exists after this wrapper runs, so
@@ -176,11 +248,11 @@ def main() -> int:
                 "You are executing an ANVIL reviewer station packet inside this "
                 "repository. You are read only: inspect the files the packet "
                 "refers to, judge the work against the packet, and do not "
-                "change anything.\n\n"
+                "change anything. The wrapper verifies the tree is unchanged "
+                "after your run and fails this station if it is not.\n\n"
                 + task
                 + REVIEW_SUFFIX
             )
-            sandbox = "read-only"
         else:
             prompt = (
                 "You are executing an ANVIL station packet inside this repository. "
@@ -188,7 +260,6 @@ def main() -> int:
                 "with a brief plain text summary of what you changed.\n\n"
                 + task
             )
-            sandbox = "workspace-write"
 
         env = dict(os.environ)
         # mkdtemp, and deliberately no cleanup here: the context manager
@@ -204,13 +275,20 @@ def main() -> int:
             )
         env["CODEX_HOME"] = codex_home
         last_message = os.path.join(codex_home, "last-message.txt")
+        # No bubblewrap: it cannot run on GitHub hosted runners (see the
+        # sandbox note at the top). Both modes run Codex with full access;
+        # for reviewers, read only is enforced by the snapshot check below.
         command = [
             "codex", "exec",
             "--skip-git-repo-check",
-            "--sandbox", sandbox,
+            "--dangerously-bypass-approvals-and-sandbox",
             "--output-last-message", last_message,
             prompt,
         ]
+        before = None
+        if reviewer:
+            exclude = {os.path.relpath(output_path), os.path.relpath(sidecar_path)}
+            before = worktree_snapshot(exclude)
         try:
             proc = subprocess.run(
                 command,
@@ -244,6 +322,21 @@ def main() -> int:
                 handle.write(proc.stdout or "")
         except OSError:
             pass
+
+        if reviewer and before is not None:
+            changed = snapshot_changes(before, worktree_snapshot(exclude))
+            if changed:
+                return fail(
+                    8,
+                    f"astra wrapper: reviewer station {station} violated read only: "
+                    "the working tree changed during the reviewer run. Read only "
+                    "for Astra reviewers is enforced by this wrapper's before and "
+                    "after worktree diff (git status plus tracked file hashes), "
+                    "not by the Codex sandbox, which cannot run on GitHub hosted "
+                    "runners. Changed paths:\n"
+                    + "\n".join(changed)
+                    + f"\nFull codex output is in {sidecar_path}",
+                )
 
         text = ""
         if os.path.exists(last_message):

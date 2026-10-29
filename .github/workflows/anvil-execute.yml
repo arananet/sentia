@@ -16,7 +16,10 @@ name: anvil-execute
 # Spec writer, test writer and four of the five reviewers run claude-sonnet-5-5
 # through Claude Code against the gateway Anthropic route (CF_AIG_TOKEN);
 # reviewer-design runs gpt-6-astra through the same Codex route as the
-# builder, in the Astra wrapper's read-only reviewer mode.
+# builder, in the Astra wrapper's reviewer mode. Codex's bubblewrap
+# sandbox cannot run on GitHub hosted runners (run 40799301315 lost both
+# Astra stations to it), so Codex runs with full access here and reviewer
+# read only is enforced by the wrapper's before and after worktree diff.
 # tools/anvil_station.py dispatches per station. There is no fallback
 # from Astra to another model for the builder: if the Astra smoke gate
 # fails, this job stops before the line runs. (The gateway's classic
@@ -100,7 +103,14 @@ jobs:
       - name: Astra smoke gate (gpt-6-astra through the unified /ai endpoints)
         id: smoke_astra
         run: |
-          export CODEX_HOME="$(mktemp -d)"
+          # All smoke scratch lives in the runner temp directory, never in
+          # the worktree: a previous run left astra-smoke.txt at the repo
+          # root and the reviewers flagged it as outside the allowed
+          # change paths. The output is printed in this step's log.
+          SMOKE_DIR="${RUNNER_TEMP}/astra-smoke"
+          mkdir -p "${SMOKE_DIR}"
+          export CODEX_HOME="${SMOKE_DIR}/codex-home"
+          mkdir -p "${CODEX_HOME}"
           cat > "${CODEX_HOME}/config.toml" <<'EOF'
           model = "openai/gpt-6-astra"
           model_provider = "cloudflare"
@@ -111,10 +121,10 @@ jobs:
           wire_api = "responses"
           http_headers = { "cf-aig-gateway-id" = "arananet-ai-gateway" }
           EOF
-          timeout 420 codex exec --skip-git-repo-check --sandbox read-only --output-last-message astra-last.txt "Reply with exactly: ASTRA_OK" < /dev/null > astra-smoke.txt 2>&1 || true
-          tail -c 3000 astra-smoke.txt || true
-          if ! grep -q "ASTRA_OK" astra-last.txt 2>/dev/null; then
-            echo "ASTRA SMOKE FAILED: codex did not return ASTRA_OK from gpt-6-astra through the unified /ai endpoints on api.cloudflare.com. The raw output above is the exact error. Stopping here: no fallback to another model for UI work. The raw output is in astra-smoke.txt and in the uploaded artifacts."
+          timeout 420 codex exec --skip-git-repo-check --dangerously-bypass-approvals-and-sandbox --output-last-message "${SMOKE_DIR}/astra-last.txt" "Reply with exactly: ASTRA_OK" < /dev/null > "${SMOKE_DIR}/astra-smoke.txt" 2>&1 || true
+          tail -c 3000 "${SMOKE_DIR}/astra-smoke.txt" || true
+          if ! grep -q "ASTRA_OK" "${SMOKE_DIR}/astra-last.txt" 2>/dev/null; then
+            echo "ASTRA SMOKE FAILED: codex did not return ASTRA_OK from gpt-6-astra through the unified /ai endpoints on api.cloudflare.com. The raw output above is the exact error. Stopping here: no fallback to another model for UI work."
             exit 1
           fi
           echo "Astra smoke passed: gpt-6-astra answered through the unified /ai endpoint (Codex, Responses API, AI Gateway header)."
@@ -213,7 +223,9 @@ jobs:
               "the OpenAI provider there); spec writer, test "
               "writer and four reviewers ran claude-sonnet-5-5 "
               "through Claude Code against the gateway Anthropic route, and reviewer-design ran "
-              "gpt-6-astra through Codex in read-only reviewer mode. Both routes passed an exact reply "
+              "gpt-6-astra through Codex in reviewer mode, with read only enforced by the Astra "
+              "wrapper's before and after worktree diff (the Codex bubblewrap sandbox cannot run "
+              "on GitHub hosted runners, so Codex itself runs with full access). Both routes passed an exact reply "
               "smoke gate before the line ran. The deployer station stayed a packet on purpose: deployment "
               "for this work order happens outside the line, by the operator, after approval.",
               f"Workflow run: {run_url}",
@@ -230,6 +242,5 @@ jobs:
           name: anvil-execute-run-wo-gh-1
           path: |
             runs/
-            astra-smoke.txt
             suite-output.txt
           if-no-files-found: ignore
