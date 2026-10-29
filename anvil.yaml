@@ -73,6 +73,15 @@
       "prompt": "stations/reviewer-architecture/PROMPT.md",
       "tools": []
     },
+    "reviewer-design": {
+      "context": [
+        "brain/project.md",
+        ".openspec/specs/"
+      ],
+      "model": "gpt-6-astra",
+      "prompt": "stations/reviewer-design/PROMPT.md",
+      "tools": []
+    },
     "approver": {
       "context": [
         "brain/project.md",

@@ -1,18 +1,26 @@
 #!/usr/bin/env python3
-"""ANVIL executed station wrapper for the GPT-6 Astra UI builder station.
+"""ANVIL executed station wrapper for GPT-6 Astra stations (Codex runtime).
 
-ANVIL's command executor calls this script as:
+ANVIL's command executor calls this script through the dispatcher as:
 
-    python3 tools/anvil_station.py {packet} {output}
+    python3 tools/astra_station.py {packet} {output} {model} {station}
 
-but the dispatcher (tools/anvil_station.py) sends the builder station here
-because anvil.yaml configures its model as gpt-6-astra.
+Two kinds of stations run here, per the ANVIL model policy (design
+stations on Astra):
 
-Runtime choice, and why: the UI model is OpenAI's GPT-6 Astra, reachable
-for this project through Cloudflare AI Gateway. Claude Code cannot speak
-to an OpenAI model route. This station runs on Codex (OpenAI's agent CLI)
-with a custom model provider pointing at the Cloudflare unified AI
-endpoint family on api.cloudflare.com:
+- builder: the UI builder station. Codex runs with the workspace-write
+  sandbox at the repository root and edits the tree directly.
+- reviewer-design (any station id starting with "reviewer"): a design
+  reviewer. Codex runs with the read-only sandbox, so it can read the
+  tree it judges but never change it, and its prompt carries the same
+  review JSON output contract that tools/claude_station.py appends for
+  its reviewers, so the runner can parse the review.
+
+Runtime choice, and why: the UI and design model is OpenAI's GPT-6
+Astra, reachable for this project through Cloudflare AI Gateway. Claude
+Code cannot speak to an OpenAI model route. This station runs on Codex
+(OpenAI's agent CLI) with a custom model provider pointing at the
+Cloudflare unified AI endpoint family on api.cloudflare.com:
 
     https://api.cloudflare.com/client/v4/accounts/693ae9c587f1f2c34328bb47447366b0/ai/v1
 
@@ -55,15 +63,22 @@ without a usable Authorization header. Codex builds its own request and
 current Codex no longer offers a chat completions wire API, so the
 Responses route is the Codex route.
 
-Behavior: the packet body (everything after the "# Task packet:" header
-line) becomes the Codex prompt. Codex runs in exec mode with the
-workspace-write sandbox at the repository root, so the builder edits the
-tree directly. The final message is written to the output file, followed
-by a JSON line naming the executed model, so ANVIL's provenance rule can
-record executed_model from the station's own output. A station counts as
-executed when Codex exits 0 and produced a final message or changed the
-working tree. There is no fallback model: if Astra cannot run, this
-wrapper fails and the run reports it.
+Failure evidence (fixed after run 40798165871): the first executed run of
+work order wo-gh-1 lost the builder station to an unhandled traceback at
+this wrapper's tempfile.TemporaryDirectory context for the Codex home, and
+ANVIL's command executor truncates captured stderr to 500 chars, so the
+exact exception was unrecoverable from the run record. This version
+therefore: creates the Codex home with tempfile.mkdtemp and never deletes
+it here (CI runners are ephemeral); captures Codex's full stdout and
+stderr to a sidecar evidence file next to the station output
+(<output>.codex.log), which the workflow commits with the run evidence;
+always writes the station output file, on failure with the failure detail
+in it; and catches any unexpected exception in the wrapper itself,
+recording the full traceback in the sidecar and the output file before
+exiting nonzero. A station counts as executed when Codex exits 0 and, for
+the builder, produced a final message or changed the working tree; for a
+reviewer, produced a final message. There is no fallback model: if Astra
+cannot run, this wrapper fails and the run reports it.
 """
 
 from __future__ import annotations
@@ -73,6 +88,7 @@ import os
 import subprocess
 import sys
 import tempfile
+import traceback
 
 # ANVIL configured model -> model string Codex sends to the endpoint.
 MODEL_MAP = {
@@ -98,42 +114,88 @@ http_headers = {{ "cf-aig-gateway-id" = "{gateway_id}" }}
 
 TIMEOUT_SECONDS = 1500
 
+# The review output contract, identical to the suffix tools/claude_station.py
+# appends for its reviewer stations (the factory docs/EXECUTION.md contract).
+REVIEW_SUFFIX = (
+    "\n\n## Output contract\n\n"
+    "Answer with a single JSON object and nothing else, in exactly this shape:\n"
+    '{"station": "<your station id>", "verdict": "pass", "findings": ["..."]}\n'
+    "The verdict must be one of: pass, fail, changes_requested. "
+    "Findings must be concrete and checkable against the spec, the code and the tests.\n"
+)
+
 
 def main() -> int:
-    if len(sys.argv) != 4:
-        print("usage: astra_station.py <packet> <output> <model>", file=sys.stderr)
+    if len(sys.argv) not in (4, 5):
+        print("usage: astra_station.py <packet> <output> <model> [station]", file=sys.stderr)
         return 64
     packet_path, output_path, configured_model = sys.argv[1], sys.argv[2], sys.argv[3]
-    if os.path.exists(output_path):
-        os.unlink(output_path)
-    with open(packet_path, encoding="utf-8") as handle:
-        packet = handle.read()
-    lines = packet.splitlines()
-    task = "\n".join(lines[1:]).strip() if lines else packet.strip()
-    if not task:
-        print("astra wrapper: empty task in packet", file=sys.stderr)
-        return 65
-    gateway_model = MODEL_MAP.get(configured_model)
-    if gateway_model is None:
-        print(
-            f"astra wrapper: no gateway mapping for configured model {configured_model!r}; "
-            "refusing to substitute another model",
-            file=sys.stderr,
-        )
-        return 6
-    token = os.environ.get("CF_AI_API_TOKEN", "")
-    if not token:
-        print("astra wrapper: CF_AI_API_TOKEN is not set in the environment", file=sys.stderr)
-        return 5
+    station = sys.argv[4] if len(sys.argv) == 5 else "unknown"
+    reviewer = station.startswith("reviewer")
+    sidecar_path = output_path + ".codex.log"
 
-    prompt = (
-        "You are executing an ANVIL station packet inside this repository. "
-        "Follow the packet exactly, edit the files it asks for, and finish "
-        "with a brief plain text summary of what you changed.\n\n"
-        + task
-    )
-    env = dict(os.environ)
-    with tempfile.TemporaryDirectory(prefix="anvil-codex-home-") as codex_home:
+    def fail(code: int, detail: str) -> int:
+        # The station output file always exists after this wrapper runs, so
+        # the run record shows the failure instead of an empty step; the
+        # sidecar keeps the untruncated evidence.
+        print(detail, file=sys.stderr)
+        try:
+            with open(output_path, "w", encoding="utf-8") as handle:
+                handle.write(detail.rstrip() + "\n")
+        except OSError:
+            pass
+        try:
+            with open(sidecar_path, "a", encoding="utf-8") as handle:
+                handle.write("\n[astra wrapper failure]\n" + detail.rstrip() + "\n")
+        except OSError:
+            pass
+        return code
+
+    try:
+        if os.path.exists(output_path):
+            os.unlink(output_path)
+        with open(packet_path, encoding="utf-8") as handle:
+            packet = handle.read()
+        lines = packet.splitlines()
+        task = "\n".join(lines[1:]).strip() if lines else packet.strip()
+        if not task:
+            return fail(65, "astra wrapper: empty task in packet")
+        gateway_model = MODEL_MAP.get(configured_model)
+        if gateway_model is None:
+            return fail(
+                6,
+                f"astra wrapper: no gateway mapping for configured model {configured_model!r}; "
+                "refusing to substitute another model",
+            )
+        token = os.environ.get("CF_AI_API_TOKEN", "")
+        if not token:
+            return fail(5, "astra wrapper: CF_AI_API_TOKEN is not set in the environment")
+
+        if reviewer:
+            prompt = (
+                "You are executing an ANVIL reviewer station packet inside this "
+                "repository. You are read only: inspect the files the packet "
+                "refers to, judge the work against the packet, and do not "
+                "change anything.\n\n"
+                + task
+                + REVIEW_SUFFIX
+            )
+            sandbox = "read-only"
+        else:
+            prompt = (
+                "You are executing an ANVIL station packet inside this repository. "
+                "Follow the packet exactly, edit the files it asks for, and finish "
+                "with a brief plain text summary of what you changed.\n\n"
+                + task
+            )
+            sandbox = "workspace-write"
+
+        env = dict(os.environ)
+        # mkdtemp, and deliberately no cleanup here: the context manager
+        # form is what crashed the first executed run, and CI runners are
+        # ephemeral, so leaving the home behind costs nothing and can
+        # never delete evidence mid run.
+        codex_home = tempfile.mkdtemp(prefix="anvil-codex-home-")
         with open(os.path.join(codex_home, "config.toml"), "w", encoding="utf-8") as handle:
             handle.write(
                 CONFIG_TEMPLATE.format(
@@ -145,7 +207,7 @@ def main() -> int:
         command = [
             "codex", "exec",
             "--skip-git-repo-check",
-            "--sandbox", "workspace-write",
+            "--sandbox", sandbox,
             "--output-last-message", last_message,
             prompt,
         ]
@@ -160,38 +222,77 @@ def main() -> int:
                 env=env,
             )
         except FileNotFoundError:
-            print("astra wrapper: codex CLI not found on PATH", file=sys.stderr)
-            return 5
-        except subprocess.TimeoutExpired:
-            print(f"astra wrapper: codex timed out after {TIMEOUT_SECONDS}s", file=sys.stderr)
-            return 4
+            return fail(5, "astra wrapper: codex CLI not found on PATH")
+        except subprocess.TimeoutExpired as exc:
+            partial = exc.output if isinstance(exc.output, str) else ""
+            try:
+                with open(sidecar_path, "w", encoding="utf-8") as handle:
+                    handle.write(partial)
+            except OSError:
+                pass
+            return fail(
+                4,
+                f"astra wrapper: codex timed out after {TIMEOUT_SECONDS}s; "
+                f"partial output is in {sidecar_path}",
+            )
+
+        # Full untruncated Codex output becomes run evidence next to the
+        # station output, so no failure can hide behind the executor's
+        # 500 char stderr truncation again.
+        try:
+            with open(sidecar_path, "w", encoding="utf-8") as handle:
+                handle.write(proc.stdout or "")
+        except OSError:
+            pass
+
         text = ""
         if os.path.exists(last_message):
             with open(last_message, encoding="utf-8") as handle:
                 text = handle.read().strip()
-    status = subprocess.run(
-        ["git", "status", "--porcelain"], capture_output=True, text=True
-    )
-    tree_changed = bool(status.stdout.strip())
-    if proc.returncode != 0:
-        print(
-            f"astra wrapper: codex exited {proc.returncode}; output tail:\n"
-            + (proc.stdout or "")[-3000:],
-            file=sys.stderr,
+
+        if proc.returncode != 0:
+            return fail(
+                2,
+                f"astra wrapper: codex exited {proc.returncode} for station {station}; "
+                f"the full codex output is in {sidecar_path}; tail:\n"
+                + (proc.stdout or "")[-3000:],
+            )
+        if reviewer:
+            if not text:
+                return fail(
+                    3,
+                    "astra wrapper: reviewer codex run produced no final message; "
+                    f"full output is in {sidecar_path}",
+                )
+        else:
+            status = subprocess.run(
+                ["git", "status", "--porcelain"], capture_output=True, text=True
+            )
+            tree_changed = bool(status.stdout.strip())
+            if not text and not tree_changed:
+                return fail(
+                    3,
+                    "astra wrapper: codex produced no final message and no working tree "
+                    f"change; full output is in {sidecar_path}",
+                )
+        body = text or "(codex changed the working tree without a final message)"
+        provenance = json.dumps({"model": configured_model, "runtime": "codex"})
+        with open(output_path, "w", encoding="utf-8") as handle:
+            handle.write(body.rstrip() + "\n\n" + provenance + "\n")
+        return 0
+    except Exception:
+        # Never die with a bare traceback the executor would truncate:
+        # record the full exception in the sidecar and the output file.
+        detail = (
+            f"astra wrapper: unhandled exception in station {station}:\n"
+            + traceback.format_exc()
         )
-        return 2
-    if not text and not tree_changed:
-        print(
-            "astra wrapper: codex produced no final message and no working tree change; "
-            "output tail:\n" + (proc.stdout or "")[-3000:],
-            file=sys.stderr,
-        )
-        return 3
-    body = text or "(codex changed the working tree without a final message)"
-    provenance = json.dumps({"model": configured_model, "runtime": "codex"})
-    with open(output_path, "w", encoding="utf-8") as handle:
-        handle.write(body.rstrip() + "\n\n" + provenance + "\n")
-    return 0
+        try:
+            with open(sidecar_path, "w", encoding="utf-8") as handle:
+                handle.write(detail)
+        except OSError:
+            pass
+        return fail(70, detail)
 
 
 if __name__ == "__main__":

@@ -13,8 +13,10 @@ name: anvil-execute
 # cf-aig-gateway-id selecting arananet-ai-gateway), authenticated with
 # the dedicated account API token held in the CF_AI_API_TOKEN secret;
 # Unified Billing covers the OpenAI provider on that endpoint family.
-# Spec writer, test writer and the four reviewers run claude-sonnet-5-5
-# through Claude Code against the gateway Anthropic route (CF_AIG_TOKEN).
+# Spec writer, test writer and four of the five reviewers run claude-sonnet-5-5
+# through Claude Code against the gateway Anthropic route (CF_AIG_TOKEN);
+# reviewer-design runs gpt-6-astra through the same Codex route as the
+# builder, in the Astra wrapper's read-only reviewer mode.
 # tools/anvil_station.py dispatches per station. There is no fallback
 # from Astra to another model for the builder: if the Astra smoke gate
 # fails, this job stops before the line runs. (The gateway's classic
@@ -209,8 +211,9 @@ jobs:
               "Responses API) against the Cloudflare unified AI endpoints on api.cloudflare.com "
               "with the cf-aig-gateway-id header selecting the AI Gateway (Unified Billing covers "
               "the OpenAI provider there); spec writer, test "
-              "writer and the four reviewers ran claude-sonnet-5-5 "
-              "through Claude Code against the gateway Anthropic route. Both routes passed an exact reply "
+              "writer and four reviewers ran claude-sonnet-5-5 "
+              "through Claude Code against the gateway Anthropic route, and reviewer-design ran "
+              "gpt-6-astra through Codex in read-only reviewer mode. Both routes passed an exact reply "
               "smoke gate before the line ran. The deployer station stayed a packet on purpose: deployment "
               "for this work order happens outside the line, by the operator, after approval.",
               f"Workflow run: {run_url}",
