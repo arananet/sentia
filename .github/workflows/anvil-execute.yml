@@ -42,13 +42,15 @@ name: anvil-execute
 # runs wo-gh-2 (work-orders/issue-2.json, reports on issue 2, the imagery
 # first design v2) and anvil/run-design-v2-1 runs wo-gh-3
 # (work-orders/issue-3.json, reports on issue 3, the corrected render set
-# and design knowledge pack recomposition). The Select work order step
+# and design knowledge pack recomposition) and anvil/run-credit-line
+# runs wo-gh-4 (work-orders/issue-4.json, reports on issue 4, the footer
+# credit line). The Select work order step
 # sets the file, id and issue
 # used by the line, commit back and comment steps. Model routing is the
 # same for both work orders.
 on:
   push:
-    branches: [anvil/run-ui-astra, anvil/run-design-v2, anvil/run-design-v2-1]
+    branches: [anvil/run-ui-astra, anvil/run-design-v2, anvil/run-design-v2-1, anvil/run-credit-line]
   workflow_dispatch:
 
 permissions:
@@ -78,7 +80,11 @@ jobs:
       - name: Select work order for this branch
         id: wo
         run: |
-          if [ "${GITHUB_REF_NAME}" = "anvil/run-design-v2-1" ]; then
+          if [ "${GITHUB_REF_NAME}" = "anvil/run-credit-line" ]; then
+            echo "file=work-orders/issue-4.json" >> "${GITHUB_OUTPUT}"
+            echo "id=wo-gh-4" >> "${GITHUB_OUTPUT}"
+            echo "issue=4" >> "${GITHUB_OUTPUT}"
+          elif [ "${GITHUB_REF_NAME}" = "anvil/run-design-v2-1" ]; then
             echo "file=work-orders/issue-3.json" >> "${GITHUB_OUTPUT}"
             echo "id=wo-gh-3" >> "${GITHUB_OUTPUT}"
             echo "issue=3" >> "${GITHUB_OUTPUT}"
