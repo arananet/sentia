@@ -1,0 +1,30 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-architecture",
+  "to_station": "reviewer-design",
+  "work_order_id": "wo-gh-5",
+  "artifact_path": "runs/wo-gh-5/reviewer-architecture.output.md",
+  "status": "executed",
+  "created_at": "2026-10-29T22:35:38.379853+00:00",
+  "review": {
+    "station": "reviewer-architecture",
+    "verdict": "pass",
+    "findings": [
+      "The change fits the project structure. Only src/page.js, design/DESIGN.md and two test files changed. No route, JSON API, MCP, packet codec, data layer or SEO/GEO file was touched. The review is at runs/wo-gh-5/reviewer-architecture.output.md.",
+      "There is no brain/decisions directory in the repo. I checked fit against brain/project.md, the spec and the frozen-layer list instead. Any decision records that were meant to be available are missing.",
+      "src/images.js hashes to e10c0b4fa90f1f68b4518d8ae392fc4caca907fe, the required blob. It does not appear in the diff, so L-5 holds. No image was regenerated or substituted.",
+      "The hero spec-strip reuses the existing .spec-strip component with scoped overrides (.hero .spec-strip). It carries only facts already on the page: 38 mm, 4.2 mm, 14 days and IP67. No new copy or invented proof was added. The h1 only loses an inline style.",
+      "The design/DESIGN.md amendments are limited to L-4 composition rules: hero scale (4/8 columns, 960 px cap), section density (64\u201396 px padding), and a display type cap of 64 px. The v2.1 imagery rules (paper background, true scale, forearm framing) stay as written. The tests/design-v2-1-corrections.test.js change is annotated as superseded by v3 S1.",
+      "The full suite ran 102 tests: 101 pass, 0 fail, 1 skipped. The skip is the existing ui-elevation S4 test, which has no main ref to diff against.",
+      "Non-blocking: the hero spec-strip repeats facts from the strip further down the page (line 434) and the '14 days \u00b7 IP67' chip. DESIGN.md records the repetition as intentional.",
+      "Non-blocking cosmetic: `.hero .spec-strip div:nth-child(odd){border-left:none}` removes the vertical hairline between columns in the desktop 2x2 grid.",
+      "Residual risk: the tests check CSS caps and column spans only. They do not check the rendered hero width at 1440 or 390 px. The owner's local render gate has to confirm that the patch is large and early."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

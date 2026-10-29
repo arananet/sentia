@@ -94,20 +94,20 @@ header.site{position:absolute;top:0;left:0;right:0;z-index:5}
 .nav nav a{color:var(--soft);font-size:17px}
 .nav nav a:hover{color:var(--ink);text-decoration:none}
 @media(max-width:1100px){.nav nav{display:none}}
-section{padding:clamp(96px,12vw,160px) 0;border-top:1px solid var(--line)}
+section{padding:clamp(64px,7vw,96px) 0;border-top:1px solid var(--line)}
 section:first-of-type{border-top:none}
-h1{font:300 clamp(56px,8.4vw,144px)/0.96 'Space Grotesk',sans-serif;letter-spacing:-0.055em;max-width:12ch;text-wrap:balance}
-h2{font:300 clamp(40px,6.2vw,88px)/1.04 'Space Grotesk',sans-serif;letter-spacing:-0.04em;margin:24px 0 32px;max-width:18ch;text-wrap:balance}
+h1{font:300 clamp(56px,4.4vw,64px)/0.96 'Space Grotesk',sans-serif;letter-spacing:-0.055em;max-width:12ch;text-wrap:balance}
+h2{font:300 clamp(40px,4.4vw,64px)/1.04 'Space Grotesk',sans-serif;letter-spacing:-0.04em;margin:24px 0 32px;max-width:18ch;text-wrap:balance}
 h3{font:500 19px/1.4 'Space Grotesk',sans-serif}
 .lede{font-size:clamp(18px,1.5vw,20px);color:var(--soft);max-width:54ch}
 .rv{opacity:0;transform:translateY(16px);transition:opacity .8s ease-out,transform .8s ease-out}
 .rv.in{opacity:1;transform:none}
 /* hero */
-.hero{padding-top:160px;position:relative}
+.hero{padding-top:128px;position:relative}
 .hero .wrap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;align-items:start}
 .hero .kicker{grid-column:1/-1;margin-bottom:16px;max-width:60ch}
-.hero h1{grid-column:1/8;grid-row:2;font-size:clamp(56px,9.6vw,144px)}
-.hero .lede{grid-column:1/8;grid-row:3;margin-top:40px}
+.hero h1{grid-column:1/5;grid-row:2;font-size:clamp(56px,4.4vw,64px);align-self:center}
+.hero .lede{grid-column:1/7;grid-row:3;margin-top:24px}
 .chips{display:flex;flex-wrap:wrap;gap:16px 24px;margin-top:32px;grid-column:1/-1}
 .chip{border-top:1px solid var(--line);padding:16px 0;font:500 11px/1.5 ui-monospace,Menlo,monospace;letter-spacing:0.16em;text-transform:uppercase;color:var(--soft)}
 .cta{display:flex;flex-wrap:wrap;gap:24px 32px;margin-top:24px;grid-column:1/-1}
@@ -115,24 +115,32 @@ h3{font:500 19px/1.4 'Space Grotesk',sans-serif}
 .cta a:hover{text-decoration:none;opacity:.85;transform:translateY(-1px)}
 .cta a:first-child{background:var(--ink);color:var(--paper);border:0;padding:16px 24px}
 .cta a{display:inline-flex;align-items:center;min-height:44px;transition:opacity 180ms ease-out,transform 180ms ease-out}
-.hero-visual{grid-column:8/13;grid-row:2/4;align-self:center;text-align:center;min-width:0}
+.hero-visual{grid-column:5/13;grid-row:2;align-self:center;text-align:center;min-width:0}
 .product-render{display:block;width:100%;height:auto;object-fit:contain}
-.hero-render{max-width:640px;margin:auto}
+.hero-render{max-width:960px;margin:auto}
+.hero .spec-strip{grid-column:7/13;grid-row:3;margin-top:24px}
+.hero .spec-strip div{flex-basis:50%;padding:16px}
+.hero .spec-strip div:nth-child(odd){border-left:none}
+.hero .spec-strip .v{font-size:32px}
+.hero .chips{margin-top:16px}
+.hero .cta{margin-top:8px}
 .svg-note{fill:#53685C}
 .caption{margin-top:24px;color:var(--faint)}
 @media(max-width:999px){
-  .hero{padding-top:144px}
+  .hero{padding-top:112px}
   .hero .wrap{grid-template-columns:minmax(0,1fr)}
-  .hero h1{grid-column:1;max-width:15ch;font-size:clamp(56px,10vw,96px)}
-  .hero-visual{grid-column:1;grid-row:3;margin-top:48px}
-  .hero-render{max-width:640px}
-  .hero .lede{grid-column:1;grid-row:4;margin-top:48px}
+  .hero h1{grid-column:1;max-width:20ch;font-size:clamp(56px,6vw,64px)}
+  .hero-visual{grid-column:1;grid-row:3;margin-top:0;margin-inline:-16px}
+  .hero-render{max-width:960px}
+  .hero .lede{grid-column:1;grid-row:4;margin-top:24px}
+  .hero .spec-strip{grid-column:1;grid-row:5}
+  .hero .caption{margin-top:0}
 }
 /* patch section */
-.wear-story{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center;margin-top:96px}
+.wear-story{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center;margin-top:48px}
 .wear-story .product-render{max-width:640px;margin:auto}
 .wear-story .lede{margin-top:0}
-.network-render{margin-top:64px}
+.network-render{margin-top:32px}
 @media(max-width:900px){.wear-story{grid-template-columns:minmax(0,1fr)}}
 .split{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(32px,5vw,72px);align-items:start}
 @media(max-width:900px){.split{grid-template-columns:1fr}}
@@ -251,9 +259,9 @@ section{scroll-margin-top:32px}
 .wearer-tab{flex-shrink:0;min-height:44px}
 @media(max-width:600px){
   .nav{padding-top:24px;padding-bottom:24px}
-  .hero{padding-top:128px}
+  .hero{padding-top:104px}
   .hero .kicker{font-size:10px}
-  .hero h1{font-size:clamp(56px,12vw,72px)}
+  .hero h1{font-size:56px}
   .caption{font-size:10px;letter-spacing:0.12em}
   .spec-strip div{flex-basis:50%}
   .spec-strip div:nth-child(odd){border-left:none}
@@ -377,8 +385,18 @@ ${jsonLd(origin)}
 <section class="hero" aria-label="Introduction">
   <div class="wrap">
     <p class="mono kicker rv">Sentia Patch One · Skin temperature · Hydration · Activity</p>
-    <h1 class="rv" style="margin-top:24px">A patch that whispers through networks that already exist.</h1>
+    <h1 class="rv">A patch that whispers through networks that already exist.</h1>
+    <div class="hero-visual rv">
+      <img class="product-render hero-render" src="/img/patch-hero.webp" width="1600" height="893" fetchpriority="high" alt="Sentia Patch One, a 38 mm disc with a matte paper-white top, ink-green edge ring and one coral LED.">
+      <p class="mono caption">Sentia Patch One · Ø 38 mm · 4.2 mm thick</p>
+    </div>
     <p class="lede rv">${FACTS.definition} It has no cellular radio and no GPS. Its measurements ride passing phones on the Find My network, or a LoRaWAN gateway kilometres away, into ${FACTS.platform}.</p>
+    <div class="spec-strip rv" aria-label="Patch specifications">
+      <div><p class="v">38 mm</p><p class="mono k">Diameter</p></div>
+      <div><p class="v">4.2 mm</p><p class="mono k">Thickness</p></div>
+      <div><p class="v">14 days</p><p class="mono k">Wear time</p></div>
+      <div><p class="v">IP67</p><p class="mono k">Water resistance</p></div>
+    </div>
     <div class="chips rv">
       <span class="chip">Find My network · BLE relay</span>
       <span class="chip">LoRaWAN · Gateway uplink</span>
@@ -387,10 +405,6 @@ ${jsonLd(origin)}
     <div class="cta rv">
       <a href="#demo">Watch the live demo</a>
       <a href="#dashboard">Open the dashboard</a>
-    </div>
-    <div class="hero-visual rv">
-      <img class="product-render hero-render" src="/img/patch-hero.webp" width="1600" height="893" fetchpriority="high" alt="Sentia Patch One, a 38 mm disc with a matte paper-white top, ink-green edge ring and one coral LED.">
-      <p class="mono caption">Sentia Patch One · Ø 38 mm · 4.2 mm thick</p>
     </div>
   </div>
 </section>
@@ -404,7 +418,7 @@ ${jsonLd(origin)}
   <div class="wrap">
     <p class="mono kicker rv"><span aria-hidden="true">01 / </span>The patch</p>
     <h2 class="rv">Six layers, 4.2 mm thin.</h2>
-    <div class="split" style="margin-top:clamp(48px,6vh,64px)">
+    <div class="split" style="margin-top:32px">
       <div class="rv"><img class="product-render" src="/img/patch-exploded.webp" width="1200" height="1200" loading="lazy" alt="Sentia Patch One, exploded view with four separated assemblies above the adhesive base."></div>
       <ol class="layer-list rv">
 ${layerItems}

@@ -1,0 +1,30 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-tests",
+  "to_station": "reviewer-architecture",
+  "work_order_id": "wo-gh-5",
+  "artifact_path": "runs/wo-gh-5/reviewer-tests.output.md",
+  "status": "executed",
+  "created_at": "2026-10-29T22:35:13.647987+00:00",
+  "review": {
+    "station": "reviewer-tests",
+    "verdict": "pass",
+    "findings": [
+      "The full suite is green. `npm test` ran 102 tests with 101 passing, 0 failing and 1 skipped. The skip is the existing ui-elevation S4 test, which is skipped because there is no main ref to diff against.",
+      "src/images.js hashes to e10c0b4fa90f1f68b4518d8ae392fc4caca907fe, and design-v3 S3 asserts it. The same S3 group checks that the four image routes answer 200 image/webp at 7838, 9318, 20098 and 13098 bytes.",
+      "tests/design-v3-product-first.test.js maps to spec scenarios S1 to S4. S5 is a run-level scenario with no unit test, so the run report has to cover it.",
+      "In tests/design-v2-1-corrections.test.js S7, the hero cap assertion was flipped from `<= 640` to `>= 640`. The edit is annotated and the spec requires it. The test title still says it keeps the patch small, and the assertion is now close to vacuous. Rename it or drop the assertion.",
+      "S1 only checks the CSS `max-width` cap (960 px) and the column spans, not the rendered width. The `.hero-visual` column may be narrower than 960 px at 1440 px. There is no above-the-fold check at 1440 or 390 px, because the tests are regex on CSS and no browser is available. The owner's local render gate must confirm this.",
+      "The S2 density test counts product-fact tokens in the hero block only. Beyond the hero, density is covered only by the section padding clamp and the h2 size cap.",
+      "S4 checks that the station packets carry the Verified learnings section. It does not check that reviewer-design's findings judge the recomposition against L-1 to L-5. That belongs to the run report.",
+      "The DESIGN.md S2 tests use loose regexes such as /density/i and /protagonist/i. They show the words are present but not what the rules say. This is acceptable.",
+      "The review is written to runs/wo-gh-5/reviewer-tests.output.md."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

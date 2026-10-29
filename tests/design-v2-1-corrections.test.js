@@ -146,7 +146,8 @@ test('S7: hero and network scene are served at a size that keeps the patch small
   const hero = imgTag(RENDERS.hero);
   assert.ok(Number(hero.match(/width="(\d+)"/)[1]) >= 1600, 'hero frame wide enough for a small disc');
   const heroCap = Number(html.match(/\.hero-render\{[^}]*max-width:(\d+)px/)[1]);
-  assert.ok(heroCap <= 640, `hero render capped at ${heroCap}px`);
+  // Superseded by design-v3-product-first S1 (wo-gh-5, L-4): the hero frame grows; the disc stays at most a quarter of it.
+  assert.ok(heroCap >= 640, `hero render capped at ${heroCap}px`);
   assert.match(design, /38 ?mm/);
   assert.match(design, /true (38 ?mm )?scale/i);
 });

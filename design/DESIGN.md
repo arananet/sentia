@@ -1,8 +1,8 @@
-# Sentia design system v2.1
+# Sentia design system v3
 
 Identity is governed by brand/BRAND.md. This system applies that identity to
-the launch page: imagery is the primary art direction, with a small physical
-instrument surrounded by generous empty space at true 38 mm scale.
+the launch page: imagery is the primary art direction, with the product as the protagonist
+and explicit anchors for true 38 mm scale.
 Sentia Patch One is the object; Sentia Cloud receives its measurements; the
 Sentia MCP Server makes those measurements available to assistants.
 
@@ -19,9 +19,9 @@ render is allowed; the page adds no shadow or tinted backdrop.
 
 ## Type scale
 
-Space Grotesk at weight 300 is the display face. The hero runs from 56 to
-144 px with 0.96 leading and -0.055 em tracking. Section titles run from
-40 to 88 px with 1.04 leading and -0.04 em tracking, limited to 18 characters
+Space Grotesk at weight 300 is the display face. Display type must serve the
+product. The hero runs from 56 to 64 px with 0.96 leading and -0.055 em tracking. Section titles run from
+40 to 64 px with 1.04 leading and -0.04 em tracking, limited to 18 characters
 per line where space permits. Data values run from 32 to 56 px. Inter body
 text is 17 px with 1.65 leading; introductory text is 18–20 px, at most
 54 characters per line. System mono labels are 11 px, uppercase, with
@@ -30,9 +30,9 @@ text is 17 px with 1.65 leading; introductory text is 18–20 px, at most
 ## Spacing rhythm
 
 Use an 8 px base: 8, 16, 24, 32, 48, 64, 96, 128, 160. The page container
-is at most 1440 px wide, with fluid 24–80 px gutters. Sections have 96–160 px
-vertical padding. A title, its introduction and its illustration form one
-idea; detailed lists follow with generous separation. Hairlines provide
+is at most 1440 px wide, with fluid 24–80 px gutters. Sections have 64–96 px
+vertical padding for richer density. A title, its introduction and its
+illustration form one idea; detailed lists follow with 32–48 px separation. Hairlines provide
 structure without enclosing every item in a card. Technical examples and
 tables remain dense enough to scan, with scrolling contained locally.
 Fixed margins, padding and gaps use multiples of 8 px, including the bounds
@@ -41,8 +41,11 @@ optical geometry rather than content spacing.
 
 ## Hero art direction
 
-Place the existing headline at large scale on the left and the supplied
-hero render on the right. Keep the kicker, chips and introductory copy.
+Place the existing headline in four columns and the supplied hero render
+in eight, capped at 960 px. The complete patch render is the visual center,
+large and early above the fold at desktop and mobile widths. Keep the kicker,
+chips and introductory copy; repeat the existing dimensional, wear and water
+resistance facts alongside the introduction.
 The round 38 mm patch has a matte paper-white top disc, deep ink-green edge
 ring, one tiny coral LED dot and a thin profile. Below 1000 px, stack the
 headline, object and supporting copy. Preserve the whole object at narrow
@@ -55,17 +58,17 @@ functional live demo graphics and dashboard charts stay.
 The brand sheet wins every conflict with the design knowledge pack. Use calm
 tactile softness from render scale and whitespace, never pastel or blue
 palettes, shadowed surfaces or decorative cards. A 12 column grid aligns the
-hero headline across seven columns and the object across five. Supporting
+hero headline across four columns and the object across eight. Supporting
 text and chips complete that system; one value proposition strip follows,
 using the existing tagline. Measured facts (38 mm, 14 days, IP67 and network
 behaviour) establish trust before the hardware detail. State plainly here
 that Sentia Patch One is not a medical device. No invented proof, testimonials,
 customer logos or unsupported claims.
 
-Alternate generous statement sections (128 px / 8rem padding) with denser
-technical sections (96 px). Use hairline divided feature grids and recurring
-numbered mono section labels. Keep the existing modular type scale, pushing
-the desktop display toward 144 px without crowding the render. Use the 8 px
+Use 64–96 px section padding and 32–48 px between related visual and factual
+groups to increase density without shrinking body copy. Use hairline divided
+feature grids and recurring numbered mono section labels. Cap desktop display
+type at 64 px so the headline supports the render. Use the 8 px
 spacing scale throughout. Load fonts with font-display swap and reserve image
 space using exact intrinsic dimensions to avoid image layout shift.
 
@@ -112,9 +115,12 @@ a quarter of its frame width or less, and the network patch remains small
 among the devices. Never crop or enlarge the disc into a plate sized centerpiece.
 Preserve original aspect ratios and
 show complete images without cropping or stretching. Use responsive full
-width images, with the hero capped at 640 px, the wear image at 640 px, and
-the network scene spanning the content width. Give each visual generous
-space on the 8 px rhythm. Stack the wear image and copy below 900 px.
+width images, with the hero capped at 960 px, the wear image at 640 px, and
+the network scene spanning the content width. Give each visual
+space on the 8 px rhythm. Below 1000 px, place the hero image directly after
+the headline with no added vertical gap; extend its frame 16 px into each
+gutter, retaining paper at both edges and the complete original image.
+Stack the wear image and copy below 900 px.
 Use descriptive, calm alt text with the exact product and network names.
 Reserve intrinsic image space to prevent layout shifts. Load the hero
 eagerly with high priority; lazy-load the three lower-page renders.

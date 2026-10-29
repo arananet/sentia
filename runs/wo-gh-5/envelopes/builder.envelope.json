@@ -1,0 +1,15 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "builder",
+  "to_station": "reviewer-spec",
+  "work_order_id": "wo-gh-5",
+  "artifact_path": "runs/wo-gh-5/builder.output.md",
+  "status": "executed",
+  "created_at": "2026-10-29T22:33:59.308519+00:00",
+  "configured_model": "gpt-6-astra",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "gpt-6-astra"
+}
