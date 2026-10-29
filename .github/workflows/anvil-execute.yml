@@ -36,9 +36,16 @@ name: anvil-execute
 # trigger is a push to the anvil/run-ui-astra branch, plus manual dispatch.
 # The commit this workflow pushes back uses GITHUB_TOKEN, which does not
 # retrigger workflows, so the run cannot loop on its own push.
+#
+# Work order selection is by branch: anvil/run-ui-astra runs wo-gh-1
+# (work-orders/issue-1.json, reports on issue 1) and anvil/run-design-v2
+# runs wo-gh-2 (work-orders/issue-2.json, reports on issue 2, the imagery
+# first design v2). The Select work order step sets the file, id and issue
+# used by the line, commit back and comment steps. Model routing is the
+# same for both work orders.
 on:
   push:
-    branches: [anvil/run-ui-astra]
+    branches: [anvil/run-ui-astra, anvil/run-design-v2]
   workflow_dispatch:
 
 permissions:
@@ -64,6 +71,20 @@ jobs:
     steps:
       - name: Check out this repository
         uses: actions/checkout@v4
+
+      - name: Select work order for this branch
+        id: wo
+        run: |
+          if [ "${GITHUB_REF_NAME}" = "anvil/run-design-v2" ]; then
+            echo "file=work-orders/issue-2.json" >> "${GITHUB_OUTPUT}"
+            echo "id=wo-gh-2" >> "${GITHUB_OUTPUT}"
+            echo "issue=2" >> "${GITHUB_OUTPUT}"
+          else
+            echo "file=work-orders/issue-1.json" >> "${GITHUB_OUTPUT}"
+            echo "id=wo-gh-1" >> "${GITHUB_OUTPUT}"
+            echo "issue=1" >> "${GITHUB_OUTPUT}"
+          fi
+          echo "Selected: $(tr '\n' ' ' < "${GITHUB_OUTPUT}")"
 
       - name: Check out the ANVIL factory
         uses: actions/checkout@v4
@@ -135,7 +156,7 @@ jobs:
         run: |
           PYTHONPATH=.anvil-factory python3 -m anvil.cli run . \
             --pipeline .anvil-factory/pipelines/sdlc-default.json \
-            --work-order work-orders/issue-1.json \
+            --work-order ${{ steps.wo.outputs.file }} \
             --execute
 
       - name: Run the project test suite after the line
@@ -157,23 +178,24 @@ jobs:
             echo "The run produced no file changes to commit."
             exit 0
           fi
-          VERDICT=$(python3 -c "import json; print(json.load(open('runs/wo-gh-1/report.json'))['verdict'])" 2>/dev/null || echo "no-report")
-          git commit -m "ANVIL execute run wo-gh-1 (issue 1): verdict ${VERDICT}" -m "Builder station executed by GPT-6 Astra (Codex) through the Cloudflare AI Gateway; spec, test and reviewer stations executed by Claude Code (claude-sonnet-5-5). Run evidence in runs/wo-gh-1/."
+          VERDICT=$(python3 -c "import json; print(json.load(open('runs/${{ steps.wo.outputs.id }}/report.json'))['verdict'])" 2>/dev/null || echo "no-report")
+          git commit -m "ANVIL execute run ${{ steps.wo.outputs.id }} (issue ${{ steps.wo.outputs.issue }}): verdict ${VERDICT}" -m "Builder station executed by GPT-6 Astra (Codex) through the Cloudflare AI Gateway; spec, test and reviewer stations executed by Claude Code (claude-sonnet-5-5). Run evidence in runs/${{ steps.wo.outputs.id }}/."
           git push origin "HEAD:${GITHUB_REF_NAME}"
 
-      - name: Comment the run report on issue 1
+      - name: Comment the run report on the issue
         if: always() && steps.smoke_anthropic.outcome == 'success' && steps.smoke_astra.outcome == 'success'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
           BRANCH: ${{ github.ref_name }}
+          WO_ID: ${{ steps.wo.outputs.id }}
         run: |
           python3 - <<'PYEOF'
           import json, os
           from pathlib import Path
           run_url = os.environ["RUN_URL"]
           branch = os.environ["BRANCH"]
-          report_path = Path("runs/wo-gh-1/report.json")
+          report_path = Path("runs") / os.environ["WO_ID"] / "report.json"
           if not report_path.exists():
               lines = [
                   "## ANVIL execute run report",
@@ -233,13 +255,13 @@ jobs:
           Path("comment.md").write_text("\n".join(lines) + "\n")
           print(f"Verdict: {report['verdict']}")
           PYEOF
-          gh issue comment 1 --body-file comment.md
+          gh issue comment ${{ steps.wo.outputs.issue }} --body-file comment.md
 
       - name: Upload the run directory
         if: always() && steps.smoke_anthropic.outcome == 'success' && steps.smoke_astra.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
-          name: anvil-execute-run-wo-gh-1
+          name: anvil-execute-run-${{ steps.wo.outputs.id }}
           path: |
             runs/
             suite-output.txt
