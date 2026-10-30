@@ -1,0 +1,28 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-spec",
+  "to_station": "reviewer-security",
+  "work_order_id": "wo-gh-8",
+  "artifact_path": "runs/wo-gh-8/reviewer-spec.output.md",
+  "status": "executed",
+  "created_at": "2026-10-30T22:26:09.872120+00:00",
+  "review": {
+    "station": "reviewer-spec",
+    "verdict": "changes_requested",
+    "findings": [
+      "S4 passes: PATCH_HERO_WEBP_B64 (sha256 35d8c304...6b12) and PATCH_ON_SKIN_WEBP_B64 (40afbe64...1acb) match the pinned digests. src/images.js is unchanged against the setup commit, so the supplied exploded and network payloads were not regenerated or substituted.",
+      "Payload bounds pass: all four payloads are RIFF/WEBP at 28610, 23746, 82934 (exploded) and 60492 (network) bytes, all between 10 KB and 160 KB.",
+      "Suite passes: `npm test` reports 124 tests, 123 pass, 0 fail, 1 skipped.",
+      "S5 scope fails on a literal reading. The working tree modifies tests/design-v4-square-product.test.js (+75 lines), which is outside runs/wo-gh-8/ and is not one of the two named payloads. The spec contradicts itself here. The Suite requirement tells the line to fold the same product assertions into that test file. The Scope requirement, S5 and the done criteria say no file outside runs/wo-gh-8/ may change. The builder recorded this conflict. The operator must resolve it, either by allowing that one test file in the scope and done criterion or by moving the assertions into the setup commit.",
+      "The same product assertions (4 images x 4 axes, the product-reference.png reference, the anchor comparison and failure detection) are folded into S11, so the suite total stays 124 as required. They check runs/wo-gh-8/reviewer-design.output.md only if it exists. That file does not exist yet, so S1 and S2 (matte finish, teal LED, no carrier, five layers) are not yet evidenced. I did not judge image content from the code.",
+      "The test edit is uncommitted and still in the working tree. It belongs to the test-writer station and should not be counted as builder output.",
+      "The review is written to runs/wo-gh-8/reviewer-spec.output.md. Approval is left to a different station."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}
