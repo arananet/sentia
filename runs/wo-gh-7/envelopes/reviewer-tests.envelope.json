@@ -1,0 +1,31 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-tests",
+  "to_station": "reviewer-architecture",
+  "work_order_id": "wo-gh-7",
+  "artifact_path": "runs/wo-gh-7/reviewer-tests.output.md",
+  "status": "executed",
+  "created_at": "2026-10-30T21:47:41.962975+00:00",
+  "review": {
+    "station": "reviewer-tests",
+    "verdict": "pass",
+    "findings": [
+      "The full suite is green: `npm test` reports 124 tests, 123 pass, 0 fail and 1 skipped. That matches the done criteria. I did not confirm the skip is the pre-existing one outside S11.",
+      "Scope is held. The only tracked change is tests/design-v4-square-product.test.js, and the only untracked path is runs/wo-gh-7/. Nothing under src/, brand/, design/, brain/ or .github/ changed, and no new fixture files were added.",
+      "Spec scenario S1 is covered. The last assertion runs `anchorComparisonProblems` on the real runs/wo-gh-6/reviewer-design.output.md and requires an empty problem list. The descriptive-naming positive case is also exercised synthetically, using 'Exploded image: ...' and 'Network image: ...'. The file-name forms (patch-hero and the others, with and without .webp) have their own positive case.",
+      "Spec scenario S2 is covered. A text with only three images returns exactly ['network-scene not addressed'].",
+      "Spec scenario S3 is covered. 'Network image: the wordmark clarity gap remains open.' returns the problems 'network-scene has an uncleared gap' and 'network-scene not cleared'. Extra cases cover 'not resolved', 'not yet cleared', 'cleared, but ... remains open', an open gap after an earlier 'no gaps', and an open gap followed by another image's clearance. These show that clearance cannot be borrowed across clauses or images.",
+      "Spec scenario S4 is covered. Removing 'design/reference/' makes the result non-empty. Replacing each of materials, light, scale and contact in turn yields the matching 'no <category> category' problem.",
+      "The negative cases sit inside the single S11 test case, so the suite total stays at 124. The skip condition on a missing wo-gh-6 review output is unchanged.",
+      "The previous literal file-name assertion is gone. Image identification now uses the descriptive regexes /\\bhero\\b/, /\\bexploded\\b/, /\\bon[- ]skin\\b/ and /\\bnetwork\\b/. The file-name forms still match through these, because 'patch-hero', 'patch-on-skin', 'patch-exploded' and 'network-scene' contain those words.",
+      "Minor and non-blocking: the matching is heuristic. The word 'network' could match unrelated prose, and clearance wording is limited to the cleared, resolved and 'no ... gap' patterns. The real wo-gh-6 text passes and the synthetic negatives bite, so this does not block approval.",
+      "Note: this packet's contract asks for a JSON answer only, so no review file was written to the repo."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

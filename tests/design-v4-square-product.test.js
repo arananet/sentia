@@ -322,12 +322,87 @@ test('S10: routes are unchanged and alt texts are the delivered ones', () => {
 });
 
 // S11: the anchor comparison covers all four images (the run report half is read at S7/S11 by the reviewer)
+// Semantic, not literal (wo-gh-7): each image must be addressed in any natural naming and cleared, with no open gap.
 
-test('S11: when reviewer-design has reviewed, it names all four images against design/reference/',
+const IMAGE_NAMING = {
+  'patch-hero': /\bhero\b/i,
+  'patch-exploded': /\bexploded\b/i,
+  'patch-on-skin': /\bon[- ]skin\b/i,
+  'network-scene': /\bnetwork\b/i,
+};
+const GAP = /\bgaps?\b/i;
+const CLEARING = /\b(?:cleared|resolved)\b|\bno\b[^.;:]*\bgaps?\b/i;
+const OPEN = /\b(?:not|never)\s+(?:(?:yet|fully)\s+)?(?:cleared|resolved)\b|\b(?:uncleared|unresolved)\b|\bgaps?\b[^.;:]*\b(?:open|remain(?:s|ing)?|persist(?:s)?)\b/i;
+
+// Returns the problems found in a review text; an empty list means the anchor comparison passes.
+const anchorComparisonProblems = (text) => {
+  const problems = [];
+  if (!/design\/reference\//.test(text)) problems.push('no design/reference/ reference');
+  for (const c of ['materials', 'light', 'scale', 'contact']) if (!new RegExp(c, 'i').test(text)) problems.push(`no ${c} category`);
+  const state = Object.fromEntries(Object.keys(IMAGE_NAMING).map((img) =>
+    [img, { addressed: false, cleared: false, open: false }]));
+  // Keep the subject across sentences in a finding (including grouped hero/on-skin
+  // findings), but never borrow clearance from a different image or JSON entry.
+  for (const finding of text.split(/"\s*,\s*"|\n/)) {
+    let subjects = [];
+    for (const clause of finding.split(/[.!?;](?:\s+|$)|,?\s+but\s+/i)) {
+      const named = Object.keys(IMAGE_NAMING).filter((img) => IMAGE_NAMING[img].test(clause));
+      if (named.length) subjects = named;
+      const cleared = CLEARING.test(clause) && !OPEN.test(clause);
+      for (const img of subjects) {
+        state[img].addressed = true;
+        if (cleared) state[img].cleared = true;
+        if (OPEN.test(clause) || (GAP.test(clause) && !cleared)) state[img].open = true;
+      }
+    }
+  }
+  for (const [img, status] of Object.entries(state)) {
+    if (!status.addressed) problems.push(`${img} not addressed`);
+    else {
+      if (status.open) problems.push(`${img} has an uncleared gap`);
+      if (!status.cleared) problems.push(`${img} not cleared`);
+    }
+  }
+  return problems;
+};
+
+const ANCHOR_BASE = [
+  'design/reference/ comparison: materials, light, scale and contact are believable.',
+  'Hero image: no remaining gaps.',
+  'On-skin image: the previous contact gap is cleared.',
+  'Exploded image: the previous material gaps are cleared.',
+];
+
+test('S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/',
   { skip: existsSync(root('runs/wo-gh-6/reviewer-design.output.md')) ? false : 'review not produced yet; the run report counts it' },
   () => {
-    const t = read('runs/wo-gh-6/reviewer-design.output.md');
-    assert.match(t, /design\/reference\//);
-    for (const n of ['patch-hero', 'patch-exploded', 'patch-on-skin', 'network-scene']) assert.match(t, new RegExp(n), n);
-    for (const c of ['materials', 'light', 'scale', 'contact']) assert.match(t, new RegExp(c, 'i'), c);
+    // The matching logic bites: three images, an open gap and a missing anchor are rejected; descriptive naming passes.
+    const four = [...ANCHOR_BASE, 'Network image: the previous wordmark clarity gap is cleared.'];
+    assert.deepEqual(anchorComparisonProblems(four.join('\n')), []);
+    for (const extension of ['', '.webp']) {
+      assert.deepEqual(anchorComparisonProblems(['patch-hero', 'patch-exploded', 'patch-on-skin', 'network-scene']
+        .map((n) => `${n}${extension}: no gaps`).concat('design/reference/ materials light scale contact').join('\n')), []);
+    }
+    assert.deepEqual(anchorComparisonProblems(ANCHOR_BASE.join('\n')), ['network-scene not addressed']);
+    const open = [...ANCHOR_BASE, 'Network image: the wordmark clarity gap remains open.'];
+    assert.deepEqual(anchorComparisonProblems(open.join('\n')), ['network-scene has an uncleared gap', 'network-scene not cleared']);
+    assert.ok(anchorComparisonProblems(four.join('\n').replace('design/reference/', 'anchors')).length > 0, 'missing anchor reference');
+    for (const category of ['materials', 'light', 'scale', 'contact']) {
+      assert.ok(anchorComparisonProblems(four.join('\n').replaceAll(category, 'detail')).includes(`no ${category} category`));
+    }
+    assert.deepEqual(anchorComparisonProblems(four.join(' ')), [], 'sentences may share a line');
+    for (const gap of [
+      'Network image: the contact gap is not resolved.',
+      'Network image: the contact gap is not yet cleared.',
+      'Network image: the material gap is cleared, but the contact gap remains open.',
+      'Network image: no material gaps. The contact gap remains open.',
+      'Network image: the contact gap remains open. Hero image: no gaps.',
+    ]) {
+      assert.ok(anchorComparisonProblems([...ANCHOR_BASE, gap].join(' '))
+        .includes('network-scene has an uncleared gap'), gap);
+    }
+    assert.ok(anchorComparisonProblems([...four, 'Network image: a contact gap remains open.'].join('\n'))
+      .includes('network-scene has an uncleared gap'), 'earlier clearance cannot hide an open gap');
+
+    assert.deepEqual(anchorComparisonProblems(read('runs/wo-gh-6/reviewer-design.output.md')), []);
   });
