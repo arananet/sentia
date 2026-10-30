@@ -8,7 +8,7 @@ import { MCP_EXAMPLE } from './mcp-example.js';
 const FAVICON =
   'data:image/svg+xml,' +
   encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="none" stroke="#12211C" stroke-width="3"/><circle cx="32" cy="32" r="17" fill="none" stroke="#12211C" stroke-width="2"/><circle cx="50" cy="14" r="5" fill="#FF6B4A"/></svg>'
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="5" y="5" width="54" height="54" rx="14" fill="none" stroke="#12211C" stroke-width="3"/><path d="M39 17h10" stroke="#FF6B4A" stroke-width="3"/></svg>'
   );
 
 export function jsonLd(origin) {
@@ -29,15 +29,9 @@ export function jsonLd(origin) {
       brand: { '@id': origin + '/#org' },
       category: 'Wearable sensor patch',
       image: origin + '/og.png',
-      additionalProperty: [
-        { '@type': 'PropertyValue', name: 'Diameter', value: '38 mm' },
-        { '@type': 'PropertyValue', name: 'Thickness', value: '4.2 mm' },
-        { '@type': 'PropertyValue', name: 'Wear time', value: '14 days' },
-        { '@type': 'PropertyValue', name: 'Battery', value: 'Printed flexible battery, full wear period' },
-        { '@type': 'PropertyValue', name: 'Radios', value: 'BLE 5.0, LoRaWAN' },
-        { '@type': 'PropertyValue', name: 'Water resistance', value: 'IP67' },
-        { '@type': 'PropertyValue', name: 'Sensors', value: 'Thermistor array, bioimpedance electrodes, 3 axis accelerometer, microfluidic sweat channel' },
-      ],
+      additionalProperty: FACTS.specs.map(([name, value]) => ({
+        '@type': 'PropertyValue', name, value,
+      })),
     },
     {
       '@type': 'SoftwareApplication',
@@ -177,10 +171,10 @@ h3{font:500 19px/1.4 'Space Grotesk',sans-serif}
 .stage{position:relative;margin-top:clamp(48px,6vh,64px);padding:32px 0 8px}
 .stage-nodes{display:flex;justify-content:space-between;text-align:center}
 .node{width:180px}
-.node .disc{width:64px;height:64px;margin:0 auto 16px;border:1.2px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff;position:relative}
-.node .disc::after{content:"";width:26px;height:26px;border:0.8px solid var(--ink);border-radius:50%;opacity:0.55}
-.node.server .disc{border-radius:14px;background:var(--mint)}
-.node.server .disc::after{border-radius:5px}
+.node .node-icon{width:64px;height:64px;margin:0 auto 16px;border:1.2px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff;position:relative}
+.node .node-icon::after{content:"";width:26px;height:26px;border:0.8px solid var(--ink);border-radius:50%;opacity:0.55}
+.node.server .node-icon{border-radius:14px;background:var(--mint)}
+.node.server .node-icon::after{border-radius:5px}
 .node h3{font-size:16px}
 .node p{color:var(--faint);font-size:17px}
 .stage-track{position:absolute;left:6%;right:6%;top:66px;height:1px;background:var(--line)}
@@ -339,7 +333,7 @@ export function renderPage(origin) {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sentia Patch One: skin temperature, hydration and activity via the Find My network and LoRaWAN</title>
-<meta name="description" content="Sentia Patch One is a 38 mm adhesive sensor patch that measures skin temperature, hydration and activity for up to 14 days, sending encrypted digests through the Find My network and LoRaWAN to Sentia Cloud. No phone, no cellular radio.">
+<meta name="description" content="Sentia Patch One is a square adhesive sensor patch with a 2.5 mm profile that measures skin temperature, hydration and activity for up to 14 days, sending encrypted digests through the Find My network and LoRaWAN to Sentia Cloud. No phone, no cellular radio.">
 <link rel="canonical" href="${origin}/">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#FAFAF6">
@@ -348,14 +342,14 @@ export function renderPage(origin) {
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sentia">
 <meta property="og:title" content="Sentia Patch One: measurements that find their own way home">
-<meta property="og:description" content="A 38 mm adhesive sensor patch. Skin temperature, hydration and activity, relayed by the Find My network in the city and by LoRaWAN out of coverage.">
+<meta property="og:description" content="A square adhesive sensor patch with a 2.5 mm profile. Skin temperature, hydration and activity, relayed by the Find My network in the city and by LoRaWAN out of coverage.">
 <meta property="og:url" content="${origin}/">
 <meta property="og:image" content="${origin}/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Sentia Patch One">
-<meta name="twitter:description" content="A 38 mm adhesive sensor patch that whispers through the Find My network and LoRaWAN.">
+<meta name="twitter:description" content="A square adhesive sensor patch with a 2.5 mm profile that whispers through the Find My network and LoRaWAN.">
 <meta name="twitter:image" content="${origin}/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -371,7 +365,7 @@ ${jsonLd(origin)}
 <header class="site">
   <div class="wrap nav">
     <a class="brand" href="#top" aria-label="Sentia home">
-      <svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29" fill="none" stroke="#12211C" stroke-width="3"/><circle cx="32" cy="32" r="17" fill="none" stroke="#12211C" stroke-width="2"/><circle cx="50" cy="14" r="5" fill="#FF6B4A"/></svg>
+      <svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><rect x="5" y="5" width="54" height="54" rx="14" fill="none" stroke="#12211C" stroke-width="3"/><path d="M39 17h10" stroke="#FF6B4A" stroke-width="3"/></svg>
       <span class="wordmark">Sentia</span>
     </a>
     <nav aria-label="Sections">
@@ -387,15 +381,14 @@ ${jsonLd(origin)}
     <p class="mono kicker rv">Sentia Patch One · Skin temperature · Hydration · Activity</p>
     <h1 class="rv">A patch that whispers through networks that already exist.</h1>
     <div class="hero-visual rv">
-      <img class="product-render hero-render" src="/img/patch-hero.webp" width="1600" height="893" fetchpriority="high" alt="Sentia Patch One, a 38 mm disc with a matte paper-white top, ink-green edge ring and one coral LED.">
-      <p class="mono caption">Sentia Patch One · Ø 38 mm · 4.2 mm thick</p>
+      <img class="product-render hero-render" src="/img/patch-hero.webp" width="1600" height="893" fetchpriority="high" alt="Sentia Patch One, a low profile square patch with rounded corners, matte warm white cover, SENTIA wordmark and LED line, worn on an upper arm in a warm studio scene.">
+      <p class="mono caption">Sentia Patch One · Square patch · ${FACTS.thicknessMm} mm profile</p>
     </div>
     <p class="lede rv">${FACTS.definition} It has no cellular radio and no GPS. Its measurements ride passing phones on the Find My network, or a LoRaWAN gateway kilometres away, into ${FACTS.platform}.</p>
     <div class="spec-strip rv" aria-label="Patch specifications">
-      <div><p class="v">38 mm</p><p class="mono k">Diameter</p></div>
-      <div><p class="v">4.2 mm</p><p class="mono k">Thickness</p></div>
-      <div><p class="v">14 days</p><p class="mono k">Wear time</p></div>
-      <div><p class="v">IP67</p><p class="mono k">Water resistance</p></div>
+      <div><p class="v">${FACTS.thicknessMm} mm</p><p class="mono k">Profile</p></div>
+      <div><p class="v">${FACTS.wearDays} days</p><p class="mono k">Wear time</p></div>
+      <div><p class="v">${FACTS.rating}</p><p class="mono k">Water resistance</p></div>
     </div>
     <div class="chips rv">
       <span class="chip">Find My network · BLE relay</span>
@@ -417,9 +410,9 @@ ${jsonLd(origin)}
 <section id="patch" aria-label="The patch">
   <div class="wrap">
     <p class="mono kicker rv"><span aria-hidden="true">01 / </span>The patch</p>
-    <h2 class="rv">Six layers, 4.2 mm thin.</h2>
+    <h2 class="rv">Five layers, ${FACTS.thicknessMm} mm profile.</h2>
     <div class="split" style="margin-top:32px">
-      <div class="rv"><img class="product-render" src="/img/patch-exploded.webp" width="1200" height="1200" loading="lazy" alt="Sentia Patch One, exploded view with four separated assemblies above the adhesive base."></div>
+      <div class="rv"><img class="product-render" src="/img/patch-exploded.webp" width="1400" height="1400" loading="lazy" alt="Sentia Patch One, five square layers separated vertically: top cover, comfort foam, sensing and processing board, adhesive layer and release liner."></div>
       <ol class="layer-list rv">
 ${layerItems}
       </ol>
@@ -428,15 +421,14 @@ ${layerItems}
 ${sensorCards}
     </div>
     <div class="wear-story">
-      <img class="product-render rv" src="/img/patch-on-skin.webp" width="1200" height="600" loading="lazy" alt="Sentia Patch One on an inner forearm, a 38 mm adhesive disc for up to 14 days of wear.">
-    <p class="lede rv">A flexible adhesive disc worn on the upper arm or torso for up to ${FACTS.wearDays} days. Everything it needs is inside: sensors, two radios, and a printed battery sized for the whole wear.</p>
+      <img class="product-render rv" src="/img/patch-on-skin.webp" width="1600" height="800" loading="lazy" alt="Sentia Patch One, a low profile square adhesive patch with SENTIA wordmark and LED line, in a close up of an upper arm.">
+    <p class="lede rv">A square adhesive patch with rounded corners worn on the upper arm for up to ${FACTS.wearDays} days. Everything it needs is inside: sensors, two radios, and a printed battery sized for the whole wear.</p>
     </div>
     <div class="spec-strip rv">
-      <div><p class="v">38 mm</p><p class="mono k">Diameter</p></div>
-      <div><p class="v">4.2 mm</p><p class="mono k">Thickness</p></div>
-      <div><p class="v">14 days</p><p class="mono k">Wear time</p></div>
+      <div><p class="v">${FACTS.thicknessMm} mm</p><p class="mono k">Profile</p></div>
+      <div><p class="v">${FACTS.wearDays} days</p><p class="mono k">Wear time</p></div>
       <div><p class="v">3.1 g</p><p class="mono k">Weight</p></div>
-      <div><p class="v">IP67</p><p class="mono k">Water resistance</p></div>
+      <div><p class="v">${FACTS.rating}</p><p class="mono k">Water resistance</p></div>
       <div><p class="v">2 radios</p><p class="mono k">BLE 5.0 · LoRaWAN</p></div>
     </div>
   </div>
@@ -447,7 +439,7 @@ ${sensorCards}
     <p class="mono kicker rv"><span aria-hidden="true">02 / </span>How it works</p>
     <h2 class="rv">Sense. Whisper. Relay.</h2>
     <p class="lede rv">The patch never looks for a network. It speaks quietly, on a schedule, and lets the networks that already surround us do the carrying.</p>
-    <img class="product-render network-render rv" src="/img/network-scene.webp" width="1600" height="900" loading="lazy" alt="Sentia Patch One beside a phone, relay domes and a LoRaWAN gateway, linked by dotted teal signal paths.">
+    <img class="product-render network-render rv" src="/img/network-scene.webp" width="1600" height="893" loading="lazy" alt="The square Sentia Patch One with its SENTIA wordmark and LED line beside a phone and LoRaWAN gateway in a warm photographic scene.">
     <ol class="journey">
       <li class="rv"><span class="mono step">Step 1</span><h3>Sense</h3><p>Every few minutes the patch samples skin temperature, hydration, movement, posture and sweat, and builds one small encrypted measurement digest.</p></li>
       <li class="rv"><span class="mono step">Step 2</span><h3>Whisper</h3><p>In the city it broadcasts the digest inside rotating Bluetooth Low Energy advertisements, following the Find My network accessory pattern. Out of coverage it sends a fuller LoRaWAN frame instead.</p></li>
@@ -477,9 +469,9 @@ ${sensorCards}
       <div class="stage-track"></div>
       <div id="packetDot"></div>
       <div class="stage-nodes">
-        <div class="node"><div class="disc"></div><h3>The patch</h3><p>Upper arm</p></div>
-        <div class="node"><div class="disc"></div><h3 id="relayName">A passing phone</h3><p id="relayKind">Find My network relay</p></div>
-        <div class="node server"><div class="disc"></div><h3>Sentia Cloud</h3><p>Decode and store</p></div>
+        <div class="node"><div class="node-icon"></div><h3>The patch</h3><p>Upper arm</p></div>
+        <div class="node"><div class="node-icon"></div><h3 id="relayName">A passing phone</h3><p id="relayKind">Find My network relay</p></div>
+        <div class="node server"><div class="node-icon"></div><h3>Sentia Cloud</h3><p>Decode and store</p></div>
       </div>
     </div>
     <div class="payload rv">

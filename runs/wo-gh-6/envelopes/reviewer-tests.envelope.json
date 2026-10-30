@@ -1,0 +1,29 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-tests",
+  "to_station": "reviewer-architecture",
+  "work_order_id": "wo-gh-6",
+  "artifact_path": "runs/wo-gh-6/reviewer-tests.output.md",
+  "status": "executed",
+  "created_at": "2026-10-30T12:41:36.394713+00:00",
+  "review": {
+    "station": "reviewer-tests",
+    "verdict": "pass",
+    "findings": [
+      "npm test runs 116 tests: 114 pass, 0 fail, 2 skipped. The review is written to runs/wo-gh-6/reviewer-tests.output.md.",
+      "tests/design-v4-square-product.test.js maps to spec scenarios S1 to S6: retired facts, spec strips, specs table, four image routes at 10 to 160 KB, five layers in order, learnings in the packets, and the byte identical credit sentence. S7 is read from the run report.",
+      "Retired tests in the v2, v2.1, v3 and site-credit files are rewritten or removed, with the reason recorded in comments citing wo-gh-6, as the spec requires.",
+      "Skip 1: the S5 reviewer-design review test is skipped because runs/wo-gh-6/reviewer-design.output.md does not exist yet. S7 counts that review, so the test must run green once the file is present.",
+      "Skip 2: ui-elevation S4 (frozen files untouched) is skipped because there is no main ref to diff against. It was not diffed by the suite, but git status shows no changes to codec, data, mcp or index.",
+      "Gap, non-blocking: no test checks for visible rectangle seams in the images. Only DESIGN.md wording is checked, with a regex for 'seam'. A comment in the v2.1 test file says the v4 tests cover seams, but they only cover the wording.",
+      "Gap, non-blocking: the 'not the v2.1 set' test compares byte sizes only.",
+      "Gap, non-blocking: image content (square product, SENTIA spelling) cannot be tested. It depends on the operator and reviewer-design read-back."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

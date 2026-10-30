@@ -1,7 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
-import { execFileSync } from 'node:child_process';
 import worker from '../src/index.js';
 import { renderPage } from '../src/page.js';
 
@@ -77,8 +76,8 @@ test('S2: section padding is tighter than the v2.1 160 px ceiling', () => {
 });
 
 test('S2: sections carry more supporting content than v2.1 (hero adds a spec strip or facts row)', () => {
-  const metrics = (heroBlock.match(/\b(38 ?mm|4\.2 ?mm|14 days|IP67)\b/g) || []).length;
-  assert.ok(metrics >= 6, `hero names ${metrics} product facts (v2.1: four, in caption and chips)`);
+  const metrics = (heroBlock.match(/\b(2\.5 ?mm|14 days|IP67)\b/g) || []).length;
+  assert.ok(metrics >= 6, `hero names ${metrics} product facts (v4 facts: 2.5 mm, 14 days, IP67)`);
 });
 
 test('S2: imagery stays primary, no flat SVG as a section main visual (L-1)', () => {
@@ -96,15 +95,16 @@ test('S2: no new copy invents proof or uses hype words', () => {
 });
 
 test('S2: DESIGN.md encodes hero product scale, section density and display type rule', () => {
-  assert.match(design, /v3/i);
+  // wo-gh-6 bumps the system to v4 while preserving v3 composition.
+  assert.match(design, /v4/i);
   assert.match(design, /product (is|as) the protagonist|protagonist/i);
   assert.match(design, /density/i);
   assert.match(design, /display type[^.]*(serve|service|product)/i);
   assert.ok(!/hero capped at 640 px/i.test(design), 'old 640 px hero cap no longer stands');
 });
 
-test('S2: DESIGN.md keeps the v2.1 imagery rules and brand tokens as written', () => {
-  for (const re of [/#FAFAF6/, /#12211C/, /#0E7C66/, /true 38 ?mm scale/i, /contact shadow/i, /forearm/i,
+test('S2: DESIGN.md keeps physical contact, limb framing and locked brand tokens', () => {
+  for (const re of [/#FAFAF6/, /#12211C/, /#0E7C66/, /contact shadow/i, /forearm/i,
     /Space Grotesk/, /Inter/]) assert.match(design, re);
 });
 
@@ -112,22 +112,9 @@ test('S2: brand tokens stay locked in the page css', () => {
   for (const t of ['#FAFAF6', '#12211C', '#0E7C66']) assert.ok(css.toUpperCase().includes(t), t);
 });
 
-// S3: the render set is untouched (L-5)
-
-test('S3: src/images.js git blob is byte identical', () => {
-  const blob = execFileSync('git', ['hash-object', 'src/images.js'], { cwd: root('').pathname }).toString().trim();
-  assert.equal(blob, 'e10c0b4fa90f1f68b4518d8ae392fc4caca907fe');
-});
-
-test('S3: four image routes answer 200 image/webp at their established sizes', async () => {
-  const sizes = { 'patch-hero': 7838, 'patch-exploded': 9318, 'patch-on-skin': 20098, 'network-scene': 13098 };
-  for (const [name, size] of Object.entries(sizes)) {
-    const res = await worker.fetch(new Request(`${ORIGIN}/img/${name}.webp`));
-    assert.equal(res.status, 200, name);
-    assert.equal(res.headers.get('content-type'), 'image/webp');
-    assert.equal((await res.arrayBuffer()).byteLength, size, name);
-  }
-});
+// S3: removed by design-v4-square-product (wo-gh-6): L-5 is lifted by owner decision, so the frozen v2.1
+// src/images.js blob and the established v2.1 payload sizes no longer apply. The new render set is covered by
+// tests/design-v4-square-product.test.js (S3).
 
 test('S3: renders keep v2.1 placement rules: no frames, shadows or filters on images (L-2)', () => {
   for (const tag of html.match(/<img[^>]*\/img\/[^>]*>/g)) assert.ok(!/style=/i.test(tag), tag);
@@ -137,9 +124,10 @@ test('S3: renders keep v2.1 placement rules: no frames, shadows or filters on im
     assert.ok(!/box-shadow|drop-shadow|filter|border|background|outline|mix-blend|radius/i.test(body), s);
 });
 
-test('S3: forearm framing and true scale anchors stay on the page (L-3)', () => {
-  assert.match(html, /inner forearm|forearm/i);
-  assert.match(html, /Ø 38 mm/);
+// Removed by design-v4 (wo-gh-6): the Ø 38 mm scale anchor is retired and L-3 is relaxed to limb close ups.
+test('S3: limb close up framing stays on the page (L-3 as amended)', () => {
+  assert.match(html, /forearm|upper arm/i);
+  assert.ok(!/Ø/.test(html));
 });
 
 // S4: the learnings reach the stations

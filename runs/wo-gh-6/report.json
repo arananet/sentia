@@ -1,0 +1,262 @@
+{
+  "work_order_id": "wo-gh-6",
+  "pipeline": "sdlc-default",
+  "title": "Design v4: the square low profile product, all imagery regenerated at production quality",
+  "kind": "feature",
+  "steps": [
+    {
+      "station": "intake",
+      "status": "completed",
+      "detail": "Work order normalized",
+      "duration_ms": 0.02,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "spec-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-6/spec-writer.output.md",
+      "duration_ms": 19256.874,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/spec-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "test-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-6/test-writer.output.md",
+      "duration_ms": 141424.659,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/test-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "builder",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-6/builder.output.md",
+      "duration_ms": 59767.082,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/builder.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-spec",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-6/reviewer-spec.output.md",
+      "duration_ms": 31138.486,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/reviewer-spec.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-security",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-6/reviewer-security.output.md",
+      "duration_ms": 17349.695,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/reviewer-security.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-tests",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-6/reviewer-tests.output.md",
+      "duration_ms": 23707.535,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/reviewer-tests.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-architecture",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-6/reviewer-architecture.output.md",
+      "duration_ms": 27563.059,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/reviewer-architecture.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-design",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-6/reviewer-design.output.md",
+      "duration_ms": 26084.72,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/reviewer-design.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "approver",
+      "status": "completed",
+      "detail": "Approver verdict: changes_requested",
+      "duration_ms": 0.039,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "approver",
+      "status": "loopback",
+      "return_to": "builder",
+      "detail": "Loopback to builder: S1 holds. Searching src, brand/BRAND.md and design/DESIGN.md finds no 38 mm, 4.2 mm, Diameter or disc language. diameterMm is removed from src/facts.js and thicknessMm is 2.5.; S2 holds. The hero chip reads '14 days \u00b7 IP67' and the specs table has 'Profile 2.5 mm' with no width or diameter entry. The llms.txt line in src/seo.js now says 'Profile'.; S3 holds. src/images.js exports the four image constants, and the decoded WebP payloads are 23.7 KB, 28.6 KB, 44.6 KB and 59.4 KB, all within 10 to 160 KB. The routes in src/index.js are unchanged. The img width and height attributes match the WebP headers (1600x893, 1400x1400, 1600x800, 1600x893). src/images.js has no builder changes, so the supplied imagery was not regenerated.; S4 holds. src/facts.js lists the five layers in spec order: Top cover, Comfort foam, Sensing and processing board, Adhesive layer, Release liner. The page layer list and the llms-full.txt layer list both derive from FACTS.layers.; S6 holds. The src/page.js diff has no credit sentence changes, and the site-credit tests pass.; S7 holds on the test suite: 114 pass, 0 fail, 2 skipped. The rewritten and removed tests record their reasons in the test files, for example in tests/site-credit.test.js. The run verdict and the count of five reviews are not assessable at this station.; S5 is out of scope for this station. reviewer-design must carry the explicit L-6 anchor comparison against design/reference/ by category (materials, light, scale, contact). This review did not assess image content or quality.; Non blocking: README.md still says '38 mm' (line 5) and '38 mm adhesive sensor patch, 4.2 mm thick, worn on the upper arm or torso' (line 13). It is outside the spec's listed copy set, but it contradicts the new product definition and should be updated.; The line added a 'Supersession of earlier specs' section to the governing spec at .openspec/specs/design-v4-square-product/spec.md. It matches the work order and the Tests requirement, but it is a spec edit made during the run.; The review is written to runs/wo-gh-6/reviewer-spec.output.md.; The diff has no new secrets, tokens or API keys. I grepped the diff and runs/wo-gh-6 for them. The only http:// string is the SVG xmlns in the favicon.; It adds no routes, external origins, eval or innerHTML sinks. Routes, the JSON API, the MCP tools, the codec and the data layer are untouched.; The interpolated values in src/page.js and src/seo.js (thicknessMm, wearDays, rating, specs) come from static constants in src/facts.js. JSON-LD additionalProperty is now built from FACTS.specs, which is also static, so there is no injection path.; At grep level, src/ has no 38 mm, 4.2 mm, Diameter or disc language left, so the retired facts are not exposed in generated surfaces.; Not assessed: src/images.js is unmodified in the working tree, so the four operator-supplied renders and the 10 to 160 KB payload check were not covered. That belongs to the operator and reviewer-design. The review is written to runs/wo-gh-6/reviewer-security.output.md.; npm test runs 116 tests: 114 pass, 0 fail, 2 skipped. The review is written to runs/wo-gh-6/reviewer-tests.output.md.; tests/design-v4-square-product.test.js maps to spec scenarios S1 to S6: retired facts, spec strips, specs table, four image routes at 10 to 160 KB, five layers in order, learnings in the packets, and the byte identical credit sentence. S7 is read from the run report.; Retired tests in the v2, v2.1, v3 and site-credit files are rewritten or removed, with the reason recorded in comments citing wo-gh-6, as the spec requires.; Skip 1: the S5 reviewer-design review test is skipped because runs/wo-gh-6/reviewer-design.output.md does not exist yet. S7 counts that review, so the test must run green once the file is present.; Skip 2: ui-elevation S4 (frozen files untouched) is skipped because there is no main ref to diff against. It was not diffed by the suite, but git status shows no changes to codec, data, mcp or index.; Gap, non-blocking: no test checks for visible rectangle seams in the images. Only DESIGN.md wording is checked, with a regex for 'seam'. A comment in the v2.1 test file says the v4 tests cover seams, but they only cover the wording.; Gap, non-blocking: the 'not the v2.1 set' test compares byte sizes only.; Gap, non-blocking: image content (square product, SENTIA spelling) cannot be tested. It depends on the operator and reviewer-design read-back.; brain/decisions does not exist in this tree. The only brain files are glossary.md, learnings.md, project.md and worklog.md, and project.md has no decisions section. I checked architectural fit against the work order's frozen-surface list, the governing spec and the existing module layout instead. Please add the decisions record or confirm it is not needed.; I did not run the suite or the page. suite-result.txt shows SUITE_EXIT=0 on every line, which I took on trust.; The structure is unchanged. The diff touches only brand/BRAND.md, design/DESIGN.md, src/facts.js, src/page.js, src/seo.js, the spec and tests. src/index.js, src/mcp.js, src/codec.js, src/browser-codec.js and src/data.js are untouched, so routes, the API, the MCP tools, the packet codec, the data layer and the live demo stay frozen as required.; src/images.js is not in the working-tree diff. The four renders arrived in the setup commit 0d65fe1, and the builder did not regenerate or substitute them, as the work order requires.; The four image routes in src/index.js (/img/patch-hero.webp, patch-exploded, patch-on-skin, network-scene) are unchanged. Decoded payloads are 28,610, 44,588, 23,746 and 59,356 bytes, all within the 10 KB to 160 KB bound.; The width and height attributes in src/page.js match the decoded WebP dimensions: hero 1600x893, exploded 1400x1400, on-skin 1600x800, network 1600x893.; facts.js remains the single source for the spec strips, specs table, JSON-LD and llms files. It now states a square patch with strongly rounded corners, a 2.5 mm profile, 14 days and the five layers. A grep of src/ for 38 mm, 4.2 mm and Diameter found nothing. The only 'disc' hits were CSS (`::selection`, `.privacy`, `.toggle`) and Math.round calls. The `src/og.js` base64 data matched my grep but is not copy.; I did not find the footer credit sentence changed in the src/page.js diff. The tests/site-credit.test.js change removes only the old per-image byte-size assertions, with the reason recorded in the file. The byte-exact footer tests (S1) are kept.; Test changes follow the work order. The retired v2.1 byte-size and paper-sampling tests are removed with a recorded reason, and a new tests/design-v4-square-product.test.js covers S1 to S3, including a no-width-figure check.; This review does not cover the L-6 anchor comparison against design/reference/. That belongs to reviewer-design, and the five-review count in the done criteria depends on it.; L-6 anchor comparison \u2014 patch-hero.webp versus design/reference/quality-board-1.png and quality-board-2.png: materials and contact fall short. The cover reads as a flat sheet with sharp edges rather than the boards' softly contoured, textured cover and visible adhesive perimeter; skin detail and surface response are substantially weaker. No clear lighting or scale inconsistency identified. Corrected imagery must come from the operator, preserving the builder's prohibition on image substitution.; L-6 anchor comparison \u2014 patch-on-skin.webp: the tighter crop retains the hero's flat cover, weak skin texture and indistinct adhesive contact rather than the boards' detailed material and contact treatment. No additional lighting or scale inconsistency identified. Supply an operator-approved close-up meeting the documented materials and contact bar.; L-6 anchor comparison \u2014 patch-exploded.webp: materials and layer identity violate DESIGN.md's Asset inventory and the reference boards. The second layer appears as a smooth sheet with protruding wires rather than porous comfort foam; the bottom two layers appear thick and fibrous rather than thin adhesive and release films. The cover also lacks the required LED line. Lighting has no clear inconsistency; skin contact is inapplicable to this exploded view. Operator correction is required.; L-6 anchor comparison \u2014 network-scene.webp: product detail does not match the boards or the other supplied views. The patch wordmark is blurred into a luminous marking, and a separate LED line cannot be distinguished. Materials and contact detail are insufficient to verify the same physical product at the required production quality. No clear scene-lighting or scale inconsistency identified. Supply an operator-approved scene with legible SENTIA lettering and the distinct LED line.; Spacing and section-density violation: src/page.js overrides section spacing with '#patch,#how{padding-top:128px;padding-bottom:128px}', exceeding DESIGN.md's required 64\u201396 px vertical section padding. Remove or update this override to the documented range.",
+      "reason": "S1 holds. Searching src, brand/BRAND.md and design/DESIGN.md finds no 38 mm, 4.2 mm, Diameter or disc language. diameterMm is removed from src/facts.js and thicknessMm is 2.5.; S2 holds. The hero chip reads '14 days \u00b7 IP67' and the specs table has 'Profile 2.5 mm' with no width or diameter entry. The llms.txt line in src/seo.js now says 'Profile'.; S3 holds. src/images.js exports the four image constants, and the decoded WebP payloads are 23.7 KB, 28.6 KB, 44.6 KB and 59.4 KB, all within 10 to 160 KB. The routes in src/index.js are unchanged. The img width and height attributes match the WebP headers (1600x893, 1400x1400, 1600x800, 1600x893). src/images.js has no builder changes, so the supplied imagery was not regenerated.; S4 holds. src/facts.js lists the five layers in spec order: Top cover, Comfort foam, Sensing and processing board, Adhesive layer, Release liner. The page layer list and the llms-full.txt layer list both derive from FACTS.layers.; S6 holds. The src/page.js diff has no credit sentence changes, and the site-credit tests pass.; S7 holds on the test suite: 114 pass, 0 fail, 2 skipped. The rewritten and removed tests record their reasons in the test files, for example in tests/site-credit.test.js. The run verdict and the count of five reviews are not assessable at this station.; S5 is out of scope for this station. reviewer-design must carry the explicit L-6 anchor comparison against design/reference/ by category (materials, light, scale, contact). This review did not assess image content or quality.; Non blocking: README.md still says '38 mm' (line 5) and '38 mm adhesive sensor patch, 4.2 mm thick, worn on the upper arm or torso' (line 13). It is outside the spec's listed copy set, but it contradicts the new product definition and should be updated.; The line added a 'Supersession of earlier specs' section to the governing spec at .openspec/specs/design-v4-square-product/spec.md. It matches the work order and the Tests requirement, but it is a spec edit made during the run.; The review is written to runs/wo-gh-6/reviewer-spec.output.md.; The diff has no new secrets, tokens or API keys. I grepped the diff and runs/wo-gh-6 for them. The only http:// string is the SVG xmlns in the favicon.; It adds no routes, external origins, eval or innerHTML sinks. Routes, the JSON API, the MCP tools, the codec and the data layer are untouched.; The interpolated values in src/page.js and src/seo.js (thicknessMm, wearDays, rating, specs) come from static constants in src/facts.js. JSON-LD additionalProperty is now built from FACTS.specs, which is also static, so there is no injection path.; At grep level, src/ has no 38 mm, 4.2 mm, Diameter or disc language left, so the retired facts are not exposed in generated surfaces.; Not assessed: src/images.js is unmodified in the working tree, so the four operator-supplied renders and the 10 to 160 KB payload check were not covered. That belongs to the operator and reviewer-design. The review is written to runs/wo-gh-6/reviewer-security.output.md.; npm test runs 116 tests: 114 pass, 0 fail, 2 skipped. The review is written to runs/wo-gh-6/reviewer-tests.output.md.; tests/design-v4-square-product.test.js maps to spec scenarios S1 to S6: retired facts, spec strips, specs table, four image routes at 10 to 160 KB, five layers in order, learnings in the packets, and the byte identical credit sentence. S7 is read from the run report.; Retired tests in the v2, v2.1, v3 and site-credit files are rewritten or removed, with the reason recorded in comments citing wo-gh-6, as the spec requires.; Skip 1: the S5 reviewer-design review test is skipped because runs/wo-gh-6/reviewer-design.output.md does not exist yet. S7 counts that review, so the test must run green once the file is present.; Skip 2: ui-elevation S4 (frozen files untouched) is skipped because there is no main ref to diff against. It was not diffed by the suite, but git status shows no changes to codec, data, mcp or index.; Gap, non-blocking: no test checks for visible rectangle seams in the images. Only DESIGN.md wording is checked, with a regex for 'seam'. A comment in the v2.1 test file says the v4 tests cover seams, but they only cover the wording.; Gap, non-blocking: the 'not the v2.1 set' test compares byte sizes only.; Gap, non-blocking: image content (square product, SENTIA spelling) cannot be tested. It depends on the operator and reviewer-design read-back.; brain/decisions does not exist in this tree. The only brain files are glossary.md, learnings.md, project.md and worklog.md, and project.md has no decisions section. I checked architectural fit against the work order's frozen-surface list, the governing spec and the existing module layout instead. Please add the decisions record or confirm it is not needed.; I did not run the suite or the page. suite-result.txt shows SUITE_EXIT=0 on every line, which I took on trust.; The structure is unchanged. The diff touches only brand/BRAND.md, design/DESIGN.md, src/facts.js, src/page.js, src/seo.js, the spec and tests. src/index.js, src/mcp.js, src/codec.js, src/browser-codec.js and src/data.js are untouched, so routes, the API, the MCP tools, the packet codec, the data layer and the live demo stay frozen as required.; src/images.js is not in the working-tree diff. The four renders arrived in the setup commit 0d65fe1, and the builder did not regenerate or substitute them, as the work order requires.; The four image routes in src/index.js (/img/patch-hero.webp, patch-exploded, patch-on-skin, network-scene) are unchanged. Decoded payloads are 28,610, 44,588, 23,746 and 59,356 bytes, all within the 10 KB to 160 KB bound.; The width and height attributes in src/page.js match the decoded WebP dimensions: hero 1600x893, exploded 1400x1400, on-skin 1600x800, network 1600x893.; facts.js remains the single source for the spec strips, specs table, JSON-LD and llms files. It now states a square patch with strongly rounded corners, a 2.5 mm profile, 14 days and the five layers. A grep of src/ for 38 mm, 4.2 mm and Diameter found nothing. The only 'disc' hits were CSS (`::selection`, `.privacy`, `.toggle`) and Math.round calls. The `src/og.js` base64 data matched my grep but is not copy.; I did not find the footer credit sentence changed in the src/page.js diff. The tests/site-credit.test.js change removes only the old per-image byte-size assertions, with the reason recorded in the file. The byte-exact footer tests (S1) are kept.; Test changes follow the work order. The retired v2.1 byte-size and paper-sampling tests are removed with a recorded reason, and a new tests/design-v4-square-product.test.js covers S1 to S3, including a no-width-figure check.; This review does not cover the L-6 anchor comparison against design/reference/. That belongs to reviewer-design, and the five-review count in the done criteria depends on it.; L-6 anchor comparison \u2014 patch-hero.webp versus design/reference/quality-board-1.png and quality-board-2.png: materials and contact fall short. The cover reads as a flat sheet with sharp edges rather than the boards' softly contoured, textured cover and visible adhesive perimeter; skin detail and surface response are substantially weaker. No clear lighting or scale inconsistency identified. Corrected imagery must come from the operator, preserving the builder's prohibition on image substitution.; L-6 anchor comparison \u2014 patch-on-skin.webp: the tighter crop retains the hero's flat cover, weak skin texture and indistinct adhesive contact rather than the boards' detailed material and contact treatment. No additional lighting or scale inconsistency identified. Supply an operator-approved close-up meeting the documented materials and contact bar.; L-6 anchor comparison \u2014 patch-exploded.webp: materials and layer identity violate DESIGN.md's Asset inventory and the reference boards. The second layer appears as a smooth sheet with protruding wires rather than porous comfort foam; the bottom two layers appear thick and fibrous rather than thin adhesive and release films. The cover also lacks the required LED line. Lighting has no clear inconsistency; skin contact is inapplicable to this exploded view. Operator correction is required.; L-6 anchor comparison \u2014 network-scene.webp: product detail does not match the boards or the other supplied views. The patch wordmark is blurred into a luminous marking, and a separate LED line cannot be distinguished. Materials and contact detail are insufficient to verify the same physical product at the required production quality. No clear scene-lighting or scale inconsistency identified. Supply an operator-approved scene with legible SENTIA lettering and the distinct LED line.; Spacing and section-density violation: src/page.js overrides section spacing with '#patch,#how{padding-top:128px;padding-bottom:128px}', exceeding DESIGN.md's required 64\u201396 px vertical section padding. Remove or update this override to the documented range.",
+      "duration_ms": 0.0,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": null,
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "triage-human",
+      "status": "completed",
+      "detail": "Human review: required",
+      "duration_ms": 0.007,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "deployer",
+      "status": "packet_ready",
+      "detail": "Packet written to runs/wo-gh-6/deployer.packet.md",
+      "duration_ms": 0.093,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/deployer.packet.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "observer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-6/observer.output.md",
+      "duration_ms": 16679.187,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/observer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    }
+  ],
+  "verdict": "changes_requested",
+  "human_required": true,
+  "max_loopbacks": 2,
+  "loopbacks": 1,
+  "deployment_status": null,
+  "verify_results": [],
+  "risk_hints": [],
+  "decision": {
+    "approver": {
+      "reviews_counted": [
+        {
+          "station": "reviewer-spec",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-security",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-tests",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-architecture",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-design",
+          "verdict": "changes_requested"
+        }
+      ],
+      "reviews_expected": [
+        "reviewer-spec",
+        "reviewer-security",
+        "reviewer-tests",
+        "reviewer-architecture",
+        "reviewer-design"
+      ],
+      "rule": "Reviewer reviewer-design requested changes."
+    },
+    "human_gate": {
+      "required": true,
+      "rule": "Verdict is changes_requested, not approved, so a human is required.",
+      "hints_matched": []
+    }
+  },
+  "warnings": []
+}

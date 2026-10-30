@@ -20,6 +20,14 @@ The product owner supplied two reference boards on 2026-10-30 (design/reference/
 4. L-3 is relaxed to limb close ups (inner forearm or upper arm crop), never torso framing.
 5. The SENTIA wordmark and the LED line are physical markings of the product and belong in the renders, spelled exactly SENTIA. Captions and labels inside website images remain banned.
 
+## Supersession of earlier specs
+
+Where this spec and an earlier spec disagree, this spec governs for wo-gh-6 and later work:
+
+- design-v2-imagery: the exact paper background rule (#FAFAF6 sampling), the true 38 mm scale rule and the round disc product description no longer apply. The no text and no labels rule for website images stands.
+- design-v3-product-first: the frozen v2.1 images.js blob (e10c0b4fa90f1f68b4518d8ae392fc4caca907fe), the 38 mm scale reads and the paper background placement rules no longer apply. The v3 composition rules (product large and early, section density, display type in service of the product) stand.
+- Tests that encode the superseded rules are rewritten or removed as the Tests requirement states.
+
 ## Requirements
 
 - Product identity: a square patch with strongly rounded corners, matte warm white top cover, low profile of about 2.5 mm, SENTIA wordmark and one LED line on the cover. The five layers, in order: top cover, comfort foam, sensing and processing board, adhesive layer, release liner. src/facts.js states this identity and these five layers, and every list derived from it (the page layer list, the specs table, llms-full.txt) matches.

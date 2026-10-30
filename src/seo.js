@@ -31,7 +31,7 @@ export function llmsTxt(origin) {
 
 ## ${FACTS.product}
 
-- Diameter: ${FACTS.diameterMm} mm. Thickness: ${FACTS.thicknessMm} mm. Weight: ${FACTS.weightG} g.
+- Profile: ${FACTS.thicknessMm} mm. Weight: ${FACTS.weightG} g.
 - Wear time: up to ${FACTS.wearDays} days, single use, ${FACTS.rating}.
 - Radios: ${FACTS.radios.join(' and ')}.
 - Tagline: ${FACTS.tagline}

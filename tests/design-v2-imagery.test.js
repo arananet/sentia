@@ -27,10 +27,11 @@ const section = (id) => {
 
 // design-v2-imagery S1: design system v2 precedes the page
 
-test('design-v2-imagery S1: DESIGN.md v2 makes imagery primary with inventory, treatment rules and SVG demotion', () => {
+test('design-v2-imagery S1: DESIGN.md v4 makes imagery primary with inventory, treatment rules and SVG demotion', () => {
   assert.ok(existsSync(DESIGN), 'design/DESIGN.md must exist');
   const d = readFileSync(DESIGN, 'utf8');
-  assert.match(d, /v2/i);
+  // wo-gh-6 supersedes the earlier design version; imagery composition still applies.
+  assert.match(d, /v4/i);
   assert.match(d, /imagery/i);
   assert.match(d, /asset inventory/i);
   assert.match(d, /treatment/i);
