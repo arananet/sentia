@@ -28,6 +28,15 @@ Where this spec and an earlier spec disagree, this spec governs for wo-gh-6 and 
 - design-v3-product-first: the frozen v2.1 images.js blob (e10c0b4fa90f1f68b4518d8ae392fc4caca907fe), the 38 mm scale reads and the paper background placement rules no longer apply. The v3 composition rules (product large and early, section density, display type in service of the product) stand.
 - Tests that encode the superseded rules are rewritten or removed as the Tests requirement states.
 
+## Loopback round (owner decision, 2026-10-30)
+
+The first round ended changes_requested on reviewer-design's L-6 anchor comparison. The owner ruled: correct the exploded and network images, remove the padding override, and re review against the anchor. This round is scoped to exactly these three fixes; everything else in this spec stands as delivered.
+
+- Corrected imagery: the operator supplies a corrected PATCH_EXPLODED_WEBP_B64 and a corrected NETWORK_SCENE_WEBP_B64 in src/images.js, generated with Magnific (Seedream 4.5) and verified on native resolution crops of the actual bytes. The exploded view shows the five layers in the v4 order with their true identities: matte top cover with a crisp printed SENTIA wordmark and a distinct LED line, porous comfort foam second, the sensing and processing board third, thin translucent adhesive and release films last. The network scene composes closer on the arm: the same matte square patch, large and sharp, wordmark crisp beside the phone and the plain gateway. Routes, dimensions (exploded 1400x1400, network 1600x893) and alt texts are unchanged. The builder integrates the payloads and never regenerates or substitutes imagery.
+- Accepted imagery untouched: PATCH_HERO_WEBP_B64 and PATCH_ON_SKIN_WEBP_B64 stay byte identical to the first round's tree.
+- Padding override removed: the rule `#patch,#how{padding-top:128px;padding-bottom:128px}` is deleted from src/page.js so #patch and #how follow the v4 vertical section range of 64 to 96 px carried by the base section rule. No other src/page.js change is in scope.
+- Re review: reviewer-design repeats the explicit L-6 anchor comparison against design/reference/ for all four images and clears or re names the exploded and network gaps by category (materials, light, scale, contact). The full panel re runs with L-1 to L-6 in the packets, L-2, L-3 and L-5 as amended by this spec, and the run records zero parse failures.
+
 ## Requirements
 
 - Product identity: a square patch with strongly rounded corners, matte warm white top cover, low profile of about 2.5 mm, SENTIA wordmark and one LED line on the cover. The five layers, in order: top cover, comfort foam, sensing and processing board, adhesive layer, release liner. src/facts.js states this identity and these five layers, and every list derived from it (the page layer list, the specs table, llms-full.txt) matches.
@@ -62,3 +71,15 @@ Where this spec and an earlier spec disagree, this spec governs for wo-gh-6 and 
 
 ### Scenario: Green suite, full review panel
 - S7: Given the executed run, when the run report is read, then the verdict is approved, all five expected reviews are counted with reviewer-design among them, and the project test suite passes in full.
+
+### Scenario: The padding override is gone
+- S8: Given the loopback tree, when src/page.js is searched, then the string `#patch,#how{padding-top:128px;padding-bottom:128px}` is absent and no rule gives #patch or #how a vertical padding above 96 px.
+
+### Scenario: Accepted images are byte identical, corrected images replaced
+- S9: Given the loopback tree and the first round's tree, when the four image constants in src/images.js are compared, then PATCH_HERO_WEBP_B64 and PATCH_ON_SKIN_WEBP_B64 are byte identical, PATCH_EXPLODED_WEBP_B64 and NETWORK_SCENE_WEBP_B64 differ, and every payload decodes to between 10 KB and 160 KB.
+
+### Scenario: Corrected image dimensions and routes hold
+- S10: Given the rendered page, when the image routes and img attributes are read, then routes are unchanged, the exploded image is 1400x1400, the network image is 1600x893, and alt texts are unchanged.
+
+### Scenario: The anchor comparison is repeated for all four images
+- S11: Given the loopback run, when reviewer-design's review is read, then it compares all four images against design/reference/ and, for the exploded and network images, clears the gaps or names them by category (materials, light, scale, contact); the run report shows five reviews counted, verdict approved and zero parse failures.

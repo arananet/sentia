@@ -5,21 +5,16 @@
   "work_order_id": "wo-gh-6",
   "artifact_path": "runs/wo-gh-6/reviewer-spec.output.md",
   "status": "executed",
-  "created_at": "2026-10-30T12:40:55.337090+00:00",
+  "created_at": "2026-10-30T17:55:36.808361+00:00",
   "review": {
     "station": "reviewer-spec",
     "verdict": "pass",
     "findings": [
-      "S1 holds. Searching src, brand/BRAND.md and design/DESIGN.md finds no 38 mm, 4.2 mm, Diameter or disc language. diameterMm is removed from src/facts.js and thicknessMm is 2.5.",
-      "S2 holds. The hero chip reads '14 days \u00b7 IP67' and the specs table has 'Profile 2.5 mm' with no width or diameter entry. The llms.txt line in src/seo.js now says 'Profile'.",
-      "S3 holds. src/images.js exports the four image constants, and the decoded WebP payloads are 23.7 KB, 28.6 KB, 44.6 KB and 59.4 KB, all within 10 to 160 KB. The routes in src/index.js are unchanged. The img width and height attributes match the WebP headers (1600x893, 1400x1400, 1600x800, 1600x893). src/images.js has no builder changes, so the supplied imagery was not regenerated.",
-      "S4 holds. src/facts.js lists the five layers in spec order: Top cover, Comfort foam, Sensing and processing board, Adhesive layer, Release liner. The page layer list and the llms-full.txt layer list both derive from FACTS.layers.",
-      "S6 holds. The src/page.js diff has no credit sentence changes, and the site-credit tests pass.",
-      "S7 holds on the test suite: 114 pass, 0 fail, 2 skipped. The rewritten and removed tests record their reasons in the test files, for example in tests/site-credit.test.js. The run verdict and the count of five reviews are not assessable at this station.",
-      "S5 is out of scope for this station. reviewer-design must carry the explicit L-6 anchor comparison against design/reference/ by category (materials, light, scale, contact). This review did not assess image content or quality.",
-      "Non blocking: README.md still says '38 mm' (line 5) and '38 mm adhesive sensor patch, 4.2 mm thick, worn on the upper arm or torso' (line 13). It is outside the spec's listed copy set, but it contradicts the new product definition and should be updated.",
-      "The line added a 'Supersession of earlier specs' section to the governing spec at .openspec/specs/design-v4-square-product/spec.md. It matches the work order and the Tests requirement, but it is a spec edit made during the run.",
-      "The review is written to runs/wo-gh-6/reviewer-spec.output.md."
+      "S8: The rule '#patch,#how{padding-top:128px;padding-bottom:128px}' is gone from src/page.js. That is the builder's only change in src/. The base rule section{padding:clamp(64px,7vw,96px) 0} (line 91) now governs #patch and #how. The only other 128px is .hero (line 100), which S8 does not cover.",
+      "S9/S10: src/images.js has no working-tree change, so the builder did not touch the supplied payloads. Decoded sizes are network 58.0 KB, exploded 69.8 KB, hero 27.9 KB and on-skin 23.2 KB, all within 10 to 160 KB. The img attributes are exploded 1400x1400 and network 1600x893, with the alt texts and routes unchanged. I could not diff hero and on-skin against the first round's tree because it is not in my inputs. I only found no builder edit to them, so their byte identity is unverified.",
+      "S1: Grep of src, brand and design/DESIGN.md for 38 mm, 4.2 mm, diameter and disc finds nothing outside src/images.js.",
+      "S7: The test suite gives 124 tests, 123 pass, 0 fail, 1 skipped. The skip is not explained in the review.",
+      "S11 and the run report (five reviews, zero parse failures, anchor comparison) are outside this station. I did not check them, and the reviewer-design output should confirm them. The review is written to runs/wo-gh-6/reviewer-spec.output.md."
     ]
   },
   "configured_model": "claude-sonnet-5-5",

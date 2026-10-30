@@ -1,9 +1,17 @@
-I revised the spec at `.openspec/specs/design-v4-square-product/spec.md`. It is not committed. I didn't run any tests, since this change only touches the spec file.
+I revised `.openspec/specs/design-v4-square-product/spec.md` for the loopback round; nothing else in the repo changed, and I haven't run any tests. The spec already existed from round one, so I added to it. I left the first-round requirements and scenarios S1–S7 as they were.
 
-The spec already matched the work order: the product identity, the five layers in order, the retired facts, both spec strips, the payload bounds for the four images, the L-2, L-3 and L-5 amendments, the L-6 anchor comparison, the byte-identical credit sentence, and scenarios S1–S7.
+- **New "Loopback round" section** covering the owner's three fixes:
+  - **Corrected images:** the exploded and network payloads are replaced. Routes, dimensions (1400x1400 and 1600x893) and alt texts are unchanged, and the hero and on-skin payloads stay byte identical.
+  - **Padding override:** `#patch,#how{padding-top:128px;padding-bottom:128px}` is removed from `src/page.js`, with no other page.js change in scope.
+  - **Re-review:** reviewer-design repeats the L-6 anchor comparison for all four images, with five reviews counted and zero parse failures.
+- **Four new scenarios:**
+  - **S8:** the padding override is absent.
+  - **S9:** the hero and on-skin payloads are identical to round one, the other two differ, and every payload is between 10 and 160 KB.
+  - **S10:** routes, dimensions and alt texts hold.
+  - **S11:** the anchor comparison covers all four images and names gaps by category or states none.
 
-The one thing I added is a short "Supersession of earlier specs" section. The v2 and v3 specs still assert the paper background sampling, 38 mm scale, round disc and frozen `images.js` blob, and nothing said v4 overrides them. Without that, the rewritten tests and the old specs would contradict each other. The new section lists what no longer applies in each older spec and what still stands: the ban on text in website images, and the v3 composition rules.
+S9 compares against the first round's tree rather than a fixed hash, because the packet gives no hash for those payloads.
 
-Nothing in the inputs was missing, so I didn't need to guess at anything.
+`runs/wo-gh-6/spec-writer.output.md` was already deleted in the working tree when I started, and I didn't recreate it. The spec file is this station's output.
 
 {"model": "claude-sonnet-5-5", "runtime": "claude-code"}

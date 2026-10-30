@@ -1,5 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import worker from '../src/index.js';
 import { renderPage } from '../src/page.js';
@@ -233,3 +234,100 @@ test('frozen: MCP tool descriptions that state the form no longer say disc or 38
   const text = await res.text();
   for (const re of RETIRED) assert.ok(!re.test(text), `tools/list matches ${re}`);
 });
+
+// Loopback round (wo-gh-6, owner decision 2026-10-30): S8 to S11. S11's run report half (five reviews, approved,
+// zero parse failures) is read from the run report, not tested here.
+
+const sha = (name) => createHash('sha256').update(Buffer.from(images[name], 'base64')).digest('hex');
+const webpDims = (buf) => {
+  const fourcc = buf.subarray(12, 16).toString('ascii');
+  if (fourcc === 'VP8 ') return { w: buf.readUInt16LE(26) & 0x3fff, h: buf.readUInt16LE(28) & 0x3fff };
+  if (fourcc === 'VP8L') {
+    const b = buf.readUInt32LE(21);
+    return { w: (b & 0x3fff) + 1, h: ((b >> 14) & 0x3fff) + 1 };
+  }
+  assert.equal(fourcc, 'VP8X');
+  return { w: buf.readUIntLE(24, 3) + 1, h: buf.readUIntLE(27, 3) + 1 };
+};
+
+// S8: the padding override is gone
+
+test('S8: src/page.js does not contain the #patch,#how 128px padding override', () => {
+  const src = read('src/page.js').replace(/\s+/g, '');
+  assert.ok(!src.includes('#patch,#how{padding-top:128px;padding-bottom:128px}'));
+  assert.ok(!/#how\{[^}]*padding[^}]*128px/.test(src));
+  assert.ok(!/#patch\{[^}]*padding[^}]*128px/.test(src));
+});
+
+test('S8: no rule gives #patch or #how a vertical padding above 96 px', () => {
+  const px = (v) => [...v.matchAll(/(\d+(?:\.\d+)?)px/g)].map((m) => Number(m[1]));
+  for (const [, sel, body] of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    if (!/#(patch|how)\b/.test(sel)) continue;
+    for (const [, prop, val] of body.matchAll(/(padding(?:-top|-bottom|-block(?:-start|-end)?)?)\s*:\s*([^;]+)/g))
+      for (const n of px(val)) assert.ok(n <= 96, `${sel.trim()} ${prop}: ${val} (${n}px)`);
+  }
+  // The base section rule carries the documented 64 to 96 px clamp.
+  assert.match(css, /section\{padding:clamp\(64px,7vw,96px\) 0/);
+});
+
+// S9: accepted images byte identical, corrected images replaced
+
+// First round digests of the owner accepted renders (decoded bytes): 28610 and 23746 bytes.
+const ACCEPTED = {
+  PATCH_HERO_WEBP_B64: '35d8c304d9d77ca7ba5c909a8be2acda734902b25ac1110702a994f799006b12',
+  PATCH_ON_SKIN_WEBP_B64: '40afbe6459d38a5e881835dbae6628186fda5ba47b1cdc97766c6325a6a41acb',
+};
+// First round byte sizes of the renders the owner asked to correct (from the first round review).
+const FIRST_ROUND_SIZE = { PATCH_EXPLODED_WEBP_B64: 44588, NETWORK_SCENE_WEBP_B64: 59356 };
+
+test('S9: the hero and on-skin payloads are byte identical to the first round', () => {
+  for (const [name, digest] of Object.entries(ACCEPTED)) assert.equal(sha(name), digest, `${name} changed`);
+});
+
+test('S9: the exploded and network payloads are the corrected ones, not the first round bytes', () => {
+  for (const [name, size] of Object.entries(FIRST_ROUND_SIZE))
+    assert.notEqual(Buffer.from(images[name], 'base64').length, size, `${name} still has the first round byte size`);
+  assert.notEqual(sha('PATCH_EXPLODED_WEBP_B64'), sha('NETWORK_SCENE_WEBP_B64'));
+});
+
+test('S9: every payload decodes to a WebP between 10 KB and 160 KB', () => {
+  for (const r of ROUTES) {
+    const buf = Buffer.from(images[r.exp], 'base64');
+    assert.equal(buf.subarray(8, 12).toString('ascii'), 'WEBP', r.exp);
+    assert.ok(buf.length >= 10 * 1024 && buf.length <= 160 * 1024, `${r.exp} is ${buf.length} bytes`);
+  }
+});
+
+// S10: dimensions, routes and alt texts hold
+
+test('S10: the exploded image is 1400x1400 and the network image 1600x893, in file and in markup', () => {
+  const want = { PATCH_EXPLODED_WEBP_B64: [1400, 1400], PATCH_ON_SKIN_WEBP_B64: [1600, 800], PATCH_HERO_WEBP_B64: [1600, 893], NETWORK_SCENE_WEBP_B64: [1600, 893] };
+  for (const r of ROUTES) {
+    const [w, h] = want[r.exp];
+    const d = webpDims(Buffer.from(images[r.exp], 'base64'));
+    assert.deepEqual([d.w, d.h], [w, h], `${r.exp} intrinsic size`);
+    const tag = html.match(new RegExp(`<img[^>]*${r.path.replace(/[.]/g, '\\.')}[^>]*>`))[0];
+    assert.match(tag, new RegExp(`width="${w}"`), r.path);
+    assert.match(tag, new RegExp(`height="${h}"`), r.path);
+  }
+});
+
+test('S10: routes are unchanged and alt texts are the delivered ones', () => {
+  const alts = {
+    '/img/patch-exploded.webp': 'Sentia Patch One, five square layers separated vertically: top cover, comfort foam, sensing and processing board, adhesive layer and release liner.',
+    '/img/network-scene.webp': 'The square Sentia Patch One with its SENTIA wordmark and LED line beside a phone and LoRaWAN gateway in a warm photographic scene.',
+    '/img/patch-on-skin.webp': 'Sentia Patch One, a low profile square adhesive patch with SENTIA wordmark and LED line, in a close up of an upper arm.',
+  };
+  for (const [path, alt] of Object.entries(alts)) assert.ok(html.includes(`src="${path}"`) && html.includes(`alt="${alt}"`), path);
+});
+
+// S11: the anchor comparison covers all four images (the run report half is read at S7/S11 by the reviewer)
+
+test('S11: when reviewer-design has reviewed, it names all four images against design/reference/',
+  { skip: existsSync(root('runs/wo-gh-6/reviewer-design.output.md')) ? false : 'review not produced yet; the run report counts it' },
+  () => {
+    const t = read('runs/wo-gh-6/reviewer-design.output.md');
+    assert.match(t, /design\/reference\//);
+    for (const n of ['patch-hero', 'patch-exploded', 'patch-on-skin', 'network-scene']) assert.match(t, new RegExp(n), n);
+    for (const c of ['materials', 'light', 'scale', 'contact']) assert.match(t, new RegExp(c, 'i'), c);
+  });

@@ -1,28 +1,16 @@
-I wrote the v4 tests and updated the older suites. 13 tests fail right now, and all 13 are for copy and design work the builder hasn't done yet. The other 101 pass.
+I added the loopback tests for S8 to S11 to `tests/design-v4-square-product.test.js`. The full suite runs 124 tests: 121 pass, 2 fail and 1 is skipped. I wrote only tests, with no code changes, so the two failures are expected until the builder acts.
 
-The new file is `tests/design-v4-square-product.test.js`. It covers spec scenarios S1 to S6; S7 comes from the run report, so it has no test.
+The two S8 tests fail because `src/page.js` line 282 still has `#patch,#how{padding-top:128px;padding-bottom:128px}`. Deleting that rule is the builder's Fix 2.
 
-**What the new tests check**
-- **Retired facts (S1):** across `src/facts.js`, `brand/BRAND.md`, `design/DESIGN.md`, the page HTML (copy, alt texts, JSON-LD), `/llms.txt` and `/llms-full.txt`, none of these appear: 38 mm, 4.2 mm, Diameter, Ø/⌀, disc, disk, round, circular. `DESIGN.md` may mention one only on a line that says it was retired or removed.
-- **Invented figures (S1):** the only "mm" figure allowed in the copy is 2.5. The page must say five layers and 2.5 mm, and `DESIGN.md` must be v4.
-- **Spec strips (S2):** the hero strip has 2.5 mm, 14 days and IP67 and no width or diameter. The second strip has no diameter and no 4.2 mm. The specs table has no Diameter row.
-- **Images (S3):** each of the four routes returns 200 image/webp with a payload between 10 KB and 160 KB, matching the `images.js` export. The alt texts must name the square product, with the hero alt saying upper arm and the on-skin alt saying forearm or upper arm and never torso.
-- **Layers (S4):** the five layers appear in order in `FACTS`, the `#patch` section and `llms-full.txt`, and the old layer names are gone.
-- **Learnings and credit (S5, S6):** every `runs/wo-gh-6` packet carries L-1 to L-6. The footer credit sentence is checked byte for byte.
-- **Frozen items:** brand tokens and the calm-voice words still hold, and the MCP `tools/list` carries none of the retired terms.
+| Scenario | What the new tests check |
+|---|---|
+| S8 | The override string is gone from `src/page.js`. No rule for `#patch` or `#how` sets vertical padding above 96 px. The base `section{padding:clamp(64px,7vw,96px) 0` rule is still present. |
+| S9 | The hero and on-skin payloads match pinned SHA-256 digests. The exploded and network payloads differ from the first round byte sizes (44588 and 59356). Every payload is a WebP between 10 KB and 160 KB. |
+| S10 | The exploded image is 1400x1400 and the network image is 1600x893, both in the file and in the `<img>` attributes. The routes and the alt texts of the exploded, network and on-skin images are the delivered ones. |
+| S11 | Once `runs/wo-gh-6/reviewer-design.output.md` exists, it must name all four images, `design/reference/` and the four categories (materials, light, scale, contact). Until then it skips. |
 
-The reviewer-design anchor-comparison test is skipped until `runs/wo-gh-6/reviewer-design.output.md` exists. Once it does, the test requires `design/reference/` and all four categories (materials, light, scale, contact) in the file.
-
-**Older tests I rewrote or removed.** Each removal has the reason recorded in the file.
-- **`design-v2-1-corrections`:**
-  - Removed the paper-sampling, on-skin corner-colour, true-38 mm-scale and paper-background rule tests, along with the PNG/Chrome helpers they used.
-  - The on-skin alt test now accepts forearm or upper arm and rejects torso.
-  - The image-dimension reader now handles VP8, VP8L and VP8X files.
-- **`design-v3-product-first`:** removed the frozen `images.js` blob and v2.1 byte-size tests, and the `Ø 38 mm` check. The hero facts count now uses 2.5 mm, 14 days and IP67.
-- **`site-credit`:** the per-image byte sizes became a plain 200 image/webp check.
-
-The four new renders are already in the tree and fall within the size bounds. Because of that, the S3 payload tests already pass.
-
-One test was already failing before my edits: "S9: image width and height attributes match the intrinsic WebP dimensions" in `design-v2-1-corrections.test.js`. It still fails, because the page markup (for example 1200 against 1400 on the exploded view) doesn't match the new images. The builder's width, height and alt updates should fix it.
+- **First-round hashes:** The first round's tree isn't in git history, because `src/images.js` has only one commit. For S9 I pinned the hero and on-skin digests from the current tree. Their sizes (28,610 and 23,746 bytes) match the first round review. If those two constants were ever changed on this branch, the pin would hide it.
+- **Exploded and network check:** I could only compare these two against the first round's recorded byte sizes, not full hashes. That proves they changed but not exactly how.
+- **Reports, not tests:** The run report half of S7 and S11 (five reviews, approved, zero parse failures) isn't tested here. Neither is image content (wordmark spelling, LED line, anchor quality). Reviewer-design covers those.
 
 {"model": "claude-sonnet-5-5", "runtime": "claude-code"}

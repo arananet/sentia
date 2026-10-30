@@ -279,7 +279,6 @@ section{scroll-margin-top:32px}
 .value-strip{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;padding-top:32px;padding-bottom:32px;border-top:1px solid var(--line)}
 .value-strip p:first-child{font:300 clamp(24px,3vw,40px)/1.2 'Space Grotesk',sans-serif;max-width:24ch}
 .value-strip p:last-child{max-width:32ch;align-self:center}
-#patch,#how{padding-top:128px;padding-bottom:128px}
 #demo,#dashboard,#mcp,#specs,#faq{padding-top:96px;padding-bottom:96px}
 section>.wrap>.rv:nth-child(2){transition-delay:40ms}
 section>.wrap>.rv:nth-child(3){transition-delay:80ms}

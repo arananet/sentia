@@ -1,13 +1,7 @@
-I couldn't observe a release because the release record doesn't exist. I wrote that finding to `runs/wo-gh-6/observer.output.md`.
+I wrote the observation report to `runs/wo-gh-6/observer.output.md`. It says no observation was possible, because the release record doesn't exist.
 
-- **Missing input:** `runs/wo-gh-6/` has no deployer output. The deployer envelope is `packet_ready` and points only at the deployer's input packet. The approver envelope points at `runs/wo-gh-6/report.json`, which is also absent.
-- **Consistent with the work order:** it says nothing deploys on this run and the operator renders the page locally for the owner's gate. I found no evidence of a deployment either way.
-- **Not observed:**
-  - whether the page was rendered locally;
-  - what the owner decided at the gate;
-  - whether the images serve between 10 KB and 160 KB;
-  - the test suite result (I didn't run it).
+The deployer left only `deployer.packet.md`, with status `packet_ready`, and no `deployer.output.md`. The work order also says nothing deploys on this run. The operator renders the page locally for the owner's gate instead.
 
-To unblock me, I need either a deployer release record, even one saying "no deploy, local render for the owner gate", or the operator's gate outcome.
+I didn't check the live site, the tests or the images to fill the gap, since the observer works only from the release record. The report lists what is missing: a release record, or an explicit record that no release happened. It says to re-run the observer once a real release is recorded after the owner's gate.
 
 {"model": "claude-sonnet-5-5", "runtime": "claude-code"}
