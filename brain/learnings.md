@@ -21,3 +21,6 @@ Provenance: run wo-gh-3, artifact src/page.js, evidence verdict changes_requeste
 
 ## L-5: The current product render set is owner approved, especially the patch render; composition iterations keep src/images.js byte identical and never regenerate product imagery.
 Provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested
+
+## L-6: Product imagery for Sentia meets the production quality bar anchored in design/reference/: photorealistic studio quality with real materials and physically consistent light; stylized or toy-like renders fail review. Reviewer-design compares every new product image against the anchor boards and names the gaps.
+Provenance: run wo-gh-5, artifact src/images.js, evidence verdict changes_requested
