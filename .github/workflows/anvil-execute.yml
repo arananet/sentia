@@ -58,13 +58,18 @@ name: anvil-execute
 # anvil/run-take-apart-bundling runs wo-gh-11 (work-orders/issue-11.json,
 # reports on issue 11, the take apart bundling fix: the served client and
 # model made independent of the Worker bundler, with production shape
-# checks). The Select work order step
+# checks) and anvil/run-take-apart-product-model runs wo-gh-12
+# (work-orders/issue-12.json, reports on issue 12, the take apart product
+# model: the block primitives replaced by a faithful Blender built Patch
+# One, with the Blender toolchain of the platform25 pattern: pinned 4.5
+# LTS, smoke gated before the line, rebuilt deterministically after it).
+# The Select work order step
 # sets the file, id and issue
 # used by the line, commit back and comment steps. Model routing is the
 # same for both work orders.
 on:
   push:
-    branches: [anvil/run-ui-astra, anvil/run-design-v2, anvil/run-design-v2-1, anvil/run-credit-line, anvil/run-design-v3, anvil/run-design-v4, anvil/run-s11-fix, anvil/run-imagery-consistency, anvil/run-take-apart, anvil/run-take-apart-bundling]
+    branches: [anvil/run-ui-astra, anvil/run-design-v2, anvil/run-design-v2-1, anvil/run-credit-line, anvil/run-design-v3, anvil/run-design-v4, anvil/run-s11-fix, anvil/run-imagery-consistency, anvil/run-take-apart, anvil/run-take-apart-bundling, anvil/run-take-apart-product-model]
   workflow_dispatch:
 
 permissions:
@@ -87,6 +92,7 @@ jobs:
       CF_AIG_TOKEN: ${{ secrets.CF_AIG_TOKEN }}
       CF_AI_API_TOKEN: ${{ secrets.CF_AI_API_TOKEN }}
       CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1"
+      BLENDER_VERSION: "4.5.15"
     steps:
       - name: Check out this repository
         uses: actions/checkout@v4
@@ -94,7 +100,11 @@ jobs:
       - name: Select work order for this branch
         id: wo
         run: |
-          if [ "${GITHUB_REF_NAME}" = "anvil/run-take-apart-bundling" ]; then
+          if [ "${GITHUB_REF_NAME}" = "anvil/run-take-apart-product-model" ]; then
+            echo "file=work-orders/issue-12.json" >> "${GITHUB_OUTPUT}"
+            echo "id=wo-gh-12" >> "${GITHUB_OUTPUT}"
+            echo "issue=12" >> "${GITHUB_OUTPUT}"
+          elif [ "${GITHUB_REF_NAME}" = "anvil/run-take-apart-bundling" ]; then
             echo "file=work-orders/issue-11.json" >> "${GITHUB_OUTPUT}"
             echo "id=wo-gh-11" >> "${GITHUB_OUTPUT}"
             echo "issue=11" >> "${GITHUB_OUTPUT}"
@@ -166,6 +176,63 @@ jobs:
           claude --version
           codex --version
 
+      # Blender toolchain (wo-gh-12, the platform25 pattern): this project
+      # now makes its take apart product model with headless Blender.
+      # Blender is pinned to the 4.5 LTS series (4.5.15) and cached
+      # between runs. A Blender smoke gate (model a cube, export a glb)
+      # must pass before the line runs, alongside the two gateway smokes.
+      # After the line, a deterministic step runs
+      # blender --background --python blender/build_all.py when that
+      # script exists, so the exported asset always comes from the
+      # committed script, never from a station's ad hoc invocation.
+      - name: Cache the pinned Blender
+        uses: actions/cache@v4
+        with:
+          path: /home/runner/blender-${{ env.BLENDER_VERSION }}
+          key: blender-${{ env.BLENDER_VERSION }}-linux-x64
+
+      - name: Set up Blender (pinned 4.5 LTS)
+        id: blender_setup
+        run: |
+          BLENDER_ROOT="${HOME}/blender-${BLENDER_VERSION}"
+          if [ ! -x "${BLENDER_ROOT}/blender" ]; then
+            echo "Cache miss: downloading Blender ${BLENDER_VERSION}"
+            curl -fsSL "https://download.blender.org/release/Blender4.5/blender-${BLENDER_VERSION}-linux-x64.tar.xz" -o /tmp/blender.tar.xz
+            mkdir -p "${BLENDER_ROOT}"
+            tar -xJf /tmp/blender.tar.xz -C "${BLENDER_ROOT}" --strip-components=1
+            rm -f /tmp/blender.tar.xz
+          else
+            echo "Blender restored from cache"
+          fi
+          echo "${BLENDER_ROOT}" >> "${GITHUB_PATH}"
+          "${BLENDER_ROOT}/blender" --version
+
+      - name: Blender smoke gate (model and export headless)
+        id: smoke_blender
+        run: |
+          SMOKE_DIR="${RUNNER_TEMP}/blender-smoke"
+          mkdir -p "${SMOKE_DIR}"
+          cat > "${SMOKE_DIR}/smoke.py" <<'EOF'
+          import bpy
+          import os
+          import sys
+
+          out = os.path.join(sys.argv[sys.argv.index("--") + 1], "smoke.glb")
+          bpy.ops.wm.read_factory_settings(use_empty=True)
+          bpy.ops.mesh.primitive_cube_add(size=2)
+          cube = bpy.context.active_object
+          cube.name = "smoke_cube"
+          bpy.ops.export_scene.gltf(filepath=out, export_format="GLB")
+          print("BLENDER_SMOKE_EXPORTED", out)
+          EOF
+          blender --background --python "${SMOKE_DIR}/smoke.py" -- "${SMOKE_DIR}" > "${SMOKE_DIR}/smoke.txt" 2>&1 || true
+          cat "${SMOKE_DIR}/smoke.txt"
+          if [ ! -s "${SMOKE_DIR}/smoke.glb" ]; then
+            echo "BLENDER SMOKE FAILED: headless Blender did not export smoke.glb. Stopping before the line runs."
+            exit 1
+          fi
+          echo "Blender smoke passed: blender ${BLENDER_VERSION} modeled and exported a glb headless."
+
       - name: Anthropic smoke gate (claude-sonnet-5-5 through the gateway)
         id: smoke_anthropic
         run: |
@@ -209,23 +276,33 @@ jobs:
 
       - name: Run the ANVIL sdlc-default line in execute mode
         id: line
-        if: steps.smoke_anthropic.outcome == 'success' && steps.smoke_astra.outcome == 'success'
+        if: steps.smoke_blender.outcome == 'success' && steps.smoke_anthropic.outcome == 'success' && steps.smoke_astra.outcome == 'success'
         run: |
           PYTHONPATH=.anvil-factory python3 -m anvil.cli run . \
             --pipeline .anvil-factory/pipelines/sdlc-default.json \
             --work-order ${{ steps.wo.outputs.file }} \
             --execute
 
+      - name: Build the Blender product model (deterministic, wo-gh-12)
+        id: blender_assets
+        if: always() && steps.smoke_blender.outcome == 'success' && steps.smoke_anthropic.outcome == 'success' && steps.smoke_astra.outcome == 'success'
+        run: |
+          if [ -f blender/build_all.py ]; then
+            blender --background --python blender/build_all.py
+          else
+            echo "No blender/build_all.py in this tree yet, nothing to build."
+          fi
+
       - name: Run the project test suite after the line
         id: suite
-        if: always() && steps.smoke_anthropic.outcome == 'success' && steps.smoke_astra.outcome == 'success'
+        if: always() && steps.smoke_blender.outcome == 'success' && steps.smoke_anthropic.outcome == 'success' && steps.smoke_astra.outcome == 'success'
         run: |
           npm test > suite-output.txt 2>&1
           echo "SUITE_EXIT=$?" >> suite-result.txt
           cat suite-output.txt
 
       - name: Commit the run evidence and the station changes back to the branch
-        if: always() && steps.smoke_anthropic.outcome == 'success' && steps.smoke_astra.outcome == 'success'
+        if: always() && steps.smoke_blender.outcome == 'success' && steps.smoke_anthropic.outcome == 'success' && steps.smoke_astra.outcome == 'success'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -247,7 +324,7 @@ jobs:
           git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: Comment the run report on the issue
-        if: always() && steps.smoke_anthropic.outcome == 'success' && steps.smoke_astra.outcome == 'success'
+        if: always() && steps.smoke_blender.outcome == 'success' && steps.smoke_anthropic.outcome == 'success' && steps.smoke_astra.outcome == 'success'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
@@ -322,7 +399,7 @@ jobs:
           gh issue comment ${{ steps.wo.outputs.issue }} --body-file comment.md
 
       - name: Upload the run directory
-        if: always() && steps.smoke_anthropic.outcome == 'success' && steps.smoke_astra.outcome == 'success'
+        if: always() && steps.smoke_blender.outcome == 'success' && steps.smoke_anthropic.outcome == 'success' && steps.smoke_astra.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: anvil-execute-run-${{ steps.wo.outputs.id }}
