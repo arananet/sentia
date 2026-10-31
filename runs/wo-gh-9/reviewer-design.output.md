@@ -2,17 +2,18 @@
   "station": "reviewer-design",
   "verdict": "changes_requested",
   "findings": [
-    "Typography requires correction in src/take-apart-page.js: the mobile h1 is 36px, below DESIGN.md's 56px mobile hero minimum, and #fallback uses 16px body copy instead of 17px. Set the documented sizes and heading leading; h1 currently inherits the body's 1.65 leading. The font stylesheet, 18px introduction, 32–56px gauges and display weight 300 are correct.",
-    "Palette and contrast: chrome, callouts, chart and contact-sheet labels use the documented tokens. The documented text/background pairs meet the 4.5:1 floor.",
-    "Spacing and container: fixed content spacing follows the 8px rhythm; the container is capped at 1440px and gutters use clamp(24px,5vw,80px).",
-    "Accessibility: the skip link targets main with tabindex=-1; 3px focus rings, 44px button and range targets, and 8px control gaps are declared. The supplied contact sheet establishes desktop appearance only; capture checks 390px overflow but does not establish the documented 320px and zoom quality bars.",
-    "No-script behavior: served HTML includes the explanation, five layer names and thicknesses, gaugeReadout(0) values, and a fallback note revealed by the noscript override. Correct the fallback typography noted above.",
-    "Assembled / Assemble: cleared under S11. Layers appear flush, labels identify the correct layers without covering them, and gauges show the hour-zero state.",
-    "Apart / Explode: cleared under S11. Five layers separate in order with model-consistent gaps, unobstructed labels and unchanged hour-zero gauges.",
-    "Board / Isolate the board: cleared under S11. The board is lifted and emphasized, other layers fade and step aside, and labels and gauges remain consistent.",
-    "X ray: cleared under S11. The cover fades further while the focused board remains visible; no unexpected intersection, misplaced label or gauge discrepancy is evident.",
-    "Mid / Settle: cleared under S11. The partially separated stack and released focus agree with the settle state; 36.9°C, hydration 69, battery 59% and day 7 agree with gaugeReadout(156).",
-    "Evidence completeness remains pending: evidence/take-apart/browser-pass.log records zero console errors and a passing hour-200 gauge comparison, but git status reports it as untracked. Include it in the committed evidence as required by the loopback addendum."
+    "Typography requires correction: src/take-apart-page.js sets h1 to 43px, falling to 36px below 720px, with inherited 1.65 leading. design/DESIGN.md specifies a 56–64px hero heading, a 56px mobile minimum, 0.96 leading and -0.055em tracking. Apply those heading rules. Font loading, 18px introduction, 17px body copy, weight-300 display faces and 32–56px gauge values otherwise meet the loopback requirements.",
+    "Palette and contrast cleared: page chrome, chart, callouts and contact-sheet composition use documented colors; the documented foreground/background text combinations exceed 4.5:1.",
+    "Spacing and container cleared: content margins, padding and gaps follow the 8px rhythm; containers cap at 1440px and gutters use 24–80px bounds.",
+    "Accessibility chrome cleared by source inspection: skip link targets main with tabindex=-1, focus outlines are 3px, header links and controls have at least 44px height, and control groups have at least 8px gaps. Range inputs explicitly have 44px operable height.",
+    "No-script behavior cleared: served HTML includes the explanation, five model-derived layer thicknesses, gaugeReadout(0) values and fallback note; the noscript override exposes the fallback and layer list.",
+    "Assembled beat cleared under S11: layers appear flush, labels identify the correct layers without covering them, and gauges show the hour-zero state. No visible intersection or clipped text.",
+    "Apart beat cleared under S11: five layers separate in order with consistent gaps, unobstructed labels and unchanged hour-zero gauges. No unexplained floating layer or clipped text.",
+    "Board beat cleared under S11: the board is lifted and emphasized while other layers fade and step aside; labels remain correctly assigned and gauges retain hour-zero values. No visible unintended intersection or clipped text.",
+    "X ray beat cleared under S11: the cover becomes faint while board focus remains visible; callouts remain unobstructed and gauges match hour zero. No unexplained displacement or clipped text.",
+    "Mid / Settle beat cleared under S11: partial separation restores the unfocused stack; 36.9°C, hydration 69, battery 59% and day 7 match hour 156. Labels remain correctly assigned without covering their layers; no visible intersection or clipped text.",
+    "Motion cleared against the study-specific rules: interaction stops the tour, reduced motion prevents automatic touring and disables transitions, and camera interpolation becomes instant.",
+    "Evidence completeness cleared: all five stills, contact-sheet.png and browser-pass.log are tracked under evidence/take-apart/. The log records zero console errors and a passing hour-200 gauge comparison."
   ]
 }
 

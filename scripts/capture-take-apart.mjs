@@ -1,7 +1,7 @@
 // Run with a runner-installed Playwright, never a site dependency:
 // PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs node scripts/capture-take-apart.mjs
 import http from 'node:http';
-import { mkdir, writeFile, readFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import { pathToFileURL } from 'node:url';
 import worker from '../src/index.js';
@@ -93,6 +93,17 @@ try {
   await page.setViewportSize({width:390,height:844});
   assert.equal(await page.locator('#callouts').isVisible(),false);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'mobile fits viewport');
+  // Verify the same model-backed HTML remains useful without the runtime.
+  const staticContext = await browser.newContext({ javaScriptEnabled:false, viewport:{width:390,height:844} });
+  const staticPage = await staticContext.newPage();
+  await staticPage.goto(`http://127.0.0.1:${server.address().port}/take-apart`);
+  assert.equal(await staticPage.locator('#fallback').isVisible(),true);
+  assert.equal(await staticPage.locator('.static-layers').isVisible(),true);
+  assert.equal(await staticPage.locator('.static-layers li').count(),5);
+  for (const [key,value] of Object.entries(gaugeReadout(0))) {
+    assert.equal(await staticPage.locator(`[data-gauge="${key}"]`).innerText(),value);
+  }
+  await staticContext.close();
   assert.equal(errors.length,0,errors.join('\n'));
 } finally {
   await writeFile(new URL('browser-pass.log',out),`console errors: ${errors.length}\ngauge comparison: ${gaugePassed?'PASS':'FAIL'} at hour 200\nvendor decoded bytes: ${vendorBytes}\n${errors.join('\n')}\n`);

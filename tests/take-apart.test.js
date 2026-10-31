@@ -18,7 +18,7 @@ import * as TWIN from '../src/take-apart-model-browser.js';
 // not rejected for a naming choice the spec leaves open.
 
 // Loopback round baseline: the operator setup commit at the head of the branch when the run starts.
-const SETUP_COMMIT = '7748273';
+const SETUP_COMMIT = 'f06bd4a';
 // Files the workflow harness itself writes at the repository root; never part of the line's change.
 const HARNESS_FILES = new Set(['suite-output.txt', 'suite-result.txt', 'run-diff.txt', 'comment.md']);
 const get = (p) => worker.fetch(new Request('https://sentia.test' + p));

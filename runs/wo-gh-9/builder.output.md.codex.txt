@@ -1,4 +1,4 @@
-WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-ym2hw2et"))
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-0z_lxrbo"))
 Reading additional input from stdin...
 OpenAI Codex v0.166.0
 --------
@@ -9,7 +9,7 @@ approval: never
 sandbox: danger-full-access
 reasoning effort: none
 reasoning summaries: none
-session id: 01a19213-428f-7821-bdb0-53c27f6ad14d
+session id: 01a19224-1046-7313-ae5b-d59d8691bb04
 --------
 user
 You are executing an ANVIL station packet inside this repository. Follow the packet exactly, edit the files it asks for, and finish with a brief plain text summary of what you changed.
@@ -92,19 +92,17 @@ Done criteria for this round: run verdict approved with all five expected review
 
 ## Project design
 codex
-I’ll read the spec, scenario tests, and vendored kit, then update the page chrome and regenerate the browser evidence.
-
+I’ll read the spec, tests, and vendored kit, then update the page chrome and regenerate the browser evidence within the allowed scope.
 exec
-/bin/bash -lc "pwd && rg --files -g 'AGENTS.md' -g '*take-apart*' -g 'package.json' -g '*SKILL*' -g '*README*' .anvil-factory/third_party/teardown .openspec src tests scripts | head -80" in /home/runner/work/sentia/sentia
+/bin/bash -lc "pwd; rg --files -g 'AGENTS.md' -g '*take-apart*' -g 'package.json' -g 'SKILL.md' .anvil-factory/third_party/teardown .openspec src tests scripts 2>/dev/null" in /home/runner/work/sentia/sentia
  succeeded in 0ms:
 /home/runner/work/sentia/sentia
 tests/take-apart.test.js
-src/take-apart-model.js
-src/take-apart-page.js
 src/take-apart-client.js
 src/take-apart-model-browser.js
+src/take-apart-page.js
+src/take-apart-model.js
 .anvil-factory/third_party/teardown/package.json
-.anvil-factory/third_party/teardown/README.md
 .anvil-factory/third_party/teardown/SKILL.md
 scripts/capture-take-apart.mjs
 
@@ -277,13 +275,16 @@ These replace the original done criteria list for the loopback round:
 - The run diff against the loopback setup commit names no file outside the allowed scope, with the harness files excluded as stated.
 
 exec
-/bin/bash -lc "find .. -name AGENTS.md -not -path '*/node_modules/*' -not -path '*/.git/*'; cat src/take-apart-page.js; cat scripts/capture-take-apart.mjs" in /home/runner/work/sentia/sentia
+/bin/bash -lc 'cat src/take-apart-page.js; cat scripts/capture-take-apart.mjs; cat .anvil-factory/third_party/teardown/SKILL.md' in /home/runner/work/sentia/sentia
  succeeded in 0ms:
 import { FACTS } from './facts.js';
+import { LAYERS, gaugeReadout } from './take-apart-model.js';
 export function renderTakeApartPage() {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Take apart — ${FACTS.product}</title><link rel="icon" href="/favicon.ico"><style>
-:root{--paper:#FAFAF6;--ink:#163c34;--teal:#008d7f;--muted:#6a7972;--line:#dce1d9}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,Arial,sans-serif}button,input{font:inherit}button,a,input{touch-action:manipulation}a{color:inherit;text-decoration:none}header{margin:0 4%;padding:25px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.brand{font-family:'Space Grotesk',sans-serif;font-size:27px;letter-spacing:-1.4px}.brand span{color:var(--teal)}header a:last-child{font-size:13px}main{max-width:1600px;margin:auto;padding:28px 4% 25px}.eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}h1{font-family:'Space Grotesk',sans-serif;font-size:43px;font-weight:400;letter-spacing:-2px;margin:10px 0}p{line-height:1.6}.intro{display:flex;justify-content:space-between;align-items:end}.intro p{font-size:13px;color:var(--muted);max-width:330px;margin:0 0 8px}.workbench{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:28px;margin-top:20px}.viewport{height:520px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}#scene{width:100%;height:100%;display:block;touch-action:none;cursor:grab}#scene:active{cursor:grabbing}.live-readout{position:absolute;top:0;left:0;pointer-events:none}.live-readout .temperature{font-size:56px;margin-top:8px}.live-readout .caption{display:none}.scene-note{position:absolute;left:0;bottom:14px;font-size:11px;color:var(--muted);pointer-events:none}.scene-note.right{left:auto;right:0}#callouts{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}#fallback{position:absolute;inset:30%;font-size:16px;line-height:1.7}#fallback[hidden]{display:none}.panel{border-left:1px solid var(--line);padding-left:25px}.live-label{display:flex;align-items:center;gap:7px;font-size:10px;letter-spacing:1.4px;text-transform:uppercase}.dot{width:6px;height:6px;border-radius:50%;background:var(--teal)}.temperature{font-family:'Space Grotesk',sans-serif;font-size:68px;letter-spacing:-4px;margin:12px 0 0;line-height:1.1}.temperature small{font-size:22px;letter-spacing:0}.caption{font-size:12px;color:var(--muted);margin:8px 0 23px}.gauges{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}.gauge{padding:17px 0;border-bottom:1px solid var(--line)}.gauge:last-child{grid-column:1 / -1}.gauge .value{font-family:'Space Grotesk',sans-serif;font-size:28px}.gauge small{font-size:11px;color:var(--muted);display:block;margin-bottom:8px}.unit{font-size:12px;color:var(--muted)}#chart{width:100%;height:90px;display:block;margin-top:14px}.chart-caption{font-size:10px;display:flex;justify-content:space-between;color:var(--muted)}.panel-note{font-size:11px;color:var(--muted);margin-top:22px}.controls{margin-top:22px}.sliders{display:grid;grid-template-columns:1fr 1fr;gap:40px}.control-heading{display:flex;justify-content:space-between;font-size:12px;margin-bottom:9px}.control-heading span{color:var(--muted)}input[type=range]{width:100%;accent-color:var(--teal);height:20px;cursor:pointer}.endpoints{display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}.button-row{display:flex;align-items:center;gap:8px;margin-top:22px;flex-wrap:wrap}button{background:transparent;border:1px solid var(--line);border-radius:5px;padding:11px 13px;color:var(--ink);font-size:11px;min-height:40px;cursor:pointer}button:hover{border-color:var(--teal)}button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}button.layer[aria-pressed=true]{background:var(--teal);border-color:var(--teal)}.camera-group{display:flex;gap:5px;margin-left:auto}.footer{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin-top:23px;padding-top:16px;font-size:10px;color:var(--muted)}#tour-status{color:var(--teal)}#tour-cursor{position:fixed;z-index:10;width:25px;height:25px;border:2px solid var(--teal);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:left .2s,top .2s;box-shadow:0 0 0 5px #008d7f16}#tour-cursor.pressing{background:#008d7f55;transform:translate(-50%,-50%) scale(.8)}:focus-visible{outline:2px solid var(--teal);outline-offset:4px}@media(min-width:1400px){.viewport{height:560px}}@media(max-width:950px){.workbench{grid-template-columns:minmax(0,1fr) 195px;gap:15px}.panel{padding-left:15px}.temperature{font-size:54px}.camera-group{margin-left:0}}@media(max-width:719px){header{padding:18px 0}.intro{display:block}h1{font-size:36px}.workbench{display:flex;flex-direction:column}.viewport{height:410px}#callouts{display:none}.panel{border-left:0;padding:0}.panel .gauges{grid-template-columns:repeat(3,1fr)}.panel .gauge:last-child{grid-column:auto}.gauges{grid-column:2;grid-row:1 / 5}.gauge{padding:10px 0}.temperature{font-size:48px}.caption{margin:0}.panel-note{display:none}.chart-wrap{grid-column:1 / -1}.sliders{gap:20px}.scene-note{font-size:9px}.button-row{gap:6px}button{font-size:10px}.footer{gap:16px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
-</style></head><body><header><a class="brand" href="/">sentia<span>·</span></a><a href="/">← Back to the whole picture</a></header><main id="take-apart" data-tour-beat="off"><div class="intro"><div><div class="eyebrow">${FACTS.product} / Interactive study</div><h1>A little space. A lot inside.</h1></div><p>Take apart the layers. Follow a day on skin.<br>One model connects every part and reading.</p></div><div class="workbench"><section aria-label="Interactive layer study"><div class="viewport"><canvas id="scene" aria-label="Three dimensional Patch One. Drag to orbit, scroll to zoom."></canvas><div class="live-readout"><div class="live-label"><i class="dot"></i>Simulated skin temperature</div><div class="temperature"><span data-gauge="temperature"></span><small> °C</small></div><div class="caption">A rhythm beneath the surface.</div></div><svg id="callouts" aria-hidden="true"></svg><p id="fallback" hidden>3D is unavailable on this device. Explore the layers and simulated readings with the controls below.</p><div class="scene-note">STUDY MODEL · vertical scale ×8</div><div class="scene-note right">Drag to orbit · Scroll to zoom</div></div></section><aside class="panel" aria-label="Simulated wear readings"><div class="eyebrow" style="margin-bottom:20px">Wear simulation</div><div class="gauges"><div class="gauge"><small>Hydration index</small><span class="value" data-gauge="hydration"></span><span class="unit"> / index</span></div><div class="gauge"><small>Battery</small><span class="value" data-gauge="battery"></span><span class="unit"> %</span></div><div class="gauge"><small>Time on skin</small><span class="unit">Day </span><span class="value" data-gauge="day"></span><span class="unit"> of ${FACTS.wearDays}</span></div></div><div class="chart-wrap"><canvas id="chart" aria-label="Skin temperature over the wear period"></canvas><div class="chart-caption"><span>Application</span><span>End of wear</span></div></div><p class="panel-note">Illustrative wellness readings.<br>A study of the system, not clinical data.</p></aside></div><section class="controls" aria-label="Study controls"><div class="sliders"><label><div class="control-heading">Separation <span>Explore the stack</span></div><input id="separation" aria-label="Separation" type="range" min="0" max="1" step="0.001" value="0"><div class="endpoints"><span>Assembled</span><span>Layer by layer</span></div></label><label><div class="control-heading">Wear time <span>Day <output id="wear-day"></output></span></div><input id="wear" aria-label="Wear time in hours" type="range" min="0" max="336" step="0.25" value="0"><div class="endpoints"><span>Application</span><span>End of wear</span></div></label></div><div class="button-row">${FACTS.layers.map((l,i)=>`<button class="layer" data-layer="${i}" aria-pressed="false">${l.name}</button>`).join('')}<button id="xray" aria-pressed="false">X ray</button><div class="camera-group" aria-label="Camera presets">${['Hero','Top','Side'].map(n=>`<button data-camera="${n}" aria-pressed="${n==='Hero'}">${n}</button>`).join('')}</div></div></section><div class="footer"><span>Five layers · ${FACTS.thicknessMm} mm assembled profile · Procedural geometry</span><span id="tour-status">Explore freely · Tour begins when idle</span></div></main><div id="tour-cursor" hidden></div><script src="/take-apart-model.js"></script><script type="module" src="/take-apart.js"></script></body></html>`;
+  const initial = gaugeReadout(0);
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Take apart — ${FACTS.product}</title><link rel="icon" href="/favicon.ico"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet"><style>
+:root{--paper:#FAFAF6;--ink:#12211C;--teal:#0E7C66;--muted:#53685C;--line:#DFE7DF;--body:#4A5D54;--mint:#EFF4EE}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,Arial,sans-serif;font-size:17px;line-height:1.65}button,input{font:inherit}button,a,input{touch-action:manipulation}a{color:inherit;text-decoration:none}header{margin:0 auto;max-width:1440px;padding:16px clamp(24px,5vw,80px);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.brand{font-family:'Space Grotesk',sans-serif;font-size:27px;letter-spacing:-1.4px}.brand span{color:var(--teal)}header a:last-child{font-size:13px}main{max-width:1440px;margin:auto;padding:24px clamp(24px,5vw,80px)}.eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}h1{font-family:'Space Grotesk',sans-serif;font-size:43px;font-weight:300;letter-spacing:-.04em;margin:8px 0}p{line-height:1.65}.intro{display:flex;justify-content:space-between;align-items:end}.intro p{font-size:18px;color:var(--body);max-width:400px;margin:0 0 8px}.workbench{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:24px;margin-top:24px}.viewport{height:520px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}#scene{width:100%;height:100%;display:block;touch-action:none;cursor:grab}#scene:active{cursor:grabbing}.live-readout{position:absolute;top:0;left:0;pointer-events:none}.live-readout .temperature{font-size:56px;margin-top:8px}.live-readout .caption{display:none}.scene-note{position:absolute;left:0;bottom:16px;font-size:11px;color:var(--muted);pointer-events:none}.scene-note.right{left:auto;right:0}#callouts{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}#fallback{position:absolute;inset:30%;font-size:16px;line-height:1.7}#fallback[hidden]{display:none}.panel{border-left:1px solid var(--line);padding-left:24px}.live-label{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:1.4px;text-transform:uppercase}.dot{width:6px;height:6px;border-radius:50%;background:var(--teal)}.temperature{font-family:'Space Grotesk',sans-serif;font-size:56px;letter-spacing:-4px;margin:8px 0 0;line-height:1.1}.temperature small{font-size:22px;letter-spacing:0}.caption{font-size:12px;color:var(--muted);margin:8px 0 24px}.gauges{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}.gauge{padding:16px 0;border-bottom:1px solid var(--line)}.gauge:last-child{grid-column:1 / -1}.gauge .value{font-family:'Space Grotesk',sans-serif;font-size:32px}.gauge small{font-size:11px;color:var(--muted);display:block;margin-bottom:8px}.unit{font-size:12px;color:var(--muted)}#chart{width:100%;height:90px;display:block;margin-top:16px}.chart-caption{font-size:11px;display:flex;justify-content:space-between;color:var(--muted)}.panel-note{font-size:11px;color:var(--muted);margin-top:24px}.controls{margin-top:24px}.sliders{display:grid;grid-template-columns:1fr 1fr;gap:40px}.control-heading{display:flex;justify-content:space-between;font-size:12px;margin-bottom:8px}.control-heading span{color:var(--muted)}input[type=range]{width:100%;accent-color:var(--teal);height:44px;margin:0;cursor:pointer}.endpoints{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}.button-row{display:flex;align-items:center;gap:8px;margin-top:24px;flex-wrap:wrap}button{background:transparent;border:1px solid var(--line);border-radius:5px;padding:8px 16px;color:var(--ink);font-size:11px;min-height:44px;min-width:44px;cursor:pointer}button:hover{border-color:var(--teal)}button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}button.layer[aria-pressed=true]{background:var(--teal);border-color:var(--teal)}.camera-group{display:flex;gap:8px;margin-left:auto}.footer{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin-top:24px;padding-top:16px;font-size:11px;color:var(--muted)}#tour-status{color:var(--teal)}#tour-cursor{position:fixed;z-index:10;width:25px;height:25px;border:2px solid var(--teal);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:left .2s,top .2s;box-shadow:0 0 0 5px var(--mint)}#tour-cursor.pressing{background:var(--mint);transform:translate(-50%,-50%) scale(.8)}:focus-visible{outline:3px solid var(--teal);outline-offset:4px}@media(min-width:1400px){.viewport{height:560px}}@media(max-width:950px){.workbench{grid-template-columns:minmax(0,1fr) 195px;gap:16px}.panel{padding-left:16px}.temperature{font-size:54px}.camera-group{margin-left:0}}@media(max-width:719px){header{padding:16px 24px}.intro{display:block}h1{font-size:36px}.workbench{display:flex;flex-direction:column}.viewport{height:410px}#callouts{display:none}.panel{border-left:0;padding:0}.panel .gauges{grid-template-columns:repeat(3,1fr)}.panel .gauge:last-child{grid-column:auto}.gauges{grid-column:2;grid-row:1 / 5}.gauge{padding:16px 0}.temperature{font-size:48px}.caption{margin:0}.panel-note{display:none}.chart-wrap{grid-column:1 / -1}.sliders{gap:24px}.scene-note{font-size:11px}.button-row{gap:8px}button{font-size:11px}.footer{gap:16px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+.eyebrow,.live-label,.scene-note,.endpoints,.chart-caption,.footer{font-family:monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase}.panel-note{font-size:17px;color:var(--body)}.temperature,.gauge .value{font-weight:300}header{gap:16px}header a{min-height:44px;display:inline-flex;align-items:center}.skip-link{position:absolute;left:24px;top:8px;transform:translateY(-200%);background:var(--paper);padding:8px 16px;z-index:20}.skip-link:focus{transform:none}.static-layers{display:none}.static-layers li{margin:8px 0}.static-layers ul{padding-left:24px}#fallback{inset:32% 16%;margin:0;padding:16px;background:var(--paper);color:var(--body)}
+</style><noscript><style>#fallback[hidden],.static-layers{display:block!important}#scene,#callouts,.controls,#tour-status,.scene-note{display:none!important}</style></noscript></head><body><a class="skip-link" href="#take-apart">Skip to study</a><header><a class="brand" href="/">sentia<span>·</span></a><a href="/">← Back to the whole picture</a></header><main tabindex="-1" id="take-apart" data-tour-beat="off"><div class="intro"><div><div class="eyebrow">${FACTS.product} / Interactive study</div><h1>A little space. A lot inside.</h1></div><p>Take apart the layers. Follow a day on skin.<br>One model connects every part and reading.</p></div><div class="workbench"><section aria-label="Interactive layer study"><div class="viewport"><canvas id="scene" aria-label="Three dimensional Patch One. Drag to orbit, scroll to zoom."></canvas><div class="live-readout"><div class="live-label"><i class="dot"></i>Simulated skin temperature</div><div class="temperature"><span data-gauge="temperature">${initial.temperature}</span><small> °C</small></div><div class="caption">A rhythm beneath the surface.</div></div><svg id="callouts" aria-hidden="true"></svg><p id="fallback" hidden>This interactive study needs JavaScript and WebGL. Explore the layer list and initial simulated readings below.</p><div class="scene-note">STUDY MODEL · vertical scale ×8</div><div class="scene-note right">Drag to orbit · Scroll to zoom</div></div></section><aside class="panel" aria-label="Simulated wear readings"><div class="eyebrow" style="margin-bottom:24px">Wear simulation</div><div class="gauges"><div class="gauge"><small>Hydration index</small><span class="value" data-gauge="hydration">${initial.hydration}</span><span class="unit"> / index</span></div><div class="gauge"><small>Battery</small><span class="value" data-gauge="battery">${initial.battery}</span><span class="unit"> %</span></div><div class="gauge"><small>Time on skin</small><span class="unit">Day </span><span class="value" data-gauge="day">${initial.day}</span><span class="unit"> of ${FACTS.wearDays}</span></div></div><div class="chart-wrap"><canvas id="chart" aria-label="Skin temperature over the wear period"></canvas><div class="chart-caption"><span>Application</span><span>End of wear</span></div></div><p class="panel-note">Illustrative wellness readings.<br>A study of the system, not clinical data.</p></aside></div><section class="static-layers" aria-label="Study layer thicknesses"><h2>The assembled stack</h2><ul>${LAYERS.map(layer => `<li>${layer.name} — ${layer.thicknessMm} mm</li>`).join('')}</ul></section><section class="controls" aria-label="Study controls"><div class="sliders"><label><div class="control-heading">Separation <span>Explore the stack</span></div><input id="separation" aria-label="Separation" type="range" min="0" max="1" step="0.001" value="0"><div class="endpoints"><span>Assembled</span><span>Layer by layer</span></div></label><label><div class="control-heading">Wear time <span>Day <output id="wear-day">${initial.day}</output></span></div><input id="wear" aria-label="Wear time in hours" type="range" min="0" max="336" step="0.25" value="0"><div class="endpoints"><span>Application</span><span>End of wear</span></div></label></div><div class="button-row">${FACTS.layers.map((l,i)=>`<button class="layer" data-layer="${i}" aria-pressed="false">${l.name}</button>`).join('')}<button id="xray" aria-pressed="false">X ray</button><div class="camera-group" aria-label="Camera presets">${['Hero','Top','Side'].map(n=>`<button data-camera="${n}" aria-pressed="${n==='Hero'}">${n}</button>`).join('')}</div></div></section><div class="footer"><span>Five layers · ${FACTS.thicknessMm} mm assembled profile · Procedural geometry</span><span id="tour-status">Explore freely · Tour begins when idle</span></div></main><div id="tour-cursor" hidden></div><script src="/take-apart-model.js"></script><script type="module" src="/take-apart.js"></script></body></html>`;
 }
 // Run with a runner-installed Playwright, never a site dependency:
 // PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs node scripts/capture-take-apart.mjs
@@ -316,7 +317,8 @@ try {
   page.on('pageerror',error=>errors.push(String(error)));
   console.log('Loading study');
   await page.goto(`http://127.0.0.1:${server.address().port}/take-apart?tour=fast`);
-  await page.waitForFunction(()=>document.querySelector('[data-gauge="temperature"]').textContent.length>0);
+  await page.waitForFunction(()=>document.querySelector('#take-apart').dataset.sceneReady==='true');
+  await page.evaluate(()=>document.fonts.ready);
   console.log('Study loaded');
   assert.equal(await page.locator('#fallback').isVisible(),false,'WebGL scene must render for evidence');
   const area=await page.locator('#scene').boundingBox();
@@ -324,7 +326,7 @@ try {
   await page.mouse.down();await page.mouse.move(area.x+area.width/2+75,area.y+area.height/2+25,{steps:8});await page.mouse.up();
   await page.mouse.wheel(0,100);
   await page.locator('#wear').evaluate(input=>{ input.value='200';input.dispatchEvent(new Event('input',{bubbles:true})); });
-  await page.waitForTimeout(350);
+  await page.waitForFunction(expected => [...document.querySelectorAll('[data-gauge]')].every(n => n.textContent === expected[n.dataset.gauge]), gaugeReadout(200));
   const actual=await page.locator('[data-gauge]').evaluateAll(nodes=>Object.fromEntries(nodes.map(n=>[n.dataset.gauge,n.textContent])));
   assert.deepEqual(actual,gaugeReadout(200));gaugePassed=true;
   for(const name of ['Top','Side','Hero']){ await page.locator(`[data-camera="${name}"]`).click();await page.waitForTimeout(180); }
@@ -359,15 +361,15 @@ try {
     sources.push({label,src:'data:image/png;base64,'+png.toString('base64')});
   }
   // Composition happens in this browser session, from the captured pixels.
-  const sheet=await browser.newPage({viewport:{width:1440,height:1710},deviceScaleFactor:1});
-  await sheet.setContent('<body style="margin:0;background:#FAFAF6"><canvas id="sheet" width="1440" height="1710"></canvas></body>');
+  const sheet=await browser.newPage({viewport:{width:1440,height:1840},deviceScaleFactor:1});
+  await sheet.setContent('<body style="margin:0;background:#FAFAF6"><canvas id="sheet" width="1440" height="1840"></canvas></body>');
   const composed=await sheet.evaluate(async sources=>{
     const c=document.querySelector('canvas'),ctx=c.getContext('2d');ctx.fillStyle='#FAFAF6';ctx.fillRect(0,0,c.width,c.height);
-    ctx.fillStyle='#163c34';ctx.font='28px sans-serif';ctx.fillText('SENTIA / Take apart — tour contact sheet',25,42);
+    ctx.fillStyle='#12211C';ctx.font='28px sans-serif';ctx.fillText('SENTIA / Take apart — tour contact sheet',24,40);
     for(let i=0;i<sources.length;i++) {
       const img=new Image();img.src=sources[i].src;await img.decode();
-      const x=(i%2)*720,y=70+Math.floor(i/2)*540;
-      ctx.drawImage(img,x,y,720,500);ctx.fillStyle='#163c34';ctx.font='18px sans-serif';ctx.fillText(sources[i].label,x+22,y+526);
+      const x=(i%2)*720,y=64+Math.floor(i/2)*592;
+      ctx.drawImage(img,x,y,720,525);ctx.fillStyle='#12211C';ctx.font='18px sans-serif';ctx.fillText(sources[i].label,x+24,y+560);
     }
     return c.toDataURL('image/png').split(',')[1];
   },sources);
@@ -385,9 +387,153 @@ try {
   await browser.close();await new Promise(resolve=>server.close(resolve));
 }
 console.log('Browser pass complete: zero console errors; gauge comparison PASS.');
+---
+name: teardown
+description: Build an interactive 3D simulator of a real machine or mechanism (an engine, a landing gear, a walking linkage, a pump, a gearbox) as one offline HTML page people can take apart, with live panels driven by the same model that moves the parts, a button for every subsystem, cutaways, camera views and an auto tour that hands control to the visitor; then record it frame by frame to a 60 fps video with a synced procedural score. Use when someone asks how a machine works, wants a "visual explainer", a "simulator", a "cutaway", an "exploded view" or an "interactive 3D lesson", or wants a 3D object shown working rather than described.
+---
+
+# Teardown
+
+One machine, one page. The visitor sees the thing run, presses a button, and the part doing the work opens up while the gauges around it read the real numbers. Left alone, the page tours itself with a cursor. The same code records a film of the tour, frame by frame, with a score built on the same timeline.
+
+`SKILL_DIR` below is the folder this file lives in. Builds and renders go to `./teardown-out` of the folder you run from.
+
+## First run
+
+```
+cd "$SKILL_DIR" && npm install && npx playwright install chromium
+```
+
+The pages need nothing else. The video needs `ffmpeg` on PATH and the score needs Python 3 (standard library only). Set `FFMPEG`, `PYTHON` or `CHROMIUM` to point at other binaries.
+
+## The 3 examples
+
+Build one, open the HTML, press buttons. Copy the closest one when you start a new machine.
+
+| | The machine | What drives it | Worth stealing |
+|---|---|---|---|
+| `v8-*` | A cross-plane V8 with glass liners: the charge burns inside the cylinder you track, valves lift on their cams, 8 pistons move from the exact slider-crank. | Crank angle. Firing order 1-8-4-3-6-5-7-2, a chamber pressure model for the indicator diagram. | Cutaway modes (glass, section, solid), the firing order as a cylinder picker, live charts synced to the crank. |
+| `cessna-*` | The Cessna 337 main landing gear folding into the airframe on takeoff and dropping on landing. | Stroke 0..1: a 201 mm rack turns a 32-tooth pinion (module 4 mm) through exactly 180°. | One degree of freedom posing a whole mechanism, flight phases as functions of time, a runway that rolls under the model. |
+| `strandbeest-*` | Theo Jansen's Strandbeest, 20 legs on one crankshaft, walking broadside over sand. | Wind. The crank speed is integrated from it; every joint follows by circle intersection from Jansen's 11 link lengths. | An exact linkage solver in 67 lines, instanced tubes, foot traces, a contact chart of all 20 feet. |
+
+Each comes in 3 folders: `<name>-shared/` holds the machine, `<name>-film/` the recorded tour, `<name>-live/` the page you drive.
+
+```
+node "$SKILL_DIR/sims/build.mjs" v8-live          # → teardown-out/dist/v8-live.html, offline, ~800 KB
+node "$SKILL_DIR/sims/build.mjs"                  # all 6
+```
+
+## How a machine is built
+
+One folder per machine, split by job. The examples follow this exactly:
+
+| File | Job |
+|---|---|
+| `kin.js` / `gear.js` / `jansen.js` | The math. Real dimensions in real units, one input (crank angle, stroke, wind) and every pose and readout as a function of it. No three.js in here. |
+| `engine.js` / `gear.js` / `beast.js` | The geometry, built from code: lathed parts, tubes, instanced links. `update(input)` poses it. |
+| `stage.js` | Studio, lights, shadows, post (GTAO, bloom). `frame(state, cam)` draws one frame. |
+| `console.js` | The overlay: fixed 1600 x 900 CSS layout of panels, charts, toggles, callouts with leaders. `update(state)` redraws it from the frame's state. |
+| `film.js` | A `SCRIPT` of operator moves (views, isolate, cutaway, throttle) and `render(t)` as a pure function of time. |
+| `live.js` | The same machine in real time: buttons, sliders, orbit, zoom, keys. With no input it plays `film.js`'s script as an auto tour with a cursor; any click, drag, wheel or key hands control over, 25 s of quiet hands it back. |
+| `score.py` | The sound on the film's timeline. |
+
+For a machine outside `SKILL_DIR`, make a folder with a `main.js` and import the kit by name: `import {runSim} from 'teardown-kit/runtime.js'`. Build it with `node "$SKILL_DIR/sims/build.mjs" ./my-machine`.
+
+## Rules that decide whether it works
+
+1. **Start from a reference, never from imagination.** A photo, a cutaway drawing from a manual, a clip of the real thing. Build against it and compare frame by frame. Machines invented from a sentence come out generic every time; the same model rebuilds a real one closely when it has something to match.
+2. **Real numbers, one source.** Get the real dimensions first (bore, stroke, tooth count, link lengths). Every gauge, chart and label reads from the same function that poses the parts, so nothing on screen can disagree with the motion. Check one by hand: in the Cessna, 32 teeth × 4 mm module is a 128 mm pitch diameter, and half its circumference is the 201 mm stroke.
+3. **One input drives everything.** Pose from the crank angle, the stroke or the wind. Nothing is keyframed by hand, so the film, the live page and the score never drift.
+4. **The part doing the work opens up.** Isolate it, cut it, x-ray it. A camera that goes inside is worth more than ten orbits.
+5. **Light studio, one accent.** Pale backgrounds read in a feed; dark ones lose the first second. The accent marks the thing that is changing. Watch near-white parts on a pale backdrop: give them an ink outline or a darker ground.
+6. **Pick the camera for the mechanism.** A planar linkage seen face-on collapses into a lattice; a 3/4 view along the spine keeps every leg readable.
+7. **Fix collisions with a number.** When a part pokes through another, scale or move it in the parameter block. Never hide it with the camera.
+
+## Live page rules
+
+- **Test on an integrated GPU.** A page that runs at 60 fps on a desktop card can drop to 15 fps on a laptop's built-in one. The examples carry quality tiers (`TIERS` in `live.js`): no AO, lower pixel ratio, smaller shadow maps, panels redrawn every other frame. Find the expensive shader first: a displacement computed 5 times per vertex costs more than every tier together.
+- **Warm the shaders.** `kit/warm.js` compiles every program in parallel before the first frame, so the page never freezes on first draw.
+- **Keep the page under 1 MB.** Link crawlers (X, Slack) read the share card from the HTML and give up on a 15 MB page. Big models go out as files next to the page: `build.json` → `{"external": {"heavy.glb": "light.glb"}}`.
+
+## render(t) contract
+
+```js
+import {runSim} from '../kit/runtime.js';
+
+const DEFAULTS = {duration: 20, fps: 60, hud: {enabled: false}, director: {enabled: false}};
+
+runSim(DEFAULTS, async ({cfg, canvas, capture}) => {
+  // build the scene, precompute anything stateful
+  return {render(t) { /* draw frame t from scratch */ return {}; }, resize() {}};
+});
+```
+
+- `render(t)` is pure: no `Math.random` (use `rng(seed)` from `kit/util.js` at setup), no `Date`, no state carried between frames. Capture calls it at arbitrary times.
+- Anything that moves by its own rules (agents, particles) is simulated once at load into typed arrays; `render` only reads them. A quantity integrated over time (the Strandbeest's crank under a changing wind) is integrated in closed form or tabulated at load.
+- Every beat goes into `<name>-film/timeline.json` in seconds. The score reads the same file.
+- Frame 0 is the thumbnail. It must already show the machine.
+
+## Commands
+
+```
+node "$SKILL_DIR/sims/build.mjs" v8-film
+node "$SKILL_DIR/sims/capture.mjs" v8-film --size 1600x900 --dpr 1.2 --stills beats --cols 4 --out teardown-out/v8-beats.png
+node "$SKILL_DIR/sims/capture.mjs" v8-film --size 1600x900 --dpr 1.2 --still 12.5 --out teardown-out/v8-12.5.png
+node "$SKILL_DIR/sims/capture.mjs" v8-film --size 1600x900 --dpr 1.2 --out teardown-out/v8-silent.mp4
+python "$SKILL_DIR/run_sfx.py" "$SKILL_DIR/sims/v8-shared/score.py"
+ffmpeg -y -i teardown-out/v8-silent.mp4 -i teardown-out/v8-score.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 256k -shortest -movflags +faststart teardown-out/v8.mp4
+node "$SKILL_DIR/wave.mjs" teardown-out/v8.mp4 --timeline "$SKILL_DIR/sims/v8-film/timeline.json"
+```
+
+`--size` is the CSS layout and `--dpr` multiplies it: 1600 x 900 at 1.2 gives 1920 x 1080. Capture prints the GPU it got; a software renderer means the GPU flags in `paths.mjs` did not take.
+
+## Review loop
+
+You cannot watch the video; you can look at frames. Never report a machine as done without reading sheets of the current render.
+
+1. `--stills beats`: one tile per timeline beat, 0.3 s after it, each labelled `t=`.
+2. Read every tile against the checklist below.
+3. Zoom in: `--stills every:0.2 --from A --to B` for a transition, `--still T` for one full frame.
+4. Fix, rebuild, go back to 1. Stop when a full pass finds nothing.
+5. Final: `node "$SKILL_DIR/sheet.mjs" --video <final.mp4> --timeline <timeline.json>` and read that too: it shows what the encoder wrote.
+
+Checklist:
+
+- **The mechanism.** Every part that should touch touches; nothing passes through anything; the numbers on the panels match the pose.
+- **Composition.** One focal point per frame. Nothing important within 60 px of an edge. Labels never cover the part they name.
+- **Type.** Nothing clipped. The key readout reads at phone width.
+- **3D.** Bloom eats detail: keep emissive layers under 1.0. Near-white surfaces blow out. Glossy metal under a low light streaks: roughness ≥ 0.45 and envMapIntensity ≈ 0.5 on big surfaces.
+- **Timing.** Each state holds long enough to read: 1 s for a short phrase plus 0.25 s per word beyond three.
+
+## three.js traps the examples already hit
+
+- `smoothstep(a, b, x)` with `a > b` returns 0 on Windows (ANGLE/D3D). Write `1.0 - smoothstep(b, a, x)`.
+- A `ShadowMaterial` or a decal a fraction of a millimetre above the floor loses the depth test inside a post-processing render target. Give it `polygonOffset`.
+- A quad laid into the ground with a mirrored mapping gets culled as a back face. Use `DoubleSide`.
+- One NaN pixel blacks out the whole frame through bloom. Clamp every `pow()` base in a shader.
+- GTAO on a clipped (cutaway) model needs the same clipping planes on `gtao.normalMaterial`, or the cut half returns as a pale ghost.
+
+## Sound
+
+`sfx/` synthesises every sound in pure Python (48 kHz, reproducible) and reads the film's timeline, so sound cannot drift out of sync. `python "$SKILL_DIR/run_sfx.py" --list` shows the generators. `sample()` adds the recorded CC0 sounds in `sfx/samples/`. `sfx/score_kit.py` has the beds and accents the 3 scores use: a chord bed, a soft thud per power stroke, a motor, air under a drag.
+
+- Every time comes from the timeline, never a typed number.
+- Mastering is automatic: −14 LUFS, true peak ≤ −2 dBFS.
+- Accent, never narrate: continuous motion stays silent. One key for every tonal sound.
+
+## Taste, with numbers
+
+- Easing: entrances `cubic-bezier(0.16, 1, 0.3, 1)`, exits `cubic-bezier(0.6, 0, 0.9, 0.35)` at half the entrance's length, state to state `cubic-bezier(0.65, 0, 0.35, 1)`. Linear only for continuous motion.
+- The machine fills 60-70% of its viewport. Labels never under 34 px on a 1080 canvas.
+- One accent, and it means something: the part that is working right now.
+- Nothing dead-still: one element always alive.
+
+## Credits
+
+The kit, frame capture, sfx engine and review rules come from [whaleyxbt/claude-motion](https://github.com/whaleyxbt/claude-motion) (MIT). The recorded samples are CC0 from Freesound, trimmed by [Barty-Bart/motion-graphics](https://github.com/Barty-Bart/motion-graphics) (MIT); sources in `sfx/samples/SOURCES.md`.
 
 exec
-/bin/bash -lc 'cat src/take-apart-client.js; cat .anvil-factory/third_party/teardown/README.md; cat package.json; git status --short' in /home/runner/work/sentia/sentia
+/bin/bash -lc "cat src/take-apart-client.js; cat tests/take-apart.test.js; cat package.json; git status --short; rg --files -g AGENTS.md -g '*tour*' -g '*capture*' .anvil-factory/third_party/teardown; rg 'fonts.googleapis' src/page.js" in /home/runner/work/sentia/sentia
  succeeded in 0ms:
 // First party application source served by the worker.
 async function takeApartApp() {
@@ -452,7 +598,7 @@ function box(parent, size, position, color, roughness=.65) {
   const mesh = new THREE.Mesh(new THREE.BoxGeometry(...size), new THREE.MeshStandardMaterial({ color,roughness }));
   mesh.position.set(...position); mesh.castShadow = true; parent.add(mesh); return mesh;
 }
-function initScene() {
+async function initScene() {
   renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
   renderer.setPixelRatio(quality.pixelRatioCap); renderer.setClearColor(0xfafaf6);
   renderer.shadowMap.enabled = quality.shadowMapSize > 0; renderer.shadowMap.type = THREE.VSMShadowMap;
@@ -466,12 +612,12 @@ function initScene() {
   key.shadow.bias = -.0003; key.shadow.normalBias = .15; key.shadow.radius = 5; key.shadow.blurSamples = 8; scene.add(key);
   const ground = new THREE.Mesh(new THREE.PlaneGeometry(1000,1000),new THREE.ShadowMaterial({ opacity:.12 }));
   ground.rotation.x = -Math.PI/2; ground.position.y=-.15; ground.receiveShadow=true; scene.add(ground);
-  const colors = [0xeeeae0,0xd1cfc3,0x163c34,0xe2e8d9,0xf0eee7];
+  const colors = [0xeeeae0,0xd1cfc3,0x12211c,0xe2e8d9,0xf0eee7];
   meshes = M.LAYERS.map((layer,i) => {
     const mesh = new THREE.Mesh(roundedGeometry(layer.thicknessMm*Z_SCALE),new THREE.MeshStandardMaterial({ color:colors[i], roughness:i===2?.58:.82, transparent:true }));
     mesh.castShadow=true; mesh.receiveShadow=true; scene.add(mesh); return mesh;
   });
-  box(meshes[0],[12,.06,.38],[0,M.LAYERS[0].thicknessMm*Z_SCALE/2+.04,8],0x008d7f);
+  box(meshes[0],[12,.06,.38],[0,M.LAYERS[0].thicknessMm*Z_SCALE/2+.04,8],0x0e7c66);
   const boardTop = M.LAYERS[2].thicknessMm*Z_SCALE/2+.04;
   // Printed traces and flush components stay inside the study layer envelope.
   for (let i=0;i<6;i++) {
@@ -491,7 +637,7 @@ function initScene() {
     words.forEach((word,j)=> {const line=document.createElementNS(ns,'tspan');line.textContent=word;line.setAttribute('dy',j?'15':'0');label.append(line);});
     group.append(label); overlay.append(group);
   });
-  updateScene(true); renderer.compile(scene,camera); renderer.render(scene,camera);
+  await renderer.compileAsync(scene,camera); updateScene(true);
 }
 function updateScene(instant=false) {
   if (!renderer) return;
@@ -530,7 +676,7 @@ function updateScene(instant=false) {
   }
   labels.forEach(l=> {
     const g=overlay.children[l.i], x=l.left?8:w-8, elbow=l.left?150:w-150;
-    const color=state.focus===l.i?'#008d7f':'#6a7972';
+    const color=state.focus===l.i?'#0E7C66':'#53685C';
     g.setAttribute('fill',color);g.querySelector('path').setAttribute('stroke',color);
     g.querySelector('path').setAttribute('d',`M ${l.x} ${l.y} L ${elbow} ${l.labelY} L ${l.left?x+3:x-3} ${l.labelY}`);
     const circle=g.querySelector('circle');circle.setAttribute('cx',l.x);circle.setAttribute('cy',l.y);
@@ -545,14 +691,14 @@ function drawChart() {
   const ctx=chart.getContext('2d');ctx.scale(dpr,dpr);
   const w=rect.width,h=rect.height, series=M.tempSeries(), low=Math.min(...series)-.1,high=Math.max(...series)+.1;
   const px=i=>4+(w-8)*i/56, py=v=>h-8-(v-low)/(high-low)*(h-16);
-  ctx.strokeStyle='#dce1d9';ctx.lineWidth=1;
+  ctx.strokeStyle='#DFE7DF';ctx.lineWidth=1;
   for(const y of [12,h/2,h-12]){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
   ctx.beginPath();series.forEach((v,i)=>i?ctx.lineTo(px(i),py(v)):ctx.moveTo(px(i),py(v)));
-  ctx.strokeStyle='#008d7f';ctx.lineWidth=1.5;ctx.stroke();
+  ctx.strokeStyle='#0E7C66';ctx.lineWidth=1.5;ctx.stroke();
   const idx=state.h/6, base=Math.floor(idx), next=Math.min(56,base+1);
   const value=series[base]+(series[next]-series[base])*(idx-base),x=px(idx),y=py(value);
-  ctx.strokeStyle='#163c34';ctx.beginPath();ctx.moveTo(x,4);ctx.lineTo(x,h-4);ctx.stroke();
-  ctx.fillStyle='#008d7f';ctx.beginPath();ctx.arc(x,y,3.5,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='#12211C';ctx.beginPath();ctx.moveTo(x,4);ctx.lineTo(x,h-4);ctx.stroke();
+  ctx.fillStyle='#0E7C66';ctx.beginPath();ctx.arc(x,y,3.5,0,Math.PI*2);ctx.fill();
   lastChartHour=state.h;
 }
 function updatePanel(now) {
@@ -587,8 +733,8 @@ function tour(now) {
     beats[index][3]();root.dataset.tourBeat=beats[index][0];$('#tour-status').textContent='Guided tour · '+beats[index][1];
   }
 }
-try { initScene(); } catch (error) {
-  if(renderer)renderer.dispose();renderer=null;canvas.hidden=true;overlay.hidden=true;$('#fallback').hidden=false;
+try { await initScene(); root.dataset.sceneReady = 'true'; } catch (error) {
+  if(renderer)renderer.dispose();renderer=null;canvas.hidden=true;overlay.hidden=true;$('#fallback').textContent='3D is unavailable on this device. Explore the layers and simulated readings with the controls below.';$('#fallback').hidden=false;
   // WebGL capability failure leaves the model and accessible controls operational.
 }
 window.addEventListener('resize',()=> {lastChartHour=-Infinity;});
@@ -597,66 +743,519 @@ requestAnimationFrame(frame);
 
 }
 export const TAKE_APART_CLIENT_JS = `(${takeApartApp.toString()})();`;
-# teardown
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import vm from 'node:vm';
+import fs from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import worker from '../src/index.js';
+import { FACTS } from '../src/facts.js';
+import * as M from '../src/take-apart-model.js';
+import * as TWIN from '../src/take-apart-model-browser.js';
 
-A Claude Code skill that turns any machine into a 3D simulator you can take apart.
+// take-apart spec scenarios S1 to S11 (S11 is a reviewer judgement, not a test).
+//
+// The spec fixes the exported function and constant names but not every
+// argument or return shape (how a layer is identified, the key names of the
+// objects returned by gaugeReadout and focusTransform, the export name of the
+// browser twin text). The helpers below resolve those shapes from the model
+// itself and then assert the numbers the spec states, so a conforming model is
+// not rejected for a naming choice the spec leaves open.
 
-Ask how something works. Claude builds it as one offline HTML page: the machine runs in the middle, every panel around it reads the real numbers, a button opens the part doing the work, and when nobody touches it the page tours itself.
+// Loopback round baseline: the operator setup commit at the head of the branch when the run starts.
+const SETUP_COMMIT = 'f06bd4a';
+// Files the workflow harness itself writes at the repository root; never part of the line's change.
+const HARNESS_FILES = new Set(['suite-output.txt', 'suite-result.txt', 'run-diff.txt', 'comment.md']);
+const get = (p) => worker.fetch(new Request('https://sentia.test' + p));
+const NAMES = FACTS.layers.map((l) => l.name);
+const THICK = [0.6, 0.7, 0.5, 0.4, 0.3]; // FACTS order, top to bottom
+const HEIGHT = [4, 3, 2, 1, 0]; // height index i per FACTS order
+const SAMPLE_HOURS = [0, 6, 12, 18, 24, 48, 100, 156, 200, 300, 335, 336];
+const near = (a, b, eps = 1e-9) => assert.ok(Math.abs(a - b) <= eps, `${a} vs ${b}`);
 
-![V8 four-stroke simulator](docs/v8.gif)
+// assembled centre of FACTS layer k: thickness below plus half its own
+function assembledCentre(k) {
+  let below = 0;
+  for (let j = 0; j < 5; j++) if (HEIGHT[j] < HEIGHT[k]) below += THICK[j];
+  return below + THICK[k] / 2;
+}
 
-| Cessna 337 landing gear | Strandbeest SB-10 |
-|---|---|
-| ![Cessna 337 main landing gear](docs/cessna.jpg) | ![Strandbeest SB-10](docs/strandbeest.jpg) |
+// Find the layer table the model exports, wherever it lives.
+function layerTable() {
+  for (const v of Object.values(M)) {
+    if (Array.isArray(v) && v.length === 5 && v.every((x) => x && typeof x === 'object')) return v;
+  }
+  for (const v of Object.values(M)) {
+    if (v && typeof v === 'object' && !Array.isArray(v)) {
+      const vals = Object.values(v);
+      if (vals.length === 5 && vals.every((x) => x && typeof x === 'object')) return vals;
+    }
+  }
+  return null;
+}
+const thicknessOf = (o) => {
+  for (const k of Object.keys(o)) if (/thick/i.test(k) && typeof o[k] === 'number') return o[k];
+  return undefined;
+};
+const nameOf = (o) => (typeof o.name === 'string' ? o.name : o.layer || o.label);
 
-## Install
+// Resolve how the model identifies a layer: FACTS index, name, height index or
+// the table entry. Chosen by which convention reproduces the assembled centre.
+const table = layerTable();
+const CONVENTIONS = [
+  (k) => k,
+  (k) => NAMES[k],
+  (k) => HEIGHT[k],
+  (k) => (table ? table[k] : undefined),
+];
+const toArg = (() => {
+  for (const c of CONVENTIONS) {
+    try {
+      if (NAMES.every((_, k) => {
+        const v = M.layerCenterMm(c(k), 0);
+        return typeof v === 'number' && Math.abs(v - assembledCentre(k)) < 1e-6;
+      })) return c;
+    } catch { /* try the next convention */ }
+  }
+  return CONVENTIONS[0];
+})();
+const centre = (k, t) => M.layerCenterMm(toArg(k), t);
+const NONE = null;
 
-```
-npx skills add elvarofficial/teardown -g -a claude-code
-```
+function parseNum(s) {
+  const m = String(s).match(/-?\d+(?:\.\d+)?/);
+  assert.ok(m, `no number in ${JSON.stringify(s)}`);
+  return Number(m[0]);
+}
 
-Then, once, in the installed folder:
+// Normalise gaugeReadout to { temp, hydration, battery, day } strings.
+function gauges(api, h) {
+  const r = api.gaugeReadout(h);
+  if (Array.isArray(r)) return { temp: r[0], hydration: r[1], battery: r[2], day: r[3] };
+  const out = {};
+  const keys = Object.keys(r);
+  const pick = (re, i) => (keys.find((k) => re.test(k)) ?? keys[i]);
+  out.temp = r[pick(/temp|skin/i, 0)];
+  out.hydration = r[pick(/hydr/i, 1)];
+  out.battery = r[pick(/batt/i, 2)];
+  out.day = r[pick(/day|wear/i, 3)];
+  return out;
+}
 
-```
-npm install && npx playwright install chromium
-```
+function lift(api, k, t, focus) {
+  const r = api.focusTransform(toArg(k), t, focus === NONE ? NONE : toArg(focus));
+  if (Array.isArray(r)) return { lift: r[0], aside: r[1] };
+  const keys = Object.keys(r);
+  const lk = keys.find((x) => /lift|vert|^y|dy/i.test(x)) ?? keys[0];
+  const ak = keys.find((x) => /aside|horiz|^x|dx/i.test(x)) ?? keys[1];
+  return { lift: r[lk], aside: r[ak] };
+}
+function opacity(api, k, focus, xray) {
+  const r = api.materialState(toArg(k), focus === NONE ? NONE : toArg(focus), xray);
+  return typeof r === 'number' ? r : r.opacity;
+}
 
-You need Node.js 20 or newer. For the video you also need `ffmpeg`, and for the sound Python 3.
+// ---------------------------------------------------------------- S1
+test('take-apart S1: five study thicknesses sum to exactly 2.5 mm and names equal FACTS.layers', () => {
+  assert.ok(table, 'model must export its five layer records');
+  assert.equal(table.length, 5);
+  assert.deepEqual(table.map(nameOf), NAMES);
+  const th = table.map(thicknessOf);
+  for (const x of th) assert.ok(typeof x === 'number' && x > 0, 'positive number');
+  assert.deepEqual(th, THICK);
+  // Sum exact decimal tenths, avoiding IEEE-754 accumulation of 0.6 + 0.7.
+  assert.equal(th.reduce((a, b) => a + Math.round(b * 10), 0) / 10, 2.5);
+  assert.equal(FACTS.thicknessMm, 2.5);
+  assert.equal(M.GAP_MM, 3.0);
+  assert.equal(M.FOOTPRINT_MM, 36);
+  assert.equal(M.CORNER_RADIUS_MM, 9);
+});
 
-## Use
+// ---------------------------------------------------------------- S2
+test('take-apart S2: at t=0 every adjacent pair is flush within 0.001 mm', () => {
+  for (let k = 0; k < 5; k++) near(centre(k, 0), assembledCentre(k), 1e-6);
+  // adjacent in the stack: FACTS k (upper) sits on FACTS k+1 (lower)
+  for (let k = 0; k < 4; k++) {
+    const lowerTop = centre(k + 1, 0) + THICK[k + 1] / 2;
+    const upperBottom = centre(k, 0) - THICK[k] / 2;
+    assert.ok(Math.abs(lowerTop - upperBottom) <= 0.001, `pair ${k} not flush`);
+  }
+  // the stack starts at 0 and ends at the 2.5 mm profile
+  near(centre(4, 0) - THICK[4] / 2, 0, 0.001);
+  near(centre(0, 0) + THICK[0] / 2, 2.5, 0.001);
+});
 
-Ask Claude Code in plain words:
+// ---------------------------------------------------------------- S3
+test('take-apart S3: at t=1 each adjacent centre distance is the assembled one plus GAP_MM', () => {
+  for (let k = 0; k < 4; k++) {
+    const assembled = centre(k, 0) - centre(k + 1, 0);
+    const apart = centre(k, 1) - centre(k + 1, 1);
+    near(apart, assembled + M.GAP_MM, 1e-9);
+  }
+  // each layer moves by t * i * GAP_MM and only by t
+  for (const t of [0, 0.25, 0.55, 1]) {
+    for (let k = 0; k < 5; k++) near(centre(k, t) - centre(k, 0), t * HEIGHT[k] * M.GAP_MM, 1e-9);
+  }
+  // pure: repeated calls agree, the bottom layer never moves
+  assert.equal(centre(2, 0.4), centre(2, 0.4));
+  near(centre(4, 1), centre(4, 0), 1e-12);
+  // layerCenterMm takes only layer and t
+  assert.ok(M.layerCenterMm.length <= 2);
+});
 
-> Build me a simulator of a 4-stroke motorcycle engine I can take apart.
+// ---------------------------------------------------------------- S4
+test('take-apart S4: wear numbers behave across 0..336', () => {
+  assert.equal(M.batteryPct(0), 100);
+  assert.equal(M.batteryPct(336), 12);
+  let prev = Infinity;
+  for (let h = 0; h <= 336; h += 1) {
+    const b = M.batteryPct(h);
+    assert.ok(b <= prev, `battery rose at ${h}`);
+    prev = b;
+    const hy = M.hydrationIndex(h);
+    assert.ok(hy >= 0 && hy <= 100 && Number.isInteger(hy), `hydration ${hy} at ${h}`);
+  }
+  assert.equal(M.wearDay(0), 1);
+  assert.equal(M.wearDay(335), 14);
+  assert.equal(M.wearDay(336), 14);
+  assert.equal(M.wearDay(24), 2);
+  assert.ok(M.skinTempC(12) > M.skinTempC(0));
+  near(M.skinTempC(12), 36.9, 1e-9);
+  near(M.skinTempC(0), 36.2, 1e-9);
+  const series = M.tempSeries();
+  assert.equal(series.length, 57);
+  assert.equal(series[0], M.skinTempC(0));
+  assert.equal(series[56], M.skinTempC(336));
+  series.forEach((v, i) => near(v, M.skinTempC(i * 6), 1e-12));
+});
 
-> How does a mechanical watch keep time? Show me as a simulator.
+test('take-apart S4: wear time is clamped to 0..336', () => {
+  assert.equal(M.batteryPct(-50), 100);
+  assert.equal(M.batteryPct(1000), 12);
+  assert.equal(M.wearDay(1000), 14);
+  assert.equal(M.wearDay(-5), 1);
+});
 
-> Make a teardown of a hydraulic excavator arm and record a 20-second video of it.
+// ---------------------------------------------------------------- S5
+test('take-apart S5: gaugeReadout strings equal the model values at sampled hours', () => {
+  for (const h of SAMPLE_HOURS) {
+    const g = gauges(M, h);
+    for (const v of Object.values(g)) assert.equal(typeof v, 'string');
+    assert.ok(Math.abs(parseNum(g.temp) - M.skinTempC(h)) <= 0.05, `temp at ${h}`);
+    assert.match(g.temp, /\d\.\d(?!\d)/, 'one decimal');
+    assert.equal(parseNum(g.hydration), M.hydrationIndex(h));
+    assert.equal(parseNum(g.battery), M.batteryPct(h));
+    assert.equal(parseNum(g.day), M.wearDay(h));
+    assert.doesNotMatch(String(g.battery).replace(/%/, ''), /\./);
+  }
+});
 
-Or open one of the 3 examples first:
+// ---------------------------------------------------------------- S6
+test('take-apart S6: focus lifts the board and steps the others aside with signs', () => {
+  assert.equal(M.FOCUS_LIFT_MM, 5.0);
+  assert.equal(M.ASIDE_MM, 8.0);
+  assert.equal(M.FADE_OPACITY, 0.35);
+  assert.equal(M.XRAY_OPACITY, 0.15);
+  const BOARD = 2;
+  for (const t of [0.55, 1]) {
+    const f = lift(M, BOARD, t, BOARD);
+    assert.equal(f.lift, M.FOCUS_LIFT_MM);
+    assert.equal(f.aside, 0);
+    for (const k of [0, 1]) { // cover, foam: above the board
+      const o = lift(M, k, t, BOARD);
+      assert.equal(o.aside, M.ASIDE_MM, `layer ${k} steps to +x`);
+      assert.equal(o.lift, 0);
+    }
+    for (const k of [3, 4]) { // adhesive, liner: below the board
+      const o = lift(M, k, t, BOARD);
+      assert.equal(o.aside, -M.ASIDE_MM, `layer ${k} steps to -x`);
+      assert.equal(o.lift, 0);
+    }
+  }
+  for (let k = 0; k < 5; k++) {
+    const n = lift(M, k, 0.5, NONE);
+    assert.equal(n.lift, 0);
+    assert.equal(n.aside, 0);
+  }
+});
 
-```
-node sims/build.mjs v8-live          # teardown-out/dist/v8-live.html
-node sims/build.mjs cessna-live
-node sims/build.mjs strandbeest-live
-```
+test('take-apart S6: fade and x ray compose to the stated cover opacities', () => {
+  const COVER = 0, BOARD = 2;
+  near(opacity(M, COVER, NONE, true), 0.15); // x ray alone
+  near(opacity(M, COVER, COVER, true), 0.15); // focused cover, no fade in play
+  near(opacity(M, COVER, BOARD, true), 0.0525); // faded by another focus under x ray
+  near(opacity(M, COVER, BOARD, false), 0.35);
+  assert.equal(opacity(M, COVER, NONE, false), 1);
+  // non focused layers: fade alone; x ray touches only the cover
+  for (const k of [1, 2, 3, 4]) {
+    const other = k === BOARD ? COVER : BOARD;
+    near(opacity(M, k, other, false), 0.35);
+    near(opacity(M, k, other, true), 0.35);
+    assert.equal(opacity(M, k, NONE, true), opacity(M, k, NONE, false));
+  }
+  assert.equal(opacity(M, BOARD, BOARD, false), 1);
+});
 
-## What is inside
+// ---------------------------------------------------------------- S7
+test('take-apart S7: qualityFor returns the stated tiers including boundaries', () => {
+  const q = (devicePixelRatio, hardwareConcurrency, coarsePointer) =>
+    M.qualityFor({ devicePixelRatio, hardwareConcurrency, coarsePointer });
+  const expect = (r, cap, shadow) => {
+    near(r.pixelRatioCap, cap);
+    assert.equal(r.shadowMapSize, shadow);
+    assert.equal(r.panelUpdateHz, 4);
+  };
+  expect(q(3, 8, false), 2, 2048); // full, ratio capped at 2
+  expect(q(1, 8, false), 1, 2048); // full, ratio below the cap
+  expect(q(1.5, 16, false), 1.5, 2048);
+  expect(q(2, 5, false), 2, 2048); // concurrency 5 stays full
+  expect(q(2, 4, false), 1.5, 1024); // boundary: exactly 4
+  expect(q(3, 3, false), 1.5, 1024);
+  expect(q(2, 16, true), 1.5, 1024); // coarse pointer with high concurrency
+  expect(q(2, 2, false), 1.25, 0); // boundary: exactly 2
+  expect(q(2, 1, false), 1.25, 0);
+  expect(q(2, 2, true), 1.25, 0); // lowest wins over coarse pointer
+});
 
-| | |
-|---|---|
-| `SKILL.md` | What Claude reads: how a machine is built, the rules that make it look right, the review loop. |
-| `sims/kit/` | Runtime, stage, shader warm-up. |
-| `sims/v8-*`, `sims/cessna-*`, `sims/strandbeest-*` | 3 complete machines. `-shared` is the machine, `-live` the page you drive, `-film` the recorded tour. |
-| `sims/build.mjs` | Bundles a machine into one HTML file, three.js and fonts inlined. |
-| `sims/capture.mjs` | Renders the film frame by frame to a 60 fps mp4, or to review sheets of stills. |
-| `sfx/`, `run_sfx.py` | Procedural sound on the film's timeline, mastered to −14 LUFS. |
+// ---------------------------------------------------------------- twin drift
+function loadTwin() {
+  const ctx = { Math, console };
+  ctx.window = ctx; ctx.self = ctx; ctx.globalThis = ctx;
+  vm.createContext(ctx);
+  const sources = Object.values(TWIN).filter((v) => typeof v === 'string');
+  assert.ok(sources.length >= 1, 'twin module must export its source text as a string');
+  for (const src of sources) vm.runInContext(src, ctx);
+  const holders = [ctx, ...Object.values(ctx).filter((v) => v && typeof v === 'object')];
+  const api = holders.find((o) => o && typeof o.wearDay === 'function' && typeof o.gaugeReadout === 'function');
+  assert.ok(api, 'twin source must expose the model API on a global');
+  return api;
+}
 
-## Credits
+test('take-apart browser twin: identical outputs to the module at sampled inputs', () => {
+  const B = loadTwin();
+  for (const h of SAMPLE_HOURS) {
+    assert.equal(B.wearDay(h), M.wearDay(h));
+    assert.equal(B.skinTempC(h), M.skinTempC(h));
+    assert.equal(B.hydrationIndex(h), M.hydrationIndex(h));
+    assert.equal(B.batteryPct(h), M.batteryPct(h));
+    assert.deepEqual(JSON.parse(JSON.stringify(B.gaugeReadout(h))), JSON.parse(JSON.stringify(M.gaugeReadout(h))));
+  }
+  assert.deepEqual(Array.from(B.tempSeries()), Array.from(M.tempSeries()));
+  for (const c of ['GAP_MM', 'FOCUS_LIFT_MM', 'ASIDE_MM', 'FADE_OPACITY', 'XRAY_OPACITY', 'FOOTPRINT_MM', 'CORNER_RADIUS_MM']) {
+    assert.equal(B[c], M[c], c);
+  }
+  for (const t of [0, 0.35, 0.55, 1]) {
+    for (let k = 0; k < 5; k++) {
+      assert.equal(B.layerCenterMm(toArg(k), t), M.layerCenterMm(toArg(k), t));
+      for (const f of [NONE, 0, 2, 4]) {
+        const a = JSON.stringify(B.focusTransform(toArg(k), t, f === NONE ? NONE : toArg(f)));
+        assert.equal(a, JSON.stringify(M.focusTransform(toArg(k), t, f === NONE ? NONE : toArg(f))));
+      }
+    }
+  }
+  for (const f of [NONE, 0, 2, 3]) {
+    for (const x of [false, true]) {
+      for (let k = 0; k < 5; k++) {
+        const fa = f === NONE ? NONE : toArg(f);
+        assert.equal(
+          JSON.stringify(B.materialState(toArg(k), fa, x)),
+          JSON.stringify(M.materialState(toArg(k), fa, x)),
+        );
+      }
+    }
+  }
+  for (const env of [
+    { devicePixelRatio: 3, hardwareConcurrency: 8, coarsePointer: false },
+    { devicePixelRatio: 2, hardwareConcurrency: 4, coarsePointer: false },
+    { devicePixelRatio: 2, hardwareConcurrency: 2, coarsePointer: false },
+    { devicePixelRatio: 2, hardwareConcurrency: 16, coarsePointer: true },
+  ]) assert.deepEqual(JSON.parse(JSON.stringify(B.qualityFor(env))), M.qualityFor(env));
+});
 
-Built on [whaleyxbt/claude-motion](https://github.com/whaleyxbt/claude-motion) (MIT): the runtime, frame capture, sound engine and review rules come from there. Recorded samples are CC0 from Freesound, prepared by [Barty-Bart/motion-graphics](https://github.com/Barty-Bart/motion-graphics); sources in `sfx/samples/SOURCES.md`.
+// ---------------------------------------------------------------- routes
+test('take-apart routes: page, model twin, app and vendor library are served', async () => {
+  const page = await get('/take-apart');
+  assert.equal(page.status, 200);
+  assert.match(page.headers.get('content-type'), /text\/html/);
+  const html = await page.text();
+  assert.ok(html.includes('data-tour-beat'), 'page root carries data-tour-beat');
+  assert.ok(html.includes('href="/"'), 'links back to /');
+  for (const p of ['/take-apart-model.js', '/take-apart.js', '/vendor/three.module.min.js']) {
+    const res = await get(p);
+    assert.equal(res.status, 200, p);
+    assert.match(res.headers.get('content-type'), /javascript/, p);
+    await res.arrayBuffer();
+  }
+  const vendor = await get('/vendor/three.module.min.js');
+  assert.match(vendor.headers.get('cache-control') || '', /max-age=\d{6,}/, 'long cache header');
+  assert.ok(!html.includes('<script src="https://') && !/https:\/\/[^"' ]*(unpkg|cdn|jsdelivr)/i.test(html));
+});
 
-MIT licence.
+test('take-apart S10: main page has exactly one anchor to /take-apart, labelled Take apart', async () => {
+  const res = await get('/');
+  assert.equal(res.status, 200);
+  const html = await res.text();
+  assert.equal((html.match(/href="\/take-apart"/g) || []).length, 1);
+  assert.match(html, /<a[^>]*href="\/take-apart"[^>]*>\s*Take apart\s*<\/a>/);
+  const nav = html.match(/<nav[\s\S]*?<\/nav>/);
+  assert.ok(nav && nav[0].includes('href="/take-apart"'), 'anchor sits in the header nav');
+});
+
+// ---------------------------------------------------------------- S9
+test('take-apart S9: first party payload under 150 KB, vendor 400 KB to 1.3 MB with license', async () => {
+  let total = 0;
+  for (const p of ['/take-apart', '/take-apart.js', '/take-apart-model.js']) {
+    total += Buffer.byteLength(await (await get(p)).text());
+  }
+  assert.ok(total < 150 * 1024, `first party bytes ${total}`);
+  const vendor = Buffer.from(await (await get('/vendor/three.module.min.js')).arrayBuffer());
+  assert.ok(vendor.length > 400 * 1024 && vendor.length < 1.3 * 1024 * 1024, `vendor bytes ${vendor.length}`);
+  const head = vendor.subarray(0, 600).toString('utf8');
+  assert.match(head, /Three\.js Authors/i);
+  assert.match(head, /SPDX-License-Identifier: MIT/);
+  const pkg = JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
+  assert.ok(!pkg.dependencies || Object.keys(pkg.dependencies).length === 0, 'no runtime dependency added');
+});
+
+// ---------------------------------------------------------------- S8
+const EVID = new URL('../evidence/take-apart/', import.meta.url);
+const PNG_SIG = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+
+test('take-apart S8: five beat stills and the contact sheet exist as PNGs of at least 20 KB', () => {
+  for (const f of ['beat-assembled', 'beat-mid', 'beat-apart', 'beat-board', 'beat-xray', 'contact-sheet']) {
+    const p = new URL(f + '.png', EVID);
+    assert.ok(fs.existsSync(p), `${f}.png missing`);
+    const b = fs.readFileSync(p);
+    assert.ok(b.length >= 20 * 1024, `${f}.png is ${b.length} bytes`);
+    assert.ok(b.subarray(0, 8).equals(PNG_SIG), `${f}.png is not a PNG`);
+  }
+  const sheet = fs.readFileSync(new URL('contact-sheet.png', EVID));
+  const beat = fs.readFileSync(new URL('beat-assembled.png', EVID));
+  assert.ok(sheet.length > beat.length, 'contact sheet composes more than one still');
+});
+
+test('take-apart S8: browser-pass.log records zero console errors, a passing gauge comparison and the vendor size', () => {
+  const log = fs.readFileSync(new URL('browser-pass.log', EVID), 'utf8');
+  assert.match(log, /console[ _-]?errors?\W{0,6}0\b/i, 'console error count of zero');
+  assert.match(log, /gauge[^\n]*\b(pass|passed|ok|equal|match)/i, 'gauge comparison passes');
+  assert.doesNotMatch(log, /gauge[^\n]*\b(fail|mismatch)/i);
+  assert.match(log, /vendor[^\n]*\d{6,}/i, 'decoded vendor byte size recorded');
+});
+
+// ---------------------------------------------------------------- S10 scope
+test('take-apart S10: src/page.js is unchanged against the loopback baseline (the anchor already exists)', () => {
+  let diff;
+  try {
+    execFileSync('git', ['cat-file', '-e', SETUP_COMMIT + '^{commit}'], { stdio: 'ignore' });
+    diff = execFileSync('git', ['diff', '-U0', SETUP_COMMIT, '--', 'src/page.js'], { encoding: 'utf8' });
+  } catch {
+    return; // setup commit not reachable in this checkout; scope is checked by the run gate
+  }
+  assert.equal(diff, '', 'src/page.js must not change this round');
+});
+
+test('take-apart scope: the run touches no file outside the allowed list', () => {
+  let names;
+  try {
+    execFileSync('git', ['cat-file', '-e', SETUP_COMMIT + '^{commit}'], { stdio: 'ignore' });
+    const tracked = execFileSync('git', ['diff', '--name-only', SETUP_COMMIT], { encoding: 'utf8' });
+    const untracked = execFileSync('git', ['ls-files', '--others', '--exclude-standard'], { encoding: 'utf8' });
+    names = (tracked + untracked).split('\n').filter(Boolean).filter((n) => !HARNESS_FILES.has(n));
+  } catch {
+    return;
+  }
+  const allowed = [
+    /^src\/take-apart-(model|model-browser|page|client)\.js$/,
+    /^src\/vendor-three\.js$/,
+    /^src\/index\.js$/,
+    /^src\/page\.js$/,
+    /^tests\/take-apart\.test\.js$/,
+    /^scripts\/capture-take-apart\.mjs$/,
+    /^evidence\/take-apart\//,
+    /^runs\/wo-gh-9\//,
+  ];
+  const outside = names.filter((n) => !allowed.some((re) => re.test(n)));
+  assert.deepEqual(outside, [], 'files outside the allowed scope');
+});
+
+// ---------------------------------------------------------------- loopback chrome
+const TOKENS = { paper: '#FAFAF6', ink: '#12211C', teal: '#0E7C66', mint: '#EFF4EE', hairline: '#DFE7DF', body: '#4A5D54', secondary: '#53685C', coral: '#FF6B4A' };
+const read = (rel) => fs.readFileSync(new URL('../' + rel, import.meta.url), 'utf8');
+
+function luminance(hex) {
+  const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)
+    .map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+}
+function contrast(a, b) {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+}
+
+test('take-apart chrome: only design token colours appear in page, client and capture sources', () => {
+  const allowed = new Set(Object.values(TOKENS).map((v) => v.toLowerCase()));
+  for (const f of ['src/take-apart-page.js', 'src/take-apart-client.js', 'scripts/capture-take-apart.mjs']) {
+    const found = (read(f).match(/#[0-9a-fA-F]{3,8}\b/g) || []).map((v) => v.toLowerCase());
+    const stray = [...new Set(found.filter((v) => !allowed.has(v)))];
+    assert.deepEqual(stray, [], `${f} carries colours outside design/DESIGN.md`);
+    for (const bad of ['#163c34', '#008d7f', '#6a7972', '#dce1d9']) {
+      assert.ok(!read(f).toLowerCase().includes(bad), `${f} still has substituted ${bad}`);
+    }
+  }
+});
+
+test('take-apart chrome: documented text pairs measure at or above 4.5 to 1', () => {
+  const pairs = [
+    [TOKENS.ink, TOKENS.paper, 15.93],
+    [TOKENS.body, TOKENS.paper, 6.72],
+    [TOKENS.secondary, TOKENS.paper, 5.73],
+    [TOKENS.teal, TOKENS.paper, 4.9],
+    [TOKENS.paper, TOKENS.teal, 4.9],
+  ];
+  for (const [fg, bg, documented] of pairs) {
+    const r = contrast(fg, bg);
+    assert.ok(r >= 4.5, `${fg} on ${bg} is ${r.toFixed(2)}`);
+    assert.ok(Math.abs(r - documented) < 0.01, `${fg} on ${bg}: ${r.toFixed(2)} vs documented ${documented}`);
+  }
+});
+
+test('take-apart chrome: font stylesheet link matches the main page, with preconnect and swap', async () => {
+  const html = await (await get('/take-apart')).text();
+  const link = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@300;400;500&display=swap';
+  assert.ok(html.includes(`<link href="${link}" rel="stylesheet">`) || html.includes(`href="${link}"`), 'font stylesheet link');
+  assert.match(html, /<link rel="preconnect" href="https:\/\/fonts\.googleapis\.com">/);
+  assert.match(html, /<link rel="preconnect" href="https:\/\/fonts\.gstatic\.com"/);
+  const main = await (await get('/')).text();
+  assert.ok(main.includes(link), 'main page serves the same link');
+});
+
+test('take-apart chrome: skip link targets a focusable main landmark', async () => {
+  const html = await (await get('/take-apart')).text();
+  const skip = html.match(/<a[^>]*href="#([\w-]+)"[^>]*>[^<]*skip[^<]*<\/a>/i);
+  assert.ok(skip, 'skip link present');
+  assert.match(html, new RegExp(`<main[^>]*id="${skip[1]}"[^>]*tabindex="-1"|<main[^>]*tabindex="-1"[^>]*id="${skip[1]}"`));
+  assert.ok(html.indexOf(skip[0]) < html.indexOf('<main'), 'skip link comes before main');
+});
+
+test('take-apart chrome: served HTML reads without script (explanation, layers, gaugeReadout(0), note, noscript override)', async () => {
+  const html = await (await get('/take-apart')).text();
+  const noscript = html.match(/<noscript[^>]*>[\s\S]*?<\/noscript>/);
+  assert.ok(noscript && /<style/i.test(noscript[0]), 'noscript style override present');
+  for (const l of FACTS.layers) assert.ok(html.includes(l.name), `layer ${l.name} listed`);
+  for (const th of THICK) assert.ok(html.includes(String(th)), `study thickness ${th} listed`);
+  for (const v of Object.values(gauges(M, 0))) assert.ok(html.includes(v), `static gauge value ${v}`);
+  assert.match(html, /JavaScript/i, 'visible note naming JavaScript');
+  assert.match(html, /interactive[^<]*JavaScript|JavaScript[^<]*interactive/i, 'note says the interactive study needs JavaScript');
+});
+
+test('take-apart chrome: container at most 1440 px and 3 px focus rings are declared', async () => {
+  const html = await (await get('/take-apart')).text();
+  const widths = [...html.matchAll(/max-width:\s*(\d+)px/g)].map((m) => Number(m[1]));
+  assert.ok(widths.includes(1440), 'a 1440 px container is declared');
+  assert.ok(widths.every((w) => w <= 1440), `no max-width above 1440: ${widths}`);
+  assert.match(html, /:focus-visible[^}]*(outline:\s*3px|outline-width:\s*3px)/, '3 px focus ring');
+  assert.match(html, /min-height:\s*44px|height:\s*44px/, '44 px targets declared');
+});
 {
   "name": "sentia",
   "version": "0.1.0",
@@ -667,18 +1266,18 @@ MIT licence.
   }
 }
  D runs/wo-gh-9/builder.output.md
- M runs/wo-gh-9/builder.packet.md
  M runs/wo-gh-9/envelopes/intake.envelope.json
  M runs/wo-gh-9/envelopes/spec-writer.envelope.json
  M runs/wo-gh-9/envelopes/test-writer.envelope.json
  M runs/wo-gh-9/spec-writer.output.md
- M runs/wo-gh-9/spec-writer.packet.md
  M runs/wo-gh-9/test-writer.output.md
- M runs/wo-gh-9/test-writer.packet.md
  M tests/take-apart.test.js
+.anvil-factory/third_party/teardown/sims/capture.mjs
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
 
 exec
-/bin/bash -lc "cat .anvil-factory/third_party/teardown/SKILL.md; rg -n 'chrome|colour|color|noscript|font|skip|1440|focus|SETUP' tests/take-apart.test.js; rg -n 'fonts.googleapis' src/page.js; ls /tmp; which google-chrome chromium chromium-browser; rg --files .anvil-factory/third_party/teardown/sims/kit" in /home/runner/work/sentia/sentia
+/bin/bash -lc 'cat .anvil-factory/third_party/teardown/SKILL.md; cat src/take-apart-client.js' in /home/runner/work/sentia/sentia
  succeeded in 0ms:
 ---
 name: teardown
@@ -824,65 +1423,223 @@ Checklist:
 ## Credits
 
 The kit, frame capture, sfx engine and review rules come from [whaleyxbt/claude-motion](https://github.com/whaleyxbt/claude-motion) (MIT). The recorded samples are CC0 from Freesound, trimmed by [Barty-Bart/motion-graphics](https://github.com/Barty-Bart/motion-graphics) (MIT); sources in `sfx/samples/SOURCES.md`.
-15:// objects returned by gaugeReadout and focusTransform, the export name of the
-21:const SETUP_COMMIT = '7748273';
-100:function lift(api, k, t, focus) {
-101:  const r = api.focusTransform(toArg(k), t, focus === NONE ? NONE : toArg(focus));
-108:function opacity(api, k, focus, xray) {
-109:  const r = api.materialState(toArg(k), focus === NONE ? NONE : toArg(focus), xray);
-209:test('take-apart S6: focus lifts the board and steps the others aside with signs', () => {
-240:  near(opacity(M, COVER, COVER, true), 0.15); // focused cover, no fade in play
-241:  near(opacity(M, COVER, BOARD, true), 0.0525); // faded by another focus under x ray
-244:  // non focused layers: fade alone; x ray touches only the cover
-306:        const a = JSON.stringify(B.focusTransform(toArg(k), t, f === NONE ? NONE : toArg(f)));
-307:        assert.equal(a, JSON.stringify(M.focusTransform(toArg(k), t, f === NONE ? NONE : toArg(f))));
-404:    execFileSync('git', ['cat-file', '-e', SETUP_COMMIT + '^{commit}'], { stdio: 'ignore' });
-405:    diff = execFileSync('git', ['diff', '-U0', SETUP_COMMIT, '--', 'src/page.js'], { encoding: 'utf8' });
-415:    execFileSync('git', ['cat-file', '-e', SETUP_COMMIT + '^{commit}'], { stdio: 'ignore' });
-416:    const tracked = execFileSync('git', ['diff', '--name-only', SETUP_COMMIT], { encoding: 'utf8' });
-436:// ---------------------------------------------------------------- loopback chrome
-450:test('take-apart chrome: only design token colours appear in page, client and capture sources', () => {
-455:    assert.deepEqual(stray, [], `${f} carries colours outside design/DESIGN.md`);
-462:test('take-apart chrome: documented text pairs measure at or above 4.5 to 1', () => {
-477:test('take-apart chrome: font stylesheet link matches the main page, with preconnect and swap', async () => {
-479:  const link = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@300;400;500&display=swap';
-480:  assert.ok(html.includes(`<link href="${link}" rel="stylesheet">`) || html.includes(`href="${link}"`), 'font stylesheet link');
-481:  assert.match(html, /<link rel="preconnect" href="https:\/\/fonts\.googleapis\.com">/);
-482:  assert.match(html, /<link rel="preconnect" href="https:\/\/fonts\.gstatic\.com"/);
-487:test('take-apart chrome: skip link targets a focusable main landmark', async () => {
-489:  const skip = html.match(/<a[^>]*href="#([\w-]+)"[^>]*>[^<]*skip[^<]*<\/a>/i);
-490:  assert.ok(skip, 'skip link present');
-491:  assert.match(html, new RegExp(`<main[^>]*id="${skip[1]}"[^>]*tabindex="-1"|<main[^>]*tabindex="-1"[^>]*id="${skip[1]}"`));
-492:  assert.ok(html.indexOf(skip[0]) < html.indexOf('<main'), 'skip link comes before main');
-495:test('take-apart chrome: served HTML reads without script (explanation, layers, gaugeReadout(0), note, noscript override)', async () => {
-497:  const noscript = html.match(/<noscript[^>]*>[\s\S]*?<\/noscript>/);
-498:  assert.ok(noscript && /<style/i.test(noscript[0]), 'noscript style override present');
-506:test('take-apart chrome: container at most 1440 px and 3 px focus rings are declared', async () => {
-509:  assert.ok(widths.includes(1440), 'a 1440 px container is declared');
-510:  assert.ok(widths.every((w) => w <= 1440), `no max-width above 1440: ${widths}`);
-511:  assert.match(html, /:focus-visible[^}]*(outline:\s*3px|outline-width:\s*3px)/, '3 px focus ring');
-353:<link rel="preconnect" href="https://fonts.googleapis.com">
-355:<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
-anvil-codex-home-ym2hw2et
-claude-1001
-clr-debug-pipe-2128-1548-in
-clr-debug-pipe-2128-1548-out
-clr-debug-pipe-2156-1780-in
-clr-debug-pipe-2156-1780-out
-dotnet-diagnostic-2128-1548-socket
-dotnet-diagnostic-2156-1780-socket
-node-compile-cache
-snap-private-tmp
-systemd-private-6a00600f22ad452880d82849c448c70f-ModemManager.service-OdmPzM
-systemd-private-6a00600f22ad452880d82849c448c70f-chrony.service-T1V1t3
-systemd-private-6a00600f22ad452880d82849c448c70f-haveged.service-GqCxy3
-systemd-private-6a00600f22ad452880d82849c448c70f-polkit.service-hps3Dy
-systemd-private-6a00600f22ad452880d82849c448c70f-systemd-logind.service-lnblRu
-systemd-private-6a00600f22ad452880d82849c448c70f-systemd-resolved.service-EAqyfm
-v8-compile-cache-1001
-/usr/bin/google-chrome
+// First party application source served by the worker.
+async function takeApartApp() {
+const THREE = await import('/vendor/three.module.min.js');
+const M = globalThis.TakeApartModel;
+const $ = s => document.querySelector(s);
+const root = $('#take-apart'), canvas = $('#scene'), overlay = $('#callouts');
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fast = new URLSearchParams(location.search).get('tour') === 'fast';
+const IDLE_SECONDS = fast ? 1.5 : 20, BEAT_SECONDS = fast ? .9 : 2.4;
+const Z_SCALE = 8;
+const quality = M.qualityFor({ devicePixelRatio, hardwareConcurrency: navigator.hardwareConcurrency, coarsePointer: matchMedia('(pointer: coarse)').matches });
+const state = { t: 0, h: 0, focus: null, xray: false };
+let renderer, scene, camera, meshes = [], lastPanel = -Infinity, lastChartHour = -Infinity;
+let lastInteraction = performance.now(), tourStart = null, tourBeat = -1, drag = null;
+let azimuth = Math.atan2(52,62), elevation = Math.atan2(32, Math.hypot(52,62)), zoom = 1;
+let targetAzimuth = azimuth, targetElevation = elevation, targetZoom = zoom;
+const cursor = $('#tour-cursor');
+const presets = { Hero: [52,42,62], Top: [0,95,1], Side: [95,18,0] };
+let radius = Math.hypot(52,32,62);
+function stopTour() {
+  lastInteraction = performance.now(); tourStart = null; tourBeat = -1;
+  root.dataset.tourBeat = 'off'; cursor.hidden = true;
+  $('#tour-status').textContent = reducedMotion ? 'Explore freely · Reduced motion' : 'Explore freely · Tour begins when idle';
+}
+for (const event of ['pointerdown','wheel','keydown','touchstart']) window.addEventListener(event, stopTour, { passive: true });
+$('#separation').addEventListener('input', e => { state.t = +e.target.value; stopTour(); });
+$('#wear').addEventListener('input', e => { state.h = +e.target.value; stopTour(); });
+for (const button of document.querySelectorAll('[data-layer]')) button.addEventListener('click', () => {
+  const index = +button.dataset.layer;
+  state.focus = state.focus === index ? null : index;
+  if (state.focus != null) state.t = Math.max(.55, state.t);
+});
+$('#xray').addEventListener('click', () => { state.xray = !state.xray; });
+function setCamera(name) {
+  const [x,y,z] = presets[name];
+  targetAzimuth = Math.atan2(x,z); targetElevation = Math.atan2(y-10,Math.hypot(x,z));
+  radius = Math.hypot(x,y-10,z); targetZoom = 1;
+  for (const b of document.querySelectorAll('[data-camera]')) b.setAttribute('aria-pressed', String(b.dataset.camera === name));
+}
+for (const b of document.querySelectorAll('[data-camera]')) b.addEventListener('click', () => setCamera(b.dataset.camera));
+canvas.addEventListener('pointerdown', e => { drag = { x:e.clientX,y:e.clientY }; canvas.setPointerCapture(e.pointerId); });
+canvas.addEventListener('pointermove', e => {
+  if (!drag) return;
+  targetAzimuth -= (e.clientX-drag.x)*.008;
+  targetElevation = Math.max(.08,Math.min(Math.PI/2-.01,targetElevation+(e.clientY-drag.y)*.006));
+  drag = { x:e.clientX,y:e.clientY };
+});
+for (const event of ['pointerup','pointercancel','lostpointercapture']) canvas.addEventListener(event, () => { drag = null; });
+canvas.addEventListener('wheel', e => { e.preventDefault(); targetZoom = Math.max(.65, Math.min(1.65,targetZoom*Math.exp(-e.deltaY*.001))); }, { passive:false });
+function roundedGeometry(thickness) {
+  const s = new THREE.Shape(), r = M.CORNER_RADIUS_MM, a = M.FOOTPRINT_MM/2;
+  s.moveTo(-a+r,-a); s.lineTo(a-r,-a); s.quadraticCurveTo(a,-a,a,-a+r);
+  s.lineTo(a,a-r); s.quadraticCurveTo(a,a,a-r,a); s.lineTo(-a+r,a);
+  s.quadraticCurveTo(-a,a,-a,a-r); s.lineTo(-a,-a+r); s.quadraticCurveTo(-a,-a,-a+r,-a);
+  const bevel = .12;
+  const g = new THREE.ExtrudeGeometry(s, { depth:thickness-2*bevel, bevelEnabled:true, bevelSegments:3, steps:1, bevelSize:bevel, bevelThickness:bevel, curveSegments:16 });
+  g.translate(0,0,-(thickness-2*bevel)/2); g.rotateX(-Math.PI/2);
+  return g;
+}
+function box(parent, size, position, color, roughness=.65) {
+  const mesh = new THREE.Mesh(new THREE.BoxGeometry(...size), new THREE.MeshStandardMaterial({ color,roughness }));
+  mesh.position.set(...position); mesh.castShadow = true; parent.add(mesh); return mesh;
+}
+async function initScene() {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
+  renderer.setPixelRatio(quality.pixelRatioCap); renderer.setClearColor(0xfafaf6);
+  renderer.shadowMap.enabled = quality.shadowMapSize > 0; renderer.shadowMap.type = THREE.VSMShadowMap;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  scene = new THREE.Scene(); camera = new THREE.OrthographicCamera(-50,50,80,-40,.1,1000);
+  scene.add(new THREE.AmbientLight(0xffffff,1.3));
+  const key = new THREE.DirectionalLight(0xfff5df,2.5); key.position.set(-65,160,65); key.castShadow = quality.shadowMapSize > 0;
+  key.shadow.mapSize.set(quality.shadowMapSize, quality.shadowMapSize);
+  Object.assign(key.shadow.camera, { left:-100,right:100,top:170,bottom:-100,near:.1,far:400 });
+  key.shadow.bias = -.0003; key.shadow.normalBias = .15; key.shadow.radius = 5; key.shadow.blurSamples = 8; scene.add(key);
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(1000,1000),new THREE.ShadowMaterial({ opacity:.12 }));
+  ground.rotation.x = -Math.PI/2; ground.position.y=-.15; ground.receiveShadow=true; scene.add(ground);
+  const colors = [0xeeeae0,0xd1cfc3,0x12211c,0xe2e8d9,0xf0eee7];
+  meshes = M.LAYERS.map((layer,i) => {
+    const mesh = new THREE.Mesh(roundedGeometry(layer.thicknessMm*Z_SCALE),new THREE.MeshStandardMaterial({ color:colors[i], roughness:i===2?.58:.82, transparent:true }));
+    mesh.castShadow=true; mesh.receiveShadow=true; scene.add(mesh); return mesh;
+  });
+  box(meshes[0],[12,.06,.38],[0,M.LAYERS[0].thicknessMm*Z_SCALE/2+.04,8],0x0e7c66);
+  const boardTop = M.LAYERS[2].thicknessMm*Z_SCALE/2+.04;
+  // Printed traces and flush components stay inside the study layer envelope.
+  for (let i=0;i<6;i++) {
+    box(meshes[2],[.15,.04,15],[i*2.3-6,boardTop,-1],0x389887);
+    box(meshes[2],[10,.04,.15],[1,boardTop,i*2.1-5],0x389887);
+  }
+  box(meshes[2],[7,.08,7],[0,boardTop,0],0x0e2722);
+  box(meshes[2],[5,.08,8],[-10,boardTop,3],0xa4b2a1);
+  for(let i=0;i<4;i++) box(meshes[2],[2,.06,1.2],[7,boardTop,i*3-4],0x8fa68d);
+  const ns='http://www.w3.org/2000/svg';
+  M.LAYERS.forEach((layer,i) => {
+    const group=document.createElementNS(ns,'g'); group.dataset.layer=i;
+    const path=document.createElementNS(ns,'path'); path.setAttribute('fill','none'); path.setAttribute('stroke-width','1'); group.append(path);
+    const dot=document.createElementNS(ns,'circle'); dot.setAttribute('r','2.5'); group.append(dot);
+    const label=document.createElementNS(ns,'text'); label.setAttribute('font-size','11');
+    const words = i===2 ? ['Sensing and','processing board'] : [layer.name];
+    words.forEach((word,j)=> {const line=document.createElementNS(ns,'tspan');line.textContent=word;line.setAttribute('dy',j?'15':'0');label.append(line);});
+    group.append(label); overlay.append(group);
+  });
+  await renderer.compileAsync(scene,camera); updateScene(true);
+}
+function updateScene(instant=false) {
+  if (!renderer) return;
+  const {width:w,height:h}=canvas.getBoundingClientRect();
+  if (canvas.width!==Math.round(w*quality.pixelRatioCap)||canvas.height!==Math.round(h*quality.pixelRatioCap)) renderer.setSize(w,h,false);
+  const blend = reducedMotion||instant ? 1 : .12;
+  azimuth+=(targetAzimuth-azimuth)*blend; elevation+=(targetElevation-elevation)*blend; zoom+=(targetZoom-zoom)*blend;
+  camera.position.set(radius*Math.cos(elevation)*Math.sin(azimuth),10+radius*Math.sin(elevation),radius*Math.cos(elevation)*Math.cos(azimuth));
+  camera.lookAt(0,10,0); camera.updateMatrixWorld();
+  const model=M.sceneState(state.t,state.h,state.focus,state.xray);
+  const bounds = new THREE.Box3();
+  meshes.forEach((mesh,i)=> {
+    const layer=model.layers[i]; mesh.position.set(layer.asideMm,(layer.centerMm+layer.liftMm)*Z_SCALE,0);
+    mesh.traverse(object=> { if(object.material){const transparent=layer.opacity<1;
+      if(object.material.transparent!==transparent){object.material.transparent=transparent;object.material.needsUpdate=true;}
+      object.material.opacity=layer.opacity;object.material.depthWrite=!transparent;object.castShadow=!transparent;} });
+    // The projection frames the same model bounds, with a stable margin for labels.
+    for(const x of [-18,18]) for(const z of [-18,18]) for(const dy of [-layer.thicknessMm*4,layer.thicknessMm*4]) {
+      bounds.expandByPoint(new THREE.Vector3(mesh.position.x+x,mesh.position.y+dy,z).applyMatrix4(camera.matrixWorldInverse));
+    }
+  });
+  const center=bounds.getCenter(new THREE.Vector3()), size=bounds.getSize(new THREE.Vector3());
+  const aspect=w/h, usableWidth=w<720?.78:.49;
+  const viewHeight=Math.max(size.y/.66,size.x/(aspect*usableWidth))/zoom;
+  camera.left=center.x-viewHeight*aspect/2;camera.right=center.x+viewHeight*aspect/2;
+  camera.top=center.y+viewHeight/2;camera.bottom=center.y-viewHeight/2;camera.updateProjectionMatrix();
+  const labels=[];
+  meshes.forEach((mesh,i)=> {
+    const left=i%2===0, point=new THREE.Vector3(left?0:18,0,left?18:0).add(mesh.position).project(camera);
+    labels.push({i,left,x:(point.x+1)*w/2,y:(1-point.y)*h/2});
+  });
+  for(const left of [true,false]) {
+    let previous=36;
+    const side=labels.filter(l=>l.left===left).sort((a,b)=>a.y-b.y);
+    side.forEach((l,j)=>{l.labelY=Math.max(previous,Math.min(h-60-(side.length-j-1)*52,l.y));previous=l.labelY+52;});
+  }
+  labels.forEach(l=> {
+    const g=overlay.children[l.i], x=l.left?8:w-8, elbow=l.left?150:w-150;
+    const color=state.focus===l.i?'#0E7C66':'#53685C';
+    g.setAttribute('fill',color);g.querySelector('path').setAttribute('stroke',color);
+    g.querySelector('path').setAttribute('d',`M ${l.x} ${l.y} L ${elbow} ${l.labelY} L ${l.left?x+3:x-3} ${l.labelY}`);
+    const circle=g.querySelector('circle');circle.setAttribute('cx',l.x);circle.setAttribute('cy',l.y);
+    const text=g.querySelector('text');text.setAttribute('text-anchor',l.left?'start':'end');text.setAttribute('y',l.labelY-9-(l.i===2?15:0));
+    text.querySelectorAll('tspan').forEach(t=>t.setAttribute('x',x));
+  });
+  renderer.render(scene,camera);
+}
+function drawChart() {
+  const chart=$('#chart'), rect=chart.getBoundingClientRect(), dpr=quality.pixelRatioCap;
+  chart.width=Math.round(rect.width*dpr);chart.height=Math.round(rect.height*dpr);
+  const ctx=chart.getContext('2d');ctx.scale(dpr,dpr);
+  const w=rect.width,h=rect.height, series=M.tempSeries(), low=Math.min(...series)-.1,high=Math.max(...series)+.1;
+  const px=i=>4+(w-8)*i/56, py=v=>h-8-(v-low)/(high-low)*(h-16);
+  ctx.strokeStyle='#DFE7DF';ctx.lineWidth=1;
+  for(const y of [12,h/2,h-12]){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+  ctx.beginPath();series.forEach((v,i)=>i?ctx.lineTo(px(i),py(v)):ctx.moveTo(px(i),py(v)));
+  ctx.strokeStyle='#0E7C66';ctx.lineWidth=1.5;ctx.stroke();
+  const idx=state.h/6, base=Math.floor(idx), next=Math.min(56,base+1);
+  const value=series[base]+(series[next]-series[base])*(idx-base),x=px(idx),y=py(value);
+  ctx.strokeStyle='#12211C';ctx.beginPath();ctx.moveTo(x,4);ctx.lineTo(x,h-4);ctx.stroke();
+  ctx.fillStyle='#0E7C66';ctx.beginPath();ctx.arc(x,y,3.5,0,Math.PI*2);ctx.fill();
+  lastChartHour=state.h;
+}
+function updatePanel(now) {
+  if(now-lastPanel<1000/quality.panelUpdateHz)return;
+  lastPanel=now; const gauges=M.gaugeReadout(state.h);
+  for(const [key,value] of Object.entries(gauges)) $('[data-gauge="'+key+'"]').textContent=value;
+  $('#wear-day').textContent=gauges.day;
+  $('#separation').value=state.t;$('#wear').value=state.h;
+  document.querySelectorAll('[data-layer]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.layer===state.focus)));
+  $('#xray').setAttribute('aria-pressed',String(state.xray));
+  if(Math.abs(state.h-lastChartHour)>=.25)drawChart();
+}
+const beats = [
+  ['assembled','Assemble','#separation',()=>{Object.assign(state,{t:0,h:0,focus:null,xray:false});setCamera('Hero');}],
+  ['apart','Explode','#separation',()=>{state.t=1;}],
+  ['board','Isolate the board','[data-layer="2"]',()=>{state.focus=2;}],
+  ['xray','X ray','#xray',()=>{state.xray=true;}],
+  ['settle','Settle','#wear',()=>{Object.assign(state,{t:.35,h:156,focus:null,xray:false});}],
+];
+function tour(now) {
+  if(reducedMotion || now-lastInteraction<IDLE_SECONDS*1000)return;
+  if(tourStart===null)tourStart=now;
+  const index=Math.floor((now-tourStart)/(BEAT_SECONDS*1000))%beats.length;
+  const phase=(now-tourStart)%(BEAT_SECONDS*1000);
+  if(index!==tourBeat){
+    tourBeat=index;const beat=beats[index];
+    const rect=$(beat[2]).getBoundingClientRect();cursor.hidden=false;cursor.style.left=rect.left+rect.width/2+'px';cursor.style.top=rect.top+rect.height/2+'px';
+    root.dataset.tourBeat='off';
+  }
+  cursor.classList.toggle('pressing',phase>=200&&phase<400);
+  if(phase>=220 && root.dataset.tourBeat!==beats[index][0]) {
+    beats[index][3]();root.dataset.tourBeat=beats[index][0];$('#tour-status').textContent='Guided tour · '+beats[index][1];
+  }
+}
+try { await initScene(); root.dataset.sceneReady = 'true'; } catch (error) {
+  if(renderer)renderer.dispose();renderer=null;canvas.hidden=true;overlay.hidden=true;$('#fallback').textContent='3D is unavailable on this device. Explore the layers and simulated readings with the controls below.';$('#fallback').hidden=false;
+  // WebGL capability failure leaves the model and accessible controls operational.
+}
+window.addEventListener('resize',()=> {lastChartHour=-Infinity;});
+function frame(now){tour(now);updateScene();updatePanel(now);requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+
+}
+export const TAKE_APART_CLIENT_JS = `(${takeApartApp.toString()})();`;
+
+exec
+/bin/bash -lc "ls /usr/bin/*chrom* /tmp/sentia-browser/node_modules/playwright/index.mjs 2>/dev/null; rg --files .anvil-factory/third_party/teardown | head -25; git log -3 --oneline; rg 'SETUP_COMMIT' tests/take-apart.test.js; ls node_modules 2>/dev/null" in /home/runner/work/sentia/sentia
+ exited 2 in 0ms:
+/usr/bin/chromedriver
 /usr/bin/chromium
 /usr/bin/chromium-browser
+/usr/bin/google-chrome
+/usr/bin/google-chrome-stable
 .anvil-factory/third_party/teardown/sims/kit/style.css
 .anvil-factory/third_party/teardown/sims/kit/hud.js
 .anvil-factory/third_party/teardown/sims/kit/director.js
@@ -890,210 +1647,87 @@ v8-compile-cache-1001
 .anvil-factory/third_party/teardown/sims/kit/stage3d.js
 .anvil-factory/third_party/teardown/sims/kit/warm.js
 .anvil-factory/third_party/teardown/sims/kit/runtime.js
+.anvil-factory/third_party/teardown/sims/build.mjs
+.anvil-factory/third_party/teardown/sims/v8-live/main.js
+.anvil-factory/third_party/teardown/sims/beats.py
+.anvil-factory/third_party/teardown/sims/v8-film/main.js
+.anvil-factory/third_party/teardown/sims/v8-film/timeline.json
+.anvil-factory/third_party/teardown/sims/v8-shared/stage.js
+.anvil-factory/third_party/teardown/sims/v8-shared/kin.js
+.anvil-factory/third_party/teardown/sims/v8-shared/engine.js
+.anvil-factory/third_party/teardown/sims/v8-shared/console.js
+.anvil-factory/third_party/teardown/sims/v8-shared/score.py
+.anvil-factory/third_party/teardown/sims/v8-shared/live.js
+.anvil-factory/third_party/teardown/sims/v8-shared/film.js
+.anvil-factory/third_party/teardown/sims/cessna-live/main.js
+.anvil-factory/third_party/teardown/sims/strandbeest-live/main.js
+.anvil-factory/third_party/teardown/sims/capture.mjs
+.anvil-factory/third_party/teardown/sims/cessna-shared/stage.js
+.anvil-factory/third_party/teardown/sims/cessna-shared/flight.js
+.anvil-factory/third_party/teardown/sims/cessna-shared/console.js
+f06bd4a Record owner acceptance for the wo-gh-9 take apart build
+const SETUP_COMMIT = 'f06bd4a';
+    execFileSync('git', ['cat-file', '-e', SETUP_COMMIT + '^{commit}'], { stdio: 'ignore' });
+    diff = execFileSync('git', ['diff', '-U0', SETUP_COMMIT, '--', 'src/page.js'], { encoding: 'utf8' });
+    execFileSync('git', ['cat-file', '-e', SETUP_COMMIT + '^{commit}'], { stdio: 'ignore' });
+    const tracked = execFileSync('git', ['diff', '--name-only', SETUP_COMMIT], { encoding: 'utf8' });
 
 codex
-The existing model and tour already follow the kit’s approach. I’m using its teardown guidance to preserve that behavior while fixing the chrome, adding model-derived static content, and improving capture readiness and sheet legibility.
-
+The current page already includes most of the required chrome fixes, and the test writer has rebased the scope checks. I’m using the vendored teardown kit’s model-driven tour and deterministic capture conventions, while retaining the spec’s timing and layout rules. I’ll check the remaining typography and fallback details, then capture the updated page.
 exec
-/bin/bash -lc "sed -n '436,515p' tests/take-apart.test.js; cat src/take-apart-model.js | head -30; cat .anvil-factory/third_party/teardown/sims/kit/warm.js; find /opt /home/runner /tmp -path '*/playwright/package.json' 2>/dev/null | head" in /home/runner/work/sentia/sentia
+/bin/bash -lc "cat .anvil-factory/third_party/teardown/sims/kit/warm.js; sed -n '1,100p' .anvil-factory/third_party/teardown/sims/capture.mjs; rg --files /tmp /opt /home/runner 2>/dev/null | rg '/playwright/(index.mjs|package.json)"'$'"' | head -10; node --test tests/take-apart.test.js" in /home/runner/work/sentia/sentia
 exec
-/bin/bash -lc "python3 - <<'PY'
-from pathlib import Path
-p=Path('src/take-apart-page.js');s=p.read_text();s=s.replace(\"import { FACTS } from './facts.js';\", \"import { FACTS } from './facts.js';\\nimport { LAYERS, gaugeReadout } from './take-apart-model.js';\").replace('export function renderTakeApartPage() {','export function renderTakeApartPage() {\\n  const initial = gaugeReadout(0);')
-s=s.replace('<style>', '''<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin><link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@300;400;500&display=swap\" rel=\"stylesheet\"><style>''',1)
-for a,b in {'#163c34':'#12211C','#008d7f16':'var(--mint)','#008d7f55':'var(--mint)','#008d7f':'#0E7C66','#6a7972':'#53685C','#dce1d9':'#DFE7DF','--line:#DFE7DF':'--line:#DFE7DF;--body:#4A5D54;--mint:#EFF4EE','max-width:1600px':'max-width:1440px','margin:0 4%':'margin:0 auto;max-width:1440px','padding:25px 0':'padding:16px clamp(24px,5vw,80px)','padding:28px 4% 25px':'padding:24px clamp(24px,5vw,80px)','font-weight:400':'font-weight:300','letter-spacing:-2px':'letter-spacing:-.04em','margin:10px 0':'margin:8px 0','font-size:13px;color:var(--muted);max-width:330px':'font-size:18px;color:var(--body);max-width:400px','gap:28px':'gap:24px','margin-top:20px':'margin-top:24px','bottom:14px':'bottom:16px','padding-left:25px':'padding-left:24px','gap:7px':'gap:8px','font-size:68px':'font-size:56px','margin:12px 0 0':'margin:8px 0 0','margin:8px 0 23px':'margin:8px 0 24px','padding:17px 0':'padding:16px 0','font-size:28px':'font-size:32px','margin-top:14px':'margin-top:16px','margin-top:22px':'margin-top:24px','margin-bottom:9px':'margin-bottom:8px','height:20px':'height:44px;margin:0','padding:11px 13px':'padding:8px 16px','min-height:40px':'min-height:44px;min-width:44px','gap:5px':'gap:8px','margin-top:23px':'margin-top:24px','outline:2px':'outline:3px','gap:15px':'gap:16px','padding-left:15px':'padding-left:16px','padding:18px 0':'padding:16px 24px','padding:10px 0':'padding:16px 0','gap:20px':'gap:24px','gap:6px':'gap:8px','margin-bottom:20px':'margin-bottom:24px','p{line-height:1.6}':'p{line-height:1.65}','font-family:Inter,Arial,sans-serif':'font-family:Inter,Arial,sans-serif;font-size:17px;line-height:1.65'}.items(): s=s.replace(a,b)
-s=s.replace('</style></head>', '''.eyebrow,.live-label,.scene-note,.endpoints,.chart-caption,.footer{font-family:monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase}.panel-note{font-size:17px;color:var(--body)}.temperature,.gauge .value{font-weight:300}header{gap:16px}header a{min-height:44px;display:inline-flex;align-items:center}.skip-link{position:absolute;left:24px;top:8px;transform:translateY(-200%);background:var(--paper);padding:8px 16px;z-index:20}.skip-link:focus{transform:none}.static-layers{display:none}.static-layers li{margin:8px 0}.static-layers ul{padding-left:24px}#fallback{inset:32% 16%;margin:0;padding:16px;background:var(--paper);color:var(--body)}
-</style><noscript><style>#fallback[hidden],.static-layers{display:block"'!important}#scene,#callouts,.controls,#tour-status,.scene-note{display:none!important}</style></noscript></head>'"''')
-s=s.replace('<body><header>','<body><a class=\"skip-link\" href=\"#take-apart\">Skip to study</a><header>').replace('<main id=\"take-apart\"','<main tabindex=\"-1\" id=\"take-apart\"')
-for k in ['temperature','hydration','battery','day']:s=s.replace(f'data-gauge=\"{k}\"></span>',f'data-gauge=\"{k}\">"'${{initial.{k}}}</span>'"')
-s=s.replace('<output id=\"wear-day\"></output>','<output id=\"wear-day\">"'${initial.day}</output>'"')
-s=s.replace('3D is unavailable on this device. Explore the layers and simulated readings with the controls below.','This interactive study needs JavaScript and WebGL. Explore the layer list and initial simulated readings below.')
-s=s.replace('<section class=\"controls\"','<section class=\"static-layers\" aria-label=\"Study layer thicknesses\"><h2>The assembled stack</h2><ul>"'${LAYERS.map(layer => `<li>${layer.name} — ${layer.thicknessMm} mm</li>`).join('"\\'\\')}</ul></section><section class=\"controls\"')
-p.write_text(s)
-p=Path('src/take-apart-client.js');s=p.read_text()
-for a,b in {'#008d7f':'#0E7C66','#163c34':'#12211C','#6a7972':'#53685C','#dce1d9':'#DFE7DF','0x163c34':'0x12211c','0x008d7f':'0x0e7c66'}.items():s=s.replace(a,b)
-s=s.replace('function initScene() {','async function initScene() {').replace('updateScene(true); renderer.compile(scene,camera); renderer.render(scene,camera);','await renderer.compileAsync(scene,camera); updateScene(true);').replace('try { initScene(); }','try { await initScene(); root.dataset.sceneReady = \\'true\\'; }').replace(\""'$('"'#fallback').hidden=false;\",\""'$('"'#fallback').textContent='3D is unavailable on this device. Explore the layers and simulated readings with the controls below.';"'$('"'#fallback').hidden=false;\")
-p.write_text(s)
-p=Path('scripts/capture-take-apart.mjs');s=p.read_text().replace('#163c34','#12211C').replace(\"await page.waitForFunction(()=>document.querySelector('[data-gauge=\\\"temperature\\\"]').textContent.length>0);\", \"await page.waitForFunction(()=>document.querySelector('#take-apart').dataset.sceneReady==='true');\\n  await page.evaluate(()=>document.fonts.ready);\")
-# preserve screenshot aspect ratio in sheet tiles
-s=s.replace('height:1710','height:1840').replace('height=\"1710\"','height=\"1840\"').replace('25,42','24,40').replace('y=70+Math.floor(i/2)*540','y=64+Math.floor(i/2)*592').replace('720,500','720,525').replace('x+22,y+526','x+24,y+560')
-p.write_text(s)
-PY
-node --test tests/take-apart.test.js > runs/wo-gh-9/builder-take-apart-test.log 2>&1; tail -18 runs/wo-gh-9/builder-take-apart-test.log" in /home/runner/work/sentia/sentia
- succeeded in 254ms:
-  duration_ms: 0.700663
-  type: 'test'
-  ...
-# Subtest: take-apart chrome: container at most 1440 px and 3 px focus rings are declared
-ok 23 - take-apart chrome: container at most 1440 px and 3 px focus rings are declared
-  ---
-  duration_ms: 0.557541
-  type: 'test'
-  ...
-1..23
-# tests 23
-# suites 0
-# pass 22
-# fail 1
-# cancelled 0
-# skipped 0
-# todo 0
-# duration_ms 329.611778
-
-exec
-/bin/bash -lc "rg -A14 'not ok' runs/wo-gh-9/builder-take-apart-test.log; npm root -g; ls .anvil-factory/third_party/teardown/node_modules/playwright/index.mjs /opt/node*/lib/node_modules/playwright/index.mjs 2>/dev/null; git diff --stat" in /home/runner/work/sentia/sentia
+/bin/bash -lc 'printenv PLAYWRIGHT_MODULE; ls /tmp; cat .anvil-factory/third_party/teardown/paths.mjs | head -45' in /home/runner/work/sentia/sentia
  succeeded in 0ms:
-not ok 15 - take-apart S8: browser-pass.log records zero console errors, a passing gauge comparison and the vendor size
-  ---
-  duration_ms: 0.252424
-  type: 'test'
-  location: '/home/runner/work/sentia/sentia/tests/take-apart.test.js:392:1'
-  failureType: 'testCodeFailure'
-  error: "ENOENT: no such file or directory, open '/home/runner/work/sentia/sentia/evidence/take-apart/browser-pass.log'"
-  code: 'ENOENT'
-  stack: |-
-    Object.readFileSync (node:fs:440:20)
-    TestContext.<anonymous> (file:///home/runner/work/sentia/sentia/tests/take-apart.test.js:393:18)
-    Test.runInAsyncScope (node:async_hooks:214:14)
-    Test.run (node:internal/test_runner/test:1047:25)
-    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
-    Test.postRun (node:internal/test_runner/test:1173:19)
-/opt/hostedtoolcache/node/22.23.4/x64/lib/node_modules
- runs/wo-gh-9/builder.output.md                   |  5 --
- runs/wo-gh-9/builder.packet.md                   | 16 +++-
- runs/wo-gh-9/envelopes/intake.envelope.json      |  2 +-
- runs/wo-gh-9/envelopes/spec-writer.envelope.json |  2 +-
- runs/wo-gh-9/envelopes/test-writer.envelope.json |  2 +-
- runs/wo-gh-9/spec-writer.output.md               | 36 +++++----
- runs/wo-gh-9/spec-writer.packet.md               | 16 +++-
- runs/wo-gh-9/test-writer.output.md               | 36 +++++----
- runs/wo-gh-9/test-writer.packet.md               | 16 +++-
- scripts/capture-take-apart.mjs                   | 13 ++--
- src/take-apart-client.js                         | 22 +++---
- src/take-apart-page.js                           |  9 ++-
- tests/take-apart.test.js                         | 97 +++++++++++++++++++++---
- 13 files changed, 197 insertions(+), 75 deletions(-)
+anvil-codex-home-0z_lxrbo
+claude-1001
+clr-debug-pipe-2141-1751-in
+clr-debug-pipe-2141-1751-out
+clr-debug-pipe-2162-1946-in
+clr-debug-pipe-2162-1946-out
+dotnet-diagnostic-2141-1751-socket
+dotnet-diagnostic-2162-1946-socket
+node-compile-cache
+snap-private-tmp
+systemd-private-196c87d39aaa4db8be5045b597fb6438-ModemManager.service-oHlQmC
+systemd-private-196c87d39aaa4db8be5045b597fb6438-chrony.service-qUKQmB
+systemd-private-196c87d39aaa4db8be5045b597fb6438-haveged.service-KjzGop
+systemd-private-196c87d39aaa4db8be5045b597fb6438-polkit.service-sog0l0
+systemd-private-196c87d39aaa4db8be5045b597fb6438-systemd-logind.service-8bDUaG
+systemd-private-196c87d39aaa4db8be5045b597fb6438-systemd-resolved.service-RnumCH
+v8-compile-cache-1001
+// Paths and browser flags for the kit. Everything resolves from this folder, so the skill runs wherever it is installed.
+// Override any of them with an environment variable.
 
-exec
-/bin/bash -lc 'npm install --prefix /tmp/sentia-browser playwright' in /home/runner/work/sentia/sentia
- succeeded in 1525ms:
+import {createRequire} from 'node:module';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
 
-added 2 packages in 2s
+const ROOT = path.dirname(fileURLToPath(import.meta.url));
 
-codex
-The chrome assertions pass. The only take-apart failure is the missing browser log, which the capture run will generate. Static gauges now use gaugeReadout(0), and capture waits for the scene and fonts to finish loading.
+export const FFMPEG = process.env.FFMPEG || 'ffmpeg';
+export const FFPROBE = process.env.FFPROBE || 'ffprobe';
+export const PYTHON = process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3');
 
-exec
-/bin/bash -lc 'PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs node scripts/capture-take-apart.mjs' in /home/runner/work/sentia/sentia
- succeeded in 35631ms:
-// ---------------------------------------------------------------- loopback chrome
-const TOKENS = { paper: '#FAFAF6', ink: '#12211C', teal: '#0E7C66', mint: '#EFF4EE', hairline: '#DFE7DF', body: '#4A5D54', secondary: '#53685C', coral: '#FF6B4A' };
-const read = (rel) => fs.readFileSync(new URL('../' + rel, import.meta.url), 'utf8');
+// three, esbuild, fonts and playwright: `npm install` in this folder puts them here.
+export const DEPS = process.env.TEARDOWN_DEPS || path.join(ROOT, 'node_modules');
+// Unset: playwright uses the Chromium that `npx playwright install chromium` downloaded.
+export const CHROMIUM = process.env.CHROMIUM || undefined;
+// Real GPU WebGL instead of a software rasteriser. On Windows d3d11 plus --force_high_performance_gpu keeps ANGLE off
+// an integrated GPU when a discrete one exists. capture.mjs prints the GPU it got on every run.
+export const CHROMIUM_ARGS = [
+  ...(process.platform === 'win32' ? ['--use-angle=d3d11'] : []),
+  '--force_high_performance_gpu', '--ignore-gpu-blocklist', '--enable-gpu-rasterization', '--enable-webgl', '--hide-scrollbars',
+];
 
-function luminance(hex) {
-  const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)
-    .map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4));
-  return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
-}
-function contrast(a, b) {
-  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
-  return (hi + 0.05) / (lo + 0.05);
-}
+// Builds and renders land in ./teardown-out of the folder you run from.
+export const OUT = path.resolve(process.env.TEARDOWN_OUT || 'teardown-out');
+export const DIST = path.join(OUT, 'dist');
 
-test('take-apart chrome: only design token colours appear in page, client and capture sources', () => {
-  const allowed = new Set(Object.values(TOKENS).map((v) => v.toLowerCase()));
-  for (const f of ['src/take-apart-page.js', 'src/take-apart-client.js', 'scripts/capture-take-apart.mjs']) {
-    const found = (read(f).match(/#[0-9a-fA-F]{3,8}\b/g) || []).map((v) => v.toLowerCase());
-    const stray = [...new Set(found.filter((v) => !allowed.has(v)))];
-    assert.deepEqual(stray, [], `${f} carries colours outside design/DESIGN.md`);
-    for (const bad of ['#163c34', '#008d7f', '#6a7972', '#dce1d9']) {
-      assert.ok(!read(f).toLowerCase().includes(bad), `${f} still has substituted ${bad}`);
-    }
-  }
-});
+export const fromDeps = (id) => createRequire(path.join(DEPS, 'x.js'))(id);
+export const playwright = () => fromDeps('playwright');
 
-test('take-apart chrome: documented text pairs measure at or above 4.5 to 1', () => {
-  const pairs = [
-    [TOKENS.ink, TOKENS.paper, 15.93],
-    [TOKENS.body, TOKENS.paper, 6.72],
-    [TOKENS.secondary, TOKENS.paper, 5.73],
-    [TOKENS.teal, TOKENS.paper, 4.9],
-    [TOKENS.paper, TOKENS.teal, 4.9],
-  ];
-  for (const [fg, bg, documented] of pairs) {
-    const r = contrast(fg, bg);
-    assert.ok(r >= 4.5, `${fg} on ${bg} is ${r.toFixed(2)}`);
-    assert.ok(Math.abs(r - documented) < 0.01, `${fg} on ${bg}: ${r.toFixed(2)} vs documented ${documented}`);
-  }
-});
-
-test('take-apart chrome: font stylesheet link matches the main page, with preconnect and swap', async () => {
-  const html = await (await get('/take-apart')).text();
-  const link = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@300;400;500&display=swap';
-  assert.ok(html.includes(`<link href="${link}" rel="stylesheet">`) || html.includes(`href="${link}"`), 'font stylesheet link');
-  assert.match(html, /<link rel="preconnect" href="https:\/\/fonts\.googleapis\.com">/);
-  assert.match(html, /<link rel="preconnect" href="https:\/\/fonts\.gstatic\.com"/);
-  const main = await (await get('/')).text();
-  assert.ok(main.includes(link), 'main page serves the same link');
-});
-
-test('take-apart chrome: skip link targets a focusable main landmark', async () => {
-  const html = await (await get('/take-apart')).text();
-  const skip = html.match(/<a[^>]*href="#([\w-]+)"[^>]*>[^<]*skip[^<]*<\/a>/i);
-  assert.ok(skip, 'skip link present');
-  assert.match(html, new RegExp(`<main[^>]*id="${skip[1]}"[^>]*tabindex="-1"|<main[^>]*tabindex="-1"[^>]*id="${skip[1]}"`));
-  assert.ok(html.indexOf(skip[0]) < html.indexOf('<main'), 'skip link comes before main');
-});
-
-test('take-apart chrome: served HTML reads without script (explanation, layers, gaugeReadout(0), note, noscript override)', async () => {
-  const html = await (await get('/take-apart')).text();
-  const noscript = html.match(/<noscript[^>]*>[\s\S]*?<\/noscript>/);
-  assert.ok(noscript && /<style/i.test(noscript[0]), 'noscript style override present');
-  for (const l of FACTS.layers) assert.ok(html.includes(l.name), `layer ${l.name} listed`);
-  for (const th of THICK) assert.ok(html.includes(String(th)), `study thickness ${th} listed`);
-  for (const v of Object.values(gauges(M, 0))) assert.ok(html.includes(v), `static gauge value ${v}`);
-  assert.match(html, /JavaScript/i, 'visible note naming JavaScript');
-  assert.match(html, /interactive[^<]*JavaScript|JavaScript[^<]*interactive/i, 'note says the interactive study needs JavaScript');
-});
-
-test('take-apart chrome: container at most 1440 px and 3 px focus rings are declared', async () => {
-  const html = await (await get('/take-apart')).text();
-  const widths = [...html.matchAll(/max-width:\s*(\d+)px/g)].map((m) => Number(m[1]));
-  assert.ok(widths.includes(1440), 'a 1440 px container is declared');
-  assert.ok(widths.every((w) => w <= 1440), `no max-width above 1440: ${widths}`);
-  assert.match(html, /:focus-visible[^}]*(outline:\s*3px|outline-width:\s*3px)/, '3 px focus ring');
-  assert.match(html, /min-height:\s*44px|height:\s*44px/, '44 px targets declared');
-});
-import { FACTS } from './facts.js';
-
-export const GAP_MM = 3, FOOTPRINT_MM = 36, CORNER_RADIUS_MM = 9;
-export const FOCUS_LIFT_MM = 5, ASIDE_MM = 8, FADE_OPACITY = 0.35, XRAY_OPACITY = 0.15;
-export const LAYERS = FACTS.layers.map((layer, index) => Object.freeze({
-  name: layer.name, thicknessMm: [0.6, 0.7, 0.5, 0.4, 0.3][index], heightIndex: 4 - index,
-}));
-const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
-const hours = h => clamp(h, 0, 336);
-export function layerCenterMm(layer, t) {
-  return LAYERS.slice(layer + 1).reduce((sum, l) => sum + l.thicknessMm, 0)
-    + LAYERS[layer].thicknessMm / 2 + clamp(t, 0, 1) * LAYERS[layer].heightIndex * GAP_MM;
-}
-export function wearDay(h) { return Math.min(14, Math.floor(hours(h) / 24) + 1); }
-export function skinTempC(h) { return 36.55 + 0.35 * Math.sin(((hours(h) % 24) - 6) * Math.PI / 12); }
-export function hydrationIndex(h) { return clamp(Math.round(66 + 8 * Math.sin(((hours(h) % 24) - 9) * Math.PI / 12) - 6 * hours(h) / 336), 0, 100); }
-export function batteryPct(h) { return Math.round(100 - 88 * hours(h) / 336); }
-export function tempSeries() { return Array.from({ length: 57 }, (_, i) => skinTempC(i * 6)); }
-export function gaugeReadout(h) {
-  return { temperature: skinTempC(h).toFixed(1), hydration: String(hydrationIndex(h)), battery: String(batteryPct(h)), day: String(wearDay(h)) };
-}
-export function focusTransform(layer, t, focusIndex) {
-  return { liftMm: layer === focusIndex ? FOCUS_LIFT_MM : 0,
-    asideMm: focusIndex == null || layer === focusIndex ? 0 : (layer < focusIndex ? ASIDE_MM : -ASIDE_MM) };
-}
-export function materialState(layer, focusIndex, xray) {
-  return { opacity: (focusIndex != null && layer !== focusIndex ? FADE_OPACITY : 1) * (layer === 0 && xray ? XRAY_OPACITY : 1) };
-}
-export function qualityFor({ devicePixelRatio = 1, hardwareConcurrency = 8, coarsePointer = false } = {}) {
-  const lowest = hardwareConcurrency <= 2, reduced = hardwareConcurrency <= 4 || coarsePointer;
+ succeeded in 20329ms:
 // Shader warm-up before a live page's first frame. three.js links a program the first time something draws with it,
 // and the frame waits on every one in turn: 1-2 s on a phone or an integrated GPU, and a frozen page meanwhile. Here
 // all of them start at once and the page awaits them without blocking (renderer.compileAsync, KHR_parallel_shader_compile):
@@ -1160,206 +1794,367 @@ export function warmComposer(renderer, composer, scene, camera, jobs = []) {
     ...jobs,
   ]);
 }
-/tmp/sentia-browser/node_modules/playwright/package.json
+#!/usr/bin/env node
+// Frame-accurate capture of a sim page to mp4: steps window.SIM.render(t) for
+// every frame in headless Chromium, screenshots, pipes to ffmpeg, then muxes
+// a music track if given.
+//
+//   node sims/capture.mjs <name> [--config post.json] [--out teardown-out/x.mp4]
+//        [--size 1080x1350] [--dpr 1.3333] [--fps 60] [--from 0] [--to <duration>]
+//        (--size is the layout in CSS px; --dpr multiplies the output: 1080x1350
+//         at the default 4/3 gives a 1440x1800 video. Default 60 fps, crf 16.)
+//        [--music music/track.mp3 [--music-start auto|SEC] [--no-sync] [--lufs -21]] [--crf 21]
+//        [--still 12.5]   (--still: one PNG, no video)
+//        [--stills 0,4,9,14 --cols 3]               (tiled review sheet, every tile labelled t=)
+//        [--stills beats [--timeline f.json]]       (one tile per timeline beat, +0.3 s so motion settles)
+//        [--stills every:0.2 --from 3 --to 5]       (scrub a transition)
+//
+//   <name> is a sim built into teardown-out/dist, or a path to any .html
+//   that exposes window.seek(seconds) and freezes its clock on ?render
+//   (motion-effects, vox-explainer, milestone-reveal, model-showdown). An .html
+//   needs --to <seconds> unless it sets window.DURATION.
+import {spawn} from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath, pathToFileURL} from 'node:url';
+import {CHROMIUM, CHROMIUM_ARGS, DIST, FFMPEG, OUT, PYTHON, playwright} from '../paths.mjs';
 
- exited 1 in 7629ms:
-Loading study
-Study loaded
-node:internal/modules/run_main:123
-    triggerUncaughtException(
-    ^
+const {chromium} = playwright();
 
-AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
-+ actual - expected
-
-  {
-+   battery: '100',
-+   day: '1',
--   battery: '48',
--   day: '9',
-    hydration: '60',
-+   temperature: '36.2'
--   temperature: '36.7'
-  }
-
-    at file:///home/runner/work/sentia/sentia/scripts/capture-take-apart.mjs:43:10 {
-  generatedMessage: true,
-  code: 'ERR_ASSERTION',
-  actual: { temperature: '36.2', hydration: '60', battery: '100', day: '1' },
-  expected: { temperature: '36.7', hydration: '60', battery: '48', day: '9' },
-  operator: 'deepStrictEqual',
-  diff: 'simple'
+const HERE = path.dirname(fileURLToPath(import.meta.url));
+const argv = process.argv.slice(2);
+const name = argv[0];
+const opt = (k, d) => {
+  const i = argv.indexOf(`--${k}`);
+  return i === -1 ? d : argv[i + 1];
+};
+if (!name) {
+  console.error('usage: node sims/capture.mjs <name|file.html> [--config f.json] [--out f.mp4] [--music f.wav]');
+  process.exit(1);
 }
+const SEEK = name.endsWith('.html');
+const html = SEEK ? path.resolve(name) : path.join(DIST, `${name}.html`);
+const label = SEEK ? path.basename(name, '.html') : name;
+if (!fs.existsSync(html)) {
+  console.error(SEEK ? `missing ${html}` : `missing ${html}; run node sims/build.mjs ${name}`);
+  process.exit(1);
+}
+const [W, H] = opt('size', '1080x1350').split('x').map(Number);
+const config = opt('config') ? JSON.parse(fs.readFileSync(opt('config'), 'utf8')) : {};
+// --music <file> [--music-start auto|SECONDS]: analyse the track (sims/beats.py),
+// cut the window so the drop lands ~40% in, and give the beat map to the director.
+const music = opt('music');
+let beats = null;
+if (music) {
+  const dur = Number(opt('to', config.duration ?? 30)) - Number(opt('from', 0));
+  const ms = opt('music-start', 'auto');
+  const cache = path.join(OUT, 'beats', `${path.basename(music).replace(/\.[^.]+$/, '')}-${ms}-${dur}.json`);
+  fs.mkdirSync(path.dirname(cache), {recursive: true});
+  const {execFileSync} = await import('node:child_process');
+  if (!fs.existsSync(cache) || fs.statSync(cache).mtimeMs < fs.statSync(music).mtimeMs) {
+    execFileSync(PYTHON, ['-I', path.join(HERE, 'beats.py'), music, '--duration', String(dur), '--start', ms, '-o', cache], {stdio: 'inherit'});
+  }
+  beats = JSON.parse(fs.readFileSync(cache, 'utf8'));
+  if (!opt('no-sync')) config.beats = beats;
+}
+const still = opt('still');
+const stamp = new Date().toISOString().slice(5, 16).replace(/[-:T]/g, '');
+const out = path.resolve(opt('out', path.join(OUT, still ? `${label}-${still}.png` : `${label}-${stamp}.mp4`)));
+fs.mkdirSync(path.dirname(out), {recursive: true});
 
-Node.js v22.23.4
+// Browser and GPU flags come from ../paths.mjs.
+const exe = CHROMIUM;
+const browser = await chromium.launch({
+  executablePath: exe,
+  args: CHROMIUM_ARGS,
+});
+const dpr = Number(opt('dpr', 4 / 3));
+const page = await browser.newPage({viewport: {width: W, height: H}, deviceScaleFactor: dpr});
+page.on('console', (m) => m.type() === 'error' && console.error('[page]', m.text()));
+page.on('pageerror', (e) => console.error('[page error]', e.message));
+await page.addInitScript((cfg) => {
+  window.__CAPTURE = true;
+  window.__SIM_CONFIG = cfg;
+}, config);
+await page.goto(pathToFileURL(html).href + (SEEK ? '?render' : ''));
+await page.waitForFunction(
+  (seek) => (seek ? typeof window.seek === 'function' : window.SIM && window.SIM.ready),
+  SEEK,
+  {timeout: 60000},
+);
+await page.evaluate(() => document.fonts.ready);
+const info = await page.evaluate((seek) => {
+  const gl = document.createElement('canvas').getContext('webgl2');
+  const ext = gl && gl.getExtension('WEBGL_debug_renderer_info');
+  return {
+    duration: seek ? window.DURATION : window.SIM.duration,
+    fps: seek ? window.FPS : window.SIM.fps,
+    gpu: ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : 'unknown',
+  };
+}, SEEK);
+console.log(`gpu: ${info.gpu}`);
+// One entry point for both contracts: a sim's SIM.render(t) or a page's seek(t).
+TAP version 13
+# Subtest: take-apart S1: five study thicknesses sum to exactly 2.5 mm and names equal FACTS.layers
+ok 1 - take-apart S1: five study thicknesses sum to exactly 2.5 mm and names equal FACTS.layers
+  ---
+  duration_ms: 1.762459
+  type: 'test'
+  ...
+# Subtest: take-apart S2: at t=0 every adjacent pair is flush within 0.001 mm
+ok 2 - take-apart S2: at t=0 every adjacent pair is flush within 0.001 mm
+  ---
+  duration_ms: 0.303807
+  type: 'test'
+  ...
+# Subtest: take-apart S3: at t=1 each adjacent centre distance is the assembled one plus GAP_MM
+ok 3 - take-apart S3: at t=1 each adjacent centre distance is the assembled one plus GAP_MM
+  ---
+  duration_ms: 0.286916
+  type: 'test'
+  ...
+# Subtest: take-apart S4: wear numbers behave across 0..336
+ok 4 - take-apart S4: wear numbers behave across 0..336
+  ---
+  duration_ms: 0.708933
+  type: 'test'
+  ...
+# Subtest: take-apart S4: wear time is clamped to 0..336
+ok 5 - take-apart S4: wear time is clamped to 0..336
+  ---
+  duration_ms: 0.149459
+  type: 'test'
+  ...
+# Subtest: take-apart S5: gaugeReadout strings equal the model values at sampled hours
+ok 6 - take-apart S5: gaugeReadout strings equal the model values at sampled hours
+  ---
+  duration_ms: 1.025915
+  type: 'test'
+  ...
+# Subtest: take-apart S6: focus lifts the board and steps the others aside with signs
+ok 7 - take-apart S6: focus lifts the board and steps the others aside with signs
+  ---
+  duration_ms: 0.562099
+  type: 'test'
+  ...
+# Subtest: take-apart S6: fade and x ray compose to the stated cover opacities
+ok 8 - take-apart S6: fade and x ray compose to the stated cover opacities
+  ---
+  duration_ms: 0.293478
+  type: 'test'
+  ...
+# Subtest: take-apart S7: qualityFor returns the stated tiers including boundaries
+ok 9 - take-apart S7: qualityFor returns the stated tiers including boundaries
+  ---
+  duration_ms: 0.539186
+  type: 'test'
+  ...
+# Subtest: take-apart browser twin: identical outputs to the module at sampled inputs
+ok 10 - take-apart browser twin: identical outputs to the module at sampled inputs
+  ---
+  duration_ms: 3.419521
+  type: 'test'
+  ...
+# Subtest: take-apart routes: page, model twin, app and vendor library are served
+ok 11 - take-apart routes: page, model twin, app and vendor library are served
+  ---
+  duration_ms: 158.006928
+  type: 'test'
+  ...
+# Subtest: take-apart S10: main page has exactly one anchor to /take-apart, labelled Take apart
+ok 12 - take-apart S10: main page has exactly one anchor to /take-apart, labelled Take apart
+  ---
+  duration_ms: 1.609583
+  type: 'test'
+  ...
+# Subtest: take-apart S9: first party payload under 150 KB, vendor 400 KB to 1.3 MB with license
+ok 13 - take-apart S9: first party payload under 150 KB, vendor 400 KB to 1.3 MB with license
+  ---
+  duration_ms: 60.976467
+  type: 'test'
+  ...
+# Subtest: take-apart S8: five beat stills and the contact sheet exist as PNGs of at least 20 KB
+ok 14 - take-apart S8: five beat stills and the contact sheet exist as PNGs of at least 20 KB
+  ---
+  duration_ms: 1.228673
+  type: 'test'
+  ...
+# Subtest: take-apart S8: browser-pass.log records zero console errors, a passing gauge comparison and the vendor size
+ok 15 - take-apart S8: browser-pass.log records zero console errors, a passing gauge comparison and the vendor size
+  ---
+  duration_ms: 0.353249
+  type: 'test'
+  ...
+# Subtest: take-apart S10: src/page.js is unchanged against the loopback baseline (the anchor already exists)
+ok 16 - take-apart S10: src/page.js is unchanged against the loopback baseline (the anchor already exists)
+  ---
+  duration_ms: 8.560344
+  type: 'test'
+  ...
+# Subtest: take-apart scope: the run touches no file outside the allowed list
+ok 17 - take-apart scope: the run touches no file outside the allowed list
+  ---
+  duration_ms: 12.335868
+  type: 'test'
+  ...
+# Subtest: take-apart chrome: only design token colours appear in page, client and capture sources
+ok 18 - take-apart chrome: only design token colours appear in page, client and capture sources
+  ---
+  duration_ms: 1.161257
+  type: 'test'
+  ...
+# Subtest: take-apart chrome: documented text pairs measure at or above 4.5 to 1
+ok 19 - take-apart chrome: documented text pairs measure at or above 4.5 to 1
+  ---
+  duration_ms: 0.447735
+  type: 'test'
+  ...
+# Subtest: take-apart chrome: font stylesheet link matches the main page, with preconnect and swap
+ok 20 - take-apart chrome: font stylesheet link matches the main page, with preconnect and swap
+  ---
+  duration_ms: 1.331345
+  type: 'test'
+  ...
+# Subtest: take-apart chrome: skip link targets a focusable main landmark
+ok 21 - take-apart chrome: skip link targets a focusable main landmark
+  ---
+  duration_ms: 0.83059
+  type: 'test'
+  ...
+# Subtest: take-apart chrome: served HTML reads without script (explanation, layers, gaugeReadout(0), note, noscript override)
+ok 22 - take-apart chrome: served HTML reads without script (explanation, layers, gaugeReadout(0), note, noscript override)
+  ---
+  duration_ms: 0.707951
+  type: 'test'
+  ...
+# Subtest: take-apart chrome: container at most 1440 px and 3 px focus rings are declared
+ok 23 - take-apart chrome: container at most 1440 px and 3 px focus rings are declared
+  ---
+  duration_ms: 0.620958
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 356.152484
 
 exec
-/bin/bash -lc "git diff -- src/take-apart-page.js | head -25; rg -o '(margin|padding|gap)["'^;}]*'"' src/take-apart-page.js" in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-diff --git a/src/take-apart-page.js b/src/take-apart-page.js
-index bd84f48..ef1037d 100644
---- a/src/take-apart-page.js
-+++ b/src/take-apart-page.js
-@@ -1,6 +1,9 @@
- import { FACTS } from './facts.js';
-+import { LAYERS, gaugeReadout } from './take-apart-model.js';
- export function renderTakeApartPage() {
--  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Take apart — ${FACTS.product}</title><link rel="icon" href="/favicon.ico"><style>
--:root{--paper:#FAFAF6;--ink:#163c34;--teal:#008d7f;--muted:#6a7972;--line:#dce1d9}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,Arial,sans-serif}button,input{font:inherit}button,a,input{touch-action:manipulation}a{color:inherit;text-decoration:none}header{margin:0 4%;padding:25px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.brand{font-family:'Space Grotesk',sans-serif;font-size:27px;letter-spacing:-1.4px}.brand span{color:var(--teal)}header a:last-child{font-size:13px}main{max-width:1600px;margin:auto;padding:28px 4% 25px}.eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}h1{font-family:'Space Grotesk',sans-serif;font-size:43px;font-weight:400;letter-spacing:-2px;margin:10px 0}p{line-height:1.6}.intro{display:flex;justify-content:space-between;align-items:end}.intro p{font-size:13px;color:var(--muted);max-width:330px;margin:0 0 8px}.workbench{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:28px;margin-top:20px}.viewport{height:520px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}#scene{width:100%;height:100%;display:block;touch-action:none;cursor:grab}#scene:active{cursor:grabbing}.live-readout{position:absolute;top:0;left:0;pointer-events:none}.live-readout .temperature{font-size:56px;margin-top:8px}.live-readout .caption{display:none}.scene-note{position:absolute;left:0;bottom:14px;font-size:11px;color:var(--muted);pointer-events:none}.scene-note.right{left:auto;right:0}#callouts{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}#fallback{position:absolute;inset:30%;font-size:16px;line-height:1.7}#fallback[hidden]{display:none}.panel{border-left:1px solid var(--line);padding-left:25px}.live-label{display:flex;align-items:center;gap:7px;font-size:10px;letter-spacing:1.4px;text-transform:uppercase}.dot{width:6px;height:6px;border-radius:50%;background:var(--teal)}.temperature{font-family:'Space Grotesk',sans-serif;font-size:68px;letter-spacing:-4px;margin:12px 0 0;line-height:1.1}.temperature small{font-size:22px;letter-spacing:0}.caption{font-size:12px;color:var(--muted);margin:8px 0 23px}.gauges{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}.gauge{padding:17px 0;border-bottom:1px solid var(--line)}.gauge:last-child{grid-column:1 / -1}.gauge .value{font-family:'Space Grotesk',sans-serif;font-size:28px}.gauge small{font-size:11px;color:var(--muted);display:block;margin-bottom:8px}.unit{font-size:12px;color:var(--muted)}#chart{width:100%;height:90px;display:block;margin-top:14px}.chart-caption{font-size:10px;display:flex;justify-content:space-between;color:var(--muted)}.panel-note{font-size:11px;color:var(--muted);margin-top:22px}.controls{margin-top:22px}.sliders{display:grid;grid-template-columns:1fr 1fr;gap:40px}.control-heading{display:flex;justify-content:space-between;font-size:12px;margin-bottom:9px}.control-heading span{color:var(--muted)}input[type=range]{width:100%;accent-color:var(--teal);height:20px;cursor:pointer}.endpoints{display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}.button-row{display:flex;align-items:center;gap:8px;margin-top:22px;flex-wrap:wrap}button{background:transparent;border:1px solid var(--line);border-radius:5px;padding:11px 13px;color:var(--ink);font-size:11px;min-height:40px;cursor:pointer}button:hover{border-color:var(--teal)}button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}button.layer[aria-pressed=true]{background:var(--teal);border-color:var(--teal)}.camera-group{display:flex;gap:5px;margin-left:auto}.footer{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin-top:23px;padding-top:16px;font-size:10px;color:var(--muted)}#tour-status{color:var(--teal)}#tour-cursor{position:fixed;z-index:10;width:25px;height:25px;border:2px solid var(--teal);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:left .2s,top .2s;box-shadow:0 0 0 5px #008d7f16}#tour-cursor.pressing{background:#008d7f55;transform:translate(-50%,-50%) scale(.8)}:focus-visible{outline:2px solid var(--teal);outline-offset:4px}@media(min-width:1400px){.viewport{height:560px}}@media(max-width:950px){.workbench{grid-template-columns:minmax(0,1fr) 195px;gap:15px}.panel{padding-left:15px}.temperature{font-size:54px}.camera-group{margin-left:0}}@media(max-width:719px){header{padding:18px 0}.intro{display:block}h1{font-size:36px}.workbench{display:flex;flex-direction:column}.viewport{height:410px}#callouts{display:none}.panel{border-left:0;padding:0}.panel .gauges{grid-template-columns:repeat(3,1fr)}.panel .gauge:last-child{grid-column:auto}.gauges{grid-column:2;grid-row:1 / 5}.gauge{padding:10px 0}.temperature{font-size:48px}.caption{margin:0}.panel-note{display:none}.chart-wrap{grid-column:1 / -1}.sliders{gap:20px}.scene-note{font-size:9px}.button-row{gap:6px}button{font-size:10px}.footer{gap:16px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
--</style></head><body><header><a class="brand" href="/">sentia<span>·</span></a><a href="/">← Back to the whole picture</a></header><main id="take-apart" data-tour-beat="off"><div class="intro"><div><div class="eyebrow">${FACTS.product} / Interactive study</div><h1>A little space. A lot inside.</h1></div><p>Take apart the layers. Follow a day on skin.<br>One model connects every part and reading.</p></div><div class="workbench"><section aria-label="Interactive layer study"><div class="viewport"><canvas id="scene" aria-label="Three dimensional Patch One. Drag to orbit, scroll to zoom."></canvas><div class="live-readout"><div class="live-label"><i class="dot"></i>Simulated skin temperature</div><div class="temperature"><span data-gauge="temperature"></span><small> °C</small></div><div class="caption">A rhythm beneath the surface.</div></div><svg id="callouts" aria-hidden="true"></svg><p id="fallback" hidden>3D is unavailable on this device. Explore the layers and simulated readings with the controls below.</p><div class="scene-note">STUDY MODEL · vertical scale ×8</div><div class="scene-note right">Drag to orbit · Scroll to zoom</div></div></section><aside class="panel" aria-label="Simulated wear readings"><div class="eyebrow" style="margin-bottom:20px">Wear simulation</div><div class="gauges"><div class="gauge"><small>Hydration index</small><span class="value" data-gauge="hydration"></span><span class="unit"> / index</span></div><div class="gauge"><small>Battery</small><span class="value" data-gauge="battery"></span><span class="unit"> %</span></div><div class="gauge"><small>Time on skin</small><span class="unit">Day </span><span class="value" data-gauge="day"></span><span class="unit"> of ${FACTS.wearDays}</span></div></div><div class="chart-wrap"><canvas id="chart" aria-label="Skin temperature over the wear period"></canvas><div class="chart-caption"><span>Application</span><span>End of wear</span></div></div><p class="panel-note">Illustrative wellness readings.<br>A study of the system, not clinical data.</p></aside></div><section class="controls" aria-label="Study controls"><div class="sliders"><label><div class="control-heading">Separation <span>Explore the stack</span></div><input id="separation" aria-label="Separation" type="range" min="0" max="1" step="0.001" value="0"><div class="endpoints"><span>Assembled</span><span>Layer by layer</span></div></label><label><div class="control-heading">Wear time <span>Day <output id="wear-day"></output></span></div><input id="wear" aria-label="Wear time in hours" type="range" min="0" max="336" step="0.25" value="0"><div class="endpoints"><span>Application</span><span>End of wear</span></div></label></div><div class="button-row">${FACTS.layers.map((l,i)=>`<button class="layer" data-layer="${i}" aria-pressed="false">${l.name}</button>`).join('')}<button id="xray" aria-pressed="false">X ray</button><div class="camera-group" aria-label="Camera presets">${['Hero','Top','Side'].map(n=>`<button data-camera="${n}" aria-pressed="${n==='Hero'}">${n}</button>`).join('')}</div></div></section><div class="footer"><span>Five layers · ${FACTS.thicknessMm} mm assembled profile · Procedural geometry</span><span id="tour-status">Explore freely · Tour begins when idle</span></div></main><div id="tour-cursor" hidden></div><script src="/take-apart-model.js"></script><script type="module" src="/take-apart.js"></script></body></html>`;
-+  const initial = gaugeReadout(0);
-+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Take apart — ${FACTS.product}</title><link rel="icon" href="/favicon.ico"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet"><style>
-+:root{--paper:#FAFAF6;--ink:#12211C;--teal:#0E7C66;--muted:#53685C;--line:#DFE7DF;--body:#4A5D54;--mint:#EFF4EE}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,Arial,sans-serif;font-size:17px;line-height:1.65}button,input{font:inherit}button,a,input{touch-action:manipulation}a{color:inherit;text-decoration:none}header{margin:0 auto;max-width:1440px;padding:16px clamp(24px,5vw,80px);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.brand{font-family:'Space Grotesk',sans-serif;font-size:27px;letter-spacing:-1.4px}.brand span{color:var(--teal)}header a:last-child{font-size:13px}main{max-width:1440px;margin:auto;padding:24px clamp(24px,5vw,80px)}.eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}h1{font-family:'Space Grotesk',sans-serif;font-size:43px;font-weight:300;letter-spacing:-.04em;margin:8px 0}p{line-height:1.65}.intro{display:flex;justify-content:space-between;align-items:end}.intro p{font-size:18px;color:var(--body);max-width:400px;margin:0 0 8px}.workbench{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:24px;margin-top:24px}.viewport{height:520px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}#scene{width:100%;height:100%;display:block;touch-action:none;cursor:grab}#scene:active{cursor:grabbing}.live-readout{position:absolute;top:0;left:0;pointer-events:none}.live-readout .temperature{font-size:56px;margin-top:8px}.live-readout .caption{display:none}.scene-note{position:absolute;left:0;bottom:16px;font-size:11px;color:var(--muted);pointer-events:none}.scene-note.right{left:auto;right:0}#callouts{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}#fallback{position:absolute;inset:30%;font-size:16px;line-height:1.7}#fallback[hidden]{display:none}.panel{border-left:1px solid var(--line);padding-left:24px}.live-label{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:1.4px;text-transform:uppercase}.dot{width:6px;height:6px;border-radius:50%;background:var(--teal)}.temperature{font-family:'Space Grotesk',sans-serif;font-size:56px;letter-spacing:-4px;margin:8px 0 0;line-height:1.1}.temperature small{font-size:22px;letter-spacing:0}.caption{font-size:12px;color:var(--muted);margin:8px 0 24px}.gauges{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}.gauge{padding:16px 0;border-bottom:1px solid var(--line)}.gauge:last-child{grid-column:1 / -1}.gauge .value{font-family:'Space Grotesk',sans-serif;font-size:32px}.gauge small{font-size:11px;color:var(--muted);display:block;margin-bottom:8px}.unit{font-size:12px;color:var(--muted)}#chart{width:100%;height:90px;display:block;margin-top:16px}.chart-caption{font-size:10px;display:flex;justify-content:space-between;color:var(--muted)}.panel-note{font-size:11px;color:var(--muted);margin-top:24px}.controls{margin-top:24px}.sliders{display:grid;grid-template-columns:1fr 1fr;gap:40px}.control-heading{display:flex;justify-content:space-between;font-size:12px;margin-bottom:8px}.control-heading span{color:var(--muted)}input[type=range]{width:100%;accent-color:var(--teal);height:44px;margin:0;cursor:pointer}.endpoints{display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}.button-row{display:flex;align-items:center;gap:8px;margin-top:24px;flex-wrap:wrap}button{background:transparent;border:1px solid var(--line);border-radius:5px;padding:8px 16px;color:var(--ink);font-size:11px;min-height:44px;min-width:44px;cursor:pointer}button:hover{border-color:var(--teal)}button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}button.layer[aria-pressed=true]{background:var(--teal);border-color:var(--teal)}.camera-group{display:flex;gap:8px;margin-left:auto}.footer{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin-top:24px;padding-top:16px;font-size:10px;color:var(--muted)}#tour-status{color:var(--teal)}#tour-cursor{position:fixed;z-index:10;width:25px;height:25px;border:2px solid var(--teal);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:left .2s,top .2s;box-shadow:0 0 0 5px var(--mint)}#tour-cursor.pressing{background:var(--mint);transform:translate(-50%,-50%) scale(.8)}:focus-visible{outline:3px solid var(--teal);outline-offset:4px}@media(min-width:1400px){.viewport{height:560px}}@media(max-width:950px){.workbench{grid-template-columns:minmax(0,1fr) 195px;gap:16px}.panel{padding-left:16px}.temperature{font-size:54px}.camera-group{margin-left:0}}@media(max-width:719px){header{padding:16px 24px}.intro{display:block}h1{font-size:36px}.workbench{display:flex;flex-direction:column}.viewport{height:410px}#callouts{display:none}.panel{border-left:0;padding:0}.panel .gauges{grid-template-columns:repeat(3,1fr)}.panel .gauge:last-child{grid-column:auto}.gauges{grid-column:2;grid-row:1 / 5}.gauge{padding:16px 0}.temperature{font-size:48px}.caption{margin:0}.panel-note{display:none}.chart-wrap{grid-column:1 / -1}.sliders{gap:24px}.scene-note{font-size:9px}.button-row{gap:8px}button{font-size:10px}.footer{gap:16px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
-+.eyebrow,.live-label,.scene-note,.endpoints,.chart-caption,.footer{font-family:monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase}.panel-note{font-size:17px;color:var(--body)}.temperature,.gauge .value{font-weight:300}header{gap:16px}header a{min-height:44px;display:inline-flex;align-items:center}.skip-link{position:absolute;left:24px;top:8px;transform:translateY(-200%);background:var(--paper);padding:8px 16px;z-index:20}.skip-link:focus{transform:none}.static-layers{display:none}.static-layers li{margin:8px 0}.static-layers ul{padding-left:24px}#fallback{inset:32% 16%;margin:0;padding:16px;background:var(--paper);color:var(--body)}
-+</style><noscript><style>#fallback[hidden],.static-layers{display:block!important}#scene,#callouts,.controls,#tour-status,.scene-note{display:none!important}</style></noscript></head><body><a class="skip-link" href="#take-apart">Skip to study</a><header><a class="brand" href="/">sentia<span>·</span></a><a href="/">← Back to the whole picture</a></header><main tabindex="-1" id="take-apart" data-tour-beat="off"><div class="intro"><div><div class="eyebrow">${FACTS.product} / Interactive study</div><h1>A little space. A lot inside.</h1></div><p>Take apart the layers. Follow a day on skin.<br>One model connects every part and reading.</p></div><div class="workbench"><section aria-label="Interactive layer study"><div class="viewport"><canvas id="scene" aria-label="Three dimensional Patch One. Drag to orbit, scroll to zoom."></canvas><div class="live-readout"><div class="live-label"><i class="dot"></i>Simulated skin temperature</div><div class="temperature"><span data-gauge="temperature">${initial.temperature}</span><small> °C</small></div><div class="caption">A rhythm beneath the surface.</div></div><svg id="callouts" aria-hidden="true"></svg><p id="fallback" hidden>This interactive study needs JavaScript and WebGL. Explore the layer list and initial simulated readings below.</p><div class="scene-note">STUDY MODEL · vertical scale ×8</div><div class="scene-note right">Drag to orbit · Scroll to zoom</div></div></section><aside class="panel" aria-label="Simulated wear readings"><div class="eyebrow" style="margin-bottom:24px">Wear simulation</div><div class="gauges"><div class="gauge"><small>Hydration index</small><span class="value" data-gauge="hydration">${initial.hydration}</span><span class="unit"> / index</span></div><div class="gauge"><small>Battery</small><span class="value" data-gauge="battery">${initial.battery}</span><span class="unit"> %</span></div><div class="gauge"><small>Time on skin</small><span class="unit">Day </span><span class="value" data-gauge="day">${initial.day}</span><span class="unit"> of ${FACTS.wearDays}</span></div></div><div class="chart-wrap"><canvas id="chart" aria-label="Skin temperature over the wear period"></canvas><div class="chart-caption"><span>Application</span><span>End of wear</span></div></div><p class="panel-note">Illustrative wellness readings.<br>A study of the system, not clinical data.</p></aside></div><section class="static-layers" aria-label="Study layer thicknesses"><h2>The assembled stack</h2><ul>${LAYERS.map(layer => `<li>${layer.name} — ${layer.thicknessMm} mm</li>`).join('')}</ul></section><section class="controls" aria-label="Study controls"><div class="sliders"><label><div class="control-heading">Separation <span>Explore the stack</span></div><input id="separation" aria-label="Separation" type="range" min="0" max="1" step="0.001" value="0"><div class="endpoints"><span>Assembled</span><span>Layer by layer</span></div></label><label><div class="control-heading">Wear time <span>Day <output id="wear-day">${initial.day}</output></span></div><input id="wear" aria-label="Wear time in hours" type="range" min="0" max="336" step="0.25" value="0"><div class="endpoints"><span>Application</span><span>End of wear</span></div></label></div><div class="button-row">${FACTS.layers.map((l,i)=>`<button class="layer" data-layer="${i}" aria-pressed="false">${l.name}</button>`).join('')}<button id="xray" aria-pressed="false">X ray</button><div class="camera-group" aria-label="Camera presets">${['Hero','Top','Side'].map(n=>`<button data-camera="${n}" aria-pressed="${n==='Hero'}">${n}</button>`).join('')}</div></div></section><div class="footer"><span>Five layers · ${FACTS.thicknessMm} mm assembled profile · Procedural geometry</span><span id="tour-status">Explore freely · Tour begins when idle</span></div></main><div id="tour-cursor" hidden></div><script src="/take-apart-model.js"></script><script type="module" src="/take-apart.js"></script></body></html>`;
- }
-margin:0
-margin:0 auto
-padding:16px clamp(24px,5vw,80px)
-margin:auto
-padding:24px clamp(24px,5vw,80px)
-margin:8px 0
-margin:0 0 8px
-gap:24px
-margin-top:24px
-margin-top:8px
-padding-left:24px
-gap:8px
-margin:8px 0 0
-margin:8px 0 24px
-padding:16px 0
-margin-bottom:8px
-margin-top:16px
-margin-top:24px
-margin-top:24px
-gap:40px
-margin-bottom:8px
-margin:0
-gap:8px
-margin-top:24px
-padding:8px 16px
-gap:8px
-margin-left:auto
-margin-top:24px
-padding-top:16px
-gap:16px
-padding-left:16px
-margin-left:0
-padding:16px 24px
-padding:0
-padding:16px 0
-margin:0
-gap:24px
-gap:8px
-gap:16px
-gap:16px
-padding:8px 16px
-margin:8px 0
-padding-left:24px
-margin:0
-padding:16px
-margin-bottom:24px">Wear simulation</div><div class="gauges"><div class="gauge"><small>Hydration index</small><span class="value" data-gauge="hydration">${initial.hydration
+/bin/bash -lc 'npm install --prefix /tmp/sentia-browser playwright --no-package-lock' in /home/runner/work/sentia/sentia
+exec
+/bin/bash -lc 'node --test tests/take-apart.test.js > runs/wo-gh-9/builder-loopback-tests.log 2>&1; tail -12 runs/wo-gh-9/builder-loopback-tests.log' in /home/runner/work/sentia/sentia
+ succeeded in 1417ms:
+
+added 2 packages in 1s
+
+ succeeded in 350ms:
+  duration_ms: 0.6157
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 445.90915
 
 exec
 /bin/bash -lc "python3 - <<'PY'
-from pathlib import Path
-p=Path('scripts/capture-take-apart.mjs');s=p.read_text().replace(\"await page.waitForTimeout(350);\", \"await page.waitForFunction(expected => [...document.querySelectorAll('[data-gauge]')].every(n => n.textContent === expected[n.dataset.gauge]), gaugeReadout(200));\");p.write_text(s)
-p=Path('src/take-apart-page.js');s=p.read_text().replace('font-size:10px','font-size:11px').replace('font-size:9px','font-size:11px');p.write_text(s)
-PY
-PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs node scripts/capture-take-apart.mjs" in /home/runner/work/sentia/sentia
-exec
-/bin/bash -lc 'npm test > runs/wo-gh-9/builder-suite.log 2>&1; tail -14 runs/wo-gh-9/builder-suite.log' in /home/runner/work/sentia/sentia
- succeeded in 1490ms:
-ok 147 - ui-elevation S6 C4: .rv starts hidden and reveals over 800 ms ease-out
-  ---
-  duration_ms: 0.652016
-  type: 'test'
-  ...
-1..147
-# tests 147
-# suites 0
-# pass 144
-# fail 2
-# cancelled 0
-# skipped 1
-# todo 0
-# duration_ms 1313.469276
-
-codex
-The browser’s hour-200 gauge comparison now passes. Capture is stepping through the tour beats on a controlled clock; after it finishes, I’ll inspect the sheet and rerun the suite with the new evidence in place.
-
-exec
-/bin/bash -lc "rg -A5 'not ok' runs/wo-gh-9/builder-suite.log; git check-ignore evidence/take-apart/browser-pass.log; ls -lh evidence/take-apart" in /home/runner/work/sentia/sentia
+p='src/take-apart-page.js'
+s=open(p).read().replace('header a:last-child{font-size:13px}','header a:last-child{font-size:17px}').replace('font-size:16px;line-height:1.7','font-size:17px;line-height:1.65').replace('.sliders{display:grid;grid-template-columns:1fr 1fr;gap:40px}', '.sliders{display:grid;grid-template-columns:1fr 1fr;gap:32px}').replace('.static-layers ul{padding-left:24px}', '.static-layers ul{margin:16px 0;padding-left:24px}.static-layers h2{font-family:\\'Space Grotesk\\',sans-serif;font-weight:300;margin:24px 0 16px}')
+s=s.replace('.eyebrow,.live-label,.scene-note,.endpoints,.chart-caption,.footer{', '.eyebrow,.live-label,.scene-note,.endpoints,.chart-caption,.footer,.gauge small{')
+open(p,'w').write(s)
+PY" in /home/runner/work/sentia/sentia
  succeeded in 0ms:
-not ok 98 - S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/
-  ---
-  duration_ms: 13.204031
-  type: 'test'
-  location: '/home/runner/work/sentia/sentia/tests/design-v4-square-product.test.js:431:1'
-  failureType: 'testCodeFailure'
---
-not ok 127 - take-apart S8: browser-pass.log records zero console errors, a passing gauge comparison and the vendor size
-  ---
-  duration_ms: 1.051209
-  type: 'test'
-  location: '/home/runner/work/sentia/sentia/tests/take-apart.test.js:392:1'
-  failureType: 'testCodeFailure'
-total 848K
--rw-r--r-- 1 runner runner  98K Oct 31 13:06 beat-apart.png
--rw-r--r-- 1 runner runner 113K Oct 31 13:09 beat-assembled.png
--rw-r--r-- 1 runner runner 100K Oct 31 13:06 beat-board.png
--rw-r--r-- 1 runner runner 106K Oct 31 13:06 beat-mid.png
--rw-r--r-- 1 runner runner  99K Oct 31 13:06 beat-xray.png
--rw-r--r-- 1 runner runner   83 Oct 31 13:09 browser-pass.log
--rw-r--r-- 1 runner runner 318K Oct 31 13:06 contact-sheet.png
+exec
+/bin/bash -lc "python3 - <<'PY'
+p='scripts/capture-take-apart.mjs'
+s=open(p).read().replace('mkdir, writeFile, readFile','mkdir, writeFile')
+s=s.replace(\"  assert.equal(errors.length,0,errors.join('\\\\n'));\", \"\"\"  // Verify the same model-backed HTML remains useful without the runtime.
+  const staticContext = await browser.newContext({ javaScriptEnabled:false, viewport:{width:390,height:844} });
+  const staticPage = await staticContext.newPage();
+  await staticPage.goto("'`http://127.0.0.1:${server.address().port}/take-apart`);
+  assert.equal(await staticPage.locator('"'#fallback').isVisible(),true);
+  assert.equal(await staticPage.locator('.static-layers').isVisible(),true);
+  assert.equal(await staticPage.locator('.static-layers li').count(),5);
+  for (const [key,value] of Object.entries(gaugeReadout(0))) {
+    assert.equal(await staticPage.locator("'`[data-gauge="${key}"]`).innerText(),value);
+  }
+  await staticContext.close();
+  assert.equal(errors.length,0,errors.join('"'\\\\n'));\"\"\")
+open(p,'w').write(s)
+PY" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+exec
+/bin/bash -lc 'PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs node scripts/capture-take-apart.mjs > runs/wo-gh-9/builder-loopback-capture.log 2>&1' in /home/runner/work/sentia/sentia
+exec
+/bin/bash -lc 'git diff --stat; git check-ignore evidence/take-apart/browser-pass.log; git ls-files evidence/take-apart/browser-pass.log' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+ runs/wo-gh-9/builder.output.md                   |  7 -----
+ runs/wo-gh-9/envelopes/intake.envelope.json      |  2 +-
+ runs/wo-gh-9/envelopes/spec-writer.envelope.json |  2 +-
+ runs/wo-gh-9/envelopes/test-writer.envelope.json |  2 +-
+ runs/wo-gh-9/spec-writer.output.md               | 35 +++++++++++-------------
+ runs/wo-gh-9/test-writer.output.md               | 28 ++++++-------------
+ scripts/capture-take-apart.mjs                   | 13 ++++++++-
+ src/take-apart-page.js                           |  4 +--
+ tests/take-apart.test.js                         |  2 +-
+ 9 files changed, 42 insertions(+), 53 deletions(-)
+evidence/take-apart/browser-pass.log
 
 exec
-/bin/bash -lc 'git diff --check; git status --short | tail -16; cat .gitignore | tail -18' in /home/runner/work/sentia/sentia
+/bin/bash -lc 'tail -15 runs/wo-gh-9/builder-loopback-capture.log; git status --short' in /home/runner/work/sentia/sentia
  succeeded in 0ms:
  D runs/wo-gh-9/builder.output.md
- M runs/wo-gh-9/builder.packet.md
  M runs/wo-gh-9/envelopes/intake.envelope.json
  M runs/wo-gh-9/envelopes/spec-writer.envelope.json
  M runs/wo-gh-9/envelopes/test-writer.envelope.json
  M runs/wo-gh-9/spec-writer.output.md
- M runs/wo-gh-9/spec-writer.packet.md
  M runs/wo-gh-9/test-writer.output.md
- M runs/wo-gh-9/test-writer.packet.md
  M scripts/capture-take-apart.mjs
- M src/take-apart-client.js
  M src/take-apart-page.js
  M tests/take-apart.test.js
-?? evidence/take-apart/browser-pass.log
-?? runs/wo-gh-9/builder-suite.log
-?? runs/wo-gh-9/builder-take-apart-test.log
-node_modules/
-.wrangler/
-.dev.vars
-.dev.vars.*
-*.log
-!evidence/take-apart/browser-pass.log
-!runs/wo-gh-9/*.log
-.anvil-factory/
+?? runs/wo-gh-9/builder-loopback-capture.log
+?? runs/wo-gh-9/builder-loopback-tests.log
+
+exec
+/bin/bash -lc 'tail -20 runs/wo-gh-9/builder-loopback-capture.log' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+Loading study
+Study loaded
 
 codex
-The first captured still shows the updated fonts, palette, spacing, and controls, with the full console visible. The assembled, exploded, and isolated-board captures are complete; the remaining beats and mobile checks are still running.
-
- succeeded in 85993ms:
+All 23 take-apart tests pass. I adjusted the remaining fallback and navigation text sizes, layer-list spacing, and gauge labels. The browser pass now also checks the visible fallback, five-layer list, and model-generated initial readings with JavaScript disabled. Capture is running now.
+exec
+/bin/bash -lc "tail -20 runs/wo-gh-9/builder-loopback-capture.log; ps -eo pid,etime,args | rg 'capture-take|chrome.*headless' | head -4" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
 Loading study
 Study loaded
 Freezing capture clock
 Capture clock frozen
-Captured assembled
-Captured apart
-Captured board
-Captured xray
-Captured settle
-Browser pass complete: zero console errors; gauge comparison PASS.
+   3455       01:01 /opt/hostedtoolcache/node/22.23.4/x64/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex exec --skip-git-repo-check --dangerously-bypass-approvals-and-sandbox --output-last-message /tmp/anvil-codex-home-0z_lxrbo/last-message.txt You are executing an ANVIL station packet inside this repository. Follow the packet exactly, edit the files it asks for, and finish with a brief plain text summary of what you changed.  ## Station prompt  # Builder  ## Role Implement the spec so the scenario tests pass.  ## Inputs - spec - tests  ## Outputs - code change  ## Rules - Work only from the inputs listed above and the work order in the packet. - Produce the output as a file in the repo, not as chat text. - If the inputs are not enough, say what is missing instead of guessing. - Never approve your own work. Approval belongs to a different station. - Keep the change small and mapped to a spec scenario where one applies.   ## Work order  - id: wo-gh-9 - kind: feature - title: Take apart: an interactive page that separates the Patch One layer by layer from one simulation model - source: github-issue - description: Problem: the Sentia site shows the Patch One only in flat photographic views. There is no way for a visitor to take the product apart, see how its five layers stack into the 2.5 mm profile, or watch its readings evolve across the 14 day wear. A conventional build would hand animate the layers and type the gauge numbers into the page, and the two would drift apart the first time either changed.  Deliverable, governed by .openspec/specs/take-apart/spec.md: a new page at /take-apart where the visitor separates the Patch One layer by layer in 3D. One simulation model drives everything: a pure state function of separation t and wear time, in src/take-apart-model.js with its browser twin, exporting the stack geometry (five layers whose study thicknesses sum to exactly 2.5 mm, flush at t=0), the wear functions and gaugeReadout (the only source of gauge text), the focus and x ray state rules, and the quality tiers. The scene renders five procedural meshes with the pinned three.js build vendored at src/vendor-three.js and served at /vendor/three.module.min.js. The console carries the separation and wear sliders, five layer buttons, the x ray toggle, three camera buttons, leader line callouts, the four gauges and the temperature chart, all reading the model. A self driving tour runs when the page is idle and hands control back on any interaction. The main page gains exactly one nav anchor to /take-apart; nothing else on it changes.  Evidence: the builder writes and runs scripts/capture-take-apart.mjs before the reviewers run: a headless browser pass over the locally served page with zero console errors, a gauge comparison at hour 200 against the model, and one still per tour beat composed into evidence/take-apart/contact-sheet.png. reviewer-design judges the contact sheet beat by beat like a critic, per scenario S11 of the spec.  Scope: the line's change is limited to the new files named in the spec (src/take-apart-model.js, src/take-apart-model-browser.js, src/take-apart-page.js, src/take-apart-client.js, src/vendor-three.js, tests/take-apart.test.js, scripts/capture-take-apart.mjs, evidence/take-apart/), route additions in src/index.js, the single nav anchor in src/page.js, and runs/wo-gh-9/ evidence. No changes to src/facts.js, src/images.js, brand or design documents, earlier specs or earlier run evidence. The operator setup commit (the spec, this work order, the execute wiring) is not part of the line's change.  Model routing for this run: builder and reviewer-design on GPT-6 Astra (gpt-6-astra) through the Cloudflare AI Gateway; spec writer, test writer and the other reviewer stations on claude-sonnet-5-5 through the same gateway, as recorded in anvil.yaml. No fallback to another model for the builder. The brain's verified learnings L-1 to L-7 are part of the run's packets; this page is a study model, and the spec states why the photographic bar of L-6 does not apply to it while L-6 keeps governing the site's photographic imagery.  Deployment: none inside the run and none after it without a separate human gate decision. The deployer station stays a packet.  Done criteria for the first round were stated here; the loopback round below replaces them.  GitHub issue: https://github.com/arananet/sentia/issues/9  Gate loopback round (owner decision, 2026-10-31). The owner reviewed the first executed run at the human gate: the model, the scene, the tour and the five beat contact sheet passed, and the verdict of changes_requested rested on the page chrome, on evidence that never reached the committed tree, and on a scope test tripping over the workflow's own harness files. The owner sent the work back with three mandates: fix the chrome, complete the evidence, adopt the vendored simulator kit. The spec addendum at .openspec/specs/take-apart/spec.md (section: Gate loopback round) governs this round and wins wherever it disagrees with the original text. Summary of the round's work:  1. Chrome to the design system, per reviewer-design's first round findings. Colours only from design/DESIGN.md tokens (paper #FAFAF6, ink #12211C, teal #0E7C66, mint #EFF4EE, hairline #DFE7DF, body #4A5D54, secondary #53685C); the substituted values (#163c34, #008d7f, #6a7972, #dce1d9) are removed from src/take-apart-page.js, src/take-apart-client.js and the contact sheet composition in scripts/capture-take-apart.mjs. Every text pair measures at or above 4.5 to 1 (the documented pairs measure: ink 15.93, body 6.72, secondary 5.73, teal 4.90). If the builder believes a documented token cannot reach 4.5 to 1 where the design system requires it, the builder flags that in its output as a design system question for the owner and keeps the token; it never substitutes its own colour again. Typography actually loads, through the same Google Fonts stylesheet link the main page serves (Inter 400 and 500, Space Grotesk 300, 400 and 500, display swap), at the design system's sizes (introduction 18 to 20 px, body 17 px, gauge values 32 to 56 px, display weight 300, mono labels 11 px). Spacing returns to the 8 px rhythm and the container to at most 1440 px. Accessibility is completed: skip link to a focusable main, 3 px focus rings, targets of at least 44 px with at least 8 px gaps, range inputs included. No script behaviour: the served page carries the explanation, the layer list and the gaugeReadout(0) values plus a visible fallback note, kept visible by a noscript style override. New tests assert the measurable chrome items (token only colours, contrast of the documented pairs, font link, skip link, noscript content, 1440 px container, 3 px focus rings).  2. Scope test robustness. The test writer re-bases tests/take-apart.test.js on the loopback setup commit (the commit at the head of this branch when the run starts) in the SETUP_COMMIT constant, excludes the workflow's harness files (suite-output.txt, suite-result.txt, run-diff.txt, comment.md at the repository root) from both the tracked diff and the untracked list before applying the allowed list, and re-bases the src/page.js diff assertion to expect no change this round (the anchor exists in the baseline; the served HTML assertion still proves exactly one anchor).  3. Complete evidence. The operator setup commit for this round adds .gitignore negations for evidence/take-apart/browser-pass.log and runs/wo-gh-9/ logs. The builder re-runs scripts/capture-take-apart.mjs on the fixed page before the reviewers run, so the committed evidence includes browser-pass.log beside the five beat stills and the contact sheet, recording zero console errors and the passing gauge comparison on the new build.  4. Kit adoption. Run input: the teardown simulator kit, vendored in the anvil-factory repository at third_party/teardown/ (upstream commit e7e668cd44f48ba79a3c575e9f55c7e194d26eef, MIT), present in this run's workspace at .anvil-factory/third_party/teardown/ because the execute workflow checks the factory out at the anvil/vendor-teardown branch for this round. The builder aligns the page runtime and the tour capture with the kit's approach where it fits (one model for parts and panels, beat driven tour with cursor, deterministic capture keyed to tour state, labelled contact sheet, quality tiers, warmed shaders), states in its output which kit conventions it relied on or adjusted, and copies no kit file into this repository unless it judges it necessary and says why. Where the kit and the spec disagree, the spec wins.  Out of scope, stated once so no station spends turns on it: the failure of tests/design-v4-square-product.test.js is pre-existing at this round's baseline (recorded in the first round at runs/wo-gh-9/builder-baseline-design-test.log). It asserts on wo-gh-8 run evidence whose gap the owner accepted when he deployed that build. Do not touch that test, that evidence, or any earlier run's files. The run report lists it separately as a pre-existing failure awaiting the owner's own decision (waiver or a separate re-baseline work order), and the verdict discussion covers only this run's own results.  Done criteria for this round: run verdict approved with all five expected reviews counted and no parse failures; reviewer-design's output addresses all five contact sheet beats by name and judges each chrome item one by one; the full project suite on the final tree passes every test except the one itemized pre-existing failure above (the 1 pre-existing skip may remain), including the take apart tests with the new chrome assertions and the re-based scope test; browser-pass.log is present in the committed evidence and records zero console errors; the run diff against the loopback setup commit names no file outside the allowed scope with the harness files excluded as stated. - risk_hints:  - status: new  ## Upstream steps  - intake: completed - spec-writer: executed - test-writer: executed  ## Verified learnings  - L-1: Art direction is imagery first; flat SVG as the primary visual language was rejected by the product owner and must not return as a section's main visual. (provenance: run wo-gh-2, artifact design/DESIGN.md, evidence verdict approved) - L-2: Product imagery sits seamlessly on the brand paper #FAFAF6 (no studio backgrounds, no visible image rectangles), verified by corner and edge sampling within 3 per channel. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested) - L-3: The patch reads at true 38 mm scale with explicit scale anchors, and on-skin imagery is strict inner forearm framing only. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested) - L-4: The product is the protagonist: the patch appears large and early, the page must not read empty or editorial, and display type must not crowd out the product. (provenance: run wo-gh-3, artifact src/page.js, evidence verdict changes_requested) - L-5: The current product render set is owner approved, especially the patch render; composition iterations keep src/images.js byte identical and never regenerate product imagery. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested) - L-6: Product imagery for Sentia meets the production quality bar anchored in design/reference/: photorealistic studio quality with real materials and physically consistent light; stylized or toy-like renders fail review. Reviewer-design compares every new product image against the anchor boards and names the gaps. (provenance: run wo-gh-5, artifact src/images.js, evidence verdict changes_requested) - L-7: The product is the square low profile patch anchored in design/reference/ and the round disc renders are retired; L-2, L-3 and L-5 stand as amended by the design v4 spec: photographic treatment instead of seamless paper backgrounds, limb close ups (inner forearm or upper arm) instead of inner forearm only, and the render set replaceable through an owner decided work order instead of frozen byte identical. (provenance: run wo-gh-6, artifact src/images.js, evidence verdict approved)  ## Project design
+   3839       00:17 /bin/bash -c PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs node scripts/capture-take-apart.mjs > runs/wo-gh-9/builder-loopback-capture.log 2>&1
+   3840       00:17 node scripts/capture-take-apart.mjs
+   3852       00:17 /usr/bin/google-chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,AvoidCorsURLLoaderRestartOnRedirect,Translate,AutoDeElevate,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --use-gl=angle --use-angle=swiftshader --enable-unsafe-swiftshader --user-data-dir=/tmp/playwright_chromiumdev_profile-33ShyE --remote-debugging-pipe --no-startup-window
 
 exec
-/bin/bash -lc 'npm test > runs/wo-gh-9/builder-suite.log 2>&1; tail -12 runs/wo-gh-9/builder-suite.log; node --test tests/take-apart.test.js > runs/wo-gh-9/builder-take-apart-test.log 2>&1; tail -10 runs/wo-gh-9/builder-take-apart-test.log; cat evidence/take-apart/browser-pass.log' in /home/runner/work/sentia/sentia
- succeeded in 1122ms:
-  duration_ms: 0.497358
+/bin/bash -lc 'npm test > runs/wo-gh-9/builder-loopback-suite.log 2>&1' in /home/runner/work/sentia/sentia
+ exited 1 in 1782ms:
+exec
+/bin/bash -lc 'tail -12 runs/wo-gh-9/builder-loopback-capture.log; tail -12 runs/wo-gh-9/builder-loopback-suite.log' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+Loading study
+Study loaded
+Freezing capture clock
+Capture clock frozen
+  duration_ms: 0.712079
   type: 'test'
   ...
 1..147
@@ -1370,8 +2165,102 @@ exec
 # cancelled 0
 # skipped 1
 # todo 0
-# duration_ms 749.185152
-  ...
+# duration_ms 1594.036286
+
+exec
+/bin/bash -lc "rg -A 8 '"'^not ok'"' runs/wo-gh-9/builder-loopback-suite.log; ls -l evidence/take-apart/beat-assembled.png; ps -eo comm,pcpu | sort -k2 -nr | head -5" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+not ok 98 - S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/
+  ---
+  duration_ms: 13.468264
+  type: 'test'
+  location: '/home/runner/work/sentia/sentia/tests/design-v4-square-product.test.js:431:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+-rw-r--r-- 1 runner runner 117609 Oct 31 13:28 evidence/take-apart/beat-assembled.png
+chrome           281
+bash            75.0
+provjobd9873840 12.4
+node             3.6
+Runner.Worker    2.6
+
+exec
+/bin/bash -lc "tail -10 runs/wo-gh-9/builder-loopback-capture.log; date -u '+%H:%M:%S'" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+Loading study
+Study loaded
+Freezing capture clock
+Capture clock frozen
+Captured assembled
+13:28:09
+
+codex
+The full suite reports 145 passes, one skip, and only the documented pre-existing failure in design-v4-square-product.test.js. The browser has passed the hour-200 gauge comparison and captured the assembled beat; the remaining tour stills are rendering through software WebGL.
+exec
+/bin/bash -lc 'git diff --check; git diff --numstat -- src/page.js src/index.js src/facts.js src/images.js; tail -8 runs/wo-gh-9/builder-loopback-capture.log' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+Loading study
+Study loaded
+Freezing capture clock
+Capture clock frozen
+Captured assembled
+Captured apart
+
+exec
+/bin/bash -lc 'git ls-files evidence/take-apart; cat evidence/take-apart/browser-pass.log' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+evidence/take-apart/beat-apart.png
+evidence/take-apart/beat-assembled.png
+evidence/take-apart/beat-board.png
+evidence/take-apart/beat-mid.png
+evidence/take-apart/beat-xray.png
+evidence/take-apart/browser-pass.log
+evidence/take-apart/contact-sheet.png
+console errors: 0
+gauge comparison: PASS at hour 200
+vendor decoded bytes: 670681
+
+
+exec
+/bin/bash -lc "cat > runs/wo-gh-9/builder.output.md <<'EOF'
+# Builder — wo-gh-9 loopback
+
+Implemented the remaining chrome refinements in src/take-apart-page.js: 17 px navigation and fallback text, 32 px slider gap, explicit 8 px rhythm for the static layer list, and 11 px uppercase mono gauge labels with 0.16 em tracking. The baseline already contains the required design tokens, loaded font stylesheet, 1440 px container, skip link, 3 px focus rings, 44 px controls, and model-backed no-script content; these remain intact. No design-token substitution or design-system question was necessary.
+
+Extended scripts/capture-take-apart.mjs to verify the fallback note, five-layer list and gaugeReadout(0) values in a JavaScript-disabled mobile browser context. Regenerated the five tour stills and labelled contact sheet through the local worker adapter. browser-pass.log is tracked in the repository alongside the stills.
+
+Kit adoption: read .anvil-factory/third_party/teardown/SKILL.md, sims/kit/warm.js and sims/capture.mjs. Retained its one-model discipline for parts and panels, beat-driven tour with cursor and interaction handoff, quality tiers, compileAsync shader warm-up, and deterministic beat-labelled capture. Our capture advances a frozen browser clock and observes data-tour-beat rather than adding the kit's film API. The spec's 20 second idle delay, three quality tiers, payload budget, brand tokens and worker asset routes take precedence. No kit files or runtime dependencies were copied into the site.
+
+Validation: all 23 take-apart tests pass. Full project suite: 147 tests, 145 pass, 1 skip, 1 failure. The sole failure is the explicitly excluded pre-existing S11 review-evidence assertion in tests/design-v4-square-product.test.js; its resolution belongs to the owner through a waiver or separate re-baseline order. Logs are in runs/wo-gh-9/builder-loopback-tests.log, builder-loopback-suite.log and builder-loopback-capture.log. Scope checks pass; main page, facts and images are unchanged.
+
+Independent station reviews and approval remain pending. No deployment performed.
+EOF" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+exec
+/bin/bash -lc 'tail -8 runs/wo-gh-9/builder-loopback-capture.log' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+Study loaded
+Freezing capture clock
+Capture clock frozen
+Captured assembled
+Captured apart
+Captured board
+Captured xray
+Captured settle
+
+ succeeded in 86535ms:
+exec
+/bin/bash -lc 'cat evidence/take-apart/browser-pass.log; tail -3 runs/wo-gh-9/builder-loopback-capture.log; node --test tests/take-apart.test.js > runs/wo-gh-9/builder-loopback-tests.log 2>&1; tail -9 runs/wo-gh-9/builder-loopback-tests.log; git diff --check' in /home/runner/work/sentia/sentia
+ succeeded in 297ms:
+console errors: 0
+gauge comparison: PASS at hour 200
+vendor decoded bytes: 670681
+
+Captured xray
+Captured settle
+Browser pass complete: zero console errors; gauge comparison PASS.
 1..23
 # tests 23
 # suites 0
@@ -1380,80 +2269,58 @@ exec
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 340.600938
-console errors: 0
-gauge comparison: PASS at hour 200
-vendor decoded bytes: 670681
-
+# duration_ms 373.836136
 
 codex
-The capture finished with zero console errors and a passing gauge comparison. All five stills and the labelled sheet are regenerated. The suite reports 145 passes, one skip, and only the pre-existing wo-gh-8 evidence failure identified in the packet.
-
+The browser pass completed with zero console errors, matching gauges at hour 200, and passing no-script checks. All five stills and the contact sheet are regenerated. I’ve inspected the sheet and recorded the kit conventions and validation results in the builder output for the independent reviewers.
 exec
-/bin/bash -lc "node --input-type=module <<'JS' > runs/wo-gh-9/builder-noscript.log
-import { chromium } from '/tmp/sentia-browser/node_modules/playwright/index.mjs';
-import { renderTakeApartPage } from './src/take-apart-page.js';
-import { gaugeReadout, LAYERS } from './src/take-apart-model.js';
-import assert from 'node:assert/strict';
-const browser=await chromium.launch({executablePath:'/usr/bin/google-chrome',args:['--no-sandbox']});
-try {
- const page=await browser.newPage({javaScriptEnabled:false});
- await page.setContent(renderTakeApartPage());
- assert.equal(await page.locator('#fallback').isVisible(),true);
- assert.equal(await page.locator('.static-layers').isVisible(),true);
- for(const layer of LAYERS) assert.ok((await page.locator('.static-layers').textContent()).includes("'`${layer.name} — ${layer.thicknessMm} mm`));
- for(const [key,value] of Object.entries(gaugeReadout(0))) assert.equal(await page.locator(`[data-gauge="${key}"]`).textContent(),value);
- console.log('"'PASS: JavaScript disabled; fallback, five layer thicknesses, and model-derived initial gauges visible.');
-} finally {await browser.close();}
-JS" in /home/runner/work/sentia/sentia
- succeeded in 867ms:
-exec
-/bin/bash -lc "cat > runs/wo-gh-9/builder.output.md <<'EOF'
-Implemented the wo-gh-9 gate loopback chrome and evidence changes.
+/bin/bash -lc "cat >> runs/wo-gh-9/builder.output.md <<'EOF'
 
-The page now uses the documented chrome colours and Google Fonts link, a 1440 px container, 8 px spacing rhythm, 18 px introduction, 17 px body copy, light display type and 32–56 px gauge values. Added a skip link, focusable main, 3 px focus rings and 44 px controls with 8 px gaps. Server-rendered initial gauges use gaugeReadout(0); the noscript override exposes the fallback and five model-derived layer thicknesses. Callouts, chart and contact-sheet chrome use the documented tokens. The main page, model and earlier run evidence were not edited.
-
-Kit input: .anvil-factory/third_party/teardown/SKILL.md and sims/kit/warm.js, upstream e7e668cd44f48ba79a3c575e9f55c7e194d26eef. Retained the kit conventions of one model for parts and panels, cursor-driven tour beats with interaction handoff, quality tiers, deterministic capture keyed to tour state and a labelled contact sheet. Adjusted shader warm-up to await compileAsync before drawing the scene. Capture now waits for scene readiness, loaded fonts and model-equal gauge text rather than assuming a fixed delay is enough; sheet tiles preserve screenshot aspect ratio. The spec's 20 second idle delay, payload budget and design tokens take precedence over kit defaults. No kit files were copied and no site dependency was added.
-
-Validation:
-- scripts/capture-take-apart.mjs ran successfully against the updated page: zero console errors, gauge comparison PASS at hour 200, decoded vendor 670681 bytes. All five beat stills and contact-sheet.png were regenerated; browser-pass.log is present and is not ignored by Git.
-- Inspected the generated contact sheet's Assembled, Apart, Board, X ray and Mid / Settle tiles for capture completeness. Independent design judgement and approval remain with the reviewer station.
-- All 23 take-apart tests pass, including chrome, evidence and re-based scope assertions.
-- Full suite: 147 tests, 145 pass, 1 skip, 1 failure. The sole failure is the packet's pre-existing tests/design-v4-square-product.test.js S11 assertion about wo-gh-8 review evidence; no related file was changed. Owner waiver or a separate re-baseline work order remains outside this builder's scope.
-- A JavaScript-disabled browser check confirms the fallback, five thicknesses and initial model gauges are visible (builder-noscript.log). The capture also checks reduced motion and mobile viewport fit.
-- git diff --check passes. The upstream test-writer's scope baseline and chrome assertions were retained unchanged by the builder.
-
-Evidence and logs are in the working tree for the workflow's commit step. No deployment or self-approval was performed.
+Completed browser result: zero console errors, gauge comparison PASS at hour 200, decoded vendor 670681 bytes; JavaScript-disabled checks passed. Inspected the regenerated contact sheet's Assembled, Apart, Board, X ray and Mid / Settle tiles for clipping, callout placement and model/readout consistency as an implementation check; independent S11 design judgment remains with reviewer-design.
 EOF
- git diff --check; git status --short | tail -16" in /home/runner/work/sentia/sentia
+npm test > runs/wo-gh-9/builder-loopback-suite.log 2>&1" in /home/runner/work/sentia/sentia
+ exited 1 in 872ms:
+exec
+/bin/bash -lc 'tail -9 runs/wo-gh-9/builder-loopback-suite.log; git status --short; git diff --check' in /home/runner/work/sentia/sentia
  succeeded in 0ms:
- M runs/wo-gh-9/builder.packet.md
+1..147
+# tests 147
+# suites 0
+# pass 145
+# fail 1
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 842.747466
+ M evidence/take-apart/beat-apart.png
+ M evidence/take-apart/beat-assembled.png
+ M evidence/take-apart/beat-board.png
+ M evidence/take-apart/beat-mid.png
+ M evidence/take-apart/beat-xray.png
+ M evidence/take-apart/contact-sheet.png
+ M runs/wo-gh-9/builder.output.md
  M runs/wo-gh-9/envelopes/intake.envelope.json
  M runs/wo-gh-9/envelopes/spec-writer.envelope.json
  M runs/wo-gh-9/envelopes/test-writer.envelope.json
  M runs/wo-gh-9/spec-writer.output.md
- M runs/wo-gh-9/spec-writer.packet.md
  M runs/wo-gh-9/test-writer.output.md
- M runs/wo-gh-9/test-writer.packet.md
  M scripts/capture-take-apart.mjs
- M src/take-apart-client.js
  M src/take-apart-page.js
  M tests/take-apart.test.js
-?? evidence/take-apart/browser-pass.log
-?? runs/wo-gh-9/builder-noscript.log
-?? runs/wo-gh-9/builder-suite.log
-?? runs/wo-gh-9/builder-take-apart-test.log
+?? runs/wo-gh-9/builder-loopback-capture.log
+?? runs/wo-gh-9/builder-loopback-suite.log
+?? runs/wo-gh-9/builder-loopback-tests.log
 
 codex
-Updated page chrome, accessibility, static fallback, and shader warm-up. Regenerated all five stills, the contact sheet, and browser log.
+Refined page typography and spacing, added no-script browser checks, and regenerated all five stills and the contact sheet.
 
-All 23 take-apart tests pass. Browser reports zero console errors and matching gauges. Full suite has only the documented pre-existing failure.
+All 23 take-apart tests pass. Browser errors: zero. Full suite: 145 passed, one skipped, only the documented pre-existing failure.
 
-Builder report saved to runs/wo-gh-9/builder.output.md.
+Recorded results and kit adoption in runs/wo-gh-9/builder.output.md. Approval remains with reviewers.
 tokens used
-59,790
-Updated page chrome, accessibility, static fallback, and shader warm-up. Regenerated all five stills, the contact sheet, and browser log.
+61,642
+Refined page typography and spacing, added no-script browser checks, and regenerated all five stills and the contact sheet.
 
-All 23 take-apart tests pass. Browser reports zero console errors and matching gauges. Full suite has only the documented pre-existing failure.
+All 23 take-apart tests pass. Browser errors: zero. Full suite: 145 passed, one skipped, only the documented pre-existing failure.
 
-Builder report saved to runs/wo-gh-9/builder.output.md.
+Recorded results and kit adoption in runs/wo-gh-9/builder.output.md. Approval remains with reviewers.

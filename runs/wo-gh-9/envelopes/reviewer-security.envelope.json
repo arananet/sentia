@@ -5,17 +5,17 @@
   "work_order_id": "wo-gh-9",
   "artifact_path": "runs/wo-gh-9/reviewer-security.output.md",
   "status": "executed",
-  "created_at": "2026-10-31T13:11:51.298141+00:00",
+  "created_at": "2026-10-31T13:29:47.747841+00:00",
   "review": {
     "station": "reviewer-security",
     "verdict": "pass",
     "findings": [
-      "I found no injection surface. src/take-apart-client.js has no innerHTML, eval, new Function, document.write or insertAdjacent. The only input it reads is `location.search` for `tour=fast`, and that value is compared to a literal and never rendered. src/take-apart-page.js interpolates only FACTS.product and gaugeReadout(0), which are server-side constants. The page has no cookies, storage, fetch calls or postMessage.",
-      "The new routes in src/index.js (/take-apart, /take-apart-model.js, /take-apart.js, /vendor/three.module.min.js) are fixed paths that serve in-repo strings. Nothing in them is derived from the request, so there is no path traversal or open redirect. I did not check whether they accept non-GET methods. The existing handlers do not restrict them either, so that is not a regression.",
-      "src/vendor-three.js is labelled as the unmodified three.js 0.160.0 npm build under the MIT licence, and it is served from the same origin with an immutable cache. I did not recompute the hash of the decoded bytes, so the 'unmodified' claim is taken from the header comment. The immutable year-long cache on an unversioned URL means a later vendor bump will not reach cached clients. That is a deployment concern, not a security risk.",
-      "The only third-party origins are fonts.googleapis.com and fonts.gstatic.com. They are loaded through the same stylesheet link the main page uses, as the work order requires, and there is no other external script or CDN. The page sets no CSP or SRI, which matches the existing site posture. A CSP on the new routes would be a reasonable hardening step, but it is not required by the spec.",
-      "The noscript override is a static style block. It shows the layer list and the initial readings and does not weaken anything.",
-      "Scope check: git status shows no changes to src/facts.js, src/images.js or src/page.js. The run touches src/index.js, src/take-apart-*.js, tests and scripts, as allowed. Nothing sensitive is committed in the run logs or evidence that I could see."
+      "/take-apart is a static page. renderTakeApartPage() interpolates only FACTS.product and gaugeReadout(0), which are server constants. It reflects no request data, so there is no reflected XSS.",
+      "src/take-apart-client.js writes to the DOM only with textContent and SVG tspan elements. It has no innerHTML, eval, new Function or document.write. The only URL input it reads is ?tour=fast, which it compares to a literal.",
+      "The new routes in src/index.js (/take-apart, /take-apart-model.js, /take-apart.js, /vendor/three.module.min.js) match exact paths and serve in-memory constants. There is no filesystem access or path traversal. The vendored three.js 0.160.0 (MIT header) is decoded in memory and served with an immutable cache header.",
+      "The only external origins are the Google Fonts stylesheet and fonts.gstatic.com, which the spec mandates and the main page already uses. There is no SRI or CSP, same as the main page. This is a residual risk, not a regression.",
+      "The change adds no secrets, client network calls or write endpoints. The /api method guard is unchanged.",
+      "The code diff touches only scripts/capture-take-apart.mjs, src/take-apart-page.js, tests/take-apart.test.js and evidence files, all within the allowed scope. I did not verify the vendored three.js bytes against the npm package. The review is at runs/wo-gh-9/reviewer-security.output.md."
     ]
   },
   "configured_model": "claude-sonnet-5-5",
