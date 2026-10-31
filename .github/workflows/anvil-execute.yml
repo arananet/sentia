@@ -52,13 +52,15 @@ name: anvil-execute
 # runs wo-gh-7 (work-orders/issue-7.json, reports on issue 7, the S11
 # semantic assertion test fix) and anvil/run-imagery-consistency
 # runs wo-gh-8 (work-orders/issue-8.json, reports on issue 8, the imagery
-# consistency pass anchored on the hero). The Select work order step
+# consistency pass anchored on the hero) and anvil/run-take-apart
+# runs wo-gh-9 (work-orders/issue-9.json, reports on issue 9, the
+# interactive take apart page driven by one simulation model). The Select work order step
 # sets the file, id and issue
 # used by the line, commit back and comment steps. Model routing is the
 # same for both work orders.
 on:
   push:
-    branches: [anvil/run-ui-astra, anvil/run-design-v2, anvil/run-design-v2-1, anvil/run-credit-line, anvil/run-design-v3, anvil/run-design-v4, anvil/run-s11-fix, anvil/run-imagery-consistency]
+    branches: [anvil/run-ui-astra, anvil/run-design-v2, anvil/run-design-v2-1, anvil/run-credit-line, anvil/run-design-v3, anvil/run-design-v4, anvil/run-s11-fix, anvil/run-imagery-consistency, anvil/run-take-apart]
   workflow_dispatch:
 
 permissions:
@@ -88,7 +90,11 @@ jobs:
       - name: Select work order for this branch
         id: wo
         run: |
-          if [ "${GITHUB_REF_NAME}" = "anvil/run-imagery-consistency" ]; then
+          if [ "${GITHUB_REF_NAME}" = "anvil/run-take-apart" ]; then
+            echo "file=work-orders/issue-9.json" >> "${GITHUB_OUTPUT}"
+            echo "id=wo-gh-9" >> "${GITHUB_OUTPUT}"
+            echo "issue=9" >> "${GITHUB_OUTPUT}"
+          elif [ "${GITHUB_REF_NAME}" = "anvil/run-imagery-consistency" ]; then
             echo "file=work-orders/issue-8.json" >> "${GITHUB_OUTPUT}"
             echo "id=wo-gh-8" >> "${GITHUB_OUTPUT}"
             echo "issue=8" >> "${GITHUB_OUTPUT}"
