@@ -61,6 +61,23 @@ function box(parent, size, position, color, roughness=.65) {
   const mesh = new THREE.Mesh(new THREE.BoxGeometry(...size), new THREE.MeshStandardMaterial({ color,roughness }));
   mesh.position.set(...position); mesh.castShadow = true; parent.add(mesh); return mesh;
 }
+function buildProceduralFallback() {
+  const colors = [0xeeeae0,0xd1cfc3,0x12211c,0xe2e8d9,0xf0eee7];
+  meshes = M.LAYERS.map((layer,i) => {
+    const mesh = new THREE.Mesh(roundedGeometry(layer.thicknessMm*Z_SCALE),new THREE.MeshStandardMaterial({ color:colors[i], roughness:i===2?.58:.82, transparent:true }));
+    mesh.castShadow=true; mesh.receiveShadow=true; return mesh;
+  });
+  box(meshes[0],[12,.06,.38],[0,M.LAYERS[0].thicknessMm*Z_SCALE/2+.04,8],0x0e7c66);
+  const boardTop = M.LAYERS[2].thicknessMm*Z_SCALE/2+.04;
+  // Printed traces and flush components stay inside the study layer envelope.
+  for (let i=0;i<6;i++) {
+    box(meshes[2],[.15,.04,15],[i*2.3-6,boardTop,-1],0x389887);
+    box(meshes[2],[10,.04,.15],[1,boardTop,i*2.1-5],0x389887);
+  }
+  box(meshes[2],[7,.08,7],[0,boardTop,0],0x0e2722);
+  box(meshes[2],[5,.08,8],[-10,boardTop,3],0xa4b2a1);
+  for(let i=0;i<4;i++) box(meshes[2],[2,.06,1.2],[7,boardTop,i*3-4],0x8fa68d);
+}
 async function initScene() {
   renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
   renderer.setPixelRatio(quality.pixelRatioCap); renderer.setClearColor(0xfafaf6);
@@ -75,21 +92,37 @@ async function initScene() {
   key.shadow.bias = -.0003; key.shadow.normalBias = .15; key.shadow.radius = 5; key.shadow.blurSamples = 8; scene.add(key);
   const ground = new THREE.Mesh(new THREE.PlaneGeometry(1000,1000),new THREE.ShadowMaterial({ opacity:.12 }));
   ground.rotation.x = -Math.PI/2; ground.position.y=-.15; ground.receiveShadow=true; scene.add(ground);
-  const colors = [0xeeeae0,0xd1cfc3,0x12211c,0xe2e8d9,0xf0eee7];
-  meshes = M.LAYERS.map((layer,i) => {
-    const mesh = new THREE.Mesh(roundedGeometry(layer.thicknessMm*Z_SCALE),new THREE.MeshStandardMaterial({ color:colors[i], roughness:i===2?.58:.82, transparent:true }));
-    mesh.castShadow=true; mesh.receiveShadow=true; scene.add(mesh); return mesh;
-  });
-  box(meshes[0],[12,.06,.38],[0,M.LAYERS[0].thicknessMm*Z_SCALE/2+.04,8],0x0e7c66);
-  const boardTop = M.LAYERS[2].thicknessMm*Z_SCALE/2+.04;
-  // Printed traces and flush components stay inside the study layer envelope.
-  for (let i=0;i<6;i++) {
-    box(meshes[2],[.15,.04,15],[i*2.3-6,boardTop,-1],0x389887);
-    box(meshes[2],[10,.04,.15],[1,boardTop,i*2.1-5],0x389887);
+  try {
+    const { GLTFLoader } = await import('GLTFLoader');
+    const gltf = await new GLTFLoader().loadAsync('/models/patch-one.glb');
+    if (gltf.scene.children.length !== M.NODE_NAMES.length) throw new Error('Invalid layer count');
+    meshes = M.NODE_NAMES.map(name => {
+      const node = gltf.scene.children.find(child => (child.userData.name || child.name) === name);
+      if (!node) throw new Error('Missing layer: '+name);
+      node.name = name;
+      node.scale.y = Z_SCALE;
+      return node;
+    });
+    root.dataset.modelNodes = JSON.stringify(meshes.map(node => node.name));
+    root.dataset.modelSource = 'glb';
+  } catch (error) {
+    // Asset/network/parser failure keeps the original study usable.
+    buildProceduralFallback();
+    root.dataset.modelSource = 'procedural';
   }
-  box(meshes[2],[7,.08,7],[0,boardTop,0],0x0e2722);
-  box(meshes[2],[5,.08,8],[-10,boardTop,3],0xa4b2a1);
-  for(let i=0;i<4;i++) box(meshes[2],[2,.06,1.2],[7,boardTop,i*3-4],0x8fa68d);
+  meshes.forEach(node => {
+    node.traverse(object => {
+      if (!object.material) return;
+      const materials = Array.isArray(object.material) ? object.material : [object.material];
+      // A layer owns its material state even when glTF shares a material.
+      const owned = materials.map(material => {
+        const copy = material.clone(); copy.userData.baseOpacity = copy.opacity; return copy;
+      });
+      object.material = Array.isArray(object.material) ? owned : owned[0];
+      object.castShadow = true; object.receiveShadow = true;
+    });
+    scene.add(node);
+  });
   const ns='http://www.w3.org/2000/svg';
   M.LAYERS.forEach((layer,i) => {
     const group=document.createElementNS(ns,'g'); group.dataset.layer=i;
@@ -114,9 +147,15 @@ function updateScene(instant=false) {
   const bounds = new THREE.Box3();
   meshes.forEach((mesh,i)=> {
     const layer=model.layers[i]; mesh.position.set(layer.asideMm,(layer.centerMm+layer.liftMm)*Z_SCALE,0);
-    mesh.traverse(object=> { if(object.material){const transparent=layer.opacity<1;
-      if(object.material.transparent!==transparent){object.material.transparent=transparent;object.material.needsUpdate=true;}
-      object.material.opacity=layer.opacity;object.material.depthWrite=!transparent;object.castShadow=!transparent;} });
+    mesh.traverse(object=> { if(object.material){
+      const materials=Array.isArray(object.material)?object.material:[object.material];
+      for(const material of materials){
+        const opacity=material.userData.baseOpacity*layer.opacity, transparent=opacity<1;
+        if(material.transparent!==transparent){material.transparent=transparent;material.needsUpdate=true;}
+        material.opacity=opacity;material.depthWrite=!transparent;
+      }
+      object.castShadow=materials.every(material=>material.opacity===1);
+    } });
     // The projection frames the same model bounds, with a stable margin for labels.
     for(const x of [-18,18]) for(const z of [-18,18]) for(const dy of [-layer.thicknessMm*4,layer.thicknessMm*4]) {
       bounds.expandByPoint(new THREE.Vector3(mesh.position.x+x,mesh.position.y+dy,z).applyMatrix4(camera.matrixWorldInverse));

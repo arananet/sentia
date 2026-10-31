@@ -5,6 +5,7 @@ export const FOCUS_LIFT_MM = 5, ASIDE_MM = 8, FADE_OPACITY = 0.35, XRAY_OPACITY 
 export const LAYERS = FACTS.layers.map((layer, index) => Object.freeze({
   name: layer.name, thicknessMm: [0.6, 0.7, 0.5, 0.4, 0.3][index], heightIndex: 4 - index,
 }));
+export const NODE_NAMES = Object.freeze(LAYERS.map(layer => layer.name));
 const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
 const hours = h => clamp(h, 0, 336);
 export function layerCenterMm(layer, t) {

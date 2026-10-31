@@ -9,6 +9,7 @@ const FOCUS_LIFT_MM = 5, ASIDE_MM = 8, FADE_OPACITY = 0.35, XRAY_OPACITY = 0.15;
 const LAYERS = FACTS.layers.map((layer, index) => Object.freeze({
   name: layer.name, thicknessMm: [0.6, 0.7, 0.5, 0.4, 0.3][index], heightIndex: 4 - index,
 }));
+const NODE_NAMES = Object.freeze(LAYERS.map(layer => layer.name));
 const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
 const hours = h => clamp(h, 0, 336);
 function layerCenterMm(layer, t) {
@@ -41,5 +42,5 @@ function sceneState(t, h, focusIndex = null, xray = false) {
   })) };
 }
 
-globalThis.TakeApartModel = { GAP_MM, FOCUS_LIFT_MM, LAYERS, layerCenterMm, wearDay, skinTempC, hydrationIndex, batteryPct, tempSeries, gaugeReadout, focusTransform, materialState, qualityFor, sceneState, FOOTPRINT_MM, CORNER_RADIUS_MM, ASIDE_MM, FADE_OPACITY, XRAY_OPACITY };
+globalThis.TakeApartModel = { NODE_NAMES, GAP_MM, FOCUS_LIFT_MM, LAYERS, layerCenterMm, wearDay, skinTempC, hydrationIndex, batteryPct, tempSeries, gaugeReadout, focusTransform, materialState, qualityFor, sceneState, FOOTPRINT_MM, CORNER_RADIUS_MM, ASIDE_MM, FADE_OPACITY, XRAY_OPACITY };
 })(${JSON.stringify({layers: FACTS.layers})});`;

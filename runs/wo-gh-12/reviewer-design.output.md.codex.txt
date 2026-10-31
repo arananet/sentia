@@ -1,0 +1,964 @@
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-_0w7n4pt"))
+Reading additional input from stdin...
+OpenAI Codex v0.166.0
+--------
+workdir: /home/runner/work/sentia/sentia
+model: openai/gpt-6-astra
+provider: cloudflare
+approval: never
+sandbox: danger-full-access
+reasoning effort: none
+reasoning summaries: none
+session id: 01a19377-cd94-71d1-af17-8f0208149406
+--------
+user
+You are executing an ANVIL reviewer station packet inside this repository. You are read only: inspect the files the packet refers to, judge the work against the packet, and do not change anything. The wrapper verifies the tree is unchanged after your run and fails this station if it is not.
+
+## Station prompt
+
+# Reviewer Design
+
+## Role
+Judge interface output against the project's own design system: its design tokens, component and layout rules, motion rules, and quality bars.
+
+## Inputs
+- design system (tokens, rules, quality bars from design/DESIGN.md and design/tokens.json)
+- interface output (HTML, React components, CSS, user-facing pages, or other interface artifacts)
+
+## Outputs
+- review (JSON format with verdict and findings)
+
+## Rules
+- Work only from the inputs listed above and the work order in the packet.
+- If the project has no design system (no design/DESIGN.md), your verdict MUST be `changes_requested` with a finding stating that no design system exists for the project.
+- If the project has a design system, review the interface output against:
+  - Design tokens: Are the correct colors, typography, spacing values being used?
+  - Component and layout rules: Do components follow the documented patterns?
+  - Motion rules: Does any animation or transition follow the motion guidelines?
+  - Quality bars: Does the interface meet the stated quality bars for visual hierarchy, scale contrast, spacing rhythm, and responsive behavior?
+- Focus on the design system the project has defined. Do not impose external design opinions or preferences that are not documented in the project's design system.
+- A design token marked as "TODO" or placeholder means the project hasn't defined that value yet. Flag missing values as findings only if the interface output actually uses undefined tokens.
+- Findings should be specific and actionable: cite which quality bar was violated, which token was used incorrectly, or which rule was not followed.
+- Your verdict must be one of: `approved`, `changes_requested`, or `comment`.
+- Produce the output as a JSON object, not as chat text.
+
+## Output Format
+
+Return a JSON object with this structure:
+
+```json
+{
+  "station": "reviewer-design",
+  "verdict": "approved | changes_requested | comment",
+  "findings": [
+    "Specific finding with reference to design system rule or quality bar",
+    "Another finding if applicable"
+  ]
+}
+```
+
+## Examples
+
+### Example 1: No design system exists
+```json
+{
+  "station": "reviewer-design",
+  "verdict": "changes_requested",
+  "findings": [
+    "No design system exists for this project. The project must define design/DESIGN.md and design/tokens.json before interface output can be reviewed against design standards."
+  ]
+}
+```
+
+### Example 2: Interface violates quality bar
+```json
+{
+  "station": "reviewer-design",
+  "verdict": "changes_requested",
+  "findings": [
+    "Quality bar violation: Scale Contrast - The button text has only 2.8:1 contrast ratio against its background, failing the minimum 4.5:1 requirement stated in the quality bars.",
+    "Token usage: The page uses hardcoded color '#FF5733' instead of the defined primary color token."
+  ]
+}
+```
+
+### Example 3: Interface meets design system
+```json
+{
+  "station": "reviewer-design",
+  "verdict": "approved",
+  "findings": []
+}
+```
+
+
+## Work order
+
+- id: wo-gh-12
+- kind: feature
+- title: Take apart product model: replace the block primitives with a faithful Blender built Patch One
+- source: github-issue
+- description: Problem: the /take-apart page works end to end (production version 4515d731 after wo-gh-11), but the product owner judged the rendered product on 2026-10-31: the five layers read as generic blocks, not as the Sentia Patch One. Each layer is one rounded box primitive with a flat color, so the silhouette, the materials and the board detail do not represent the product anchored in design/reference/.
+
+Deliverable: the change described by .openspec/specs/take-apart-product-model/spec.md. A deterministic Blender build script (blender/build_patch_one.py, entry blender/build_all.py, headless Blender pinned 4.5.15) models the Patch One from design/reference/product-reference.png and the two quality boards at true scale (36 mm footprint, thicknesses 0.6, 0.7, 0.5, 0.4, 0.3 summing to the 2.5 mm profile) and exports one GLB whose five top level nodes are exactly the five layers, named as the page's model names them. The asset is carried as a base64 constant module and served at /models/patch-one.glb at or under 800 KB. The page loads it and binds each named node to the existing state function: separation, focus and aside, x ray on the cover node and the tour behave exactly as today. The cover carries the SENTIA wordmark and the teal LED line; the foam reads porous; the board carries real component geometry; the adhesive and liner are thin films, the liner slightly peeled or offset. If the GLB fails to load, the page falls back to the existing procedural meshes.
+
+Fidelity gate, binding: the build emits beauty renders (assembled three quarter, exploded) into evidence/take-apart-product-model/ and the run's browser capture emits the usual contact sheet. Reviewer-design runs the same product test against the references on both: the assembled product must be recognizable as the Patch One of the reference (silhouette, proportions, wordmark and LED, layer order and materials). A render that reads as generic blocks fails the run. The builder compares its own renders against the reference before review and records the comparison.
+
+Production shape, binding (from wo-gh-11): the production bundle builds clean with zero local patches; the bundled output is served locally (wrangler dev, no bundle) and browser verified with zero console and page errors, the scene ready flag set, the GLB fetched and the five named nodes recorded in the pass log, and the product visible in the screenshot; no evidence step imports the unbundled source. The workflow installs and smoke gates the pinned Blender before the line and reruns blender/build_all.py deterministically after the line, before the suite.
+
+Suite: green on the final tree, with the one pre existing design v4 S11 failure itemized by name (resolved on the sibling branch anvil/run-s11-rebaseline, wo-gh-10 approved), never absorbed and never fixed by editing evidence.
+
+Model routing for this run: builder and reviewer-design on GPT-6 Astra (gpt-6-astra) through the Cloudflare AI Gateway; spec writer, test writer and the other reviewer stations on claude-sonnet-5-5 through the same gateway. No fallback to another model for the builder.
+
+No deployment and no merge in this order: the run stops at the human gate.
+
+Done criteria: the GLB route serves the five named layer nodes at or under 800 KB; the same product test passes on the beauty renders and on the contact sheet; all pre existing take apart tests pass in their original meaning; the production bundle is clean and the bundled shape browser pass records zero errors with the product visible; the run verdict is approved with all five expected reviews counted, reviewer-design among them.
+
+GitHub issue: https://github.com/arananet/sentia/issues/12
+- risk_hints: 
+- status: new
+
+## Upstream steps
+
+- intake: completed
+- spec-writer: executed
+- test-writer: executed
+- builder: executed
+- reviewer-spec: executed
+- reviewer-security: executed
+- reviewer-tests: executed
+- reviewer-architecture: executed
+
+## Verified learnings
+
+- L-1: Art direction is imagery first; flat SVG as the primary visual language was rejected by the product owner and must not return as a section's main visual. (provenance: run wo-gh-2, artifact design/DESIGN.md, evidence verdict approved)
+- L-2: Product imagery sits seamlessly on the brand paper #FAFAF6 (no studio backgrounds, no visible image rectangles), verified by corner and edge sampling within 3 per channel. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-3: The patch reads at true 38 mm scale with explicit scale anchors, and on-skin imagery is strict inner forearm framing only. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-4: The product is the protagonist: the patch appears large and early, the page must not read empty or editorial, and display type must not crowd out the product. (provenance: run wo-gh-3, artifact src/page.js, evidence verdict changes_requested)
+- L-5: The current product render set is owner approved, especially the patch render; composition iterations keep src/images.js byte identical and never regenerate product imagery. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-6: Product imagery for Sentia meets the production quality bar anchored in design/reference/: photorealistic studio quality with real materials and physically consistent light; stylized or toy-like renders fail review. Reviewer-design compares every new product image against the anchor boards and names the gaps. (provenance: run wo-gh-5, artifact src/images.js, evidence verdict changes_requested)
+- L-7: The product is the square low profile patch anchored in design/reference/ and the round disc renders are retired; L-2, L-3 and L-5 stand as amended by the design v4 spec: photographic treatment instead of seamless paper backgrounds, limb close ups (inner forearm or upper arm) instead of inner forearm only, and the render set replaceable through an owner decided work order instead of frozen byte identical. (provenance: run wo-gh-6, artifact src/images.js, evidence verdict approved)
+
+## Project design
+
+## Output contract
+
+Answer with a single JSON object and nothing else, in exactly this shape:
+{"station": "<your station id>", "verdict": "pass", "findings": ["..."]}
+The verdict must be one of: pass, fail, changes_requested. Findings must be concrete and checkable against the spec, the code and the tests.
+
+codex
+I’ll inspect the design rules, model implementation, and visual evidence without changing any files.
+
+exec
+/bin/bash -lc "pwd; rg --files -g 'AGENTS.md' -g 'design/**' -g 'blender/**' -g '*take-apart*' -g '.openspec/**' -g 'evidence/**'" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+/home/runner/work/sentia/sentia
+tests/take-apart-product-model.test.js
+tests/take-apart.test.js
+tests/take-apart-bundling.test.js
+scripts/capture-take-apart.mjs
+src/take-apart-model.js
+src/take-apart-page.js
+src/take-apart-client.js
+src/take-apart-model-browser.js
+design/DESIGN.md
+design/reference/product-reference.png
+design/reference/quality-board-2.png
+design/reference/quality-board-1.png
+design/reference/README.md
+evidence/take-apart-product-model/fidelity-comparison.md
+evidence/take-apart-product-model/reproducibility.log
+evidence/take-apart-product-model/browser-pass.log
+evidence/take-apart-product-model/take-apart-tests.log
+evidence/take-apart-product-model/render-exploded.png
+evidence/take-apart-product-model/bundle-build.log
+evidence/take-apart-product-model/browser-assembled.png
+evidence/take-apart-product-model/builder-notes.md
+evidence/take-apart-product-model/render-assembled.png
+evidence/take-apart-product-model/test-suite.log
+evidence/take-apart-product-model/blender-build.log
+evidence/red.txt
+evidence/take-apart/contact-sheet.png
+evidence/take-apart/beat-apart.png
+evidence/take-apart/beat-assembled.png
+evidence/take-apart/beat-mid.png
+evidence/take-apart/beat-xray.png
+evidence/take-apart/browser-pass.log
+evidence/take-apart/beat-board.png
+evidence/take-apart-bundling/contact-sheet.png
+evidence/take-apart-bundling/beat-apart.png
+evidence/take-apart-bundling/beat-assembled.png
+evidence/take-apart-bundling/beat-mid.png
+evidence/take-apart-bundling/beat-xray.png
+evidence/take-apart-bundling/README.md
+evidence/take-apart-bundling/browser-pass.log
+evidence/take-apart-bundling/take-apart-tests.log
+evidence/take-apart-bundling/bundle-build.log
+evidence/take-apart-bundling/beat-board.png
+evidence/take-apart-bundling/test-suite.log
+evidence/green.txt
+runs/wo-gh-9/builder-take-apart-test.log
+blender/build_all.py
+blender/build_patch_one.py
+
+exec
+/bin/bash -lc 'cat design/DESIGN.md design/tokens.json .openspec/specs/take-apart-product-model/spec.md design/reference/README.md evidence/take-apart-product-model/fidelity-comparison.md evidence/take-apart-product-model/builder-notes.md' in /home/runner/work/sentia/sentia
+ exited 1 in 0ms:
+# Sentia design system v4
+
+Identity is governed by brand/BRAND.md. This system applies that identity to
+the launch page: imagery is the primary art direction, with the product as the protagonist
+and natural limb proportions as anchors for true scale.
+Sentia Patch One is the object; Sentia Cloud receives its measurements; the
+Sentia MCP Server makes those measurements available to assistants.
+
+## Tokens
+
+Paper #FAFAF6 occupies roughly 90 percent of the surface. Ink green #12211C
+forms text and instrument outlines. Signal teal #0E7C66 marks links, labels
+and the Find My network and LoRaWAN paths. Coral #FF6B4A is reserved for the
+status LED and alert dots. Soft mint #EFF4EE is a rare panel fill; hairline
+#DFE7DF divides information. Body text uses #4A5D54; secondary labels use
+#53685C for legibility on paper. White is reserved for the physical patch.
+No decorative gradients. Only the soft contact shadow baked into each product
+render is allowed; the page adds no shadow or tinted backdrop.
+
+## Type scale
+
+Space Grotesk at weight 300 is the display face. Display type must serve the
+product. The hero runs from 56 to 64 px with 0.96 leading and -0.055 em tracking. Section titles run from
+40 to 64 px with 1.04 leading and -0.04 em tracking, limited to 18 characters
+per line where space permits. Data values run from 32 to 56 px. Inter body
+text is 17 px with 1.65 leading; introductory text is 18–20 px, at most
+54 characters per line. System mono labels are 11 px, uppercase, with
+0.16 em tracking. Never shrink body copy to fit a composition.
+
+## Spacing rhythm
+
+Use an 8 px base: 8, 16, 24, 32, 48, 64, 96, 128, 160. The page container
+is at most 1440 px wide, with fluid 24–80 px gutters. Sections have 64–96 px
+vertical padding for richer density. A title, its introduction and its
+illustration form one idea; detailed lists follow with 32–48 px separation. Hairlines provide
+structure without enclosing every item in a card. Technical examples and
+tables remain dense enough to scan, with scrolling contained locally.
+Fixed margins, padding and gaps use multiples of 8 px, including the bounds
+of fluid spacing. One-pixel border overlaps and diagram coordinates are
+optical geometry rather than content spacing.
+
+## Hero art direction
+
+Place the existing headline in four columns and the supplied hero render
+in eight, capped at 960 px. The complete patch render is the visual center,
+large and early above the fold at desktop and mobile widths. Keep the kicker,
+chips and introductory copy; repeat the existing dimensional, wear and water
+resistance facts alongside the introduction.
+The square patch has strongly rounded corners, a matte warm white top cover,
+the physical SENTIA wordmark and one LED line, with a low 2.5 mm profile.
+The hero shows it worn on an upper arm in a warm neutral studio photograph. Below 1000 px, stack the
+headline, object and supporting copy. Preserve the whole object at narrow
+widths. Flat inline SVG is demoted to small supporting diagrams only; it
+must not carry the hero, hardware or connectivity art direction. The logo,
+functional live demo graphics and dashboard charts stay.
+
+## Composition and accessibility
+
+The brand sheet wins every conflict with the design knowledge pack. Use calm
+tactile softness from render scale and whitespace, never pastel or blue
+palettes, shadowed surfaces or decorative cards. A 12 column grid aligns the
+hero headline across four columns and the object across eight. Supporting
+text and chips complete that system; one value proposition strip follows,
+using the existing tagline. Measured facts (2.5 mm profile, 14 days, IP67 and network
+behaviour) establish trust before the hardware detail. State plainly here
+that Sentia Patch One is not a medical device. No invented proof, testimonials,
+customer logos or unsupported claims.
+
+Use 64–96 px section padding and 32–48 px between related visual and factual
+groups to increase density without shrinking body copy. Use hairline divided
+feature grids and recurring numbered mono section labels. Cap desktop display
+type at 64 px so the headline supports the render. Use the 8 px
+spacing scale throughout. Load fonts with font-display swap and reserve image
+space using exact intrinsic dimensions to avoid image layout shift.
+
+Text contrast is at least 4.5:1; body text aims for 7:1 on paper. The primary
+CTA uses paper on ink (about 15.9:1); the second action remains a text link.
+Use semantic sections, one h1, a skip link to focusable main content, visible
+3 px focus rings, and touch targets at least 44 px with at least 8 px gaps.
+Keep below-fold images lazy and the hero eager. Review at mobile widths and
+zoom, with keyboard navigation, no script, and prefers-reduced-motion.
+
+## Asset inventory
+
+All four operator-supplied WebP renders come from src/images.js. Serve the
+original export bytes without editing, replacing or generating imagery.
+
+| Module export | Route | Page placement |
+| --- | --- | --- |
+| PATCH_HERO_WEBP_B64 | /img/patch-hero.webp | Hero, primary object beside the headline |
+| PATCH_EXPLODED_WEBP_B64 | /img/patch-exploded.webp | #patch, beside the five-layer factual list |
+| PATCH_ON_SKIN_WEBP_B64 | /img/patch-on-skin.webp | #patch, second visual with the upper arm close-up and 14 day wear story |
+| NETWORK_SCENE_WEBP_B64 | /img/network-scene.webp | #how, before the five relay steps |
+
+The exploded photograph separates the five square layers vertically, in order:
+top cover, comfort foam, sensing and processing board, adhesive layer,
+release liner. The page list and specs table use the same names.
+The on-skin photograph follows the layer and sensor details, paired with the
+wear paragraph and followed by profile and wear metrics.
+The network photograph presents the same patch in its connected context,
+beside a phone and LoRaWAN gateway. It does not replace the live packet visualization.
+
+## Image treatment
+
+Full photographs in warm neutral studio scenes replace the earlier isolated
+product treatment. Preserve the supplied bytes and original aspect ratios:
+hero 1600 × 893, exploded 1400 × 1400, on-skin 1600 × 800, network 1600 × 893.
+The physical SENTIA wordmark and LED line belong on the product; captions,
+labels and explanatory text inside images remain banned.
+
+Each image is an intentional photographic frame within the page grid, with
+no visible rectangle seams from mismatched background extensions. Do not
+attempt to blend the photographic backgrounds into paper. The hero fills
+its eight-column visual area; the exploded photograph fills its column
+beside the layer list; the limb close up fills the wear image area; the
+network photograph spans the content width. Paper gutters separate each
+complete photograph from copy. No borders, rounded cards, filters, added
+shadows or tinted backdrops. Physical light and contact shadows come from
+the supplied photographs.
+
+Hero and on-skin framing is a strict limb close up (upper arm or inner
+forearm), never torso framing. Skin texture, limb proportions and adhesive
+contact establish scale without inventing a width measurement.
+Preserve complete images without cropping or stretching. Use responsive full
+width images, with the hero capped at 960 px, the wear image at 640 px, and
+the network scene spanning the content width. Give each visual
+space on the 8 px rhythm. Below 1000 px, place the hero image directly after
+the headline with no added vertical gap; extend its frame 16 px into each
+gutter, retaining the complete original image.
+Stack the wear image and copy below 900 px.
+Use descriptive, calm alt text with the exact product and network names.
+Reserve intrinsic image space to prevent layout shifts. Load the hero
+eagerly with high priority; lazy-load the three lower-page renders.
+
+Production quality is anchored in design/reference/. L-6 remains binding:
+reviewer-design compares every new image against the boards and names gaps
+in materials, light, scale and contact, or states none. L-5 is lifted for
+this order; the operator has supplied the entire replacement set. L-2 now
+governs integration without seams; L-3 allows limb close ups as stated above.
+
+## Motion
+
+Existing reveal hooks stay intact. Fades and small rises use 800 ms ease-out.
+No scale animation, bounce, glow or perpetual hero movement. Hover feedback
+uses opacity or a rise under 2 px over 180 ms.
+Stagger up to eight children per section in 40 ms steps, capped at 280 ms.
+Reduced motion disables CSS reveals
+and smooth scrolling, and hides the moving packet dot; the measurements
+and existing controls continue to operate. Static content must remain
+readable without JavaScript through a noscript style override. With scripting
+enabled, reveal elements begin at zero opacity and 16 px below their final
+position; the existing observer adds the visible state. Reduced motion keeps
+both the initial and revealed states visible and stationary.
+
+## Launch page quality bars
+
+- S1: This document precedes implementation. CSS implements its palette,
+  type hierarchy, spacing and physical hero composition.
+- The first view has one focal object and a headline substantially larger
+  than body copy. The page has breathing room at 1440, 1024, 768 and 375 px.
+- S2: Preserve every section, content fact, SEO/GEO output, client hook,
+  simulation control and dashboard action. Measurements keep their units.
+- At 320 px and at browser zoom, text wraps without page overflow; wide
+  technical data scrolls in its own region. Keyboard focus is visible.
+- V4: Update product definition surfaces and integrate the operator supplied
+  renders. Preserve the four image/webp routes and supplied src/images.js bytes.
+  API, MCP, codec, data and all other routing behavior stay unchanged.
+- S5: Keep the existing calm copy and exact product and network names.
+  Wellness framing and the medical disclaimer remain visible.
+- Run the full scenario suite. Visual quality and S3 model provenance are
+  assessed by the independent review stations; passing tests is not approval.
+- S6: At small widths retain a 56 px hero minimum and 17 px body minimum.
+  Use #53685C for SVG annotations and paper for the simulation toggle.
+  Check the hidden reveal state, 800 ms ease-out transition and motion fallback.
+cat: design/tokens.json: No such file or directory
+# Sentia: Take Apart Product Model
+
+Status: active for wo-gh-12
+Slug: take-apart-product-model
+
+## Roles
+- implementer: builds the change described here
+- reviewer: checks the change against this spec
+- qa: checks the scenarios below with tests
+- product_owner: owns the purpose and accepts the result
+
+## Purpose
+
+The /take-apart page works: its model, tour, gauges and production serving shape are proven by wo-gh-9 and wo-gh-11. What fails is the product itself. Each layer is one rounded box primitive with a flat color, and the product owner judged the result on 2026-10-31: the layers read as generic blocks, not as the Sentia Patch One. This order replaces only the geometry. A deterministic Blender build models the Patch One from the repo's own reference anchors and exports it as one glTF binary; the page loads that binary and binds its named layer nodes to the existing state function. The governing specs for the page and its serving stay .openspec/specs/take-apart/spec.md and .openspec/specs/take-apart-bundling/spec.md; this spec governs the model asset, its integration and the fidelity gate. The builder and reviewer-design run on GPT-6 Astra; the spec writer, test writer and the other reviewers run on claude-sonnet-5-5, per ANVIL policy.
+
+## References (the fidelity anchor)
+
+- design/reference/product-reference.png: the identity anchor. The canonical Patch One: a flat, thin, matte off white square patch with strongly rounded corners, the SENTIA wordmark in dark print, and a teal cyan LED line.
+- design/reference/quality-board-1.png and design/reference/quality-board-2.png: the quality anchor. Photorealistic studio boards whose exploded views show the layer materials: matte silicone top cover, porous comfort foam, a detailed PCB with real components, translucent adhesive and release liner films.
+- src/facts.js FACTS.layers: the five layer names, in stack order, and their product descriptions. The facts file is not edited by this order.
+
+## Requirements
+
+### The build
+
+- R1 (deterministic Blender build): A build script at blender/build_patch_one.py, driven by the deterministic entry blender/build_all.py, models the product and exports the asset and the beauty renders. It runs under headless Blender pinned to the 4.5 LTS series (4.5.15, the version the workflow installs and smoke gates before the line). The workflow runs blender/build_all.py again after the line, before the suite, so the committed asset and renders always come from the committed script, never from a station's ad hoc invocation. The script is the only producer of the asset: no hand edited GLB, no downloaded model, no external texture or image file. Any texture the materials need is generated inside the script.
+- R2 (units and proportions): The script works in millimetres with the scene unit system set so one exported glTF unit equals one millimetre, and the client treats loaded units as millimetres. The footprint is the model's FOOTPRINT_MM 36 square with CORNER_RADIUS_MM 9. Layer thicknesses are the model's: Top cover 0.6, Comfort foam 0.7, Sensing and processing board 0.5, Adhesive layer 0.4, Release liner 0.3, summing to the 2.5 mm profile. The product is modeled true scale: no vertical exaggeration inside the asset. The page's study exaggeration stays where it lives today, in the client, applied per layer node about its own centre exactly as the current geometry construction applies it.
+
+### The asset
+
+- R3 (one GLB, five named nodes): The build exports one glTF binary (GLB). Its scene has exactly five top level nodes, in this order, named exactly as the page's model names the layers: Top cover, Comfort foam, Sensing and processing board, Adhesive layer, Release liner. Each top level node is the parent of that layer's meshes and nothing else; there are no other top level nodes. Each node's origin sits at that layer's assembled centre, so its exported translation is (0, centre, 0) with the centre equal to src/take-apart-model.js layerCenterMm for that layer at t=0, within 0.01. All geometry is local to its node.
+- R4 (the asset in the repo): The GLB is carried in the repo following this codebase's binary pattern: a base64 constant module at src/patch-one-glb.js, exported bytes byte identical to the build's export. A new route /models/patch-one.glb in src/index.js serves the decoded bytes as model/gltf-binary. The GLB measures at or under 800 KB; the enforcing test states the measured size either way, and the run report states it too. If the measured size exceeds the budget, the build's geometry and texture discipline is tightened until it fits; the budget is not raised by this order.
+- R5 (cover detail): The top cover carries the product's real silhouette and detail: a softly rounded, low profile shell whose top face is gently crowned, never a box with rounded corners; the SENTIA wordmark as modeled or textured detail on the top face, in the dark ink of the reference, oriented to read as it reads in product-reference.png; and the teal LED line as a thin strip on the top face, in the brand teal, positioned as in the reference. The earlier take apart spec's no text clause governed the primitive study model and is superseded for the cover by this requirement; no other layer gains text.
+- R6 (layer materials and parts): The foam reads as a thin porous layer (fine surface texture generated in the build, pale warm gray, high roughness). The board is a real board: an ink green substrate carrying component geometry, at minimum a main chip, at least two sensor discs, a battery and fine traces or their textured equivalent, all inside the layer's thickness envelope. The adhesive layer is a thin translucent film. The release liner is the lightest thin film, modeled slightly peeled or offset as in the reference exploded views (a lifted corner or an offset tab), still a child of its node and still stacking flush at rest apart from the modeled peel. Materials follow the boards: matte off white silicone for the cover, teal as the only accent, believable under the page's existing studio lighting, which does not change.
+
+### Integration
+
+- R7 (binding to the state function): The client loads the GLB from /models/patch-one.glb during scene setup and binds nodes to model layers by name. The model may gain exactly one export, the node name mapping, mirrored in the browser twin with the drift test extended to cover it; no model output changes. Per frame, each node receives exactly what the current meshes receive: position from the model (aside in x, centre plus lift in y, both under the same Z_SCALE treatment as today), opacity by traversing its materials under the same rules as today (focus fade, x ray on the cover node only), and shadow flags. The procedural primitive construction and the procedural board and LED decoration code are removed. Callout anchors, camera, tour, gauges, chart and controls behave exactly as before.
+- R8 (loading mechanism): Rendering uses only the pinned three.js core (0.160.0, the vendored bytes unchanged). If the official GLTFLoader addon of the same pinned release is used to parse the GLB, it is vendored byte pinned the same way as the core, license header intact, and module resolution is solved in the production shape (an import map in the page markup mapping the three specifier to the vendor route is the stated acceptable shape). Any other parsing mechanism is justified in the run report against the production shape checks. The wo-gh-11 lesson binds: no served byte may depend on a bundler rewrite, and no evidence step may import the unbundled source.
+- R9 (fallback): If the GLB cannot be fetched or parsed, the page falls back to the existing procedural meshes, so a failed asset never blanks the page. The fallback is the current primitive construction retained for that path only.
+- R10 (frozen behavior): Everything else stays as proven by wo-gh-9 and wo-gh-11: routes and response shapes outside the new asset route, the main page and its one link, the page chrome, the vendored three.js bytes, the model and its outputs, the suite of page behaviors. All pre existing take apart tests keep passing with their assertions unchanged in meaning; tests that measured the primitive construction directly are updated only where this order replaces what they measure, and the updated tests say what they now prove.
+
+### Evidence and the fidelity gate
+
+- R11 (beauty renders): The Blender build writes two beauty renders into evidence/take-apart-product-model/: render-assembled.png (three quarter hero framing of the assembled product) and render-exploded.png (the five layers separated in stack order). Background is the brand paper #FAFAF6, one soft key light logic as on the boards, each render at least 800 by 800 pixels. The builder compares its own renders against the references before review, per the standing generation duty, and its output records the comparison points (silhouette, proportions, wordmark, LED, layer order, materials) and what it adjusted between attempts.
+- R12 (the same product test): Reviewer-design runs the same product test from the reference README against the references on BOTH the beauty renders and the run's contact sheet: same matte finish, same flat thin proportions, same teal LED, layer order and materials as the boards show. The assembled product must be recognizable as the Patch One of product-reference.png. A render or a sheet that reads as generic blocks fails the run, in those words. The contact sheet judging keeps the take apart spec's beat by beat discipline on top of the product test.
+- R13 (production shape): The production bundle command succeeds on the final tree with zero local patches, command and exit status recorded. The bundled output is served by a local Worker runtime and the browser pass against it records zero console errors and zero page errors, the scene ready flag set, the GLB route fetched, the five named nodes present in the loaded scene (recorded in the pass log), and a screenshot whose scene region shows the rendered product. The capture of record is scripts/capture-take-apart.mjs in its bundled form, extended for the node and asset assertions; it regenerates the five beat stills and the contact sheet under evidence/take-apart/ as before.
+- R14 (suite): The project suite passes on the final tree, including the take apart tests and the new product model tests. The one known exception: the design v4 S11 test failure that is pre existing on this branch's base and already resolved on the sibling branch anvil/run-s11-rebaseline (wo-gh-10, approved) is itemized by name in the run report, never silently absorbed and never fixed by editing another run's evidence.
+
+## Scenarios
+
+### Scenario: The asset names the product's layers
+- S1: Given the exported GLB, when its JSON chunk is parsed, then the scene's top level nodes are exactly the five FACTS layer names in stack order, each node parents at least one mesh, and each node's translation matches layerCenterMm at t=0 within 0.01.
+
+### Scenario: True scale proportions
+- S2: Given the GLB, when the assembled bounding box is measured, then the footprint is 36 by 36 within 0.5 and the total height is 2.5 within 0.1, and the layer thickness order in the geometry matches the model's thickness table.
+
+### Scenario: The route serves the asset at budget
+- S3: Given the final tree, when the worker fetch handler serves /models/patch-one.glb, then it answers 200 with content type model/gltf-binary, the bytes equal the decoded asset module exactly, and the measured size is at or under 800 KB with the number stated in the test output or the run report.
+
+### Scenario: The cover carries the product identity
+- S4: Given the cover node, when its subtree is inspected, then it carries the wordmark detail and the teal LED detail as separate modeled or textured elements (structurally: at least three meshes or a cover texture carrying both), and reviewer-design confirms both read correctly against product-reference.png in the beauty render.
+
+### Scenario: The board is a board
+- S5: Given the board node, when its subtree is inspected, then it carries at least six meshes (substrate plus components), and reviewer-design confirms the component detail reads as a real board against the quality boards.
+
+### Scenario: The product test on renders
+- S6: Given render-assembled.png and render-exploded.png, when reviewer-design runs the same product test against the references, then the assembled render is judged recognizable as the Patch One (silhouette, proportions, wordmark and LED, layer order, materials), or the review fails the run naming the gap; a render that reads as generic blocks fails in those words.
+
+### Scenario: The bundled page renders the product
+- S7: Given the bundled output served by a local Worker runtime, when a headless browser loads /take-apart, then there are zero console errors and zero page errors, the scene ready flag is set, the pass log records the GLB fetch and the five node names found in the scene, and the contact sheet shows the faithful product at every beat under the take apart spec's beat by beat judging, with the same product test applied to the sheet.
+
+### Scenario: Behavior is unchanged
+- S8: Given the change, when the project suite runs, then all pre existing take apart assertions pass in their original meaning (model outputs, gauges, focus and x ray state, quality tiers, parity, payload budgets as amended by R4 and R10), the browser pass gauge comparison at hour 200 passes, and no route outside the take apart surface changes its response.
+
+### Scenario: The build is reproducible
+- S9: Given the committed tree, when the workflow's deterministic step runs blender/build_all.py after the line, then it exits successfully and the suite's asset assertions (S1 to S3) pass against the rebuilt asset.
+
+### Scenario: The UI model built it
+- S10: Given the executed run, when the run report is read, then the builder step shows configured model gpt-6-astra, reviewer-design is among the counted reviews, and the source diffs are the builder station output.
+
+## Scope
+
+Allowed changes: new files under blender/, src/patch-one-glb.js, any vendored loader addon modules under src/ if R8's addon route is taken, tests/take-apart-product-model.test.js, evidence/take-apart-product-model/ outputs and regenerated evidence/take-apart/ outputs; edits to src/index.js limited to the new asset route (and addon routes if taken) and their imports; edits to src/take-apart-client.js limited to loading, binding, decoration removal and the fallback path; edits to src/take-apart-page.js limited to an import map if R8's addon route is taken; edits to src/take-apart-model.js and src/take-apart-model-browser.js limited to the node name mapping export and its mirror; edits to scripts/capture-take-apart.mjs limited to the asset and node assertions. Everything else is out of scope: no changes to src/facts.js, src/images.js, the main page, brand or design documents, earlier specs, earlier run evidence, the vendored three.js bytes, or the model's behavior. The operator setup commit (this spec, the work order and the execute wiring for this branch, including the Blender toolchain steps) is not part of the line's change.
+
+## Out of scope
+
+- Any change to the interaction model, the tour, the copy, the chrome or the main page.
+- Any change to the site's photographic imagery or to design/reference/.
+- Merging or deploying: this order stops at the human gate.
+# Reference boards: the production quality anchor
+
+The two boards in this folder are the quality anchor for Sentia product
+imagery. The product owner supplied them on 2026-10-30 as the standard
+that every product image for Sentia is measured against.
+
+## What the boards anchor
+
+- Photorealistic studio product photography: real materials, real light,
+  real skin. The patch reads as a physical object a camera photographed,
+  never as a stylized or toy-like render.
+- The exploded view shows each layer with believable materials: a matte
+  silicone top cover, porous comfort foam, a detailed PCB with real
+  components, and translucent adhesive and release liner films.
+- On-skin shots look like skin and product in the same photograph:
+  natural skin texture, a soft contact shadow, and the patch sitting
+  into the surface it is applied to.
+- Studio light and shadow are physically consistent across every view:
+  one light logic, soft falloff, no pasted-on look.
+
+## What a reviewer checks in any new product image
+
+- Materials read as what they are: silicone, foam, PCB, adhesive film,
+  skin.
+- Skin contact looks believable: the patch rests on the skin with a
+  contact shadow and a slight surface response, not floating above it.
+- Light and shadow stay physically consistent with the anchor boards.
+- Detail holds up at close range: fine texture on the cover, real
+  component detail on the board, clean edges.
+
+## Scope of the anchor
+
+The boards carry labels and marketing text because they are reference
+material. Website assets themselves stay free of text and labels. The
+anchor governs realism and finish, not layout or copy.
+
+## The identity anchor: product-reference.png
+
+product-reference.png is the hero image of the square product, added on
+2026-10-30 for work order wo-gh-8. The boards above anchor quality; this
+file anchors identity. The product it shows is the canonical Sentia
+Patch One: a flat, thin, matte off white square patch with strongly
+rounded corners, worn directly on the skin with no carrier or frame
+around it, the SENTIA wordmark in dark print, and a teal cyan LED line.
+
+Every product image is compared against this reference for identity:
+same matte finish, same direct skin mounting, same teal LED, same flat
+proportions. An image whose LED glows amber, whose cover reads glossy,
+which shows a fabric carrier frame, or whose patch reads thick or
+domed depicts a different product and fails review, however good it
+looks against the quality boards.
+# Builder comparison, wo-gh-12
+
+Anchors inspected: design/reference/product-reference.png, quality-board-1.png,
+and quality-board-2.png. This is the builder's comparison, not design approval.
+Reviewer-design must independently judge both beauty renders and the contact sheet.
+
+- Silhouette: the cover uses eight rounded-square cross sections rolling into a
+  shallow crown, with the specified 36 mm footprint and 9 mm corner radius.
+  It retains the reference's square identity rather than a disc or carrier frame.
+- Proportions: exported geometry is 2.5 mm overall, with the five specified
+  thicknesses. Beauty renders show that true profile. The browser preserves the
+  existing, explicitly labeled vertical scale ×8; its assembled study is therefore
+  visibly thicker than the identity photograph. Camera/framing and this treatment
+  are frozen by R7/R10, and are not silently changed to improve the capture.
+- Wordmark: dark modeled SENTIA lettering sits on the cover, centered and readable
+  from above, with no text on the other layers. Its spacing and placement follow
+  the identity reference rather than the smaller wordmark on the quality boards.
+- LED: a narrow cyan teal strip sits immediately below the wordmark in a recessed
+  dark socket. It is the only saturated accent, not amber. It has a continuous
+  illuminated strip; the photograph's partially illuminated end is not reproduced.
+- Layer order: silicone, porous foam, populated ink green PCB, translucent adhesive,
+  and frosted release liner. The liner has a slight lifted corner. The two film
+  layers are distinguishable from the opaque foam and board.
+- Materials: matte silicone, generated foam microcells and normals, individually
+  modeled processor/shield, two sensor discs, battery, plated contacts, passive
+  packages and fine traces. Films retain their authored translucency during focus
+  fading. The reference boards have denser electronics and subtler material detail;
+  the small browser study loses some of the detail visible in the beauty render.
+
+## Adjustments between attempts
+
+The first beauty attempt clipped the cover highlights and turned the paper white.
+The next attempt removed the contrast look, reduced the key light, and added a
+soft contact shadow. The key was then raised moderately to restore an off white
+rather than gray silicone finish. Background compositing uses linear equivalents
+of #FAFAF6.
+
+The initial foam UVs stretched its pores along the sides, especially in the ×8
+browser view. Side UVs now include height, with higher vertical texel density;
+the final generated pore texture has lower contrast and a direct tangent normal
+map instead of exporter-baked bump. Repeated board components were joined by
+material/part type to reduce draw calls while retaining their geometry. Shield
+metalness was reduced for readability under the page's unchanged studio lighting.
+
+The initial browser attempt exposed GLTFLoader's sanitizing of spaces in node
+names. Binding now uses its preserved original name and restores the exact model
+name on each loaded parent. No procedural decorations are added on the GLB path.
+
+The first exploded composition hid the main packages behind the foam. The final
+beauty composition increases only the render's layer separation and lowers its
+camera, exposing the populated board; its soft key is repositioned for the taller
+composition. These render-only adjustments do not alter exported geometry or the
+page's existing separation function.
+
+## Final capture inspection
+
+Inspected both generated beauty PNGs and the final bundled contact sheet.
+The beauty assembled view keeps the thin profile and readable cover identity;
+the exploded view exposes both sensor discs, the processor/shield and battery,
+with the two translucent films below the board. Floating exploded layers use the
+paper background without a distant floor shadow; the assembled view retains its
+soft contact shadow.
+
+On the sheet: assembled shows the wordmark/LED and foam texture; apart preserves
+all five layers in order; board focus lifts the populated board while the other
+layers fade and move aside; x ray further fades only the cover; mid/settle returns
+the denser five-layer composition with day-7 readings. The fixed full-explosion
+framing makes the product much smaller than the hero beat, and the fixed ×8 scale
+makes the assembled browser profile thicker than the true-scale beauty. Those
+are explicit limitations for reviewer-design to judge against the binding spec,
+not a builder-issued fidelity approval.
+# Builder implementation notes
+
+The Blender 4.5.15 script is the sole asset producer. Run:
+
+    blender --background --python blender/build_all.py
+
+It generates the base64 module and the two true-scale beauty renders. The existing
+operator workflow already installs/smoke-gates this pinned Blender and reruns the
+entry after the station; no workflow edits were needed or made by the builder.
+
+The official three.js 0.160.0 GLTFLoader and its BufferGeometryUtils dependency
+are vendored as literal base64 modules, with the upstream MIT license prefixed.
+Their upstream implementation bytes are otherwise unchanged. The page import map
+resolves `three` and `GLTFLoader`; the dependency's relative URL resolves to its
+own same-origin route. No served module needs a Worker bundler rewrite.
+
+Decoded SHA-256 values:
+
+- GLTFLoader: 6dccb55803632351ba4f6c6f36ab3d6436514cc64555241bfcaf2903aedc48d5
+- BufferGeometryUtils: 7b05041fa3b3c7b040211dabe62f365a151027654191ac1a5ac8a379913f9338
+
+Only the new product-model test was corrected: its standalone assertion expected
+cover center 1.9 mm, inconsistent with the existing function and its own thickness
+table. The cover center is 0.7 + 0.5 + 0.4 + 0.3 + 0.6/2 = 2.2 mm. All pre-existing
+take-apart assertions remain unchanged.
+
+Known suite exception, not repaired or absorbed:
+`S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/`
+from tests/design-v4-square-product.test.js. The work order identifies this as
+pre-existing and resolved on sibling anvil/run-s11-rebaseline (wo-gh-10).
+Earlier run evidence has not been edited.
+
+ANVIL owns station routing, independent reviews, and the run verdict. This builder
+has not authored approval, deployed, or merged. The five-review count and final
+human gate remain the responsibility of the downstream stations and operator.
+
+The final GLB is 386,708 bytes (377.6 KiB), below the 819,200 byte limit.
+The byte reproducibility check initially exposed nondeterministic rounding of
+unused bevel-generated cube UVs (about 1e-7). Removing UV channels from those
+untextured components makes the generated module byte identical across independent
+exports; no GLB bytes are edited after export. The full entry is rerun after this
+fix and its module is compared with the independent exports.
+
+The browser capture retains the original tour assertions. One intermediate run
+hit its tour-clock timeout; a subsequent run reached all five beats. Asset-failure
+probes explicitly abort the GLB fetch and serve invalid GLB bytes, respectively;
+these must reach a ready procedural scene. Their wait allows 60 seconds for
+software WebGL compilation. Final pass/fail is recorded in browser-pass.log.
+
+## Final verification
+
+- Full deterministic entry completed under Blender 4.5.15; the output module
+  matches both independent export checks byte for byte (reproducibility.log).
+- Production command: wrangler deploy --dry-run --outdir <temporary directory>,
+  exit 0, zero local patches. Served using wrangler dev <bundle>/index.js
+  --no-bundle --local. See bundle-build.log and browser-pass.log.
+- Final bundled browser pass: zero console errors, zero page errors, scene ready,
+  GLB HTTP 200, all five exact node names, hour-200 gauge comparison PASS,
+  fetch-abort and invalid-GLB procedural recovery PASS. Five beat stills and the
+  contact sheet were regenerated from that bundled session.
+- node --test tests/take-apart-product-model.test.js tests/take-apart.test.js
+  tests/take-apart-bundling.test.js: 61 passed, 0 failed.
+- npm test: 185 tests, 183 passed, 1 skipped, 1 failed. The only failure is the
+  pre-existing design-v4 S11 assertion named above. See test-suite.log.
+- git diff --check: clean. No main-page imagery, facts, vendor core bytes,
+  earlier run evidence, deployment, or merge changed.
+
+exec
+/bin/bash -lc "rg --files -g AGENTS.md -g '*token*'; git status --short; cat evidence/take-apart-product-model/browser-pass.log; cat src/take-apart-page.js" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+ M evidence/take-apart/beat-apart.png
+ M evidence/take-apart/beat-assembled.png
+ M evidence/take-apart/beat-board.png
+ M evidence/take-apart/beat-mid.png
+ M evidence/take-apart/beat-xray.png
+ M evidence/take-apart/contact-sheet.png
+ M scripts/capture-take-apart.mjs
+ M src/index.js
+ M src/take-apart-client.js
+ M src/take-apart-model-browser.js
+ M src/take-apart-model.js
+ M src/take-apart-page.js
+?? blender/
+?? evidence/take-apart-product-model/
+?? runs/wo-gh-12/
+?? src/patch-one-glb.js
+?? src/vendor-buffer-geometry-utils.js
+?? src/vendor-gltf-loader.js
+?? tests/take-apart-product-model.test.js
+Bundled Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-bundle-auS75b/index.js --no-bundle --local --ip 127.0.0.1 --port 8791
+console errors: 0
+page errors: 0
+TakeApartModel: object
+scene ready: true
+canvas: 1022x559; layout: 1022x559; DPR: 1
+gauge comparison: PASS at hour 200
+asset failure checks: PASS (fetch and parse)
+GLB /models/patch-one.glb: status 200; bytes 386708
+loaded nodes: 5; Top cover; Comfort foam; Sensing and processing board; Adhesive layer; Release liner
+vendor /vendor/three.module.min.js: status 200; decoded bytes 670681
+
+
+import { FACTS } from './facts.js';
+import { LAYERS, gaugeReadout } from './take-apart-model.js';
+export function renderTakeApartPage() {
+  const initial = gaugeReadout(0);
+  return `<!doctype html><html lang="en"><head>
+<script type="importmap">{"imports":{"three":"/vendor/three.module.min.js","GLTFLoader":"/vendor/loaders/GLTFLoader.js"}}</script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Take apart — ${FACTS.product}</title><link rel="icon" href="/favicon.ico"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet"><style>
+:root{--paper:#FAFAF6;--ink:#12211C;--teal:#0E7C66;--muted:#53685C;--line:#DFE7DF;--body:#4A5D54;--mint:#EFF4EE}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,Arial,sans-serif;font-size:17px;line-height:1.65}button,input{font:inherit}button,a,input{touch-action:manipulation}a{color:inherit;text-decoration:none}header{margin:0 auto;max-width:1440px;padding:16px clamp(24px,5vw,80px);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.brand{font-family:'Space Grotesk',sans-serif;font-size:27px;letter-spacing:-1.4px}.brand span{color:var(--teal)}header a:last-child{font-size:13px}main{max-width:1440px;margin:auto;padding:24px clamp(24px,5vw,80px)}.eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}h1{font-family:'Space Grotesk',sans-serif;font-size:43px;font-weight:300;letter-spacing:-.04em;margin:8px 0}p{line-height:1.65}.intro{display:flex;justify-content:space-between;align-items:end}.intro p{font-size:18px;color:var(--body);max-width:400px;margin:0 0 8px}.workbench{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:24px;margin-top:24px}.viewport{height:520px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}#scene{width:100%;height:100%;display:block;touch-action:none;cursor:grab}#scene:active{cursor:grabbing}.live-readout{position:absolute;top:0;left:0;pointer-events:none}.live-readout .temperature{font-size:56px;margin-top:8px}.live-readout .caption{display:none}.scene-note{position:absolute;left:0;bottom:16px;font-size:11px;color:var(--muted);pointer-events:none}.scene-note.right{left:auto;right:0}#callouts{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}#fallback{position:absolute;inset:30%;font-size:16px;line-height:1.7}#fallback[hidden]{display:none}.panel{border-left:1px solid var(--line);padding-left:24px}.live-label{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:1.4px;text-transform:uppercase}.dot{width:6px;height:6px;border-radius:50%;background:var(--teal)}.temperature{font-family:'Space Grotesk',sans-serif;font-size:56px;letter-spacing:-4px;margin:8px 0 0;line-height:1.1}.temperature small{font-size:22px;letter-spacing:0}.caption{font-size:12px;color:var(--muted);margin:8px 0 24px}.gauges{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}.gauge{padding:16px 0;border-bottom:1px solid var(--line)}.gauge:last-child{grid-column:1 / -1}.gauge .value{font-family:'Space Grotesk',sans-serif;font-size:32px}.gauge small{font-size:11px;color:var(--muted);display:block;margin-bottom:8px}.unit{font-size:12px;color:var(--muted)}#chart{width:100%;height:90px;display:block;margin-top:16px}.chart-caption{font-size:11px;display:flex;justify-content:space-between;color:var(--muted)}.panel-note{font-size:11px;color:var(--muted);margin-top:24px}.controls{margin-top:24px}.sliders{display:grid;grid-template-columns:1fr 1fr;gap:40px}.control-heading{display:flex;justify-content:space-between;font-size:12px;margin-bottom:8px}.control-heading span{color:var(--muted)}input[type=range]{width:100%;accent-color:var(--teal);height:44px;margin:0;cursor:pointer}.endpoints{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}.button-row{display:flex;align-items:center;gap:8px;margin-top:24px;flex-wrap:wrap}button{background:transparent;border:1px solid var(--line);border-radius:5px;padding:8px 16px;color:var(--ink);font-size:11px;min-height:44px;min-width:44px;cursor:pointer}button:hover{border-color:var(--teal)}button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}button.layer[aria-pressed=true]{background:var(--teal);border-color:var(--teal)}.camera-group{display:flex;gap:8px;margin-left:auto}.footer{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin-top:24px;padding-top:16px;font-size:11px;color:var(--muted)}#tour-status{color:var(--teal)}#tour-cursor{position:fixed;z-index:10;width:25px;height:25px;border:2px solid var(--teal);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:left .2s,top .2s;box-shadow:0 0 0 5px var(--mint)}#tour-cursor.pressing{background:var(--mint);transform:translate(-50%,-50%) scale(.8)}:focus-visible{outline:3px solid var(--teal);outline-offset:4px}@media(min-width:1400px){.viewport{height:560px}}@media(max-width:950px){.workbench{grid-template-columns:minmax(0,1fr) 195px;gap:16px}.panel{padding-left:16px}.temperature{font-size:54px}.camera-group{margin-left:0}}@media(max-width:719px){header{padding:16px 24px}.intro{display:block}h1{font-size:36px}.workbench{display:flex;flex-direction:column}.viewport{height:410px}#callouts{display:none}.panel{border-left:0;padding:0}.panel .gauges{grid-template-columns:repeat(3,1fr)}.panel .gauge:last-child{grid-column:auto}.gauges{grid-column:2;grid-row:1 / 5}.gauge{padding:16px 0}.temperature{font-size:48px}.caption{margin:0}.panel-note{display:none}.chart-wrap{grid-column:1 / -1}.sliders{gap:24px}.scene-note{font-size:11px}.button-row{gap:8px}button{font-size:11px}.footer{gap:16px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+.eyebrow,.live-label,.scene-note,.endpoints,.chart-caption,.footer{font-family:monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase}.panel-note{font-size:17px;color:var(--body)}.temperature,.gauge .value{font-weight:300}header{gap:16px}header a{min-height:44px;display:inline-flex;align-items:center}.skip-link{position:absolute;left:24px;top:8px;transform:translateY(-200%);background:var(--paper);padding:8px 16px;z-index:20}.skip-link:focus{transform:none}.static-layers{display:none}.static-layers li{margin:8px 0}.static-layers ul{padding-left:24px}#fallback{inset:32% 16%;margin:0;padding:16px;background:var(--paper);color:var(--body)}
+</style><noscript><style>#fallback[hidden],.static-layers{display:block!important}#scene,#callouts,.controls,#tour-status,.scene-note{display:none!important}</style></noscript></head><body><a class="skip-link" href="#take-apart">Skip to study</a><header><a class="brand" href="/">sentia<span>·</span></a><a href="/">← Back to the whole picture</a></header><main tabindex="-1" id="take-apart" data-tour-beat="off"><div class="intro"><div><div class="eyebrow">${FACTS.product} / Interactive study</div><h1>A little space. A lot inside.</h1></div><p>Take apart the layers. Follow a day on skin.<br>One model connects every part and reading.</p></div><div class="workbench"><section aria-label="Interactive layer study"><div class="viewport"><canvas id="scene" aria-label="Three dimensional Patch One. Drag to orbit, scroll to zoom."></canvas><div class="live-readout"><div class="live-label"><i class="dot"></i>Simulated skin temperature</div><div class="temperature"><span data-gauge="temperature">${initial.temperature}</span><small> °C</small></div><div class="caption">A rhythm beneath the surface.</div></div><svg id="callouts" aria-hidden="true"></svg><p id="fallback" hidden>This interactive study needs JavaScript and WebGL. Explore the layer list and initial simulated readings below.</p><div class="scene-note">STUDY MODEL · vertical scale ×8</div><div class="scene-note right">Drag to orbit · Scroll to zoom</div></div></section><aside class="panel" aria-label="Simulated wear readings"><div class="eyebrow" style="margin-bottom:24px">Wear simulation</div><div class="gauges"><div class="gauge"><small>Hydration index</small><span class="value" data-gauge="hydration">${initial.hydration}</span><span class="unit"> / index</span></div><div class="gauge"><small>Battery</small><span class="value" data-gauge="battery">${initial.battery}</span><span class="unit"> %</span></div><div class="gauge"><small>Time on skin</small><span class="unit">Day </span><span class="value" data-gauge="day">${initial.day}</span><span class="unit"> of ${FACTS.wearDays}</span></div></div><div class="chart-wrap"><canvas id="chart" aria-label="Skin temperature over the wear period"></canvas><div class="chart-caption"><span>Application</span><span>End of wear</span></div></div><p class="panel-note">Illustrative wellness readings.<br>A study of the system, not clinical data.</p></aside></div><section class="static-layers" aria-label="Study layer thicknesses"><h2>The assembled stack</h2><ul>${LAYERS.map(layer => `<li>${layer.name} — ${layer.thicknessMm} mm</li>`).join('')}</ul></section><section class="controls" aria-label="Study controls"><div class="sliders"><label><div class="control-heading">Separation <span>Explore the stack</span></div><input id="separation" aria-label="Separation" type="range" min="0" max="1" step="0.001" value="0"><div class="endpoints"><span>Assembled</span><span>Layer by layer</span></div></label><label><div class="control-heading">Wear time <span>Day <output id="wear-day">${initial.day}</output></span></div><input id="wear" aria-label="Wear time in hours" type="range" min="0" max="336" step="0.25" value="0"><div class="endpoints"><span>Application</span><span>End of wear</span></div></label></div><div class="button-row">${FACTS.layers.map((l,i)=>`<button class="layer" data-layer="${i}" aria-pressed="false">${l.name}</button>`).join('')}<button id="xray" aria-pressed="false">X ray</button><div class="camera-group" aria-label="Camera presets">${['Hero','Top','Side'].map(n=>`<button data-camera="${n}" aria-pressed="${n==='Hero'}">${n}</button>`).join('')}</div></div></section><div class="footer"><span>Five layers · ${FACTS.thicknessMm} mm assembled profile · Procedural geometry</span><span id="tour-status">Explore freely · Tour begins when idle</span></div></main><div id="tour-cursor" hidden></div><script src="/take-apart-model.js"></script><script type="module" src="/take-apart.js"></script></body></html>`;
+}
+
+exec
+/bin/bash -lc "cat design/reference/README.md; sed -n '55,150p' .openspec/specs/take-apart-product-model/spec.md; rg -n 'material|roughness|metallic|LED|led|foam|film|cover|crown|transmission' blender/build_patch_one.py; git diff -- src/take-apart-page.js src/take-apart-client.js" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+# Reference boards: the production quality anchor
+
+The two boards in this folder are the quality anchor for Sentia product
+imagery. The product owner supplied them on 2026-10-30 as the standard
+that every product image for Sentia is measured against.
+
+## What the boards anchor
+
+- Photorealistic studio product photography: real materials, real light,
+  real skin. The patch reads as a physical object a camera photographed,
+  never as a stylized or toy-like render.
+- The exploded view shows each layer with believable materials: a matte
+  silicone top cover, porous comfort foam, a detailed PCB with real
+  components, and translucent adhesive and release liner films.
+- On-skin shots look like skin and product in the same photograph:
+  natural skin texture, a soft contact shadow, and the patch sitting
+  into the surface it is applied to.
+- Studio light and shadow are physically consistent across every view:
+  one light logic, soft falloff, no pasted-on look.
+
+## What a reviewer checks in any new product image
+
+- Materials read as what they are: silicone, foam, PCB, adhesive film,
+  skin.
+- Skin contact looks believable: the patch rests on the skin with a
+  contact shadow and a slight surface response, not floating above it.
+- Light and shadow stay physically consistent with the anchor boards.
+- Detail holds up at close range: fine texture on the cover, real
+  component detail on the board, clean edges.
+
+## Scope of the anchor
+
+The boards carry labels and marketing text because they are reference
+material. Website assets themselves stay free of text and labels. The
+anchor governs realism and finish, not layout or copy.
+
+## The identity anchor: product-reference.png
+
+product-reference.png is the hero image of the square product, added on
+2026-10-30 for work order wo-gh-8. The boards above anchor quality; this
+file anchors identity. The product it shows is the canonical Sentia
+Patch One: a flat, thin, matte off white square patch with strongly
+rounded corners, worn directly on the skin with no carrier or frame
+around it, the SENTIA wordmark in dark print, and a teal cyan LED line.
+
+Every product image is compared against this reference for identity:
+same matte finish, same direct skin mounting, same teal LED, same flat
+proportions. An image whose LED glows amber, whose cover reads glossy,
+which shows a fabric carrier frame, or whose patch reads thick or
+domed depicts a different product and fails review, however good it
+looks against the quality boards.
+### Scenario: True scale proportions
+- S2: Given the GLB, when the assembled bounding box is measured, then the footprint is 36 by 36 within 0.5 and the total height is 2.5 within 0.1, and the layer thickness order in the geometry matches the model's thickness table.
+
+### Scenario: The route serves the asset at budget
+- S3: Given the final tree, when the worker fetch handler serves /models/patch-one.glb, then it answers 200 with content type model/gltf-binary, the bytes equal the decoded asset module exactly, and the measured size is at or under 800 KB with the number stated in the test output or the run report.
+
+### Scenario: The cover carries the product identity
+- S4: Given the cover node, when its subtree is inspected, then it carries the wordmark detail and the teal LED detail as separate modeled or textured elements (structurally: at least three meshes or a cover texture carrying both), and reviewer-design confirms both read correctly against product-reference.png in the beauty render.
+
+### Scenario: The board is a board
+- S5: Given the board node, when its subtree is inspected, then it carries at least six meshes (substrate plus components), and reviewer-design confirms the component detail reads as a real board against the quality boards.
+
+### Scenario: The product test on renders
+- S6: Given render-assembled.png and render-exploded.png, when reviewer-design runs the same product test against the references, then the assembled render is judged recognizable as the Patch One (silhouette, proportions, wordmark and LED, layer order, materials), or the review fails the run naming the gap; a render that reads as generic blocks fails in those words.
+
+### Scenario: The bundled page renders the product
+- S7: Given the bundled output served by a local Worker runtime, when a headless browser loads /take-apart, then there are zero console errors and zero page errors, the scene ready flag is set, the pass log records the GLB fetch and the five node names found in the scene, and the contact sheet shows the faithful product at every beat under the take apart spec's beat by beat judging, with the same product test applied to the sheet.
+
+### Scenario: Behavior is unchanged
+- S8: Given the change, when the project suite runs, then all pre existing take apart assertions pass in their original meaning (model outputs, gauges, focus and x ray state, quality tiers, parity, payload budgets as amended by R4 and R10), the browser pass gauge comparison at hour 200 passes, and no route outside the take apart surface changes its response.
+
+### Scenario: The build is reproducible
+- S9: Given the committed tree, when the workflow's deterministic step runs blender/build_all.py after the line, then it exits successfully and the suite's asset assertions (S1 to S3) pass against the rebuilt asset.
+
+### Scenario: The UI model built it
+- S10: Given the executed run, when the run report is read, then the builder step shows configured model gpt-6-astra, reviewer-design is among the counted reviews, and the source diffs are the builder station output.
+
+## Scope
+
+Allowed changes: new files under blender/, src/patch-one-glb.js, any vendored loader addon modules under src/ if R8's addon route is taken, tests/take-apart-product-model.test.js, evidence/take-apart-product-model/ outputs and regenerated evidence/take-apart/ outputs; edits to src/index.js limited to the new asset route (and addon routes if taken) and their imports; edits to src/take-apart-client.js limited to loading, binding, decoration removal and the fallback path; edits to src/take-apart-page.js limited to an import map if R8's addon route is taken; edits to src/take-apart-model.js and src/take-apart-model-browser.js limited to the node name mapping export and its mirror; edits to scripts/capture-take-apart.mjs limited to the asset and node assertions. Everything else is out of scope: no changes to src/facts.js, src/images.js, the main page, brand or design documents, earlier specs, earlier run evidence, the vendored three.js bytes, or the model's behavior. The operator setup commit (this spec, the work order and the execute wiring for this branch, including the Blender toolchain steps) is not part of the line's change.
+
+## Out of scope
+
+- Any change to the interaction model, the tour, the copy, the chrome or the main page.
+- Any change to the site's photographic imagery or to design/reference/.
+- Merging or deploying: this order stops at the human gate.
+15:NAMES = ['Top cover', 'Comfort foam', 'Sensing and processing board', 'Adhesive layer', 'Release liner']
+19:def material(name, rgb, roughness=.7, metallic=0, alpha=1):
+20:    m = bpy.data.materials.new(name)
+22:    p = m.node_tree.nodes.get('Principled BSDF')
+24:    p.inputs['Roughness'].default_value = roughness
+25:    p.inputs['Metallic'].default_value = metallic
+35:    obj.data.materials.append(mat)
+100:def foam_texture(mat):
+114:    img=bpy.data.images.new('Generated foam microcells',width=size,height=size)
+118:    nt=mat.node_tree;p=nt.nodes.get('Principled BSDF')
+123:    normal_image=bpy.data.images.new('Generated foam pore normals',width=size,height=size)
+146:    silicone=material('Matte off white silicone',(.83,.82,.77),.82)
+147:    ink=material('SENTIA charcoal ink',(.018,.024,.021),.9)
+148:    teal=material('Teal cyan LED',(.015,.65,.59),.3)
+149:    p=teal.node_tree.nodes.get('Principled BSDF');p.inputs['Emission Color'].default_value=(.01,.65,.59,1);p.inputs['Emission Strength'].default_value=.5
+150:    foam=material('Porous warm gray foam',(.72,.70,.65),.95);foam_texture(foam)
+151:    pcb=material('Ink green solder mask',(.014,.052,.037),.65)
+152:    chip=material('Ceramic packages',(.018,.022,.021),.6)
+153:    metal=material('Brushed component shielding',(.38,.41,.39),.36,.5)
+154:    trace=material('Muted plated contacts',(.39,.33,.20),.4,.72)
+155:    film=material('Translucent adhesive film',(.77,.83,.78),.28,alpha=.38)
+156:    liner=material('Frosted release film',(.9,.91,.86),.52,alpha=.82)
+161:    # Several cross sections roll the edge into a very gentle crown, not a box bevel.
+166:    box('LED recessed socket',parents[0],metal,(0,-3.2,.282),(10,.82,.026),.012)
+167:    box('Teal LED line',parents[0],teal,(0,-3.2,.301),(9.6,.55,.018),.008)
+168:    shell('Microcell comfort foam',parents[1],foam,[(.985,-.35),(1,-.28),(1,.27),(.985,.35)])
+173:    box('Thin film battery',b,metal,(7,4,.075),(9,12,.3),.06)
+194:    # Batch repeated parts without losing the independently modeled components.
+201:    shell('Optically translucent adhesive',parents[3],film,[(.99,-.2),(.996,-.16),(.996,.16),(.99,.2)])
+202:    shell('Peeled release liner',parents[4],liner,[(1,-.15),(1,.15)],peel=True)
+213:    # Studio render uses the same exported geometry and materials, true scale.
+217:    scene.render.film_transparent=True
+226:    floor.data.materials.append(material('Studio shadow surface',(.955973,.955973,.921582),.85))
+232:    for exploded,file in [(False,'render-assembled.png'),(True,'render-exploded.png')]:
+diff --git a/src/take-apart-client.js b/src/take-apart-client.js
+index be77702..4be2279 100644
+--- a/src/take-apart-client.js
++++ b/src/take-apart-client.js
+@@ -61,6 +61,23 @@ function box(parent, size, position, color, roughness=.65) {
+   const mesh = new THREE.Mesh(new THREE.BoxGeometry(...size), new THREE.MeshStandardMaterial({ color,roughness }));
+   mesh.position.set(...position); mesh.castShadow = true; parent.add(mesh); return mesh;
+ }
++function buildProceduralFallback() {
++  const colors = [0xeeeae0,0xd1cfc3,0x12211c,0xe2e8d9,0xf0eee7];
++  meshes = M.LAYERS.map((layer,i) => {
++    const mesh = new THREE.Mesh(roundedGeometry(layer.thicknessMm*Z_SCALE),new THREE.MeshStandardMaterial({ color:colors[i], roughness:i===2?.58:.82, transparent:true }));
++    mesh.castShadow=true; mesh.receiveShadow=true; return mesh;
++  });
++  box(meshes[0],[12,.06,.38],[0,M.LAYERS[0].thicknessMm*Z_SCALE/2+.04,8],0x0e7c66);
++  const boardTop = M.LAYERS[2].thicknessMm*Z_SCALE/2+.04;
++  // Printed traces and flush components stay inside the study layer envelope.
++  for (let i=0;i<6;i++) {
++    box(meshes[2],[.15,.04,15],[i*2.3-6,boardTop,-1],0x389887);
++    box(meshes[2],[10,.04,.15],[1,boardTop,i*2.1-5],0x389887);
++  }
++  box(meshes[2],[7,.08,7],[0,boardTop,0],0x0e2722);
++  box(meshes[2],[5,.08,8],[-10,boardTop,3],0xa4b2a1);
++  for(let i=0;i<4;i++) box(meshes[2],[2,.06,1.2],[7,boardTop,i*3-4],0x8fa68d);
++}
+ async function initScene() {
+   renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
+   renderer.setPixelRatio(quality.pixelRatioCap); renderer.setClearColor(0xfafaf6);
+@@ -75,21 +92,37 @@ async function initScene() {
+   key.shadow.bias = -.0003; key.shadow.normalBias = .15; key.shadow.radius = 5; key.shadow.blurSamples = 8; scene.add(key);
+   const ground = new THREE.Mesh(new THREE.PlaneGeometry(1000,1000),new THREE.ShadowMaterial({ opacity:.12 }));
+   ground.rotation.x = -Math.PI/2; ground.position.y=-.15; ground.receiveShadow=true; scene.add(ground);
+-  const colors = [0xeeeae0,0xd1cfc3,0x12211c,0xe2e8d9,0xf0eee7];
+-  meshes = M.LAYERS.map((layer,i) => {
+-    const mesh = new THREE.Mesh(roundedGeometry(layer.thicknessMm*Z_SCALE),new THREE.MeshStandardMaterial({ color:colors[i], roughness:i===2?.58:.82, transparent:true }));
+-    mesh.castShadow=true; mesh.receiveShadow=true; scene.add(mesh); return mesh;
+-  });
+-  box(meshes[0],[12,.06,.38],[0,M.LAYERS[0].thicknessMm*Z_SCALE/2+.04,8],0x0e7c66);
+-  const boardTop = M.LAYERS[2].thicknessMm*Z_SCALE/2+.04;
+-  // Printed traces and flush components stay inside the study layer envelope.
+-  for (let i=0;i<6;i++) {
+-    box(meshes[2],[.15,.04,15],[i*2.3-6,boardTop,-1],0x389887);
+-    box(meshes[2],[10,.04,.15],[1,boardTop,i*2.1-5],0x389887);
++  try {
++    const { GLTFLoader } = await import('GLTFLoader');
++    const gltf = await new GLTFLoader().loadAsync('/models/patch-one.glb');
++    if (gltf.scene.children.length !== M.NODE_NAMES.length) throw new Error('Invalid layer count');
++    meshes = M.NODE_NAMES.map(name => {
++      const node = gltf.scene.children.find(child => (child.userData.name || child.name) === name);
++      if (!node) throw new Error('Missing layer: '+name);
++      node.name = name;
++      node.scale.y = Z_SCALE;
++      return node;
++    });
++    root.dataset.modelNodes = JSON.stringify(meshes.map(node => node.name));
++    root.dataset.modelSource = 'glb';
++  } catch (error) {
++    // Asset/network/parser failure keeps the original study usable.
++    buildProceduralFallback();
++    root.dataset.modelSource = 'procedural';
+   }
+-  box(meshes[2],[7,.08,7],[0,boardTop,0],0x0e2722);
+-  box(meshes[2],[5,.08,8],[-10,boardTop,3],0xa4b2a1);
+-  for(let i=0;i<4;i++) box(meshes[2],[2,.06,1.2],[7,boardTop,i*3-4],0x8fa68d);
++  meshes.forEach(node => {
++    node.traverse(object => {
++      if (!object.material) return;
++      const materials = Array.isArray(object.material) ? object.material : [object.material];
++      // A layer owns its material state even when glTF shares a material.
++      const owned = materials.map(material => {
++        const copy = material.clone(); copy.userData.baseOpacity = copy.opacity; return copy;
++      });
++      object.material = Array.isArray(object.material) ? owned : owned[0];
++      object.castShadow = true; object.receiveShadow = true;
++    });
++    scene.add(node);
++  });
+   const ns='http://www.w3.org/2000/svg';
+   M.LAYERS.forEach((layer,i) => {
+     const group=document.createElementNS(ns,'g'); group.dataset.layer=i;
+@@ -114,9 +147,15 @@ function updateScene(instant=false) {
+   const bounds = new THREE.Box3();
+   meshes.forEach((mesh,i)=> {
+     const layer=model.layers[i]; mesh.position.set(layer.asideMm,(layer.centerMm+layer.liftMm)*Z_SCALE,0);
+-    mesh.traverse(object=> { if(object.material){const transparent=layer.opacity<1;
+-      if(object.material.transparent!==transparent){object.material.transparent=transparent;object.material.needsUpdate=true;}
+-      object.material.opacity=layer.opacity;object.material.depthWrite=!transparent;object.castShadow=!transparent;} });
++    mesh.traverse(object=> { if(object.material){
++      const materials=Array.isArray(object.material)?object.material:[object.material];
++      for(const material of materials){
++        const opacity=material.userData.baseOpacity*layer.opacity, transparent=opacity<1;
++        if(material.transparent!==transparent){material.transparent=transparent;material.needsUpdate=true;}
++        material.opacity=opacity;material.depthWrite=!transparent;
++      }
++      object.castShadow=materials.every(material=>material.opacity===1);
++    } });
+     // The projection frames the same model bounds, with a stable margin for labels.
+     for(const x of [-18,18]) for(const z of [-18,18]) for(const dy of [-layer.thicknessMm*4,layer.thicknessMm*4]) {
+       bounds.expandByPoint(new THREE.Vector3(mesh.position.x+x,mesh.position.y+dy,z).applyMatrix4(camera.matrixWorldInverse));
+diff --git a/src/take-apart-page.js b/src/take-apart-page.js
+index 35455d6..77a851b 100644
+--- a/src/take-apart-page.js
++++ b/src/take-apart-page.js
+@@ -2,7 +2,8 @@ import { FACTS } from './facts.js';
+ import { LAYERS, gaugeReadout } from './take-apart-model.js';
+ export function renderTakeApartPage() {
+   const initial = gaugeReadout(0);
+-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Take apart — ${FACTS.product}</title><link rel="icon" href="/favicon.ico"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet"><style>
++  return `<!doctype html><html lang="en"><head>
++<script type="importmap">{"imports":{"three":"/vendor/three.module.min.js","GLTFLoader":"/vendor/loaders/GLTFLoader.js"}}</script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Take apart — ${FACTS.product}</title><link rel="icon" href="/favicon.ico"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet"><style>
+ :root{--paper:#FAFAF6;--ink:#12211C;--teal:#0E7C66;--muted:#53685C;--line:#DFE7DF;--body:#4A5D54;--mint:#EFF4EE}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,Arial,sans-serif;font-size:17px;line-height:1.65}button,input{font:inherit}button,a,input{touch-action:manipulation}a{color:inherit;text-decoration:none}header{margin:0 auto;max-width:1440px;padding:16px clamp(24px,5vw,80px);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.brand{font-family:'Space Grotesk',sans-serif;font-size:27px;letter-spacing:-1.4px}.brand span{color:var(--teal)}header a:last-child{font-size:13px}main{max-width:1440px;margin:auto;padding:24px clamp(24px,5vw,80px)}.eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}h1{font-family:'Space Grotesk',sans-serif;font-size:43px;font-weight:300;letter-spacing:-.04em;margin:8px 0}p{line-height:1.65}.intro{display:flex;justify-content:space-between;align-items:end}.intro p{font-size:18px;color:var(--body);max-width:400px;margin:0 0 8px}.workbench{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:24px;margin-top:24px}.viewport{height:520px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}#scene{width:100%;height:100%;display:block;touch-action:none;cursor:grab}#scene:active{cursor:grabbing}.live-readout{position:absolute;top:0;left:0;pointer-events:none}.live-readout .temperature{font-size:56px;margin-top:8px}.live-readout .caption{display:none}.scene-note{position:absolute;left:0;bottom:16px;font-size:11px;color:var(--muted);pointer-events:none}.scene-note.right{left:auto;right:0}#callouts{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}#fallback{position:absolute;inset:30%;font-size:16px;line-height:1.7}#fallback[hidden]{display:none}.panel{border-left:1px solid var(--line);padding-left:24px}.live-label{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:1.4px;text-transform:uppercase}.dot{width:6px;height:6px;border-radius:50%;background:var(--teal)}.temperature{font-family:'Space Grotesk',sans-serif;font-size:56px;letter-spacing:-4px;margin:8px 0 0;line-height:1.1}.temperature small{font-size:22px;letter-spacing:0}.caption{font-size:12px;color:var(--muted);margin:8px 0 24px}.gauges{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}.gauge{padding:16px 0;border-bottom:1px solid var(--line)}.gauge:last-child{grid-column:1 / -1}.gauge .value{font-family:'Space Grotesk',sans-serif;font-size:32px}.gauge small{font-size:11px;color:var(--muted);display:block;margin-bottom:8px}.unit{font-size:12px;color:var(--muted)}#chart{width:100%;height:90px;display:block;margin-top:16px}.chart-caption{font-size:11px;display:flex;justify-content:space-between;color:var(--muted)}.panel-note{font-size:11px;color:var(--muted);margin-top:24px}.controls{margin-top:24px}.sliders{display:grid;grid-template-columns:1fr 1fr;gap:40px}.control-heading{display:flex;justify-content:space-between;font-size:12px;margin-bottom:8px}.control-heading span{color:var(--muted)}input[type=range]{width:100%;accent-color:var(--teal);height:44px;margin:0;cursor:pointer}.endpoints{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}.button-row{display:flex;align-items:center;gap:8px;margin-top:24px;flex-wrap:wrap}button{background:transparent;border:1px solid var(--line);border-radius:5px;padding:8px 16px;color:var(--ink);font-size:11px;min-height:44px;min-width:44px;cursor:pointer}button:hover{border-color:var(--teal)}button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}button.layer[aria-pressed=true]{background:var(--teal);border-color:var(--teal)}.camera-group{display:flex;gap:8px;margin-left:auto}.footer{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin-top:24px;padding-top:16px;font-size:11px;color:var(--muted)}#tour-status{color:var(--teal)}#tour-cursor{position:fixed;z-index:10;width:25px;height:25px;border:2px solid var(--teal);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:left .2s,top .2s;box-shadow:0 0 0 5px var(--mint)}#tour-cursor.pressing{background:var(--mint);transform:translate(-50%,-50%) scale(.8)}:focus-visible{outline:3px solid var(--teal);outline-offset:4px}@media(min-width:1400px){.viewport{height:560px}}@media(max-width:950px){.workbench{grid-template-columns:minmax(0,1fr) 195px;gap:16px}.panel{padding-left:16px}.temperature{font-size:54px}.camera-group{margin-left:0}}@media(max-width:719px){header{padding:16px 24px}.intro{display:block}h1{font-size:36px}.workbench{display:flex;flex-direction:column}.viewport{height:410px}#callouts{display:none}.panel{border-left:0;padding:0}.panel .gauges{grid-template-columns:repeat(3,1fr)}.panel .gauge:last-child{grid-column:auto}.gauges{grid-column:2;grid-row:1 / 5}.gauge{padding:16px 0}.temperature{font-size:48px}.caption{margin:0}.panel-note{display:none}.chart-wrap{grid-column:1 / -1}.sliders{gap:24px}.scene-note{font-size:11px}.button-row{gap:8px}button{font-size:11px}.footer{gap:16px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+ .eyebrow,.live-label,.scene-note,.endpoints,.chart-caption,.footer{font-family:monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase}.panel-note{font-size:17px;color:var(--body)}.temperature,.gauge .value{font-weight:300}header{gap:16px}header a{min-height:44px;display:inline-flex;align-items:center}.skip-link{position:absolute;left:24px;top:8px;transform:translateY(-200%);background:var(--paper);padding:8px 16px;z-index:20}.skip-link:focus{transform:none}.static-layers{display:none}.static-layers li{margin:8px 0}.static-layers ul{padding-left:24px}#fallback{inset:32% 16%;margin:0;padding:16px;background:var(--paper);color:var(--body)}
+ </style><noscript><style>#fallback[hidden],.static-layers{display:block!important}#scene,#callouts,.controls,#tour-status,.scene-note{display:none!important}</style></noscript></head><body><a class="skip-link" href="#take-apart">Skip to study</a><header><a class="brand" href="/">sentia<span>·</span></a><a href="/">← Back to the whole picture</a></header><main tabindex="-1" id="take-apart" data-tour-beat="off"><div class="intro"><div><div class="eyebrow">${FACTS.product} / Interactive study</div><h1>A little space. A lot inside.</h1></div><p>Take apart the layers. Follow a day on skin.<br>One model connects every part and reading.</p></div><div class="workbench"><section aria-label="Interactive layer study"><div class="viewport"><canvas id="scene" aria-label="Three dimensional Patch One. Drag to orbit, scroll to zoom."></canvas><div class="live-readout"><div class="live-label"><i class="dot"></i>Simulated skin temperature</div><div class="temperature"><span data-gauge="temperature">${initial.temperature}</span><small> °C</small></div><div class="caption">A rhythm beneath the surface.</div></div><svg id="callouts" aria-hidden="true"></svg><p id="fallback" hidden>This interactive study needs JavaScript and WebGL. Explore the layer list and initial simulated readings below.</p><div class="scene-note">STUDY MODEL · vertical scale ×8</div><div class="scene-note right">Drag to orbit · Scroll to zoom</div></div></section><aside class="panel" aria-label="Simulated wear readings"><div class="eyebrow" style="margin-bottom:24px">Wear simulation</div><div class="gauges"><div class="gauge"><small>Hydration index</small><span class="value" data-gauge="hydration">${initial.hydration}</span><span class="unit"> / index</span></div><div class="gauge"><small>Battery</small><span class="value" data-gauge="battery">${initial.battery}</span><span class="unit"> %</span></div><div class="gauge"><small>Time on skin</small><span class="unit">Day </span><span class="value" data-gauge="day">${initial.day}</span><span class="unit"> of ${FACTS.wearDays}</span></div></div><div class="chart-wrap"><canvas id="chart" aria-label="Skin temperature over the wear period"></canvas><div class="chart-caption"><span>Application</span><span>End of wear</span></div></div><p class="panel-note">Illustrative wellness readings.<br>A study of the system, not clinical data.</p></aside></div><section class="static-layers" aria-label="Study layer thicknesses"><h2>The assembled stack</h2><ul>${LAYERS.map(layer => `<li>${layer.name} — ${layer.thicknessMm} mm</li>`).join('')}</ul></section><section class="controls" aria-label="Study controls"><div class="sliders"><label><div class="control-heading">Separation <span>Explore the stack</span></div><input id="separation" aria-label="Separation" type="range" min="0" max="1" step="0.001" value="0"><div class="endpoints"><span>Assembled</span><span>Layer by layer</span></div></label><label><div class="control-heading">Wear time <span>Day <output id="wear-day">${initial.day}</output></span></div><input id="wear" aria-label="Wear time in hours" type="range" min="0" max="336" step="0.25" value="0"><div class="endpoints"><span>Application</span><span>End of wear</span></div></label></div><div class="button-row">${FACTS.layers.map((l,i)=>`<button class="layer" data-layer="${i}" aria-pressed="false">${l.name}</button>`).join('')}<button id="xray" aria-pressed="false">X ray</button><div class="camera-group" aria-label="Camera presets">${['Hero','Top','Side'].map(n=>`<button data-camera="${n}" aria-pressed="${n==='Hero'}">${n}</button>`).join('')}</div></div></section><div class="footer"><span>Five layers · ${FACTS.thicknessMm} mm assembled profile · Procedural geometry</span><span id="tour-status">Explore freely · Tour begins when idle</span></div></main><div id="tour-cursor" hidden></div><script src="/take-apart-model.js"></script><script type="module" src="/take-apart.js"></script></body></html>`;
+
+codex
+{
+  "station": "reviewer-design",
+  "verdict": "changes_requested",
+  "findings": [
+    "R6/R12 and scenario S5 fail the reference-board realism bar: evidence/take-apart-product-model/render-exploded.png shows a sparse PCB with flat gray packages, uniform contacts and simple parallel traces. The contact sheet's Board beat retains this schematic appearance. Compared with design/reference/quality-board-1.png and quality-board-2.png, component terminals, solder detail and convincing metal finishes are missing. Refine the generated component geometry and materials within the existing thickness and asset budgets.",
+    "R12/S6/S7 and design/DESIGN.md's production-quality requirement are not met by the cover finish. The assembled beauty render establishes the rounded silhouette, thin profile, SENTIA wordmark and teal LED, but its uniformly smooth cover and flat cyan strip lack the fine silicone texture and recessed optical detail visible in the references. The contact sheet likewise reads as a stylized model. Add generated surface microtexture and refine the LED/socket materials, then verify both beauty renders and the bundled browser capture under the required unchanged lighting and study scale."
+  ]
+}
+tokens used
+43,193
+{
+  "station": "reviewer-design",
+  "verdict": "changes_requested",
+  "findings": [
+    "R6/R12 and scenario S5 fail the reference-board realism bar: evidence/take-apart-product-model/render-exploded.png shows a sparse PCB with flat gray packages, uniform contacts and simple parallel traces. The contact sheet's Board beat retains this schematic appearance. Compared with design/reference/quality-board-1.png and quality-board-2.png, component terminals, solder detail and convincing metal finishes are missing. Refine the generated component geometry and materials within the existing thickness and asset budgets.",
+    "R12/S6/S7 and design/DESIGN.md's production-quality requirement are not met by the cover finish. The assembled beauty render establishes the rounded silhouette, thin profile, SENTIA wordmark and teal LED, but its uniformly smooth cover and flat cyan strip lack the fine silicone texture and recessed optical detail visible in the references. The contact sheet likewise reads as a stylized model. Add generated surface microtexture and refine the LED/socket materials, then verify both beauty renders and the bundled browser capture under the required unchanged lighting and study scale."
+  ]
+}

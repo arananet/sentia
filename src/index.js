@@ -70,6 +70,18 @@ export default {
     const path = url.pathname;
     const origin = url.origin;
 
+    if (path === '/models/patch-one.glb') {
+      const { PATCH_ONE_GLB_B64 } = await import('./patch-one-glb.js');
+      return text(Uint8Array.from(atob(PATCH_ONE_GLB_B64), c => c.charCodeAt(0)), 'model/gltf-binary', { 'cache-control': 'public, max-age=86400' });
+    }
+    if (path === '/vendor/loaders/GLTFLoader.js') {
+      const { GLTF_LOADER_B64 } = await import('./vendor-gltf-loader.js');
+      return text(Uint8Array.from(atob(GLTF_LOADER_B64), c => c.charCodeAt(0)), 'application/javascript; charset=utf-8');
+    }
+    if (path === '/vendor/utils/BufferGeometryUtils.js') {
+      const { BUFFER_GEOMETRY_UTILS_B64 } = await import('./vendor-buffer-geometry-utils.js');
+      return text(Uint8Array.from(atob(BUFFER_GEOMETRY_UTILS_B64), c => c.charCodeAt(0)), 'application/javascript; charset=utf-8');
+    }
     if (path === '/take-apart') {
       const { renderTakeApartPage } = await import('./take-apart-page.js');
       return text(renderTakeApartPage(), 'text/html; charset=utf-8');

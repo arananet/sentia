@@ -1,0 +1,30 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-architecture",
+  "to_station": "reviewer-design",
+  "work_order_id": "wo-gh-12",
+  "artifact_path": "runs/wo-gh-12/reviewer-architecture.output.md",
+  "status": "executed",
+  "created_at": "2026-10-31T19:37:44.395589+00:00",
+  "review": {
+    "station": "reviewer-architecture",
+    "verdict": "pass",
+    "findings": [
+      "Missing input: brain/decisions does not exist. brain/ holds only glossary.md, learnings.md, project.md and worklog.md, and project.md records no structural decisions. I judged fit against the existing code patterns and the governing specs (take-apart, take-apart-bundling, take-apart-product-model). I did not judge against any decision record.",
+      "The binary-asset pattern matches the existing vendor and image pattern. src/patch-one-glb.js, src/vendor-gltf-loader.js and src/vendor-buffer-geometry-utils.js are base64 constant modules. src/index.js loads them with a lazy `await import()` and serves them through the shared `text()` helper, as /vendor/three.module.min.js already does. /models/patch-one.glb is served as model/gltf-binary.",
+      "The bundling lesson from wo-gh-11 is respected. The client loads the loader with `import('GLTFLoader')`, a bare specifier mapped by an import map in take-apart-page.js to /vendor/loaders/GLTFLoader.js. No served byte depends on a bundler rewrite. The loader's relative import of ../utils/BufferGeometryUtils.js resolves to the new /vendor/utils/BufferGeometryUtils.js route. The 'three' mapping reuses the existing vendor route, so the vendored core is unchanged and there is one three instance. The import-map approach is the acceptable shape named in R8.",
+      "The model/twin boundary is kept small. The only new export is NODE_NAMES, added identically in src/take-apart-model.js and src/take-apart-model-browser.js, and it is derived from LAYERS. No model output changes. Per-frame state in updateScene still comes from the model (position, opacity, x ray, shadows). The node scale and position Z_SCALE treatment matches R7. The extra `material.clone()` with userData.baseOpacity keeps per-layer opacity independent of shared glTF materials, which is a sound adaptation.",
+      "R9 is met structurally. buildProceduralFallback keeps the old primitive construction for the failure path only, and the try/catch covers import, fetch, parse and node-name validation. The failure path sets root.dataset.modelSource = 'procedural' and the success path sets 'glb', so the two paths are observable.",
+      "Non-blocking: the footer in take-apart-page.js still reads 'Procedural geometry', which is inaccurate when the GLB loads. R10 freezes the page chrome, so I am not requesting a change. Consider fixing it under a later order.",
+      "Non-blocking: the import-map script is placed before `<meta charset>` in the head. It is still within the first 1024 bytes, so it is harmless today. Future additions before the charset meta could push it past that limit.",
+      "Non-blocking: the /take-apart-bundling spec F4 and R2 describe a static dynamic import of the three.js specifier. The new `import('GLTFLoader')` follows the same bare-specifier approach and does not break the production bundle. reviewer-spec recorded a clean bundle and a zero-error bundled browser pass.",
+      "Scope: the change touches only the take-apart surface (index.js routes, the page, the client, the model twin, the capture script, the blender/ directory and the vendor and asset modules). Nothing else changes, which fits R10. I did not judge the visual fidelity of the beauty renders or the contact sheet. That belongs to reviewer-design."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-tests",
+  "to_station": "reviewer-architecture",
+  "work_order_id": "wo-gh-12",
+  "artifact_path": "runs/wo-gh-12/reviewer-tests.output.md",
+  "status": "executed",
+  "created_at": "2026-10-31T19:37:24.146240+00:00",
+  "review": {
+    "station": "reviewer-tests",
+    "verdict": "pass",
+    "findings": [
+      "I ran `npm test` on the final tree. It gave 185 tests: 183 pass, 1 fail, 1 skip. The one failure is `S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/`. That is the design v4 S11 failure the work order itemizes, resolved on `anvil/run-s11-rebaseline`, and it was not absorbed or fixed by editing evidence. The skip is `ui-elevation S4`, 'no main ref to diff against', and it is pre-existing and unrelated.",
+      "I ran `tests/take-apart-product-model.test.js` alone: 22 of 22 pass. The tests map to the spec: S1 and S2 (node names, centres, 36 mm footprint, 2.5 mm height, thickness order), S3 and R4 (route and bytes), S4 and S5 (cover and board mesh counts), R6, R1 and S9, R7 to R9, R11, S7 and R13, and S8 and R10. S10 is a run-report property, so no test covers it, which is acceptable.",
+      "S3 measured size: 386,708 bytes (377.6 KB) against an 819,200 byte budget. The test prints the number, as R4 requires. `browser-pass.log` records the same 386,708 bytes with a 200 status.",
+      "The tests check real artifacts. The GLB is parsed from the module bytes, and the PNG renders are decoded for size, brand-paper corners and coverage. The bundled pass log records 0 console errors, 0 page errors, scene ready true, the GLB 200, five named nodes, gauge comparison PASS at hour 200 and 'asset failure checks: PASS (fetch and parse)', so the R9 fallback was exercised. `reproducibility.log` records three byte-identical Blender 4.5.15 exports with a sha256 that matches the committed module.",
+      "Weak spot: the R13 screenshot test only checks tonal variance in the centre of the image, 40 or more quantised colours and a luminance range of at least 60. It cannot tell a faithful Patch One from generic blocks. That judgement correctly stays with reviewer-design under S6 and S7. This test is not evidence of fidelity.",
+      "Weak spot: the 'contact sheet not older than the asset' assertion allows a one-year window, so it can never fail. The test file labels it informational. It does not prove the sheet was regenerated after the asset. I confirmed the sheet and beat PNGs are modified in git status, but only a human can tell whether they show the new model.",
+      "Weak spot: the browser-pass and bundle-build checks parse text logs by regex. They prove the logs are consistent with the spec. They do not re-run the bundled browser pass, so they depend on the capture script's honesty. The log's wrangler command line does include `--no-bundle` and a bundled output path.",
+      "Gap to flag for the later stations: the product test on the beauty renders and the contact sheet (S6, R12) and the fidelity comparison are untested by design. `fidelity-comparison.md` is only checked for the six comparison points and the adjustments. Approval of recognizability must come from reviewer-design."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-spec",
+  "to_station": "reviewer-security",
+  "work_order_id": "wo-gh-12",
+  "artifact_path": "runs/wo-gh-12/reviewer-spec.output.md",
+  "status": "executed",
+  "created_at": "2026-10-31T19:36:46.901639+00:00",
+  "review": {
+    "station": "reviewer-spec",
+    "verdict": "pass",
+    "findings": [
+      "The GLB has exactly five top-level nodes, in stack order, named as in FACTS. Their translations (y 2.2, 1.55, 0.95, 0.5, 0.15) match layerCenterMm at t=0. Meshes per node: cover 4, foam 1, board 17, adhesive 1, liner 1. This meets R3 and S1.",
+      "The footprint is 36 by 36. The layer thicknesses match the model table (0.6, 0.7, 0.5, 0.4, 0.3), and the liner's lifted corner reaches 0.29. This meets R2 and S2.",
+      "The decoded GLB is 386,708 bytes, under the 800 KB budget. The /models/patch-one.glb route serves model/gltf-binary from a base64 constant module (src/patch-one-glb.js). This meets R4 and S3.",
+      "GLTFLoader and BufferGeometryUtils are vendored and served, and the page has an import map. The vendored three core is unchanged. This meets R8.",
+      "NODE_NAMES is the only new model export and is mirrored in the browser twin. The client binds nodes by name and applies Z_SCALE to node scale and position. Opacity and x-ray rules are kept, with a per-layer material clone. buildProceduralFallback remains for the failure path only, and the capture checks fetch and parse failure. This meets R7 and R9.",
+      "The cover has 4 meshes and the board has 17, which meets S4 and S5 structurally. Whether they read correctly against the references is reviewer-design's call (R12/S6). I did not judge the beauty renders or the contact sheet.",
+      "The bundled browser pass shows 0 console errors, 0 page errors, scene ready and gauge PASS at hour 200. The GLB fetch returned 200 and the five node names were recorded. The bundle build exited 0 with no local patches. Blender 4.5.15 produced three byte-identical exports. This meets R13 and R1/S9.",
+      "The suite ran 185 tests: 183 pass, 1 skipped, 1 failed. The one failure is 'S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/' in design-v4, the pre-existing exception. The run report must itemize it by name (R14). The skip is the ui-elevation S4 'no main ref to diff against' test and is unrelated to this order.",
+      "Minor, not blocking: the page footer still says 'Procedural geometry', which is inaccurate when the GLB loads. R10 freezes the chrome, so I am noting it rather than requesting a change.",
+      "The review file is at runs/wo-gh-12/reviewer-spec.output.md."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

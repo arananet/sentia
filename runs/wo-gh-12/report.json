@@ -1,0 +1,262 @@
+{
+  "work_order_id": "wo-gh-12",
+  "pipeline": "sdlc-default",
+  "title": "Take apart product model: replace the block primitives with a faithful Blender built Patch One",
+  "kind": "feature",
+  "steps": [
+    {
+      "station": "intake",
+      "status": "completed",
+      "detail": "Work order normalized",
+      "duration_ms": 0.012,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "spec-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-12/spec-writer.output.md",
+      "duration_ms": 19332.738,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/spec-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "test-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-12/test-writer.output.md",
+      "duration_ms": 114991.825,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/test-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "builder",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-12/builder.output.md",
+      "duration_ms": 929380.998,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/builder.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-spec",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-12/reviewer-spec.output.md",
+      "duration_ms": 30922.064,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/reviewer-spec.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-security",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-12/reviewer-security.output.md",
+      "duration_ms": 17609.512,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/reviewer-security.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-tests",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-12/reviewer-tests.output.md",
+      "duration_ms": 19634.7,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/reviewer-tests.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-architecture",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-12/reviewer-architecture.output.md",
+      "duration_ms": 20249.172,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/reviewer-architecture.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-design",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-12/reviewer-design.output.md",
+      "duration_ms": 24165.744,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/reviewer-design.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "approver",
+      "status": "completed",
+      "detail": "Approver verdict: changes_requested",
+      "duration_ms": 0.037,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "approver",
+      "status": "loopback",
+      "return_to": "spec-writer",
+      "detail": "Loopback to spec-writer: The GLB has exactly five top-level nodes, in stack order, named as in FACTS. Their translations (y 2.2, 1.55, 0.95, 0.5, 0.15) match layerCenterMm at t=0. Meshes per node: cover 4, foam 1, board 17, adhesive 1, liner 1. This meets R3 and S1.; The footprint is 36 by 36. The layer thicknesses match the model table (0.6, 0.7, 0.5, 0.4, 0.3), and the liner's lifted corner reaches 0.29. This meets R2 and S2.; The decoded GLB is 386,708 bytes, under the 800 KB budget. The /models/patch-one.glb route serves model/gltf-binary from a base64 constant module (src/patch-one-glb.js). This meets R4 and S3.; GLTFLoader and BufferGeometryUtils are vendored and served, and the page has an import map. The vendored three core is unchanged. This meets R8.; NODE_NAMES is the only new model export and is mirrored in the browser twin. The client binds nodes by name and applies Z_SCALE to node scale and position. Opacity and x-ray rules are kept, with a per-layer material clone. buildProceduralFallback remains for the failure path only, and the capture checks fetch and parse failure. This meets R7 and R9.; The cover has 4 meshes and the board has 17, which meets S4 and S5 structurally. Whether they read correctly against the references is reviewer-design's call (R12/S6). I did not judge the beauty renders or the contact sheet.; The bundled browser pass shows 0 console errors, 0 page errors, scene ready and gauge PASS at hour 200. The GLB fetch returned 200 and the five node names were recorded. The bundle build exited 0 with no local patches. Blender 4.5.15 produced three byte-identical exports. This meets R13 and R1/S9.; The suite ran 185 tests: 183 pass, 1 skipped, 1 failed. The one failure is 'S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/' in design-v4, the pre-existing exception. The run report must itemize it by name (R14). The skip is the ui-elevation S4 'no main ref to diff against' test and is unrelated to this order.; Minor, not blocking: the page footer still says 'Procedural geometry', which is inaccurate when the GLB loads. R10 freezes the chrome, so I am noting it rather than requesting a change.; The review file is at runs/wo-gh-12/reviewer-spec.output.md.; The new routes /models/patch-one.glb, /vendor/loaders/GLTFLoader.js and /vendor/utils/BufferGeometryUtils.js are in src/index.js:73-82. They serve fixed first-party base64 constants. No request input reaches them, so there is no path traversal or injection.; In src/take-apart-client.js the GLB is loaded same-origin, and the loader is wrapped in try/catch with a fallback to procedural meshes. The error is not written to the DOM. root.dataset.modelNodes comes from JSON.stringify of the fixed NODE_NAMES.; The GLTFLoader and BufferGeometryUtils are vendored from three.js 0.160.0 with the MIT license text included. The importmap in src/take-apart-page.js maps only same-origin paths. There is no runtime third-party script fetch and no eval. The only external requests are the existing Google Fonts links.; blender/build_all.py and blender/build_patch_one.py contain no subprocess, os.system, network or urllib calls.; Low: the Blender download in .github/workflows/anvil-execute.yml uses curl over HTTPS from download.blender.org with no SHA256 check before extracting. The cache limits how often this runs. Recommend pinning a checksum.; Low: every /models/patch-one.glb request does a full atob decode of about 500 KB. Cache-control max-age=86400 limits the cost. Consider decoding once at module scope. The review is saved at runs/wo-gh-12/reviewer-security.output.md.; I ran `npm test` on the final tree. It gave 185 tests: 183 pass, 1 fail, 1 skip. The one failure is `S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/`. That is the design v4 S11 failure the work order itemizes, resolved on `anvil/run-s11-rebaseline`, and it was not absorbed or fixed by editing evidence. The skip is `ui-elevation S4`, 'no main ref to diff against', and it is pre-existing and unrelated.; I ran `tests/take-apart-product-model.test.js` alone: 22 of 22 pass. The tests map to the spec: S1 and S2 (node names, centres, 36 mm footprint, 2.5 mm height, thickness order), S3 and R4 (route and bytes), S4 and S5 (cover and board mesh counts), R6, R1 and S9, R7 to R9, R11, S7 and R13, and S8 and R10. S10 is a run-report property, so no test covers it, which is acceptable.; S3 measured size: 386,708 bytes (377.6 KB) against an 819,200 byte budget. The test prints the number, as R4 requires. `browser-pass.log` records the same 386,708 bytes with a 200 status.; The tests check real artifacts. The GLB is parsed from the module bytes, and the PNG renders are decoded for size, brand-paper corners and coverage. The bundled pass log records 0 console errors, 0 page errors, scene ready true, the GLB 200, five named nodes, gauge comparison PASS at hour 200 and 'asset failure checks: PASS (fetch and parse)', so the R9 fallback was exercised. `reproducibility.log` records three byte-identical Blender 4.5.15 exports with a sha256 that matches the committed module.; Weak spot: the R13 screenshot test only checks tonal variance in the centre of the image, 40 or more quantised colours and a luminance range of at least 60. It cannot tell a faithful Patch One from generic blocks. That judgement correctly stays with reviewer-design under S6 and S7. This test is not evidence of fidelity.; Weak spot: the 'contact sheet not older than the asset' assertion allows a one-year window, so it can never fail. The test file labels it informational. It does not prove the sheet was regenerated after the asset. I confirmed the sheet and beat PNGs are modified in git status, but only a human can tell whether they show the new model.; Weak spot: the browser-pass and bundle-build checks parse text logs by regex. They prove the logs are consistent with the spec. They do not re-run the bundled browser pass, so they depend on the capture script's honesty. The log's wrangler command line does include `--no-bundle` and a bundled output path.; Gap to flag for the later stations: the product test on the beauty renders and the contact sheet (S6, R12) and the fidelity comparison are untested by design. `fidelity-comparison.md` is only checked for the six comparison points and the adjustments. Approval of recognizability must come from reviewer-design.; Missing input: brain/decisions does not exist. brain/ holds only glossary.md, learnings.md, project.md and worklog.md, and project.md records no structural decisions. I judged fit against the existing code patterns and the governing specs (take-apart, take-apart-bundling, take-apart-product-model). I did not judge against any decision record.; The binary-asset pattern matches the existing vendor and image pattern. src/patch-one-glb.js, src/vendor-gltf-loader.js and src/vendor-buffer-geometry-utils.js are base64 constant modules. src/index.js loads them with a lazy `await import()` and serves them through the shared `text()` helper, as /vendor/three.module.min.js already does. /models/patch-one.glb is served as model/gltf-binary.; The bundling lesson from wo-gh-11 is respected. The client loads the loader with `import('GLTFLoader')`, a bare specifier mapped by an import map in take-apart-page.js to /vendor/loaders/GLTFLoader.js. No served byte depends on a bundler rewrite. The loader's relative import of ../utils/BufferGeometryUtils.js resolves to the new /vendor/utils/BufferGeometryUtils.js route. The 'three' mapping reuses the existing vendor route, so the vendored core is unchanged and there is one three instance. The import-map approach is the acceptable shape named in R8.; The model/twin boundary is kept small. The only new export is NODE_NAMES, added identically in src/take-apart-model.js and src/take-apart-model-browser.js, and it is derived from LAYERS. No model output changes. Per-frame state in updateScene still comes from the model (position, opacity, x ray, shadows). The node scale and position Z_SCALE treatment matches R7. The extra `material.clone()` with userData.baseOpacity keeps per-layer opacity independent of shared glTF materials, which is a sound adaptation.; R9 is met structurally. buildProceduralFallback keeps the old primitive construction for the failure path only, and the try/catch covers import, fetch, parse and node-name validation. The failure path sets root.dataset.modelSource = 'procedural' and the success path sets 'glb', so the two paths are observable.; Non-blocking: the footer in take-apart-page.js still reads 'Procedural geometry', which is inaccurate when the GLB loads. R10 freezes the page chrome, so I am not requesting a change. Consider fixing it under a later order.; Non-blocking: the import-map script is placed before `<meta charset>` in the head. It is still within the first 1024 bytes, so it is harmless today. Future additions before the charset meta could push it past that limit.; Non-blocking: the /take-apart-bundling spec F4 and R2 describe a static dynamic import of the three.js specifier. The new `import('GLTFLoader')` follows the same bare-specifier approach and does not break the production bundle. reviewer-spec recorded a clean bundle and a zero-error bundled browser pass.; Scope: the change touches only the take-apart surface (index.js routes, the page, the client, the model twin, the capture script, the blender/ directory and the vendor and asset modules). Nothing else changes, which fits R10. I did not judge the visual fidelity of the beauty renders or the contact sheet. That belongs to reviewer-design.; R6/R12 and scenario S5 fail the reference-board realism bar: evidence/take-apart-product-model/render-exploded.png shows a sparse PCB with flat gray packages, uniform contacts and simple parallel traces. The contact sheet's Board beat retains this schematic appearance. Compared with design/reference/quality-board-1.png and quality-board-2.png, component terminals, solder detail and convincing metal finishes are missing. Refine the generated component geometry and materials within the existing thickness and asset budgets.; R12/S6/S7 and design/DESIGN.md's production-quality requirement are not met by the cover finish. The assembled beauty render establishes the rounded silhouette, thin profile, SENTIA wordmark and teal LED, but its uniformly smooth cover and flat cyan strip lack the fine silicone texture and recessed optical detail visible in the references. The contact sheet likewise reads as a stylized model. Add generated surface microtexture and refine the LED/socket materials, then verify both beauty renders and the bundled browser capture under the required unchanged lighting and study scale.",
+      "reason": "The GLB has exactly five top-level nodes, in stack order, named as in FACTS. Their translations (y 2.2, 1.55, 0.95, 0.5, 0.15) match layerCenterMm at t=0. Meshes per node: cover 4, foam 1, board 17, adhesive 1, liner 1. This meets R3 and S1.; The footprint is 36 by 36. The layer thicknesses match the model table (0.6, 0.7, 0.5, 0.4, 0.3), and the liner's lifted corner reaches 0.29. This meets R2 and S2.; The decoded GLB is 386,708 bytes, under the 800 KB budget. The /models/patch-one.glb route serves model/gltf-binary from a base64 constant module (src/patch-one-glb.js). This meets R4 and S3.; GLTFLoader and BufferGeometryUtils are vendored and served, and the page has an import map. The vendored three core is unchanged. This meets R8.; NODE_NAMES is the only new model export and is mirrored in the browser twin. The client binds nodes by name and applies Z_SCALE to node scale and position. Opacity and x-ray rules are kept, with a per-layer material clone. buildProceduralFallback remains for the failure path only, and the capture checks fetch and parse failure. This meets R7 and R9.; The cover has 4 meshes and the board has 17, which meets S4 and S5 structurally. Whether they read correctly against the references is reviewer-design's call (R12/S6). I did not judge the beauty renders or the contact sheet.; The bundled browser pass shows 0 console errors, 0 page errors, scene ready and gauge PASS at hour 200. The GLB fetch returned 200 and the five node names were recorded. The bundle build exited 0 with no local patches. Blender 4.5.15 produced three byte-identical exports. This meets R13 and R1/S9.; The suite ran 185 tests: 183 pass, 1 skipped, 1 failed. The one failure is 'S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/' in design-v4, the pre-existing exception. The run report must itemize it by name (R14). The skip is the ui-elevation S4 'no main ref to diff against' test and is unrelated to this order.; Minor, not blocking: the page footer still says 'Procedural geometry', which is inaccurate when the GLB loads. R10 freezes the chrome, so I am noting it rather than requesting a change.; The review file is at runs/wo-gh-12/reviewer-spec.output.md.; The new routes /models/patch-one.glb, /vendor/loaders/GLTFLoader.js and /vendor/utils/BufferGeometryUtils.js are in src/index.js:73-82. They serve fixed first-party base64 constants. No request input reaches them, so there is no path traversal or injection.; In src/take-apart-client.js the GLB is loaded same-origin, and the loader is wrapped in try/catch with a fallback to procedural meshes. The error is not written to the DOM. root.dataset.modelNodes comes from JSON.stringify of the fixed NODE_NAMES.; The GLTFLoader and BufferGeometryUtils are vendored from three.js 0.160.0 with the MIT license text included. The importmap in src/take-apart-page.js maps only same-origin paths. There is no runtime third-party script fetch and no eval. The only external requests are the existing Google Fonts links.; blender/build_all.py and blender/build_patch_one.py contain no subprocess, os.system, network or urllib calls.; Low: the Blender download in .github/workflows/anvil-execute.yml uses curl over HTTPS from download.blender.org with no SHA256 check before extracting. The cache limits how often this runs. Recommend pinning a checksum.; Low: every /models/patch-one.glb request does a full atob decode of about 500 KB. Cache-control max-age=86400 limits the cost. Consider decoding once at module scope. The review is saved at runs/wo-gh-12/reviewer-security.output.md.; I ran `npm test` on the final tree. It gave 185 tests: 183 pass, 1 fail, 1 skip. The one failure is `S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/`. That is the design v4 S11 failure the work order itemizes, resolved on `anvil/run-s11-rebaseline`, and it was not absorbed or fixed by editing evidence. The skip is `ui-elevation S4`, 'no main ref to diff against', and it is pre-existing and unrelated.; I ran `tests/take-apart-product-model.test.js` alone: 22 of 22 pass. The tests map to the spec: S1 and S2 (node names, centres, 36 mm footprint, 2.5 mm height, thickness order), S3 and R4 (route and bytes), S4 and S5 (cover and board mesh counts), R6, R1 and S9, R7 to R9, R11, S7 and R13, and S8 and R10. S10 is a run-report property, so no test covers it, which is acceptable.; S3 measured size: 386,708 bytes (377.6 KB) against an 819,200 byte budget. The test prints the number, as R4 requires. `browser-pass.log` records the same 386,708 bytes with a 200 status.; The tests check real artifacts. The GLB is parsed from the module bytes, and the PNG renders are decoded for size, brand-paper corners and coverage. The bundled pass log records 0 console errors, 0 page errors, scene ready true, the GLB 200, five named nodes, gauge comparison PASS at hour 200 and 'asset failure checks: PASS (fetch and parse)', so the R9 fallback was exercised. `reproducibility.log` records three byte-identical Blender 4.5.15 exports with a sha256 that matches the committed module.; Weak spot: the R13 screenshot test only checks tonal variance in the centre of the image, 40 or more quantised colours and a luminance range of at least 60. It cannot tell a faithful Patch One from generic blocks. That judgement correctly stays with reviewer-design under S6 and S7. This test is not evidence of fidelity.; Weak spot: the 'contact sheet not older than the asset' assertion allows a one-year window, so it can never fail. The test file labels it informational. It does not prove the sheet was regenerated after the asset. I confirmed the sheet and beat PNGs are modified in git status, but only a human can tell whether they show the new model.; Weak spot: the browser-pass and bundle-build checks parse text logs by regex. They prove the logs are consistent with the spec. They do not re-run the bundled browser pass, so they depend on the capture script's honesty. The log's wrangler command line does include `--no-bundle` and a bundled output path.; Gap to flag for the later stations: the product test on the beauty renders and the contact sheet (S6, R12) and the fidelity comparison are untested by design. `fidelity-comparison.md` is only checked for the six comparison points and the adjustments. Approval of recognizability must come from reviewer-design.; Missing input: brain/decisions does not exist. brain/ holds only glossary.md, learnings.md, project.md and worklog.md, and project.md records no structural decisions. I judged fit against the existing code patterns and the governing specs (take-apart, take-apart-bundling, take-apart-product-model). I did not judge against any decision record.; The binary-asset pattern matches the existing vendor and image pattern. src/patch-one-glb.js, src/vendor-gltf-loader.js and src/vendor-buffer-geometry-utils.js are base64 constant modules. src/index.js loads them with a lazy `await import()` and serves them through the shared `text()` helper, as /vendor/three.module.min.js already does. /models/patch-one.glb is served as model/gltf-binary.; The bundling lesson from wo-gh-11 is respected. The client loads the loader with `import('GLTFLoader')`, a bare specifier mapped by an import map in take-apart-page.js to /vendor/loaders/GLTFLoader.js. No served byte depends on a bundler rewrite. The loader's relative import of ../utils/BufferGeometryUtils.js resolves to the new /vendor/utils/BufferGeometryUtils.js route. The 'three' mapping reuses the existing vendor route, so the vendored core is unchanged and there is one three instance. The import-map approach is the acceptable shape named in R8.; The model/twin boundary is kept small. The only new export is NODE_NAMES, added identically in src/take-apart-model.js and src/take-apart-model-browser.js, and it is derived from LAYERS. No model output changes. Per-frame state in updateScene still comes from the model (position, opacity, x ray, shadows). The node scale and position Z_SCALE treatment matches R7. The extra `material.clone()` with userData.baseOpacity keeps per-layer opacity independent of shared glTF materials, which is a sound adaptation.; R9 is met structurally. buildProceduralFallback keeps the old primitive construction for the failure path only, and the try/catch covers import, fetch, parse and node-name validation. The failure path sets root.dataset.modelSource = 'procedural' and the success path sets 'glb', so the two paths are observable.; Non-blocking: the footer in take-apart-page.js still reads 'Procedural geometry', which is inaccurate when the GLB loads. R10 freezes the page chrome, so I am not requesting a change. Consider fixing it under a later order.; Non-blocking: the import-map script is placed before `<meta charset>` in the head. It is still within the first 1024 bytes, so it is harmless today. Future additions before the charset meta could push it past that limit.; Non-blocking: the /take-apart-bundling spec F4 and R2 describe a static dynamic import of the three.js specifier. The new `import('GLTFLoader')` follows the same bare-specifier approach and does not break the production bundle. reviewer-spec recorded a clean bundle and a zero-error bundled browser pass.; Scope: the change touches only the take-apart surface (index.js routes, the page, the client, the model twin, the capture script, the blender/ directory and the vendor and asset modules). Nothing else changes, which fits R10. I did not judge the visual fidelity of the beauty renders or the contact sheet. That belongs to reviewer-design.; R6/R12 and scenario S5 fail the reference-board realism bar: evidence/take-apart-product-model/render-exploded.png shows a sparse PCB with flat gray packages, uniform contacts and simple parallel traces. The contact sheet's Board beat retains this schematic appearance. Compared with design/reference/quality-board-1.png and quality-board-2.png, component terminals, solder detail and convincing metal finishes are missing. Refine the generated component geometry and materials within the existing thickness and asset budgets.; R12/S6/S7 and design/DESIGN.md's production-quality requirement are not met by the cover finish. The assembled beauty render establishes the rounded silhouette, thin profile, SENTIA wordmark and teal LED, but its uniformly smooth cover and flat cyan strip lack the fine silicone texture and recessed optical detail visible in the references. The contact sheet likewise reads as a stylized model. Add generated surface microtexture and refine the LED/socket materials, then verify both beauty renders and the bundled browser capture under the required unchanged lighting and study scale.",
+      "duration_ms": 0.0,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": null,
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "triage-human",
+      "status": "completed",
+      "detail": "Human review: required",
+      "duration_ms": 0.006,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "deployer",
+      "status": "packet_ready",
+      "detail": "Packet written to runs/wo-gh-12/deployer.packet.md",
+      "duration_ms": 0.07,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/deployer.packet.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "observer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-12/observer.output.md",
+      "duration_ms": 13748.644,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/observer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    }
+  ],
+  "verdict": "changes_requested",
+  "human_required": true,
+  "max_loopbacks": 2,
+  "loopbacks": 1,
+  "deployment_status": null,
+  "verify_results": [],
+  "risk_hints": [],
+  "decision": {
+    "approver": {
+      "reviews_counted": [
+        {
+          "station": "reviewer-spec",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-security",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-tests",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-architecture",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-design",
+          "verdict": "changes_requested"
+        }
+      ],
+      "reviews_expected": [
+        "reviewer-spec",
+        "reviewer-security",
+        "reviewer-tests",
+        "reviewer-architecture",
+        "reviewer-design"
+      ],
+      "rule": "Reviewer reviewer-design requested changes."
+    },
+    "human_gate": {
+      "required": true,
+      "rule": "Verdict is changes_requested, not approved, so a human is required.",
+      "hints_matched": []
+    }
+  },
+  "warnings": []
+}
