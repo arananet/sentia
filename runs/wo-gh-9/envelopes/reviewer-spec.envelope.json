@@ -1,0 +1,29 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-spec",
+  "to_station": "reviewer-security",
+  "work_order_id": "wo-gh-9",
+  "artifact_path": "runs/wo-gh-9/reviewer-spec.output.md",
+  "status": "executed",
+  "created_at": "2026-10-31T12:53:20.814424+00:00",
+  "review": {
+    "station": "reviewer-spec",
+    "verdict": "pass",
+    "findings": [
+      "The model matches the spec. Thicknesses are 0.6/0.7/0.5/0.4/0.3 and sum to 2.5, with names and order taken from FACTS.layers. layerCenterMm, the wear functions, tempSeries (57 samples), focusTransform signs, materialState (0.15, 0.0525, 1) and the qualityFor tiers all follow the spec. Z_SCALE exists only in the client.",
+      "Gauge text comes only from gaugeReadout through data-gauge attributes, and the markup has no hand-typed numbers. browser-pass.log shows 0 console errors, a PASS gauge comparison at hour 200, and 670681 decoded vendor bytes. The five beat stills (each over 100 KB) and contact-sheet.png exist.",
+      "The vendored library is three.js 160 with its license header intact, and the size is within the 400 KB to 1.3 MB range. The src/page.js diff is exactly one anchor. The src/index.js diff adds only the four routes, using dynamic imports. There is no package.json change and no out-of-scope file in the diff.",
+      "Client behaviour matches the spec. Layer buttons raise t to at least 0.55 and toggle the focus. Camera presets, idle and hold timings, data-tour-beat values, the reduced-motion guard, the 4 Hz panel throttle and the 0.25 h chart redraw rule are all as specified.",
+      "OPEN ITEM, needs an operator decision: the full suite is 139 pass, 1 fail, 1 skip, so the done criterion of 0 failures is not met. The failure is tests/design-v4-square-product.test.js S11 ('patch-exploded not cleared'), which relies on an earlier run's reviewer-design evidence. It also fails in the builder's baseline log, and fixing it is out of this work order's scope. The 17 new take-apart tests pass.",
+      "evidence/take-apart/browser-pass.log is matched by the .gitignore rule *.log. A clean checkout or commit would lack it, and the spec's evidence test would then fail unless the file is force-added.",
+      "Minor: the tour moves the cursor and animates a press, but it applies each beat by calling state functions instead of dispatching real clicks. This is acceptable.",
+      "Visual judgement of contact-sheet.png (S11) is left to reviewer-design. This review is written to runs/wo-gh-9/reviewer-spec.output.md."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

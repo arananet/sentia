@@ -1,0 +1,29 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-architecture",
+  "to_station": "reviewer-design",
+  "work_order_id": "wo-gh-9",
+  "artifact_path": "runs/wo-gh-9/reviewer-architecture.output.md",
+  "status": "executed",
+  "created_at": "2026-10-31T12:54:28.126457+00:00",
+  "review": {
+    "station": "reviewer-architecture",
+    "verdict": "pass",
+    "findings": [
+      "Limitation: `brain/decisions` does not exist. `brain/` holds only glossary.md, learnings.md, project.md and worklog.md, and project.md records no decisions. I judged fit against the spec's 'Place in the site' section, the existing conventions (src/index.js header: 'one Cloudflare Worker, no build step', and the codec/browser-codec twin pattern), and learnings L-1 to L-7. No recorded decision was checked, because none exists.",
+      "Structure fits. The model is a pure ES module with no DOM or renderer imports (src/take-apart-model.js, importing only FACTS). The page shell, the browser twin, the client and the vendored library each sit in their own file under src/, and the new routes are in src/index.js. This matches the codec/browser-codec/client split. The thicknesses sum to 2.5 (0.6+0.7+0.5+0.4+0.3). Layer names and order come from FACTS.layers, and the height index runs from the bottom as specified.",
+      "The browser twin is built differently from src/browser-codec.js. It does not hand-copy the logic as a text blob. src/take-apart-model-browser.js serialises `installTakeApartModel.toString()` and injects FACTS.layers as JSON. This is a reasonable choice because the twin's logic body is a near-verbatim copy of the node model. It does not break the 'same logic as browser source text' rule, and tests/take-apart.test.js guards parity. Two risks remain. A future minify or bundle step would break `Function.toString` serialisation, and wrangler.toml sets no minify today. The node and browser copies still have to be edited together by hand, and the parity test is the only guard.",
+      "Scope on the main surface is correct. The src/page.js diff is one line: a single `<a href=\"/take-apart\">Take apart</a>` added to the header nav, with nothing else changed. The src/index.js diff only adds four routes (/take-apart, /take-apart-model.js, /take-apart.js, /vendor/three.module.min.js). src/facts.js and src/images.js are untouched. The working tree shows no modified or untracked file outside the allowed list (src/take-apart-*.js, src/vendor-three.js, tests/take-apart.test.js, scripts/, evidence/take-apart/, runs/wo-gh-9/).",
+      "src/index.js loads the take-apart modules with dynamic `await import()` inside the route branches. All other routes use static imports at the top of the file. This keeps the 894 KB base64 three.js payload out of the module graph evaluated on every request, so it is defensible. Wrangler still bundles the module, so the deployed Worker size is unchanged. The deviation is not documented anywhere. Consider a one-line comment, or static imports for consistency. This is not blocking.",
+      "The vendored library is src/vendor-three.js: three.js 0.160.0 stored as base64 (about 894 KB file, roughly 670 KB decoded). It is decoded on each request to /vendor/three.module.min.js and served with `cache-control: public, max-age=31536000, immutable`. The route path is not versioned, so an immutable one-year cache on a fixed URL means a future library bump would not reach cached clients. Suggest versioning the path or shortening the max-age if the library is ever upgraded. It also adds a decode per cold request, although the CDN cache should absorb that. This does not block the current change. The MIT licence header is preserved, as the file comment states.",
+      "Page fit matches the 'wears the site identity' rule. take-apart-page.js uses the brand paper #FAFAF6, ink and teal, Space Grotesk and Inter, a back link to /, and product and layer names from FACTS. Gauge text is bound through `data-gauge` hooks with no typed numbers in the markup. The page is a study model, as the spec says, so L-6's photographic bar is not applied here. L-1's 'no flat SVG as the main visual' does not apply either, because the main visual is a WebGL canvas. The SVG is used only for callout leader lines.",
+      "Evidence and tooling are consistent with the architecture. scripts/capture-take-apart.mjs exists, and evidence/take-apart/ holds five beat stills (assembled, mid, apart, xray, board), the contact sheet and browser-pass.log. suite-result.txt shows SUITE_EXIT=0. Whether browser-pass.log records zero console errors, and whether the contact sheet is judged beat by beat, are outside this station's remit and belong to reviewer-tests and reviewer-design."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

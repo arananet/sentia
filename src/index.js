@@ -70,6 +70,23 @@ export default {
     const path = url.pathname;
     const origin = url.origin;
 
+    if (path === '/take-apart') {
+      const { renderTakeApartPage } = await import('./take-apart-page.js');
+      return text(renderTakeApartPage(), 'text/html; charset=utf-8');
+    }
+    if (path === '/take-apart-model.js') {
+      const { TAKE_APART_MODEL_JS } = await import('./take-apart-model-browser.js');
+      return text(TAKE_APART_MODEL_JS, 'application/javascript; charset=utf-8');
+    }
+    if (path === '/take-apart.js') {
+      const { TAKE_APART_CLIENT_JS } = await import('./take-apart-client.js');
+      return text(TAKE_APART_CLIENT_JS, 'application/javascript; charset=utf-8');
+    }
+    if (path === '/vendor/three.module.min.js') {
+      const { THREE_B64 } = await import('./vendor-three.js');
+      const bytes = Uint8Array.from(atob(THREE_B64), c => c.charCodeAt(0));
+      return text(bytes, 'application/javascript; charset=utf-8', { 'cache-control': 'public, max-age=31536000, immutable' });
+    }
     if (path === '/mcp') {
       if (request.method !== 'POST') return json({ error: 'method not allowed, use POST' }, 405);
       return handleMcp(request);
