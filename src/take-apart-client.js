@@ -61,7 +61,7 @@ function box(parent, size, position, color, roughness=.65) {
   const mesh = new THREE.Mesh(new THREE.BoxGeometry(...size), new THREE.MeshStandardMaterial({ color,roughness }));
   mesh.position.set(...position); mesh.castShadow = true; parent.add(mesh); return mesh;
 }
-function initScene() {
+async function initScene() {
   renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
   renderer.setPixelRatio(quality.pixelRatioCap); renderer.setClearColor(0xfafaf6);
   renderer.shadowMap.enabled = quality.shadowMapSize > 0; renderer.shadowMap.type = THREE.VSMShadowMap;
@@ -75,12 +75,12 @@ function initScene() {
   key.shadow.bias = -.0003; key.shadow.normalBias = .15; key.shadow.radius = 5; key.shadow.blurSamples = 8; scene.add(key);
   const ground = new THREE.Mesh(new THREE.PlaneGeometry(1000,1000),new THREE.ShadowMaterial({ opacity:.12 }));
   ground.rotation.x = -Math.PI/2; ground.position.y=-.15; ground.receiveShadow=true; scene.add(ground);
-  const colors = [0xeeeae0,0xd1cfc3,0x163c34,0xe2e8d9,0xf0eee7];
+  const colors = [0xeeeae0,0xd1cfc3,0x12211c,0xe2e8d9,0xf0eee7];
   meshes = M.LAYERS.map((layer,i) => {
     const mesh = new THREE.Mesh(roundedGeometry(layer.thicknessMm*Z_SCALE),new THREE.MeshStandardMaterial({ color:colors[i], roughness:i===2?.58:.82, transparent:true }));
     mesh.castShadow=true; mesh.receiveShadow=true; scene.add(mesh); return mesh;
   });
-  box(meshes[0],[12,.06,.38],[0,M.LAYERS[0].thicknessMm*Z_SCALE/2+.04,8],0x008d7f);
+  box(meshes[0],[12,.06,.38],[0,M.LAYERS[0].thicknessMm*Z_SCALE/2+.04,8],0x0e7c66);
   const boardTop = M.LAYERS[2].thicknessMm*Z_SCALE/2+.04;
   // Printed traces and flush components stay inside the study layer envelope.
   for (let i=0;i<6;i++) {
@@ -100,7 +100,7 @@ function initScene() {
     words.forEach((word,j)=> {const line=document.createElementNS(ns,'tspan');line.textContent=word;line.setAttribute('dy',j?'15':'0');label.append(line);});
     group.append(label); overlay.append(group);
   });
-  updateScene(true); renderer.compile(scene,camera); renderer.render(scene,camera);
+  await renderer.compileAsync(scene,camera); updateScene(true);
 }
 function updateScene(instant=false) {
   if (!renderer) return;
@@ -139,7 +139,7 @@ function updateScene(instant=false) {
   }
   labels.forEach(l=> {
     const g=overlay.children[l.i], x=l.left?8:w-8, elbow=l.left?150:w-150;
-    const color=state.focus===l.i?'#008d7f':'#6a7972';
+    const color=state.focus===l.i?'#0E7C66':'#53685C';
     g.setAttribute('fill',color);g.querySelector('path').setAttribute('stroke',color);
     g.querySelector('path').setAttribute('d',`M ${l.x} ${l.y} L ${elbow} ${l.labelY} L ${l.left?x+3:x-3} ${l.labelY}`);
     const circle=g.querySelector('circle');circle.setAttribute('cx',l.x);circle.setAttribute('cy',l.y);
@@ -154,14 +154,14 @@ function drawChart() {
   const ctx=chart.getContext('2d');ctx.scale(dpr,dpr);
   const w=rect.width,h=rect.height, series=M.tempSeries(), low=Math.min(...series)-.1,high=Math.max(...series)+.1;
   const px=i=>4+(w-8)*i/56, py=v=>h-8-(v-low)/(high-low)*(h-16);
-  ctx.strokeStyle='#dce1d9';ctx.lineWidth=1;
+  ctx.strokeStyle='#DFE7DF';ctx.lineWidth=1;
   for(const y of [12,h/2,h-12]){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
   ctx.beginPath();series.forEach((v,i)=>i?ctx.lineTo(px(i),py(v)):ctx.moveTo(px(i),py(v)));
-  ctx.strokeStyle='#008d7f';ctx.lineWidth=1.5;ctx.stroke();
+  ctx.strokeStyle='#0E7C66';ctx.lineWidth=1.5;ctx.stroke();
   const idx=state.h/6, base=Math.floor(idx), next=Math.min(56,base+1);
   const value=series[base]+(series[next]-series[base])*(idx-base),x=px(idx),y=py(value);
-  ctx.strokeStyle='#163c34';ctx.beginPath();ctx.moveTo(x,4);ctx.lineTo(x,h-4);ctx.stroke();
-  ctx.fillStyle='#008d7f';ctx.beginPath();ctx.arc(x,y,3.5,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='#12211C';ctx.beginPath();ctx.moveTo(x,4);ctx.lineTo(x,h-4);ctx.stroke();
+  ctx.fillStyle='#0E7C66';ctx.beginPath();ctx.arc(x,y,3.5,0,Math.PI*2);ctx.fill();
   lastChartHour=state.h;
 }
 function updatePanel(now) {
@@ -196,8 +196,8 @@ function tour(now) {
     beats[index][3]();root.dataset.tourBeat=beats[index][0];$('#tour-status').textContent='Guided tour · '+beats[index][1];
   }
 }
-try { initScene(); } catch (error) {
-  if(renderer)renderer.dispose();renderer=null;canvas.hidden=true;overlay.hidden=true;$('#fallback').hidden=false;
+try { await initScene(); root.dataset.sceneReady = 'true'; } catch (error) {
+  if(renderer)renderer.dispose();renderer=null;canvas.hidden=true;overlay.hidden=true;$('#fallback').textContent='3D is unavailable on this device. Explore the layers and simulated readings with the controls below.';$('#fallback').hidden=false;
   // WebGL capability failure leaves the model and accessible controls operational.
 }
 window.addEventListener('resize',()=> {lastChartHour=-Infinity;});

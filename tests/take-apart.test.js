@@ -17,7 +17,10 @@ import * as TWIN from '../src/take-apart-model-browser.js';
 // itself and then assert the numbers the spec states, so a conforming model is
 // not rejected for a naming choice the spec leaves open.
 
-const SETUP_COMMIT = '4e4f8b2';
+// Loopback round baseline: the operator setup commit at the head of the branch when the run starts.
+const SETUP_COMMIT = '7748273';
+// Files the workflow harness itself writes at the repository root; never part of the line's change.
+const HARNESS_FILES = new Set(['suite-output.txt', 'suite-result.txt', 'run-diff.txt', 'comment.md']);
 const get = (p) => worker.fetch(new Request('https://sentia.test' + p));
 const NAMES = FACTS.layers.map((l) => l.name);
 const THICK = [0.6, 0.7, 0.5, 0.4, 0.3]; // FACTS order, top to bottom
@@ -395,7 +398,7 @@ test('take-apart S8: browser-pass.log records zero console errors, a passing gau
 });
 
 // ---------------------------------------------------------------- S10 scope
-test('take-apart S10: main page diff is only the one nav anchor in src/page.js', () => {
+test('take-apart S10: src/page.js is unchanged against the loopback baseline (the anchor already exists)', () => {
   let diff;
   try {
     execFileSync('git', ['cat-file', '-e', SETUP_COMMIT + '^{commit}'], { stdio: 'ignore' });
@@ -403,14 +406,7 @@ test('take-apart S10: main page diff is only the one nav anchor in src/page.js',
   } catch {
     return; // setup commit not reachable in this checkout; scope is checked by the run gate
   }
-  const lines = diff.split('\n').filter((l) => /^[+-]/.test(l) && !/^(\+\+\+|---)/.test(l));
-  const removed = lines.filter((l) => l[0] === '-');
-  const added = lines.filter((l) => l[0] === '+');
-  // a modified nav line shows as one removal and one addition; a new line as one addition
-  assert.ok(removed.length <= 1, 'page.js removes at most the nav line it extends');
-  assert.equal(added.length, 1, 'page.js adds exactly one line');
-  assert.match(added[0], /href="\/take-apart"/);
-  assert.equal((added[0].match(/take-apart/g) || []).length, 1);
+  assert.equal(diff, '', 'src/page.js must not change this round');
 });
 
 test('take-apart scope: the run touches no file outside the allowed list', () => {
@@ -419,7 +415,7 @@ test('take-apart scope: the run touches no file outside the allowed list', () =>
     execFileSync('git', ['cat-file', '-e', SETUP_COMMIT + '^{commit}'], { stdio: 'ignore' });
     const tracked = execFileSync('git', ['diff', '--name-only', SETUP_COMMIT], { encoding: 'utf8' });
     const untracked = execFileSync('git', ['ls-files', '--others', '--exclude-standard'], { encoding: 'utf8' });
-    names = (tracked + untracked).split('\n').filter(Boolean);
+    names = (tracked + untracked).split('\n').filter(Boolean).filter((n) => !HARNESS_FILES.has(n));
   } catch {
     return;
   }
@@ -435,4 +431,83 @@ test('take-apart scope: the run touches no file outside the allowed list', () =>
   ];
   const outside = names.filter((n) => !allowed.some((re) => re.test(n)));
   assert.deepEqual(outside, [], 'files outside the allowed scope');
+});
+
+// ---------------------------------------------------------------- loopback chrome
+const TOKENS = { paper: '#FAFAF6', ink: '#12211C', teal: '#0E7C66', mint: '#EFF4EE', hairline: '#DFE7DF', body: '#4A5D54', secondary: '#53685C', coral: '#FF6B4A' };
+const read = (rel) => fs.readFileSync(new URL('../' + rel, import.meta.url), 'utf8');
+
+function luminance(hex) {
+  const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)
+    .map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+}
+function contrast(a, b) {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+}
+
+test('take-apart chrome: only design token colours appear in page, client and capture sources', () => {
+  const allowed = new Set(Object.values(TOKENS).map((v) => v.toLowerCase()));
+  for (const f of ['src/take-apart-page.js', 'src/take-apart-client.js', 'scripts/capture-take-apart.mjs']) {
+    const found = (read(f).match(/#[0-9a-fA-F]{3,8}\b/g) || []).map((v) => v.toLowerCase());
+    const stray = [...new Set(found.filter((v) => !allowed.has(v)))];
+    assert.deepEqual(stray, [], `${f} carries colours outside design/DESIGN.md`);
+    for (const bad of ['#163c34', '#008d7f', '#6a7972', '#dce1d9']) {
+      assert.ok(!read(f).toLowerCase().includes(bad), `${f} still has substituted ${bad}`);
+    }
+  }
+});
+
+test('take-apart chrome: documented text pairs measure at or above 4.5 to 1', () => {
+  const pairs = [
+    [TOKENS.ink, TOKENS.paper, 15.93],
+    [TOKENS.body, TOKENS.paper, 6.72],
+    [TOKENS.secondary, TOKENS.paper, 5.73],
+    [TOKENS.teal, TOKENS.paper, 4.9],
+    [TOKENS.paper, TOKENS.teal, 4.9],
+  ];
+  for (const [fg, bg, documented] of pairs) {
+    const r = contrast(fg, bg);
+    assert.ok(r >= 4.5, `${fg} on ${bg} is ${r.toFixed(2)}`);
+    assert.ok(Math.abs(r - documented) < 0.01, `${fg} on ${bg}: ${r.toFixed(2)} vs documented ${documented}`);
+  }
+});
+
+test('take-apart chrome: font stylesheet link matches the main page, with preconnect and swap', async () => {
+  const html = await (await get('/take-apart')).text();
+  const link = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@300;400;500&display=swap';
+  assert.ok(html.includes(`<link href="${link}" rel="stylesheet">`) || html.includes(`href="${link}"`), 'font stylesheet link');
+  assert.match(html, /<link rel="preconnect" href="https:\/\/fonts\.googleapis\.com">/);
+  assert.match(html, /<link rel="preconnect" href="https:\/\/fonts\.gstatic\.com"/);
+  const main = await (await get('/')).text();
+  assert.ok(main.includes(link), 'main page serves the same link');
+});
+
+test('take-apart chrome: skip link targets a focusable main landmark', async () => {
+  const html = await (await get('/take-apart')).text();
+  const skip = html.match(/<a[^>]*href="#([\w-]+)"[^>]*>[^<]*skip[^<]*<\/a>/i);
+  assert.ok(skip, 'skip link present');
+  assert.match(html, new RegExp(`<main[^>]*id="${skip[1]}"[^>]*tabindex="-1"|<main[^>]*tabindex="-1"[^>]*id="${skip[1]}"`));
+  assert.ok(html.indexOf(skip[0]) < html.indexOf('<main'), 'skip link comes before main');
+});
+
+test('take-apart chrome: served HTML reads without script (explanation, layers, gaugeReadout(0), note, noscript override)', async () => {
+  const html = await (await get('/take-apart')).text();
+  const noscript = html.match(/<noscript[^>]*>[\s\S]*?<\/noscript>/);
+  assert.ok(noscript && /<style/i.test(noscript[0]), 'noscript style override present');
+  for (const l of FACTS.layers) assert.ok(html.includes(l.name), `layer ${l.name} listed`);
+  for (const th of THICK) assert.ok(html.includes(String(th)), `study thickness ${th} listed`);
+  for (const v of Object.values(gauges(M, 0))) assert.ok(html.includes(v), `static gauge value ${v}`);
+  assert.match(html, /JavaScript/i, 'visible note naming JavaScript');
+  assert.match(html, /interactive[^<]*JavaScript|JavaScript[^<]*interactive/i, 'note says the interactive study needs JavaScript');
+});
+
+test('take-apart chrome: container at most 1440 px and 3 px focus rings are declared', async () => {
+  const html = await (await get('/take-apart')).text();
+  const widths = [...html.matchAll(/max-width:\s*(\d+)px/g)].map((m) => Number(m[1]));
+  assert.ok(widths.includes(1440), 'a 1440 px container is declared');
+  assert.ok(widths.every((w) => w <= 1440), `no max-width above 1440: ${widths}`);
+  assert.match(html, /:focus-visible[^}]*(outline:\s*3px|outline-width:\s*3px)/, '3 px focus ring');
+  assert.match(html, /min-height:\s*44px|height:\s*44px/, '44 px targets declared');
 });

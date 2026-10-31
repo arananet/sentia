@@ -1,5 +1,7 @@
-Implemented /take-apart, its simulation model, interactive 3D scene, controls, tour, and single nav link. Generated browser evidence and handoff notes.
+Updated page chrome, accessibility, static fallback, and shader warm-up. Regenerated all five stills, the contact sheet, and browser log.
 
-All 17 new tests pass; browser reports zero console errors. Full suite: 139 passed, 1 pre-existing failure, 1 skipped. No deployment or approval performed.
+All 23 take-apart tests pass. Browser reports zero console errors and matching gauges. Full suite has only the documented pre-existing failure.
+
+Builder report saved to runs/wo-gh-9/builder.output.md.
 
 {"model": "gpt-6-astra", "runtime": "codex"}

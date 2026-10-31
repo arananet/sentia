@@ -1,4 +1,4 @@
-WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-9ul6aidv"))
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-2lx4ssgw"))
 Reading additional input from stdin...
 OpenAI Codex v0.166.0
 --------
@@ -9,7 +9,7 @@ approval: never
 sandbox: danger-full-access
 reasoning effort: none
 reasoning summaries: none
-session id: 01a19206-98df-7ff2-9b85-cf987fd503a4
+session id: 01a19216-fee2-7913-8708-9ee8a4b19391
 --------
 user
 You are executing an ANVIL reviewer station packet inside this repository. You are read only: inspect the files the packet refers to, judge the work against the packet, and do not change anything. The wrapper verifies the tree is unchanged after your run and fails this station if it is not.
@@ -110,9 +110,23 @@ Model routing for this run: builder and reviewer-design on GPT-6 Astra (gpt-6-as
 
 Deployment: none inside the run and none after it without a separate human gate decision. The deployer station stays a packet.
 
-Done criteria: run verdict approved with all five expected reviews counted and no parse failures; reviewer-design's output addresses all five contact sheet beats by name; the full project suite green on the final tree with 0 failures (the 1 pre existing skip may remain) including the new take apart tests; the model tests assert the thickness sum, the flush stack and the gauge equality; browser-pass.log records zero console errors; the run diff against the setup commit names no file outside the allowed scope.
+Done criteria for the first round were stated here; the loopback round below replaces them.
 
 GitHub issue: https://github.com/arananet/sentia/issues/9
+
+Gate loopback round (owner decision, 2026-10-31). The owner reviewed the first executed run at the human gate: the model, the scene, the tour and the five beat contact sheet passed, and the verdict of changes_requested rested on the page chrome, on evidence that never reached the committed tree, and on a scope test tripping over the workflow's own harness files. The owner sent the work back with three mandates: fix the chrome, complete the evidence, adopt the vendored simulator kit. The spec addendum at .openspec/specs/take-apart/spec.md (section: Gate loopback round) governs this round and wins wherever it disagrees with the original text. Summary of the round's work:
+
+1. Chrome to the design system, per reviewer-design's first round findings. Colours only from design/DESIGN.md tokens (paper #FAFAF6, ink #12211C, teal #0E7C66, mint #EFF4EE, hairline #DFE7DF, body #4A5D54, secondary #53685C); the substituted values (#163c34, #008d7f, #6a7972, #dce1d9) are removed from src/take-apart-page.js, src/take-apart-client.js and the contact sheet composition in scripts/capture-take-apart.mjs. Every text pair measures at or above 4.5 to 1 (the documented pairs measure: ink 15.93, body 6.72, secondary 5.73, teal 4.90). If the builder believes a documented token cannot reach 4.5 to 1 where the design system requires it, the builder flags that in its output as a design system question for the owner and keeps the token; it never substitutes its own colour again. Typography actually loads, through the same Google Fonts stylesheet link the main page serves (Inter 400 and 500, Space Grotesk 300, 400 and 500, display swap), at the design system's sizes (introduction 18 to 20 px, body 17 px, gauge values 32 to 56 px, display weight 300, mono labels 11 px). Spacing returns to the 8 px rhythm and the container to at most 1440 px. Accessibility is completed: skip link to a focusable main, 3 px focus rings, targets of at least 44 px with at least 8 px gaps, range inputs included. No script behaviour: the served page carries the explanation, the layer list and the gaugeReadout(0) values plus a visible fallback note, kept visible by a noscript style override. New tests assert the measurable chrome items (token only colours, contrast of the documented pairs, font link, skip link, noscript content, 1440 px container, 3 px focus rings).
+
+2. Scope test robustness. The test writer re-bases tests/take-apart.test.js on the loopback setup commit (the commit at the head of this branch when the run starts) in the SETUP_COMMIT constant, excludes the workflow's harness files (suite-output.txt, suite-result.txt, run-diff.txt, comment.md at the repository root) from both the tracked diff and the untracked list before applying the allowed list, and re-bases the src/page.js diff assertion to expect no change this round (the anchor exists in the baseline; the served HTML assertion still proves exactly one anchor).
+
+3. Complete evidence. The operator setup commit for this round adds .gitignore negations for evidence/take-apart/browser-pass.log and runs/wo-gh-9/ logs. The builder re-runs scripts/capture-take-apart.mjs on the fixed page before the reviewers run, so the committed evidence includes browser-pass.log beside the five beat stills and the contact sheet, recording zero console errors and the passing gauge comparison on the new build.
+
+4. Kit adoption. Run input: the teardown simulator kit, vendored in the anvil-factory repository at third_party/teardown/ (upstream commit e7e668cd44f48ba79a3c575e9f55c7e194d26eef, MIT), present in this run's workspace at .anvil-factory/third_party/teardown/ because the execute workflow checks the factory out at the anvil/vendor-teardown branch for this round. The builder aligns the page runtime and the tour capture with the kit's approach where it fits (one model for parts and panels, beat driven tour with cursor, deterministic capture keyed to tour state, labelled contact sheet, quality tiers, warmed shaders), states in its output which kit conventions it relied on or adjusted, and copies no kit file into this repository unless it judges it necessary and says why. Where the kit and the spec disagree, the spec wins.
+
+Out of scope, stated once so no station spends turns on it: the failure of tests/design-v4-square-product.test.js is pre-existing at this round's baseline (recorded in the first round at runs/wo-gh-9/builder-baseline-design-test.log). It asserts on wo-gh-8 run evidence whose gap the owner accepted when he deployed that build. Do not touch that test, that evidence, or any earlier run's files. The run report lists it separately as a pre-existing failure awaiting the owner's own decision (waiver or a separate re-baseline work order), and the verdict discussion covers only this run's own results.
+
+Done criteria for this round: run verdict approved with all five expected reviews counted and no parse failures; reviewer-design's output addresses all five contact sheet beats by name and judges each chrome item one by one; the full project suite on the final tree passes every test except the one itemized pre-existing failure above (the 1 pre-existing skip may remain), including the take apart tests with the new chrome assertions and the re-based scope test; browser-pass.log is present in the committed evidence and records zero console errors; the run diff against the loopback setup commit names no file outside the allowed scope with the harness files excluded as stated.
 - risk_hints: 
 - status: new
 
@@ -146,21 +160,7 @@ Answer with a single JSON object and nothing else, in exactly this shape:
 The verdict must be one of: pass, fail, changes_requested. Findings must be concrete and checkable against the spec, the code and the tests.
 
 codex
-I’ll inspect the design rules, take-apart spec, interface code, and captured tour beats without changing any files.
-
-exec
-/bin/bash -lc "pwd; rg --files -g 'AGENTS.md' -g 'DESIGN.md' -g 'tokens.json' -g '*take-apart*' -g '*contact-sheet*' -g '*browser-pass*' -g 'spec.md'" in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-/home/runner/work/sentia/sentia
-tests/take-apart.test.js
-scripts/capture-take-apart.mjs
-src/take-apart-model.js
-src/take-apart-page.js
-src/take-apart-client.js
-src/take-apart-model-browser.js
-design/DESIGN.md
-evidence/take-apart/contact-sheet.png
-evidence/take-apart/browser-pass.log
+I’ll inspect the design rules, page code, and five captured tour beats without changing any files.
 
 exec
 /bin/bash -lc 'cat design/DESIGN.md design/tokens.json .openspec/specs/take-apart/spec.md' in /home/runner/work/sentia/sentia
@@ -339,7 +339,6 @@ both the initial and revealed states visible and stationary.
 - S6: At small widths retain a 56 px hero minimum and 17 px body minimum.
   Use #53685C for SVG annotations and paper for the simulation toggle.
   Check the hidden reveal state, 800 ms ease-out transition and motion fallback.
-cat: design/tokens.json: No such file or directory
 # Sentia: Take Apart
 
 Status: active for wo-gh-9
@@ -422,7 +421,8 @@ Allowed changes: new files src/take-apart-model.js, src/take-apart-model-browser
 ## Scenarios
 
 ### Scenario: Thicknesses sum to the profile
-- S1: Given the model, when the five study thicknesses are added, then the total is exactly 2.5 mm and the layer names and order equal FACTS.layers.
+- S1: Given the model, when the five study thicknesses are added, thecat: design/tokens.json: No such file or directory
+n the total is exactly 2.5 mm and the layer names and order equal FACTS.layers.
 
 ### Scenario: Flush at rest
 - S2: Given t=0, when every adjacent pair of layer faces is compared through layerCenterMm, then each pair is flush within 0.001 mm with no overlap.
@@ -454,19 +454,69 @@ Allowed changes: new files src/take-apart-model.js, src/take-apart-model-browser
 ### Scenario: The critic sheet is judged beat by beat
 - S11: Given evidence/take-apart/contact-sheet.png, when reviewer-design judges it, then its review addresses all five beats by name and either clears each beat or names the defect and the beat it appears in.
 
-exec
-/bin/bash -lc 'cat src/take-apart-page.js' in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-import { FACTS } from './facts.js';
-export function renderTakeApartPage() {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Take apart — ${FACTS.product}</title><link rel="icon" href="/favicon.ico"><style>
-:root{--paper:#FAFAF6;--ink:#163c34;--teal:#008d7f;--muted:#6a7972;--line:#dce1d9}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,Arial,sans-serif}button,input{font:inherit}button,a,input{touch-action:manipulation}a{color:inherit;text-decoration:none}header{margin:0 4%;padding:25px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.brand{font-family:'Space Grotesk',sans-serif;font-size:27px;letter-spacing:-1.4px}.brand span{color:var(--teal)}header a:last-child{font-size:13px}main{max-width:1600px;margin:auto;padding:28px 4% 25px}.eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}h1{font-family:'Space Grotesk',sans-serif;font-size:43px;font-weight:400;letter-spacing:-2px;margin:10px 0}p{line-height:1.6}.intro{display:flex;justify-content:space-between;align-items:end}.intro p{font-size:13px;color:var(--muted);max-width:330px;margin:0 0 8px}.workbench{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:28px;margin-top:20px}.viewport{height:520px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}#scene{width:100%;height:100%;display:block;touch-action:none;cursor:grab}#scene:active{cursor:grabbing}.live-readout{position:absolute;top:0;left:0;pointer-events:none}.live-readout .temperature{font-size:56px;margin-top:8px}.live-readout .caption{display:none}.scene-note{position:absolute;left:0;bottom:14px;font-size:11px;color:var(--muted);pointer-events:none}.scene-note.right{left:auto;right:0}#callouts{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}#fallback{position:absolute;inset:30%;font-size:16px;line-height:1.7}#fallback[hidden]{display:none}.panel{border-left:1px solid var(--line);padding-left:25px}.live-label{display:flex;align-items:center;gap:7px;font-size:10px;letter-spacing:1.4px;text-transform:uppercase}.dot{width:6px;height:6px;border-radius:50%;background:var(--teal)}.temperature{font-family:'Space Grotesk',sans-serif;font-size:68px;letter-spacing:-4px;margin:12px 0 0;line-height:1.1}.temperature small{font-size:22px;letter-spacing:0}.caption{font-size:12px;color:var(--muted);margin:8px 0 23px}.gauges{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}.gauge{padding:17px 0;border-bottom:1px solid var(--line)}.gauge:last-child{grid-column:1 / -1}.gauge .value{font-family:'Space Grotesk',sans-serif;font-size:28px}.gauge small{font-size:11px;color:var(--muted);display:block;margin-bottom:8px}.unit{font-size:12px;color:var(--muted)}#chart{width:100%;height:90px;display:block;margin-top:14px}.chart-caption{font-size:10px;display:flex;justify-content:space-between;color:var(--muted)}.panel-note{font-size:11px;color:var(--muted);margin-top:22px}.controls{margin-top:22px}.sliders{display:grid;grid-template-columns:1fr 1fr;gap:40px}.control-heading{display:flex;justify-content:space-between;font-size:12px;margin-bottom:9px}.control-heading span{color:var(--muted)}input[type=range]{width:100%;accent-color:var(--teal);height:20px;cursor:pointer}.endpoints{display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}.button-row{display:flex;align-items:center;gap:8px;margin-top:22px;flex-wrap:wrap}button{background:transparent;border:1px solid var(--line);border-radius:5px;padding:11px 13px;color:var(--ink);font-size:11px;min-height:40px;cursor:pointer}button:hover{border-color:var(--teal)}button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}button.layer[aria-pressed=true]{background:var(--teal);border-color:var(--teal)}.camera-group{display:flex;gap:5px;margin-left:auto}.footer{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin-top:23px;padding-top:16px;font-size:10px;color:var(--muted)}#tour-status{color:var(--teal)}#tour-cursor{position:fixed;z-index:10;width:25px;height:25px;border:2px solid var(--teal);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:left .2s,top .2s;box-shadow:0 0 0 5px #008d7f16}#tour-cursor.pressing{background:#008d7f55;transform:translate(-50%,-50%) scale(.8)}:focus-visible{outline:2px solid var(--teal);outline-offset:4px}@media(min-width:1400px){.viewport{height:560px}}@media(max-width:950px){.workbench{grid-template-columns:minmax(0,1fr) 195px;gap:15px}.panel{padding-left:15px}.temperature{font-size:54px}.camera-group{margin-left:0}}@media(max-width:719px){header{padding:18px 0}.intro{display:block}h1{font-size:36px}.workbench{display:flex;flex-direction:column}.viewport{height:410px}#callouts{display:none}.panel{border-left:0;padding:0}.panel .gauges{grid-template-columns:repeat(3,1fr)}.panel .gauge:last-child{grid-column:auto}.gauges{grid-column:2;grid-row:1 / 5}.gauge{padding:10px 0}.temperature{font-size:48px}.caption{margin:0}.panel-note{display:none}.chart-wrap{grid-column:1 / -1}.sliders{gap:20px}.scene-note{font-size:9px}.button-row{gap:6px}button{font-size:10px}.footer{gap:16px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
-</style></head><body><header><a class="brand" href="/">sentia<span>·</span></a><a href="/">← Back to the whole picture</a></header><main id="take-apart" data-tour-beat="off"><div class="intro"><div><div class="eyebrow">${FACTS.product} / Interactive study</div><h1>A little space. A lot inside.</h1></div><p>Take apart the layers. Follow a day on skin.<br>One model connects every part and reading.</p></div><div class="workbench"><section aria-label="Interactive layer study"><div class="viewport"><canvas id="scene" aria-label="Three dimensional Patch One. Drag to orbit, scroll to zoom."></canvas><div class="live-readout"><div class="live-label"><i class="dot"></i>Simulated skin temperature</div><div class="temperature"><span data-gauge="temperature"></span><small> °C</small></div><div class="caption">A rhythm beneath the surface.</div></div><svg id="callouts" aria-hidden="true"></svg><p id="fallback" hidden>3D is unavailable on this device. Explore the layers and simulated readings with the controls below.</p><div class="scene-note">STUDY MODEL · vertical scale ×8</div><div class="scene-note right">Drag to orbit · Scroll to zoom</div></div></section><aside class="panel" aria-label="Simulated wear readings"><div class="eyebrow" style="margin-bottom:20px">Wear simulation</div><div class="gauges"><div class="gauge"><small>Hydration index</small><span class="value" data-gauge="hydration"></span><span class="unit"> / index</span></div><div class="gauge"><small>Battery</small><span class="value" data-gauge="battery"></span><span class="unit"> %</span></div><div class="gauge"><small>Time on skin</small><span class="unit">Day </span><span class="value" data-gauge="day"></span><span class="unit"> of ${FACTS.wearDays}</span></div></div><div class="chart-wrap"><canvas id="chart" aria-label="Skin temperature over the wear period"></canvas><div class="chart-caption"><span>Application</span><span>End of wear</span></div></div><p class="panel-note">Illustrative wellness readings.<br>A study of the system, not clinical data.</p></aside></div><section class="controls" aria-label="Study controls"><div class="sliders"><label><div class="control-heading">Separation <span>Explore the stack</span></div><input id="separation" aria-label="Separation" type="range" min="0" max="1" step="0.001" value="0"><div class="endpoints"><span>Assembled</span><span>Layer by layer</span></div></label><label><div class="control-heading">Wear time <span>Day <output id="wear-day"></output></span></div><input id="wear" aria-label="Wear time in hours" type="range" min="0" max="336" step="0.25" value="0"><div class="endpoints"><span>Application</span><span>End of wear</span></div></label></div><div class="button-row">${FACTS.layers.map((l,i)=>`<button class="layer" data-layer="${i}" aria-pressed="false">${l.name}</button>`).join('')}<button id="xray" aria-pressed="false">X ray</button><div class="camera-group" aria-label="Camera presets">${['Hero','Top','Side'].map(n=>`<button data-camera="${n}" aria-pressed="${n==='Hero'}">${n}</button>`).join('')}</div></div></section><div class="footer"><span>Five layers · ${FACTS.thicknessMm} mm assembled profile · Procedural geometry</span><span id="tour-status">Explore freely · Tour begins when idle</span></div></main><div id="tour-cursor" hidden></div><script src="/take-apart-model.js"></script><script type="module" src="/take-apart.js"></script></body></html>`;
-}
+
+## Gate loopback round (owner decision, 2026-10-31)
+
+This addendum governs the loopback round of wo-gh-9. The owner reviewed the first executed run at the human gate and sent it back with three mandates: fix the page chrome, complete the evidence, and adopt the vendored simulator kit as a run input. Where this addendum and the original text disagree about the items it names, this addendum wins. Everything else in the original text stands, including the model, the scene, the tour, the vendored library and the scope.
+
+### What the first run established
+
+The model, the scene, the tour and the evidence pass met the spec: the model tests pass, the browser pass recorded zero console errors and a passing gauge comparison at hour 200, and reviewer-design cleared all five contact sheet beats by name under S11. The changes_requested verdict rests on the page chrome around the study (palette, typography, spacing, accessibility, no script behaviour), on evidence that never reached the committed tree, and on a scope test that trips over the workflow's own harness files. Those are the only subjects of this round.
+
+### Chrome: the design system is the only source
+
+- Colours come only from design/DESIGN.md tokens: paper #FAFAF6, ink #12211C, signal teal #0E7C66, soft mint #EFF4EE, hairline #DFE7DF, body text #4A5D54, secondary labels #53685C. Coral #FF6B4A stays reserved for the status LED and alert dots and is never used as text. The substituted values from the first build (#163c34, #008d7f, #6a7972, #dce1d9) disappear from every take apart surface: src/take-apart-page.js, src/take-apart-client.js (callout and chart colours included) and the contact sheet composition inside scripts/capture-take-apart.mjs.
+- Measured contrast of the documented text pairs on paper, computed with the WCAG relative luminance formula: ink #12211C measures 15.93 to 1, body #4A5D54 measures 6.72 to 1, secondary #53685C measures 5.73 to 1, and teal #0E7C66 measures 4.90 to 1 in both directions (teal text on paper, and paper text on a teal filled control). Every text pair the page uses sits at or above the 4.5 to 1 floor that design/DESIGN.md sets. If the builder believes a documented token cannot reach 4.5 to 1 somewhere the design system requires it, the builder flags that in its output as a design system question for the owner and keeps the documented token. It never substitutes its own colour again.
+- Typography loads the way the main page loads it: the same Google Fonts stylesheet link in the page head (Inter at 400 and 500, Space Grotesk at 300, 400 and 500, display swap), matching the link tags src/page.js serves. The first round named the families without loading them. The ban on downloaded fonts in the scene section above governs scene assets; page typography follows design/DESIGN.md, which requires loaded fonts with font display swap. Sizes follow design/DESIGN.md: introduction 18 to 20 px, body 17 px with 1.65 leading, gauge and data values 32 to 56 px, display headings in Space Grotesk at weight 300 with the documented tracking, mono labels 11 px uppercase with 0.16 em tracking.
+- Spacing follows the documented rhythm: every fixed margin, padding and gap is a multiple of 8 px (8, 16, 24, 32, 48, 64, 96). The container is at most 1440 px wide. Gutters sit inside the documented fluid range of 24 to 80 px with their bounds on the 8 px rhythm. The first build's 25 px padding, 28 px gaps, 22 px margins, 15 px responsive spacing, 1600 px container and 4 percent gutters are all replaced.
+- Accessibility is completed to design/DESIGN.md: a skip link to a focusable main landmark (the main element carries tabindex minus 1), visible focus rings of 3 px, and every interactive target at least 44 px with at least 8 px between targets. The range inputs count: their operable height is brought to at least 44 px by track sizing or padding, without changing what the sliders control.
+- No script behaviour: with JavaScript disabled the page stays readable, as design/DESIGN.md requires. The served HTML carries the study's explanation, the five layer names with their study thicknesses, the initial gauge values rendered from gaugeReadout(0) by the page module, and a visible note where the canvas would be, saying the interactive study needs JavaScript. A noscript style override keeps that static content visible. With JavaScript enabled the client takes the gauges over from the same model, so the static and live values share one source.
+
+Tests assert the measurable parts of this section: no hexadecimal colour outside the documented token set appears in src/take-apart-page.js, src/take-apart-client.js or scripts/capture-take-apart.mjs; the documented text pairs, computed from the token values, measure at or above 4.5 to 1; the served page HTML contains the font stylesheet link, the skip link with its main target, and the noscript fallback content with the gaugeReadout(0) values; the declared container max width is 1440 px; the declared focus ring width is 3 px.
+
+### Evidence completeness
+
+The operator setup commit for this round adds .gitignore negations so the evidence logs commit: evidence/take-apart/browser-pass.log and the run's own logs under runs/wo-gh-9/. The first round wrote browser-pass.log into the worktree and the blanket log ignore kept it out of the tree, so the S8 log assertions read a file the repository did not hold. The builder re-runs scripts/capture-take-apart.mjs on the fixed page before the reviewers run, and the committed evidence for this round includes browser-pass.log next to the five beat stills and the contact sheet, recording zero console errors and the passing gauge comparison on the new build.
+
+### Scope test robustness and the new baseline
+
+The scope measurement for this round uses a new baseline: the loopback setup commit, which is the commit at the head of this branch when the run starts. The test writer records that hash in the SETUP_COMMIT constant of tests/take-apart.test.js, replacing the first round's constant. Two consequences:
+
+- The scope test excludes the harness files the workflow itself writes, before the allowed list is applied, from both the tracked diff and the untracked list: suite-output.txt, suite-result.txt, run-diff.txt and comment.md at the repository root. The first round failed its own scope test in the workflow suite step because the suite output file was created by the step that ran the suite. Everything else about the scope test is unchanged, and the allowed list gains nothing this round.
+- The src/page.js diff assertion is re-based with the same constant: the anchor already exists in the baseline, so this round asserts the line changes src/page.js not at all. The served HTML assertion continues to prove exactly one anchor to /take-apart labelled Take apart in the header nav.
+
+### The stale S11 failure is out of scope
+
+tests/design-v4-square-product.test.js fails on run evidence from wo-gh-8 whose gap the owner accepted when he deployed that build. The failure is pre-existing: the first round recorded it at its own baseline in runs/wo-gh-9/builder-baseline-design-test.log, and it fails identically at this round's baseline. This round does not touch that test, that evidence, or any earlier run's files, and no station spends turns on it. The run report lists it separately as a pre-existing failure awaiting the owner's own decision (a waiver for this work order, or a separate re-baseline work order). The suite criterion for this round is: every test passes except that one itemized failure, and the 1 pre-existing skip may remain.
+
+### Kit adoption (run input)
+
+- Run input: the teardown simulator kit, vendored in the anvil-factory repository at third_party/teardown/ (upstream commit e7e668cd44f48ba79a3c575e9f55c7e194d26eef, MIT licence, inventory note at third_party/README.md in that repository). For this round the execute workflow checks the factory out at the anvil/vendor-teardown branch, so the kit is present in the run workspace at .anvil-factory/third_party/teardown/. It is a reference and tooling input, not a dependency of this site: no kit file is copied into this repository unless the builder judges it necessary and says why in its output.
+- The page and the capture already follow the kit's central discipline: one model posing the parts and the panels, a beat driven tour with an on screen cursor that hands control to the visitor, deterministic capture keyed to the tour state rather than wall clock waits, a labelled contact sheet read beat by beat, quality tiers for weak GPUs, and shaders warmed before the first frame. The builder keeps that alignment and states in its output which kit conventions it relied on or adjusted. Where the kit and this spec disagree, this spec wins: the idle delay stays 20 seconds, the payload budget stays this spec's, and the design tokens stay design/DESIGN.md's.
+- reviewer-design reads the new contact sheet the way the kit's review loop reads its sheets: every beat tile, checked for parts passing through parts, labels covering what they name, numbers disagreeing with the pose, and clipped or undersized type, naming the beat for anything it finds.
+
+### Done criteria for this round
+
+These replace the original done criteria list for the loopback round:
+
+- Run verdict approved, with all five expected reviews counted and no parse failures.
+- reviewer-design's output addresses all five contact sheet beats by name under S11 and judges each chrome item of this addendum (palette and contrast, typography, spacing and container, accessibility, no script behaviour) one by one.
+- The full project suite on the final tree: every test passes except the one itemized pre-existing failure named above; the 1 pre-existing skip may remain. The take apart tests, including the new chrome assertions and the re-based scope test, pass.
+- browser-pass.log is present in the committed evidence/take-apart/ and records zero console errors and a passing gauge comparison.
+- The run diff against the loopback setup commit names no file outside the allowed scope, with the harness files excluded as stated.
 
 exec
-/bin/bash -lc 'cat src/take-apart-client.js evidence/take-apart/browser-pass.log scripts/capture-take-apart.mjs' in /home/runner/work/sentia/sentia
+/bin/bash -lc 'cat src/take-apart-page.js src/take-apart-client.js scripts/capture-take-apart.mjs evidence/take-apart/browser-pass.log' in /home/runner/work/sentia/sentia
  succeeded in 0ms:
+import { FACTS } from './facts.js';
+import { LAYERS, gaugeReadout } from './take-apart-model.js';
+export function renderTakeApartPage() {
+  const initial = gaugeReadout(0);
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Take apart — ${FACTS.product}</title><link rel="icon" href="/favicon.ico"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet"><style>
+:root{--paper:#FAFAF6;--ink:#12211C;--teal:#0E7C66;--muted:#53685C;--line:#DFE7DF;--body:#4A5D54;--mint:#EFF4EE}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,Arial,sans-serif;font-size:17px;line-height:1.65}button,input{font:inherit}button,a,input{touch-action:manipulation}a{color:inherit;text-decoration:none}header{margin:0 auto;max-width:1440px;padding:16px clamp(24px,5vw,80px);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.brand{font-family:'Space Grotesk',sans-serif;font-size:27px;letter-spacing:-1.4px}.brand span{color:var(--teal)}header a:last-child{font-size:13px}main{max-width:1440px;margin:auto;padding:24px clamp(24px,5vw,80px)}.eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}h1{font-family:'Space Grotesk',sans-serif;font-size:43px;font-weight:300;letter-spacing:-.04em;margin:8px 0}p{line-height:1.65}.intro{display:flex;justify-content:space-between;align-items:end}.intro p{font-size:18px;color:var(--body);max-width:400px;margin:0 0 8px}.workbench{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:24px;margin-top:24px}.viewport{height:520px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}#scene{width:100%;height:100%;display:block;touch-action:none;cursor:grab}#scene:active{cursor:grabbing}.live-readout{position:absolute;top:0;left:0;pointer-events:none}.live-readout .temperature{font-size:56px;margin-top:8px}.live-readout .caption{display:none}.scene-note{position:absolute;left:0;bottom:16px;font-size:11px;color:var(--muted);pointer-events:none}.scene-note.right{left:auto;right:0}#callouts{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}#fallback{position:absolute;inset:30%;font-size:16px;line-height:1.7}#fallback[hidden]{display:none}.panel{border-left:1px solid var(--line);padding-left:24px}.live-label{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:1.4px;text-transform:uppercase}.dot{width:6px;height:6px;border-radius:50%;background:var(--teal)}.temperature{font-family:'Space Grotesk',sans-serif;font-size:56px;letter-spacing:-4px;margin:8px 0 0;line-height:1.1}.temperature small{font-size:22px;letter-spacing:0}.caption{font-size:12px;color:var(--muted);margin:8px 0 24px}.gauges{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}.gauge{padding:16px 0;border-bottom:1px solid var(--line)}.gauge:last-child{grid-column:1 / -1}.gauge .value{font-family:'Space Grotesk',sans-serif;font-size:32px}.gauge small{font-size:11px;color:var(--muted);display:block;margin-bottom:8px}.unit{font-size:12px;color:var(--muted)}#chart{width:100%;height:90px;display:block;margin-top:16px}.chart-caption{font-size:11px;display:flex;justify-content:space-between;color:var(--muted)}.panel-note{font-size:11px;color:var(--muted);margin-top:24px}.controls{margin-top:24px}.sliders{display:grid;grid-template-columns:1fr 1fr;gap:40px}.control-heading{display:flex;justify-content:space-between;font-size:12px;margin-bottom:8px}.control-heading span{color:var(--muted)}input[type=range]{width:100%;accent-color:var(--teal);height:44px;margin:0;cursor:pointer}.endpoints{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}.button-row{display:flex;align-items:center;gap:8px;margin-top:24px;flex-wrap:wrap}button{background:transparent;border:1px solid var(--line);border-radius:5px;padding:8px 16px;color:var(--ink);font-size:11px;min-height:44px;min-width:44px;cursor:pointer}button:hover{border-color:var(--teal)}button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}button.layer[aria-pressed=true]{background:var(--teal);border-color:var(--teal)}.camera-group{display:flex;gap:8px;margin-left:auto}.footer{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin-top:24px;padding-top:16px;font-size:11px;color:var(--muted)}#tour-status{color:var(--teal)}#tour-cursor{position:fixed;z-index:10;width:25px;height:25px;border:2px solid var(--teal);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:left .2s,top .2s;box-shadow:0 0 0 5px var(--mint)}#tour-cursor.pressing{background:var(--mint);transform:translate(-50%,-50%) scale(.8)}:focus-visible{outline:3px solid var(--teal);outline-offset:4px}@media(min-width:1400px){.viewport{height:560px}}@media(max-width:950px){.workbench{grid-template-columns:minmax(0,1fr) 195px;gap:16px}.panel{padding-left:16px}.temperature{font-size:54px}.camera-group{margin-left:0}}@media(max-width:719px){header{padding:16px 24px}.intro{display:block}h1{font-size:36px}.workbench{display:flex;flex-direction:column}.viewport{height:410px}#callouts{display:none}.panel{border-left:0;padding:0}.panel .gauges{grid-template-columns:repeat(3,1fr)}.panel .gauge:last-child{grid-column:auto}.gauges{grid-column:2;grid-row:1 / 5}.gauge{padding:16px 0}.temperature{font-size:48px}.caption{margin:0}.panel-note{display:none}.chart-wrap{grid-column:1 / -1}.sliders{gap:24px}.scene-note{font-size:11px}.button-row{gap:8px}button{font-size:11px}.footer{gap:16px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+.eyebrow,.live-label,.scene-note,.endpoints,.chart-caption,.footer{font-family:monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase}.panel-note{font-size:17px;color:var(--body)}.temperature,.gauge .value{font-weight:300}header{gap:16px}header a{min-height:44px;display:inline-flex;align-items:center}.skip-link{position:absolute;left:24px;top:8px;transform:translateY(-200%);background:var(--paper);padding:8px 16px;z-index:20}.skip-link:focus{transform:none}.static-layers{display:none}.static-layers li{margin:8px 0}.static-layers ul{padding-left:24px}#fallback{inset:32% 16%;margin:0;padding:16px;background:var(--paper);color:var(--body)}
+</style><noscript><style>#fallback[hidden],.static-layers{display:block!important}#scene,#callouts,.controls,#tour-status,.scene-note{display:none!important}</style></noscript></head><body><a class="skip-link" href="#take-apart">Skip to study</a><header><a class="brand" href="/">sentia<span>·</span></a><a href="/">← Back to the whole picture</a></header><main tabindex="-1" id="take-apart" data-tour-beat="off"><div class="intro"><div><div class="eyebrow">${FACTS.product} / Interactive study</div><h1>A little space. A lot inside.</h1></div><p>Take apart the layers. Follow a day on skin.<br>One model connects every part and reading.</p></div><div class="workbench"><section aria-label="Interactive layer study"><div class="viewport"><canvas id="scene" aria-label="Three dimensional Patch One. Drag to orbit, scroll to zoom."></canvas><div class="live-readout"><div class="live-label"><i class="dot"></i>Simulated skin temperature</div><div class="temperature"><span data-gauge="temperature">${initial.temperature}</span><small> °C</small></div><div class="caption">A rhythm beneath the surface.</div></div><svg id="callouts" aria-hidden="true"></svg><p id="fallback" hidden>This interactive study needs JavaScript and WebGL. Explore the layer list and initial simulated readings below.</p><div class="scene-note">STUDY MODEL · vertical scale ×8</div><div class="scene-note right">Drag to orbit · Scroll to zoom</div></div></section><aside class="panel" aria-label="Simulated wear readings"><div class="eyebrow" style="margin-bottom:24px">Wear simulation</div><div class="gauges"><div class="gauge"><small>Hydration index</small><span class="value" data-gauge="hydration">${initial.hydration}</span><span class="unit"> / index</span></div><div class="gauge"><small>Battery</small><span class="value" data-gauge="battery">${initial.battery}</span><span class="unit"> %</span></div><div class="gauge"><small>Time on skin</small><span class="unit">Day </span><span class="value" data-gauge="day">${initial.day}</span><span class="unit"> of ${FACTS.wearDays}</span></div></div><div class="chart-wrap"><canvas id="chart" aria-label="Skin temperature over the wear period"></canvas><div class="chart-caption"><span>Application</span><span>End of wear</span></div></div><p class="panel-note">Illustrative wellness readings.<br>A study of the system, not clinical data.</p></aside></div><section class="static-layers" aria-label="Study layer thicknesses"><h2>The assembled stack</h2><ul>${LAYERS.map(layer => `<li>${layer.name} — ${layer.thicknessMm} mm</li>`).join('')}</ul></section><section class="controls" aria-label="Study controls"><div class="sliders"><label><div class="control-heading">Separation <span>Explore the stack</span></div><input id="separation" aria-label="Separation" type="range" min="0" max="1" step="0.001" value="0"><div class="endpoints"><span>Assembled</span><span>Layer by layer</span></div></label><label><div class="control-heading">Wear time <span>Day <output id="wear-day">${initial.day}</output></span></div><input id="wear" aria-label="Wear time in hours" type="range" min="0" max="336" step="0.25" value="0"><div class="endpoints"><span>Application</span><span>End of wear</span></div></label></div><div class="button-row">${FACTS.layers.map((l,i)=>`<button class="layer" data-layer="${i}" aria-pressed="false">${l.name}</button>`).join('')}<button id="xray" aria-pressed="false">X ray</button><div class="camera-group" aria-label="Camera presets">${['Hero','Top','Side'].map(n=>`<button data-camera="${n}" aria-pressed="${n==='Hero'}">${n}</button>`).join('')}</div></div></section><div class="footer"><span>Five layers · ${FACTS.thicknessMm} mm assembled profile · Procedural geometry</span><span id="tour-status">Explore freely · Tour begins when idle</span></div></main><div id="tour-cursor" hidden></div><script src="/take-apart-model.js"></script><script type="module" src="/take-apart.js"></script></body></html>`;
+}
 // First party application source served by the worker.
 async function takeApartApp() {
 const THREE = await import('/vendor/three.module.min.js');
@@ -530,7 +580,7 @@ function box(parent, size, position, color, roughness=.65) {
   const mesh = new THREE.Mesh(new THREE.BoxGeometry(...size), new THREE.MeshStandardMaterial({ color,roughness }));
   mesh.position.set(...position); mesh.castShadow = true; parent.add(mesh); return mesh;
 }
-function initScene() {
+async function initScene() {
   renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
   renderer.setPixelRatio(quality.pixelRatioCap); renderer.setClearColor(0xfafaf6);
   renderer.shadowMap.enabled = quality.shadowMapSize > 0; renderer.shadowMap.type = THREE.VSMShadowMap;
@@ -544,12 +594,12 @@ function initScene() {
   key.shadow.bias = -.0003; key.shadow.normalBias = .15; key.shadow.radius = 5; key.shadow.blurSamples = 8; scene.add(key);
   const ground = new THREE.Mesh(new THREE.PlaneGeometry(1000,1000),new THREE.ShadowMaterial({ opacity:.12 }));
   ground.rotation.x = -Math.PI/2; ground.position.y=-.15; ground.receiveShadow=true; scene.add(ground);
-  const colors = [0xeeeae0,0xd1cfc3,0x163c34,0xe2e8d9,0xf0eee7];
+  const colors = [0xeeeae0,0xd1cfc3,0x12211c,0xe2e8d9,0xf0eee7];
   meshes = M.LAYERS.map((layer,i) => {
     const mesh = new THREE.Mesh(roundedGeometry(layer.thicknessMm*Z_SCALE),new THREE.MeshStandardMaterial({ color:colors[i], roughness:i===2?.58:.82, transparent:true }));
     mesh.castShadow=true; mesh.receiveShadow=true; scene.add(mesh); return mesh;
   });
-  box(meshes[0],[12,.06,.38],[0,M.LAYERS[0].thicknessMm*Z_SCALE/2+.04,8],0x008d7f);
+  box(meshes[0],[12,.06,.38],[0,M.LAYERS[0].thicknessMm*Z_SCALE/2+.04,8],0x0e7c66);
   const boardTop = M.LAYERS[2].thicknessMm*Z_SCALE/2+.04;
   // Printed traces and flush components stay inside the study layer envelope.
   for (let i=0;i<6;i++) {
@@ -569,7 +619,7 @@ function initScene() {
     words.forEach((word,j)=> {const line=document.createElementNS(ns,'tspan');line.textContent=word;line.setAttribute('dy',j?'15':'0');label.append(line);});
     group.append(label); overlay.append(group);
   });
-  updateScene(true); renderer.compile(scene,camera); renderer.render(scene,camera);
+  await renderer.compileAsync(scene,camera); updateScene(true);
 }
 function updateScene(instant=false) {
   if (!renderer) return;
@@ -608,7 +658,7 @@ function updateScene(instant=false) {
   }
   labels.forEach(l=> {
     const g=overlay.children[l.i], x=l.left?8:w-8, elbow=l.left?150:w-150;
-    const color=state.focus===l.i?'#008d7f':'#6a7972';
+    const color=state.focus===l.i?'#0E7C66':'#53685C';
     g.setAttribute('fill',color);g.querySelector('path').setAttribute('stroke',color);
     g.querySelector('path').setAttribute('d',`M ${l.x} ${l.y} L ${elbow} ${l.labelY} L ${l.left?x+3:x-3} ${l.labelY}`);
     const circle=g.querySelector('circle');circle.setAttribute('cx',l.x);circle.setAttribute('cy',l.y);
@@ -623,14 +673,14 @@ function drawChart() {
   const ctx=chart.getContext('2d');ctx.scale(dpr,dpr);
   const w=rect.width,h=rect.height, series=M.tempSeries(), low=Math.min(...series)-.1,high=Math.max(...series)+.1;
   const px=i=>4+(w-8)*i/56, py=v=>h-8-(v-low)/(high-low)*(h-16);
-  ctx.strokeStyle='#dce1d9';ctx.lineWidth=1;
+  ctx.strokeStyle='#DFE7DF';ctx.lineWidth=1;
   for(const y of [12,h/2,h-12]){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
   ctx.beginPath();series.forEach((v,i)=>i?ctx.lineTo(px(i),py(v)):ctx.moveTo(px(i),py(v)));
-  ctx.strokeStyle='#008d7f';ctx.lineWidth=1.5;ctx.stroke();
+  ctx.strokeStyle='#0E7C66';ctx.lineWidth=1.5;ctx.stroke();
   const idx=state.h/6, base=Math.floor(idx), next=Math.min(56,base+1);
   const value=series[base]+(series[next]-series[base])*(idx-base),x=px(idx),y=py(value);
-  ctx.strokeStyle='#163c34';ctx.beginPath();ctx.moveTo(x,4);ctx.lineTo(x,h-4);ctx.stroke();
-  ctx.fillStyle='#008d7f';ctx.beginPath();ctx.arc(x,y,3.5,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='#12211C';ctx.beginPath();ctx.moveTo(x,4);ctx.lineTo(x,h-4);ctx.stroke();
+  ctx.fillStyle='#0E7C66';ctx.beginPath();ctx.arc(x,y,3.5,0,Math.PI*2);ctx.fill();
   lastChartHour=state.h;
 }
 function updatePanel(now) {
@@ -665,8 +715,8 @@ function tour(now) {
     beats[index][3]();root.dataset.tourBeat=beats[index][0];$('#tour-status').textContent='Guided tour · '+beats[index][1];
   }
 }
-try { initScene(); } catch (error) {
-  if(renderer)renderer.dispose();renderer=null;canvas.hidden=true;overlay.hidden=true;$('#fallback').hidden=false;
+try { await initScene(); root.dataset.sceneReady = 'true'; } catch (error) {
+  if(renderer)renderer.dispose();renderer=null;canvas.hidden=true;overlay.hidden=true;$('#fallback').textContent='3D is unavailable on this device. Explore the layers and simulated readings with the controls below.';$('#fallback').hidden=false;
   // WebGL capability failure leaves the model and accessible controls operational.
 }
 window.addEventListener('resize',()=> {lastChartHour=-Infinity;});
@@ -675,10 +725,6 @@ requestAnimationFrame(frame);
 
 }
 export const TAKE_APART_CLIENT_JS = `(${takeApartApp.toString()})();`;
-console errors: 0
-gauge comparison: PASS at hour 200
-vendor decoded bytes: 670681
-
 // Run with a runner-installed Playwright, never a site dependency:
 // PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs node scripts/capture-take-apart.mjs
 import http from 'node:http';
@@ -710,7 +756,8 @@ try {
   page.on('pageerror',error=>errors.push(String(error)));
   console.log('Loading study');
   await page.goto(`http://127.0.0.1:${server.address().port}/take-apart?tour=fast`);
-  await page.waitForFunction(()=>document.querySelector('[data-gauge="temperature"]').textContent.length>0);
+  await page.waitForFunction(()=>document.querySelector('#take-apart').dataset.sceneReady==='true');
+  await page.evaluate(()=>document.fonts.ready);
   console.log('Study loaded');
   assert.equal(await page.locator('#fallback').isVisible(),false,'WebGL scene must render for evidence');
   const area=await page.locator('#scene').boundingBox();
@@ -718,7 +765,7 @@ try {
   await page.mouse.down();await page.mouse.move(area.x+area.width/2+75,area.y+area.height/2+25,{steps:8});await page.mouse.up();
   await page.mouse.wheel(0,100);
   await page.locator('#wear').evaluate(input=>{ input.value='200';input.dispatchEvent(new Event('input',{bubbles:true})); });
-  await page.waitForTimeout(350);
+  await page.waitForFunction(expected => [...document.querySelectorAll('[data-gauge]')].every(n => n.textContent === expected[n.dataset.gauge]), gaugeReadout(200));
   const actual=await page.locator('[data-gauge]').evaluateAll(nodes=>Object.fromEntries(nodes.map(n=>[n.dataset.gauge,n.textContent])));
   assert.deepEqual(actual,gaugeReadout(200));gaugePassed=true;
   for(const name of ['Top','Side','Hero']){ await page.locator(`[data-camera="${name}"]`).click();await page.waitForTimeout(180); }
@@ -753,15 +800,15 @@ try {
     sources.push({label,src:'data:image/png;base64,'+png.toString('base64')});
   }
   // Composition happens in this browser session, from the captured pixels.
-  const sheet=await browser.newPage({viewport:{width:1440,height:1710},deviceScaleFactor:1});
-  await sheet.setContent('<body style="margin:0;background:#FAFAF6"><canvas id="sheet" width="1440" height="1710"></canvas></body>');
+  const sheet=await browser.newPage({viewport:{width:1440,height:1840},deviceScaleFactor:1});
+  await sheet.setContent('<body style="margin:0;background:#FAFAF6"><canvas id="sheet" width="1440" height="1840"></canvas></body>');
   const composed=await sheet.evaluate(async sources=>{
     const c=document.querySelector('canvas'),ctx=c.getContext('2d');ctx.fillStyle='#FAFAF6';ctx.fillRect(0,0,c.width,c.height);
-    ctx.fillStyle='#163c34';ctx.font='28px sans-serif';ctx.fillText('SENTIA / Take apart — tour contact sheet',25,42);
+    ctx.fillStyle='#12211C';ctx.font='28px sans-serif';ctx.fillText('SENTIA / Take apart — tour contact sheet',24,40);
     for(let i=0;i<sources.length;i++) {
       const img=new Image();img.src=sources[i].src;await img.decode();
-      const x=(i%2)*720,y=70+Math.floor(i/2)*540;
-      ctx.drawImage(img,x,y,720,500);ctx.fillStyle='#163c34';ctx.font='18px sans-serif';ctx.fillText(sources[i].label,x+22,y+526);
+      const x=(i%2)*720,y=64+Math.floor(i/2)*592;
+      ctx.drawImage(img,x,y,720,525);ctx.fillStyle='#12211C';ctx.font='18px sans-serif';ctx.fillText(sources[i].label,x+24,y+560);
     }
     return c.toDataURL('image/png').split(',')[1];
   },sources);
@@ -779,13 +826,46 @@ try {
   await browser.close();await new Promise(resolve=>server.close(resolve));
 }
 console.log('Browser pass complete: zero console errors; gauge comparison PASS.');
+console errors: 0
+gauge comparison: PASS at hour 200
+vendor decoded bytes: 670681
+
 
 codex
-The five tour beats show the expected poses and wear readings, with labels kept outside the parts. The interface code does diverge from the documented palette, type sizes, spacing, and accessibility rules; I’m checking those findings against the exact requirements.
+The five tour beats show consistent layer poses and gauge values. The chrome uses the documented colours, loads the fonts, and adds the required focus and no-script support. I’m checking the remaining typography and narrow-screen rules before issuing the verdict.
 
 exec
-/bin/bash -lc "cat src/take-apart-model.js; rg -n 'font|skip|medical' src/take-apart-page.js; rg --files -g 'AGENTS.md' -g '*font*' -g '*.woff*' -g '*tokens*' -g '"'!src/vendor-three.js'"'" in /home/runner/work/sentia/sentia
- exited 1 in 0ms:
+/bin/bash -lc "rg -n 'chrome|contrast|font|spacing|noscript|focus|1440|palette' tests/take-apart.test.js; git ls-files evidence/take-apart/browser-pass.log; cat src/take-apart-model.js" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+15:// objects returned by gaugeReadout and focusTransform, the export name of the
+100:function lift(api, k, t, focus) {
+101:  const r = api.focusTransform(toArg(k), t, focus === NONE ? NONE : toArg(focus));
+108:function opacity(api, k, focus, xray) {
+109:  const r = api.materialState(toArg(k), focus === NONE ? NONE : toArg(focus), xray);
+209:test('take-apart S6: focus lifts the board and steps the others aside with signs', () => {
+240:  near(opacity(M, COVER, COVER, true), 0.15); // focused cover, no fade in play
+241:  near(opacity(M, COVER, BOARD, true), 0.0525); // faded by another focus under x ray
+244:  // non focused layers: fade alone; x ray touches only the cover
+306:        const a = JSON.stringify(B.focusTransform(toArg(k), t, f === NONE ? NONE : toArg(f)));
+307:        assert.equal(a, JSON.stringify(M.focusTransform(toArg(k), t, f === NONE ? NONE : toArg(f))));
+436:// ---------------------------------------------------------------- loopback chrome
+445:function contrast(a, b) {
+450:test('take-apart chrome: only design token colours appear in page, client and capture sources', () => {
+462:test('take-apart chrome: documented text pairs measure at or above 4.5 to 1', () => {
+471:    const r = contrast(fg, bg);
+477:test('take-apart chrome: font stylesheet link matches the main page, with preconnect and swap', async () => {
+479:  const link = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@300;400;500&display=swap';
+480:  assert.ok(html.includes(`<link href="${link}" rel="stylesheet">`) || html.includes(`href="${link}"`), 'font stylesheet link');
+481:  assert.match(html, /<link rel="preconnect" href="https:\/\/fonts\.googleapis\.com">/);
+482:  assert.match(html, /<link rel="preconnect" href="https:\/\/fonts\.gstatic\.com"/);
+487:test('take-apart chrome: skip link targets a focusable main landmark', async () => {
+495:test('take-apart chrome: served HTML reads without script (explanation, layers, gaugeReadout(0), note, noscript override)', async () => {
+497:  const noscript = html.match(/<noscript[^>]*>[\s\S]*?<\/noscript>/);
+498:  assert.ok(noscript && /<style/i.test(noscript[0]), 'noscript style override present');
+506:test('take-apart chrome: container at most 1440 px and 3 px focus rings are declared', async () => {
+509:  assert.ok(widths.includes(1440), 'a 1440 px container is declared');
+510:  assert.ok(widths.every((w) => w <= 1440), `no max-width above 1440: ${widths}`);
+511:  assert.match(html, /:focus-visible[^}]*(outline:\s*3px|outline-width:\s*3px)/, '3 px focus ring');
 import { FACTS } from './facts.js';
 
 export const GAP_MM = 3, FOOTPRINT_MM = 36, CORNER_RADIUS_MM = 9;
@@ -824,48 +904,91 @@ export function sceneState(t, h, focusIndex = null, xray = false) {
     ...layer, centerMm: layerCenterMm(i, t), ...focusTransform(i, t, focusIndex), ...materialState(i, focusIndex, xray),
   })) };
 }
-4::root{--paper:#FAFAF6;--ink:#163c34;--teal:#008d7f;--muted:#6a7972;--line:#dce1d9}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,Arial,sans-serif}button,input{font:inherit}button,a,input{touch-action:manipulation}a{color:inherit;text-decoration:none}header{margin:0 4%;padding:25px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.brand{font-family:'Space Grotesk',sans-serif;font-size:27px;letter-spacing:-1.4px}.brand span{color:var(--teal)}header a:last-child{font-size:13px}main{max-width:1600px;margin:auto;padding:28px 4% 25px}.eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}h1{font-family:'Space Grotesk',sans-serif;font-size:43px;font-weight:400;letter-spacing:-2px;margin:10px 0}p{line-height:1.6}.intro{display:flex;justify-content:space-between;align-items:end}.intro p{font-size:13px;color:var(--muted);max-width:330px;margin:0 0 8px}.workbench{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:28px;margin-top:20px}.viewport{height:520px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}#scene{width:100%;height:100%;display:block;touch-action:none;cursor:grab}#scene:active{cursor:grabbing}.live-readout{position:absolute;top:0;left:0;pointer-events:none}.live-readout .temperature{font-size:56px;margin-top:8px}.live-readout .caption{display:none}.scene-note{position:absolute;left:0;bottom:14px;font-size:11px;color:var(--muted);pointer-events:none}.scene-note.right{left:auto;right:0}#callouts{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}#fallback{position:absolute;inset:30%;font-size:16px;line-height:1.7}#fallback[hidden]{display:none}.panel{border-left:1px solid var(--line);padding-left:25px}.live-label{display:flex;align-items:center;gap:7px;font-size:10px;letter-spacing:1.4px;text-transform:uppercase}.dot{width:6px;height:6px;border-radius:50%;background:var(--teal)}.temperature{font-family:'Space Grotesk',sans-serif;font-size:68px;letter-spacing:-4px;margin:12px 0 0;line-height:1.1}.temperature small{font-size:22px;letter-spacing:0}.caption{font-size:12px;color:var(--muted);margin:8px 0 23px}.gauges{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}.gauge{padding:17px 0;border-bottom:1px solid var(--line)}.gauge:last-child{grid-column:1 / -1}.gauge .value{font-family:'Space Grotesk',sans-serif;font-size:28px}.gauge small{font-size:11px;color:var(--muted);display:block;margin-bottom:8px}.unit{font-size:12px;color:var(--muted)}#chart{width:100%;height:90px;display:block;margin-top:14px}.chart-caption{font-size:10px;display:flex;justify-content:space-between;color:var(--muted)}.panel-note{font-size:11px;color:var(--muted);margin-top:22px}.controls{margin-top:22px}.sliders{display:grid;grid-template-columns:1fr 1fr;gap:40px}.control-heading{display:flex;justify-content:space-between;font-size:12px;margin-bottom:9px}.control-heading span{color:var(--muted)}input[type=range]{width:100%;accent-color:var(--teal);height:20px;cursor:pointer}.endpoints{display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}.button-row{display:flex;align-items:center;gap:8px;margin-top:22px;flex-wrap:wrap}button{background:transparent;border:1px solid var(--line);border-radius:5px;padding:11px 13px;color:var(--ink);font-size:11px;min-height:40px;cursor:pointer}button:hover{border-color:var(--teal)}button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}button.layer[aria-pressed=true]{background:var(--teal);border-color:var(--teal)}.camera-group{display:flex;gap:5px;margin-left:auto}.footer{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin-top:23px;padding-top:16px;font-size:10px;color:var(--muted)}#tour-status{color:var(--teal)}#tour-cursor{position:fixed;z-index:10;width:25px;height:25px;border:2px solid var(--teal);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:left .2s,top .2s;box-shadow:0 0 0 5px #008d7f16}#tour-cursor.pressing{background:#008d7f55;transform:translate(-50%,-50%) scale(.8)}:focus-visible{outline:2px solid var(--teal);outline-offset:4px}@media(min-width:1400px){.viewport{height:560px}}@media(max-width:950px){.workbench{grid-template-columns:minmax(0,1fr) 195px;gap:15px}.panel{padding-left:15px}.temperature{font-size:54px}.camera-group{margin-left:0}}@media(max-width:719px){header{padding:18px 0}.intro{display:block}h1{font-size:36px}.workbench{display:flex;flex-direction:column}.viewport{height:410px}#callouts{display:none}.panel{border-left:0;padding:0}.panel .gauges{grid-template-columns:repeat(3,1fr)}.panel .gauge:last-child{grid-column:auto}.gauges{grid-column:2;grid-row:1 / 5}.gauge{padding:10px 0}.temperature{font-size:48px}.caption{margin:0}.panel-note{display:none}.chart-wrap{grid-column:1 / -1}.sliders{gap:20px}.scene-note{font-size:9px}.button-row{gap:6px}button{font-size:10px}.footer{gap:16px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 
 exec
-/bin/bash -lc "node --input-type=module -e 'const linear=x=>{x/=255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4};const lum=s=>{const a=s.match(/../g).map(x=>linear(parseInt(x,16)));return .2126*a[0]+.7152*a[1]+.0722*a[2]}; for(const c of [\"6a7972\",\"008d7f\",\"53685C\",\"0E7C66\"])console.log(c,(lum(\"FAFAF6\")+.05)/(lum(c)+.05));'" in /home/runner/work/sentia/sentia
+/bin/bash -lc "git status --short -- evidence/take-apart/browser-pass.log src/take-apart-page.js; sed -n '436,477p' tests/take-apart.test.js; rg --files /tmp /usr/lib/node_modules 2>/dev/null | rg 'playwright/(index.mjs|package.json)"'$'"'" in /home/runner/work/sentia/sentia
  succeeded in 0ms:
-6a7972 4.371778885401446
-008d7f 3.922633006779965
-53685C 5.730191006143661
-0E7C66 4.902733691309474
+ M src/take-apart-page.js
+?? evidence/take-apart/browser-pass.log
+// ---------------------------------------------------------------- loopback chrome
+const TOKENS = { paper: '#FAFAF6', ink: '#12211C', teal: '#0E7C66', mint: '#EFF4EE', hairline: '#DFE7DF', body: '#4A5D54', secondary: '#53685C', coral: '#FF6B4A' };
+const read = (rel) => fs.readFileSync(new URL('../' + rel, import.meta.url), 'utf8');
+
+function luminance(hex) {
+  const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)
+    .map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+}
+function contrast(a, b) {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+}
+
+test('take-apart chrome: only design token colours appear in page, client and capture sources', () => {
+  const allowed = new Set(Object.values(TOKENS).map((v) => v.toLowerCase()));
+  for (const f of ['src/take-apart-page.js', 'src/take-apart-client.js', 'scripts/capture-take-apart.mjs']) {
+    const found = (read(f).match(/#[0-9a-fA-F]{3,8}\b/g) || []).map((v) => v.toLowerCase());
+    const stray = [...new Set(found.filter((v) => !allowed.has(v)))];
+    assert.deepEqual(stray, [], `${f} carries colours outside design/DESIGN.md`);
+    for (const bad of ['#163c34', '#008d7f', '#6a7972', '#dce1d9']) {
+      assert.ok(!read(f).toLowerCase().includes(bad), `${f} still has substituted ${bad}`);
+    }
+  }
+});
+
+test('take-apart chrome: documented text pairs measure at or above 4.5 to 1', () => {
+  const pairs = [
+    [TOKENS.ink, TOKENS.paper, 15.93],
+    [TOKENS.body, TOKENS.paper, 6.72],
+    [TOKENS.secondary, TOKENS.paper, 5.73],
+    [TOKENS.teal, TOKENS.paper, 4.9],
+    [TOKENS.paper, TOKENS.teal, 4.9],
+  ];
+  for (const [fg, bg, documented] of pairs) {
+    const r = contrast(fg, bg);
+    assert.ok(r >= 4.5, `${fg} on ${bg} is ${r.toFixed(2)}`);
+    assert.ok(Math.abs(r - documented) < 0.01, `${fg} on ${bg}: ${r.toFixed(2)} vs documented ${documented}`);
+  }
+});
+
+test('take-apart chrome: font stylesheet link matches the main page, with preconnect and swap', async () => {
+/tmp/sentia-browser/node_modules/playwright/index.mjs
+/tmp/sentia-browser/node_modules/playwright/package.json
 
 codex
 {
   "station": "reviewer-design",
   "verdict": "changes_requested",
   "findings": [
-    "Palette and contrast: src/take-apart-page.js substitutes ink #163c34, teal #008d7f, muted #6a7972 and hairline #dce1d9 for design/DESIGN.md's defined colors. Muted text on paper measures 4.37:1; teal text on paper and paper text on selected teal buttons measure 3.92:1, below the required 4.5:1. Restore the documented tokens, including callout and chart colors in src/take-apart-client.js.",
-    "Typography: src/take-apart-page.js names Space Grotesk and Inter without loading either font. Its introduction is 13px rather than 18–20px, gauge values are 28px rather than 32–56px, and display weight is 400 rather than 300. Supply the specified typography through a spec-compliant font strategy and restore the documented sizes.",
-    "Layout rhythm: src/take-apart-page.js uses 25px padding, 28px workbench gaps, 22px control margins and 15px responsive spacing, violating the required multiples of 8px. Its 1600px container exceeds the 1440px maximum, and 4% gutters fall below 24px on mobile. Apply the documented spacing and container bounds.",
-    "Accessibility: src/take-apart-page.js lacks the required skip link and focusable main target, uses 2px rather than 3px focus rings, and provides 40px buttons and 20px range inputs rather than minimum 44px targets. Camera gaps of 5px and mobile button gaps of 6px also fall below the required 8px.",
-    "No-script behavior: src/take-apart-page.js leaves gauges empty and the canvas fallback hidden when JavaScript is disabled. Provide readable static explanatory content and a visible no-script fallback as required by design/DESIGN.md.",
-    "S11 — Assembled: cleared for the listed visual defects. The five layers appear flush, labels identify the correct layers without covering them, and readings 36.2°C, hydration 60, battery 100%, day 1 agree with hour 0.",
-    "S11 — Apart: cleared for the listed visual defects. All five layers separate in the expected order without visible intersections or unexplained displacement; callouts remain outside their parts and readings agree with hour 0.",
-    "S11 — Board: cleared for the listed visual defects. The board is raised and emphasized, other layers fade and step aside consistently with the focus model, labels remain correctly attached, and readings agree with hour 0.",
-    "S11 — X ray: cleared for the listed visual defects. The cover becomes more transparent while board focus persists, without visible unexpected intersections or misplaced labels; readings agree with hour 0.",
-    "S11 — Mid / Settle: cleared for the listed visual defects. The unfocused stack has intermediate separation, restored cover opacity and correctly placed labels. Readings 36.9°C, hydration 69, battery 59%, day 7 agree with hour 156. These five beats were assessed against the study-model specification, not the photographic L-6 bar."
+    "Typography requires correction in src/take-apart-page.js: the mobile h1 is 36px, below DESIGN.md's 56px mobile hero minimum, and #fallback uses 16px body copy instead of 17px. Set the documented sizes and heading leading; h1 currently inherits the body's 1.65 leading. The font stylesheet, 18px introduction, 32–56px gauges and display weight 300 are correct.",
+    "Palette and contrast: chrome, callouts, chart and contact-sheet labels use the documented tokens. The documented text/background pairs meet the 4.5:1 floor.",
+    "Spacing and container: fixed content spacing follows the 8px rhythm; the container is capped at 1440px and gutters use clamp(24px,5vw,80px).",
+    "Accessibility: the skip link targets main with tabindex=-1; 3px focus rings, 44px button and range targets, and 8px control gaps are declared. The supplied contact sheet establishes desktop appearance only; capture checks 390px overflow but does not establish the documented 320px and zoom quality bars.",
+    "No-script behavior: served HTML includes the explanation, five layer names and thicknesses, gaugeReadout(0) values, and a fallback note revealed by the noscript override. Correct the fallback typography noted above.",
+    "Assembled / Assemble: cleared under S11. Layers appear flush, labels identify the correct layers without covering them, and gauges show the hour-zero state.",
+    "Apart / Explode: cleared under S11. Five layers separate in order with model-consistent gaps, unobstructed labels and unchanged hour-zero gauges.",
+    "Board / Isolate the board: cleared under S11. The board is lifted and emphasized, other layers fade and step aside, and labels and gauges remain consistent.",
+    "X ray: cleared under S11. The cover fades further while the focused board remains visible; no unexpected intersection, misplaced label or gauge discrepancy is evident.",
+    "Mid / Settle: cleared under S11. The partially separated stack and released focus agree with the settle state; 36.9°C, hydration 69, battery 59% and day 7 agree with gaugeReadout(156).",
+    "Evidence completeness remains pending: evidence/take-apart/browser-pass.log records zero console errors and a passing hour-200 gauge comparison, but git status reports it as untracked. Include it in the committed evidence as required by the loopback addendum."
   ]
 }
 tokens used
-36,241
+41,830
 {
   "station": "reviewer-design",
   "verdict": "changes_requested",
   "findings": [
-    "Palette and contrast: src/take-apart-page.js substitutes ink #163c34, teal #008d7f, muted #6a7972 and hairline #dce1d9 for design/DESIGN.md's defined colors. Muted text on paper measures 4.37:1; teal text on paper and paper text on selected teal buttons measure 3.92:1, below the required 4.5:1. Restore the documented tokens, including callout and chart colors in src/take-apart-client.js.",
-    "Typography: src/take-apart-page.js names Space Grotesk and Inter without loading either font. Its introduction is 13px rather than 18–20px, gauge values are 28px rather than 32–56px, and display weight is 400 rather than 300. Supply the specified typography through a spec-compliant font strategy and restore the documented sizes.",
-    "Layout rhythm: src/take-apart-page.js uses 25px padding, 28px workbench gaps, 22px control margins and 15px responsive spacing, violating the required multiples of 8px. Its 1600px container exceeds the 1440px maximum, and 4% gutters fall below 24px on mobile. Apply the documented spacing and container bounds.",
-    "Accessibility: src/take-apart-page.js lacks the required skip link and focusable main target, uses 2px rather than 3px focus rings, and provides 40px buttons and 20px range inputs rather than minimum 44px targets. Camera gaps of 5px and mobile button gaps of 6px also fall below the required 8px.",
-    "No-script behavior: src/take-apart-page.js leaves gauges empty and the canvas fallback hidden when JavaScript is disabled. Provide readable static explanatory content and a visible no-script fallback as required by design/DESIGN.md.",
-    "S11 — Assembled: cleared for the listed visual defects. The five layers appear flush, labels identify the correct layers without covering them, and readings 36.2°C, hydration 60, battery 100%, day 1 agree with hour 0.",
-    "S11 — Apart: cleared for the listed visual defects. All five layers separate in the expected order without visible intersections or unexplained displacement; callouts remain outside their parts and readings agree with hour 0.",
-    "S11 — Board: cleared for the listed visual defects. The board is raised and emphasized, other layers fade and step aside consistently with the focus model, labels remain correctly attached, and readings agree with hour 0.",
-    "S11 — X ray: cleared for the listed visual defects. The cover becomes more transparent while board focus persists, without visible unexpected intersections or misplaced labels; readings agree with hour 0.",
-    "S11 — Mid / Settle: cleared for the listed visual defects. The unfocused stack has intermediate separation, restored cover opacity and correctly placed labels. Readings 36.9°C, hydration 69, battery 59%, day 7 agree with hour 156. These five beats were assessed against the study-model specification, not the photographic L-6 bar."
+    "Typography requires correction in src/take-apart-page.js: the mobile h1 is 36px, below DESIGN.md's 56px mobile hero minimum, and #fallback uses 16px body copy instead of 17px. Set the documented sizes and heading leading; h1 currently inherits the body's 1.65 leading. The font stylesheet, 18px introduction, 32–56px gauges and display weight 300 are correct.",
+    "Palette and contrast: chrome, callouts, chart and contact-sheet labels use the documented tokens. The documented text/background pairs meet the 4.5:1 floor.",
+    "Spacing and container: fixed content spacing follows the 8px rhythm; the container is capped at 1440px and gutters use clamp(24px,5vw,80px).",
+    "Accessibility: the skip link targets main with tabindex=-1; 3px focus rings, 44px button and range targets, and 8px control gaps are declared. The supplied contact sheet establishes desktop appearance only; capture checks 390px overflow but does not establish the documented 320px and zoom quality bars.",
+    "No-script behavior: served HTML includes the explanation, five layer names and thicknesses, gaugeReadout(0) values, and a fallback note revealed by the noscript override. Correct the fallback typography noted above.",
+    "Assembled / Assemble: cleared under S11. Layers appear flush, labels identify the correct layers without covering them, and gauges show the hour-zero state.",
+    "Apart / Explode: cleared under S11. Five layers separate in order with model-consistent gaps, unobstructed labels and unchanged hour-zero gauges.",
+    "Board / Isolate the board: cleared under S11. The board is lifted and emphasized, other layers fade and step aside, and labels and gauges remain consistent.",
+    "X ray: cleared under S11. The cover fades further while the focused board remains visible; no unexpected intersection, misplaced label or gauge discrepancy is evident.",
+    "Mid / Settle: cleared under S11. The partially separated stack and released focus agree with the settle state; 36.9°C, hydration 69, battery 59% and day 7 agree with gaugeReadout(156).",
+    "Evidence completeness remains pending: evidence/take-apart/browser-pass.log records zero console errors and a passing hour-200 gauge comparison, but git status reports it as untracked. Include it in the committed evidence as required by the loopback addendum."
   ]
 }

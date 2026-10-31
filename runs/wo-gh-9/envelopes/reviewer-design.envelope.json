@@ -5,21 +5,22 @@
   "work_order_id": "wo-gh-9",
   "artifact_path": "runs/wo-gh-9/reviewer-design.output.md",
   "status": "executed",
-  "created_at": "2026-10-31T12:54:50.955481+00:00",
+  "created_at": "2026-10-31T13:12:50.300596+00:00",
   "review": {
     "station": "reviewer-design",
     "verdict": "changes_requested",
     "findings": [
-      "Palette and contrast: src/take-apart-page.js substitutes ink #163c34, teal #008d7f, muted #6a7972 and hairline #dce1d9 for design/DESIGN.md's defined colors. Muted text on paper measures 4.37:1; teal text on paper and paper text on selected teal buttons measure 3.92:1, below the required 4.5:1. Restore the documented tokens, including callout and chart colors in src/take-apart-client.js.",
-      "Typography: src/take-apart-page.js names Space Grotesk and Inter without loading either font. Its introduction is 13px rather than 18\u201320px, gauge values are 28px rather than 32\u201356px, and display weight is 400 rather than 300. Supply the specified typography through a spec-compliant font strategy and restore the documented sizes.",
-      "Layout rhythm: src/take-apart-page.js uses 25px padding, 28px workbench gaps, 22px control margins and 15px responsive spacing, violating the required multiples of 8px. Its 1600px container exceeds the 1440px maximum, and 4% gutters fall below 24px on mobile. Apply the documented spacing and container bounds.",
-      "Accessibility: src/take-apart-page.js lacks the required skip link and focusable main target, uses 2px rather than 3px focus rings, and provides 40px buttons and 20px range inputs rather than minimum 44px targets. Camera gaps of 5px and mobile button gaps of 6px also fall below the required 8px.",
-      "No-script behavior: src/take-apart-page.js leaves gauges empty and the canvas fallback hidden when JavaScript is disabled. Provide readable static explanatory content and a visible no-script fallback as required by design/DESIGN.md.",
-      "S11 \u2014 Assembled: cleared for the listed visual defects. The five layers appear flush, labels identify the correct layers without covering them, and readings 36.2\u00b0C, hydration 60, battery 100%, day 1 agree with hour 0.",
-      "S11 \u2014 Apart: cleared for the listed visual defects. All five layers separate in the expected order without visible intersections or unexplained displacement; callouts remain outside their parts and readings agree with hour 0.",
-      "S11 \u2014 Board: cleared for the listed visual defects. The board is raised and emphasized, other layers fade and step aside consistently with the focus model, labels remain correctly attached, and readings agree with hour 0.",
-      "S11 \u2014 X ray: cleared for the listed visual defects. The cover becomes more transparent while board focus persists, without visible unexpected intersections or misplaced labels; readings agree with hour 0.",
-      "S11 \u2014 Mid / Settle: cleared for the listed visual defects. The unfocused stack has intermediate separation, restored cover opacity and correctly placed labels. Readings 36.9\u00b0C, hydration 69, battery 59%, day 7 agree with hour 156. These five beats were assessed against the study-model specification, not the photographic L-6 bar."
+      "Typography requires correction in src/take-apart-page.js: the mobile h1 is 36px, below DESIGN.md's 56px mobile hero minimum, and #fallback uses 16px body copy instead of 17px. Set the documented sizes and heading leading; h1 currently inherits the body's 1.65 leading. The font stylesheet, 18px introduction, 32\u201356px gauges and display weight 300 are correct.",
+      "Palette and contrast: chrome, callouts, chart and contact-sheet labels use the documented tokens. The documented text/background pairs meet the 4.5:1 floor.",
+      "Spacing and container: fixed content spacing follows the 8px rhythm; the container is capped at 1440px and gutters use clamp(24px,5vw,80px).",
+      "Accessibility: the skip link targets main with tabindex=-1; 3px focus rings, 44px button and range targets, and 8px control gaps are declared. The supplied contact sheet establishes desktop appearance only; capture checks 390px overflow but does not establish the documented 320px and zoom quality bars.",
+      "No-script behavior: served HTML includes the explanation, five layer names and thicknesses, gaugeReadout(0) values, and a fallback note revealed by the noscript override. Correct the fallback typography noted above.",
+      "Assembled / Assemble: cleared under S11. Layers appear flush, labels identify the correct layers without covering them, and gauges show the hour-zero state.",
+      "Apart / Explode: cleared under S11. Five layers separate in order with model-consistent gaps, unobstructed labels and unchanged hour-zero gauges.",
+      "Board / Isolate the board: cleared under S11. The board is lifted and emphasized, other layers fade and step aside, and labels and gauges remain consistent.",
+      "X ray: cleared under S11. The cover fades further while the focused board remains visible; no unexpected intersection, misplaced label or gauge discrepancy is evident.",
+      "Mid / Settle: cleared under S11. The partially separated stack and released focus agree with the settle state; 36.9\u00b0C, hydration 69, battery 59% and day 7 agree with gaugeReadout(156).",
+      "Evidence completeness remains pending: evidence/take-apart/browser-pass.log records zero console errors and a passing hour-200 gauge comparison, but git status reports it as untracked. Include it in the committed evidence as required by the loopback addendum."
     ]
   },
   "configured_model": "gpt-6-astra",

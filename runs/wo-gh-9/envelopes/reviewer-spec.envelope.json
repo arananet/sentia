@@ -5,19 +5,17 @@
   "work_order_id": "wo-gh-9",
   "artifact_path": "runs/wo-gh-9/reviewer-spec.output.md",
   "status": "executed",
-  "created_at": "2026-10-31T12:53:20.814424+00:00",
+  "created_at": "2026-10-31T13:11:36.675546+00:00",
   "review": {
     "station": "reviewer-spec",
-    "verdict": "pass",
+    "verdict": "changes_requested",
     "findings": [
-      "The model matches the spec. Thicknesses are 0.6/0.7/0.5/0.4/0.3 and sum to 2.5, with names and order taken from FACTS.layers. layerCenterMm, the wear functions, tempSeries (57 samples), focusTransform signs, materialState (0.15, 0.0525, 1) and the qualityFor tiers all follow the spec. Z_SCALE exists only in the client.",
-      "Gauge text comes only from gaugeReadout through data-gauge attributes, and the markup has no hand-typed numbers. browser-pass.log shows 0 console errors, a PASS gauge comparison at hour 200, and 670681 decoded vendor bytes. The five beat stills (each over 100 KB) and contact-sheet.png exist.",
-      "The vendored library is three.js 160 with its license header intact, and the size is within the 400 KB to 1.3 MB range. The src/page.js diff is exactly one anchor. The src/index.js diff adds only the four routes, using dynamic imports. There is no package.json change and no out-of-scope file in the diff.",
-      "Client behaviour matches the spec. Layer buttons raise t to at least 0.55 and toggle the focus. Camera presets, idle and hold timings, data-tour-beat values, the reduced-motion guard, the 4 Hz panel throttle and the 0.25 h chart redraw rule are all as specified.",
-      "OPEN ITEM, needs an operator decision: the full suite is 139 pass, 1 fail, 1 skip, so the done criterion of 0 failures is not met. The failure is tests/design-v4-square-product.test.js S11 ('patch-exploded not cleared'), which relies on an earlier run's reviewer-design evidence. It also fails in the builder's baseline log, and fixing it is out of this work order's scope. The 17 new take-apart tests pass.",
-      "evidence/take-apart/browser-pass.log is matched by the .gitignore rule *.log. A clean checkout or commit would lack it, and the spec's evidence test would then fail unless the file is force-added.",
-      "Minor: the tour moves the cursor and animates a press, but it applies each beat by calling state functions instead of dispatching real clicks. This is acceptable.",
-      "Visual judgement of contact-sheet.png (S11) is left to reviewer-design. This review is written to runs/wo-gh-9/reviewer-spec.output.md."
+      "The spec addendum (Kit adoption) requires the builder's output to state which kit conventions it relied on or adjusted, and to say whether any kit file was copied. runs/wo-gh-9/builder.output.md is 386 bytes and never mentions the kit, .anvil-factory/third_party/teardown, or a design system question. This requirement is unmet.",
+      "The Typography section sets body text at 17 px and gauge and data values at 32 to 56 px. src/take-apart-page.js still uses 12, 13, 16 and 22 px text for the caption, units, control headings, the header link, the JS-off fallback note and the temperature unit. No test asserts type sizes, so conformance to the design system sizes is unproven.",
+      "Minor: the tour cursor is 25 px wide with a 5 px box-shadow, off the 8 px rhythm. This is non-text and arguably outside the spacing rule.",
+      "Checked and met: the colour hexes in the page, client and capture script are all documented tokens, with none of the four substituted values. The font link, skip link, focusable main (tabindex -1), 3 px focus ring, 1440 px container and noscript fallback (layer list plus gaugeReadout(0)) are present in the page.",
+      "Checked and met: SETUP_COMMIT is 7748273, the harness files are excluded in the scope test, and the line leaves src/page.js unchanged, with one /take-apart anchor already in the baseline. The changed non-evidence files are only the four allowed ones.",
+      "Checked and met: evidence/take-apart/browser-pass.log exists and records 0 console errors and a PASS gauge comparison at hour 200. tests/take-apart.test.js passes 23 of 23 (I re-ran it). In the builder's suite log the only failure is test 98, the pre-existing S11 design-v4 test, which the spec carves out."
     ]
   },
   "configured_model": "claude-sonnet-5-5",

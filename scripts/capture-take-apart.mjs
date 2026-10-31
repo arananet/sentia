@@ -29,7 +29,8 @@ try {
   page.on('pageerror',error=>errors.push(String(error)));
   console.log('Loading study');
   await page.goto(`http://127.0.0.1:${server.address().port}/take-apart?tour=fast`);
-  await page.waitForFunction(()=>document.querySelector('[data-gauge="temperature"]').textContent.length>0);
+  await page.waitForFunction(()=>document.querySelector('#take-apart').dataset.sceneReady==='true');
+  await page.evaluate(()=>document.fonts.ready);
   console.log('Study loaded');
   assert.equal(await page.locator('#fallback').isVisible(),false,'WebGL scene must render for evidence');
   const area=await page.locator('#scene').boundingBox();
@@ -37,7 +38,7 @@ try {
   await page.mouse.down();await page.mouse.move(area.x+area.width/2+75,area.y+area.height/2+25,{steps:8});await page.mouse.up();
   await page.mouse.wheel(0,100);
   await page.locator('#wear').evaluate(input=>{ input.value='200';input.dispatchEvent(new Event('input',{bubbles:true})); });
-  await page.waitForTimeout(350);
+  await page.waitForFunction(expected => [...document.querySelectorAll('[data-gauge]')].every(n => n.textContent === expected[n.dataset.gauge]), gaugeReadout(200));
   const actual=await page.locator('[data-gauge]').evaluateAll(nodes=>Object.fromEntries(nodes.map(n=>[n.dataset.gauge,n.textContent])));
   assert.deepEqual(actual,gaugeReadout(200));gaugePassed=true;
   for(const name of ['Top','Side','Hero']){ await page.locator(`[data-camera="${name}"]`).click();await page.waitForTimeout(180); }
@@ -72,15 +73,15 @@ try {
     sources.push({label,src:'data:image/png;base64,'+png.toString('base64')});
   }
   // Composition happens in this browser session, from the captured pixels.
-  const sheet=await browser.newPage({viewport:{width:1440,height:1710},deviceScaleFactor:1});
-  await sheet.setContent('<body style="margin:0;background:#FAFAF6"><canvas id="sheet" width="1440" height="1710"></canvas></body>');
+  const sheet=await browser.newPage({viewport:{width:1440,height:1840},deviceScaleFactor:1});
+  await sheet.setContent('<body style="margin:0;background:#FAFAF6"><canvas id="sheet" width="1440" height="1840"></canvas></body>');
   const composed=await sheet.evaluate(async sources=>{
     const c=document.querySelector('canvas'),ctx=c.getContext('2d');ctx.fillStyle='#FAFAF6';ctx.fillRect(0,0,c.width,c.height);
-    ctx.fillStyle='#163c34';ctx.font='28px sans-serif';ctx.fillText('SENTIA / Take apart — tour contact sheet',25,42);
+    ctx.fillStyle='#12211C';ctx.font='28px sans-serif';ctx.fillText('SENTIA / Take apart — tour contact sheet',24,40);
     for(let i=0;i<sources.length;i++) {
       const img=new Image();img.src=sources[i].src;await img.decode();
-      const x=(i%2)*720,y=70+Math.floor(i/2)*540;
-      ctx.drawImage(img,x,y,720,500);ctx.fillStyle='#163c34';ctx.font='18px sans-serif';ctx.fillText(sources[i].label,x+22,y+526);
+      const x=(i%2)*720,y=64+Math.floor(i/2)*592;
+      ctx.drawImage(img,x,y,720,525);ctx.fillStyle='#12211C';ctx.font='18px sans-serif';ctx.fillText(sources[i].label,x+24,y+560);
     }
     return c.toDataURL('image/png').split(',')[1];
   },sources);
