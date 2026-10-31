@@ -1,0 +1,29 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-architecture",
+  "to_station": "reviewer-design",
+  "work_order_id": "wo-gh-10",
+  "artifact_path": "runs/wo-gh-10/reviewer-architecture.output.md",
+  "status": "executed",
+  "created_at": "2026-10-31T13:11:12.593876+00:00",
+  "review": {
+    "station": "reviewer-architecture",
+    "verdict": "pass",
+    "findings": [
+      "Scope fits the work order. The only tracked change against a69a853 is tests/design-v4-square-product.test.js. The new files are runs/wo-gh-8/owner-acceptance.json, tests/fixtures/s11-rebaseline/* and runs/wo-gh-10/ evidence. I found nothing under src/, brand/, design/, brain/ or .github/, and nothing in tests/take-apart.test.js.",
+      "runs/wo-gh-8/reviewer-design.output.md is unchanged. Its blob hash (418275a5\u2026) matches the one in the setup commit a69a853.",
+      "The change keeps to the existing structure. The pure matchers keep their signatures, and the new runDirectoryProblems(dirUrl) layers on sameProductProblems without altering it. The S11 assertion for the real wo-gh-8 run now goes through that entry point (tests/design-v4-square-product.test.js, around lines 418-445 and 507). The wo-gh-6 assertion is untouched.",
+      "Rule A is implemented as the spec describes. Acceptance removes only '<img> has an uncleared gap', the matching '<img> not cleared' (and only when that gap is present), and '<img> / <axis> fails'. Absence problems (not addressed, missing anchor reference, axis not cleared) are never removed. Fixtures F3, F4-axis-unmentioned-accepted and F4-not-applicable-but-failed cover this.",
+      "Rule B is a one-line change to the clause evaluator: 'not applicable' counts as cleared, and the separate failed flag still wins. The fixture F4-not-applicable-but-failed covers that case.",
+      "Minor observation, not blocking: the validity check accepts a gate_record citation for non-deploy acts. The work order only names production version plus source commit for deploys, so this is a small extension. It is guarded by the /deploy/ test on the act text and is harmless for the wo-gh-8 record. The spec reviewer should confirm it is allowed.",
+      "Minor observation, not blocking: the 'not applicable' regex applies to a whole clause. A clause that names no image or axis falls back to all subjects and all axes, so a generic 'not applicable' sentence could clear more than intended. The fixtures don't cover that case, but it fits the existing clause semantics.",
+      "Running node --test tests/design-v4-square-product.test.js gives 36 pass, 0 fail. S11 passes against the real wo-gh-8 evidence, and the wo-gh-7 negative cases still pass."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

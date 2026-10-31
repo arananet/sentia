@@ -401,7 +401,7 @@ const sameProductProblems = (text) => {
       if (named.length) subjects = named;
       const axes = ALL_AXES.test(clause) ? Object.keys(AXES) : Object.keys(AXES).filter((a) => AXES[a].test(clause));
       const failed = FAIL.test(clause) && !NOT_FAIL.test(clause);
-      const cleared = PASS.test(clause) && !failed;
+      const cleared = (PASS.test(clause) || /\bnot applicable\b/i.test(clause)) && !failed;
       for (const img of subjects) for (const axis of axes) {
         if (failed) state[`${img} / ${axis}`].failed = true;
         if (cleared) state[`${img} / ${axis}`].cleared = true;
@@ -413,6 +413,32 @@ const sameProductProblems = (text) => {
     else if (!st.cleared) problems.push(`${key} not cleared`);
   }
   return [...problems, ...anchorComparisonProblems(text)];
+};
+
+// Acceptance can resolve a judgement, but cannot supply missing review coverage.
+const runDirectoryProblems = (dirUrl) => {
+  const problems = sameProductProblems(readFileSync(new URL('reviewer-design.output.md', dirUrl), 'utf8'));
+  let record;
+  try {
+    record = JSON.parse(readFileSync(new URL('owner-acceptance.json', dirUrl), 'utf8'));
+  } catch {
+    return problems;
+  }
+  const present = (value) => typeof value === 'string' && value.trim().length > 0;
+  // gate_record is the equivalent citation for an owner decision at the human gate.
+  const cited = record && (present(record.production_version) && present(record.source_commit)
+    || !/deploy/i.test(record.act || '') && present(record.gate_record));
+  if (!record || record.accepted !== true || !present(record.accepted_by)
+    || !present(record.date) || !present(record.act) || !cited) return problems;
+  const acceptedGaps = new Set(Object.keys(IMAGE_NAMING)
+    .filter((img) => problems.includes(`${img} has an uncleared gap`)));
+  return problems.filter((problem) => {
+    for (const img of acceptedGaps)
+      if (problem === `${img} has an uncleared gap` || problem === `${img} not cleared`) return false;
+    for (const img of Object.keys(SUBJECTS)) for (const axis of Object.keys(AXES))
+      if (problem === `${img} / ${axis} fails`) return false;
+    return true;
+  });
 };
 
 const SAME_PRODUCT_OK = [
@@ -478,6 +504,64 @@ test('S11: when reviewer-design has reviewed, it addresses and clears all four i
     const png = readFileSync(root('design/reference/product-reference.png'));
     assert.equal(png.subarray(1, 4).toString('ascii'), 'PNG', 'identity anchor is a PNG');
     assert.match(read('design/reference/README.md'), /product-reference\.png/);
+    // wo-gh-10: the run directory entry point reads the review and the owner acceptance record together.
     if (existsSync(root('runs/wo-gh-8/reviewer-design.output.md')))
-      assert.deepEqual(sameProductProblems(read('runs/wo-gh-8/reviewer-design.output.md')), []);
+      assert.deepEqual(runDirectoryProblems(root('runs/wo-gh-8/')), []);
+  });
+
+// wo-gh-10 (s11-rebaseline): fixtures are small run directories; runDirectoryProblems(dirUrl) reads reviewer-design.output.md
+// and owner-acceptance.json from the directory and returns the problem list with Rule A and Rule B applied.
+const FIX = (name) => root(`tests/fixtures/s11-rebaseline/${name}/`);
+const fixtureText = (name) => readFileSync(new URL('reviewer-design.output.md', FIX(name)), 'utf8');
+const GAP_PROBLEMS = ['patch-exploded has an uncleared gap', 'patch-exploded not cleared'];
+
+test('S11 re-baseline S2/S3: an accepted gap resolves (F1); the same gap without a record fails (F2)', () => {
+  assert.deepEqual(runDirectoryProblems(FIX('F1-accepted-gap')), []);
+  assert.deepEqual(runDirectoryProblems(FIX('F2-unaccepted-gap')), GAP_PROBLEMS);
+  assert.equal(fixtureText('F1-accepted-gap'), fixtureText('F2-unaccepted-gap'), 'F1 and F2 carry the identical review text');
+  assert.deepEqual(sameProductProblems(fixtureText('F1-accepted-gap')), GAP_PROBLEMS, 'the pure matcher still reports the gap');
+});
+
+test('S11 re-baseline S1/S4: acceptance never creates coverage (F3)', () => {
+  for (const name of ['F3-missing-image', 'F3-missing-anchor']) {
+    const problems = runDirectoryProblems(FIX(name));
+    assert.ok(problems.length > 0, name);
+    assert.deepEqual(problems, sameProductProblems(fixtureText(name)), `${name}: same problems as without any record`);
+  }
+  assert.ok(runDirectoryProblems(FIX('F3-missing-image')).includes('network-scene not addressed'));
+  assert.ok(runDirectoryProblems(FIX('F3-missing-anchor')).includes('no design/reference/ reference'));
+});
+
+test('S11 re-baseline S5: not applicable counts as judged (F4); unmentioned axis still fails', () => {
+  assert.deepEqual(runDirectoryProblems(FIX('F4-not-applicable')), []);
+  assert.deepEqual(runDirectoryProblems(FIX('F4-axis-unmentioned')), ['patch-exploded / mounting not cleared']);
+  // acceptance does not resolve an axis the review never judged
+  assert.deepEqual(runDirectoryProblems(FIX('F4-axis-unmentioned-accepted')), ['patch-exploded / mounting not cleared']);
+  // not applicable does not hide a failure recorded for the same image and axis
+  assert.deepEqual(runDirectoryProblems(FIX('F4-not-applicable-but-failed')), ['patch-exploded / mounting fails']);
+});
+
+test('S11 re-baseline S6: an invalid acceptance record resolves nothing (F5)', () => {
+  for (const name of ['F5-invalid-accepted-false', 'F5-invalid-citation-missing', 'F5-invalid-not-json']) {
+    assert.deepEqual(runDirectoryProblems(FIX(name)), GAP_PROBLEMS, name);
+  }
+});
+
+test('S11 re-baseline Rule A: acceptance resolves a recorded axis failure only', () => {
+  assert.deepEqual(runDirectoryProblems(FIX('F6-axis-failure-unaccepted')), ['patch-exploded / mounting fails']);
+  assert.deepEqual(runDirectoryProblems(FIX('F6-axis-failure-accepted')), []);
+});
+
+test('S11 re-baseline S7: the real wo-gh-8 evidence carries the acceptance addendum and an untouched review',
+  { skip: existsSync(root('runs/wo-gh-8/reviewer-design.output.md')) ? false : 'wo-gh-8 evidence not present' },
+  () => {
+    const record = JSON.parse(read('runs/wo-gh-8/owner-acceptance.json'));
+    assert.equal(record.accepted, true);
+    assert.equal(record.date, '2026-10-30');
+    assert.equal(record.production_version, 'b33fd7f2');
+    assert.equal(record.source_commit, '9305937197f83e40a244841bdb987a0cbb599ce2');
+    assert.ok(record.accepted_by && record.act);
+    // the review itself is not edited: the gap stays on the record, so the pure matcher still sees it
+    assert.ok(sameProductProblems(read('runs/wo-gh-8/reviewer-design.output.md')).includes('patch-exploded has an uncleared gap'));
+    assert.deepEqual(runDirectoryProblems(root('runs/wo-gh-8/')), []);
   });
