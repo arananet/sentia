@@ -1,0 +1,27 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-tests",
+  "to_station": "reviewer-architecture",
+  "work_order_id": "wo-gh-11",
+  "artifact_path": "runs/wo-gh-11/reviewer-tests.output.md",
+  "status": "executed",
+  "created_at": "2026-10-31T13:51:17.884102+00:00",
+  "review": {
+    "station": "reviewer-tests",
+    "verdict": "pass",
+    "findings": [
+      "The tests are real. tests/take-apart-bundling.test.js has 16 tests, and all 16 pass on the final tree. With the builder diff stashed, bundling R1 (no toString), R2 (no static vendor import) and R6 (evidence of record capture) fail. So the tests catch the F1, F4 and F5 defects.",
+      "The tests map to the spec. R1 is covered by scans for toString, bundler helper names and renamed collisions, plus vm execution of the served model and client. R2 and S3 are covered by the vendor specifier scan, the route reference, and the 670681-byte and sha256 check. R3 and S4 are covered by route shapes, the sampled model parity comparison and the main page link. R4/S1 and R5/S2/S3 are covered by the committed logs. R6 is covered by the capture script headers. S5 is correctly left as a run report fact.",
+      "The screenshot test decodes the committed PNGs and checks tone variety in the central region, so it does not rely on the log alone. Reviewer-design still has to judge that the patch is visible.",
+      "Limit: the R4 and R5 tests only match text in the committed logs, because wrangler and a browser are not repo dependencies. A hand-written log would pass them. The logs agree with the capture script: `wrangler deploy --dry-run --outdir` exit 0, 0 console errors, 0 page errors, scene ready true, canvas 1022x559 matching its layout, vendor 200 with 670681 bytes. I did not re-run wrangler or the browser.",
+      "Full suite: `npm test` gives 161 pass, 1 fail, 1 skip. The failure is 'S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/' in tests/design-v4-square-product.test.js. It also fails on the baseline without this change. It is itemized by name in evidence/take-apart-bundling/README.md. I could not confirm that a sibling branch resolves it (R7), so the operator or verdict station should confirm. The skip is ui-elevation S4, which has no main ref. No other run's evidence was edited.",
+      "Minor, not blocking: the 'no local patch' check is a text match on the log, and the production-origin guard only scans src/."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

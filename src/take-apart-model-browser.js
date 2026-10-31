@@ -1,6 +1,7 @@
-// Browser source twin; parity is checked by tests/take-apart.test.js.
+// Literal browser source: Worker bundlers must treat this as data, not executable code.
+// Browser model parity is enforced by the take-apart tests.
 import { FACTS } from './facts.js';
-function installTakeApartModel(FACTS) {
+export const TAKE_APART_MODEL_JS = `(function installTakeApartModel(FACTS) {
 
 
 const GAP_MM = 3, FOOTPRINT_MM = 36, CORNER_RADIUS_MM = 9;
@@ -41,5 +42,4 @@ function sceneState(t, h, focusIndex = null, xray = false) {
 }
 
 globalThis.TakeApartModel = { GAP_MM, FOCUS_LIFT_MM, LAYERS, layerCenterMm, wearDay, skinTempC, hydrationIndex, batteryPct, tempSeries, gaugeReadout, focusTransform, materialState, qualityFor, sceneState, FOOTPRINT_MM, CORNER_RADIUS_MM, ASIDE_MM, FADE_OPACITY, XRAY_OPACITY };
-}
-export const TAKE_APART_MODEL_JS = `(${installTakeApartModel.toString()})(${JSON.stringify({layers: FACTS.layers})});`;
+})(${JSON.stringify({layers: FACTS.layers})});`;

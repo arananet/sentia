@@ -1,36 +1,68 @@
-// Run with a runner-installed Playwright, never a site dependency:
-// PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs node scripts/capture-take-apart.mjs
-import http from 'node:http';
-import { mkdir, writeFile, readFile } from 'node:fs/promises';
+// Evidence of record: production shape capture of the Wrangler bundled Worker.
+// Runner tooling (not site dependencies): PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs
+// WRANGLER_BIN=/tmp/sentia-browser/node_modules/.bin/wrangler node scripts/capture-take-apart.mjs
+import { mkdir, writeFile, mkdtemp, rm } from 'node:fs/promises';
+import { spawn, spawnSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import assert from 'node:assert/strict';
 import { pathToFileURL } from 'node:url';
-import worker from '../src/index.js';
 import { gaugeReadout } from '../src/take-apart-model.js';
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ? pathToFileURL(process.env.PLAYWRIGHT_MODULE).href : 'playwright');
-const out = new URL('../evidence/take-apart/', import.meta.url);
+const out = new URL('../evidence/take-apart-bundling/', import.meta.url);
 await mkdir(out, { recursive: true });
-const server = http.createServer(async (req,res) => {
-  try {
-    const response = await worker.fetch(new Request('http://localhost'+req.url));
-    res.writeHead(response.status, Object.fromEntries(response.headers));
-    res.end(Buffer.from(await response.arrayBuffer()));
-  } catch(error) { res.writeHead(500);res.end(String(error)); }
-});
-await new Promise(resolve => server.listen(0,'127.0.0.1',resolve));
-const browser = await chromium.launch({ executablePath: process.env.CHROME_BIN || '/usr/bin/google-chrome', headless:true,
-  args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'] });
-const errors=[];
-let gaugePassed=false;
-const vendorBytes=(await (await worker.fetch(new Request('http://localhost/vendor/three.module.min.js'))).arrayBuffer()).byteLength;
+const buildDir = await mkdtemp(join(tmpdir(), 'sentia-bundle-'));
+const wrangler = process.env.WRANGLER_BIN || 'wrangler';
+const buildArgs = ['deploy', '--dry-run', '--outdir', buildDir];
+const build = spawnSync(wrangler, buildArgs, { encoding: 'utf8' });
+await writeFile(new URL('bundle-build.log', out), `${wrangler} ${buildArgs.join(' ')}
+${build.stdout || ''}${build.stderr || ''}
+exit status: ${build.status}
+No local patches applied.
+`);
+assert.equal(build.status, 0, build.error?.message || build.stderr);
+const port = Number(process.env.CAPTURE_PORT || 8791);
+const origin = `http://127.0.0.1:${port}`;
+const runtimeArgs = ['dev', join(buildDir, 'index.js'), '--no-bundle', '--local', '--ip', '127.0.0.1', '--port', String(port)];
+const runtime = spawn(wrangler, runtimeArgs, { stdio: ['ignore', 'pipe', 'pipe'] });
+let runtimeLog = '';
+runtime.stdout.on('data', chunk => { runtimeLog += chunk; });
+runtime.stderr.on('data', chunk => { runtimeLog += chunk; });
+let browser;
+const errors=[], pageErrors=[];
+let gaugePassed=false, sceneInfo, vendorStatus, vendorBytes;
 try {
+  let ready = false;
+  for (let tries = 0; tries < 120; tries++) {
+    assert.equal(runtime.exitCode, null, runtimeLog);
+    try { ready = (await fetch(origin + '/take-apart')).ok; } catch {}
+    if (ready) break;
+    await new Promise(resolve => setTimeout(resolve, 500));
+  }
+  assert.ok(ready, 'Local bundled Worker did not start: ' + runtimeLog);
+browser = await chromium.launch({ executablePath: process.env.CHROME_BIN || '/usr/bin/google-chrome', headless:true,
+  args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'] });
+
   const page=await browser.newPage({ viewport:{width:1440,height:1050}, deviceScaleFactor:1 });
   const cdp=await page.context().newCDPSession(page);
   page.on('console',msg=>{if(msg.type()==='error')errors.push(msg.text());});
-  page.on('pageerror',error=>errors.push(String(error)));
+  page.on('pageerror',error=>pageErrors.push(String(error)));
+  const vendorResponse = page.waitForResponse(response => response.url() === origin + '/vendor/three.module.min.js');
   console.log('Loading study');
-  await page.goto(`http://127.0.0.1:${server.address().port}/take-apart?tour=fast`);
+  await page.goto(`${origin}/take-apart?tour=fast`);
   await page.waitForFunction(()=>document.querySelector('#take-apart').dataset.sceneReady==='true');
   await page.evaluate(()=>document.fonts.ready);
+  const vendor = await vendorResponse;
+  vendorStatus = vendor.status(); vendorBytes = (await vendor.body()).byteLength;
+  assert.equal(vendorStatus, 200); assert.equal(vendorBytes, 670681);
+  sceneInfo = await page.evaluate(() => {
+    const canvas = document.querySelector('#scene'), rect = canvas.getBoundingClientRect();
+    return { model: typeof globalThis.TakeApartModel, ready: document.querySelector('#take-apart').dataset.sceneReady,
+      width: canvas.width, height: canvas.height, layoutWidth: rect.width, layoutHeight: rect.height, dpr: devicePixelRatio };
+  });
+  assert.equal(sceneInfo.model, 'object'); assert.equal(sceneInfo.ready, 'true');
+  assert.equal(sceneInfo.width, Math.floor(sceneInfo.layoutWidth * sceneInfo.dpr));
+  assert.equal(sceneInfo.height, Math.floor(sceneInfo.layoutHeight * sceneInfo.dpr));
   console.log('Study loaded');
   assert.equal(await page.locator('#fallback').isVisible(),false,'WebGL scene must render for evidence');
   const area=await page.locator('#scene').boundingBox();
@@ -94,8 +126,22 @@ try {
   assert.equal(await page.locator('#callouts').isVisible(),false);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'mobile fits viewport');
   assert.equal(errors.length,0,errors.join('\n'));
+  assert.equal(pageErrors.length,0,pageErrors.join('\n'));
 } finally {
-  await writeFile(new URL('browser-pass.log',out),`console errors: ${errors.length}\ngauge comparison: ${gaugePassed?'PASS':'FAIL'} at hour 200\nvendor decoded bytes: ${vendorBytes}\n${errors.join('\n')}\n`);
-  await browser.close();await new Promise(resolve=>server.close(resolve));
+  await writeFile(new URL('browser-pass.log',out), `Bundled Worker: ${wrangler} ${runtimeArgs.join(' ')}
+console errors: ${errors.length}
+page errors: ${pageErrors.length}
+TakeApartModel: ${sceneInfo?.model}
+scene ready: ${sceneInfo?.ready}
+canvas: ${sceneInfo?.width}x${sceneInfo?.height}; layout: ${sceneInfo?.layoutWidth}x${sceneInfo?.layoutHeight}; DPR: ${sceneInfo?.dpr}
+gauge comparison: ${gaugePassed?'PASS':'FAIL'} at hour 200
+vendor /vendor/three.module.min.js: status ${vendorStatus}; decoded bytes ${vendorBytes}
+${errors.join('\n')}
+${pageErrors.join('\n')}
+`);
+  await browser?.close();
+  runtime.kill('SIGTERM');
+  await new Promise(resolve => runtime.exitCode !== null ? resolve() : runtime.once('exit', resolve));
+  await rm(buildDir, { recursive: true, force: true });
 }
 console.log('Browser pass complete: zero console errors; gauge comparison PASS.');

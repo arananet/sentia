@@ -1,0 +1,10 @@
+Bundled Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-bundle-iSCstc/index.js --no-bundle --local --ip 127.0.0.1 --port 8791
+console errors: 0
+page errors: 0
+TakeApartModel: object
+scene ready: true
+canvas: 1022x559; layout: 1022x559; DPR: 1
+gauge comparison: PASS at hour 200
+vendor /vendor/three.module.min.js: status 200; decoded bytes 670681
+
+

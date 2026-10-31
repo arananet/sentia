@@ -1,0 +1,1203 @@
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-btuspu5z"))
+Reading additional input from stdin...
+OpenAI Codex v0.166.0
+--------
+workdir: /home/runner/work/sentia/sentia
+model: openai/gpt-6-astra
+provider: cloudflare
+approval: never
+sandbox: danger-full-access
+reasoning effort: none
+reasoning summaries: none
+session id: 01a19237-db48-74c1-a63b-e3b8cccedafe
+--------
+user
+You are executing an ANVIL station packet inside this repository. Follow the packet exactly, edit the files it asks for, and finish with a brief plain text summary of what you changed.
+
+## Station prompt
+
+# Builder
+
+## Role
+Implement the spec so the scenario tests pass.
+
+## Inputs
+- spec
+- tests
+
+## Outputs
+- code change
+
+## Rules
+- Work only from the inputs listed above and the work order in the packet.
+- Produce the output as a file in the repo, not as chat text.
+- If the inputs are not enough, say what is missing instead of guessing.
+- Never approve your own work. Approval belongs to a different station.
+- Keep the change small and mapped to a spec scenario where one applies.
+
+
+## Work order
+
+- id: wo-gh-11
+- kind: feature
+- title: Take apart bundling fix: make the served client and model independent of the Worker bundler
+- source: github-issue
+- description: Problem: minutes after the wo-gh-9 deploy (production version 3145ac8a), Edu opened https://sentia.info-693.workers.dev/take-apart and the 3D scene never appears. The page chrome renders and the controls answer, but the viewport stays empty. The wo-gh-9 evidence pass was green because it never exercised the production serving shape.
+
+Root cause, reproduced by the operator in a headless browser against the live URL on 2026-10-31 and stated in full in .openspec/specs/take-apart-bundling/spec.md: the bytes served at /take-apart.js and /take-apart-model.js are produced at Worker module evaluation by Function.prototype.toString() (TAKE_APART_CLIENT_JS in src/take-apart-client.js, TAKE_APART_MODEL_JS in src/take-apart-model-browser.js). The production bundle (wrangler, esbuild) rewrites those function bodies before toString runs, wrapping function expressions in the esbuild __name helper and renaming colliding identifiers. The helper is defined in the Worker bundle scope, not in the stringified text: the served model file carries 13 __name call sites and the served client 12, with no definition in either. The live console shows ReferenceError: __name is not defined at take-apart-model.js line 9 and at take-apart.js line 4; globalThis.TakeApartModel stays undefined, the canvas keeps its default 300 by 150 backing store, and zero non transparent pixels are drawn. WebGL itself works in the same browser; the failure precedes all rendering. The same bundling pass statically resolves the dynamic import of /vendor/three.module.min.js in src/take-apart-client.js and fails the deploy build, which is why the wo-gh-9 deploy needed a local patch on the deploy copy: the repo source was never deployable as it stands. The wo-gh-9 capture script imports src/index.js directly in Node, so it only ever proved the source shape.
+
+Deliverable: the fix described by .openspec/specs/take-apart-bundling/spec.md. The served client and model reach the browser independent of Worker bundling (no served byte produced by stringifying a bundler rewritten function, nothing relying on bundle scope identifiers), and the three.js load satisfies both the production bundler and the browser with no patching anywhere. Page behavior, model outputs, routes, the vendored three.js bytes (670681 decoded) and the rest of the site stay frozen, and model parity stays test enforced.
+
+Production shape checks, binding for this run: (1) the real production bundle command succeeds on the final tree with zero local patches, command and exit status recorded in the evidence; (2) the bundled output is served by a local Worker runtime (wrangler dev or equivalent) and a headless browser pass against that served output records zero console errors, zero page errors, the scene ready flag set, and a screenshot whose scene region shows the rendered patch, committed under evidence/take-apart-bundling/ for reviewer-design; (3) the capture used as page evidence exercises the bundled shape from now on; (4) the full suite stays green apart from failures already resolved on sibling branches, itemized by name if any appear.
+
+Model routing for this run: builder and reviewer-design on GPT-6 Astra (gpt-6-astra) through the Cloudflare AI Gateway; spec writer, test writer and the other reviewer stations on claude-sonnet-5-5 through the same gateway. No fallback to another model for the builder.
+
+Deployment happens outside the line, by the operator, only on an approved verdict: the operator redeploys from the fixed branch head and verifies from the public URL, per the owner's standing instruction for this order.
+
+Done criteria: production bundle green with no patches; bundled shape browser evidence with zero errors and the patch visible in the screenshot; suite green with any sibling resolved failures itemized; run verdict approved with all five expected reviews counted, reviewer-design among them.
+
+GitHub issue: https://github.com/arananet/sentia/issues/11
+- risk_hints: 
+- status: new
+
+## Upstream steps
+
+- intake: completed
+- spec-writer: executed
+- test-writer: executed
+
+## Verified learnings
+
+- L-1: Art direction is imagery first; flat SVG as the primary visual language was rejected by the product owner and must not return as a section's main visual. (provenance: run wo-gh-2, artifact design/DESIGN.md, evidence verdict approved)
+- L-2: Product imagery sits seamlessly on the brand paper #FAFAF6 (no studio backgrounds, no visible image rectangles), verified by corner and edge sampling within 3 per channel. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-3: The patch reads at true 38 mm scale with explicit scale anchors, and on-skin imagery is strict inner forearm framing only. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-4: The product is the protagonist: the patch appears large and early, the page must not read empty or editorial, and display type must not crowd out the product. (provenance: run wo-gh-3, artifact src/page.js, evidence verdict changes_requested)
+- L-5: The current product render set is owner approved, especially the patch render; composition iterations keep src/images.js byte identical and never regenerate product imagery. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-6: Product imagery for Sentia meets the production quality bar anchored in design/reference/: photorealistic studio quality with real materials and physically consistent light; stylized or toy-like renders fail review. Reviewer-design compares every new product image against the anchor boards and names the gaps. (provenance: run wo-gh-5, artifact src/images.js, evidence verdict changes_requested)
+- L-7: The product is the square low profile patch anchored in design/reference/ and the round disc renders are retired; L-2, L-3 and L-5 stand as amended by the design v4 spec: photographic treatment instead of seamless paper backgrounds, limb close ups (inner forearm or upper arm) instead of inner forearm only, and the render set replaceable through an owner decided work order instead of frozen byte identical. (provenance: run wo-gh-6, artifact src/images.js, evidence verdict approved)
+
+## Project design
+codex
+I’ll read the bundling spec and tests, make the required changes, then verify the bundled Worker in a browser and save the evidence.
+
+exec
+/bin/bash -lc "pwd; rg --files -g 'AGENTS.md' -g '*bundling*' -g '*take-apart*' -g 'package.json' -g 'wrangler*' -g '*capture*'" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+/home/runner/work/sentia/sentia
+tests/take-apart.test.js
+tests/take-apart-bundling.test.js
+scripts/capture-take-apart.mjs
+src/take-apart-model.js
+src/take-apart-page.js
+src/take-apart-client.js
+src/take-apart-model-browser.js
+wrangler.toml
+package.json
+runs/wo-gh-9/builder-take-apart-test.log
+
+exec
+/bin/bash -lc 'cat .openspec/specs/take-apart-bundling/spec.md tests/take-apart-bundling.test.js package.json wrangler.toml; cat scripts/capture-take-apart.mjs; git status --short; find .. -name AGENTS.md' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+# Sentia: Take Apart Bundling Fix
+
+Status: active for wo-gh-11
+Slug: take-apart-bundling
+
+## Roles
+- implementer: builds the change described here
+- reviewer: checks the change against this spec
+- qa: checks the scenarios below with tests
+- product_owner: owns the purpose and accepts the result
+
+## Purpose
+
+wo-gh-9 shipped the /take-apart page and its evidence pass was green, but in production the page renders its chrome and leaves the 3D viewport empty. This order fixes the serving mechanism so the repo source is deployable and runnable exactly as it stands, and it adds production shape checks so this class of defect is visible to evidence passes from now on. The governing spec for the page itself stays .openspec/specs/take-apart/spec.md; this spec governs only the bundling fix and the new checks. The builder and reviewer-design run on GPT-6 Astra; the spec writer, test writer and the other reviewers run on claude-sonnet-5-5, per ANVIL policy.
+
+## Findings (reproduced by the operator against the live site, 2026-10-31)
+
+- F1: The bytes served at /take-apart.js and /take-apart-model.js are produced at Worker module evaluation by Function.prototype.toString(): src/take-apart-client.js ends with export const TAKE_APART_CLIENT_JS built from takeApartApp.toString(), and src/take-apart-model-browser.js ends with export const TAKE_APART_MODEL_JS built from installTakeApartModel.toString().
+- F2: The production bundle (wrangler, esbuild) rewrites those function bodies before toString runs. It renames colliding identifiers (the served files show FACTS2, clamp2 and similar) and wraps function expressions in the esbuild __name helper. The helper is defined in the Worker bundle scope; it is not part of the stringified function text. The served model file carries 13 __name call sites and the served client file carries 12, and neither defines the helper.
+- F3: Live browser evidence (headless Chromium on https://sentia.info-693.workers.dev/take-apart): two uncaught exceptions, ReferenceError: __name is not defined at take-apart-model.js line 9 and at take-apart.js line 4. globalThis.TakeApartModel stays undefined, the scene canvas keeps its default 300 by 150 backing store, and a pixel sample finds zero non transparent pixels. A fresh WebGL context in the same browser works, so the failure precedes all rendering: the model never installs and the client dies before creating the renderer.
+- F4: The same bundling pass statically resolves the dynamic import of /vendor/three.module.min.js written in src/take-apart-client.js and fails the deploy build. The wo-gh-9 deploy only succeeded with a local patch on the deploy copy (an absolute URL specifier). The repo source at the deployed head is not deployable as it stands.
+- F5: The wo-gh-9 evidence could not see F2 or F4: scripts/capture-take-apart.mjs imports src/index.js directly in Node and calls worker.fetch, so toString returned the unbundled source and no bundler ever resolved the import. The evidence proved the source shape, never the production shape.
+
+## Requirements
+
+- R1 (decoupling): The code served at /take-apart.js and /take-apart-model.js reaches the browser independent of Worker bundling. No served byte may be produced by stringifying a function that the production bundler can rewrite, and the served code may not rely on any identifier that exists only inside the Worker bundle. Any mechanism that satisfies this (for example carrying the browser code as literal source text in the repo) is acceptable; the run report justifies the chosen one against F1 and F2.
+- R2 (three.js load): The vendored three.js module loads in both worlds with no patching anywhere: the production bundle build succeeds with the specifier as written in the repo, and the browser loads the module from the /vendor/three.module.min.js route at runtime. The vendored bytes stay exactly the pinned build (670681 bytes decoded) and the vendor route keeps its response shape.
+- R3 (frozen behavior): Everything else stays as deployed by wo-gh-9: the page markup and chrome, the model and its outputs, all routes and their response shapes, the main page and its single link, the suite of page behaviors (tour, controls, gauges, chart, fallbacks). Model parity between src/take-apart-model.js and the browser surface stays enforced by tests; if the browser surface changes shape, an equivalent parity check replaces the current one and the tests say what it proves.
+- R4 (production bundle check): The real production bundle command for this Worker (the wrangler deploy bundling step, or its dry run form) runs on the final tree and succeeds with zero local patches. The command and its exit status are recorded in the run evidence.
+- R5 (bundled shape browser check): The bundled output is served by a local Worker runtime (wrangler dev or an equivalent runtime that serves the built bundle, not the raw source) and a headless browser pass against that served output records zero console errors and zero page errors, the scene ready flag set on the page root, and a screenshot whose scene region shows the rendered patch. The screenshot and the pass log are committed under evidence/take-apart-bundling/ and reviewer-design judges the screenshot.
+- R6 (evidence of record): The capture used as this order's page evidence exercises the bundled shape from R5. The pre-existing direct import capture may remain as an additional surface, but it is not the evidence of record for the page anymore, and the repo records which capture is which.
+- R7 (suite): The project test suite passes on the final tree, including the take apart tests. A failure that is already resolved on a sibling branch is itemized by name in the run report, never silently absorbed and never fixed by editing another run's evidence.
+
+## Scenarios
+
+### Scenario: Production bundle builds the repo as it stands
+- S1: Given the final tree, when the production bundle command runs, then it exits successfully with no local patches, no deploy copy edits and no specifier rewrites, and the command with its exit status is in the run evidence.
+
+### Scenario: The bundled page renders in a real browser
+- S2: Given the bundled output served by a local Worker runtime, when a headless browser loads /take-apart, then there are zero console errors and zero page errors, globalThis.TakeApartModel is defined, the scene ready flag is set, the scene canvas backing store matches its layout size rather than the 300 by 150 default, and the committed screenshot shows the rendered patch in the scene region.
+
+### Scenario: The vendored library still loads from its route
+- S3: Given the bundled output, when the browser loads the page, then the three.js module is fetched from /vendor/three.module.min.js, the route answers 200 with the pinned 670681 decoded bytes, and the scene initializes against it.
+
+### Scenario: Behavior and parity hold
+- S4: Given the change, when the project suite runs, then all tests pass (any sibling resolved failure itemized by name under R7), the model parity check passes in its current or replacement form, the take apart page behaviors match the take-apart spec, and no route outside the take apart surface changes its response.
+
+### Scenario: The UI model built it
+- S5: Given the executed run, when the run report is read, then the builder step shows configured model gpt-6-astra, reviewer-design is among the counted reviews, and the source diffs are the builder station output.
+
+## Out of scope
+
+- Any change to the page design, the model, the tour, the copy or the main page.
+- Any change to the vendored three.js build itself.
+- Merging or deploying inside the line: the operator redeploys from the fixed branch head after the verdict, per the owner's instruction on issue 11.
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+import zlib from 'node:zlib';
+import crypto from 'node:crypto';
+import worker from '../src/index.js';
+import * as M from '../src/take-apart-model.js';
+
+// take-apart-bundling spec scenarios S1 to S5 (S5 is a run report fact, not a test).
+//
+// These tests run offline in plain Node. The production bundler (wrangler,
+// esbuild) is not a repo dependency, so the tests prove the bundler independent
+// properties directly (R1, R2, R3) and read the committed evidence for the
+// production shape checks (R4, R5, R6) that need wrangler and a browser.
+//
+// Evidence layout the builder must produce under evidence/take-apart-bundling/:
+//   bundle-build.log   the production bundle command and its exit status (R4, S1)
+//   browser-pass.log   the headless pass against the bundled output (R5, S2, S3)
+//   *.png              screenshot(s); at least one shows the rendered patch (S2)
+
+const get = (p) => worker.fetch(new Request('https://sentia.test' + p));
+const read = (rel) => fs.readFileSync(new URL('../' + rel, import.meta.url), 'utf8');
+const EVID = new URL('../evidence/take-apart-bundling/', import.meta.url);
+const evidFile = (re) => (fs.existsSync(EVID) ? fs.readdirSync(EVID) : []).filter((f) => re.test(f));
+
+// Vendored three.js, pinned by wo-gh-9: must stay byte for byte (R2, R3).
+const VENDOR_BYTES = 670681;
+const VENDOR_SHA256 = '3e690ac7d180b0aadf0891bea39eec643e29e2d3e75c99b18689518665f69ba6';
+
+// Helper names esbuild injects into bundle scope. A served byte that calls one
+// of these has no definition in the browser (F2).
+const BUNDLER_HELPER = /\b__(name|defProp|publicField|export|toESM|toCommonJS|commonJS|esm|spreadValues|spreadProps|async|require|decorateClass|privateGet|privateAdd|privateSet)\b/;
+
+// Replace comments and string/template literal text with spaces (keeping each
+// literal's first character, so an absolute specifier stays recognisable) so a
+// scan sees only text the bundler would treat as code. Template ${...}
+// expressions are code and stay.
+function executableOnly(src) {
+  let out = '';
+  const code = (i, stopAtBrace) => {
+    let depth = 0;
+    while (i < src.length) {
+      const c = src[i], n = src[i + 1];
+      if (c === '/' && n === '/') { while (i < src.length && src[i] !== '\n') { out += ' '; i++; } continue; }
+      if (c === '/' && n === '*') {
+        const end = src.indexOf('*/', i + 2), stop = end < 0 ? src.length : end + 2;
+        out += ' '.repeat(stop - i); i = stop; continue;
+      }
+      if (c === '"' || c === "'") {
+        let j = i + 1; out += c + (src[j] === c ? '' : src[j] ?? ' ');
+        while (j < src.length && src[j] !== c) { if (src[j] === '\\') j++; j++; if (j > i + 2) out += ' '; }
+        out += c; i = j + 1; continue;
+      }
+      if (c === '`') { out += c + (src[i + 1] === '`' ? '' : ' '); i = template(i + 1); out += c; continue; }
+      if (stopAtBrace) {
+        if (c === '{') depth++;
+        if (c === '}') { if (depth === 0) return i; depth--; }
+      }
+      out += c; i++;
+    }
+    return i;
+  };
+  const template = (i) => {
+    while (i < src.length && src[i] !== '`') {
+      if (src[i] === '\\') { out += '  '; i += 2; continue; }
+      if (src[i] === '$' && src[i + 1] === '{') { out += '${'; i = code(i + 2, true); out += '}'; i++; continue; }
+      out += ' '; i++;
+    }
+    return i + 1;
+  };
+  code(0, false);
+  return out;
+}
+
+const SRC_FILES = fs.readdirSync(new URL('../src/', import.meta.url)).filter((f) => f.endsWith('.js') && f !== 'vendor-three.js');
+
+// ---------------------------------------------------------------- R1 decoupling
+test('bundling R1: no source stringifies a function to produce served bytes', () => {
+  for (const f of SRC_FILES) {
+    const code = executableOnly(read('src/' + f));
+    // Function.prototype.toString on a bundled function is the F1 mechanism.
+    // Number.prototype.toString(16) style radix calls are fine and carry an argument.
+    assert.ok(!/\.toString\(\s*\)/.test(code), `src/${f} calls .toString() with no argument`);
+    assert.ok(!/Function\.prototype\.toString/.test(code), `src/${f} uses Function.prototype.toString`);
+  }
+});
+
+test('bundling R1: served client and model text carry no bundler helper and no renamed collision', async () => {
+  for (const p of ['/take-apart.js', '/take-apart-model.js']) {
+    const res = await get(p);
+    assert.equal(res.status, 200, p);
+    const body = await res.text();
+    assert.ok(body.length > 500, `${p} is not empty`);
+    assert.doesNotMatch(body, BUNDLER_HELPER, `${p} references an esbuild helper that only exists in bundle scope`);
+    // esbuild renames collisions by suffixing 2 (FACTS2, clamp2); the repo source never uses those names.
+    assert.doesNotMatch(body, /\b(FACTS|clamp|hours)2\b/, `${p} shows bundler renamed identifiers`);
+  }
+});
+
+test('bundling R1: served model text installs in a bare browser-like global with nothing from Worker scope', async () => {
+  const body = await (await get('/take-apart-model.js')).text();
+  // A context with only what a browser script has; any reference to a bundle
+  // scope identifier throws ReferenceError here exactly as it did in production.
+  const ctx = { Math, JSON, Object, Array };
+  ctx.window = ctx; ctx.self = ctx; ctx.globalThis = ctx;
+  vm.createContext(ctx);
+  assert.doesNotThrow(() => vm.runInContext(body, ctx), 'served model text must run standalone');
+  assert.equal(typeof ctx.TakeApartModel, 'object', 'globalThis.TakeApartModel must be defined');
+  assert.equal(typeof ctx.TakeApartModel.gaugeReadout, 'function');
+});
+
+test('bundling R1: served client text is a standalone script that parses and names no Worker scope identifier', async () => {
+  const body = await (await get('/take-apart.js')).text();
+  assert.doesNotThrow(() => new vm.Script(body, { filename: 'take-apart.js' }), 'client must parse as a classic script');
+  // Run it against an empty global: it may fail on missing DOM, but never with
+  // a ReferenceError for a bundle identifier (the F3 failure shape).
+  const ctx = { Math, JSON, Object, Array, Promise, console: { log() {}, warn() {}, error() {} } };
+  ctx.window = ctx; ctx.self = ctx; ctx.globalThis = ctx;
+  vm.createContext(ctx);
+  let err;
+  try { await vm.runInContext(body, ctx); } catch (e) { err = e; }
+  if (err) assert.ok(!/__name|is not defined/.test(String(err)) || /document|window|navigator|requestAnimationFrame|TakeApartModel/.test(String(err)),
+    `client threw a bundle scope ReferenceError: ${err}`);
+});
+
+// ---------------------------------------------------------------- R2 / S3 three.js load
+test('bundling R2: no module the Worker bundles holds a statically resolvable import of the vendor route', () => {
+  // esbuild resolves import('/vendor/...') written as code and fails the build (F4).
+  // The same text inside a string (served browser source) is invisible to it.
+  for (const f of SRC_FILES) {
+    const code = executableOnly(read('src/' + f));
+    assert.ok(!/\bimport\s*\(\s*['"`]\//.test(code), `src/${f} has an absolute specifier dynamic import in code position`);
+    assert.ok(!/\bfrom\s*['"]\//.test(code), `src/${f} has an absolute specifier static import`);
+  }
+});
+
+test('bundling R2/S3: the served client loads three.js from the /vendor/three.module.min.js route', async () => {
+  const body = await (await get('/take-apart.js')).text();
+  assert.match(body, /\/vendor\/three\.module\.min\.js/, 'client names the vendor route');
+});
+
+test('bundling R2/R3: the vendor route is unchanged: 200, 670681 decoded bytes, pinned sha256, long cache', async () => {
+  const res = await get('/vendor/three.module.min.js');
+  assert.equal(res.status, 200);
+  assert.match(res.headers.get('content-type') || '', /javascript/);
+  assert.match(res.headers.get('cache-control') || '', /max-age=31536000/);
+  const bytes = Buffer.from(await res.arrayBuffer());
+  assert.equal(bytes.length, VENDOR_BYTES);
+  assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'), VENDOR_SHA256);
+});
+
+// ---------------------------------------------------------------- R3 frozen behavior / S4 parity
+test('bundling R3: take apart routes keep their response shapes', async () => {
+  const page = await get('/take-apart');
+  assert.equal(page.status, 200);
+  assert.match(page.headers.get('content-type') || '', /text\/html/);
+  const html = await page.text();
+  assert.match(html, /\/take-apart\.js/);
+  assert.match(html, /\/take-apart-model\.js/);
+  assert.match(html, /id="take-apart"/);
+  for (const p of ['/take-apart.js', '/take-apart-model.js']) {
+    const res = await get(p);
+    assert.match(res.headers.get('content-type') || '', /application\/javascript/, p);
+  }
+});
+
+test('bundling S4: served model matches the Worker model at sampled inputs (parity survives the new mechanism)', async () => {
+  const body = await (await get('/take-apart-model.js')).text();
+  const ctx = { Math, JSON, Object, Array };
+  ctx.window = ctx; ctx.self = ctx; ctx.globalThis = ctx;
+  vm.createContext(ctx);
+  vm.runInContext(body, ctx);
+  const B = ctx.TakeApartModel;
+  const plain = (v) => JSON.parse(JSON.stringify(v));
+  for (const h of [0, 6, 12, 18, 24, 48, 100, 156, 200, 300, 335, 336, -5, 400]) {
+    assert.deepEqual(plain(B.gaugeReadout(h)), plain(M.gaugeReadout(h)), `gaugeReadout(${h})`);
+    assert.equal(B.wearDay(h), M.wearDay(h));
+    assert.equal(B.skinTempC(h), M.skinTempC(h));
+    assert.equal(B.hydrationIndex(h), M.hydrationIndex(h));
+    assert.equal(B.batteryPct(h), M.batteryPct(h));
+  }
+  assert.deepEqual(Array.from(B.tempSeries()), Array.from(M.tempSeries()));
+  for (const c of ['GAP_MM', 'FOCUS_LIFT_MM', 'ASIDE_MM', 'FADE_OPACITY', 'XRAY_OPACITY', 'FOOTPRINT_MM', 'CORNER_RADIUS_MM']) {
+    assert.equal(B[c], M[c], c);
+  }
+  for (const t of [0, 0.35, 0.55, 1]) {
+    for (let k = 0; k < 5; k++) {
+      assert.equal(B.layerCenterMm(k, t), M.layerCenterMm(k, t));
+      for (const f of [null, 0, 2, 4]) {
+        assert.deepEqual(plain(B.focusTransform(k, t, f)), plain(M.focusTransform(k, t, f)));
+        for (const x of [false, true]) assert.deepEqual(plain(B.materialState(k, f, x)), plain(M.materialState(k, f, x)));
+      }
+    }
+  }
+  for (const env of [{ devicePixelRatio: 3, hardwareConcurrency: 8 }, { devicePixelRatio: 2, hardwareConcurrency: 2 }, { devicePixelRatio: 2, hardwareConcurrency: 16, coarsePointer: true }, {}]) {
+    assert.deepEqual(plain(B.qualityFor(env)), plain(M.qualityFor(env)));
+  }
+  assert.deepEqual(plain(B.sceneState(0.5, 100, 2, true)), plain(M.sceneState(0.5, 100, 2, true)));
+  assert.deepEqual(plain(B.LAYERS), plain(M.LAYERS));
+});
+
+test('bundling S4: no route outside the take apart surface changes: main page keeps its single take apart link', async () => {
+  const res = await get('/');
+  assert.equal(res.status, 200);
+  const html = await res.text();
+  assert.equal((html.match(/href="\/take-apart"/g) || []).length, 1);
+});
+
+// ---------------------------------------------------------------- R4 / S1 production bundle
+test('bundling S1/R4: bundle-build.log records the real production bundle command with exit status 0 and no patches', () => {
+  const files = evidFile(/bundle.*\.(log|txt)$|build.*\.(log|txt)$/i);
+  assert.ok(files.length >= 1, 'evidence/take-apart-bundling/bundle-build.log is missing');
+  const log = fs.readFileSync(new URL(files[0], EVID), 'utf8');
+  assert.match(log, /wrangler[^\n]*(deploy[^\n]*--dry-run|--dry-run[^\n]*deploy|--outdir|--outfile)/i, 'command line is the wrangler deploy bundling step or its dry run');
+  assert.match(log, /exit(?:\s+(?:status|code))?\W{0,6}0\b/i, 'exit status 0 recorded');
+  assert.doesNotMatch(log, /exit(?:\s+(?:status|code))?\W{0,6}[1-9]\d*\b/i, 'no non zero exit recorded');
+  assert.doesNotMatch(log, /\b(ERROR|Could not resolve|Build failed)\b/, 'bundler reported an error');
+  assert.match(log, /no (local )?patch|zero (local )?patch|patches?:\s*(none|0)/i, 'log states that no local patch was applied');
+});
+
+test('bundling S1/R4: wrangler.toml still points at src/index.js and the repo source carries no deploy patch marker', () => {
+  assert.match(read('wrangler.toml'), /main\s*=\s*"src\/index\.js"/);
+  for (const f of SRC_FILES) assert.doesNotMatch(read('src/' + f), /https?:\/\/sentia\.info-693\.workers\.dev/, `src/${f} hard codes the production origin (the old deploy patch)`);
+});
+
+// ---------------------------------------------------------------- R5 / S2 bundled browser pass
+test('bundling S2/R5: browser-pass.log records the bundled run with zero errors, model defined, scene ready, canvas sized', () => {
+  const files = evidFile(/browser.*\.(log|txt)$/i);
+  assert.ok(files.length >= 1, 'evidence/take-apart-bundling/browser-pass.log is missing');
+  const log = fs.readFileSync(new URL(files[0], EVID), 'utf8');
+  assert.match(log, /console[ _-]?errors?\W{0,6}0\b/i, 'console error count of zero');
+  assert.match(log, /page[ _-]?errors?\W{0,6}0\b/i, 'page error count of zero');
+  assert.match(log, /TakeApartModel\W{0,12}(defined|true|object)/i, 'TakeApartModel defined recorded');
+  assert.match(log, /scene[ _-]?ready\W{0,8}true/i, 'scene ready flag recorded');
+  assert.match(log, /wrangler|bundled|built bundle/i, 'log says the served output is the bundled shape');
+  const canvas = log.match(/canvas[^\n]*?(\d+)\s*[x×]\s*(\d+)/i);
+  assert.ok(canvas, 'canvas backing store size recorded as WxH');
+  assert.ok(!(canvas[1] === '300' && canvas[2] === '150'), 'canvas kept the 300 by 150 default');
+  assert.doesNotMatch(log, /ReferenceError|__name/);
+});
+
+test('bundling S3: browser-pass.log records the vendor route answering 200 with 670681 decoded bytes', () => {
+  const files = evidFile(/browser.*\.(log|txt)$/i);
+  assert.ok(files.length >= 1, 'browser-pass.log is missing');
+  const log = fs.readFileSync(new URL(files[0], EVID), 'utf8');
+  assert.match(log, /vendor[^\n]*\b200\b/i, 'vendor route status 200 recorded');
+  assert.match(log, new RegExp(`vendor[^\\n]*\\b${VENDOR_BYTES}\\b`, 'i'), 'vendor decoded bytes recorded');
+});
+
+// Minimal PNG decoder (8 bit, non interlaced, RGB or RGBA) so the test can
+// look at the pixels of the committed screenshot instead of trusting a log.
+function decodePng(buf) {
+  assert.ok(buf.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])), 'not a PNG');
+  let off = 8, w, h, bpp, idat = [];
+  while (off < buf.length) {
+    const len = buf.readUInt32BE(off), type = buf.toString('ascii', off + 4, off + 8);
+    const data = buf.subarray(off + 8, off + 8 + len);
+    if (type === 'IHDR') {
+      w = data.readUInt32BE(0); h = data.readUInt32BE(4);
+      assert.equal(data[8], 8, '8 bit PNG expected'); assert.equal(data[12], 0, 'non interlaced PNG expected');
+      bpp = { 2: 3, 6: 4 }[data[9]]; assert.ok(bpp, 'RGB or RGBA PNG expected');
+    } else if (type === 'IDAT') idat.push(data);
+    else if (type === 'IEND') break;
+    off += 12 + len;
+  }
+  const raw = zlib.inflateSync(Buffer.concat(idat)), stride = w * bpp, px = Buffer.alloc(h * stride);
+  for (let y = 0; y < h; y++) {
+    const f = raw[y * (stride + 1)], row = raw.subarray(y * (stride + 1) + 1, (y + 1) * (stride + 1));
+    for (let x = 0; x < stride; x++) {
+      const a = x >= bpp ? px[y * stride + x - bpp] : 0, b = y ? px[(y - 1) * stride + x] : 0, c = x >= bpp && y ? px[(y - 1) * stride + x - bpp] : 0;
+      const p = a + b - c, pa = Math.abs(p - a), pb = Math.abs(p - b), pc = Math.abs(p - c);
+      const pred = [0, a, b, (a + b) >> 1, pa <= pb && pa <= pc ? a : pb <= pc ? b : c][f];
+      px[y * stride + x] = (row[x] + pred) & 255;
+    }
+  }
+  return { w, h, bpp, px };
+}
+
+test('bundling S2/R5: a committed bundled screenshot shows rendered content in the scene region, not an empty viewport', () => {
+  const pngs = evidFile(/\.png$/i);
+  assert.ok(pngs.length >= 1, 'no screenshot under evidence/take-apart-bundling/');
+  const verdicts = pngs.map((f) => {
+    const bytes = fs.readFileSync(new URL(f, EVID));
+    if (bytes.length < 20 * 1024) return { f, ok: false, why: `${bytes.length} bytes, under 20 KB` };
+    const { w, h, bpp, px } = decodePng(bytes);
+    // Central half of the frame: where the scene viewport sits. An empty
+    // viewport is one flat background; a rendered patch adds many tones.
+    const x0 = Math.floor(w * 0.25), x1 = Math.floor(w * 0.75), y0 = Math.floor(h * 0.25), y1 = Math.floor(h * 0.75);
+    const tones = new Set();
+    let min = 255, max = 0;
+    for (let y = y0; y < y1; y += 2) for (let x = x0; x < x1; x += 2) {
+      const i = (y * w + x) * bpp, l = Math.round((px[i] + px[i + 1] + px[i + 2]) / 3);
+      tones.add(`${px[i] >> 3},${px[i + 1] >> 3},${px[i + 2] >> 3}`);
+      min = Math.min(min, l); max = Math.max(max, l);
+    }
+    return { f, ok: tones.size >= 40 && max - min >= 60, why: `${tones.size} tones, luminance span ${max - min}` };
+  });
+  assert.ok(verdicts.some((v) => v.ok), `no screenshot shows a rendered scene: ${JSON.stringify(verdicts)}`);
+});
+
+// ---------------------------------------------------------------- R6 evidence of record
+test('bundling R6: the repo records which capture is the evidence of record and it serves the bundled shape', () => {
+  const scripts = fs.readdirSync(new URL('../scripts/', import.meta.url)).filter((f) => /\.m?js$/.test(f));
+  const direct = scripts.filter((f) => /from\s+['"]\.\.\/src\/index\.js['"]/.test(read('scripts/' + f)));
+  const bundled = scripts.filter((f) => !direct.includes(f) && /wrangler/.test(read('scripts/' + f)));
+  assert.ok(bundled.length >= 1, 'a capture script that serves the wrangler built bundle is required');
+  for (const f of bundled) {
+    const head = read('scripts/' + f).split('\n').slice(0, 15).join('\n');
+    assert.match(head, /evidence of record/i, `${f} header states it is the evidence of record`);
+    assert.match(head, /bundled|production shape/i, `${f} header names the bundled shape`);
+    assert.doesNotMatch(read('scripts/' + f), /import\s+worker\s+from\s+['"]\.\.\/src\/index\.js['"]/, `${f} must not import the Worker source directly`);
+  }
+  for (const f of direct) {
+    const head = read('scripts/' + f).split('\n').slice(0, 15).join('\n');
+    assert.match(head, /direct import|source shape/i, `${f} header says it covers the direct import (source shape) only`);
+    assert.doesNotMatch(head, /evidence of record(?!\s*(is|=)?\s*no)/i, `${f} must not claim to be the evidence of record`);
+  }
+});
+{
+  "name": "sentia",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  }
+}
+name = "sentia"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+workers_dev = true
+// Run with a runner-installed Playwright, never a site dependency:
+// PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs node scripts/capture-take-apart.mjs
+import http from 'node:http';
+import { mkdir, writeFile, readFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import { pathToFileURL } from 'node:url';
+import worker from '../src/index.js';
+import { gaugeReadout } from '../src/take-apart-model.js';
+const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ? pathToFileURL(process.env.PLAYWRIGHT_MODULE).href : 'playwright');
+const out = new URL('../evidence/take-apart/', import.meta.url);
+await mkdir(out, { recursive: true });
+const server = http.createServer(async (req,res) => {
+  try {
+    const response = await worker.fetch(new Request('http://localhost'+req.url));
+    res.writeHead(response.status, Object.fromEntries(response.headers));
+    res.end(Buffer.from(await response.arrayBuffer()));
+  } catch(error) { res.writeHead(500);res.end(String(error)); }
+});
+await new Promise(resolve => server.listen(0,'127.0.0.1',resolve));
+const browser = await chromium.launch({ executablePath: process.env.CHROME_BIN || '/usr/bin/google-chrome', headless:true,
+  args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'] });
+const errors=[];
+let gaugePassed=false;
+const vendorBytes=(await (await worker.fetch(new Request('http://localhost/vendor/three.module.min.js'))).arrayBuffer()).byteLength;
+try {
+  const page=await browser.newPage({ viewport:{width:1440,height:1050}, deviceScaleFactor:1 });
+  const cdp=await page.context().newCDPSession(page);
+  page.on('console',msg=>{if(msg.type()==='error')errors.push(msg.text());});
+  page.on('pageerror',error=>errors.push(String(error)));
+  console.log('Loading study');
+  await page.goto(`http://127.0.0.1:${server.address().port}/take-apart?tour=fast`);
+  await page.waitForFunction(()=>document.querySelector('#take-apart').dataset.sceneReady==='true');
+  await page.evaluate(()=>document.fonts.ready);
+  console.log('Study loaded');
+  assert.equal(await page.locator('#fallback').isVisible(),false,'WebGL scene must render for evidence');
+  const area=await page.locator('#scene').boundingBox();
+  await page.mouse.move(area.x+area.width/2,area.y+area.height/2);
+  await page.mouse.down();await page.mouse.move(area.x+area.width/2+75,area.y+area.height/2+25,{steps:8});await page.mouse.up();
+  await page.mouse.wheel(0,100);
+  await page.locator('#wear').evaluate(input=>{ input.value='200';input.dispatchEvent(new Event('input',{bubbles:true})); });
+  await page.waitForFunction(expected => [...document.querySelectorAll('[data-gauge]')].every(n => n.textContent === expected[n.dataset.gauge]), gaugeReadout(200));
+  const actual=await page.locator('[data-gauge]').evaluateAll(nodes=>Object.fromEntries(nodes.map(n=>[n.dataset.gauge,n.textContent])));
+  assert.deepEqual(actual,gaugeReadout(200));gaugePassed=true;
+  for(const name of ['Top','Side','Hero']){ await page.locator(`[data-camera="${name}"]`).click();await page.waitForTimeout(180); }
+  await page.locator('#xray').click();
+  await page.mouse.move(1400,60);
+  // Freeze the browser clock between controlled advances so software WebGL
+  // screenshot latency cannot advance to a different tour beat mid-capture.
+  const previousNow=await page.evaluate(()=>performance.now());
+  await page.clock.install();
+  console.log('Freezing capture clock');
+  await page.clock.pauseAt(new Date());
+  await page.clock.fastForward(previousNow+1000);
+  await page.evaluate(()=>window.dispatchEvent(new Event('pointerdown')));
+  console.log('Capture clock frozen');
+  const beats=[['assembled','Assembled'],['apart','Apart'],['board','Board'],['xray','X ray'],['settle','Mid / Settle']];
+  const sources=[];
+  for(const [beat,label] of beats) {
+    for(let ticks=0;;ticks++) {
+      if(await page.locator('#take-apart').getAttribute('data-tour-beat')===beat)break;
+      assert.ok(ticks<200,'tour must reach '+beat);
+      await page.clock.runFor(50);
+    }
+    await page.clock.runFor(260);
+    assert.equal(await page.locator('#take-apart').getAttribute('data-tour-beat'),beat);
+    const hour=beat==='settle'?156:0;
+    assert.deepEqual(await page.locator('[data-gauge]').evaluateAll(nodes=>Object.fromEntries(nodes.map(n=>[n.dataset.gauge,n.textContent]))),gaugeReadout(hour));
+    const file=beat==='settle'?'mid':beat;
+    const {data}=await cdp.send('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});
+    const png=Buffer.from(data,'base64');
+    await writeFile(new URL(`beat-${file}.png`,out),png);
+    console.log('Captured '+beat);
+    sources.push({label,src:'data:image/png;base64,'+png.toString('base64')});
+  }
+  // Composition happens in this browser session, from the captured pixels.
+  const sheet=await browser.newPage({viewport:{width:1440,height:1840},deviceScaleFactor:1});
+  await sheet.setContent('<body style="margin:0;background:#FAFAF6"><canvas id="sheet" width="1440" height="1840"></canvas></body>');
+  const composed=await sheet.evaluate(async sources=>{
+    const c=document.querySelector('canvas'),ctx=c.getContext('2d');ctx.fillStyle='#FAFAF6';ctx.fillRect(0,0,c.width,c.height);
+    ctx.fillStyle='#12211C';ctx.font='28px sans-serif';ctx.fillText('SENTIA / Take apart — tour contact sheet',24,40);
+    for(let i=0;i<sources.length;i++) {
+      const img=new Image();img.src=sources[i].src;await img.decode();
+      const x=(i%2)*720,y=64+Math.floor(i/2)*592;
+      ctx.drawImage(img,x,y,720,525);ctx.fillStyle='#12211C';ctx.font='18px sans-serif';ctx.fillText(sources[i].label,x+24,y+560);
+    }
+    return c.toDataURL('image/png').split(',')[1];
+  },sources);
+  await writeFile(new URL('contact-sheet.png',out),Buffer.from(composed,'base64'));
+  // Reduced-motion users retain controls without an automatic tour.
+  await page.clock.resume();
+  await page.emulateMedia({reducedMotion:'reduce'});await page.reload();await page.waitForTimeout(1800);
+  assert.equal(await page.locator('#take-apart').getAttribute('data-tour-beat'),'off');
+  await page.setViewportSize({width:390,height:844});
+  assert.equal(await page.locator('#callouts').isVisible(),false);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'mobile fits viewport');
+  assert.equal(errors.length,0,errors.join('\n'));
+} finally {
+  await writeFile(new URL('browser-pass.log',out),`console errors: ${errors.length}\ngauge comparison: ${gaugePassed?'PASS':'FAIL'} at hour 200\nvendor decoded bytes: ${vendorBytes}\n${errors.join('\n')}\n`);
+  await browser.close();await new Promise(resolve=>server.close(resolve));
+}
+console.log('Browser pass complete: zero console errors; gauge comparison PASS.');
+?? runs/wo-gh-11/
+?? tests/take-apart-bundling.test.js
+
+exec
+/bin/bash -lc "head -25 src/take-apart-client.js; tail -10 src/take-apart-client.js; cat src/take-apart-model-browser.js; rg -n 'toString|takeApartApp|installTakeApart|CLIENT_JS|MODEL_JS' tests/take-apart.test.js; ls /tmp; which google-chrome chromium node npx; ls -a" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+// First party application source served by the worker.
+async function takeApartApp() {
+const THREE = await import('/vendor/three.module.min.js');
+const M = globalThis.TakeApartModel;
+const $ = s => document.querySelector(s);
+const root = $('#take-apart'), canvas = $('#scene'), overlay = $('#callouts');
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fast = new URLSearchParams(location.search).get('tour') === 'fast';
+const IDLE_SECONDS = fast ? 1.5 : 20, BEAT_SECONDS = fast ? .9 : 2.4;
+const Z_SCALE = 8;
+const quality = M.qualityFor({ devicePixelRatio, hardwareConcurrency: navigator.hardwareConcurrency, coarsePointer: matchMedia('(pointer: coarse)').matches });
+const state = { t: 0, h: 0, focus: null, xray: false };
+let renderer, scene, camera, meshes = [], lastPanel = -Infinity, lastChartHour = -Infinity;
+let lastInteraction = performance.now(), tourStart = null, tourBeat = -1, drag = null;
+let azimuth = Math.atan2(52,62), elevation = Math.atan2(32, Math.hypot(52,62)), zoom = 1;
+let targetAzimuth = azimuth, targetElevation = elevation, targetZoom = zoom;
+const cursor = $('#tour-cursor');
+const presets = { Hero: [52,42,62], Top: [0,95,1], Side: [95,18,0] };
+let radius = Math.hypot(52,32,62);
+function stopTour() {
+  lastInteraction = performance.now(); tourStart = null; tourBeat = -1;
+  root.dataset.tourBeat = 'off'; cursor.hidden = true;
+  $('#tour-status').textContent = reducedMotion ? 'Explore freely · Reduced motion' : 'Explore freely · Tour begins when idle';
+}
+for (const event of ['pointerdown','wheel','keydown','touchstart']) window.addEventListener(event, stopTour, { passive: true });
+try { await initScene(); root.dataset.sceneReady = 'true'; } catch (error) {
+  if(renderer)renderer.dispose();renderer=null;canvas.hidden=true;overlay.hidden=true;$('#fallback').textContent='3D is unavailable on this device. Explore the layers and simulated readings with the controls below.';$('#fallback').hidden=false;
+  // WebGL capability failure leaves the model and accessible controls operational.
+}
+window.addEventListener('resize',()=> {lastChartHour=-Infinity;});
+function frame(now){tour(now);updateScene();updatePanel(now);requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+
+}
+export const TAKE_APART_CLIENT_JS = `(${takeApartApp.toString()})();`;
+// Browser source twin; parity is checked by tests/take-apart.test.js.
+import { FACTS } from './facts.js';
+function installTakeApartModel(FACTS) {
+
+
+const GAP_MM = 3, FOOTPRINT_MM = 36, CORNER_RADIUS_MM = 9;
+const FOCUS_LIFT_MM = 5, ASIDE_MM = 8, FADE_OPACITY = 0.35, XRAY_OPACITY = 0.15;
+const LAYERS = FACTS.layers.map((layer, index) => Object.freeze({
+  name: layer.name, thicknessMm: [0.6, 0.7, 0.5, 0.4, 0.3][index], heightIndex: 4 - index,
+}));
+const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+const hours = h => clamp(h, 0, 336);
+function layerCenterMm(layer, t) {
+  return LAYERS.slice(layer + 1).reduce((sum, l) => sum + l.thicknessMm, 0)
+    + LAYERS[layer].thicknessMm / 2 + clamp(t, 0, 1) * LAYERS[layer].heightIndex * GAP_MM;
+}
+function wearDay(h) { return Math.min(14, Math.floor(hours(h) / 24) + 1); }
+function skinTempC(h) { return 36.55 + 0.35 * Math.sin(((hours(h) % 24) - 6) * Math.PI / 12); }
+function hydrationIndex(h) { return clamp(Math.round(66 + 8 * Math.sin(((hours(h) % 24) - 9) * Math.PI / 12) - 6 * hours(h) / 336), 0, 100); }
+function batteryPct(h) { return Math.round(100 - 88 * hours(h) / 336); }
+function tempSeries() { return Array.from({ length: 57 }, (_, i) => skinTempC(i * 6)); }
+function gaugeReadout(h) {
+  return { temperature: skinTempC(h).toFixed(1), hydration: String(hydrationIndex(h)), battery: String(batteryPct(h)), day: String(wearDay(h)) };
+}
+function focusTransform(layer, t, focusIndex) {
+  return { liftMm: layer === focusIndex ? FOCUS_LIFT_MM : 0,
+    asideMm: focusIndex == null || layer === focusIndex ? 0 : (layer < focusIndex ? ASIDE_MM : -ASIDE_MM) };
+}
+function materialState(layer, focusIndex, xray) {
+  return { opacity: (focusIndex != null && layer !== focusIndex ? FADE_OPACITY : 1) * (layer === 0 && xray ? XRAY_OPACITY : 1) };
+}
+function qualityFor({ devicePixelRatio = 1, hardwareConcurrency = 8, coarsePointer = false } = {}) {
+  const lowest = hardwareConcurrency <= 2, reduced = hardwareConcurrency <= 4 || coarsePointer;
+  return { pixelRatioCap: Math.min(devicePixelRatio, lowest ? 1.25 : reduced ? 1.5 : 2),
+    shadowMapSize: lowest ? 0 : reduced ? 1024 : 2048, panelUpdateHz: 4 };
+}
+function sceneState(t, h, focusIndex = null, xray = false) {
+  return { gauges: gaugeReadout(h), layers: LAYERS.map((layer, i) => ({
+    ...layer, centerMm: layerCenterMm(i, t), ...focusTransform(i, t, focusIndex), ...materialState(i, focusIndex, xray),
+  })) };
+}
+
+globalThis.TakeApartModel = { GAP_MM, FOCUS_LIFT_MM, LAYERS, layerCenterMm, wearDay, skinTempC, hydrationIndex, batteryPct, tempSeries, gaugeReadout, focusTransform, materialState, qualityFor, sceneState, FOOTPRINT_MM, CORNER_RADIUS_MM, ASIDE_MM, FADE_OPACITY, XRAY_OPACITY };
+}
+export const TAKE_APART_MODEL_JS = `(${installTakeApartModel.toString()})(${JSON.stringify({layers: FACTS.layers})});`;
+368:  const head = vendor.subarray(0, 600).toString('utf8');
+anvil-codex-home-btuspu5z
+claude-1001
+clr-debug-pipe-1930-7282-in
+clr-debug-pipe-1930-7282-out
+clr-debug-pipe-1950-7465-in
+clr-debug-pipe-1950-7465-out
+dbg.mjs
+dotnet-diagnostic-1930-7282-socket
+dotnet-diagnostic-1950-7465-socket
+node-compile-cache
+snap-private-tmp
+systemd-private-4017cb8d538c4e0fb4b554f1b2684874-ModemManager.service-6OS4RM
+systemd-private-4017cb8d538c4e0fb4b554f1b2684874-chrony.service-xcab8M
+systemd-private-4017cb8d538c4e0fb4b554f1b2684874-haveged.service-RtNBnf
+systemd-private-4017cb8d538c4e0fb4b554f1b2684874-polkit.service-3Q84kT
+systemd-private-4017cb8d538c4e0fb4b554f1b2684874-systemd-logind.service-4s4NO2
+systemd-private-4017cb8d538c4e0fb4b554f1b2684874-systemd-resolved.service-9WuEqV
+v8-compile-cache-1001
+/usr/bin/google-chrome
+/usr/bin/chromium
+/opt/hostedtoolcache/node/22.23.4/x64/bin/node
+/opt/hostedtoolcache/node/22.23.4/x64/bin/npx
+.
+..
+.anvil-factory
+.git
+.github
+.gitignore
+.openspec
+BLUEPRINT.md
+LICENSE
+PIPELINES.md
+README.md
+anvil.json
+anvil.yaml
+brain
+brand
+design
+evidence
+package.json
+reviews
+runs
+scripts
+src
+status
+tests
+tools
+work-orders
+wrangler.toml
+
+exec
+/bin/bash -lc "python3 - <<'PY'
+from pathlib import Path
+for name,fn,const in [('take-apart-client.js','takeApartApp','TAKE_APART_CLIENT_JS'),('take-apart-model-browser.js','installTakeApartModel','TAKE_APART_MODEL_JS')]:
+ p=Path('src')/name
+ s=p.read_text(); start=s.index('async function' if fn=='takeApartApp' else 'function install'); end=s.index('\\nexport const')
+ body=s[start:end].replace('\\\\','\\\\\\\\').replace('"'`'"','\\\\"'`'"').replace('"'${'"','\\\\"'${'"')
+ pre='// Literal browser source: Worker bundlers must treat this as data, not executable code.\\n'
+ if fn=='installTakeApartModel': pre+=\"// Browser model parity is enforced by the take-apart tests.\\nimport { FACTS } from './facts.js';\\n\"
+ suffix='})();"'`;'"' if fn=='takeApartApp' else '})("'${JSON.stringify({layers: FACTS.layers})});`;'"'
+ p.write_text(pre+'export const '+const+' = "'`('"'+body+suffix+'\\n')
+PY
+npm install --prefix /tmp/sentia-browser playwright wrangler" in /home/runner/work/sentia/sentia
+ succeeded in 4874ms:
+
+added 40 packages in 5s
+
+7 packages are looking for funding
+  run `npm fund` for details
+
+exec
+/bin/bash -lc "python3 - <<'PY'
+from pathlib import Path
+for n in ['take-apart-client.js','take-apart-model-browser.js']:
+ p=Path('src')/n;s=p.read_text().replace('}})(', '})(');p.write_text(s)
+PY
+tail -3 src/take-apart-client.js; tail -3 src/take-apart-model-browser.js; rg -n 'scene|canvas' src/take-apart-client.js | tail -10" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+requestAnimationFrame(frame);
+
+})();`;
+
+globalThis.TakeApartModel = { GAP_MM, FOCUS_LIFT_MM, LAYERS, layerCenterMm, wearDay, skinTempC, hydrationIndex, batteryPct, tempSeries, gaugeReadout, focusTransform, materialState, qualityFor, sceneState, FOOTPRINT_MM, CORNER_RADIUS_MM, ASIDE_MM, FADE_OPACITY, XRAY_OPACITY };
+})(${JSON.stringify({layers: FACTS.layers})});`;
+75:  key.shadow.bias = -.0003; key.shadow.normalBias = .15; key.shadow.radius = 5; key.shadow.blurSamples = 8; scene.add(key);
+77:  ground.rotation.x = -Math.PI/2; ground.position.y=-.15; ground.receiveShadow=true; scene.add(ground);
+81:    mesh.castShadow=true; mesh.receiveShadow=true; scene.add(mesh); return mesh;
+103:  await renderer.compileAsync(scene,camera); updateScene(true);
+107:  const {width:w,height:h}=canvas.getBoundingClientRect();
+108:  if (canvas.width!==Math.round(w*quality.pixelRatioCap)||canvas.height!==Math.round(h*quality.pixelRatioCap)) renderer.setSize(w,h,false);
+113:  const model=M.sceneState(state.t,state.h,state.focus,state.xray);
+149:  renderer.render(scene,camera);
+199:try { await initScene(); root.dataset.sceneReady = 'true'; } catch (error) {
+200:  if(renderer)renderer.dispose();renderer=null;canvas.hidden=true;overlay.hidden=true;$('#fallback').textContent='3D is unavailable on this device. Explore the layers and simulated readings with the controls below.';$('#fallback').hidden=false;
+
+codex
+The tests support storing the browser code as literal source text. I’ve made that change while preserving the served code, so Worker bundling cannot rewrite its functions or resolve its browser-only import. Next I’ll update the capture to build with Wrangler and serve that bundle locally.
+
+exec
+/bin/bash -lc "python3 - <<'PY'
+from pathlib import Path
+p=Path('scripts/capture-take-apart.mjs');s=p.read_text();start=s.index('// Run');end=s.index('const browser =')
+s='''// Evidence of record: production shape capture of the Wrangler bundled Worker.
+// Runner tooling (not site dependencies): PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs
+// WRANGLER_BIN=/tmp/sentia-browser/node_modules/.bin/wrangler node scripts/capture-take-apart.mjs
+import { mkdir, writeFile, mkdtemp, rm } from 'node:fs/promises';
+import { spawn, spawnSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import assert from 'node:assert/strict';
+import { pathToFileURL } from 'node:url';
+import { gaugeReadout } from '../src/take-apart-model.js';
+const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ? pathToFileURL(process.env.PLAYWRIGHT_MODULE).href : 'playwright');
+const out = new URL('../evidence/take-apart-bundling/', import.meta.url);
+await mkdir(out, { recursive: true });
+const buildDir = await mkdtemp(join(tmpdir(), 'sentia-bundle-'));
+const wrangler = process.env.WRANGLER_BIN || 'wrangler';
+const buildArgs = ['deploy', '--dry-run', '--outdir', buildDir];
+const build = spawnSync(wrangler, buildArgs, { encoding: 'utf8' });
+await writeFile(new URL('bundle-build.log', out), "'`${wrangler} ${buildArgs.join('"' ')}\\n"'${build.stdout || '"''}"'${build.stderr || '"''}\\nexit status: "'${build.status}'"\\nNo local patches applied.\\n"'`);
+assert.equal(build.status, 0, build.error?.message || build.stderr);
+const port = Number(process.env.CAPTURE_PORT || 8791);
+const origin = `http://127.0.0.1:${port}`;
+const runtimeArgs = ['"'dev', join(buildDir, 'index.js'), '--no-bundle', '--local', '--ip', '127.0.0.1', '--port', String(port)];
+const runtime = spawn(wrangler, runtimeArgs, { stdio: ['ignore', 'pipe', 'pipe'] });
+let runtimeLog = '';
+runtime.stdout.on('data', chunk => { runtimeLog += chunk; });
+runtime.stderr.on('data', chunk => { runtimeLog += chunk; });
+let browser;
+const errors=[], pageErrors=[];
+let gaugePassed=false, sceneInfo, vendorStatus, vendorBytes;
+try {
+  let ready = false;
+  for (let tries = 0; tries < 120; tries++) {
+    assert.equal(runtime.exitCode, null, runtimeLog);
+    try { ready = (await fetch(origin + '/take-apart')).ok; } catch {}
+    if (ready) break;
+    await new Promise(resolve => setTimeout(resolve, 500));
+  }
+  assert.ok(ready, 'Local bundled Worker did not start: ' + runtimeLog);
+''' + s[end:]
+s=s.replace('const browser = await chromium.launch','browser = await chromium.launch')
+s=s.replace(\"const errors=[];\\nlet gaugePassed=false;\\nconst vendorBytes=(await (await worker.fetch(new Request('http://localhost/vendor/three.module.min.js'))).arrayBuffer()).byteLength;\\ntry {\",'')
+s=s.replace(\"page.on('pageerror',error=>errors.push(String(error)));\", \"page.on('pageerror',error=>pageErrors.push(String(error)));\\n  const vendorResponse = page.waitForResponse(response => response.url() === origin + '/vendor/three.module.min.js');\")
+s=s.replace('"'`http://127.0.0.1:${server.address().port}/take-apart?tour=fast`'"','"'`${origin}/take-apart?tour=fast`'"')
+s=s.replace(\"  console.log('Study loaded');\", \"\"\"  const vendor = await vendorResponse;
+  vendorStatus = vendor.status(); vendorBytes = (await vendor.body()).byteLength;
+  assert.equal(vendorStatus, 200); assert.equal(vendorBytes, 670681);
+  sceneInfo = await page.evaluate(() => {
+    const canvas = document.querySelector('#scene'), rect = canvas.getBoundingClientRect();
+    return { model: typeof globalThis.TakeApartModel, ready: document.querySelector('#take-apart').dataset.sceneReady,
+      width: canvas.width, height: canvas.height, layoutWidth: rect.width, layoutHeight: rect.height, dpr: devicePixelRatio };
+  });
+  assert.equal(sceneInfo.model, 'object'); assert.equal(sceneInfo.ready, 'true');
+  assert.equal(sceneInfo.width, Math.floor(sceneInfo.layoutWidth * sceneInfo.dpr));
+  assert.equal(sceneInfo.height, Math.floor(sceneInfo.layoutHeight * sceneInfo.dpr));
+  console.log('Study loaded');\"\"\")
+s=s.replace(\"  assert.equal(errors.length,0,errors.join('\\\\n'));\", \"  assert.equal(errors.length,0,errors.join('\\\\n'));\\n  assert.equal(pageErrors.length,0,pageErrors.join('\\\\n'));\")
+a=s.index('  await writeFile(new URL(\\'browser-pass.log\\'');b=s.index(\"console.log('Browser pass complete\",a)
+s=s[:a]+'''  await writeFile(new URL('browser-pass.log',out), "'`Bundled Worker: ${wrangler} ${runtimeArgs.join('"' ')}
+console errors: "'${errors.length}
+page errors: ${pageErrors.length}
+TakeApartModel: ${sceneInfo?.model}
+scene ready: ${sceneInfo?.ready}
+canvas: ${sceneInfo?.width}x${sceneInfo?.height}; layout: ${sceneInfo?.layoutWidth}x${sceneInfo?.layoutHeight}; DPR: ${sceneInfo?.dpr}
+gauge comparison: ${gaugePassed?'"'PASS':'FAIL'} at hour 200
+vendor /vendor/three.module.min.js: status "'${vendorStatus}; decoded bytes ${vendorBytes}
+${errors.join('"'\\\\n')}
+"'${pageErrors.join('"'\\\\n')}
+"'`);
+  await browser?.close();
+  runtime.kill('"'SIGTERM');
+  await new Promise(resolve => runtime.exitCode "'!== null ? resolve() : runtime.once('"'exit', resolve));
+  await rm(buildDir, { recursive: true, force: true });
+}
+'''+s[b:];p.write_text(s)
+PY
+PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs WRANGLER_BIN=/tmp/sentia-browser/node_modules/.bin/wrangler node scripts/capture-take-apart.mjs" in /home/runner/work/sentia/sentia
+exec
+/bin/bash -lc 'git diff --stat; node --check scripts/capture-take-apart.mjs; cat evidence/take-apart-bundling/bundle-build.log' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+ scripts/capture-take-apart.mjs  | 92 ++++++++++++++++++++++++++++++-----------
+ src/take-apart-client.js        |  9 ++--
+ src/take-apart-model-browser.js |  8 ++--
+ 3 files changed, 77 insertions(+), 32 deletions(-)
+/tmp/sentia-browser/node_modules/.bin/wrangler deploy --dry-run --outdir /tmp/sentia-bundle-iSCstc
+
+ ⛅️ wrangler 4.156.0
+────────────────────
+Total Upload: 1320.43 KiB / gzip: 545.44 KiB
+No bindings found.
+--dry-run: exiting now.
+
+Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
+
+exit status: 0
+No local patches applied.
+
+exec
+/bin/bash -lc 'git diff -- src/take-apart-client.js src/take-apart-model-browser.js; cat .gitignore' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+diff --git a/src/take-apart-client.js b/src/take-apart-client.js
+index 9f17c60..be77702 100644
+--- a/src/take-apart-client.js
++++ b/src/take-apart-client.js
+@@ -1,5 +1,5 @@
+-// First party application source served by the worker.
+-async function takeApartApp() {
++// Literal browser source: Worker bundlers must treat this as data, not executable code.
++export const TAKE_APART_CLIENT_JS = `(async function takeApartApp() {
+ const THREE = await import('/vendor/three.module.min.js');
+ const M = globalThis.TakeApartModel;
+ const $ = s => document.querySelector(s);
+@@ -141,7 +141,7 @@ function updateScene(instant=false) {
+     const g=overlay.children[l.i], x=l.left?8:w-8, elbow=l.left?150:w-150;
+     const color=state.focus===l.i?'#0E7C66':'#53685C';
+     g.setAttribute('fill',color);g.querySelector('path').setAttribute('stroke',color);
+-    g.querySelector('path').setAttribute('d',`M ${l.x} ${l.y} L ${elbow} ${l.labelY} L ${l.left?x+3:x-3} ${l.labelY}`);
++    g.querySelector('path').setAttribute('d',\`M \${l.x} \${l.y} L \${elbow} \${l.labelY} L \${l.left?x+3:x-3} \${l.labelY}\`);
+     const circle=g.querySelector('circle');circle.setAttribute('cx',l.x);circle.setAttribute('cy',l.y);
+     const text=g.querySelector('text');text.setAttribute('text-anchor',l.left?'start':'end');text.setAttribute('y',l.labelY-9-(l.i===2?15:0));
+     text.querySelectorAll('tspan').forEach(t=>t.setAttribute('x',x));
+@@ -204,5 +204,4 @@ window.addEventListener('resize',()=> {lastChartHour=-Infinity;});
+ function frame(now){tour(now);updateScene();updatePanel(now);requestAnimationFrame(frame);}
+ requestAnimationFrame(frame);
+ 
+-}
+-export const TAKE_APART_CLIENT_JS = `(${takeApartApp.toString()})();`;
++})();`;
+diff --git a/src/take-apart-model-browser.js b/src/take-apart-model-browser.js
+index 979ead6..de105ef 100644
+--- a/src/take-apart-model-browser.js
++++ b/src/take-apart-model-browser.js
+@@ -1,6 +1,7 @@
+-// Browser source twin; parity is checked by tests/take-apart.test.js.
++// Literal browser source: Worker bundlers must treat this as data, not executable code.
++// Browser model parity is enforced by the take-apart tests.
+ import { FACTS } from './facts.js';
+-function installTakeApartModel(FACTS) {
++export const TAKE_APART_MODEL_JS = `(function installTakeApartModel(FACTS) {
+ 
+ 
+ const GAP_MM = 3, FOOTPRINT_MM = 36, CORNER_RADIUS_MM = 9;
+@@ -41,5 +42,4 @@ function sceneState(t, h, focusIndex = null, xray = false) {
+ }
+ 
+ globalThis.TakeApartModel = { GAP_MM, FOCUS_LIFT_MM, LAYERS, layerCenterMm, wearDay, skinTempC, hydrationIndex, batteryPct, tempSeries, gaugeReadout, focusTransform, materialState, qualityFor, sceneState, FOOTPRINT_MM, CORNER_RADIUS_MM, ASIDE_MM, FADE_OPACITY, XRAY_OPACITY };
+-}
+-export const TAKE_APART_MODEL_JS = `(${installTakeApartModel.toString()})(${JSON.stringify({layers: FACTS.layers})});`;
++})(${JSON.stringify({layers: FACTS.layers})});`;
+node_modules/
+.wrangler/
+.dev.vars
+.dev.vars.*
+*.log
+!evidence/take-apart/browser-pass.log
+!runs/wo-gh-9/*.log
+.anvil-factory/
+
+exec
+/bin/bash -lc "python3 - <<'PY'
+from pathlib import Path
+p=Path('.gitignore');s=p.read_text().replace('"'!evidence/take-apart/browser-pass.log'"','"'!evidence/take-apart/browser-pass.log'"\\n"'!evidence/take-apart-bundling/*.log'"');p.write_text(s)
+PY
+node --input-type=module <<'JS'
+import { execFileSync } from 'node:child_process';
+import assert from 'node:assert/strict';
+for (const [file, name] of [['take-apart-client.js','TAKE_APART_CLIENT_JS'],['take-apart-model-browser.js','TAKE_APART_MODEL_JS']]) {
+ const old = execFileSync('git',['show',"'`HEAD:src/${file}`],{encoding:'"'utf8'}).replace(\"'./facts.js'\",JSON.stringify(new URL('./src/facts.js',import.meta.url).href));
+ const before = await import('data:text/javascript;base64,'+Buffer.from(old).toString('base64'));
+ const after = await import('./src/'+file);
+ assert.equal(after[name],before[name]);
+ console.log(file+': served bytes identical to original unbundled source');
+}
+JS" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+take-apart-client.js: served bytes identical to original unbundled source
+take-apart-model-browser.js: served bytes identical to original unbundled source
+
+codex
+The production dry run passed without patches, and the bundled Worker has initialized the scene in Chromium. Both served scripts also match the original unbundled bytes exactly. The capture is recording the tour screenshots before I run the full suite.
+
+exec
+/bin/bash -lc 'ls evidence/take-apart-bundling; git status --short' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+beat-apart.png
+beat-assembled.png
+beat-board.png
+bundle-build.log
+ M .gitignore
+ M scripts/capture-take-apart.mjs
+ M src/take-apart-client.js
+ M src/take-apart-model-browser.js
+?? evidence/take-apart-bundling/
+?? runs/wo-gh-11/
+?? tests/take-apart-bundling.test.js
+
+ succeeded in 52960ms:
+Loading study
+Study loaded
+Freezing capture clock
+Capture clock frozen
+Captured assembled
+Captured apart
+Captured board
+Captured xray
+Captured settle
+Browser pass complete: zero console errors; gauge comparison PASS.
+
+exec
+/bin/bash -lc 'npm test > evidence/take-apart-bundling/test-suite.log 2>&1; result=$?; tail -18 evidence/take-apart-bundling/test-suite.log; exit "$result"' in /home/runner/work/sentia/sentia
+ exited 1 in 719ms:
+  duration_ms: 0.50791
+  type: 'test'
+  ...
+# Subtest: ui-elevation S6 C4: .rv starts hidden and reveals over 800 ms ease-out
+ok 163 - ui-elevation S6 C4: .rv starts hidden and reveals over 800 ms ease-out
+  ---
+  duration_ms: 0.419167
+  type: 'test'
+  ...
+1..163
+# tests 163
+# suites 0
+# pass 161
+# fail 1
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 758.057548
+
+exec
+/bin/bash -lc 'cat evidence/take-apart-bundling/browser-pass.log; git diff --check' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+Bundled Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-bundle-iSCstc/index.js --no-bundle --local --ip 127.0.0.1 --port 8791
+console errors: 0
+page errors: 0
+TakeApartModel: object
+scene ready: true
+canvas: 1022x559; layout: 1022x559; DPR: 1
+gauge comparison: PASS at hour 200
+vendor /vendor/three.module.min.js: status 200; decoded bytes 670681
+
+
+
+exec
+/bin/bash -lc "rg -n -A28 -B3 'not ok|SKIP' evidence/take-apart-bundling/test-suite.log" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+586-  type: 'test'
+587-  ...
+588-# Subtest: S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/
+589:not ok 98 - S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/
+590-  ---
+591-  duration_ms: 6.443765
+592-  type: 'test'
+593-  location: '/home/runner/work/sentia/sentia/tests/design-v4-square-product.test.js:431:1'
+594-  failureType: 'testCodeFailure'
+595-  error: |-
+596-    Expected values to be strictly deep-equal:
+597-    + actual - expected
+598-    
+599-    + [
+600-    +   'patch-exploded / mounting not cleared',
+601-    +   'patch-exploded has an uncleared gap',
+602-    +   'patch-exploded not cleared'
+603-    + ]
+604-    - []
+605-    
+606-  code: 'ERR_ASSERTION'
+607-  name: 'AssertionError'
+608-  expected:
+609-  actual:
+610-    0: 'patch-exploded / mounting not cleared'
+611-    1: 'patch-exploded has an uncleared gap'
+612-    2: 'patch-exploded not cleared'
+613-  operator: 'deepStrictEqual'
+614-  stack: |-
+615-    TestContext.<anonymous> (file:///home/runner/work/sentia/sentia/tests/design-v4-square-product.test.js:482:14)
+616-    Test.runInAsyncScope (node:async_hooks:214:14)
+617-    Test.run (node:internal/test_runner/test:1047:25)
+--
+963-  type: 'test'
+964-  ...
+965-# Subtest: ui-elevation S4: codec, data, mcp and index are untouched by the run
+966:ok 156 - ui-elevation S4: codec, data, mcp and index are untouched by the run # SKIP no main ref to diff against
+967-  ---
+968-  duration_ms: 12.769423
+969-  type: 'test'
+970-  ...
+971-# Subtest: ui-elevation S5: no hype words in page or DESIGN.md
+972-ok 157 - ui-elevation S5: no hype words in page or DESIGN.md
+973-  ---
+974-  duration_ms: 0.471035
+975-  type: 'test'
+976-  ...
+977-# Subtest: ui-elevation S5: product names match BRAND.md exactly
+978-ok 158 - ui-elevation S5: product names match BRAND.md exactly
+979-  ---
+980-  duration_ms: 0.881239
+981-  type: 'test'
+982-  ...
+983-# Subtest: ui-elevation S6 C1: hero type never drops below 56 px at any width
+984-ok 159 - ui-elevation S6 C1: hero type never drops below 56 px at any width
+985-  ---
+986-  duration_ms: 0.659497
+987-  type: 'test'
+988-  ...
+989-# Subtest: ui-elevation S6 C1: body copy never drops below 17 px
+990-ok 160 - ui-elevation S6 C1: body copy never drops below 17 px
+991-  ---
+992-  duration_ms: 0.699447
+993-  type: 'test'
+994-  ...
+
+codex
+The bundled browser pass completed with zero console or page errors, and the screenshots show the rendered patch. The full suite reports 161 passes, one skip, and one failure in an existing design-review evidence check. I’ll record that failure by name; it is outside this fix’s scope.
+
+exec
+/bin/bash -lc "sed -n '431,485p' tests/design-v4-square-product.test.js; node --test tests/take-apart.test.js tests/take-apart-bundling.test.js > evidence/take-apart-bundling/take-apart-tests.log 2>&1; tail -10 evidence/take-apart-bundling/take-apart-tests.log" in /home/runner/work/sentia/sentia
+ succeeded in 360ms:
+test('S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/',
+  { skip: existsSync(root('runs/wo-gh-6/reviewer-design.output.md')) ? false : 'review not produced yet; the run report counts it' },
+  () => {
+    // The matching logic bites: three images, an open gap and a missing anchor are rejected; descriptive naming passes.
+    const four = [...ANCHOR_BASE, 'Network image: the previous wordmark clarity gap is cleared.'];
+    assert.deepEqual(anchorComparisonProblems(four.join('\n')), []);
+    for (const extension of ['', '.webp']) {
+      assert.deepEqual(anchorComparisonProblems(['patch-hero', 'patch-exploded', 'patch-on-skin', 'network-scene']
+        .map((n) => `${n}${extension}: no gaps`).concat('design/reference/ materials light scale contact').join('\n')), []);
+    }
+    assert.deepEqual(anchorComparisonProblems(ANCHOR_BASE.join('\n')), ['network-scene not addressed']);
+    const open = [...ANCHOR_BASE, 'Network image: the wordmark clarity gap remains open.'];
+    assert.deepEqual(anchorComparisonProblems(open.join('\n')), ['network-scene has an uncleared gap', 'network-scene not cleared']);
+    assert.ok(anchorComparisonProblems(four.join('\n').replace('design/reference/', 'anchors')).length > 0, 'missing anchor reference');
+    for (const category of ['materials', 'light', 'scale', 'contact']) {
+      assert.ok(anchorComparisonProblems(four.join('\n').replaceAll(category, 'detail')).includes(`no ${category} category`));
+    }
+    assert.deepEqual(anchorComparisonProblems(four.join(' ')), [], 'sentences may share a line');
+    for (const gap of [
+      'Network image: the contact gap is not resolved.',
+      'Network image: the contact gap is not yet cleared.',
+      'Network image: the material gap is cleared, but the contact gap remains open.',
+      'Network image: no material gaps. The contact gap remains open.',
+      'Network image: the contact gap remains open. Hero image: no gaps.',
+    ]) {
+      assert.ok(anchorComparisonProblems([...ANCHOR_BASE, gap].join(' '))
+        .includes('network-scene has an uncleared gap'), gap);
+    }
+    assert.ok(anchorComparisonProblems([...four, 'Network image: a contact gap remains open.'].join('\n'))
+      .includes('network-scene has an uncleared gap'), 'earlier clearance cannot hide an open gap');
+
+    assert.deepEqual(anchorComparisonProblems(read('runs/wo-gh-6/reviewer-design.output.md')), []);
+
+    // wo-gh-8: the same product test. The matching bites on each identity axis; the identity anchor exists.
+    assert.deepEqual(sameProductProblems(SAME_PRODUCT_OK.join('\n')), []);
+    assert.ok(sameProductProblems(SAME_PRODUCT_OK.join('\n').replace('product-reference.png', 'the hero')).includes('no product-reference.png reference'));
+    assert.ok(sameProductProblems(SAME_PRODUCT_OK.slice(0, 2).concat(SAME_PRODUCT_OK.slice(5)).join('\n')).includes('patch-exploded / finish not cleared'), 'missing image');
+    for (const [fail, key] of [
+      ['Exploded image: LED color fails, the line glows amber.', 'patch-exploded / LED color'],
+      ['Exploded image: the finish diverges, the cover reads glossy.', 'patch-exploded / finish'],
+      ['Network image: mounting fails, a fabric carrier frame surrounds the patch.', 'network-scene / mounting'],
+      ['Network image: proportions diverge from the hero, thick and domed.', 'network-scene / proportions'],
+      ['Hero image: the finish fails.', 'patch-hero / finish'],
+      ['On-skin image: mounting passes, but the LED color fails.', 'patch-on-skin / LED color'],
+    ]) assert.ok(sameProductProblems([...SAME_PRODUCT_OK, fail].join('\n')).includes(`${key} fails`), fail);
+    assert.deepEqual(sameProductProblems([...SAME_PRODUCT_OK, 'Network image: no divergence on any axis, nothing fails.'].join('\n')), []);
+    assert.deepEqual(sameProductProblems(SAME_PRODUCT_OK.join(' ')), [], 'sentences may share a line');
+    const png = readFileSync(root('design/reference/product-reference.png'));
+    assert.equal(png.subarray(1, 4).toString('ascii'), 'PNG', 'identity anchor is a PNG');
+    assert.match(read('design/reference/README.md'), /product-reference\.png/);
+    if (existsSync(root('runs/wo-gh-8/reviewer-design.output.md')))
+      assert.deepEqual(sameProductProblems(read('runs/wo-gh-8/reviewer-design.output.md')), []);
+  });
+  ...
+1..39
+# tests 39
+# suites 0
+# pass 39
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 472.945223
+
+exec
+/bin/bash -lc "cat > evidence/take-apart-bundling/README.md <<'EOF'
+# wo-gh-11 builder evidence
+
+The client and browser model now live as literal source text in their existing modules. Wrangler can transform the surrounding Worker module but cannot rewrite functions inside these strings or resolve the browser's dynamic import. No function stringification or bundle-scope helper supplies served bytes. The model still receives serialized FACTS data; both existing and new parity tests remain in place. A direct comparison against HEAD's unbundled exports confirmed both served strings are byte identical. Page, routes, canonical model, and vendor source are unchanged.
+
+"'`scripts/capture-take-apart.mjs` is the evidence of record. It runs the production `wrangler deploy --dry-run --outdir` step, then serves that output with `wrangler dev <built index.js> --no-bundle --local`. It does not import the Worker source into Node. Tooling is runner-installed, not a site dependency. Reproduce with:
+
+```sh
+npm install --prefix /tmp/sentia-browser playwright wrangler
+PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs WRANGLER_BIN=/tmp/sentia-browser/node_modules/.bin/wrangler node scripts/capture-take-apart.mjs
+npm test
+```
+
+Chrome defaults to `/usr/bin/google-chrome`; override with CHROME_BIN. CAPTURE_PORT defaults to 8791. This capture used Wrangler 4.156.0.
+
+- `bundle-build.log`: production bundle command, output, exit status 0; no patches.
+- `browser-pass.log`: bundled runtime command; zero console errors, zero page errors, model installed, scene ready, canvas 1022x559 matching its layout at DPR 1; actual browser vendor response 200 with 670681 decoded bytes.
+- `beat-*.png` and `contact-sheet.png`: five tour states from the bundled runtime for reviewer-design. The capture also checks gauges, camera controls, reduced motion and mobile fit.
+- `take-apart-tests.log`: 39/39 take-apart and bundling tests pass.
+- `test-suite.log`: npm test exits 1; 161 pass, one fail, one skip (163 total).
+
+The full-suite failure is `S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/` in tests/design-v4-square-product.test.js:482. It reads the existing wo-gh-8 reviewer-design output and reports `patch-exploded / mounting not cleared`, `patch-exploded has an uncleared gap`, and `patch-exploded not cleared`. That test and its evidence inputs are unchanged by this work. Sibling-branch resolution is not established by the supplied inputs. No other run'"'s evidence was edited. The skipped test is "'`ui-elevation S4: codec, data, mcp and index are untouched by the run` because no main ref exists.
+
+This is builder output, not approval. Reviewer-design and the five-review verdict remain the responsibility of subsequent stations; production deployment remains with the operator. Model routing is controlled by the station runner and is not independently verifiable from these code and test inputs.
+EOF
+git diff --check; git diff --stat; du -h evidence/take-apart-bundling' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+ .gitignore                      |  1 +
+ scripts/capture-take-apart.mjs  | 92 ++++++++++++++++++++++++++++++-----------
+ src/take-apart-client.js        |  9 ++--
+ src/take-apart-model-browser.js |  8 ++--
+ 4 files changed, 78 insertions(+), 32 deletions(-)
+952K	evidence/take-apart-bundling
+
+codex
+Replaced function stringification with literal browser source and updated capture to exercise the production bundle. Saved screenshots and logs under evidence/take-apart-bundling/.
+
+Bundle and browser checks passed with zero errors; all 39 relevant tests pass. Full suite has one unrelated design-review evidence failure, documented in the report. No deployment or approval performed.
+tokens used
+40,533
+Replaced function stringification with literal browser source and updated capture to exercise the production bundle. Saved screenshots and logs under evidence/take-apart-bundling/.
+
+Bundle and browser checks passed with zero errors; all 39 relevant tests pass. Full suite has one unrelated design-review evidence failure, documented in the report. No deployment or approval performed.
