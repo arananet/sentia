@@ -129,11 +129,17 @@ jobs:
           fi
           echo "Selected: $(tr '\n' ' ' < "${GITHUB_OUTPUT}")"
 
+      # Loopback round of wo-gh-9: the factory is checked out at the
+      # anvil/vendor-teardown branch so the vendored simulator kit is
+      # present at .anvil-factory/third_party/teardown/ as a run input.
+      # That branch is factory main plus third_party/ only, so the line,
+      # the pipelines and the station registry are identical to main.
       - name: Check out the ANVIL factory
         uses: actions/checkout@v4
         with:
           repository: arananet/anvil-factory
           path: .anvil-factory
+          ref: anvil/vendor-teardown
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -216,6 +222,13 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
+          # Harness files the workflow itself writes stay out of the run
+          # commit (they remain on disk for the later steps that read
+          # them). Committing them in the first round of wo-gh-9 made the
+          # project's own scope test fail on the workflow's output.
+          for f in suite-output.txt suite-result.txt run-diff.txt comment.md; do
+            git reset -q -- "$f" 2>/dev/null || true
+          done
           git diff --cached --stat > run-diff.txt || true
           if git diff --cached --quiet; then
             echo "The run produced no file changes to commit."
