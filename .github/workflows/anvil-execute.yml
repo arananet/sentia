@@ -58,13 +58,17 @@ name: anvil-execute
 # anvil/run-take-apart-bundling runs wo-gh-11 (work-orders/issue-11.json,
 # reports on issue 11, the take apart bundling fix: the served client and
 # model made independent of the Worker bundler, with production shape
-# checks). The Select work order step
+# checks) and anvil/run-possible-applications
+# runs wo-gh-15 (work-orders/issue-15.json, reports on issue 15, the
+# possible applications section: glucose monitoring named as a possible
+# future application of the platform under strict exploratory wording
+# guardrails, insertion only, no deployment in the order). The Select work order step
 # sets the file, id and issue
 # used by the line, commit back and comment steps. Model routing is the
 # same for both work orders.
 on:
   push:
-    branches: [anvil/run-ui-astra, anvil/run-design-v2, anvil/run-design-v2-1, anvil/run-credit-line, anvil/run-design-v3, anvil/run-design-v4, anvil/run-s11-fix, anvil/run-imagery-consistency, anvil/run-take-apart, anvil/run-take-apart-bundling]
+    branches: [anvil/run-ui-astra, anvil/run-design-v2, anvil/run-design-v2-1, anvil/run-credit-line, anvil/run-design-v3, anvil/run-design-v4, anvil/run-s11-fix, anvil/run-imagery-consistency, anvil/run-take-apart, anvil/run-take-apart-bundling, anvil/run-possible-applications]
   workflow_dispatch:
 
 permissions:
@@ -94,7 +98,11 @@ jobs:
       - name: Select work order for this branch
         id: wo
         run: |
-          if [ "${GITHUB_REF_NAME}" = "anvil/run-take-apart-bundling" ]; then
+          if [ "${GITHUB_REF_NAME}" = "anvil/run-possible-applications" ]; then
+            echo "file=work-orders/issue-15.json" >> "${GITHUB_OUTPUT}"
+            echo "id=wo-gh-15" >> "${GITHUB_OUTPUT}"
+            echo "issue=15" >> "${GITHUB_OUTPUT}"
+          elif [ "${GITHUB_REF_NAME}" = "anvil/run-take-apart-bundling" ]; then
             echo "file=work-orders/issue-11.json" >> "${GITHUB_OUTPUT}"
             echo "id=wo-gh-11" >> "${GITHUB_OUTPUT}"
             echo "issue=11" >> "${GITHUB_OUTPUT}"

@@ -5,5 +5,6 @@ node_modules/
 *.log
 !evidence/take-apart/browser-pass.log
 !evidence/take-apart-bundling/*.log
+!evidence/possible-applications/*.log
 !runs/wo-gh-9/*.log
 .anvil-factory/
