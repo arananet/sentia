@@ -1,66 +1,75 @@
-# Builder implementation notes
+# Builder implementation notes — gate loopback
 
-The Blender 4.5.15 script is the sole asset producer. Run:
+Changes map to S11 (board finish), S12 (silicone and recessed optics), and S13
+(the one footer claim). Five layer parents, transforms, interaction code, routes,
+wordmark, camera, beauty framing and studio lighting are unchanged.
 
-    blender --background --python blender/build_all.py
+Run the sole asset producer with Blender 4.5.15 LTS:
 
-It generates the base64 module and the two true-scale beauty renders. The existing
-operator workflow already installs/smoke-gates this pinned Blender and reruns the
-entry after the station; no workflow edits were needed or made by the builder.
+    blender --background --threads 4 --python blender/build_all.py
 
-The official three.js 0.160.0 GLTFLoader and its BufferGeometryUtils dependency
-are vendored as literal base64 modules, with the upstream MIT license prefixed.
-Their upstream implementation bytes are otherwise unchanged. The page import map
-resolves `three` and `GLTFLoader`; the dependency's relative URL resolves to its
-own same-origin route. No served module needs a Worker bundler rewrite.
+The generated textures are embedded in the GLB. Existing foam microcell color
+and pore normals retain seed 12. `Generated silicone micrograin normals` uses
+seed 4515, a 128-square normal tile repeated eight times over planar crown UVs.
+It affects surface normals only, never geometry or silhouette. No downloaded
+models, textures or fonts were introduced.
 
-Decoded SHA-256 values:
+The LED pocket is cut into the actual shell. Its black socket, unchanged teal
+emitter footprint and separate clear coated optical window occupy the recess.
+The emitter is 0.086 mm below the surrounding shell. Wordmark vertices, ink,
+orientation and placement remain pinned by the supplied tests.
 
-- GLTFLoader: 6dccb55803632351ba4f6c6f36ab3d6436514cc64555241bfcaf2903aedc48d5
-- BufferGeometryUtils: 7b05041fa3b3c7b040211dabe62f365a151027654191ac1a5ac8a379913f9338
+The final board has 217 mesh primitives and nine distinct finishes (first round:
+17 and four). Board components use epoxy, ceramic, ferrite, shielding, nickel, tin solder and
+plated contact finishes. Small component groups, reflow fillets, battery seams,
+terminal tabs and via annuli occupy the existing 0.5 mm envelope. Routed copper
+uses right-angle and diagonal segments with varied lengths. Fine bevels use
+one segment and discs use 32 sides to meet the fixed asset budget.
 
-Only the new product-model test was corrected: its standalone assertion expected
-cover center 1.9 mm, inconsistent with the existing function and its own thickness
-table. The cover center is 0.7 + 0.5 + 0.4 + 0.3 + 0.6/2 = 2.2 mm. All pre-existing
-take-apart assertions remain unchanged.
+The final GLB is 798,092 bytes, below 819,200 bytes (800 KiB), and also below
+800,000 bytes. See reproducibility.log for repeated full-entry hashes, the
+Blender logs for generation, and fidelity-comparison.md for visual comparisons.
+The asset module is written directly from the export bytes without GLB editing.
+
+Production verification uses the unchanged capture-of-record script. It runs
+Wrangler deploy --dry-run, then serves the resulting index.js using Wrangler
+--no-bundle --local. The browser never imports the unbundled Worker source.
+See bundle-build.log and browser-pass.log for the final checks, with the five
+beats and contact sheet under evidence/take-apart/.
 
 Known suite exception, not repaired or absorbed:
 `S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/`
-from tests/design-v4-square-product.test.js. The work order identifies this as
-pre-existing and resolved on sibling anvil/run-s11-rebaseline (wo-gh-10).
-Earlier run evidence has not been edited.
+in tests/design-v4-square-product.test.js. The work order identifies this as
+pre-existing and resolved on anvil/run-s11-rebaseline (wo-gh-10).
 
-ANVIL owns station routing, independent reviews, and the run verdict. This builder
-has not authored approval, deployed, or merged. The five-review count and final
-human gate remain the responsibility of the downstream stations and operator.
+The supplied tests were left unchanged by the builder. Earlier run evidence,
+main-page imagery, facts, vendor code and interaction model were not edited.
+ANVIL owns model routing, independent reviews and the run verdict. This builder
+has not approved its work, deployed or merged; downstream reviews and the human
+gate remain outstanding.
 
-The final GLB is 386,708 bytes (377.6 KiB), below the 819,200 byte limit.
-The byte reproducibility check initially exposed nondeterministic rounding of
-unused bevel-generated cube UVs (about 1e-7). Removing UV channels from those
-untextured components makes the generated module byte identical across independent
-exports; no GLB bytes are edited after export. The full entry is rerun after this
-fix and its module is compared with the independent exports.
+## Final test results
 
-The browser capture retains the original tour assertions. One intermediate run
-hit its tour-clock timeout; a subsequent run reached all five beats. Asset-failure
-probes explicitly abort the GLB fetch and serve invalid GLB bytes, respectively;
-these must reach a ready procedural scene. Their wait allows 60 seconds for
-software WebGL compilation. Final pass/fail is recorded in browser-pass.log.
+- `node --test tests/take-apart-product-model.test.js tests/take-apart.test.js tests/take-apart-bundling.test.js`:
+  74 passed, zero failed.
+- `npm test`: 198 tests, 196 passed, one skipped, one failed. The sole failure is
+  the pre-existing design-v4 S11 case named above, unchanged and itemized.
+- Source `git diff --check`: clean. The retained raw browser/test logs have
+  whitespace-only warnings from their original command output.
 
-## Final verification
+These checks cover S1–S5, S7–S9 and the structural portions of S11–S14. Visual
+approval and the independent five-review run verdict are not builder outputs.
 
-- Full deterministic entry completed under Blender 4.5.15; the output module
-  matches both independent export checks byte for byte (reproducibility.log).
-- Production command: wrangler deploy --dry-run --outdir <temporary directory>,
-  exit 0, zero local patches. Served using wrangler dev <bundle>/index.js
-  --no-bundle --local. See bundle-build.log and browser-pass.log.
-- Final bundled browser pass: zero console errors, zero page errors, scene ready,
-  GLB HTTP 200, all five exact node names, hour-200 gauge comparison PASS,
-  fetch-abort and invalid-GLB procedural recovery PASS. Five beat stills and the
-  contact sheet were regenerated from that bundled session.
-- node --test tests/take-apart-product-model.test.js tests/take-apart.test.js
-  tests/take-apart-bundling.test.js: 61 passed, 0 failed.
-- npm test: 185 tests, 183 passed, 1 skipped, 1 failed. The only failure is the
-  pre-existing design-v4 S11 assertion named above. See test-suite.log.
-- git diff --check: clean. No main-page imagery, facts, vendor core bytes,
-  earlier run evidence, deployment, or merge changed.
+## Final production and reproducibility results
+
+Both full Blender 4.5.15 entry invocations exited zero and exported identical
+798,092-byte GLBs: SHA-256
+`3a84576570cf0ec95fb85885ecfc7d831927237ef54d167d4d37ad7baea19c58`.
+The final base64 module contains those exact export bytes.
+
+The final production bundle built with exit zero and no local patches. The
+bundled local browser pass recorded zero console errors, zero page errors,
+scene ready true, GLB HTTP 200 with 798,092 bytes, and all five named nodes.
+Hour-200 gauges and both fetch/parse fallback probes passed. All five beat
+stills, the contact sheet, the browser screenshot and both beauty renders were
+regenerated from the final asset/script.

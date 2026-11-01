@@ -1,7 +1,7 @@
-Implemented the deterministic Blender model, 386,708-byte GLB route, named-layer integration, and procedural fallback. Added renders, browser captures, and fidelity comparison.
+Refined board components and materials, added silicone grain and recessed LED optics, and corrected the footer. Regenerated the 798,092-byte GLB, renders, contact sheet, and comparison notes.
 
-All 61 take-apart tests pass. Bundled browser verification reports zero errors. Full suite has only the documented pre-existing S11 failure.
+Repeated exports are byte identical. Bundled browser checks passed with zero errors; all 74 take-apart tests pass. The full suite retains only the documented pre-existing S11 failure.
 
-No deployment, merge, or self-approval.
+No approval, deployment, or merge performed.
 
 {"model": "gpt-6-astra", "runtime": "codex"}

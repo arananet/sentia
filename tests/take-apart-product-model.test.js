@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import zlib from 'node:zlib';
+import crypto from 'node:crypto';
 import worker from '../src/index.js';
 import * as M from '../src/take-apart-model.js';
 import * as TWIN from '../src/take-apart-model-browser.js';
@@ -453,4 +454,263 @@ test('product-model S8/R10: the frozen surfaces are untouched (facts layers, mod
   assert.equal(M.GAP_MM, 3);
   assert.deepEqual(M.sceneState(0, 0).layers.map((l) => l.thicknessMm), [0.6, 0.7, 0.5, 0.4, 0.3]);
   assert.equal(M.sceneState(0, 0, 2, true).layers[0].opacity, M.materialState(0, 2, true).opacity);
+});
+
+// =====================================================================================
+// Gate loopback round (owner decision 2026-10-31), spec addendum scenarios S11 to S14.
+//
+// Round 1 baseline, measured on the committed first-round GLB (386,708 bytes), pinned
+// below so the tests say what "more than the first round" and "exactly as approved" mean:
+//   board node: 17 meshes, 4 distinct material finishes
+//   cover node: 4 meshes (shell, LED recessed socket, wordmark, teal LED line), no
+//               microtexture; the teal strip stood above the shell apex (0.31 vs 0.295)
+//   wordmark:   101 vertices, 97 distinct xz positions, xz hash a0831dd0197a
+//   shell:      36 x 36, y from -0.3 to 0.295 (cover local)
+// What a script cannot prove (the board reading as a manufactured board against
+// quality-board-1/2, the cover reading as silicone, the LED reading as an optical part)
+// stays reviewer-design's judgement on the exploded render, the assembled render and the
+// contact sheet. These tests prove only the structure those judgements stand on.
+// =====================================================================================
+const ROUND1 = { boardMeshes: 17, boardFinishes: 4, wordmarkVerts: 101, wordmarkXz: 97, wordmarkHash: 'a0831dd0197a' };
+
+// ---- vertex level access (local to a layer node), needed to measure depth and fingerprints
+function glbBin(buf) {
+  const jlen = buf.readUInt32LE(12), off = 20 + jlen;
+  assert.equal(buf.readUInt32LE(off + 4), 0x004e4942, 'second chunk is BIN');
+  return buf.subarray(off + 8, off + 8 + buf.readUInt32LE(off));
+}
+function accessorVec3(gltf, bin, ai) {
+  const a = gltf.accessors[ai], bv = gltf.bufferViews[a.bufferView];
+  assert.equal(a.componentType, 5126, 'POSITION is float32');
+  const off = (bv.byteOffset || 0) + (a.byteOffset || 0), stride = bv.byteStride || 12, out = [];
+  for (let i = 0; i < a.count; i++) out.push([0, 1, 2].map((k) => bin.readFloatLE(off + i * stride + k * 4)));
+  return out;
+}
+// Every mesh node under a layer node, with vertices in the layer's local frame
+// (the layer node's own matrix is skipped, as in the S2 local bounds).
+function layerMeshes(gltf, bin, layerIdx) {
+  const out = [];
+  const walk = (idx, parent) => {
+    const n = gltf.nodes[idx], m = mul(parent, nodeMatrix(n));
+    if (n.mesh != null) {
+      for (const prim of gltf.meshes[n.mesh].primitives) {
+        const verts = accessorVec3(gltf, bin, prim.attributes.POSITION).map((p) => [0, 1, 2].map((r) => m[r] * p[0] + m[4 + r] * p[1] + m[8 + r] * p[2] + m[12 + r]));
+        const lo = [0, 1, 2].map((k) => Math.min(...verts.map((v) => v[k]))), hi = [0, 1, 2].map((k) => Math.max(...verts.map((v) => v[k])));
+        out.push({ name: n.name || '', mat: prim.material != null ? gltf.materials[prim.material] : null, verts, lo, hi });
+      }
+    }
+    for (const c of n.children || []) walk(c, m);
+  };
+  for (const c of gltf.nodes[layerIdx].children || []) walk(c, IDENT);
+  return out;
+}
+const lum = (c) => 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+const base = (m) => m?.pbrMetallicRoughness?.baseColorFactor || [1, 1, 1, 1];
+const metal = (m) => m?.pbrMetallicRoughness?.metallicFactor ?? 1;
+const rough = (m) => m?.pbrMetallicRoughness?.roughnessFactor ?? 1;
+const finishKey = (m) => JSON.stringify([base(m).map((v) => +v.toFixed(2)), +metal(m).toFixed(2), +rough(m).toFixed(2), !!m?.pbrMetallicRoughness?.baseColorTexture, !!m?.normalTexture, !!m?.pbrMetallicRoughness?.metallicRoughnessTexture]);
+const isTealEmitter = (m) => m?.emissiveFactor && m.emissiveFactor[1] > m.emissiveFactor[0] + 0.1 && m.emissiveFactor[2] > m.emissiveFactor[0] + 0.1;
+const imageNameOf = (gltf, texInfo) => (texInfo ? gltf.images?.[gltf.textures?.[texInfo.index]?.source]?.name || '' : '');
+const sha12 = (s) => crypto.createHash('sha1').update(s).digest('hex').slice(0, 12);
+
+async function round() {
+  const { gltf, top, bytes } = await gltfOfAsset();
+  const bin = glbBin(bytes);
+  return { gltf, top, bytes, bin, board: layerMeshes(gltf, bin, top[2]), cover: layerMeshes(gltf, bin, top[0]) };
+}
+
+// ---------------------------------------------------------------- S11 (L1) the board
+test('product-model S11/L1: the board is denser than round 1, with more meshes and more distinct finishes', async () => {
+  const { board } = await round();
+  const finishes = new Set(board.map((p) => finishKey(p.mat)));
+  assert.ok(board.length > ROUND1.boardMeshes, `board has ${board.length} meshes, round 1 had ${ROUND1.boardMeshes}`);
+  assert.ok(board.length >= 30, `board has ${board.length} meshes, the round must comfortably exceed the old ${ROUND1.boardMeshes} (floor 30)`);
+  assert.ok(finishes.size > ROUND1.boardFinishes, `board has ${finishes.size} distinct finishes, round 1 had ${ROUND1.boardFinishes}`);
+  assert.ok(finishes.size >= 7, `board has ${finishes.size} distinct finishes (floor 7)`);
+  console.log(`# board: ${board.length} meshes, ${finishes.size} distinct finishes (round 1: ${ROUND1.boardMeshes} and ${ROUND1.boardFinishes})`);
+});
+
+test('product-model S11/L1: component finishes are differentiated, not one uniform gray (polymer, ceramic, tinned and plated metal)', async () => {
+  const { board } = await round();
+  const parts = board.filter((p) => !/substrate|solder mask|pcb/i.test(p.name) && !/solder mask/i.test(p.mat?.name || ''));
+  const mats = [...new Map(parts.map((p) => [finishKey(p.mat), p.mat])).values()];
+  assert.ok(mats.length >= 6, `components use ${mats.length} distinct finishes (floor 6)`);
+  const dielectric = mats.filter((m) => metal(m) < 0.3);
+  const metals = mats.filter((m) => metal(m) >= 0.5);
+  assert.ok(dielectric.some((m) => lum(base(m)) < 0.12 && rough(m) >= 0.45), 'a dark matte polymer package finish exists');
+  assert.ok(dielectric.some((m) => lum(base(m)) >= 0.25 && lum(base(m)) <= 0.9), 'a lighter ceramic tone exists');
+  assert.ok(metals.length >= 2, `${metals.length} metal finishes`);
+  const lums = metals.map((m) => lum(base(m))), rs = metals.map(rough);
+  assert.ok(Math.max(...lums) - Math.min(...lums) >= 0.1, `metal brightness varies (spread ${(Math.max(...lums) - Math.min(...lums)).toFixed(3)})`);
+  assert.ok(Math.max(...rs) - Math.min(...rs) >= 0.08, `metal reflectance varies (roughness spread ${(Math.max(...rs) - Math.min(...rs)).toFixed(3)})`);
+  // The main chip, the shield and the passives do not share one finish.
+  const chip = parts.filter((p) => /chip|processor|soc|mcu/i.test(p.name) && !/shield|pin|pad/i.test(p.name));
+  const shield = parts.filter((p) => /shield|can|cover/i.test(p.name));
+  const passive = parts.filter((p) => /passive|resistor|capacitor|inductor|mlcc/i.test(p.name));
+  assert.ok(chip.length && shield.length && passive.length, 'chip, shield and passives are all present by name');
+  assert.ok(new Set([chip[0], shield[0], passive[0]].map((p) => finishKey(p.mat))).size === 3, 'chip, shield and passives carry three different finishes');
+});
+
+test('product-model S11/L1: the named parts stay identifiable (main chip, two or more sensor discs, battery, contacts)', async () => {
+  const { board } = await round();
+  const named = (re) => board.filter((p) => re.test(p.name));
+  assert.ok(named(/main.*(chip|processor)|processor|\bsoc\b|mcu/i).length >= 1, 'main chip');
+  assert.ok(named(/sensor.*disc|disc/i).length >= 2, 'at least two sensor discs');
+  assert.ok(named(/battery|cell/i).length >= 1, 'battery');
+  assert.ok(named(/contact|terminal|pad|pin/i).length >= 1, 'contacts, terminals or pads');
+  // Sensor discs are discs: round in plan, wider than they are tall.
+  for (const d of named(/sensor.*disc/i)) {
+    const w = d.hi[0] - d.lo[0], l = d.hi[2] - d.lo[2], h = d.hi[1] - d.lo[1];
+    assert.ok(Math.abs(w - l) <= 0.15 * Math.max(w, l) && w > 4 * h, `${d.name} is a flat round disc (${w.toFixed(2)} x ${l.toFixed(2)} x ${h.toFixed(2)})`);
+  }
+});
+
+test('product-model S11/L1: solder joints, varied copper work and metal terminals are modeled or textured', async () => {
+  const { gltf, board } = await round();
+  const solder = board.filter((p) => /solder|fillet|joint/i.test(p.name) && !/mask/i.test(p.name));
+  assert.ok(solder.length >= 4, `${solder.length} solder joint meshes at component feet (floor 4)`);
+  const copper = board.filter((p) => /trace|via|pour|copper/i.test(p.name));
+  const textured = board.some((p) => p.mat?.pbrMetallicRoughness?.baseColorTexture || p.mat?.normalTexture || p.mat?.pbrMetallicRoughness?.metallicRoughnessTexture);
+  assert.ok(copper.length >= 4 || textured, `${copper.length} trace, via or pour meshes, board texture ${textured}`);
+  assert.ok(copper.some((p) => /via/i.test(p.name)) || copper.length >= 6 || textured, 'copper work carries vias or enough runs to lose the ruler look');
+  // Traces are not all parallel rulers: copper runs span more than one orientation.
+  const runs = copper.filter((p) => /trace/i.test(p.name));
+  if (runs.length >= 2) {
+    const horiz = runs.filter((p) => p.hi[0] - p.lo[0] >= p.hi[2] - p.lo[2]).length;
+    assert.ok(horiz > 0 || runs.length < 2, 'copper runs exist');
+    assert.ok(horiz < runs.length || runs.length >= 4, 'trace runs are not all parallel');
+  }
+  assert.ok(gltf.materials.length >= 10, `${gltf.materials.length} materials in the asset`);
+});
+
+test('product-model S11/L1: the board stays inside its 0.5 mm envelope and inside the substrate footprint; no layer grew', async () => {
+  const { gltf, top, board } = await round();
+  const lo = Math.min(...board.map((p) => p.lo[1])), hi = Math.max(...board.map((p) => p.hi[1]));
+  assert.ok(hi - lo <= M.LAYERS[2].thicknessMm + 0.02, `board spans ${(hi - lo).toFixed(3)} mm of ${M.LAYERS[2].thicknessMm}`);
+  const half = M.LAYERS[2].thicknessMm / 2;
+  assert.ok(lo >= -half - 0.02 && hi <= half + 0.02, `board spans y ${lo.toFixed(3)} to ${hi.toFixed(3)} about its centre`);
+  for (const p of board) assert.ok(p.lo[0] >= -17.6 && p.hi[0] <= 17.6 && p.lo[2] >= -17.6 && p.hi[2] <= 17.6, `${p.name} stays on the board (x ${p.lo[0].toFixed(2)}..${p.hi[0].toFixed(2)}, z ${p.lo[2].toFixed(2)}..${p.hi[2].toFixed(2)})`);
+  top.forEach((idx, k) => {
+    const b = bounds(gltf, idx, IDENT, true), th = b.hi[1] - b.lo[1], want = M.LAYERS[k].thicknessMm;
+    assert.ok(th <= want + (k === 4 ? 0.3 : 0.1), `${NAMES[k]} thickness ${th.toFixed(3)} (table ${want})`);
+  });
+});
+
+// ---------------------------------------------------------------- S12 (L2) the cover
+test('product-model S12/L2: a generated silicone microtexture is carried by the cover material and recorded like the foam textures', async () => {
+  const { gltf, cover } = await round();
+  const shell = cover.slice().sort((a, b) => (b.hi[0] - b.lo[0]) * (b.hi[2] - b.lo[2]) - (a.hi[0] - a.lo[0]) * (a.hi[2] - a.lo[2]))[0];
+  assert.ok(shell.hi[0] - shell.lo[0] >= 35.9, 'the largest cover mesh is the 36 mm shell');
+  const m = shell.mat, pbr = m.pbrMetallicRoughness || {};
+  const names = [imageNameOf(gltf, pbr.baseColorTexture), imageNameOf(gltf, m.normalTexture), imageNameOf(gltf, pbr.metallicRoughnessTexture)].filter(Boolean);
+  assert.ok(names.some((n) => /^Generated\b.*(silicone|grain|micro)/i.test(n)), `shell material references a generated silicone texture, found ${JSON.stringify(names)}`);
+  assert.ok((gltf.images || []).some((i) => /^Generated\b.*(silicone|grain|micro)/i.test(i.name || '')), 'the texture is embedded and named like the foam textures ("Generated ...")');
+  for (const i of gltf.images) assert.ok(i.bufferView != null && !i.uri, `image "${i.name}" is embedded, no external file`);
+  // The foam textures stay.
+  assert.ok(gltf.images.some((i) => /foam/i.test(i.name)), 'foam textures unchanged');
+  const py = read('blender/build_patch_one.py');
+  assert.match(py, /Generated[^\n]*silicone[^\n]*|silicone[^\n]*(micro|grain)/i, 'the build records the generated silicone microtexture');
+  assert.match(py, /def\s+\w*silicone\w*|silicone_texture|silicone_grain/i, 'a seeded generator for the silicone texture exists in the build script');
+});
+
+test('product-model S12/L2: the texture does not move the silhouette, the crown or the footprint', async () => {
+  const { cover } = await round();
+  const shell = cover.slice().sort((a, b) => (b.hi[0] - b.lo[0]) * (b.hi[2] - b.lo[2]) - (a.hi[0] - a.lo[0]) * (a.hi[2] - a.lo[2]))[0];
+  const near = (v, w, t) => Math.abs(v - w) <= t;
+  assert.ok(near(shell.lo[0], -18, 0.05) && near(shell.hi[0], 18, 0.05) && near(shell.lo[2], -18, 0.05) && near(shell.hi[2], 18, 0.05), 'footprint stays 36 x 36');
+  assert.ok(near(shell.hi[1], 0.295, 0.02), `crown apex ${shell.hi[1].toFixed(3)} stays at 0.295`);
+  assert.ok(near(shell.lo[1], -0.3, 0.02), `shell underside ${shell.lo[1].toFixed(3)} stays at -0.3`);
+});
+
+test('product-model S12/L2: the LED is a recessed optical element with measurable socket depth, teal, in its approved position and proportions', async () => {
+  const { gltf, cover } = await round();
+  const shell = cover.slice().sort((a, b) => (b.hi[0] - b.lo[0]) * (b.hi[2] - b.lo[2]) - (a.hi[0] - a.lo[0]) * (a.hi[2] - a.lo[2]))[0];
+  const emit = cover.filter((p) => isTealEmitter(p.mat));
+  assert.ok(emit.length >= 1, 'a teal emissive LED element exists on the cover');
+  const lo = [0, 1, 2].map((k) => Math.min(...emit.map((p) => p.lo[k]))), hi = [0, 1, 2].map((k) => Math.max(...emit.map((p) => p.hi[k])));
+  const cx = (lo[0] + hi[0]) / 2, cz = (lo[2] + hi[2]) / 2, w = hi[0] - lo[0], d = hi[2] - lo[2];
+  // Round 1 approved: strip x -4.8..4.8, z 2.925..3.475 (centre 3.2, 9.6 by 0.55), brand teal.
+  assert.ok(Math.abs(cx) <= 0.1 && Math.abs(cz - 3.2) <= 0.1, `emitter centre (${cx.toFixed(2)}, ${cz.toFixed(2)}) stays at (0, 3.2)`);
+  assert.ok(Math.abs(w - 9.6) <= 0.2 && Math.abs(d - 0.55) <= 0.1, `emitter proportions ${w.toFixed(2)} x ${d.toFixed(2)} stay 9.6 x 0.55`);
+  for (const p of emit) {
+    const c = p.mat.pbrMetallicRoughness.baseColorFactor, e = p.mat.emissiveFactor;
+    assert.ok(c[1] > c[0] + 0.3 && c[2] > c[0] + 0.3 && e[1] > 0.2 && e[2] > 0.2, 'the LED stays brand teal');
+  }
+  // Depth: the emitter sits below the surrounding top face. Surface height is read from
+  // the shell vertices around the LED (the rim a socket is cut into).
+  // Nearest top-face vertices to the LED centre (the rim of a cut socket, or the crowned
+  // surface itself on a coarse shell); underside vertices are excluded.
+  const topFace = shell.verts.filter((v) => v[1] > shell.lo[1] + 0.2);
+  const around = topFace.map((v) => ({ v, d: Math.hypot(v[0] - cx, v[2] - 3.2) })).sort((a, b) => a.d - b.d).slice(0, 16).map((o) => o.v);
+  assert.ok(around.length > 0, 'shell has top face vertices near the LED');
+  const surface = Math.max(...around.map((v) => v[1]));
+  const depth = surface - hi[1];
+  assert.ok(depth >= 0.05, `LED emitter top ${hi[1].toFixed(3)} sits ${depth.toFixed(3)} mm below the surrounding top face ${surface.toFixed(3)} (need at least 0.05, round 1 stood proud at ${(0.295 - 0.31).toFixed(3)})`);
+  console.log(`# LED socket depth: ${depth.toFixed(3)} mm below the surrounding top face`);
+  // A socket part encloses the emitter in plan, and the socket is a separate manufactured part.
+  const socket = cover.filter((p) => /socket|bezel|recess|lens|window|well/i.test(p.name) && !isTealEmitter(p.mat));
+  assert.ok(socket.length >= 1, 'a socket, bezel or lens part is modeled apart from the emitter');
+  assert.ok(socket.some((p) => p.lo[0] <= lo[0] + 0.01 && p.hi[0] >= hi[0] - 0.01 && p.lo[2] <= lo[2] + 0.01 && p.hi[2] >= hi[2] - 0.01), 'the socket surrounds the emitter in plan');
+  assert.ok(cover.length >= 4 && gltf.nodes.length > 0);
+});
+
+test('product-model S12/L2: the SENTIA wordmark is exactly as approved in round 1 (same letterforms, ink, placement)', async () => {
+  const { cover } = await round();
+  const wm = cover.filter((p) => /wordmark|sentia/i.test(p.name) && !isTealEmitter(p.mat));
+  assert.equal(wm.length, 1, 'one wordmark mesh');
+  const w = wm[0];
+  assert.equal(w.verts.length, ROUND1.wordmarkVerts, 'same vertex count, same letterforms');
+  const xz = [...new Set(w.verts.map((v) => `${v[0].toFixed(3)},${v[2].toFixed(3)}`))].sort();
+  assert.equal(xz.length, ROUND1.wordmarkXz);
+  assert.equal(sha12(xz.join(';')), ROUND1.wordmarkHash, 'letterform plan positions are byte stable against round 1');
+  const near = (a, b) => Math.abs(a - b) <= 0.02;
+  assert.ok(near(w.lo[0], -7.623) && near(w.hi[0], 7.791) && near(w.lo[2], -2.5022) && near(w.hi[2], 0.4378), 'same placement and orientation');
+  assert.ok(near(w.lo[1], 0.298) && near(w.hi[1], 0.298), 'same height on the top face');
+  assert.ok(lum(base(w.mat)) < 0.05, 'same dark ink');
+});
+
+// ---------------------------------------------------------------- S13 (L3) the footer
+test('product-model S13/L3: the served footer names the Blender built product model and no longer claims procedural geometry', async () => {
+  const html = await (await get('/take-apart')).text();
+  const m = html.match(/<div class="footer"><span>([^<]*)<\/span><span id="tour-status">([^<]*)<\/span><\/div>/);
+  assert.ok(m, 'the footer keeps its markup: one div.footer with the profile span first and the tour status span second');
+  assert.match(m[1], /Blender built product model/i);
+  assert.doesNotMatch(m[1], /procedural/i);
+  assert.equal(m[1], `Five layers · ${FACTS.thicknessMm} mm assembled profile · Blender built product model`, 'same voice and separators, only the closing words changed');
+  assert.equal(m[2], 'Explore freely · Tour begins when idle', 'the tour status span is untouched');
+  assert.doesNotMatch(html, /Procedural geometry/, 'no served page copy claims the retired procedural geometry');
+  assert.ok(!/\n/.test(m[1]), 'one line');
+});
+
+test('product-model S13/L3: no other page copy or chrome differs from round 1 (page bytes equal round 1 with only the footer words swapped)', async () => {
+  const html = await (await get('/take-apart')).text();
+  const swapped = html.replace('Blender built product model', '@@FOOTER@@');
+  assert.ok(swapped.includes('@@FOOTER@@'), 'footer claim present');
+  // Pinned from the round 1 served page (footer words replaced by the placeholder).
+  assert.equal(crypto.createHash('sha256').update(swapped).digest('hex'), '175da34e51b8b128181498b6ba62b9796a18b357660922bd071e79568330f7f3', 'the footer words are the only difference from the round 1 page');
+});
+
+// ---------------------------------------------------------------- S14 (frozen) and evidence
+test('product-model S14: the build script is still the only producer and stays deterministic; the asset stays at budget with its size stated', async () => {
+  const py = read('blender/build_patch_one.py') + read('blender/build_all.py');
+  assert.match(py, /seed|random\.Random\(/i, 'generated textures are seeded');
+  assert.doesNotMatch(py, /time\.time|datetime|uuid|random\.random\(|random\.seed\(\s*\)/, 'no wall clock or unseeded randomness in the build');
+  const bytes = await assetBytes();
+  console.log(`# patch-one.glb measured size (round 2): ${bytes.length} bytes (${(bytes.length / 1024).toFixed(1)} KB), budget ${BUDGET} bytes`);
+  assert.ok(bytes.length <= BUDGET, `GLB is ${bytes.length} bytes, over the ${BUDGET} byte budget`);
+});
+
+test('product-model S14/R11: fidelity-comparison.md records the round 2 comparison for both finish areas against the boards', () => {
+  const md = fs.readFileSync(new URL('fidelity-comparison.md', EVID), 'utf8');
+  for (const f of ['quality-board-1.png', 'quality-board-2.png', 'product-reference.png']) assert.ok(md.includes(f), `compares against ${f}`);
+  for (const [area, re] of [
+    ['board component density', /density|dense|component count/i],
+    ['differentiated finishes', /finish/i],
+    ['solder and metal detail', /solder/i],
+    ['trace character', /trace/i],
+    ['cover microtexture', /micro ?texture|silicone grain/i],
+    ['LED socket depth', /socket/i],
+    ['LED optics', /optic|lens|window|emitter/i],
+  ]) assert.match(md, re, `comparison covers ${area}`);
+  assert.match(md, /attempt|adjust/i, 'records what was adjusted between attempts');
 });
