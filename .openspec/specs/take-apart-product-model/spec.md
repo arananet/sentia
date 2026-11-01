@@ -88,3 +88,61 @@ Allowed changes: new files under blender/, src/patch-one-glb.js, any vendored lo
 - Any change to the interaction model, the tour, the copy, the chrome or the main page.
 - Any change to the site's photographic imagery or to design/reference/.
 - Merging or deploying: this order stops at the human gate.
+
+
+## Gate loopback round (owner decision, 2026-10-31)
+
+This addendum governs the loopback round of wo-gh-12, the last loopback of this order (one of two was used by the first round). The owner reviewed the first executed run at the human gate and sent it back with a bounded finish list: the board's finish, the cover's finish, and one footer line. Where this addendum and the original text disagree about the items it names, this addendum wins. Everything else in the original text stands, including the references, the build discipline, the integration and the fidelity gate, as narrowed by the frozen list below.
+
+### What the first run established
+
+The identity gate passed. The GLB measured 386,708 bytes against the 800 KB budget; its five top level nodes carry the exact FACTS names in stack order with translations at the model centres; three Blender 4.5.15 exports were byte identical and matched the committed asset module; the production bundle built clean with zero local patches; the bundled browser pass recorded zero console errors and zero page errors with the scene ready, the gauge comparison passing at hour 200 and the R9 fallback exercised; the take apart behavior tests passed in their original meaning; the suite read 183 pass, 1 fail, 1 skip, the failure being the itemized design v4 S11 case of R14. reviewer-design's same product test passed identity on both beauty renders and the contact sheet: silhouette, proportions, wordmark and LED, layer order and materials all established, and nothing read as generic blocks. The changes_requested verdict rests only on finish detail against the quality boards' realism bar, in the two places reviewer-design named, plus one stale footer line the first round's scope had frozen. Those are the only subjects of this round.
+
+### Frozen for this round
+
+- The five top level nodes, their names, their order and their translations, and the model's layer centres. The stack geometry of R2 and R3 stands untouched.
+- The interaction model and its tests: no model output changes. The node name mapping stays the only model change this order ever made.
+- The budget: the GLB stays at or under 800 KB, with the measured size stated in the test output and the run report. If the finish work pressures the budget, geometry and texture discipline tightens; the budget is not raised.
+- The route shape: /models/patch-one.glb serves the decoded asset module as model/gltf-binary, and the loading mechanism of R8 (pinned three.js core, vendored loader, import map) stands.
+- The production shape checks of R13, re-proven on the new build: the bundle builds clean with zero local patches, the bundled output is served and browser verified with the scene rendered and zero console and page errors, and the capture of record runs in its bundled form.
+- The deterministic build of R1: blender/build_all.py stays the only producer of the asset and the renders, and the workflow reruns it after the line. The reproducibility bar of the first round stands: repeated exports of the committed script are byte identical, and the committed asset module equals the build's export byte for byte.
+- The fallback of R9 and every behavior proven by wo-gh-9 and wo-gh-11.
+
+### The finish list
+
+#### L1: the board stops reading as schematic
+
+reviewer-design's first round finding, in substance: the exploded render shows a sparse PCB with flat gray packages, uniform contacts and simple parallel traces; compared with design/reference/quality-board-1.png and quality-board-2.png, component terminals, solder detail and convincing metal finishes are missing. This round refines the board node only:
+
+- Denser, varied component geometry: more parts across the substrate, with varied footprints and heights, grouped the way a manufactured board groups them, inside the board node's existing 0.5 mm thickness envelope. No layer grows; R2 stands.
+- Differentiated package finishes: the main chip, the shield and the passives do not share one uniform flat gray. Finishes vary the way real packages vary (matte black polymer, tinned metal, ceramic tones), with believable reflectance under the page's unchanged studio lighting.
+- Solder and metal detail: contact pads, terminals and the battery contacts carry metal finishes with brightness variation, and solder joints, or their textured equivalent, appear at component feet.
+- Traces with manufactured irregularity: the trace work keeps reading as copper on the ink green substrate and loses the simple parallel ruler look, through varied runs, vias, pours or their textured equivalent.
+- The parts R6 names stay present and identifiable: the main chip, at least two sensor discs, the battery, the contacts. Scenario S5's structural floor (at least six meshes in the board subtree) stands and will be comfortably exceeded; the judging that matters is reviewer-design's realism reading, not the count.
+
+#### L2: the cover gains its finish
+
+reviewer-design's first round finding, in substance: the uniformly smooth cover and the flat cyan strip lack the fine silicone texture and recessed optical detail visible in the references, so the sheet reads as a stylized model. This round refines the cover node only:
+
+- A generated silicone microtexture on the top cover: fine surface grain produced inside the deterministic Blender build, the way the foam's pore texture is produced today, and recorded in the build's notes like the existing generated textures. At the beauty render scale it reads as silicone, not as noise, and it does not move the silhouette, the crown or the footprint.
+- The LED becomes a recessed optical element: a socket with real depth in the cover's top face, the teal emitter set into it, with the small optical detail the references show. A lens or window surface over the emitter is acceptable if it reads as one manufactured part. The LED's teal color, position and proportions stay exactly as approved in the first round.
+- The SENTIA wordmark stays exactly as approved: same dark ink, same orientation, same placement, same letterforms. The cover keeps passing S4.
+
+#### L3: the footer line tells the truth
+
+The footer of the take apart page, served from src/take-apart-page.js, closes with the words "Procedural geometry". That described the retired primitive study model. The page's primary path is now the modeled product, so the closing claim must name the modeled asset instead, in words to the effect of "Blender built product model". The builder keeps the line in the page's existing voice: one line, same position, same typography, no other words in the footer change. No other chrome changes anywhere in the page in this round: no other copy, colour, spacing or layout. A test asserts the footer claim: the served footer names the modeled product and does not claim procedural geometry. The R9 fallback keeps its own honest description wherever the fallback itself is described; the footer is not that place. Because the contact sheet is composed from the served page, the corrected line flows into the regenerated sheet on its own; scripts/capture-take-apart.mjs needs no edit for this item.
+
+### Evidence and judging for this round
+
+- The builder re-runs its generation duty before review, per R11: it renders the new beauty pair (render-assembled.png and render-exploded.png, same framing, paper background and lighting logic as the first round, into evidence/take-apart-product-model/) and records in evidence/take-apart-product-model/fidelity-comparison.md the comparison points against design/reference/quality-board-1.png, design/reference/quality-board-2.png and design/reference/product-reference.png for the two finish areas (board component density and differentiated finishes, solder and metal detail, trace character; cover microtexture at render scale, LED socket depth and optics) and what it adjusted between attempts.
+- The capture of record regenerates the five beat stills and the contact sheet under evidence/take-apart/ from the bundled output, as in R13, on the final tree.
+- reviewer-design re-judges with the same product test of R12: identity must stay passed on both beauty renders and the contact sheet (silhouette, proportions, wordmark and LED, layer order, materials), and the finish is judged against the boards' realism bar in exactly the two areas of its first round findings. A board that still reads schematic, or a cover that still reads uniformly smooth with a flat strip LED, fails the run naming the area.
+- The suite runs as in R14: green on the final tree apart from the one itemized exception, the design v4 S11 failure that is pre existing on this branch's base and resolved on the sibling branch anvil/run-s11-rebaseline (wo-gh-10, approved). It is itemized by name in the run report, never absorbed, never fixed by editing another run's evidence, and no station spends turns on it.
+
+### Scope for this round
+
+Allowed changes: edits to blender/build_patch_one.py and any build helpers under blender/; the regenerated src/patch-one-glb.js; regenerated evidence under evidence/take-apart-product-model/ and evidence/take-apart/; the one line footer edit in src/take-apart-page.js named in L3; edits to tests/take-apart-product-model.test.js and tests/take-apart.test.js only where they measure what this round replaces (board subtree composition and finishes, cover texture and LED structure, the footer claim), with the updated tests stating what they now prove. Everything else is out of scope, exactly as the original scope section states: no changes to src/facts.js, src/images.js, the client beyond what the original scope allowed (and nothing this round needs there), the model files, the main page, brand or design documents, earlier specs, earlier run evidence, or the vendored three.js bytes. The operator setup commit (this addendum and the work order amendment) is not part of the line's change.
+
+### Done criteria for this round
+
+The run verdict is approved with all five expected reviews counted and no parse failures, reviewer-design among the counted with identity intact and the finish bar met in both named areas; the GLB measures at or under 800 KB with the size stated; repeated Blender exports of the committed script are byte identical and the committed asset module equals the build's export; the R13 production shape checks are recorded clean on the final tree; the suite is green apart from the itemized design v4 S11 exception; the footer line is truthful and test asserted. No deployment and no merge: the run stops at the human gate.
