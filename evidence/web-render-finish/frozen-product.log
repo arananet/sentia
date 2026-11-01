@@ -1,0 +1,2 @@
+Compared final GLB to operator setup HEAD 62f98b32144b2e64fd0227d4ff403d67e777bec3.
+PASS: nodes, meshes, accessors, scenes and binary payload byte identical. Geometry, translations, UVs, embedded textures, wordmark and LED dimensions unchanged. Only material JSON changed.

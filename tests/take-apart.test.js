@@ -18,7 +18,7 @@ import * as TWIN from '../src/take-apart-model-browser.js';
 // not rejected for a naming choice the spec leaves open.
 
 // Loopback round baseline: the operator setup commit at the head of the branch when the run starts.
-const SETUP_COMMIT = '7748273';
+const SETUP_COMMIT = '62f98b3'; // wo-gh-14 loopback operator setup
 // Files the workflow harness itself writes at the repository root; never part of the line's change.
 const HARNESS_FILES = new Set(['suite-output.txt', 'suite-result.txt', 'run-diff.txt', 'comment.md']);
 const get = (p) => worker.fetch(new Request('https://sentia.test' + p));
@@ -420,14 +420,13 @@ test('take-apart scope: the run touches no file outside the allowed list', () =>
     return;
   }
   const allowed = [
-    /^src\/take-apart-(model|model-browser|page|client)\.js$/,
-    /^src\/vendor-three\.js$/,
-    /^src\/index\.js$/,
-    /^src\/page\.js$/,
-    /^tests\/take-apart\.test\.js$/,
+    /^blender\/build_patch_one\.py$/,
+    /^src\/patch-one-glb\.js$/,
+    /^src\/take-apart-client\.js$/,
+    /^tests\/(web-render-finish|take-apart-product-model|take-apart)\.test\.js$/,
     /^scripts\/capture-take-apart\.mjs$/,
-    /^evidence\/take-apart\//,
-    /^runs\/wo-gh-9\//,
+    /^evidence\/(web-render-finish|take-apart|take-apart-product-model)\//,
+    /^runs\/wo-gh-14\//,
   ];
   const outside = names.filter((n) => !allowed.some((re) => re.test(n)));
   assert.deepEqual(outside, [], 'files outside the allowed scope');

@@ -9,9 +9,10 @@ import assert from 'node:assert/strict';
 import { pathToFileURL } from 'node:url';
 import { gaugeReadout, NODE_NAMES } from '../src/take-apart-model.js';
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ? pathToFileURL(process.env.PLAYWRIGHT_MODULE).href : 'playwright');
-const out = new URL('../evidence/take-apart-product-model/', import.meta.url);
+const captureDir = process.env.CAPTURE_DIR;
+const out = new URL(captureDir ? '../' + captureDir.replace(/\/?$/, '/') : '../evidence/take-apart-product-model/', import.meta.url);
 await mkdir(out, { recursive: true });
-const beatsOut = new URL('../evidence/take-apart/', import.meta.url);
+const beatsOut = captureDir ? out : new URL('../evidence/take-apart/', import.meta.url);
 await mkdir(beatsOut, { recursive: true });
 const buildDir = await mkdtemp(join(tmpdir(), 'sentia-bundle-'));
 const wrangler = process.env.WRANGLER_BIN || 'wrangler';
@@ -156,7 +157,7 @@ browser = await chromium.launch({ executablePath: process.env.CHROME_BIN || '/us
   assert.equal(errors.length,0,errors.join('\n'));
   assert.equal(pageErrors.length,0,pageErrors.join('\n'));
 } finally {
-  await writeFile(new URL('browser-pass.log',out), `Bundled Worker: ${wrangler} ${runtimeArgs.join(' ')}
+  const passLog = `Bundled Worker: ${wrangler} ${runtimeArgs.join(' ')}
 console errors: ${errors.length}
 page errors: ${pageErrors.length}
 TakeApartModel: ${sceneInfo?.model}
@@ -169,7 +170,9 @@ loaded nodes: ${nodeNames?.length}; ${nodeNames?.join('; ')}
 vendor /vendor/three.module.min.js: status ${vendorStatus}; decoded bytes ${vendorBytes}
 ${errors.join('\n')}
 ${pageErrors.join('\n')}
-`);
+`;
+  await writeFile(new URL('browser-pass.log',out), passLog);
+  if (beatsOut !== out) await writeFile(new URL('browser-pass.log',beatsOut), passLog);
   await browser?.close();
   runtime.kill('SIGTERM');
   await new Promise(resolve => runtime.exitCode !== null ? resolve() : runtime.once('exit', resolve));
