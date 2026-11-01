@@ -1,20 +1,11 @@
-I revised `.openspec/specs/web-render-finish/spec.md` with one small change. The setup commit had already put a spec in place, and it already covered most of the work order. I haven't committed the change.
+I made no changes to `.openspec/specs/web-render-finish/spec.md` this round. The work order says it stands exactly as it now reads. The new loopback content is about the builder's model route, which is a station and wrapper matter, not a product requirement.
 
-The covered points:
-- Both finish problems, with the page rendering as the evidence.
-- The 819,200-byte budget and the 798,092-byte current asset.
-- The frozen product, interaction model, vendored three.js and page chrome.
-- Reproducibility.
-- Before and after evidence.
-- Production shape.
-- The suite, with the S11 exception itemized.
-- Deployment as the operator's gated step after the run.
-- Scenarios S1–S10 and the done criteria.
+The spec already covers what the order needs:
+- **Evidence and capture:** the before and after beats, and the rule that no evidence step imports the unbundled source (R8, S7).
+- **Scope:** the byte budget, the frozen items, and deployment as the operator's gated step.
 
-The work order says no evidence step may import the unbundled source, and the spec didn't state that. I added it to R8 and to S7, so every capture now has to drive the bundled output only.
+I rewrote `runs/wo-gh-14/spec-writer.output.md` to record this. It had been deleted in the working tree, and the version in the last commit described a round 1 edit to R8 and S7 that is already in the spec.
 
-I did not add the model routing (builder and reviewer-design on GPT-6 Astra, the other stations on claude-sonnet-5-5) or L-1 to L-7. The spec already states the routing, and the learnings travel in the run's packets.
-
-I didn't touch the work order, the tests or anything outside the spec.
+I didn't commit anything. I did not touch the tests or any product file.
 
 {"model": "claude-sonnet-5-5", "runtime": "claude-code"}

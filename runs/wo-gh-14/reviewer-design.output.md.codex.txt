@@ -1,4 +1,4 @@
-WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-yx3rh8dd"))
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-ff_z9_9w"))
 Reading additional input from stdin...
 OpenAI Codex v0.166.0
 --------
@@ -9,7 +9,7 @@ approval: never
 sandbox: danger-full-access
 reasoning effort: none
 reasoning summaries: none
-session id: 01a19503-ed64-7100-9763-63bdd9facb44
+session id: 01a1976d-7253-7e73-b98d-3dcc1b49e627
 --------
 user
 You are executing an ANVIL reviewer station packet inside this repository. You are read only: inspect the files the packet refers to, judge the work against the packet, and do not change anything. The wrapper verifies the tree is unchanged after your run and fails this station if it is not.
@@ -98,7 +98,13 @@ Return a JSON object with this structure:
 - kind: feature
 - title: Web render finish: board and cover materials read in the page rendering, then deploy on approval
 - source: github-issue
-- description: Problem: the /take-apart page's modeled product is right in Blender and wrong on the web. wo-gh-12 built a faithful Blender Patch One (one GLB, five named layers) whose identity passes the same product test and whose beauty renders meet the quality boards' bar, but reviewer-design's loopback findings name two finish problems that survive in the page's own bundled rendering: (1) the board's shield, battery and sensor faces read as flat gray surfaces with little metallic highlight variation; (2) the cover's generated silicone micrograin and the recessed LED (teal emitter in its socket) wash out under the page's unchanged flat lighting, the cover reading uniformly smooth and the LED slot reading gray. Production still serves the older procedural build (version 4515d731), so the modeled product is not live at all.
+- description: LOOPBACK ROUND (gate loopback, ordered by the product owner on 2026-11-01 after round 1 closed changes_requested). Round 1 produced no implementation at all: the builder station recorded a blocker claiming it could not select or verify the GPT-6 Astra route this packet requires, and implemented nothing. That premise was false, and the run record proves it: the Astra smoke gate passed in the same job before the line ran, the round 1 report records the builder station configured on gpt-6-astra and executed on gpt-6-astra, and reviewer-design did a full round of work on the identical route in the same job. Every target file stayed byte identical to the base, and nothing deployed.
+
+Routing fact for the builder station, established by the operator and not open to re-verification: your session is launched and verified by the operator's wrapper (tools/astra_station.py, Codex) on gpt-6-astra through the Cloudflare AI Gateway, and the workflow runs the Astra smoke gate before the line inside the same job. If that gate fails, the job stops before you are ever started, so a builder session that is running is already on the verified route. Your session exposes no control to select or verify the route because selection and verification are the wrapper's job, not the station's. Do not record a blocker about the model route and do not spend the session checking it: your task is to implement the spec. The no fallback rule in this work order means one thing only: never silently switch to another model. It is a prohibition on switching, not a condition you must satisfy before working, and not an invitation to doubt the route you are already on.
+
+Everything else from round 1 stands unchanged and is the baseline for this round: the spec at .openspec/specs/web-render-finish/spec.md exactly as it now reads, the 16 tests in tests/web-render-finish.test.js (round 1 ran them 9 pass and 7 fail, every failure caused by the missing builder output, not by defective tests), the scope of scenario S10, and the evidence duties of R7 and R8. Because round 1 changed no product file, the before beats of R7 are captured from the tree as it stands at the start of this round, whose client and asset are byte identical to the round 1 setup commit, before you change anything. Deployment stays the operator's gated step after this round, judged on this round's own verdict: an approved verdict deploys, anything else deploys nothing.
+
+Problem: the /take-apart page's modeled product is right in Blender and wrong on the web. wo-gh-12 built a faithful Blender Patch One (one GLB, five named layers) whose identity passes the same product test and whose beauty renders meet the quality boards' bar, but reviewer-design's loopback findings name two finish problems that survive in the page's own bundled rendering: (1) the board's shield, battery and sensor faces read as flat gray surfaces with little metallic highlight variation; (2) the cover's generated silicone micrograin and the recessed LED (teal emitter in its socket) wash out under the page's unchanged flat lighting, the cover reading uniformly smooth and the LED slot reading gray. Production still serves the older procedural build (version 4515d731), so the modeled product is not live at all.
 
 Deliverable, governed by .openspec/specs/web-render-finish/spec.md: close both problems where they are judged, in the bundled browser rendering (production shape), working both sides of the problem: asset materials inside the deterministic Blender build (blender/build_patch_one.py through blender/build_all.py, headless Blender pinned 4.5.15), and the take apart client's lighting and material handling in src/take-apart-client.js (lighting rig, tone mapping, exposure, environment, on load material adjustments). This order supersedes the product model spec's frozen lighting clause for this order only. The Blender beauty renders alone are not evidence: reviewer-design re-runs the same product test on the regenerated bundled contact sheet and beats, comparing after beats against before beats captured from the setup commit tree, and must confirm both problems closed in the page rendering with identity intact.
 
@@ -148,50 +154,34 @@ Answer with a single JSON object and nothing else, in exactly this shape:
 The verdict must be one of: pass, fail, changes_requested. Findings must be concrete and checkable against the spec, the code and the tests.
 
 codex
-I’ll inspect the design rules, finish spec, and bundled before-and-after evidence without changing any files.
+I’ll inspect the design rules, implementation, and bundled before-and-after evidence without changing any files.
 
 exec
-/bin/bash -lc "pwd; rg --files -g 'AGENTS.md' -g 'DESIGN.md' -g 'tokens.json' -g '*web-render*' -g '*spec.md' -g '*contact*' -g '*pass*' -g '*log*' design .openspec evidence runs | head -160" in /home/runner/work/sentia/sentia
+/bin/bash -lc "pwd && rg --files -g 'AGENTS.md' -g 'DESIGN.md' -g 'tokens.json' -g '*web-render-finish*' -g '*pass*.json' -g '*report*.json' -g '*contact*' -g '*spec.md'" in /home/runner/work/sentia/sentia
  succeeded in 0ms:
 /home/runner/work/sentia/sentia
+tests/web-render-finish.test.js
 design/DESIGN.md
-evidence/take-apart-product-model/reproducibility.log
-evidence/take-apart-product-model/blender-build-1.log
-evidence/take-apart-product-model/browser-pass.log
-evidence/take-apart-product-model/take-apart-tests.log
-evidence/take-apart-product-model/bundle-build.log
-evidence/take-apart-product-model/blender-build-2.log
-evidence/take-apart-product-model/test-suite.log
 evidence/take-apart/contact-sheet.png
-evidence/take-apart/browser-pass.log
-.openspec/specs/s11-semantic-assertion/spec.md
 evidence/take-apart-bundling/contact-sheet.png
-evidence/take-apart-bundling/browser-pass.log
-evidence/take-apart-bundling/take-apart-tests.log
-evidence/take-apart-bundling/bundle-build.log
-evidence/take-apart-bundling/test-suite.log
-.openspec/specs/site-credit/spec.md
-.openspec/specs/mcp-server/spec.md
-.openspec/specs/imagery-consistency/spec.md
-.openspec/specs/take-apart-bundling/spec.md
-.openspec/specs/ui-elevation/spec.md
-.openspec/specs/ingestion-api/spec.md
-runs/wo-gh-9/builder-take-apart-test.log
-runs/wo-gh-9/builder-noscript.log
-runs/wo-gh-9/builder-suite.log
-.openspec/specs/take-apart-product-model/spec.md
-.openspec/specs/dashboard-data/spec.md
-.openspec/specs/core-worker/spec.md
-.openspec/specs/design-v3-product-first/spec.md
-.openspec/specs/packet-codec/spec.md
-.openspec/specs/design-v2-imagery/spec.md
-.openspec/specs/web-render-finish/spec.md
-.openspec/specs/take-apart/spec.md
-.openspec/specs/design-v4-square-product/spec.md
-.openspec/specs/live-demo/spec.md
+evidence/web-render-finish/after/contact-sheet.png
+evidence/web-render-finish/before/contact-sheet.png
+runs/wo-gh-14/report.json
+runs/wo-gh-1/report.json
+runs/wo-gh-9/report.json
+runs/wo-gh-5/report.json
+runs/wo-gh-3/report.json
+runs/wo-gh-7/report.json
+runs/wo-gh-12/report.json
+runs/wo-gh-2/report.json
+runs/wo-sentia-001/report.json
+runs/wo-gh-11/report.json
+runs/wo-gh-8/report.json
+runs/wo-gh-4/report.json
+runs/wo-gh-6/report.json
 
 exec
-/bin/bash -lc "cat design/DESIGN.md .openspec/specs/web-render-finish/spec.md; rg --files evidence/web-render-finish design/reference; git status --short; rg --files -g AGENTS.md -g '*tokens*' -g '*web*finish*'" in /home/runner/work/sentia/sentia
+/bin/bash -lc 'cat design/DESIGN.md .openspec/specs/web-render-finish/spec.md; rg --files design evidence/web-render-finish evidence/take-apart runs/wo-gh-14; git status --short' in /home/runner/work/sentia/sentia
  succeeded in 0ms:
 # Sentia design system v4
 
@@ -473,18 +463,103 @@ Deployment is the operator's gated step, outside the line. If this run's verdict
 - The GLB measures at or under 819,200 bytes with the size stated; reproducibility is re-proven if the asset changed (S3); the product is frozen (S2).
 - The production shape checks are recorded clean on the final tree (S7), and the before and after evidence is committed under evidence/web-render-finish/ with its pass logs.
 - The full suite passes apart from the itemized design v4 S11 failure (S9), and the run diff stays inside the scope of S10.
-rg: evidence/web-render-finish: No such file or directory (os error 2)
+design/DESIGN.md
+runs/wo-gh-14/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-14/envelopes/approver.envelope.json
+runs/wo-gh-14/envelopes/deployer.envelope.json
+runs/wo-gh-14/envelopes/reviewer-security.envelope.json
+runs/wo-gh-14/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-14/envelopes/builder.envelope.json
+runs/wo-gh-14/envelopes/reviewer-architecture.envelope.json
+runs/wo-gh-14/envelopes/spec-writer.envelope.json
+runs/wo-gh-14/envelopes/test-writer.envelope.json
+runs/wo-gh-14/envelopes/triage-human.envelope.json
+runs/wo-gh-14/envelopes/intake.envelope.json
+runs/wo-gh-14/envelopes/reviewer-design.envelope.json
+runs/wo-gh-14/envelopes/observer.envelope.json
+runs/wo-gh-14/reviewer-tests.packet.md
+runs/wo-gh-14/swimlane.md
+runs/wo-gh-14/observer.output.md
+runs/wo-gh-14/reviewer-design.packet.md
+runs/wo-gh-14/deployer.packet.md
+runs/wo-gh-14/reviewer-architecture.packet.md
+runs/wo-gh-14/reviewer-architecture.output.md
+runs/wo-gh-14/builder.output.md
+runs/wo-gh-14/reviewer-security.output.md
+runs/wo-gh-14/builder.packet.md
+runs/wo-gh-14/reviewer-spec.packet.md
+runs/wo-gh-14/reviewer-tests.output.md
+runs/wo-gh-14/report.json
+runs/wo-gh-14/spec-writer.output.md
+runs/wo-gh-14/reviewer-design.output.md.codex.txt
+runs/wo-gh-14/observer.packet.md
 design/reference/product-reference.png
 design/reference/quality-board-2.png
 design/reference/quality-board-1.png
 design/reference/README.md
- M .openspec/specs/web-render-finish/spec.md
-?? runs/wo-gh-14/
-?? tests/web-render-finish.test.js
-tests/web-render-finish.test.js
+runs/wo-gh-14/builder.output.md.codex.txt
+runs/wo-gh-14/reviewer-spec.output.md
+runs/wo-gh-14/test-writer.packet.md
+runs/wo-gh-14/spec-writer.packet.md
+runs/wo-gh-14/test-writer.output.md
+runs/wo-gh-14/reviewer-security.packet.md
+evidence/web-render-finish/reproducibility.log
+evidence/web-render-finish/blender-build-1.log
+evidence/web-render-finish/frozen-product.log
+evidence/take-apart/contact-sheet.png
+evidence/take-apart/beat-apart.png
+evidence/take-apart/beat-assembled.png
+evidence/take-apart/beat-mid.png
+evidence/take-apart/beat-xray.png
+evidence/take-apart/browser-pass.log
+evidence/take-apart/beat-board.png
+evidence/web-render-finish/builder-notes.md
+evidence/web-render-finish/blender-build-2.log
+evidence/web-render-finish/behavior-tests.log
+evidence/web-render-finish/suite.log
+evidence/web-render-finish/bundle-build.log
+evidence/web-render-finish/after/contact-sheet.png
+evidence/web-render-finish/after/beat-apart.png
+evidence/web-render-finish/after/beat-assembled.png
+evidence/web-render-finish/after/beat-mid.png
+evidence/web-render-finish/after/beat-xray.png
+evidence/web-render-finish/after/beat-board.png
+evidence/web-render-finish/after/browser-assembled.png
+evidence/web-render-finish/before/browser-assembled.png
+evidence/web-render-finish/before/beat-board.png
+evidence/web-render-finish/before/contact-sheet.png
+evidence/web-render-finish/before/beat-apart.png
+evidence/web-render-finish/before/beat-assembled.png
+evidence/web-render-finish/before/beat-mid.png
+evidence/web-render-finish/before/beat-xray.png
+ M runs/wo-gh-14/builder.output.md
+ M runs/wo-gh-14/builder.output.md.codex.txt
+ M runs/wo-gh-14/builder.packet.md
+ M runs/wo-gh-14/envelopes/builder.envelope.json
+ M runs/wo-gh-14/envelopes/intake.envelope.json
+ M runs/wo-gh-14/envelopes/reviewer-architecture.envelope.json
+ M runs/wo-gh-14/envelopes/reviewer-security.envelope.json
+ M runs/wo-gh-14/envelopes/reviewer-spec.envelope.json
+ M runs/wo-gh-14/envelopes/reviewer-tests.envelope.json
+ M runs/wo-gh-14/envelopes/spec-writer.envelope.json
+ M runs/wo-gh-14/envelopes/test-writer.envelope.json
+ M runs/wo-gh-14/reviewer-architecture.output.md
+ M runs/wo-gh-14/reviewer-architecture.packet.md
+ D runs/wo-gh-14/reviewer-design.output.md
+ M runs/wo-gh-14/reviewer-design.packet.md
+ M runs/wo-gh-14/reviewer-security.output.md
+ M runs/wo-gh-14/reviewer-security.packet.md
+ M runs/wo-gh-14/reviewer-spec.output.md
+ M runs/wo-gh-14/reviewer-spec.packet.md
+ M runs/wo-gh-14/reviewer-tests.output.md
+ M runs/wo-gh-14/reviewer-tests.packet.md
+ M runs/wo-gh-14/spec-writer.output.md
+ M runs/wo-gh-14/spec-writer.packet.md
+ M runs/wo-gh-14/test-writer.output.md
+ M runs/wo-gh-14/test-writer.packet.md
 
 exec
-/bin/bash -lc "cat design/reference/README.md; ls -la runs/wo-gh-14; cat evidence/take-apart/browser-pass.log; rg -n 'Ambient|Hemisphere|Directional|roughness|metalness|exposure|toneMapping|environment|envMap' src/take-apart-client.js; git log -4 --oneline; ls evidence/take-apart; ls evidence/take-apart-product-model" in /home/runner/work/sentia/sentia
+/bin/bash -lc "cat design/reference/README.md evidence/web-render-finish/builder-notes.md evidence/take-apart/browser-pass.log; ls -la evidence/web-render-finish/after evidence/web-render-finish/before; git log -4 --oneline; rg -n 'light|Light|roughness|metalness|toneMapping|exposure|environment|grain' src/take-apart-client.js blender/build_patch_one.py" in /home/runner/work/sentia/sentia
  succeeded in 0ms:
 # Reference boards: the production quality anchor
 
@@ -537,75 +612,601 @@ proportions. An image whose LED glows amber, whose cover reads glossy,
 which shows a fabric carrier frame, or whose patch reads thick or
 domed depicts a different product and fails review, however good it
 looks against the quality boards.
-total 144
-drwxr-xr-x  3 runner runner  4096 Nov  1 02:50 .
-drwxr-xr-x 15 runner runner  4096 Nov  1 02:47 ..
--rw-r--r--  1 runner runner   301 Nov  1 02:49 builder.output.md
--rw-r--r--  1 runner runner 35930 Nov  1 02:49 builder.output.md.codex.txt
--rw-r--r--  1 runner runner  7756 Nov  1 02:48 builder.packet.md
-drwxr-xr-x  2 runner runner  4096 Nov  1 02:50 envelopes
--rw-r--r--  1 runner runner  1751 Nov  1 02:50 reviewer-architecture.output.md
--rw-r--r--  1 runner runner  7884 Nov  1 02:50 reviewer-architecture.packet.md
--rw-r--r--  1 runner runner 10406 Nov  1 02:50 reviewer-design.packet.md
--rw-r--r--  1 runner runner  1388 Nov  1 02:49 reviewer-security.output.md
--rw-r--r--  1 runner runner  7806 Nov  1 02:49 reviewer-security.packet.md
--rw-r--r--  1 runner runner  1484 Nov  1 02:49 reviewer-spec.output.md
--rw-r--r--  1 runner runner  7779 Nov  1 02:49 reviewer-spec.packet.md
--rw-r--r--  1 runner runner  1986 Nov  1 02:50 reviewer-tests.output.md
--rw-r--r--  1 runner runner  7822 Nov  1 02:49 reviewer-tests.packet.md
--rw-r--r--  1 runner runner  1183 Nov  1 02:47 spec-writer.output.md
--rw-r--r--  1 runner runner  7700 Nov  1 02:47 spec-writer.packet.md
--rw-r--r--  1 runner runner  3440 Nov  1 02:48 test-writer.output.md
--rw-r--r--  1 runner runner  7721 Nov  1 02:47 test-writer.packet.md
-console errors: 0
-gauge comparison: PASS at hour 200
-vendor decoded bytes: 670681
+# Web render finish — builder evidence
 
-60:function box(parent, size, position, color, roughness=.65) {
-61:  const mesh = new THREE.Mesh(new THREE.BoxGeometry(...size), new THREE.MeshStandardMaterial({ color,roughness }));
-67:    const mesh = new THREE.Mesh(roundedGeometry(layer.thicknessMm*Z_SCALE),new THREE.MeshStandardMaterial({ color:colors[i], roughness:i===2?.58:.82, transparent:true }));
-85:  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1;
-88:  scene.add(new THREE.AmbientLight(0xffffff,1.3));
-89:  const key = new THREE.DirectionalLight(0xfff5df,2.5); key.position.set(-65,160,65); key.castShadow = quality.shadowMapSize > 0;
-4de668a Operator setup for wo-gh-14 (issue 14): web render finish spec, work order, execute wiring
-beat-apart.png
-beat-assembled.png
-beat-board.png
-beat-mid.png
-beat-xray.png
-browser-pass.log
-contact-sheet.png
-blender-build-1.log
-blender-build-2.log
-browser-assembled.png
-browser-pass.log
-builder-notes.md
-bundle-build.log
-fidelity-comparison.md
-render-assembled.png
-render-exploded.png
-reproducibility.log
-take-apart-tests.log
-test-suite.log
+The implementation changes only material settings and client rendering (S4/S5), with the capture output selection and scope baselines required by S7/S10. Approval and the product identity judgement belong to reviewer-design; this report does not approve the work. No deployment was performed.
+
+Before: the bundled setup client used ambient intensity 1.3, one overhead key and no reflection environment. The cover was smooth at beat resolution and the recessed LED appeared gray. Board metal faces were uniformly gray with weak differentiation from packages.
+
+After: a generated PMREM studio environment supplies three luminous reflection cards against a dark surround. Ambient fill is .25, the key is lower and a cool rim separates edges; exposure is .95. Metals receive stronger environment reflections than dielectric materials. The shield and battery now have bright bevels and darker reflective faces; solder highlights, gold pads and sensor edges separate from the dark substrate and epoxy packages. The Blender plated-contact material has warmer gold color and lower roughness. The lighting is generated locally without external images or changes to vendored three.js.
+
+Cover: the same seeded normal tile repeats twice instead of eight times, preventing its grain being averaged away at beat resolution, and exported normal strength is .85. Client shading attenuates side grain to compensate for the study's frozen ×8 vertical exaggeration while retaining fine crown grain. The emitter's exported strength increases from .5 to 1.4. The optical lens carries teal emission and has increased optical opacity, so the emitter's color survives the deep, vertically exaggerated pocket in the hero view. Its geometry, position and proportions are unchanged; the socket border remains recessed. The wordmark is untouched.
+
+The GLB is 798,088 bytes (budget 819,200), four bytes smaller than the baseline. Two consecutive full Blender 4.5.15 builds exited 0 and generated byte-identical modules. See reproducibility.log and the full build logs. frozen-product.log compares nodes, meshes, accessors, scenes and the entire binary payload against setup: all identical. Only GLB material JSON differs. Both beauty renders were regenerated.
+
+Before evidence is captured from an archive of operator setup 62f98b32144b2e64fd0227d4ff403d67e777bec3, with its original client and original 798,092-byte asset. The only capture-script changes select an output directory and also record the standard browser log. The first baseline browser process closed before completing the tour; the complete rerun replaces that partial evidence. Intermediate finish captures are replaced by the final capture. All captures build with Wrangler deploy --dry-run and serve that built Worker with --no-bundle; none imports the unbundled page or client.
+
+The test setup constants now point to this round's actual operator setup, 62f98b3. The previous 4de668a and 7748273 objects are unavailable in this checkout, which otherwise silently skips scope assertions. The take-apart scope whitelist is rebased to S10; all behavior assertions retain their original meaning.
+
+Known suite exception, untouched: "S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/" in tests/design-v4-square-product.test.js. This is pre-existing on this base and resolved on the approved sibling anvil/run-s11-rebaseline (wo-gh-10).
+
+Final validation: npm test reports 214 tests: 212 pass, the one named pre-existing S11 failure, and one existing skip (ui-elevation S4: codec, data, mcp and index are untouched by the run — no main ref to diff against). All 16 web-render-finish tests pass. Before, after and standard browser logs record zero console/page errors, scene ready, 200 GLB fetch, all five named nodes, gauges PASS and both asset-failure fallback checks PASS. Production bundle exits 0 with no local patches. The capture runner printed its successful completion after all assertions; the execution wrapper reported 143 on shutdown for the final captures, after the browser pass was complete.
+Bundled Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-bundle-GILIsF/index.js --no-bundle --local --ip 127.0.0.1 --port 8796
+console errors: 0
+page errors: 0
+TakeApartModel: object
+scene ready: true
+canvas: 1022x559; layout: 1022x559; DPR: 1
+gauge comparison: PASS at hour 200
+asset failure checks: PASS (fetch and parse)
+GLB /models/patch-one.glb: status 200; bytes 798088
+loaded nodes: 5; Top cover; Comfort foam; Sensing and processing board; Adhesive layer; Release liner
+vendor /vendor/three.module.min.js: status 200; decoded bytes 670681
+
+
+evidence/web-render-finish/after:
+total 1368
+drwxr-xr-x 2 runner runner   4096 Nov  1 14:01 .
+drwxr-xr-x 4 runner runner   4096 Nov  1 14:02 ..
+-rw-r--r-- 1 runner runner 129799 Nov  1 14:00 beat-apart.png
+-rw-r--r-- 1 runner runner 207426 Nov  1 14:00 beat-assembled.png
+-rw-r--r-- 1 runner runner 130427 Nov  1 14:01 beat-board.png
+-rw-r--r-- 1 runner runner 165887 Nov  1 14:01 beat-mid.png
+-rw-r--r-- 1 runner runner 127142 Nov  1 14:01 beat-xray.png
+-rw-r--r-- 1 runner runner 207426 Nov  1 14:00 browser-assembled.png
+-rw-r--r-- 1 runner runner    571 Nov  1 14:01 browser-pass.log
+-rw-r--r-- 1 runner runner    316 Nov  1 13:59 bundle-build.log
+-rw-r--r-- 1 runner runner 403558 Nov  1 14:01 contact-sheet.png
+
+evidence/web-render-finish/before:
+total 1244
+drwxr-xr-x 2 runner runner   4096 Nov  1 14:01 .
+drwxr-xr-x 4 runner runner   4096 Nov  1 14:02 ..
+-rw-r--r-- 1 runner runner 122677 Nov  1 14:00 beat-apart.png
+-rw-r--r-- 1 runner runner 174351 Nov  1 14:00 beat-assembled.png
+-rw-r--r-- 1 runner runner 123248 Nov  1 14:00 beat-board.png
+-rw-r--r-- 1 runner runner 148771 Nov  1 14:00 beat-mid.png
+-rw-r--r-- 1 runner runner 120819 Nov  1 14:00 beat-xray.png
+-rw-r--r-- 1 runner runner 174351 Nov  1 14:00 browser-assembled.png
+-rw-r--r-- 1 runner runner    571 Nov  1 14:00 browser-pass.log
+-rw-r--r-- 1 runner runner    316 Nov  1 14:00 bundle-build.log
+-rw-r--r-- 1 runner runner 374604 Nov  1 14:00 contact-sheet.png
+-rw-r--r-- 1 runner runner    347 Nov  1 14:01 source.log
+17b8e28 Improve bundled take-apart material finish and capture before-after evidence
+62f98b3 Operator: wo-gh-14 gate loopback setup (builder route declaration)
+blender/build_patch_one.py:19:def material(name, rgb, roughness=.7, metallic=0, alpha=1):
+blender/build_patch_one.py:24:    p.inputs['Roughness'].default_value = roughness
+blender/build_patch_one.py:141:    # Generated silicone grain: seeded normal tile, no silhouette displacement.
+blender/build_patch_one.py:151:    img=bpy.data.images.new('Generated silicone micrograin normals',width=size,height=size)
+blender/build_patch_one.py:196:    # Planar crown UVs keep the silicone grain isotropic across every ring.
+blender/build_patch_one.py:292:        bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_yup=True,export_apply=True,export_animations=False,export_cameras=False,export_lights=False,export_extras=False)
+blender/build_patch_one.py:305:    scene.view_settings.view_transform='Standard';scene.view_settings.look='None';scene.view_settings.exposure=0
+blender/build_patch_one.py:306:    bpy.ops.object.light_add(type='AREA',location=(-30,-35,65));key=bpy.context.object;key.data.energy=35000;key.data.shape='DISK';key.data.size=55
+src/take-apart-client.js:60:function box(parent, size, position, color, roughness=.65) {
+src/take-apart-client.js:61:  const mesh = new THREE.Mesh(new THREE.BoxGeometry(...size), new THREE.MeshStandardMaterial({ color,roughness }));
+src/take-apart-client.js:67:    const mesh = new THREE.Mesh(roundedGeometry(layer.thicknessMm*Z_SCALE),new THREE.MeshStandardMaterial({ color:colors[i], roughness:i===2?.58:.82, transparent:true }));
+src/take-apart-client.js:85:  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = .95;
+src/take-apart-client.js:98:  scene.environment = pmrem.fromScene(studio,.04).texture;
+src/take-apart-client.js:100:  scene.add(new THREE.AmbientLight(0xffffff,.25));
+src/take-apart-client.js:101:  const rim = new THREE.DirectionalLight(0xdceaff,.7); rim.position.set(45,25,-55); scene.add(rim);
+src/take-apart-client.js:102:  const key = new THREE.DirectionalLight(0xfff5eb,3.2); key.position.set(-65,65,35); key.castShadow = quality.shadowMapSize > 0;
+src/take-apart-client.js:133:        copy.envMapIntensity = copy.metalness > .5 ? 1.25 : .35;
+src/take-apart-client.js:136:          copy.envMapIntensity = .2; copy.roughness = .22; copy.opacity = .85;
+src/take-apart-client.js:141:          // Vertical exaggeration also stretches side normals; keep grain on the crown.
+src/take-apart-client.js:143:            shader.vertexShader = 'varying float grainCrown;\\n' + shader.vertexShader;
+src/take-apart-client.js:144:            shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\\ngrainCrown = smoothstep(.98, .999, abs(normal.y));');
+src/take-apart-client.js:145:            shader.fragmentShader = 'varying float grainCrown;\\n' + shader.fragmentShader;
+src/take-apart-client.js:146:            shader.fragmentShader = shader.fragmentShader.replace('#include <normal_fragment_maps>', THREE.ShaderChunk.normal_fragment_maps.replace('normalScale;', 'normalScale * mix(.005, .65, grainCrown);'));
+
+exec
+/bin/bash -lc 'git diff 62f98b3 HEAD -- src/take-apart-client.js blender/build_patch_one.py; cat evidence/web-render-finish/reproducibility.log evidence/web-render-finish/after/browser-pass.log evidence/web-render-finish/before/browser-pass.log; git ls-files evidence/web-render-finish/*/*.log; cat evidence/web-render-finish/frozen-product.log' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+diff --git a/blender/build_patch_one.py b/blender/build_patch_one.py
+index 72d9049..2fada0e 100644
+--- a/blender/build_patch_one.py
++++ b/blender/build_patch_one.py
+@@ -152,9 +152,9 @@ def silicone_texture(mat):
+     img.colorspace_settings.name='Non-Color';img.pixels=pixels;img.pack()
+     nt=mat.node_tree;tex=nt.nodes.new('ShaderNodeTexImage');tex.image=img
+     uv=nt.nodes.new('ShaderNodeTexCoord');mapping=nt.nodes.new('ShaderNodeMapping')
+-    mapping.inputs['Scale'].default_value=(8,8,1)
++    mapping.inputs['Scale'].default_value=(2,2,1)
+     nt.links.new(uv.outputs['UV'],mapping.inputs['Vector']);nt.links.new(mapping.outputs[0],tex.inputs['Vector'])
+-    normal=nt.nodes.new('ShaderNodeNormalMap');normal.inputs['Strength'].default_value=.65
++    normal=nt.nodes.new('ShaderNodeNormalMap');normal.inputs['Strength'].default_value=.85
+     nt.links.new(tex.outputs['Color'],normal.inputs['Color']);nt.links.new(normal.outputs[0],nt.nodes.get('Principled BSDF').inputs['Normal'])
+ 
+ 
+@@ -174,7 +174,7 @@ def build():
+     silicone=material('Matte off white silicone',(.83,.82,.77),.82);silicone_texture(silicone)
+     ink=material('SENTIA charcoal ink',(.018,.024,.021),.9)
+     teal=material('Teal cyan LED',(.015,.65,.59),.3)
+-    p=teal.node_tree.nodes.get('Principled BSDF');p.inputs['Emission Color'].default_value=(.01,.65,.59,1);p.inputs['Emission Strength'].default_value=.5
++    p=teal.node_tree.nodes.get('Principled BSDF');p.inputs['Emission Color'].default_value=(.01,.65,.59,1);p.inputs['Emission Strength'].default_value=1.4
+     foam=material('Porous warm gray foam',(.72,.70,.65),.95);foam_texture(foam)
+     pcb=material('Ink green solder mask',(.014,.052,.037),.65)
+     chip=material('Molded epoxy packages',(.018,.022,.021),.64)
+@@ -184,7 +184,7 @@ def build():
+     resin=material('Ferrite inductors',(.095,.105,.11),.46)
+     copper=material('Copper under solder mask',(.16,.20,.10),.4,.65)
+     metal=material('Brushed component shielding',(.56,.59,.57),.27,.88)
+-    trace=material('Muted plated contacts',(.39,.33,.20),.4,.72)
++    trace=material('Muted plated contacts',(.58,.38,.12),.28,.85)
+     film=material('Translucent adhesive film',(.77,.83,.78),.28,alpha=.38)
+     liner=material('Frosted release film',(.9,.91,.86),.52,alpha=.82)
+     parents=[]
+diff --git a/src/take-apart-client.js b/src/take-apart-client.js
+index 4be2279..68194f6 100644
+--- a/src/take-apart-client.js
++++ b/src/take-apart-client.js
+@@ -82,11 +82,24 @@ async function initScene() {
+   renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
+   renderer.setPixelRatio(quality.pixelRatioCap); renderer.setClearColor(0xfafaf6);
+   renderer.shadowMap.enabled = quality.shadowMapSize > 0; renderer.shadowMap.type = THREE.VSMShadowMap;
+-  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1;
++  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = .95;
+   renderer.outputColorSpace = THREE.SRGBColorSpace;
+   scene = new THREE.Scene(); camera = new THREE.OrthographicCamera(-50,50,80,-40,.1,1000);
+-  scene.add(new THREE.AmbientLight(0xffffff,1.3));
+-  const key = new THREE.DirectionalLight(0xfff5df,2.5); key.position.set(-65,160,65); key.castShadow = quality.shadowMapSize > 0;
++  // A dark studio with broad luminous cards gives metals something to reflect.
++  const studio = new THREE.Scene(); studio.background = new THREE.Color(0x252b30);
++  for (const [position, size, intensity] of [
++    [[-30,45,15],[35,65],5], [[40,20,-25],[16,55],3], [[0,35,-45],[60,12],2]
++  ]) {
++    const card = new THREE.Mesh(new THREE.PlaneGeometry(...size),
++      new THREE.MeshBasicMaterial({ color:new THREE.Color(intensity,intensity,intensity), side:THREE.DoubleSide }));
++    card.position.set(...position); card.lookAt(0,0,0); studio.add(card);
++  }
++  const pmrem = new THREE.PMREMGenerator(renderer);
++  scene.environment = pmrem.fromScene(studio,.04).texture;
++  pmrem.dispose(); studio.traverse(object => { if(object.isMesh){object.geometry.dispose();object.material.dispose();} });
++  scene.add(new THREE.AmbientLight(0xffffff,.25));
++  const rim = new THREE.DirectionalLight(0xdceaff,.7); rim.position.set(45,25,-55); scene.add(rim);
++  const key = new THREE.DirectionalLight(0xfff5eb,3.2); key.position.set(-65,65,35); key.castShadow = quality.shadowMapSize > 0;
+   key.shadow.mapSize.set(quality.shadowMapSize, quality.shadowMapSize);
+   Object.assign(key.shadow.camera, { left:-100,right:100,top:170,bottom:-100,near:.1,far:400 });
+   key.shadow.bias = -.0003; key.shadow.normalBias = .15; key.shadow.radius = 5; key.shadow.blurSamples = 8; scene.add(key);
+@@ -116,7 +129,24 @@ async function initScene() {
+       const materials = Array.isArray(object.material) ? object.material : [object.material];
+       // A layer owns its material state even when glTF shares a material.
+       const owned = materials.map(material => {
+-        const copy = material.clone(); copy.userData.baseOpacity = copy.opacity; return copy;
++        const copy = material.clone();
++        copy.envMapIntensity = copy.metalness > .5 ? 1.25 : .35;
++        // The translucent lens must retain its tint over the emitting surface.
++        if (copy.name === 'Optical silicone window') {
++          copy.envMapIntensity = .2; copy.roughness = .22; copy.opacity = .85;
++          // Carry the emitter through the lens at the study's exaggerated vertical scale.
++          copy.color.setRGB(.015,.65,.59); copy.emissive.setRGB(.01,.65,.59); copy.emissiveIntensity = .8;
++        }
++        if (copy.name === 'Matte off white silicone') {
++          // Vertical exaggeration also stretches side normals; keep grain on the crown.
++          copy.onBeforeCompile = shader => {
++            shader.vertexShader = 'varying float grainCrown;\\n' + shader.vertexShader;
++            shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\\ngrainCrown = smoothstep(.98, .999, abs(normal.y));');
++            shader.fragmentShader = 'varying float grainCrown;\\n' + shader.fragmentShader;
++            shader.fragmentShader = shader.fragmentShader.replace('#include <normal_fragment_maps>', THREE.ShaderChunk.normal_fragment_maps.replace('normalScale;', 'normalScale * mix(.005, .65, grainCrown);'));
++          };
++        }
++        copy.userData.baseOpacity = copy.opacity; return copy;
+       });
+       object.material = Array.isArray(object.material) ? owned : owned[0];
+       object.castShadow = true; object.receiveShadow = true;
+Blender 4.5.15; command for both consecutive full builds: blender --background --python blender/build_all.py
+export 1 GLB SHA256 1b9bab70dd7e9d3af0224a4246be400856c8e372af63f27bc790befa0a407668 bytes 798088 exit 0; module SHA256 3ea15ceebff10ebd264afd4c64c412a37f04515d2a4d0fd73fb91749f9205bb3
+export 2 GLB SHA256 1b9bab70dd7e9d3af0224a4246be400856c8e372af63f27bc790befa0a407668 bytes 798088 exit 0; module SHA256 3ea15ceebff10ebd264afd4c64c412a37f04515d2a4d0fd73fb91749f9205bb3
+PASS: both generated modules byte identical, committed src/patch-one-glb.js equals export module byte for byte. Decoded exports equal served GLB. Budget 819200 bytes. Both beauty renders regenerated by each full build.
+Bundled Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-bundle-ndrMRX/index.js --no-bundle --local --ip 127.0.0.1 --port 8795
+console errors: 0
+page errors: 0
+TakeApartModel: object
+scene ready: true
+canvas: 1022x559; layout: 1022x559; DPR: 1
+gauge comparison: PASS at hour 200
+asset failure checks: PASS (fetch and parse)
+GLB /models/patch-one.glb: status 200; bytes 798088
+loaded nodes: 5; Top cover; Comfort foam; Sensing and processing board; Adhesive layer; Release liner
+vendor /vendor/three.module.min.js: status 200; decoded bytes 670681
+
+
+Bundled Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-bundle-pdqiyi/index.js --no-bundle --local --ip 127.0.0.1 --port 8793
+console errors: 0
+page errors: 0
+TakeApartModel: object
+scene ready: true
+canvas: 1022x559; layout: 1022x559; DPR: 1
+gauge comparison: PASS at hour 200
+asset failure checks: PASS (fetch and parse)
+GLB /models/patch-one.glb: status 200; bytes 798092
+loaded nodes: 5; Top cover; Comfort foam; Sensing and processing board; Adhesive layer; Release liner
+vendor /vendor/three.module.min.js: status 200; decoded bytes 670681
+
+
+evidence/web-render-finish/after/browser-pass.log
+evidence/web-render-finish/after/bundle-build.log
+evidence/web-render-finish/before/browser-pass.log
+evidence/web-render-finish/before/bundle-build.log
+evidence/web-render-finish/before/source.log
+Compared final GLB to operator setup HEAD 62f98b32144b2e64fd0227d4ff403d67e777bec3.
+PASS: nodes, meshes, accessors, scenes and binary payload byte identical. Geometry, translations, UVs, embedded textures, wordmark and LED dimensions unchanged. Only material JSON changed.
 
 codex
-{
-  "station": "reviewer-design",
-  "verdict": "changes_requested",
-  "findings": [
-    "R1/R7/R8: evidence/web-render-finish/before/ and after/ are absent. Supply the required bundled-browser beats, contact sheets and browser logs so both finish fixes and preserved identity can be judged against the setup tree.",
-    "R2/S4 and design/reference/README.md material-realism bar: the existing evidence/take-apart/beat-board.png still shows dark, flat component faces without readable metallic highlight variation across the shield, battery and sensors. Adjust materials and lighting until these finishes read distinctly in the bundled page captures.",
-    "R3/S5 and the reference fine-detail and identity bars: evidence/take-apart/beat-assembled.png shows a uniformly smooth cover and a gray LED slot, without readable silicone micrograin or the reference's recessed teal emitter. Make both visible at beat resolution, preserving the approved wordmark and geometry, and demonstrate them in assembled and mid after beats."
-  ]
+The board now shows stronger metal highlights and clearer separation from the packages and substrate. The cover grain is also visible, but the LED still looks like a muted gray-green line in the assembled and mid beats. I’m checking that against the reference’s recessed teal emitter requirement.
+
+exec
+/bin/bash -lc "sed -n '1,210p' tests/web-render-finish.test.js; sed -n '1,100p' scripts/capture-take-apart.mjs; cat evidence/web-render-finish/after/bundle-build.log; git diff 62f98b3 HEAD --stat" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import worker from '../src/index.js';
+import * as M from '../src/take-apart-model.js';
+import { FACTS } from '../src/facts.js';
+
+// web-render-finish spec scenarios S1 to S10 (wo-gh-14).
+//
+// Offline, plain Node. A script can prove the budget, the frozen product, reproducibility,
+// the evidence contract, production shape records and scope. It cannot prove that the board
+// finishes or the cover micrograin and LED "read" in the page rendering (S4, S5) or that
+// identity holds (S6): those are reviewer-design's judgement on the committed before and after
+// beats against design/reference/. Tests here only prove the evidence reviewer-design needs
+// exists, is well formed, and that the after beats are not a copy of the before beats.
+//
+// Evidence contract the builder must produce:
+//   evidence/web-render-finish/before/  beat-{assembled,mid,apart,board,xray}.png, contact-sheet.png, browser-pass.log
+//   evidence/web-render-finish/after/   the same set, captured from the final tree
+//   evidence/web-render-finish/*.md     builder notes: per problem before/after comparison and what was adjusted
+//   evidence/web-render-finish/bundle-build.log  production bundle command, exit 0, no local patches
+//   evidence/web-render-finish/reproducibility.log  (only if the asset changed) two exports, equal SHA256s,
+//                                       module equal to the export; states the GLB byte size
+//   evidence/take-apart/ regenerated by the standard capture on the final tree.
+
+const SETUP_COMMIT = '62f98b3'; // wo-gh-14 loopback operator setup
+const HARNESS_FILES = new Set(['suite-output.txt', 'suite-result.txt', 'run-diff.txt', 'comment.md']);
+const BUDGET = 819200;
+// The wo-gh-12 loopback asset (evidence/take-apart-product-model/reproducibility.log).
+const BASE_GLB = { bytes: 798092, sha256: '3a84576570cf0ec95fb85885ecfc7d831927237ef54d167d4d37ad7baea19c58' };
+const BASE_MODULE_SHA = 'aea8040575ffa9ce600ed7db779e911d48ee4f49d87192a841e4180ab2ce7132';
+const NAMES = FACTS.layers.map((l) => l.name);
+const BEATS = ['assembled', 'mid', 'apart', 'board', 'xray'];
+
+const root = (rel) => new URL('../' + rel, import.meta.url);
+const exists = (rel) => fs.existsSync(root(rel));
+const read = (rel) => fs.readFileSync(root(rel), 'utf8');
+const sha = (buf) => crypto.createHash('sha256').update(buf).digest('hex');
+const get = (p) => worker.fetch(new Request('https://sentia.test' + p));
+
+const setupReachable = () => {
+  try { execFileSync('git', ['cat-file', '-e', SETUP_COMMIT + '^{commit}'], { stdio: 'ignore' }); return true; } catch { return false; }
+};
+const git = (...args) => execFileSync('git', args, { encoding: 'utf8' });
+
+function parseGlb(buf) {
+  assert.equal(buf.readUInt32LE(0), 0x46546c67, 'GLB magic "glTF"');
+  assert.equal(buf.readUInt32LE(8), buf.length, 'GLB header length equals byte length');
+  const jlen = buf.readUInt32LE(12);
+  assert.equal(buf.readUInt32LE(16), 0x4e4f534a, 'first chunk is JSON');
+  return JSON.parse(buf.toString('utf8', 20, 20 + jlen));
 }
+async function moduleInfo() {
+  assert.ok(exists('src/patch-one-glb.js'), 'src/patch-one-glb.js is missing');
+  const mod = await import('../src/patch-one-glb.js');
+  const b64 = Object.values(mod).find((v) => typeof v === 'string');
+  assert.ok(b64, 'src/patch-one-glb.js exports the base64 string');
+  const bytes = Buffer.from(b64, 'base64');
+  return { bytes, glbSha: sha(bytes), moduleSha: sha(fs.readFileSync(root('src/patch-one-glb.js'))) };
+}
+const assetChanged = async () => (await moduleInfo()).glbSha !== BASE_GLB.sha256;
+
+// World bounds of a subtree from POSITION accessor min and max (nodes carry translation only here;
+// the frozen product test in take-apart-product-model keeps the full matrix reader).
+function worldBounds(gltf, idx, off = [0, 0, 0]) {
+  const n = gltf.nodes[idx];
+  const t = n.translation || [0, 0, 0];
+  const o = [off[0] + t[0], off[1] + t[1], off[2] + t[2]];
+  const lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity];
+  const add = (l, h) => { for (let i = 0; i < 3; i++) { lo[i] = Math.min(lo[i], l[i]); hi[i] = Math.max(hi[i], h[i]); } };
+  if (n.mesh != null) {
+    assert.ok(!n.rotation && !n.scale && !n.matrix, 'descendant nodes are plain translations');
+    for (const p of gltf.meshes[n.mesh].primitives) {
+      const a = gltf.accessors[p.attributes.POSITION];
+      add(a.min.map((v, i) => v + o[i]), a.max.map((v, i) => v + o[i]));
+    }
+  }
+  for (const c of n.children || []) { const b = worldBounds(gltf, c, o); if (b) add(b.lo, b.hi); }
+  return lo[0] === Infinity ? null : { lo, hi };
+}
+
+// ---------------------------------------------------------------- S1 (R5)
+test('web-render-finish S1: the GLB served at /models/patch-one.glb is at or under 819,200 bytes, size stated', async () => {
+  const res = await get('/models/patch-one.glb');
+  assert.equal(res.status, 200);
+  const served = Buffer.from(await res.arrayBuffer());
+  console.log(`# patch-one.glb measured size (web-render-finish): ${served.length} bytes (${(served.length / 1024).toFixed(1)} KB), budget ${BUDGET} bytes`);
+  assert.ok(served.length <= BUDGET, `GLB is ${served.length} bytes, over the ${BUDGET} byte budget`);
+  assert.ok(served.equals((await moduleInfo()).bytes), 'served bytes equal the decoded asset module');
+});
+
+// ---------------------------------------------------------------- S2 (R6)
+test('web-render-finish S2: five FACTS nodes in stack order at layerCenterMm(t=0) within 0.01, 36 mm footprint, 2.5 mm profile', async () => {
+  const { bytes } = await moduleInfo();
+  const gltf = parseGlb(bytes);
+  const top = gltf.scenes[gltf.scene ?? 0].nodes;
+  assert.deepEqual(top.map((i) => gltf.nodes[i].name), NAMES, 'exactly the five FACTS names in stack order');
+  top.forEach((idx, k) => {
+    const t = gltf.nodes[idx].translation || [0, 0, 0];
+    assert.ok(Math.abs(t[0]) <= 0.01 && Math.abs(t[2]) <= 0.01, `${NAMES[k]} x and z are 0`);
+    assert.ok(Math.abs(t[1] - M.layerCenterMm(k, 0)) <= 0.01, `${NAMES[k]} y ${t[1]} vs layerCenterMm ${M.layerCenterMm(k, 0)}`);
+  });
+  const lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity];
+  for (const idx of top) {
+    const b = worldBounds(gltf, idx);
+    for (let a = 0; a < 3; a++) { lo[a] = Math.min(lo[a], b.lo[a]); hi[a] = Math.max(hi[a], b.hi[a]); }
+  }
+  assert.ok(Math.abs(hi[0] - lo[0] - 36) <= 0.5, `footprint x ${(hi[0] - lo[0]).toFixed(3)}`);
+  assert.ok(Math.abs(hi[2] - lo[2] - 36) <= 0.5, `footprint z ${(hi[2] - lo[2]).toFixed(3)}`);
+  assert.ok(Math.abs(hi[1] - lo[1] - 2.5) <= 0.1, `profile ${(hi[1] - lo[1]).toFixed(3)}`);
+  // Layer thicknesses are frozen (local bounds of each layer, descendants only).
+  top.forEach((idx, k) => {
+    const n = gltf.nodes[idx];
+    const kids = (n.children || []).map((c) => worldBounds(gltf, c));
+    const l = Math.min(...kids.map((b) => b.lo[1])), h = Math.max(...kids.map((b) => b.hi[1]));
+    const slack = k === 4 ? 0.3 : 0.1;
+    assert.ok(h - l >= M.LAYERS[k].thicknessMm * 0.4 && h - l <= M.LAYERS[k].thicknessMm + slack, `${NAMES[k]} thickness ${(h - l).toFixed(3)}`);
+  });
+});
+
+// ---------------------------------------------------------------- S3 (R5)
+test('web-render-finish S3: asset unchanged equals the wo-gh-12 loopback asset; asset changed has reproducibility re-proven', async () => {
+  const info = await moduleInfo();
+  if (!(await assetChanged())) {
+    assert.equal(info.bytes.length, BASE_GLB.bytes, 'unchanged asset keeps its byte size');
+    assert.equal(info.moduleSha, BASE_MODULE_SHA, 'committed module is byte identical to the wo-gh-12 loopback asset');
+    return;
+  }
+  const log = 'evidence/web-render-finish/reproducibility.log';
+  assert.ok(exists(log), `${log} is missing: the asset changed, reproducibility must be re-proven`);
+  const text = read(log);
+  const exports = [...text.matchAll(/export\s+(\d+)[^\n]*GLB SHA256 ([0-9a-f]{64})[^\n]*bytes (\d+)[^\n]*exit 0/gi)];
+  assert.ok(exports.length >= 2, 'the log records two consecutive full build_all.py exports, each exit 0');
+  assert.equal(exports[0][2], exports[1][2], 'two exports have the same GLB SHA256');
+  assert.equal(exports[0][2], info.glbSha, 'the export SHA256 equals the committed GLB bytes');
+  assert.equal(Number(exports[0][3]), info.bytes.length, 'the logged byte size equals the committed GLB size');
+  const mods = [...text.matchAll(/module SHA256 ([0-9a-f]{64})/gi)].map((m) => m[1]);
+  assert.ok(mods.length >= 2 && mods.every((m) => m === info.moduleSha), 'committed src/patch-one-glb.js equals the export module byte for byte');
+  assert.match(text, /PASS/);
+  assert.match(text, /4\.5\.15/, 'the log names the pinned Blender 4.5.15');
+});
+
+test('web-render-finish R5: asset changes come only from the deterministic Blender build, no downloaded model or texture', () => {
+  const py = read('blender/build_patch_one.py') + read('blender/build_all.py');
+  assert.doesNotMatch(py, /https?:\/\/(?!www\.blender\.org|docs\.blender\.org)/, 'no downloaded model or texture');
+  if (!setupReachable()) return;
+  const changed = git('diff', '--name-only', SETUP_COMMIT, '--', 'src/patch-one-glb.js').trim();
+  if (changed) assert.match(git('diff', '--name-only', SETUP_COMMIT, '--', 'blender/build_patch_one.py').trim(), /build_patch_one\.py/, 'a changed GLB module comes with a changed build script (no hand edit)');
+});
+
+// ---------------------------------------------------------------- the work happened (R2 to R4)
+test('web-render-finish R2-R4: the run changed the finish somewhere it may: the client rendering or the asset build', async () => {
+  if (!setupReachable()) return;
+  const diff = git('diff', '--name-only', SETUP_COMMIT, '--', 'src/take-apart-client.js', 'blender/build_patch_one.py', 'src/patch-one-glb.js').trim();
+  assert.ok(diff, 'neither src/take-apart-client.js nor the asset build changed: the finish problems cannot be closed');
+  // The client work is real, not a comment edit: the diff must touch rendering code lines.
+  const cd = git('diff', '-U0', SETUP_COMMIT, '--', 'src/take-apart-client.js');
+  if (cd) {
+    const code = cd.split('\n').filter((l) => /^[+-](?![+-])/.test(l) && !/^[+-]\s*(\/\/|\/\*|\*)/.test(l) && l.trim().length > 1);
+    assert.ok(code.length > 0, 'client diff has code lines');
+  }
+});
+
+// ---------------------------------------------------------------- S4, S5, S6 evidence (R7), judged by reviewer-design
+const isPng = (b) => b.length > 8 && b.readUInt32BE(0) === 0x89504e47 && b.readUInt32BE(4) === 0x0d0a1a0a;
+const pngSize = (b) => ({ w: b.readUInt32BE(16), h: b.readUInt32BE(20) });
+
+test('web-render-finish R7: before and after beats and contact sheets are committed, valid PNGs of the same size', () => {
+  for (const set of ['before', 'after']) {
+    for (const f of [...BEATS.map((b) => `beat-${b}.png`), 'contact-sheet.png']) {
+      const rel = `evidence/web-render-finish/${set}/${f}`;
+      assert.ok(exists(rel), `${rel} is missing`);
+      const b = fs.readFileSync(root(rel));
+      assert.ok(isPng(b), `${rel} is a PNG`);
+      assert.ok(pngSize(b).w >= 800 && pngSize(b).h >= 400, `${rel} is at least beat resolution, got ${pngSize(b).w}x${pngSize(b).h}`);
+    }
+  }
+  for (const b of [...BEATS.map((x) => `beat-${x}.png`), 'contact-sheet.png']) {
+    const be = fs.readFileSync(root(`evidence/web-render-finish/before/${b}`)), af = fs.readFileSync(root(`evidence/web-render-finish/after/${b}`));
+    assert.deepEqual(pngSize(be), pngSize(af), `${b} before and after share dimensions (same capture of record)`);
+  }
+});
+
+test('web-render-finish S4/S5: the after beats are not the before beats, and the board, assembled and mid beats each differ', () => {
+  for (const b of ['assembled', 'mid', 'apart', 'board']) {
+    const be = fs.readFileSync(root(`evidence/web-render-finish/before/beat-${b}.png`)), af = fs.readFileSync(root(`evidence/web-render-finish/after/beat-${b}.png`));
+    assert.notEqual(sha(be), sha(af), `beat-${b}: after is byte identical to before, nothing changed in the page rendering`);
+  }
+});
+
+test('web-render-finish S4/S5: the builder records a before and after comparison per problem and what it adjusted', () => {
+  const notes = fs.readdirSync(root('evidence/web-render-finish/')).filter((f) => f.endsWith('.md'));
+  assert.ok(notes.length >= 1, 'a builder notes or comparison markdown file exists under evidence/web-render-finish/');
+  const text = notes.map((f) => read('evidence/web-render-finish/' + f)).join('\n');
+  assert.match(text, /board|shield|battery|sensor/i, 'board finish problem addressed');
+  assert.match(text, /cover|micrograin|silicone/i, 'cover finish problem addressed');
+  assert.match(text, /LED|emitter|socket/i, 'LED problem addressed');
+  assert.match(text, /before/i); assert.match(text, /after/i);
+  assert.match(text, /adjust|changed|tuned|set /i, 'records what was adjusted');
+});
+
+test('web-render-finish S6: the beauty renders needed for the identity re-run exist (regenerated if the asset changed)', async () => {
+  for (const f of ['render-assembled.png', 'render-exploded.png']) {
+    const rel = 'evidence/take-apart-product-model/' + f;
+    assert.ok(exists(rel), `${rel} is missing`);
+    const b = fs.readFileSync(root(rel));
+    assert.ok(isPng(b) && pngSize(b).w >= 800 && pngSize(b).h >= 800, `${rel} is a PNG of at least 800 x 800`);
+  }
+// Evidence of record: production shape capture of the Wrangler bundled Worker.
+// Runner tooling (not site dependencies): PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs
+// WRANGLER_BIN=/tmp/sentia-browser/node_modules/.bin/wrangler node scripts/capture-take-apart.mjs
+import { mkdir, writeFile, mkdtemp, rm } from 'node:fs/promises';
+import { spawn, spawnSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import assert from 'node:assert/strict';
+import { pathToFileURL } from 'node:url';
+import { gaugeReadout, NODE_NAMES } from '../src/take-apart-model.js';
+const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ? pathToFileURL(process.env.PLAYWRIGHT_MODULE).href : 'playwright');
+const captureDir = process.env.CAPTURE_DIR;
+const out = new URL(captureDir ? '../' + captureDir.replace(/\/?$/, '/') : '../evidence/take-apart-product-model/', import.meta.url);
+await mkdir(out, { recursive: true });
+const beatsOut = captureDir ? out : new URL('../evidence/take-apart/', import.meta.url);
+await mkdir(beatsOut, { recursive: true });
+const buildDir = await mkdtemp(join(tmpdir(), 'sentia-bundle-'));
+const wrangler = process.env.WRANGLER_BIN || 'wrangler';
+const buildArgs = ['deploy', '--dry-run', '--outdir', buildDir];
+const build = spawnSync(wrangler, buildArgs, { encoding: 'utf8' });
+await writeFile(new URL('bundle-build.log', out), `${wrangler} ${buildArgs.join(' ')}
+${build.stdout || ''}${build.stderr || ''}
+exit status: ${build.status}
+No local patches applied.
+`);
+assert.equal(build.status, 0, build.error?.message || build.stderr);
+const port = Number(process.env.CAPTURE_PORT || 8791);
+const origin = `http://127.0.0.1:${port}`;
+const runtimeArgs = ['dev', join(buildDir, 'index.js'), '--no-bundle', '--local', '--ip', '127.0.0.1', '--port', String(port)];
+const runtime = spawn(wrangler, runtimeArgs, { stdio: ['ignore', 'pipe', 'pipe'] });
+let runtimeLog = '';
+runtime.stdout.on('data', chunk => { runtimeLog += chunk; });
+runtime.stderr.on('data', chunk => { runtimeLog += chunk; });
+let browser;
+const errors=[], pageErrors=[];
+let gaugePassed=false, sceneInfo, vendorStatus, vendorBytes, assetStatus, assetBytes, nodeNames, assetFailureChecks=false;
+try {
+  let ready = false;
+  for (let tries = 0; tries < 120; tries++) {
+    assert.equal(runtime.exitCode, null, runtimeLog);
+    try { ready = (await fetch(origin + '/take-apart')).ok; } catch {}
+    if (ready) break;
+    await new Promise(resolve => setTimeout(resolve, 500));
+  }
+  assert.ok(ready, 'Local bundled Worker did not start: ' + runtimeLog);
+browser = await chromium.launch({ executablePath: process.env.CHROME_BIN || '/usr/bin/google-chrome', headless:true,
+  args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'] });
+
+  const page=await browser.newPage({ viewport:{width:1440,height:1050}, deviceScaleFactor:1 });
+  const cdp=await page.context().newCDPSession(page);
+  page.on('console',msg=>{if(msg.type()==='error')errors.push(msg.text());});
+  page.on('pageerror',error=>pageErrors.push(String(error)));
+  const vendorResponse = page.waitForResponse(response => response.url() === origin + '/vendor/three.module.min.js');
+  const assetResponse = page.waitForResponse(response => response.url() === origin + '/models/patch-one.glb');
+  console.log('Loading study');
+  await page.goto(`${origin}/take-apart?tour=fast`);
+  await page.waitForFunction(()=>document.querySelector('#take-apart').dataset.sceneReady==='true');
+  await page.evaluate(()=>document.fonts.ready);
+  const asset = await assetResponse;
+  assetStatus = asset.status(); assetBytes = (await asset.body()).byteLength;
+  assert.equal(assetStatus, 200); assert.ok(assetBytes <= 800 * 1024);
+  nodeNames = await page.evaluate(() => JSON.parse(document.querySelector('#take-apart').dataset.modelNodes));
+  assert.deepEqual(nodeNames, NODE_NAMES);
+  assert.equal(await page.locator('#take-apart').getAttribute('data-model-source'), 'glb');
+  const vendor = await vendorResponse;
+  vendorStatus = vendor.status(); vendorBytes = (await vendor.body()).byteLength;
+  assert.equal(vendorStatus, 200); assert.equal(vendorBytes, 670681);
+  sceneInfo = await page.evaluate(() => {
+    const canvas = document.querySelector('#scene'), rect = canvas.getBoundingClientRect();
+    return { model: typeof globalThis.TakeApartModel, ready: document.querySelector('#take-apart').dataset.sceneReady,
+      width: canvas.width, height: canvas.height, layoutWidth: rect.width, layoutHeight: rect.height, dpr: devicePixelRatio };
+  });
+  assert.equal(sceneInfo.model, 'object'); assert.equal(sceneInfo.ready, 'true');
+  assert.equal(sceneInfo.width, Math.floor(sceneInfo.layoutWidth * sceneInfo.dpr));
+  assert.equal(sceneInfo.height, Math.floor(sceneInfo.layoutHeight * sceneInfo.dpr));
+  console.log('Study loaded');
+  assert.equal(await page.locator('#fallback').isVisible(),false,'WebGL scene must render for evidence');
+  const area=await page.locator('#scene').boundingBox();
+  await page.mouse.move(area.x+area.width/2,area.y+area.height/2);
+  await page.mouse.down();await page.mouse.move(area.x+area.width/2+75,area.y+area.height/2+25,{steps:8});await page.mouse.up();
+  await page.mouse.wheel(0,100);
+  await page.locator('#wear').evaluate(input=>{ input.value='200';input.dispatchEvent(new Event('input',{bubbles:true})); });
+  await page.waitForFunction(expected => [...document.querySelectorAll('[data-gauge]')].every(n => n.textContent === expected[n.dataset.gauge]), gaugeReadout(200));
+  const actual=await page.locator('[data-gauge]').evaluateAll(nodes=>Object.fromEntries(nodes.map(n=>[n.dataset.gauge,n.textContent])));
+  assert.deepEqual(actual,gaugeReadout(200));gaugePassed=true;
+  for(const name of ['Top','Side','Hero']){ await page.locator(`[data-camera="${name}"]`).click();await page.waitForTimeout(180); }
+  await page.locator('#xray').click();
+  await page.mouse.move(1400,60);
+  // Freeze the browser clock between controlled advances so software WebGL
+  // screenshot latency cannot advance to a different tour beat mid-capture.
+  const previousNow=await page.evaluate(()=>performance.now());
+  await page.clock.install();
+  console.log('Freezing capture clock');
+  await page.clock.pauseAt(new Date());
+  await page.clock.fastForward(previousNow+1000);
+  await page.evaluate(()=>window.dispatchEvent(new Event('pointerdown')));
+  console.log('Capture clock frozen');
+  const beats=[['assembled','Assembled'],['apart','Apart'],['board','Board'],['xray','X ray'],['settle','Mid / Settle']];
+  const sources=[];
+  for(const [beat,label] of beats) {
+/tmp/sentia-browser/node_modules/.bin/wrangler deploy --dry-run --outdir /tmp/sentia-bundle-ndrMRX
+
+ ⛅️ wrangler 4.156.0
+────────────────────
+Total Upload: 2551.18 KiB / gzip: 826.66 KiB
+No bindings found.
+--dry-run: exiting now.
+
+exit status: 0
+No local patches applied.
+ blender/build_patch_one.py                         |    8 +-
+ .../take-apart-product-model/browser-assembled.png |  Bin 174082 -> 206987 bytes
+ evidence/take-apart-product-model/browser-pass.log |    4 +-
+ evidence/take-apart-product-model/bundle-build.log |    4 +-
+ .../take-apart-product-model/render-assembled.png  |  Bin 779392 -> 809052 bytes
+ .../take-apart-product-model/render-exploded.png   |  Bin 777412 -> 800354 bytes
+ evidence/take-apart/beat-apart.png                 |  Bin 122680 -> 129800 bytes
+ evidence/take-apart/beat-assembled.png             |  Bin 174082 -> 206987 bytes
+ evidence/take-apart/beat-board.png                 |  Bin 123248 -> 130427 bytes
+ evidence/take-apart/beat-mid.png                   |  Bin 148771 -> 165887 bytes
+ evidence/take-apart/beat-xray.png                  |  Bin 120819 -> 127142 bytes
+ evidence/take-apart/browser-pass.log               |   11 +-
+ evidence/take-apart/contact-sheet.png              |  Bin 374470 -> 403604 bytes
+ evidence/web-render-finish/after/beat-apart.png    |  Bin 0 -> 129799 bytes
+ .../web-render-finish/after/beat-assembled.png     |  Bin 0 -> 207426 bytes
+ evidence/web-render-finish/after/beat-board.png    |  Bin 0 -> 130427 bytes
+ evidence/web-render-finish/after/beat-mid.png      |  Bin 0 -> 165887 bytes
+ evidence/web-render-finish/after/beat-xray.png     |  Bin 0 -> 127142 bytes
+ .../web-render-finish/after/browser-assembled.png  |  Bin 0 -> 207426 bytes
+ evidence/web-render-finish/after/browser-pass.log  |   13 +
+ evidence/web-render-finish/after/bundle-build.log  |   10 +
+ evidence/web-render-finish/after/contact-sheet.png |  Bin 0 -> 403558 bytes
+ evidence/web-render-finish/before/beat-apart.png   |  Bin 0 -> 122677 bytes
+ .../web-render-finish/before/beat-assembled.png    |  Bin 0 -> 174351 bytes
+ evidence/web-render-finish/before/beat-board.png   |  Bin 0 -> 123248 bytes
+ evidence/web-render-finish/before/beat-mid.png     |  Bin 0 -> 148771 bytes
+ evidence/web-render-finish/before/beat-xray.png    |  Bin 0 -> 120819 bytes
+ .../web-render-finish/before/browser-assembled.png |  Bin 0 -> 174351 bytes
+ evidence/web-render-finish/before/browser-pass.log |   13 +
+ evidence/web-render-finish/before/bundle-build.log |   10 +
+ .../web-render-finish/before/contact-sheet.png     |  Bin 0 -> 374604 bytes
+ evidence/web-render-finish/before/source.log       |    4 +
+ evidence/web-render-finish/behavior-tests.log      |  458 +++++++
+ evidence/web-render-finish/blender-build-1.log     |  970 ++++++++++++++
+ evidence/web-render-finish/blender-build-2.log     |  973 ++++++++++++++
+ evidence/web-render-finish/builder-notes.md        |   19 +
+ evidence/web-render-finish/bundle-build.log        |   10 +
+ evidence/web-render-finish/frozen-product.log      |    2 +
+ evidence/web-render-finish/reproducibility.log     |    4 +
+ evidence/web-render-finish/suite.log               | 1332 ++++++++++++++++++++
+ runs/wo-gh-14/builder.output.md                    |   12 +-
+ scripts/capture-take-apart.mjs                     |   11 +-
+ src/patch-one-glb.js                               |    2 +-
+ src/take-apart-client.js                           |   38 +-
+ tests/take-apart.test.js                           |   15 +-
+ tests/web-render-finish.test.js                    |    2 +-
+ 46 files changed, 3895 insertions(+), 30 deletions(-)
+
+codex
+{"station":"reviewer-design","verdict":"changes_requested","findings":["R3/S5 remains unmet: evidence/web-render-finish/after/beat-assembled.png and beat-mid.png show the LED as a muted gray-green stripe, without a clearly readable teal emitter separated from its recessed socket shadow. Compared with design/reference/product-reference.png, the optical identity remains washed out. Adjust client material/lighting handling while preserving geometry, then regenerate bundled evidence.","R2/S4 improved sufficiently: the after board beats show silver face highlights, darker packages, gold contacts and metallic sensor rims distinctly against the substrate. Fine cover grain is now visible in the assembled browser beat.","R6/S6: rounded-square silhouette, wordmark and five-layer order remain recognizable, accounting for the documented vertical exaggeration. Full identity clearance is withheld because the browser LED still fails the reference's teal-emitter read. The regenerated beauty cover also has substantially coarser grain than the fine silicone finish in quality-board-2.png; reduce that coarseness while retaining browser readability."]}
 tokens used
-31,985
-{
-  "station": "reviewer-design",
-  "verdict": "changes_requested",
-  "findings": [
-    "R1/R7/R8: evidence/web-render-finish/before/ and after/ are absent. Supply the required bundled-browser beats, contact sheets and browser logs so both finish fixes and preserved identity can be judged against the setup tree.",
-    "R2/S4 and design/reference/README.md material-realism bar: the existing evidence/take-apart/beat-board.png still shows dark, flat component faces without readable metallic highlight variation across the shield, battery and sensors. Adjust materials and lighting until these finishes read distinctly in the bundled page captures.",
-    "R3/S5 and the reference fine-detail and identity bars: evidence/take-apart/beat-assembled.png shows a uniformly smooth cover and a gray LED slot, without readable silicone micrograin or the reference's recessed teal emitter. Make both visible at beat resolution, preserving the approved wordmark and geometry, and demonstrate them in assembled and mid after beats."
-  ]
-}
+54,869
+{"station":"reviewer-design","verdict":"changes_requested","findings":["R3/S5 remains unmet: evidence/web-render-finish/after/beat-assembled.png and beat-mid.png show the LED as a muted gray-green stripe, without a clearly readable teal emitter separated from its recessed socket shadow. Compared with design/reference/product-reference.png, the optical identity remains washed out. Adjust client material/lighting handling while preserving geometry, then regenerate bundled evidence.","R2/S4 improved sufficiently: the after board beats show silver face highlights, darker packages, gold contacts and metallic sensor rims distinctly against the substrate. Fine cover grain is now visible in the assembled browser beat.","R6/S6: rounded-square silhouette, wordmark and five-layer order remain recognizable, accounting for the documented vertical exaggeration. Full identity clearance is withheld because the browser LED still fails the reference's teal-emitter read. The regenerated beauty cover also has substantially coarser grain than the fine silicone finish in quality-board-2.png; reduce that coarseness while retaining browser readability."]}

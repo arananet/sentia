@@ -5,7 +5,7 @@
   "work_order_id": "wo-gh-14",
   "artifact_path": "runs/wo-gh-14/builder.output.md",
   "status": "executed",
-  "created_at": "2026-11-01T02:49:16.698864+00:00",
+  "created_at": "2026-11-01T14:03:08.760979+00:00",
   "configured_model": "gpt-6-astra",
   "executor": {
     "kind": "command",
