@@ -1,0 +1,785 @@
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-wn99lx6w"))
+Reading additional input from stdin...
+OpenAI Codex v0.166.0
+--------
+workdir: /home/runner/work/sentia/sentia
+model: openai/gpt-6-astra
+provider: cloudflare
+approval: never
+sandbox: danger-full-access
+reasoning effort: none
+reasoning summaries: none
+session id: 01a197d7-b59a-70d2-b114-269e92cb1c09
+--------
+user
+You are executing an ANVIL reviewer station packet inside this repository. You are read only: inspect the files the packet refers to, judge the work against the packet, and do not change anything. The wrapper verifies the tree is unchanged after your run and fails this station if it is not.
+
+## Station prompt
+
+# Reviewer Design
+
+## Role
+Judge interface output against the project's own design system: its design tokens, component and layout rules, motion rules, and quality bars.
+
+## Inputs
+- design system (tokens, rules, quality bars from design/DESIGN.md and design/tokens.json)
+- interface output (HTML, React components, CSS, user-facing pages, or other interface artifacts)
+
+## Outputs
+- review (JSON format with verdict and findings)
+
+## Rules
+- Work only from the inputs listed above and the work order in the packet.
+- If the project has no design system (no design/DESIGN.md), your verdict MUST be `changes_requested` with a finding stating that no design system exists for the project.
+- If the project has a design system, review the interface output against:
+  - Design tokens: Are the correct colors, typography, spacing values being used?
+  - Component and layout rules: Do components follow the documented patterns?
+  - Motion rules: Does any animation or transition follow the motion guidelines?
+  - Quality bars: Does the interface meet the stated quality bars for visual hierarchy, scale contrast, spacing rhythm, and responsive behavior?
+- Focus on the design system the project has defined. Do not impose external design opinions or preferences that are not documented in the project's design system.
+- A design token marked as "TODO" or placeholder means the project hasn't defined that value yet. Flag missing values as findings only if the interface output actually uses undefined tokens.
+- Findings should be specific and actionable: cite which quality bar was violated, which token was used incorrectly, or which rule was not followed.
+- Your verdict must be one of: `approved`, `changes_requested`, or `comment`.
+- Produce the output as a JSON object, not as chat text.
+
+## Output Format
+
+Return a JSON object with this structure:
+
+```json
+{
+  "station": "reviewer-design",
+  "verdict": "approved | changes_requested | comment",
+  "findings": [
+    "Specific finding with reference to design system rule or quality bar",
+    "Another finding if applicable"
+  ]
+}
+```
+
+## Examples
+
+### Example 1: No design system exists
+```json
+{
+  "station": "reviewer-design",
+  "verdict": "changes_requested",
+  "findings": [
+    "No design system exists for this project. The project must define design/DESIGN.md and design/tokens.json before interface output can be reviewed against design standards."
+  ]
+}
+```
+
+### Example 2: Interface violates quality bar
+```json
+{
+  "station": "reviewer-design",
+  "verdict": "changes_requested",
+  "findings": [
+    "Quality bar violation: Scale Contrast - The button text has only 2.8:1 contrast ratio against its background, failing the minimum 4.5:1 requirement stated in the quality bars.",
+    "Token usage: The page uses hardcoded color '#FF5733' instead of the defined primary color token."
+  ]
+}
+```
+
+### Example 3: Interface meets design system
+```json
+{
+  "station": "reviewer-design",
+  "verdict": "approved",
+  "findings": []
+}
+```
+
+
+## Work order
+
+- id: wo-gh-15
+- kind: feature
+- title: Possible applications: glucose monitoring as a possible future application of the Sentia platform
+- source: github-issue
+- description: Context: Edu saw coverage of glucose responsive insulin research and of living cell implants that sense glucose and respond, and ordered the Sentia site to name glucose monitoring support for people with diabetes as a possible application of the Sentia platform. Sentia Patch One is a concept sensing patch: it senses, relays, and alerts. The full governing text is .openspec/specs/possible-applications/spec.md; this work order summarises it and the spec wins any conflict.
+
+Deliverable: one new section on the home page, a possible applications area in the established design system (numbered mono kicker reading "08 / Possible applications", section title, short introduction, hairline divided grid), placed after the FAQ section at the end of main. The section is typographic and carries no imagery. The change is a pure insertion: no existing line of any production file is modified or deleted, and the header, nav, existing sections, footer and routes stay byte identical to the base tree.
+
+Content: the introduction states the platform pattern only (a patch that senses, relays what it senses, and alerts the wearer and a care circle they choose) and frames the section as exploration. The grid names four applications at equal weight, each a title plus two or three sentences: (1) everyday wellness trends, (2) a care circle around someone living alone, (3) activity and recovery patterns, (4) glucose monitoring support for people living with diabetes.
+
+Hard guardrails, binding: wording is exploratory throughout (possible, could, one day, future, explores, would); the diabetes entry carries at least two exploratory markers and frames glucose monitoring as a possible future application. The patch does NOT detect glucose today: the new content never claims or implies a present glucose capability in any construction (no "detects glucose", "measures glucose", "monitors glucose", "senses glucose", "glucose sensor"). The new content contains no mention of insulin, of releasing or delivering any substance, of treatment, therapy, dosing or diagnosis, and no efficacy or medical outcome claim. Nothing implies a medical device in clinical use. The footer keeps byte exact both "Wellness monitoring, not diagnosis. Sentia Patch One is not a medical device." and "Sentia is a concept product, designed and built end to end by ANVIL, an open source software factory. Developed by Eduardo Arana."
+
+Tests: the test writer turns the spec scenarios into automated assertions, including absence checks for the forbidden claim shapes and terms across the new section, exploratory marker presence in the diabetes entry, the four entries at equal weight, and the footer sentences byte exact.
+
+Production shape checks, binding: (1) the real production bundle command succeeds on the final tree with zero local patches, command and exit status recorded in the evidence; (2) the bundled output is served by a local Worker runtime and a headless browser pass on the home page records zero console errors and zero page errors; (3) before and after screenshots of the affected area (end of main and footer region, desktop width) are committed under evidence/possible-applications/, before from the base build and after from the final build.
+
+Model routing for this run: builder and reviewer-design on GPT-6 Astra (gpt-6-astra) through the Cloudflare AI Gateway; spec writer, test writer and the other reviewer stations on claude-sonnet-5-5 through the same gateway. No fallback to another model for the builder.
+
+Deployment is NOT part of this order: the deployer station stays a packet, nothing deploys from this branch, and the result stops at the owner gate.
+
+Done criteria: the section live in the branch build with all four applications at equal weight and the guardrails verified by tests; insertion only diff; production shape evidence committed; suite green apart from the design v4 S11 failure itemized by name as pre-existing and untouched; run verdict with all five expected reviews counted, reviewer-design among them.
+
+GitHub issue: https://github.com/arananet/sentia/issues/15
+- risk_hints: 
+- status: new
+
+## Upstream steps
+
+- intake: completed
+- spec-writer: executed
+- test-writer: executed
+- builder: executed
+- reviewer-spec: executed
+- reviewer-security: executed
+- reviewer-tests: executed
+- reviewer-architecture: executed
+
+## Verified learnings
+
+- L-1: Art direction is imagery first; flat SVG as the primary visual language was rejected by the product owner and must not return as a section's main visual. (provenance: run wo-gh-2, artifact design/DESIGN.md, evidence verdict approved)
+- L-2: Product imagery sits seamlessly on the brand paper #FAFAF6 (no studio backgrounds, no visible image rectangles), verified by corner and edge sampling within 3 per channel. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-3: The patch reads at true 38 mm scale with explicit scale anchors, and on-skin imagery is strict inner forearm framing only. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-4: The product is the protagonist: the patch appears large and early, the page must not read empty or editorial, and display type must not crowd out the product. (provenance: run wo-gh-3, artifact src/page.js, evidence verdict changes_requested)
+- L-5: The current product render set is owner approved, especially the patch render; composition iterations keep src/images.js byte identical and never regenerate product imagery. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-6: Product imagery for Sentia meets the production quality bar anchored in design/reference/: photorealistic studio quality with real materials and physically consistent light; stylized or toy-like renders fail review. Reviewer-design compares every new product image against the anchor boards and names the gaps. (provenance: run wo-gh-5, artifact src/images.js, evidence verdict changes_requested)
+- L-7: The product is the square low profile patch anchored in design/reference/ and the round disc renders are retired; L-2, L-3 and L-5 stand as amended by the design v4 spec: photographic treatment instead of seamless paper backgrounds, limb close ups (inner forearm or upper arm) instead of inner forearm only, and the render set replaceable through an owner decided work order instead of frozen byte identical. (provenance: run wo-gh-6, artifact src/images.js, evidence verdict approved)
+
+## Project design
+
+## Output contract
+
+Answer with a single JSON object and nothing else, in exactly this shape:
+{"station": "<your station id>", "verdict": "pass", "findings": ["..."]}
+The verdict must be one of: pass, fail, changes_requested. Findings must be concrete and checkable against the spec, the code and the tests.
+
+codex
+I’ll inspect the design rules, new section, and visual evidence without changing any files.
+
+exec
+/bin/bash -lc "pwd && rg --files -g 'AGENTS.md' -g 'design/**' -g '*possible-applications*' -g 'src/**' -g 'evidence/**' -g '.openspec/**'" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+/home/runner/work/sentia/sentia
+tests/possible-applications.test.js
+src/client.js
+src/og.js
+src/vendor-three.js
+src/take-apart-model.js
+src/take-apart-page.js
+src/data.js
+src/take-apart-client.js
+src/codec.js
+src/index.js
+src/facts.js
+src/take-apart-model-browser.js
+src/mcp-example.js
+src/mcp.js
+src/page.js
+src/browser-codec.js
+src/seo.js
+src/images.js
+design/DESIGN.md
+design/reference/product-reference.png
+design/reference/quality-board-2.png
+design/reference/quality-board-1.png
+design/reference/README.md
+evidence/red.txt
+evidence/take-apart/contact-sheet.png
+evidence/take-apart/beat-apart.png
+evidence/take-apart/beat-assembled.png
+evidence/take-apart/beat-mid.png
+evidence/take-apart/beat-xray.png
+evidence/take-apart/browser-pass.log
+evidence/take-apart/beat-board.png
+evidence/take-apart-bundling/contact-sheet.png
+evidence/take-apart-bundling/beat-apart.png
+evidence/take-apart-bundling/beat-assembled.png
+evidence/take-apart-bundling/beat-mid.png
+evidence/take-apart-bundling/beat-xray.png
+evidence/take-apart-bundling/README.md
+evidence/take-apart-bundling/browser-pass.log
+evidence/take-apart-bundling/take-apart-tests.log
+evidence/take-apart-bundling/bundle-build.log
+evidence/take-apart-bundling/beat-board.png
+evidence/take-apart-bundling/test-suite.log
+evidence/possible-applications/base-browser.log
+evidence/possible-applications/after-desktop.png
+evidence/possible-applications/README.md
+evidence/possible-applications/browser-pass.log
+evidence/possible-applications/applications-tests.log
+evidence/possible-applications/bundle-build.log
+evidence/possible-applications/base-build.log
+evidence/possible-applications/base-test-suite.log
+evidence/possible-applications/capture.mjs
+evidence/possible-applications/before-desktop.png
+evidence/possible-applications/test-suite.log
+evidence/green.txt
+
+exec
+/bin/bash -lc 'cat design/DESIGN.md; cat design/tokens.json; cat .openspec/specs/possible-applications/spec.md; cat evidence/possible-applications/README.md; git status --short' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+# Sentia design system v4
+
+Identity is governed by brand/BRAND.md. This system applies that identity to
+the launch page: imagery is the primary art direction, with the product as the protagonist
+and natural limb proportions as anchors for true scale.
+Sentia Patch One is the object; Sentia Cloud receives its measurements; the
+Sentia MCP Server makes those measurements available to assistants.
+
+## Tokens
+
+Paper #FAFAF6 occupies roughly 90 percent of the surface. Ink green #12211C
+forms text and instrument outlines. Signal teal #0E7C66 marks links, labels
+and the Find My network and LoRaWAN paths. Coral #FF6B4A is reserved for the
+status LED and alert dots. Soft mint #EFF4EE is a rare panel fill; hairline
+#DFE7DF divides information. Body text uses #4A5D54; secondary labels use
+#53685C for legibility on paper. White is reserved for the physical patch.
+No decorative gradients. Only the soft contact shadow baked into each product
+render is allowed; the page adds no shadow or tinted backdrop.
+
+## Type scale
+
+Space Grotesk at weight 300 is the display face. Display type must serve the
+product. The hero runs from 56 to 64 px with 0.96 leading and -0.055 em tracking. Section titles run from
+40 to 64 px with 1.04 leading and -0.04 em tracking, limited to 18 characters
+per line where space permits. Data values run from 32 to 56 px. Inter body
+text is 17 px with 1.65 leading; introductory text is 18–20 px, at most
+54 characters per line. System mono labels are 11 px, uppercase, with
+0.16 em tracking. Never shrink body copy to fit a composition.
+
+## Spacing rhythm
+
+Use an 8 px base: 8, 16, 24, 32, 48, 64, 96, 128, 160. The page container
+is at most 1440 px wide, with fluid 24–80 px gutters. Sections have 64–96 px
+vertical padding for richer density. A title, its introduction and its
+illustration form one idea; detailed lists follow with 32–48 px separation. Hairlines provide
+structure without enclosing every item in a card. Technical examples and
+tables remain dense enough to scan, with scrolling contained locally.
+Fixed margins, padding and gaps use multiples of 8 px, including the bounds
+of fluid spacing. One-pixel border overlaps and diagram coordinates are
+optical geometry rather than content spacing.
+
+## Hero art direction
+
+Place the existing headline in four columns and the supplied hero render
+in eight, capped at 960 px. The complete patch render is the visual center,
+large and early above the fold at desktop and mobile widths. Keep the kicker,
+chips and introductory copy; repeat the existing dimensional, wear and water
+resistance facts alongside the introduction.
+The square patch has strongly rounded corners, a matte warm white top cover,
+the physical SENTIA wordmark and one LED line, with a low 2.5 mm profile.
+The hero shows it worn on an upper arm in a warm neutral studio photograph. Below 1000 px, stack the
+headline, object and supporting copy. Preserve the whole object at narrow
+widths. Flat inline SVG is demoted to small supporting diagrams only; it
+must not carry the hero, hardware or connectivity art direction. The logo,
+functional live demo graphics and dashboard charts stay.
+
+## Composition and accessibility
+
+The brand sheet wins every conflict with the design knowledge pack. Use calm
+tactile softness from render scale and whitespace, never pastel or blue
+palettes, shadowed surfaces or decorative cards. A 12 column grid aligns the
+hero headline across four columns and the object across eight. Supporting
+text and chips complete that system; one value proposition strip follows,
+using the existing tagline. Measured facts (2.5 mm profile, 14 days, IP67 and network
+behaviour) establish trust before the hardware detail. State plainly here
+that Sentia Patch One is not a medical device. No invented proof, testimonials,
+customer logos or unsupported claims.
+
+Use 64–96 px section padding and 32–48 px between related visual and factual
+groups to increase density without shrinking body copy. Use hairline divided
+feature grids and recurring numbered mono section labels. Cap desktop display
+type at 64 px so the headline supports the render. Use the 8 px
+spacing scale throughout. Load fonts with font-display swap and reserve image
+space using exact intrinsic dimensions to avoid image layout shift.
+
+Text contrast is at least 4.5:1; body text aims for 7:1 on paper. The primary
+CTA uses paper on ink (about 15.9:1); the second action remains a text link.
+Use semantic sections, one h1, a skip link to focusable main content, visible
+3 px focus rings, and touch targets at least 44 px with at least 8 px gaps.
+Keep below-fold images lazy and the hero eager. Review at mobile widths and
+zoom, with keyboard navigation, no script, and prefers-reduced-motion.
+
+## Asset inventory
+
+All four operator-supplied WebP renders come from src/images.js. Serve the
+original export bytes without editing, replacing or generating imagery.
+
+| Module export | Route | Page placement |
+| --- | --- | --- |
+| PATCH_HERO_WEBP_B64 | /img/patch-hero.webp | Hero, primary object beside the headline |
+| PATCH_EXPLODED_WEBP_B64 | /img/patch-exploded.webp | #patch, beside the five-layer factual list |
+| PATCH_ON_SKIN_WEBP_B64 | /img/patch-on-skin.webp | #patch, second visual with the upper arm close-up and 14 day wear story |
+| NETWORK_SCENE_WEBP_B64 | /img/network-scene.webp | #how, before the five relay steps |
+
+The exploded photograph separates the five square layers vertically, in order:
+top cover, comfort foam, sensing and processing board, adhesive layer,
+release liner. The page list and specs table use the same names.
+The on-skin photograph follows the layer and sensor details, paired with the
+wear paragraph and followed by profile and wear metrics.
+The network photograph presents the same patch in its connected context,
+beside a phone and LoRaWAN gateway. It does not replace the live packet visualization.
+
+## Image treatment
+
+Full photographs in warm neutral studio scenes replace the earlier isolated
+product treatment. Preserve the supplied bytes and original aspect ratios:
+hero 1600 × 893, exploded 1400 × 1400, on-skin 1600 × 800, network 1600 × 893.
+The physical SENTIA wordmark and LED line belong on the product; captions,
+labels and explanatory text inside images remain banned.
+
+Each image is an intentional photographic frame within the page grid, with
+no visible rectangle seams from mismatched background extensions. Do not
+attempt to blend the photographic backgrounds into paper. The hero fills
+its eight-column visual area; the exploded photograph fills its column
+beside the layer list; the limb close up fills the wear image area; the
+network photograph spans the content width. Paper gutters separate each
+complete photograph from copy. No borders, rounded cards, filters, added
+shadows or tinted backdrops. Physical light and contact shadows come from
+the supplied photographs.
+
+Hero and on-skin framing is a strict limb close up (upper arm or inner
+forearm), never torso framing. Skin texture, limb proportions and adhesive
+contact establish scale without inventing a width measurement.
+Preserve complete images without cropping or stretching. Use responsive full
+width images, with the hero capped at 960 px, the wear image at 640 px, and
+the network scene spanning the content width. Give each visual
+space on the 8 px rhythm. Below 1000 px, place the hero image directly after
+the headline with no added vertical gap; extend its frame 16 px into each
+gutter, retaining the complete original image.
+Stack the wear image and copy below 900 px.
+Use descriptive, calm alt text with the exact product and network names.
+Reserve intrinsic image space to prevent layout shifts. Load the hero
+eagerly with high priority; lazy-load the three lower-page renders.
+
+Production quality is anchored in design/reference/. L-6 remains binding:
+reviewer-design compares every new image against the boards and names gaps
+in materials, light, scale and contact, or states none. L-5 is lifted for
+this order; the operator has supplied the entire replacement set. L-2 now
+governs integration without seams; L-3 allows limb close ups as stated above.
+
+## Motion
+
+Existing reveal hooks stay intact. Fades and small rises use 800 ms ease-out.
+No scale animation, bounce, glow or perpetual hero movement. Hover feedback
+uses opacity or a rise under 2 px over 180 ms.
+Stagger up to eight children per section in 40 ms steps, capped at 280 ms.
+Reduced motion disables CSS reveals
+and smooth scrolling, and hides the moving packet dot; the measurements
+and existing controls continue to operate. Static content must remain
+readable without JavaScript through a noscript style override. With scripting
+enabled, reveal elements begin at zero opacity and 16 px below their final
+position; the existing observer adds the visible state. Reduced motion keeps
+both the initial and revealed states visible and stationary.
+
+## Launch page quality bars
+
+- S1: This document precedes implementation. CSS implements its palette,
+  type hierarchy, spacing and physical hero composition.
+- The first view has one focal object and a headline substantially larger
+  than body copy. The page has breathing room at 1440, 1024, 768 and 375 px.
+- S2: Preserve every section, content fact, SEO/GEO output, client hook,
+  simulation control and dashboard action. Measurements keep their units.
+- At 320 px and at browser zoom, text wraps without page overflow; wide
+  technical data scrolls in its own region. Keyboard focus is visible.
+- V4: Update product definition surfaces and integrate the operator supplied
+  renders. Preserve the four image/webp routes and supplied src/images.js bytes.
+  API, MCP, codec, data and all other routing behavior stay unchanged.
+- S5: Keep the existing calm copy and exact product and network names.
+  Wellness framing and the medical disclaimer remain visible.
+- Run the full scenario suite. Visual quality and S3 model provenance are
+  assessed by the independent review stations; passing tests is not approval.
+- S6: At small widths retain a 56 px hero minimum and 17 px body minimum.
+  Use #53685C for SVG annotations and paper for the simulation toggle.
+  Check the hidden reveal state, 800 ms ease-out transition and motion fallback.
+cat: design/tokens.json: No such file or directory
+# Sentia Possible Applications
+
+Status: active for wo-gh-15
+Slug: possible-applications
+
+## Roles
+- implementer: builds the change described here
+- reviewer: checks the change against this spec
+- qa: checks the scenarios below with tests
+- product_owner: owns the purpose and accepts the result
+
+## Purpose
+Edu saw coverage of glucose responsive insulin research and of living cell implants that sense glucose and respond, and ordered the Sentia site to name glucose monitoring support for people with diabetes as a possible application of the Sentia platform. Sentia Patch One is a concept sensing patch: it senses, relays, and alerts. This spec governs adding a possible applications area to the home page that carries that application at the same weight as the others, framed strictly as possible and future. Nothing in this order deploys; the result stops at the owner gate.
+
+## Requirements
+- R1: The home page gains one new section, a possible applications area, in the established design system of design/DESIGN.md: a numbered mono kicker in the established style, a section title, a short introduction, and a hairline divided grid of application entries. Placed after the FAQ section at the end of main, its kicker reads "08 / Possible applications". The section is typographic: it carries no imagery at all, new or reused.
+- R2: The change is a pure insertion. No existing line of any production file is modified or deleted: the header, the nav, every existing section, the footer and every route stay byte identical to the base tree. The footer keeps, byte exact, both "Wellness monitoring, not diagnosis. Sentia Patch One is not a medical device." and "Sentia is a concept product, designed and built end to end by ANVIL, an open source software factory. Developed by Eduardo Arana."
+- R3: The introduction states the platform pattern only: a patch that senses, relays what it senses, and alerts the wearer and a care circle they choose. It frames the whole section as exploration: where that pattern could go, not what the product does today.
+- R4: The grid names four application entries at equal weight, each with a title and two or three sentences of body copy: (1) everyday wellness trends, (2) a care circle around someone living alone, (3) activity and recovery patterns, (4) glucose monitoring support for people living with diabetes. No entry is visually or verbally privileged over the others: same grid treatment, comparable length, no badges, no calls to action.
+- R5: Wording is exploratory throughout the new section: possible, could, one day, future, explores, would. The diabetes entry must carry at least two such exploratory markers in its own copy, and its title or lead must frame it as a possible future application.
+- R6: HARD GUARDRAIL, capability: the new content never claims or implies that the patch detects, measures, monitors or senses glucose today, in any tense or construction that reads as a present capability of the product. Naming the possible application itself (glucose monitoring as the name of the future application) is allowed only inside the exploratory framing of R5.
+- R7: HARD GUARDRAIL, medicine: the new content contains no mention of insulin, of releasing or delivering any substance, of treatment, therapy, dosing or diagnosis, and no efficacy claim or medical outcome claim of any kind. Nothing in the section implies a medical device in clinical use.
+- R8: The rest of the site is untouched: no changes to facts, sensors, specs, FAQ answers, the demo, the dashboard, the MCP surface, llms outputs or any route. New files are limited to the tests for this spec, the run evidence under evidence/possible-applications/, and the run records the line itself produces.
+- R9: Production shape evidence, binding: (1) the real production bundle command succeeds on the final tree with zero local patches, command and exit status recorded; (2) the bundled output is served by a local Worker runtime and a headless browser pass records zero console errors and zero page errors on the home page; (3) before and after screenshots of the affected area (the end of main and the footer region) are committed under evidence/possible-applications/, the before capture taken from the base build and the after capture from the final build, both at desktop width.
+- R10: Deployment is not part of this order. The deployer station stays a packet; nothing is deployed from this branch, and production keeps serving its current version.
+
+## Scenarios
+
+### Scenario: The section exists and names four applications at equal weight
+- S1: Given the final tree, when the home page is served, then it contains one section with id "applications" whose grid names all four entries of R4, the diabetes entry among them, each with a title and body copy of comparable length and identical grid treatment.
+
+### Scenario: The diabetes application is framed as possible and future
+- S2: Given the new section, when its diabetes entry is read, then the entry carries at least two exploratory markers from R5 and frames glucose monitoring as a possible future application of the platform pattern (continuous sensing, relay, alerts to the wearer and their circle), and nothing more.
+
+### Scenario: No present capability claim for glucose
+- S3: Given the new section text, when it is scanned, then no sentence states or implies that the patch detects, measures, monitors or senses glucose as a present capability; an automated test asserts the absence of capability claim shapes (for example "detects glucose", "measures glucose", "monitors glucose", "senses glucose", "glucose sensor") in the new section.
+
+### Scenario: No treatment or outcome language
+- S4: Given the new section text, when it is scanned, then the words insulin, treat and its derivatives, therapy, dose and its derivatives, diagnos and its derivatives, cure and manage your condition shapes are all absent, and an automated test asserts each absence; the section makes no efficacy or medical outcome claim.
+
+### Scenario: Everything outside the section is byte stable
+- S5: Given the production diff against the base tree, when it is read, then the only production change is the inserted section block in src/page.js; the footer disclosure sentences of R2 are byte exact; the header, nav, existing sections, routes, image payloads and llms outputs are unchanged.
+
+### Scenario: Production shape holds
+- S6: Given the final tree, when the bundle is built with no local patches and the bundled output is served locally, then the bundle command exits clean, the headless browser pass on the home page records zero console errors and zero page errors, and the before and after screenshots of R9 are committed under evidence/possible-applications/.
+
+### Scenario: Green suite, full review panel, no deployment
+- S7: Given the executed run, when the run report is read, then the project test suite passes apart from the design v4 S11 failure, itemized by name as pre-existing on this stack and left untouched; reviewer-design has judged the rendered section against DESIGN.md and the guardrails R5 to R7; and no deployment step ran, with production still serving its previous version.
+# wo-gh-15 builder evidence
+
+Inserted one typographic section after FAQ and before the end of main in src/page.js. It reuses the existing sensors/sensor grid, typography and reveal styles. Four entries have equal treatment and two sentences each. Glucose monitoring support is explicitly a possible future application; no present capability or medical outcome is claimed.
+
+Production diff against c55bc1659a1b1f5f6adb66760faa4915dcd01aee: src/page.js only, 26 inserted lines, zero deletions. All existing production bytes remain intact, including the footer; no CSS, imagery, routes or dependencies changed.
+
+Evidence:
+- bundle-build.log: Wrangler 4.156.0 production dry-run bundle, exit status 0, no local patches.
+- browser-pass.log: bundled output served with wrangler dev --no-bundle --local; home page with four application entries, zero console errors and zero page errors. Mobile width 375 has no horizontal overflow.
+- before-desktop.png: base commit build, 1440 px wide, FAQ through footer.
+- after-desktop.png: final build, same width and region including the insertion.
+- applications-tests.log: all 16 tests pass.
+- test-suite.log: 179 tests, 177 pass, one failure, one skip.
+- base-test-suite.log: 163 tests, 161 pass, the same failure and skip.
+
+The untouched pre-existing failure is "S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/" in tests/design-v4-square-product.test.js. It reports uncleared patch-exploded / mounting review evidence. The skipped test is "ui-elevation S4: codec, data, mcp and index are untouched by the run" because no main ref exists. No existing tests or review evidence were changed.
+
+Reproduction: install playwright and wrangler under /tmp/sentia-browser, extract git archive c55bc16 to /tmp/sentia-applications-base, then run `node evidence/possible-applications/capture.mjs` from the repository root. The capture uses /usr/bin/google-chrome, builds both trees, runs each bundled Worker locally, and captures the affected region after scrolling through reveal observers. Run `npm test` and `node --test tests/possible-applications.test.js` for suite evidence.
+
+This is builder evidence, not approval or a run verdict. All five independent reviews, including reviewer-design, remain outstanding for subsequent stations. No deployment ran; only dry-run bundling and local Workers ran. The result remains at the owner gate. Runner model/gateway provenance cannot be established from the supplied spec and tests.
+ M runs/wo-gh-15/builder.output.md
+?? runs/wo-gh-15/builder.output.md.codex.txt
+?? runs/wo-gh-15/builder.packet.md
+?? runs/wo-gh-15/envelopes/
+?? runs/wo-gh-15/reviewer-architecture.output.md
+?? runs/wo-gh-15/reviewer-architecture.packet.md
+?? runs/wo-gh-15/reviewer-design.packet.md
+?? runs/wo-gh-15/reviewer-security.output.md
+?? runs/wo-gh-15/reviewer-security.packet.md
+?? runs/wo-gh-15/reviewer-spec.output.md
+?? runs/wo-gh-15/reviewer-spec.packet.md
+?? runs/wo-gh-15/reviewer-tests.output.md
+?? runs/wo-gh-15/reviewer-tests.packet.md
+?? runs/wo-gh-15/spec-writer.output.md
+?? runs/wo-gh-15/spec-writer.packet.md
+?? runs/wo-gh-15/test-writer.output.md
+?? runs/wo-gh-15/test-writer.packet.md
+?? tests/possible-applications.test.js
+
+exec
+/bin/bash -lc "rg -n 'applications|\\.sensor|\\.section|\\.reveal|prefers-reduced|noscript|h2|h3|section-intro|section-label' src/page.js; git diff c55bc1659a1b1f5f6adb66760faa4915dcd01aee -- src/page.js; cat evidence/possible-applications/browser-pass.log" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+94:h2{font:300 clamp(40px,4.4vw,64px)/1.04 'Space Grotesk',sans-serif;letter-spacing:-0.04em;margin:24px 0 32px;max-width:18ch;text-wrap:balance}
+95:h3{font:500 19px/1.4 'Space Grotesk',sans-serif}
+145:.layer-list h3{margin:8px 0 8px;font-size:16.5px}
+152:.sensors{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(32px,5vw,72px);margin-top:clamp(48px,6vh,64px)}
+153:@media(max-width:760px){.sensors{grid-template-columns:1fr}}
+154:.sensor{padding:24px 0;border-top:1px solid var(--line)}
+155:.sensor h3{font-size:17px;margin-bottom:8px}
+156:.sensor p{color:var(--soft);font-size:17px}
+162:.journey h3{font-size:18px}
+165:.privacy h3{margin-bottom:8px}
+178:.node h3{font-size:16px}
+223:.sub h3{font:300 clamp(32px,3.6vw,48px) 'Space Grotesk',sans-serif;margin-bottom:16px}
+234:.faq-item h3{font-size:20px;margin-bottom:8px}
+245:.journey h3{font-size:24px}
+263:  .node h3{font-size:14px}
+273:@media(prefers-reduced-motion:reduce){
+297:@media(prefers-reduced-motion:reduce){
+313:      (l, i) => `          <li><span class="n">LAYER ${i + 1}</span><h3>${l.name}</h3><p>${l.detail}</p></li>`
+316:  const sensorCards = FACTS.sensors
+317:    .map((s) => `        <div class="sensor"><h3>${s.name}</h3><p>${s.detail}. Sampled every few minutes and summarised into each digest.</p></div>`)
+321:      (f) => `      <article class="faq-item rv"><h3>${f.q}</h3><p>${f.a}</p></article>`
+360:<noscript><style>.rv{opacity:1;transform:none}</style></noscript>
+412:    <h2 class="rv">Five layers, ${FACTS.thicknessMm} mm profile.</h2>
+439:    <h2 class="rv">Sense. Whisper. Relay.</h2>
+443:      <li class="rv"><span class="mono step">Step 1</span><h3>Sense</h3><p>Every few minutes the patch samples skin temperature, hydration, movement, posture and sweat, and builds one small encrypted measurement digest.</p></li>
+444:      <li class="rv"><span class="mono step">Step 2</span><h3>Whisper</h3><p>In the city it broadcasts the digest inside rotating Bluetooth Low Energy advertisements, following the Find My network accessory pattern. Out of coverage it sends a fuller LoRaWAN frame instead.</p></li>
+445:      <li class="rv"><span class="mono step">Step 3</span><h3>Relay</h3><p>A passing iPhone, iPad or Mac forwards the opaque digest it cannot read. A LoRaWAN gateway forwards the frame to its network server. Neither learns anything about the wearer.</p></li>
+446:      <li class="rv"><span class="mono step">Step 4</span><h3>Server</h3><p>${FACTS.platform} retrieves and decrypts the payloads addressed to it, decodes both formats with one codec, stores the time series and evaluates the alert rules.</p></li>
+447:      <li class="rv"><span class="mono step">Step 5</span><h3>You</h3><p>The wearer, or a care circle they choose, sees the result in the dashboard, through the API, or by asking an assistant through the ${FACTS.mcpServer}.</p></li>
+450:      <h3>Private by construction</h3>
+459:    <h2 class="rv">Watch a packet travel.</h2>
+471:        <div class="node"><div class="node-icon"></div><h3>The patch</h3><p>Upper arm</p></div>
+472:        <div class="node"><div class="node-icon"></div><h3 id="relayName">A passing phone</h3><p id="relayKind">Find My network relay</p></div>
+473:        <div class="node server"><div class="node-icon"></div><h3>Sentia Cloud</h3><p>Decode and store</p></div>
+495:    <h2 class="rv">${FACTS.platform}, quietly.</h2>
+517:      <h3>Alerts</h3>
+521:      <h3>The fleet</h3>
+533:    <h2 class="rv">The ${FACTS.mcpServer}.</h2>
+537:      <h3>Tools</h3>
+543:      <h3>Client configuration</h3>
+547:      <h3>A real exchange</h3>
+559:    <h2 class="rv">${FACTS.product}, in numbers.</h2>
+571:    <h2 class="rv">Asked, answered.</h2>
+578:<section id="applications" aria-label="Possible applications">
+580:    <p class="mono kicker rv"><span aria-hidden="true">08 / </span>Possible applications</p>
+581:    <h2 class="rv">Where the pattern could go.</h2>
+585:        <h3>Everyday wellness trends</h3>
+589:        <h3>A care circle around someone living alone</h3>
+593:        <h3>Activity and recovery patterns</h3>
+597:        <h3>Glucose monitoring support</h3>
+diff --git a/src/page.js b/src/page.js
+index 628de9b..75c9f22 100644
+--- a/src/page.js
++++ b/src/page.js
+@@ -575,6 +575,32 @@ ${faqItems}
+   </div>
+ </section>
+ 
++<section id="applications" aria-label="Possible applications">
++  <div class="wrap">
++    <p class="mono kicker rv"><span aria-hidden="true">08 / </span>Possible applications</p>
++    <h2 class="rv">Where the pattern could go.</h2>
++    <p class="lede rv">A patch that senses, relays what it senses, and alerts the wearer and a care circle they choose: this section explores where that pattern could go.</p>
++    <div class="sensors">
++      <article class="sensor rv">
++        <h3>Everyday wellness trends</h3>
++        <p>Everyday wellness trends could offer a way to explore the rhythms of daily life over time. A future application would relay those patterns to the wearer, with alerts shared with a care circle they choose.</p>
++      </article>
++      <article class="sensor rv">
++        <h3>A care circle around someone living alone</h3>
++        <p>A possible application could connect someone living alone with a care circle they choose. Relayed observations and alerts would give the wearer and their circle a shared starting point for everyday check-ins.</p>
++      </article>
++      <article class="sensor rv">
++        <h3>Activity and recovery patterns</h3>
++        <p>Activity and recovery patterns could be another direction to explore, following the rhythm of movement and rest. A future application would relay observations to the wearer, with alerts for a care circle they choose.</p>
++      </article>
++      <article class="sensor rv">
++        <h3>Glucose monitoring support</h3>
++        <p>A possible future application is glucose monitoring support for people living with diabetes. One day, this could explore the same continuous sensing, relay and alert pattern for the wearer and a care circle they choose.</p>
++      </article>
++    </div>
++  </div>
++</section>
++
+ </main>
+ <footer>
+   <div class="wrap">
+Bundled local Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-applications-after/index.js --no-bundle --local --ip 127.0.0.1 --port 8791
+Home page status: 200
+applications sections: 1
+console errors: 0
+page errors: 0
+Desktop capture: 1440 x 2939.484375, FAQ through footer
+Four entries; mobile width 375: no horizontal overflow
+
+
+exec
+/bin/bash -lc "sed -n '55,105p' src/page.js; sed -n '268,305p' src/page.js; rg -n 'stagger|transitionDelay|\\.rv|IntersectionObserver' src/client.js; cat evidence/possible-applications/applications-tests.log" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+    {
+      '@type': 'WebSite',
+      '@id': origin + '/#site',
+      name: 'Sentia',
+      url: origin + '/',
+      publisher: { '@id': origin + '/#org' },
+    },
+  ];
+  return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2);
+}
+
+const CSS = `
+:root{
+  --paper:#FAFAF6; --ink:#12211C; --soft:#4A5D54; --faint:#53685C;
+  --teal:#0E7C66; --coral:#FF6B4A; --mint:#EFF4EE; --line:#DFE7DF;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font:400 17px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+::selection{background:var(--mint)}
+a{color:var(--teal);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+.wrap{max-width:1440px;margin:0 auto;padding:0 clamp(24px,5.6vw,80px)}
+.mono{font:500 11px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:0.18em;text-transform:uppercase}
+.kicker{color:var(--teal)}
+.muted{color:var(--soft)}
+header.site{position:absolute;top:0;left:0;right:0;z-index:5}
+.nav{display:flex;align-items:center;justify-content:space-between;padding-top:32px;padding-bottom:32px;gap:24px}
+.brand{display:flex;align-items:center;gap:16px;color:var(--ink)}
+.brand:hover{text-decoration:none}
+.brand svg{display:block}
+.wordmark{font:500 21px 'Space Grotesk',sans-serif;letter-spacing:0.01em}
+.nav nav{display:flex;gap:16px}
+.nav nav a{color:var(--soft);font-size:17px}
+.nav nav a:hover{color:var(--ink);text-decoration:none}
+@media(max-width:1100px){.nav nav{display:none}}
+section{padding:clamp(64px,7vw,96px) 0;border-top:1px solid var(--line)}
+section:first-of-type{border-top:none}
+h1{font:300 clamp(56px,4.4vw,64px)/0.96 'Space Grotesk',sans-serif;letter-spacing:-0.055em;max-width:12ch;text-wrap:balance}
+h2{font:300 clamp(40px,4.4vw,64px)/1.04 'Space Grotesk',sans-serif;letter-spacing:-0.04em;margin:24px 0 32px;max-width:18ch;text-wrap:balance}
+h3{font:500 19px/1.4 'Space Grotesk',sans-serif}
+.lede{font-size:clamp(18px,1.5vw,20px);color:var(--soft);max-width:54ch}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .8s ease-out,transform .8s ease-out}
+.rv.in{opacity:1;transform:none}
+/* hero */
+.hero{padding-top:128px;position:relative}
+.hero .wrap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;align-items:start}
+.hero .kicker{grid-column:1/-1;margin-bottom:16px;max-width:60ch}
+.hero h1{grid-column:1/5;grid-row:2;font-size:clamp(56px,4.4vw,64px);align-self:center}
+.hero .lede{grid-column:1/7;grid-row:3;margin-top:24px}
+.chips{display:flex;flex-wrap:wrap;gap:16px 24px;margin-top:32px;grid-column:1/-1}
+  .journey li{gap:16px;grid-template-columns:52px minmax(0,1fr)}
+  .tools li{gap:8px}
+  #specs th{width:38%;letter-spacing:0.08em;padding-left:0}
+  #specs td{overflow-wrap:anywhere}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv,.feed-row{opacity:1;transform:none;transition:none}
+  #packetDot{visibility:hidden}
+}
+/* v2.1: factual hierarchy, bounded motion and accessible controls. */
+.value-strip{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;padding-top:32px;padding-bottom:32px;border-top:1px solid var(--line)}
+.value-strip p:first-child{font:300 clamp(24px,3vw,40px)/1.2 'Space Grotesk',sans-serif;max-width:24ch}
+.value-strip p:last-child{max-width:32ch;align-self:center}
+#demo,#dashboard,#mcp,#specs,#faq{padding-top:96px;padding-bottom:96px}
+section>.wrap>.rv:nth-child(2){transition-delay:40ms}
+section>.wrap>.rv:nth-child(3){transition-delay:80ms}
+section>.wrap>.rv:nth-child(4){transition-delay:120ms}
+section>.wrap>.rv:nth-child(5){transition-delay:160ms}
+section>.wrap>.rv:nth-child(6){transition-delay:200ms}
+section>.wrap>.rv:nth-child(7){transition-delay:240ms}
+section>.wrap>.rv:nth-child(8){transition-delay:280ms}
+.nav a,footer a{display:inline-flex;align-items:center;min-height:44px}
+footer a{margin-right:8px}
+button,.text-btn{min-height:44px;min-width:44px}
+.toggle{gap:8px;overflow:visible}
+.wearer-tabs{gap:8px;padding:8px}
+.skip-link{position:fixed;top:8px;left:8px;z-index:10;padding:16px 24px;background:var(--ink);color:var(--paper);transform:translateY(-160%)}
+.skip-link:focus{transform:none}
+@media(prefers-reduced-motion:reduce){
+  .cta a{transition:none}
+  .cta a:hover{transform:none}
+  section>.wrap>.rv{transition-delay:0ms}
+}
+footer .fine{margin-top:24px;color:var(--faint);font-size:13px}
+`;
+
+export function renderPage(origin) {
+9:  var rv = document.querySelectorAll('.rv');
+10:  if ('IntersectionObserver' in window) {
+11:    var io = new IntersectionObserver(function (entries) {
+TAP version 13
+# Subtest: applications S1: the guarded home page has exactly one section id="applications" after FAQ, at the end of main
+ok 1 - applications S1: the guarded home page has exactly one section id="applications" after FAQ, at the end of main
+  ---
+  duration_ms: 21.079177
+  type: 'test'
+  ...
+# Subtest: applications R1: kicker reads "08 / Possible applications" in the established mono kicker style, with title and intro
+ok 2 - applications R1: kicker reads "08 / Possible applications" in the established mono kicker style, with title and intro
+  ---
+  duration_ms: 0.345793
+  type: 'test'
+  ...
+# Subtest: applications R1: the section is typographic, no imagery new or reused
+ok 3 - applications R1: the section is typographic, no imagery new or reused
+  ---
+  duration_ms: 0.258029
+  type: 'test'
+  ...
+# Subtest: applications S1/R4: four entries, in order, with identical grid treatment and a title each
+ok 4 - applications S1/R4: four entries, in order, with identical grid treatment and a title each
+  ---
+  duration_ms: 0.382437
+  type: 'test'
+  ...
+# Subtest: applications S1/R4: entries have two or three sentences and comparable length; nothing privileged
+ok 5 - applications S1/R4: entries have two or three sentences and comparable length; nothing privileged
+  ---
+  duration_ms: 0.349698
+  type: 'test'
+  ...
+# Subtest: applications R3: the introduction states the platform pattern only and frames the section as exploration
+ok 6 - applications R3: the introduction states the platform pattern only and frames the section as exploration
+  ---
+  duration_ms: 0.57655
+  type: 'test'
+  ...
+# Subtest: applications S2/R5: every entry is exploratory; the diabetes entry carries two or more markers and frames a possible future application
+ok 7 - applications S2/R5: every entry is exploratory; the diabetes entry carries two or more markers and frames a possible future application
+  ---
+  duration_ms: 0.282546
+  type: 'test'
+  ...
+# Subtest: applications S2/R6: glucose appears only in the diabetes entry, and only in sentences that carry an exploratory marker
+ok 8 - applications S2/R6: glucose appears only in the diabetes entry, and only in sentences that carry an exploratory marker
+  ---
+  duration_ms: 0.28441
+  type: 'test'
+  ...
+# Subtest: applications S3/R6: no present capability claim shape for glucose
+ok 9 - applications S3/R6: no present capability claim shape for glucose
+  ---
+  duration_ms: 0.667849
+  type: 'test'
+  ...
+# Subtest: applications S4/R7: no insulin, delivery, treatment, therapy, dose, diagnosis, cure, or outcome language
+ok 10 - applications S4/R7: no insulin, delivery, treatment, therapy, dose, diagnosis, cure, or outcome language
+  ---
+  duration_ms: 0.725876
+  type: 'test'
+  ...
+# Subtest: applications S5/R2: the footer disclosure sentences are byte exact in the served page
+ok 11 - applications S5/R2: the footer disclosure sentences are byte exact in the served page
+  ---
+  duration_ms: 1.888061
+  type: 'test'
+  ...
+# Subtest: applications S5/R2/R8: production diff against the base tree is an insertion only change in src/page.js
+ok 12 - applications S5/R2/R8: production diff against the base tree is an insertion only change in src/page.js
+  ---
+  duration_ms: 19.556939
+  type: 'test'
+  ...
+# Subtest: applications S5/R2: base page structure is intact around the insertion (header, nav, sections, routes, image payloads, llms)
+ok 13 - applications S5/R2: base page structure is intact around the insertion (header, nav, sections, routes, image payloads, llms)
+  ---
+  duration_ms: 12.434655
+  type: 'test'
+  ...
+# Subtest: applications S6/R9.1: bundle-build.log records the real production bundle command, exit 0, zero local patches
+ok 14 - applications S6/R9.1: bundle-build.log records the real production bundle command, exit 0, zero local patches
+  ---
+  duration_ms: 0.593346
+  type: 'test'
+  ...
+# Subtest: applications S6/R9.2: browser-pass.log records a bundled run of the home page with zero console and page errors
+ok 15 - applications S6/R9.2: browser-pass.log records a bundled run of the home page with zero console and page errors
+  ---
+  duration_ms: 0.348926
+  type: 'test'
+  ...
+# Subtest: applications S6/R9.3: before and after desktop screenshots are committed and differ
+ok 16 - applications S6/R9.3: before and after desktop screenshots are committed and differ
+  ---
+  duration_ms: 2.113111
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 131.805831
+exit status: 0
+
+codex
+{"station":"reviewer-design","verdict":"pass","findings":["src/page.js:578–602 and the desktop screenshots show the required typographic section after FAQ, with four equally styled entries, hairline dividers, established colors and responsive typography, and no imagery.","The section inherits the existing 800 ms ease-out reveals, reduced-motion handling and noscript fallback. Browser evidence records no horizontal overflow at 375 px.","The diabetes entry explicitly describes a possible future application; the new section contains no present glucose capability, medical-use or outcome claim. Existing footer disclosures remain unchanged."]}
+tokens used
+29,776
+{"station":"reviewer-design","verdict":"pass","findings":["src/page.js:578–602 and the desktop screenshots show the required typographic section after FAQ, with four equally styled entries, hairline dividers, established colors and responsive typography, and no imagery.","The section inherits the existing 800 ms ease-out reveals, reduced-motion handling and noscript fallback. Browser evidence records no horizontal overflow at 375 px.","The diabetes entry explicitly describes a possible future application; the new section contains no present glucose capability, medical-use or outcome claim. Existing footer disclosures remain unchanged."]}

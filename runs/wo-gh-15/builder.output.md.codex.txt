@@ -1,0 +1,1611 @@
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-7n3xscho"))
+Reading additional input from stdin...
+OpenAI Codex v0.166.0
+--------
+workdir: /home/runner/work/sentia/sentia
+model: openai/gpt-6-astra
+provider: cloudflare
+approval: never
+sandbox: danger-full-access
+reasoning effort: none
+reasoning summaries: none
+session id: 01a197d4-eb96-7842-8377-1f9954e86a53
+--------
+user
+You are executing an ANVIL station packet inside this repository. Follow the packet exactly, edit the files it asks for, and finish with a brief plain text summary of what you changed.
+
+## Station prompt
+
+# Builder
+
+## Role
+Implement the spec so the scenario tests pass.
+
+## Inputs
+- spec
+- tests
+
+## Outputs
+- code change
+
+## Rules
+- Work only from the inputs listed above and the work order in the packet.
+- Produce the output as a file in the repo, not as chat text.
+- If the inputs are not enough, say what is missing instead of guessing.
+- Never approve your own work. Approval belongs to a different station.
+- Keep the change small and mapped to a spec scenario where one applies.
+
+
+## Work order
+
+- id: wo-gh-15
+- kind: feature
+- title: Possible applications: glucose monitoring as a possible future application of the Sentia platform
+- source: github-issue
+- description: Context: Edu saw coverage of glucose responsive insulin research and of living cell implants that sense glucose and respond, and ordered the Sentia site to name glucose monitoring support for people with diabetes as a possible application of the Sentia platform. Sentia Patch One is a concept sensing patch: it senses, relays, and alerts. The full governing text is .openspec/specs/possible-applications/spec.md; this work order summarises it and the spec wins any conflict.
+
+Deliverable: one new section on the home page, a possible applications area in the established design system (numbered mono kicker reading "08 / Possible applications", section title, short introduction, hairline divided grid), placed after the FAQ section at the end of main. The section is typographic and carries no imagery. The change is a pure insertion: no existing line of any production file is modified or deleted, and the header, nav, existing sections, footer and routes stay byte identical to the base tree.
+
+Content: the introduction states the platform pattern only (a patch that senses, relays what it senses, and alerts the wearer and a care circle they choose) and frames the section as exploration. The grid names four applications at equal weight, each a title plus two or three sentences: (1) everyday wellness trends, (2) a care circle around someone living alone, (3) activity and recovery patterns, (4) glucose monitoring support for people living with diabetes.
+
+Hard guardrails, binding: wording is exploratory throughout (possible, could, one day, future, explores, would); the diabetes entry carries at least two exploratory markers and frames glucose monitoring as a possible future application. The patch does NOT detect glucose today: the new content never claims or implies a present glucose capability in any construction (no "detects glucose", "measures glucose", "monitors glucose", "senses glucose", "glucose sensor"). The new content contains no mention of insulin, of releasing or delivering any substance, of treatment, therapy, dosing or diagnosis, and no efficacy or medical outcome claim. Nothing implies a medical device in clinical use. The footer keeps byte exact both "Wellness monitoring, not diagnosis. Sentia Patch One is not a medical device." and "Sentia is a concept product, designed and built end to end by ANVIL, an open source software factory. Developed by Eduardo Arana."
+
+Tests: the test writer turns the spec scenarios into automated assertions, including absence checks for the forbidden claim shapes and terms across the new section, exploratory marker presence in the diabetes entry, the four entries at equal weight, and the footer sentences byte exact.
+
+Production shape checks, binding: (1) the real production bundle command succeeds on the final tree with zero local patches, command and exit status recorded in the evidence; (2) the bundled output is served by a local Worker runtime and a headless browser pass on the home page records zero console errors and zero page errors; (3) before and after screenshots of the affected area (end of main and footer region, desktop width) are committed under evidence/possible-applications/, before from the base build and after from the final build.
+
+Model routing for this run: builder and reviewer-design on GPT-6 Astra (gpt-6-astra) through the Cloudflare AI Gateway; spec writer, test writer and the other reviewer stations on claude-sonnet-5-5 through the same gateway. No fallback to another model for the builder.
+
+Deployment is NOT part of this order: the deployer station stays a packet, nothing deploys from this branch, and the result stops at the owner gate.
+
+Done criteria: the section live in the branch build with all four applications at equal weight and the guardrails verified by tests; insertion only diff; production shape evidence committed; suite green apart from the design v4 S11 failure itemized by name as pre-existing and untouched; run verdict with all five expected reviews counted, reviewer-design among them.
+
+GitHub issue: https://github.com/arananet/sentia/issues/15
+- risk_hints: 
+- status: new
+
+## Upstream steps
+
+- intake: completed
+- spec-writer: executed
+- test-writer: executed
+
+## Verified learnings
+
+- L-1: Art direction is imagery first; flat SVG as the primary visual language was rejected by the product owner and must not return as a section's main visual. (provenance: run wo-gh-2, artifact design/DESIGN.md, evidence verdict approved)
+- L-2: Product imagery sits seamlessly on the brand paper #FAFAF6 (no studio backgrounds, no visible image rectangles), verified by corner and edge sampling within 3 per channel. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-3: The patch reads at true 38 mm scale with explicit scale anchors, and on-skin imagery is strict inner forearm framing only. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-4: The product is the protagonist: the patch appears large and early, the page must not read empty or editorial, and display type must not crowd out the product. (provenance: run wo-gh-3, artifact src/page.js, evidence verdict changes_requested)
+- L-5: The current product render set is owner approved, especially the patch render; composition iterations keep src/images.js byte identical and never regenerate product imagery. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-6: Product imagery for Sentia meets the production quality bar anchored in design/reference/: photorealistic studio quality with real materials and physically consistent light; stylized or toy-like renders fail review. Reviewer-design compares every new product image against the anchor boards and names the gaps. (provenance: run wo-gh-5, artifact src/images.js, evidence verdict changes_requested)
+- L-7: The product is the square low profile patch anchored in design/reference/ and the round disc renders are retired; L-2, L-3 and L-5 stand as amended by the design v4 spec: photographic treatment instead of seamless paper backgrounds, limb close ups (inner forearm or upper arm) instead of inner forearm only, and the render set replaceable through an owner decided work order instead of frozen byte identical. (provenance: run wo-gh-6, artifact src/images.js, evidence verdict approved)
+
+## Project design
+codex
+I’ll read the spec and tests, add the section as an insertion, and capture the required build and browser evidence.
+
+exec
+/bin/bash -lc "pwd; rg --files -g 'AGENTS.md' -g '*possible*' -g 'package.json' -g '*test*' -g '*spec*' -g 'wrangler*' -g '*lock*' -g 'vite*' -g 'README*' -g 'playwright*' -g '"'!node_modules'"' -g '"'!package-lock.json'"' -g '"'!pnpm-lock.yaml'"'" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+/home/runner/work/sentia/sentia
+tests/ui-elevation.test.js
+tests/api.test.js
+tests/design-v2-imagery.test.js
+tests/design-v2-1-corrections.test.js
+tests/site-credit.test.js
+tests/possible-applications.test.js
+tests/take-apart.test.js
+tests/take-apart-bundling.test.js
+tests/design-v3-product-first.test.js
+tests/demo.test.js
+tests/design-v4-square-product.test.js
+tests/mcp.test.js
+tests/codec.test.js
+design/reference/README.md
+wrangler.toml
+evidence/take-apart-bundling/README.md
+evidence/take-apart-bundling/take-apart-tests.log
+evidence/take-apart-bundling/test-suite.log
+.openspec/specs/s11-semantic-assertion/spec.md
+.openspec/specs/site-credit/spec.md
+.openspec/specs/imagery-consistency/spec.md
+.openspec/specs/ui-elevation/spec.md
+.openspec/specs/design-v3-product-first/spec.md
+.openspec/specs/design-v2-imagery/spec.md
+.openspec/specs/take-apart/spec.md
+.openspec/specs/live-demo/spec.md
+.openspec/specs/mcp-server/spec.md
+.openspec/specs/take-apart-bundling/spec.md
+.openspec/specs/possible-applications/spec.md
+.openspec/specs/ingestion-api/spec.md
+.openspec/specs/dashboard-data/spec.md
+.openspec/specs/packet-codec/spec.md
+README.md
+package.json
+.openspec/specs/design-v4-square-product/spec.md
+reviews/live-demo/reviewer-spec.json
+reviews/live-demo/reviewer-tests.json
+.openspec/specs/core-worker/spec.md
+reviews/mcp-server/reviewer-spec.json
+reviews/mcp-server/reviewer-tests.json
+reviews/ingestion-api/reviewer-spec.json
+reviews/ingestion-api/reviewer-tests.json
+reviews/dashboard-data/reviewer-spec.json
+reviews/dashboard-data/reviewer-tests.json
+reviews/core-worker/reviewer-spec.json
+reviews/core-worker/reviewer-tests.json
+reviews/packet-codec/reviewer-spec.json
+reviews/packet-codec/reviewer-tests.json
+runs/wo-sentia-001/envelopes/reviewer-tests.envelope.json
+runs/wo-sentia-001/envelopes/reviewer-spec.envelope.json
+runs/wo-sentia-001/envelopes/spec-writer.envelope.json
+runs/wo-sentia-001/envelopes/test-writer.envelope.json
+runs/wo-sentia-001/reviewer-tests.packet.md
+runs/wo-sentia-001/reviewer-spec.packet.md
+runs/wo-sentia-001/test-writer.packet.md
+runs/wo-sentia-001/spec-writer.packet.md
+runs/wo-gh-1/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-1/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-1/envelopes/spec-writer.envelope.json
+runs/wo-gh-1/envelopes/test-writer.envelope.json
+runs/wo-gh-1/reviewer-tests.packet.md
+runs/wo-gh-1/reviewer-spec.packet.md
+runs/wo-gh-1/reviewer-tests.output.md
+runs/wo-gh-1/spec-writer.output.md
+runs/wo-gh-1/reviewer-spec.output.md
+runs/wo-gh-1/test-writer.packet.md
+runs/wo-gh-1/spec-writer.packet.md
+runs/wo-gh-1/test-writer.output.md
+runs/wo-gh-6/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-6/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-6/envelopes/spec-writer.envelope.json
+runs/wo-gh-6/envelopes/test-writer.envelope.json
+runs/wo-gh-6/reviewer-tests.packet.md
+runs/wo-gh-6/reviewer-spec.packet.md
+runs/wo-gh-6/reviewer-tests.output.md
+runs/wo-gh-6/spec-writer.output.md
+runs/wo-gh-6/reviewer-spec.output.md
+runs/wo-gh-6/test-writer.packet.md
+runs/wo-gh-6/spec-writer.packet.md
+runs/wo-gh-6/test-writer.output.md
+runs/wo-gh-11/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-11/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-15/envelopes/spec-writer.envelope.json
+runs/wo-gh-11/envelopes/spec-writer.envelope.json
+runs/wo-gh-15/envelopes/test-writer.envelope.json
+runs/wo-gh-11/envelopes/test-writer.envelope.json
+runs/wo-gh-15/spec-writer.output.md
+runs/wo-gh-11/reviewer-tests.packet.md
+runs/wo-gh-15/test-writer.packet.md
+runs/wo-gh-11/reviewer-spec.packet.md
+runs/wo-gh-15/spec-writer.packet.md
+runs/wo-gh-11/reviewer-tests.output.md
+runs/wo-gh-11/spec-writer.output.md
+runs/wo-gh-11/reviewer-spec.output.md
+runs/wo-gh-11/test-writer.packet.md
+runs/wo-gh-11/spec-writer.packet.md
+runs/wo-gh-11/test-writer.output.md
+runs/wo-gh-15/test-writer.output.md
+runs/wo-gh-2/test-writer.packet.md
+runs/wo-gh-2/spec-writer.packet.md
+runs/wo-gh-2/test-writer.output.md
+runs/wo-gh-2/spec-writer.output.md
+runs/wo-gh-2/reviewer-spec.output.md
+runs/wo-gh-2/reviewer-tests.output.md
+runs/wo-gh-2/reviewer-spec.packet.md
+runs/wo-gh-9/test-writer.output.md
+runs/wo-gh-9/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-9/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-9/envelopes/spec-writer.envelope.json
+runs/wo-gh-9/envelopes/test-writer.envelope.json
+runs/wo-gh-9/reviewer-tests.packet.md
+runs/wo-gh-9/reviewer-spec.packet.md
+runs/wo-gh-9/reviewer-tests.output.md
+runs/wo-gh-9/builder-take-apart-test.log
+runs/wo-gh-9/spec-writer.output.md
+runs/wo-gh-9/reviewer-spec.output.md
+runs/wo-gh-9/test-writer.packet.md
+runs/wo-gh-9/spec-writer.packet.md
+runs/wo-gh-2/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-2/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-2/envelopes/spec-writer.envelope.json
+runs/wo-gh-2/envelopes/test-writer.envelope.json
+runs/wo-gh-2/reviewer-tests.packet.md
+runs/wo-gh-4/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-4/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-4/envelopes/spec-writer.envelope.json
+runs/wo-gh-4/envelopes/test-writer.envelope.json
+runs/wo-gh-4/reviewer-tests.packet.md
+runs/wo-gh-4/reviewer-spec.packet.md
+runs/wo-gh-4/reviewer-tests.output.md
+runs/wo-gh-4/spec-writer.output.md
+runs/wo-gh-4/reviewer-spec.output.md
+runs/wo-gh-4/test-writer.packet.md
+runs/wo-gh-4/spec-writer.packet.md
+runs/wo-gh-4/test-writer.output.md
+runs/wo-gh-5/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-5/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-5/envelopes/spec-writer.envelope.json
+runs/wo-gh-5/envelopes/test-writer.envelope.json
+runs/wo-gh-5/reviewer-tests.packet.md
+runs/wo-gh-5/reviewer-spec.packet.md
+runs/wo-gh-5/reviewer-tests.output.md
+runs/wo-gh-5/spec-writer.output.md
+runs/wo-gh-5/reviewer-spec.output.md
+runs/wo-gh-5/test-writer.packet.md
+runs/wo-gh-5/spec-writer.packet.md
+runs/wo-gh-5/test-writer.output.md
+runs/wo-gh-7/reviewer-spec.output.md
+runs/wo-gh-7/test-writer.packet.md
+runs/wo-gh-7/spec-writer.packet.md
+runs/wo-gh-7/test-writer.output.md
+runs/wo-gh-7/reviewer-tests.output.md
+runs/wo-gh-7/spec-writer.output.md
+runs/wo-gh-7/reviewer-spec.packet.md
+runs/wo-gh-7/reviewer-tests.packet.md
+runs/wo-gh-8/spec-writer.output.md
+runs/wo-gh-8/reviewer-spec.output.md
+runs/wo-gh-8/test-writer.packet.md
+runs/wo-gh-8/spec-writer.packet.md
+runs/wo-gh-8/test-writer.output.md
+runs/wo-gh-8/reviewer-tests.packet.md
+runs/wo-gh-8/reviewer-spec.packet.md
+runs/wo-gh-8/reviewer-tests.output.md
+runs/wo-gh-8/envelopes/spec-writer.envelope.json
+runs/wo-gh-8/envelopes/test-writer.envelope.json
+runs/wo-gh-8/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-3/reviewer-tests.output.md
+runs/wo-gh-3/spec-writer.output.md
+runs/wo-gh-3/reviewer-spec.output.md
+runs/wo-gh-3/test-writer.packet.md
+runs/wo-gh-3/spec-writer.packet.md
+runs/wo-gh-3/test-writer.output.md
+runs/wo-gh-7/envelopes/test-writer.envelope.json
+runs/wo-gh-7/envelopes/spec-writer.envelope.json
+runs/wo-gh-3/envelopes/test-writer.envelope.json
+runs/wo-gh-3/reviewer-tests.packet.md
+runs/wo-gh-3/reviewer-spec.packet.md
+runs/wo-gh-3/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-3/envelopes/spec-writer.envelope.json
+runs/wo-gh-8/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-3/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-7/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-7/envelopes/reviewer-tests.envelope.json
+
+exec
+/bin/bash -lc 'git status --short; cat .openspec/specs/possible-applications/spec.md; cat package.json' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+?? runs/wo-gh-15/
+?? tests/possible-applications.test.js
+# Sentia Possible Applications
+
+Status: active for wo-gh-15
+Slug: possible-applications
+
+## Roles
+- implementer: builds the change described here
+- reviewer: checks the change against this spec
+- qa: checks the scenarios below with tests
+- product_owner: owns the purpose and accepts the result
+
+## Purpose
+Edu saw coverage of glucose responsive insulin research and of living cell implants that sense glucose and respond, and ordered the Sentia site to name glucose monitoring support for people with diabetes as a possible application of the Sentia platform. Sentia Patch One is a concept sensing patch: it senses, relays, and alerts. This spec governs adding a possible applications area to the home page that carries that application at the same weight as the others, framed strictly as possible and future. Nothing in this order deploys; the result stops at the owner gate.
+
+## Requirements
+- R1: The home page gains one new section, a possible applications area, in the established design system of design/DESIGN.md: a numbered mono kicker in the established style, a section title, a short introduction, and a hairline divided grid of application entries. Placed after the FAQ section at the end of main, its kicker reads "08 / Possible applications". The section is typographic: it carries no imagery at all, new or reused.
+- R2: The change is a pure insertion. No existing line of any production file is modified or deleted: the header, the nav, every existing section, the footer and every route stay byte identical to the base tree. The footer keeps, byte exact, both "Wellness monitoring, not diagnosis. Sentia Patch One is not a medical device." and "Sentia is a concept product, designed and built end to end by ANVIL, an open source software factory. Developed by Eduardo Arana."
+- R3: The introduction states the platform pattern only: a patch that senses, relays what it senses, and alerts the wearer and a care circle they choose. It frames the whole section as exploration: where that pattern could go, not what the product does today.
+- R4: The grid names four application entries at equal weight, each with a title and two or three sentences of body copy: (1) everyday wellness trends, (2) a care circle around someone living alone, (3) activity and recovery patterns, (4) glucose monitoring support for people living with diabetes. No entry is visually or verbally privileged over the others: same grid treatment, comparable length, no badges, no calls to action.
+- R5: Wording is exploratory throughout the new section: possible, could, one day, future, explores, would. The diabetes entry must carry at least two such exploratory markers in its own copy, and its title or lead must frame it as a possible future application.
+- R6: HARD GUARDRAIL, capability: the new content never claims or implies that the patch detects, measures, monitors or senses glucose today, in any tense or construction that reads as a present capability of the product. Naming the possible application itself (glucose monitoring as the name of the future application) is allowed only inside the exploratory framing of R5.
+- R7: HARD GUARDRAIL, medicine: the new content contains no mention of insulin, of releasing or delivering any substance, of treatment, therapy, dosing or diagnosis, and no efficacy claim or medical outcome claim of any kind. Nothing in the section implies a medical device in clinical use.
+- R8: The rest of the site is untouched: no changes to facts, sensors, specs, FAQ answers, the demo, the dashboard, the MCP surface, llms outputs or any route. New files are limited to the tests for this spec, the run evidence under evidence/possible-applications/, and the run records the line itself produces.
+- R9: Production shape evidence, binding: (1) the real production bundle command succeeds on the final tree with zero local patches, command and exit status recorded; (2) the bundled output is served by a local Worker runtime and a headless browser pass records zero console errors and zero page errors on the home page; (3) before and after screenshots of the affected area (the end of main and the footer region) are committed under evidence/possible-applications/, the before capture taken from the base build and the after capture from the final build, both at desktop width.
+- R10: Deployment is not part of this order. The deployer station stays a packet; nothing is deployed from this branch, and production keeps serving its current version.
+
+## Scenarios
+
+### Scenario: The section exists and names four applications at equal weight
+- S1: Given the final tree, when the home page is served, then it contains one section with id "applications" whose grid names all four entries of R4, the diabetes entry among them, each with a title and body copy of comparable length and identical grid treatment.
+
+### Scenario: The diabetes application is framed as possible and future
+- S2: Given the new section, when its diabetes entry is read, then the entry carries at least two exploratory markers from R5 and frames glucose monitoring as a possible future application of the platform pattern (continuous sensing, relay, alerts to the wearer and their circle), and nothing more.
+
+### Scenario: No present capability claim for glucose
+- S3: Given the new section text, when it is scanned, then no sentence states or implies that the patch detects, measures, monitors or senses glucose as a present capability; an automated test asserts the absence of capability claim shapes (for example "detects glucose", "measures glucose", "monitors glucose", "senses glucose", "glucose sensor") in the new section.
+
+### Scenario: No treatment or outcome language
+- S4: Given the new section text, when it is scanned, then the words insulin, treat and its derivatives, therapy, dose and its derivatives, diagnos and its derivatives, cure and manage your condition shapes are all absent, and an automated test asserts each absence; the section makes no efficacy or medical outcome claim.
+
+### Scenario: Everything outside the section is byte stable
+- S5: Given the production diff against the base tree, when it is read, then the only production change is the inserted section block in src/page.js; the footer disclosure sentences of R2 are byte exact; the header, nav, existing sections, routes, image payloads and llms outputs are unchanged.
+
+### Scenario: Production shape holds
+- S6: Given the final tree, when the bundle is built with no local patches and the bundled output is served locally, then the bundle command exits clean, the headless browser pass on the home page records zero console errors and zero page errors, and the before and after screenshots of R9 are committed under evidence/possible-applications/.
+
+### Scenario: Green suite, full review panel, no deployment
+- S7: Given the executed run, when the run report is read, then the project test suite passes apart from the design v4 S11 failure, itemized by name as pre-existing on this stack and left untouched; reviewer-design has judged the rendered section against DESIGN.md and the guardrails R5 to R7; and no deployment step ran, with production still serving its previous version.
+{
+  "name": "sentia",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  }
+}
+
+exec
+/bin/bash -lc 'cat tests/possible-applications.test.js; cat wrangler.toml; cat design/DESIGN.md' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import zlib from 'node:zlib';
+import { execFileSync } from 'node:child_process';
+import worker from '../src/index.js';
+import { renderPage } from '../src/page.js';
+
+// possible-applications spec (wo-gh-15), scenarios S1 to S6. S7 (suite, review panel, no
+// deployment) is a run report fact, not a test.
+//
+// Offline, plain Node. The production bundler and the headless browser are not repo
+// dependencies, so S6 reads the committed evidence under evidence/possible-applications/:
+//   bundle-build.log   the production bundle command and its exit status (R9.1)
+//   browser-pass.log   headless pass on the bundled output, served locally (R9.2)
+//   before*.png / after*.png   desktop width screenshots of end of main + footer (R9.3)
+
+const ORIGIN = 'https://sentia.test';
+const BASE = 'c55bc16'; // base tree: the operator setup commit, before any implementation
+const ROOT = new URL('../', import.meta.url);
+const EVID = new URL('../evidence/possible-applications/', import.meta.url);
+const read = (rel) => fs.readFileSync(new URL('../' + rel, import.meta.url), 'utf8');
+const git = (...args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8' });
+const evidFile = (re) => (fs.existsSync(EVID) ? fs.readdirSync(EVID) : []).filter((f) => re.test(f));
+
+const html = renderPage(ORIGIN);
+const sectionMatch = html.match(/<section\b[^>]*\bid="applications"[^>]*>[\s\S]*?<\/section>/);
+const SECTION = sectionMatch ? sectionMatch[0] : '';
+const text = (s) => s.replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+const SECTION_TEXT = text(SECTION);
+
+// Grid entries: <article> blocks inside the section.
+const entries = [...SECTION.matchAll(/<article\b([^>]*)>([\s\S]*?)<\/article>/g)].map((m) => {
+  const title = text((m[2].match(/<h3\b[^>]*>([\s\S]*?)<\/h3>/) || [, ''])[1]);
+  const body = text(m[2].replace(/<h3\b[^>]*>[\s\S]*?<\/h3>/, ''));
+  return { attrs: m[1].trim(), title, body, sentences: body.split(/(?<=[.!?])\s+/).filter(Boolean) };
+});
+const MARKER = /\b(possible|possibly|could|one day|future|explores?|exploring|would)\b/i;
+const markerCount = (s) => (s.match(new RegExp(MARKER.source, 'gi')) || []).length;
+const diabetes = entries.find((e) => /diabetes|glucose/i.test(e.title + ' ' + e.body));
+
+test('applications S1: the guarded home page has exactly one section id="applications" after FAQ, at the end of main', async () => {
+  const res = await worker.fetch(new Request(ORIGIN + '/'));
+  assert.equal(res.status, 200);
+  const served = await res.text();
+  assert.equal((served.match(/id="applications"/g) || []).length, 1, 'exactly one applications section');
+  const iFaq = served.indexOf('id="faq"'), iApp = served.indexOf('id="applications"');
+  const iMainEnd = served.indexOf('</main>'), iFooter = served.indexOf('<footer>');
+  assert.ok(iFaq > -1 && iFaq < iApp && iApp < iMainEnd && iMainEnd < iFooter, 'order: faq, applications, </main>, footer');
+  assert.ok(SECTION, 'section block found');
+  assert.equal(served.slice(iApp).split('<section').length - 1, 0, 'applications is the last section of main');
+});
+
+test('applications R1: kicker reads "08 / Possible applications" in the established mono kicker style, with title and intro', () => {
+  assert.ok(SECTION.includes('<p class="mono kicker rv"><span aria-hidden="true">08 / </span>Possible applications</p>'), 'established kicker markup');
+  assert.match(SECTION_TEXT, /^08 \/ Possible applications\b/);
+  assert.match(SECTION, /<h2\b[^>]*>[^<]+<\/h2>/, 'section title');
+  assert.ok(SECTION.includes('aria-label='), 'section carries an aria-label like its siblings');
+  assert.match(SECTION, /<p\b(?![^>]*kicker)[^>]*>[^<]{40,}<\/p>/, 'short introduction paragraph');
+});
+
+test('applications R1: the section is typographic, no imagery new or reused', () => {
+  assert.ok(SECTION);
+  assert.doesNotMatch(SECTION, /<(img|svg|picture|video|canvas|source|figure|iframe)\b/i);
+  assert.doesNotMatch(SECTION, /url\(|background-image|\.(png|jpe?g|webp|avif|gif|svg)\b|data:image/i);
+});
+
+test('applications S1/R4: four entries, in order, with identical grid treatment and a title each', () => {
+  assert.equal(entries.length, 4, 'four application entries');
+  assert.equal(new Set(entries.map((e) => e.attrs)).size, 1, 'all four articles carry identical attributes (same class/treatment)');
+  assert.ok(entries.every((e) => e.title && e.body), 'each entry has a title and body');
+  assert.match(entries[0].title, /wellness/i);
+  assert.match(entries[0].title + entries[0].body, /trend/i);
+  assert.match(entries[1].title, /care circle/i);
+  assert.match(entries[1].title + entries[1].body, /alone/i);
+  assert.match(entries[2].title, /activity/i);
+  assert.match(entries[2].title + entries[2].body, /recovery/i);
+  assert.match(entries[3].title, /glucose/i);
+  assert.match(entries[3].title + entries[3].body, /diabetes/i);
+});
+
+test('applications S1/R4: entries have two or three sentences and comparable length; nothing privileged', () => {
+  for (const e of entries) assert.ok(e.sentences.length >= 2 && e.sentences.length <= 3, `"${e.title}" has ${e.sentences.length} sentences`);
+  const lens = entries.map((e) => e.body.length);
+  assert.ok(Math.max(...lens) / Math.min(...lens) <= 1.5, `body lengths comparable: ${lens}`);
+  const titleLens = entries.map((e) => e.title.length);
+  assert.ok(Math.max(...titleLens) / Math.min(...titleLens) <= 2.5, `title lengths comparable: ${titleLens}`);
+  assert.doesNotMatch(SECTION, /<(a|button)\b/i, 'no calls to action or links in the section');
+  assert.doesNotMatch(SECTION, /\b(badge|new|featured|highlight|primary|flagship|most important|learn more|get started|sign up)\b/i, 'no badges or calls to action');
+  assert.doesNotMatch(SECTION, /<(strong|em|b|mark)\b|font-size|font-weight|style="[^"]*(color|background|border)/i, 'no inline emphasis on any entry');
+});
+
+test('applications R3: the introduction states the platform pattern only and frames the section as exploration', () => {
+  const intro = text((SECTION.match(/<p\b(?![^>]*kicker)[^>]*>([\s\S]*?)<\/p>/) || [, ''])[1]);
+  assert.match(intro, /\bsens/i);
+  assert.match(intro, /\brelay/i);
+  assert.match(intro, /\balert/i);
+  assert.match(intro, /care circle/i);
+  assert.match(intro, /wearer/i);
+  assert.ok(markerCount(intro) >= 1, 'intro carries an exploratory marker');
+  assert.doesNotMatch(intro, /glucose|diabetes/i, 'intro names the pattern, not any application');
+});
+
+test('applications S2/R5: every entry is exploratory; the diabetes entry carries two or more markers and frames a possible future application', () => {
+  for (const e of entries) assert.ok(markerCount(e.body) >= 1, `"${e.title}" has no exploratory marker`);
+  assert.ok(diabetes, 'diabetes entry found');
+  assert.ok(markerCount(diabetes.body) >= 2, `diabetes body markers: ${markerCount(diabetes.body)}`);
+  const lead = diabetes.title + ' ' + diabetes.sentences[0];
+  assert.match(lead, /\b(possible|future|one day)\b/i, 'title or lead frames a possible future application');
+  assert.match(diabetes.body, /\b(continuous|sensing|relay|alert)/i, 'framed as the platform pattern');
+  assert.match(diabetes.body, /\b(circle|wearer)\b/i);
+  assert.ok(markerCount(SECTION_TEXT) >= 6, 'exploratory wording throughout the section');
+});
+
+test('applications S2/R6: glucose appears only in the diabetes entry, and only in sentences that carry an exploratory marker', () => {
+  const outside = SECTION_TEXT.replace(diabetes.title, '').replace(diabetes.body, '');
+  assert.doesNotMatch(outside, /glucose|diabet/i, 'glucose and diabetes are named in the diabetes entry only');
+  for (const s of diabetes.sentences.filter((x) => /glucose/i.test(x))) {
+    assert.ok(MARKER.test(s), `glucose sentence lacks an exploratory marker: "${s}"`);
+  }
+});
+
+test('applications S3/R6: no present capability claim shape for glucose', () => {
+  const shapes = [
+    /\b(detect|measure|monitor|sense|read|track|test|check|record|gauge)(s|ed|ing)?\b(\s+\w+){0,3}\s+(blood\s+)?(glucose|sugar)/i,
+    /\bglucose\s+(sensor|sensing|detection|measurement|reading|readings|level|levels|data|value|values|tracking)\b/i,
+    /\b(blood\s+(glucose|sugar)|cgm|glucometer)\b/i,
+    /\b(detects?|measures?|monitors?|senses?)\s+glucose/i,
+    /\bglucose\b[^.]*\b(today|now|already|currently|is able|can detect|can measure|can monitor|can sense)\b/i,
+    /\b(patch|sentia|it)\s+(does|can|will|is)\b[^.]*glucose/i,
+  ];
+  for (const re of shapes) assert.doesNotMatch(SECTION_TEXT, re, `capability claim shape present: ${re}`);
+  assert.ok(/glucose/i.test(SECTION_TEXT), 'the possible application itself is still named (R6 allows the name inside exploratory framing)');
+});
+
+test('applications S4/R7: no insulin, delivery, treatment, therapy, dose, diagnosis, cure, or outcome language', () => {
+  assert.ok(SECTION, 'applications section missing');
+  const absent = {
+    insulin: /insulin/i,
+    treat: /\btreat\w*/i,
+    therapy: /\btherap\w*/i,
+    dose: /\bdos(e|es|ed|ing|age)\b/i,
+    diagnos: /diagnos\w*/i,
+    cure: /\bcur(e|es|ed|ing)\b/i,
+    'manage your condition': /manag\w*\s+(your|their|a|the)\s+(condition|diabetes|health)|manage\s+diabetes/i,
+    'release or delivery of a substance': /\b(releas|deliver|dispens|inject|administer|infus)\w*|\bdrug|medicat\w*|\bpump\b|\bhormone/i,
+    'clinical or medical device': /\bclinical\w*|\bmedical\b|\bpatient|\bFDA\b|\bprescri\w*|\bphysician|\bdisease/i,
+    'efficacy or outcome claim': /\b(proven|effective|efficacy|prevent\w*|improv\w*|reduc\w*|heal\w*|outcome\w*|accura\w*|reliabl\w*|safe|safely|control\w*)\b/i,
+  };
+  for (const [name, re] of Object.entries(absent)) assert.doesNotMatch(SECTION_TEXT, re, `forbidden term group present: ${name}`);
+});
+
+test('applications S5/R2: the footer disclosure sentences are byte exact in the served page', async () => {
+  const served = await (await worker.fetch(new Request(ORIGIN + '/'))).text();
+  assert.ok(served.includes('Wellness monitoring, not diagnosis. Sentia Patch One is not a medical device.'));
+  const plain = (s) => s.replace(/<a href="[^"]*">ANVIL<\/a>/, 'ANVIL');
+  const fine = [...served.matchAll(/<p class="fine">([\s\S]*?)<\/p>/g)].map((m) => plain(m[1]));
+  assert.ok(fine.includes('Sentia is a concept product, designed and built end to end by ANVIL, an open source software factory. Developed by Eduardo Arana.'));
+  assert.ok(served.indexOf('</main>') < served.indexOf('Wellness monitoring, not diagnosis.'), 'disclosure stays in the footer');
+});
+
+// ---------------------------------------------------------------- S5 insertion only diff
+function baseAvailable() {
+  try { git('cat-file', '-e', BASE + '^{commit}'); return true; } catch { return false; }
+}
+
+test('applications S5/R2/R8: production diff against the base tree is an insertion only change in src/page.js', () => {
+  assert.ok(baseAvailable(), `base commit ${BASE} not available in this checkout (fetch full history)`);
+  const names = git('diff', '--name-only', BASE).split('\n').filter(Boolean);
+  const untracked = git('ls-files', '--others', '--exclude-standard').split('\n').filter(Boolean);
+  const prod = [...names, ...untracked].filter((f) => /^(src|brand|design|brain|tools|scripts)\//.test(f) || ['wrangler.toml', 'package.json', 'anvil.yaml', 'anvil.json'].includes(f));
+  assert.deepEqual([...new Set(prod)].filter((f) => f !== 'src/page.js'), [], 'only src/page.js may change among production files');
+  const stat = git('diff', '--numstat', BASE, '--', 'src/page.js').trim().split('\t');
+  assert.ok(Number(stat[0]) > 0, 'page.js gained lines');
+  assert.equal(Number(stat[1]), 0, `src/page.js deleted or modified ${stat[1]} existing lines`);
+});
+
+test('applications S5/R2: base page structure is intact around the insertion (header, nav, sections, routes, image payloads, llms)', async () => {
+  assert.ok(baseAvailable(), `base commit ${BASE} not available`);
+  const base = git('show', `${BASE}:src/page.js`);
+  const cur = read('src/page.js');
+  // Every base line survives in order (subsequence check), so nothing was edited or moved.
+  const a = base.split('\n'), b = cur.split('\n');
+  let j = 0;
+  for (const line of a) { while (j < b.length && b[j] !== line) j++; assert.ok(j < b.length, `base line missing or moved: ${line.slice(0, 80)}`); j++; }
+  for (const id of ['patch', 'how', 'demo', 'dashboard', 'mcp', 'specs', 'faq']) assert.ok(html.includes(`id="${id}"`), `#${id} present`);
+  assert.equal((html.match(/<nav\b/g) || []).length, (base.match(/<nav\b/g) || []).length);
+  for (const route of ['/', '/take-apart', '/llms.txt', '/robots.txt', '/sitemap.xml']) {
+    const res = await worker.fetch(new Request(ORIGIN + route));
+    assert.equal(res.status, 200, `${route} still answers`);
+  }
+  const llms = await (await worker.fetch(new Request(ORIGIN + '/llms.txt'))).text();
+  assert.doesNotMatch(llms, /glucose|diabetes|possible applications/i, 'llms output untouched');
+});
+
+// ---------------------------------------------------------------- S6 production shape evidence
+test('applications S6/R9.1: bundle-build.log records the real production bundle command, exit 0, zero local patches', () => {
+  const files = evidFile(/bundle.*\.(log|txt)$|build.*\.(log|txt)$/i);
+  assert.ok(files.length >= 1, 'evidence/possible-applications/bundle-build.log is missing');
+  const log = fs.readFileSync(new URL(files[0], EVID), 'utf8');
+  assert.match(log, /wrangler[^\n]*(deploy[^\n]*--dry-run|--dry-run[^\n]*deploy|--outdir|--outfile)/i, 'wrangler bundling command recorded');
+  assert.match(log, /exit(?:\s+(?:status|code))?\W{0,6}0\b/i, 'exit status 0 recorded');
+  assert.doesNotMatch(log, /exit(?:\s+(?:status|code))?\W{0,6}[1-9]\d*\b/i, 'no non zero exit recorded');
+  assert.doesNotMatch(log, /\b(ERROR|Could not resolve|Build failed)\b/, 'bundler reported an error');
+  assert.match(log, /no (local )?patch|zero (local )?patch|patches?:\s*(none|0)/i, 'log states no local patch was applied');
+});
+
+test('applications S6/R9.2: browser-pass.log records a bundled run of the home page with zero console and page errors', () => {
+  const files = evidFile(/browser.*\.(log|txt)$/i);
+  assert.ok(files.length >= 1, 'evidence/possible-applications/browser-pass.log is missing');
+  const log = fs.readFileSync(new URL(files[0], EVID), 'utf8');
+  assert.match(log, /console[ _-]?errors?\W{0,6}0\b/i, 'console error count of zero');
+  assert.match(log, /page[ _-]?errors?\W{0,6}0\b/i, 'page error count of zero');
+  assert.match(log, /wrangler|bundled|built bundle/i, 'the served output is the bundled shape');
+  assert.match(log, /(workerd|wrangler dev|local worker|miniflare)/i, 'served by a local Worker runtime');
+  assert.match(log, /applications/i, 'the pass saw the applications section');
+});
+
+function pngSize(buf) {
+  assert.ok(buf.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])), 'not a PNG');
+  return { w: buf.readUInt32BE(16), h: buf.readUInt32BE(20) };
+}
+
+test('applications S6/R9.3: before and after desktop screenshots are committed and differ', () => {
+  const before = evidFile(/^before.*\.png$/i), after = evidFile(/^after.*\.png$/i);
+  assert.ok(before.length >= 1, 'no before*.png under evidence/possible-applications/');
+  assert.ok(after.length >= 1, 'no after*.png under evidence/possible-applications/');
+  const load = (f) => fs.readFileSync(new URL(f, EVID));
+  for (const f of [...before, ...after]) {
+    const b = load(f);
+    assert.ok(b.length >= 20 * 1024, `${f} is ${b.length} bytes, under 20 KB`);
+    assert.ok(pngSize(b).w >= 1200, `${f} is not desktop width`);
+  }
+  assert.ok(!load(before[0]).equals(load(after[0])), 'before and after captures are identical');
+  assert.ok(pngSize(load(after[0])).h > pngSize(load(before[0])).h * 0.95, 'after capture covers at least the same area');
+});
+name = "sentia"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+workers_dev = true
+# Sentia design system v4
+
+Identity is governed by brand/BRAND.md. This system applies that identity to
+the launch page: imagery is the primary art direction, with the product as the protagonist
+and natural limb proportions as anchors for true scale.
+Sentia Patch One is the object; Sentia Cloud receives its measurements; the
+Sentia MCP Server makes those measurements available to assistants.
+
+## Tokens
+
+Paper #FAFAF6 occupies roughly 90 percent of the surface. Ink green #12211C
+forms text and instrument outlines. Signal teal #0E7C66 marks links, labels
+and the Find My network and LoRaWAN paths. Coral #FF6B4A is reserved for the
+status LED and alert dots. Soft mint #EFF4EE is a rare panel fill; hairline
+#DFE7DF divides information. Body text uses #4A5D54; secondary labels use
+#53685C for legibility on paper. White is reserved for the physical patch.
+No decorative gradients. Only the soft contact shadow baked into each product
+render is allowed; the page adds no shadow or tinted backdrop.
+
+## Type scale
+
+Space Grotesk at weight 300 is the display face. Display type must serve the
+product. The hero runs from 56 to 64 px with 0.96 leading and -0.055 em tracking. Section titles run from
+40 to 64 px with 1.04 leading and -0.04 em tracking, limited to 18 characters
+per line where space permits. Data values run from 32 to 56 px. Inter body
+text is 17 px with 1.65 leading; introductory text is 18–20 px, at most
+54 characters per line. System mono labels are 11 px, uppercase, with
+0.16 em tracking. Never shrink body copy to fit a composition.
+
+## Spacing rhythm
+
+Use an 8 px base: 8, 16, 24, 32, 48, 64, 96, 128, 160. The page container
+is at most 1440 px wide, with fluid 24–80 px gutters. Sections have 64–96 px
+vertical padding for richer density. A title, its introduction and its
+illustration form one idea; detailed lists follow with 32–48 px separation. Hairlines provide
+structure without enclosing every item in a card. Technical examples and
+tables remain dense enough to scan, with scrolling contained locally.
+Fixed margins, padding and gaps use multiples of 8 px, including the bounds
+of fluid spacing. One-pixel border overlaps and diagram coordinates are
+optical geometry rather than content spacing.
+
+## Hero art direction
+
+Place the existing headline in four columns and the supplied hero render
+in eight, capped at 960 px. The complete patch render is the visual center,
+large and early above the fold at desktop and mobile widths. Keep the kicker,
+chips and introductory copy; repeat the existing dimensional, wear and water
+resistance facts alongside the introduction.
+The square patch has strongly rounded corners, a matte warm white top cover,
+the physical SENTIA wordmark and one LED line, with a low 2.5 mm profile.
+The hero shows it worn on an upper arm in a warm neutral studio photograph. Below 1000 px, stack the
+headline, object and supporting copy. Preserve the whole object at narrow
+widths. Flat inline SVG is demoted to small supporting diagrams only; it
+must not carry the hero, hardware or connectivity art direction. The logo,
+functional live demo graphics and dashboard charts stay.
+
+## Composition and accessibility
+
+The brand sheet wins every conflict with the design knowledge pack. Use calm
+tactile softness from render scale and whitespace, never pastel or blue
+palettes, shadowed surfaces or decorative cards. A 12 column grid aligns the
+hero headline across four columns and the object across eight. Supporting
+text and chips complete that system; one value proposition strip follows,
+using the existing tagline. Measured facts (2.5 mm profile, 14 days, IP67 and network
+behaviour) establish trust before the hardware detail. State plainly here
+that Sentia Patch One is not a medical device. No invented proof, testimonials,
+customer logos or unsupported claims.
+
+Use 64–96 px section padding and 32–48 px between related visual and factual
+groups to increase density without shrinking body copy. Use hairline divided
+feature grids and recurring numbered mono section labels. Cap desktop display
+type at 64 px so the headline supports the render. Use the 8 px
+spacing scale throughout. Load fonts with font-display swap and reserve image
+space using exact intrinsic dimensions to avoid image layout shift.
+
+Text contrast is at least 4.5:1; body text aims for 7:1 on paper. The primary
+CTA uses paper on ink (about 15.9:1); the second action remains a text link.
+Use semantic sections, one h1, a skip link to focusable main content, visible
+3 px focus rings, and touch targets at least 44 px with at least 8 px gaps.
+Keep below-fold images lazy and the hero eager. Review at mobile widths and
+zoom, with keyboard navigation, no script, and prefers-reduced-motion.
+
+## Asset inventory
+
+All four operator-supplied WebP renders come from src/images.js. Serve the
+original export bytes without editing, replacing or generating imagery.
+
+| Module export | Route | Page placement |
+| --- | --- | --- |
+| PATCH_HERO_WEBP_B64 | /img/patch-hero.webp | Hero, primary object beside the headline |
+| PATCH_EXPLODED_WEBP_B64 | /img/patch-exploded.webp | #patch, beside the five-layer factual list |
+| PATCH_ON_SKIN_WEBP_B64 | /img/patch-on-skin.webp | #patch, second visual with the upper arm close-up and 14 day wear story |
+| NETWORK_SCENE_WEBP_B64 | /img/network-scene.webp | #how, before the five relay steps |
+
+The exploded photograph separates the five square layers vertically, in order:
+top cover, comfort foam, sensing and processing board, adhesive layer,
+release liner. The page list and specs table use the same names.
+The on-skin photograph follows the layer and sensor details, paired with the
+wear paragraph and followed by profile and wear metrics.
+The network photograph presents the same patch in its connected context,
+beside a phone and LoRaWAN gateway. It does not replace the live packet visualization.
+
+## Image treatment
+
+Full photographs in warm neutral studio scenes replace the earlier isolated
+product treatment. Preserve the supplied bytes and original aspect ratios:
+hero 1600 × 893, exploded 1400 × 1400, on-skin 1600 × 800, network 1600 × 893.
+The physical SENTIA wordmark and LED line belong on the product; captions,
+labels and explanatory text inside images remain banned.
+
+Each image is an intentional photographic frame within the page grid, with
+no visible rectangle seams from mismatched background extensions. Do not
+attempt to blend the photographic backgrounds into paper. The hero fills
+its eight-column visual area; the exploded photograph fills its column
+beside the layer list; the limb close up fills the wear image area; the
+network photograph spans the content width. Paper gutters separate each
+complete photograph from copy. No borders, rounded cards, filters, added
+shadows or tinted backdrops. Physical light and contact shadows come from
+the supplied photographs.
+
+Hero and on-skin framing is a strict limb close up (upper arm or inner
+forearm), never torso framing. Skin texture, limb proportions and adhesive
+contact establish scale without inventing a width measurement.
+Preserve complete images without cropping or stretching. Use responsive full
+width images, with the hero capped at 960 px, the wear image at 640 px, and
+the network scene spanning the content width. Give each visual
+space on the 8 px rhythm. Below 1000 px, place the hero image directly after
+the headline with no added vertical gap; extend its frame 16 px into each
+gutter, retaining the complete original image.
+Stack the wear image and copy below 900 px.
+Use descriptive, calm alt text with the exact product and network names.
+Reserve intrinsic image space to prevent layout shifts. Load the hero
+eagerly with high priority; lazy-load the three lower-page renders.
+
+Production quality is anchored in design/reference/. L-6 remains binding:
+reviewer-design compares every new image against the boards and names gaps
+in materials, light, scale and contact, or states none. L-5 is lifted for
+this order; the operator has supplied the entire replacement set. L-2 now
+governs integration without seams; L-3 allows limb close ups as stated above.
+
+## Motion
+
+Existing reveal hooks stay intact. Fades and small rises use 800 ms ease-out.
+No scale animation, bounce, glow or perpetual hero movement. Hover feedback
+uses opacity or a rise under 2 px over 180 ms.
+Stagger up to eight children per section in 40 ms steps, capped at 280 ms.
+Reduced motion disables CSS reveals
+and smooth scrolling, and hides the moving packet dot; the measurements
+and existing controls continue to operate. Static content must remain
+readable without JavaScript through a noscript style override. With scripting
+enabled, reveal elements begin at zero opacity and 16 px below their final
+position; the existing observer adds the visible state. Reduced motion keeps
+both the initial and revealed states visible and stationary.
+
+## Launch page quality bars
+
+- S1: This document precedes implementation. CSS implements its palette,
+  type hierarchy, spacing and physical hero composition.
+- The first view has one focal object and a headline substantially larger
+  than body copy. The page has breathing room at 1440, 1024, 768 and 375 px.
+- S2: Preserve every section, content fact, SEO/GEO output, client hook,
+  simulation control and dashboard action. Measurements keep their units.
+- At 320 px and at browser zoom, text wraps without page overflow; wide
+  technical data scrolls in its own region. Keyboard focus is visible.
+- V4: Update product definition surfaces and integrate the operator supplied
+  renders. Preserve the four image/webp routes and supplied src/images.js bytes.
+  API, MCP, codec, data and all other routing behavior stay unchanged.
+- S5: Keep the existing calm copy and exact product and network names.
+  Wellness framing and the medical disclaimer remain visible.
+- Run the full scenario suite. Visual quality and S3 model provenance are
+  assessed by the independent review stations; passing tests is not approval.
+- S6: At small widths retain a 56 px hero minimum and 17 px body minimum.
+  Use #53685C for SVG annotations and paper for the simulation toggle.
+  Check the hidden reveal state, 800 ms ease-out transition and motion fallback.
+
+exec
+/bin/bash -lc "rg -n 'faq|</main>|section-kicker|grid|<style' src/page.js; cat evidence/take-apart-bundling/README.md; ls -a" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+48:      '@id': origin + '/#faq',
+49:      mainEntity: FACTS.faq.map((f) => ({
+101:.hero .wrap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;align-items:start}
+102:.hero .kicker{grid-column:1/-1;margin-bottom:16px;max-width:60ch}
+103:.hero h1{grid-column:1/5;grid-row:2;font-size:clamp(56px,4.4vw,64px);align-self:center}
+104:.hero .lede{grid-column:1/7;grid-row:3;margin-top:24px}
+105:.chips{display:flex;flex-wrap:wrap;gap:16px 24px;margin-top:32px;grid-column:1/-1}
+107:.cta{display:flex;flex-wrap:wrap;gap:24px 32px;margin-top:24px;grid-column:1/-1}
+112:.hero-visual{grid-column:5/13;grid-row:2;align-self:center;text-align:center;min-width:0}
+115:.hero .spec-strip{grid-column:7/13;grid-row:3;margin-top:24px}
+125:  .hero .wrap{grid-template-columns:minmax(0,1fr)}
+126:  .hero h1{grid-column:1;max-width:20ch;font-size:clamp(56px,6vw,64px)}
+127:  .hero-visual{grid-column:1;grid-row:3;margin-top:0;margin-inline:-16px}
+129:  .hero .lede{grid-column:1;grid-row:4;margin-top:24px}
+130:  .hero .spec-strip{grid-column:1;grid-row:5}
+134:.wear-story{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center;margin-top:48px}
+138:@media(max-width:900px){.wear-story{grid-template-columns:minmax(0,1fr)}}
+139:.split{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(32px,5vw,72px);align-items:start}
+140:@media(max-width:900px){.split{grid-template-columns:1fr}}
+152:.sensors{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(32px,5vw,72px);margin-top:clamp(48px,6vh,64px)}
+153:@media(max-width:760px){.sensors{grid-template-columns:1fr}}
+159:.journey li{display:grid;grid-template-columns:110px 180px 1fr;gap:16px;padding:24px 0;border-top:1px solid var(--line);align-items:baseline}
+160:@media(max-width:760px){.journey li{grid-template-columns:60px 1fr}.journey li p{grid-column:2}}
+184:.readouts{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:32px;border-bottom:1px solid var(--line)}
+185:@media(max-width:760px){.readouts{grid-template-columns:repeat(2,1fr)}}
+200:.tiles{display:grid;grid-template-columns:repeat(3,1fr);margin-top:8px}
+201:@media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+205:.charts{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,4vw,56px);margin-top:clamp(40px,6vh,56px)}
+206:@media(max-width:760px){.charts{grid-template-columns:1fr}}
+228:.tools li{display:grid;grid-template-columns:210px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+229:@media(max-width:760px){.tools li{grid-template-columns:1fr}}
+232:/* faq */
+233:.faq-item{padding:24px 0;border-top:1px solid var(--line)}
+234:.faq-item h3{font-size:20px;margin-bottom:8px}
+235:.faq-item p{color:var(--soft);max-width:68ch}
+246:.faq-item{padding:32px 0}
+268:  .journey li{gap:16px;grid-template-columns:52px minmax(0,1fr)}
+282:#demo,#dashboard,#mcp,#specs,#faq{padding-top:96px;padding-bottom:96px}
+319:  const faqItems = FACTS.faq
+321:      (f) => `      <article class="faq-item rv"><h3>${f.q}</h3><p>${f.a}</p></article>`
+359:<style>${CSS}</style>
+360:<noscript><style>.rv{opacity:1;transform:none}</style></noscript>
+371:      <a href="/take-apart">Take apart</a><a href="#patch">Patch</a><a href="#how">How it works</a><a href="#demo">Live demo</a><a href="#dashboard">Dashboard</a><a href="#mcp">MCP</a><a href="#specs">Specs</a><a href="#faq">FAQ</a>
+568:<section id="faq" aria-label="Frequently asked questions">
+573:${faqItems}
+578:</main>
+# wo-gh-11 builder evidence
+
+The client and browser model now live as literal source text in their existing modules. Wrangler can transform the surrounding Worker module but cannot rewrite functions inside these strings or resolve the browser's dynamic import. No function stringification or bundle-scope helper supplies served bytes. The model still receives serialized FACTS data; both existing and new parity tests remain in place. A direct comparison against HEAD's unbundled exports confirmed both served strings are byte identical. Page, routes, canonical model, and vendor source are unchanged.
+
+`scripts/capture-take-apart.mjs` is the evidence of record. It runs the production `wrangler deploy --dry-run --outdir` step, then serves that output with `wrangler dev <built index.js> --no-bundle --local`. It does not import the Worker source into Node. Tooling is runner-installed, not a site dependency. Reproduce with:
+
+```sh
+npm install --prefix /tmp/sentia-browser playwright wrangler
+PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs WRANGLER_BIN=/tmp/sentia-browser/node_modules/.bin/wrangler node scripts/capture-take-apart.mjs
+npm test
+```
+
+Chrome defaults to `/usr/bin/google-chrome`; override with CHROME_BIN. CAPTURE_PORT defaults to 8791. This capture used Wrangler 4.156.0.
+
+- `bundle-build.log`: production bundle command, output, exit status 0; no patches.
+- `browser-pass.log`: bundled runtime command; zero console errors, zero page errors, model installed, scene ready, canvas 1022x559 matching its layout at DPR 1; actual browser vendor response 200 with 670681 decoded bytes.
+- `beat-*.png` and `contact-sheet.png`: five tour states from the bundled runtime for reviewer-design. The capture also checks gauges, camera controls, reduced motion and mobile fit.
+- `take-apart-tests.log`: 39/39 take-apart and bundling tests pass.
+- `test-suite.log`: npm test exits 1; 161 pass, one fail, one skip (163 total).
+
+The full-suite failure is `S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/` in tests/design-v4-square-product.test.js:482. It reads the existing wo-gh-8 reviewer-design output and reports `patch-exploded / mounting not cleared`, `patch-exploded has an uncleared gap`, and `patch-exploded not cleared`. That test and its evidence inputs are unchanged by this work. Sibling-branch resolution is not established by the supplied inputs. No other run's evidence was edited. The skipped test is `ui-elevation S4: codec, data, mcp and index are untouched by the run` because no main ref exists.
+
+This is builder output, not approval. Reviewer-design and the five-review verdict remain the responsibility of subsequent stations; production deployment remains with the operator. Model routing is controlled by the station runner and is not independently verifiable from these code and test inputs.
+.
+..
+.anvil-factory
+.git
+.github
+.gitignore
+.openspec
+.pull-manifest.json
+BLUEPRINT.md
+LICENSE
+PIPELINES.md
+README.md
+anvil.json
+anvil.yaml
+brain
+brand
+design
+evidence
+package.json
+reviews
+runs
+scripts
+src
+status
+tests
+tools
+work-orders
+wrangler.toml
+
+exec
+/bin/bash -lc "sed -n '85,101p;150,159p;568,595p' src/page.js; cat scripts/capture-take-apart.mjs" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+.brand svg{display:block}
+.wordmark{font:500 21px 'Space Grotesk',sans-serif;letter-spacing:0.01em}
+.nav nav{display:flex;gap:16px}
+.nav nav a{color:var(--soft);font-size:17px}
+.nav nav a:hover{color:var(--ink);text-decoration:none}
+@media(max-width:1100px){.nav nav{display:none}}
+section{padding:clamp(64px,7vw,96px) 0;border-top:1px solid var(--line)}
+section:first-of-type{border-top:none}
+h1{font:300 clamp(56px,4.4vw,64px)/0.96 'Space Grotesk',sans-serif;letter-spacing:-0.055em;max-width:12ch;text-wrap:balance}
+h2{font:300 clamp(40px,4.4vw,64px)/1.04 'Space Grotesk',sans-serif;letter-spacing:-0.04em;margin:24px 0 32px;max-width:18ch;text-wrap:balance}
+h3{font:500 19px/1.4 'Space Grotesk',sans-serif}
+.lede{font-size:clamp(18px,1.5vw,20px);color:var(--soft);max-width:54ch}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .8s ease-out,transform .8s ease-out}
+.rv.in{opacity:1;transform:none}
+/* hero */
+.hero{padding-top:128px;position:relative}
+.hero .wrap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;align-items:start}
+.spec-strip .v{font:300 clamp(32px,3vw,48px) 'Space Grotesk',sans-serif}
+.spec-strip .k{color:var(--faint);margin-top:8px}
+.sensors{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(32px,5vw,72px);margin-top:clamp(48px,6vh,64px)}
+@media(max-width:760px){.sensors{grid-template-columns:1fr}}
+.sensor{padding:24px 0;border-top:1px solid var(--line)}
+.sensor h3{font-size:17px;margin-bottom:8px}
+.sensor p{color:var(--soft);font-size:17px}
+/* how */
+.journey{list-style:none;margin-top:clamp(40px,6vh,64px)}
+.journey li{display:grid;grid-template-columns:110px 180px 1fr;gap:16px;padding:24px 0;border-top:1px solid var(--line);align-items:baseline}
+<section id="faq" aria-label="Frequently asked questions">
+  <div class="wrap">
+    <p class="mono kicker rv"><span aria-hidden="true">07 / </span>Questions</p>
+    <h2 class="rv">Asked, answered.</h2>
+    <div style="margin-top:24px">
+${faqItems}
+    </div>
+  </div>
+</section>
+
+</main>
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <p><strong style="color:var(--ink)">Sentia</strong> · ${FACTS.tagline}</p>
+        <p style="margin-top:8px">${FACTS.definition}</p>
+      </div>
+      <div>
+        <p><a href="#demo">Live demo</a> · <a href="#dashboard">Dashboard</a> · <a href="#mcp">MCP</a> · <a href="${REPO_URL}">Source</a></p>
+        <p style="margin-top:8px">Wellness monitoring, not diagnosis. ${FACTS.product} is not a medical device.</p>
+      </div>
+    </div>
+    <p class="fine">Sentia is a concept product, designed and built end to end by <a href="${GITHUB_URL}">ANVIL</a>, an open source software factory. Developed by Eduardo Arana.</p>
+  </div>
+</footer>
+<script src="/browser-codec.js"></script>
+<script src="/client.js"></script>
+// Evidence of record: production shape capture of the Wrangler bundled Worker.
+// Runner tooling (not site dependencies): PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs
+// WRANGLER_BIN=/tmp/sentia-browser/node_modules/.bin/wrangler node scripts/capture-take-apart.mjs
+import { mkdir, writeFile, mkdtemp, rm } from 'node:fs/promises';
+import { spawn, spawnSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import assert from 'node:assert/strict';
+import { pathToFileURL } from 'node:url';
+import { gaugeReadout } from '../src/take-apart-model.js';
+const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ? pathToFileURL(process.env.PLAYWRIGHT_MODULE).href : 'playwright');
+const out = new URL('../evidence/take-apart-bundling/', import.meta.url);
+await mkdir(out, { recursive: true });
+const buildDir = await mkdtemp(join(tmpdir(), 'sentia-bundle-'));
+const wrangler = process.env.WRANGLER_BIN || 'wrangler';
+const buildArgs = ['deploy', '--dry-run', '--outdir', buildDir];
+const build = spawnSync(wrangler, buildArgs, { encoding: 'utf8' });
+await writeFile(new URL('bundle-build.log', out), `${wrangler} ${buildArgs.join(' ')}
+${build.stdout || ''}${build.stderr || ''}
+exit status: ${build.status}
+No local patches applied.
+`);
+assert.equal(build.status, 0, build.error?.message || build.stderr);
+const port = Number(process.env.CAPTURE_PORT || 8791);
+const origin = `http://127.0.0.1:${port}`;
+const runtimeArgs = ['dev', join(buildDir, 'index.js'), '--no-bundle', '--local', '--ip', '127.0.0.1', '--port', String(port)];
+const runtime = spawn(wrangler, runtimeArgs, { stdio: ['ignore', 'pipe', 'pipe'] });
+let runtimeLog = '';
+runtime.stdout.on('data', chunk => { runtimeLog += chunk; });
+runtime.stderr.on('data', chunk => { runtimeLog += chunk; });
+let browser;
+const errors=[], pageErrors=[];
+let gaugePassed=false, sceneInfo, vendorStatus, vendorBytes;
+try {
+  let ready = false;
+  for (let tries = 0; tries < 120; tries++) {
+    assert.equal(runtime.exitCode, null, runtimeLog);
+    try { ready = (await fetch(origin + '/take-apart')).ok; } catch {}
+    if (ready) break;
+    await new Promise(resolve => setTimeout(resolve, 500));
+  }
+  assert.ok(ready, 'Local bundled Worker did not start: ' + runtimeLog);
+browser = await chromium.launch({ executablePath: process.env.CHROME_BIN || '/usr/bin/google-chrome', headless:true,
+  args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'] });
+
+  const page=await browser.newPage({ viewport:{width:1440,height:1050}, deviceScaleFactor:1 });
+  const cdp=await page.context().newCDPSession(page);
+  page.on('console',msg=>{if(msg.type()==='error')errors.push(msg.text());});
+  page.on('pageerror',error=>pageErrors.push(String(error)));
+  const vendorResponse = page.waitForResponse(response => response.url() === origin + '/vendor/three.module.min.js');
+  console.log('Loading study');
+  await page.goto(`${origin}/take-apart?tour=fast`);
+  await page.waitForFunction(()=>document.querySelector('#take-apart').dataset.sceneReady==='true');
+  await page.evaluate(()=>document.fonts.ready);
+  const vendor = await vendorResponse;
+  vendorStatus = vendor.status(); vendorBytes = (await vendor.body()).byteLength;
+  assert.equal(vendorStatus, 200); assert.equal(vendorBytes, 670681);
+  sceneInfo = await page.evaluate(() => {
+    const canvas = document.querySelector('#scene'), rect = canvas.getBoundingClientRect();
+    return { model: typeof globalThis.TakeApartModel, ready: document.querySelector('#take-apart').dataset.sceneReady,
+      width: canvas.width, height: canvas.height, layoutWidth: rect.width, layoutHeight: rect.height, dpr: devicePixelRatio };
+  });
+  assert.equal(sceneInfo.model, 'object'); assert.equal(sceneInfo.ready, 'true');
+  assert.equal(sceneInfo.width, Math.floor(sceneInfo.layoutWidth * sceneInfo.dpr));
+  assert.equal(sceneInfo.height, Math.floor(sceneInfo.layoutHeight * sceneInfo.dpr));
+  console.log('Study loaded');
+  assert.equal(await page.locator('#fallback').isVisible(),false,'WebGL scene must render for evidence');
+  const area=await page.locator('#scene').boundingBox();
+  await page.mouse.move(area.x+area.width/2,area.y+area.height/2);
+  await page.mouse.down();await page.mouse.move(area.x+area.width/2+75,area.y+area.height/2+25,{steps:8});await page.mouse.up();
+  await page.mouse.wheel(0,100);
+  await page.locator('#wear').evaluate(input=>{ input.value='200';input.dispatchEvent(new Event('input',{bubbles:true})); });
+  await page.waitForFunction(expected => [...document.querySelectorAll('[data-gauge]')].every(n => n.textContent === expected[n.dataset.gauge]), gaugeReadout(200));
+  const actual=await page.locator('[data-gauge]').evaluateAll(nodes=>Object.fromEntries(nodes.map(n=>[n.dataset.gauge,n.textContent])));
+  assert.deepEqual(actual,gaugeReadout(200));gaugePassed=true;
+  for(const name of ['Top','Side','Hero']){ await page.locator(`[data-camera="${name}"]`).click();await page.waitForTimeout(180); }
+  await page.locator('#xray').click();
+  await page.mouse.move(1400,60);
+  // Freeze the browser clock between controlled advances so software WebGL
+  // screenshot latency cannot advance to a different tour beat mid-capture.
+  const previousNow=await page.evaluate(()=>performance.now());
+  await page.clock.install();
+  console.log('Freezing capture clock');
+  await page.clock.pauseAt(new Date());
+  await page.clock.fastForward(previousNow+1000);
+  await page.evaluate(()=>window.dispatchEvent(new Event('pointerdown')));
+  console.log('Capture clock frozen');
+  const beats=[['assembled','Assembled'],['apart','Apart'],['board','Board'],['xray','X ray'],['settle','Mid / Settle']];
+  const sources=[];
+  for(const [beat,label] of beats) {
+    for(let ticks=0;;ticks++) {
+      if(await page.locator('#take-apart').getAttribute('data-tour-beat')===beat)break;
+      assert.ok(ticks<200,'tour must reach '+beat);
+      await page.clock.runFor(50);
+    }
+    await page.clock.runFor(260);
+    assert.equal(await page.locator('#take-apart').getAttribute('data-tour-beat'),beat);
+    const hour=beat==='settle'?156:0;
+    assert.deepEqual(await page.locator('[data-gauge]').evaluateAll(nodes=>Object.fromEntries(nodes.map(n=>[n.dataset.gauge,n.textContent]))),gaugeReadout(hour));
+    const file=beat==='settle'?'mid':beat;
+    const {data}=await cdp.send('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});
+    const png=Buffer.from(data,'base64');
+    await writeFile(new URL(`beat-${file}.png`,out),png);
+    console.log('Captured '+beat);
+    sources.push({label,src:'data:image/png;base64,'+png.toString('base64')});
+  }
+  // Composition happens in this browser session, from the captured pixels.
+  const sheet=await browser.newPage({viewport:{width:1440,height:1840},deviceScaleFactor:1});
+  await sheet.setContent('<body style="margin:0;background:#FAFAF6"><canvas id="sheet" width="1440" height="1840"></canvas></body>');
+  const composed=await sheet.evaluate(async sources=>{
+    const c=document.querySelector('canvas'),ctx=c.getContext('2d');ctx.fillStyle='#FAFAF6';ctx.fillRect(0,0,c.width,c.height);
+    ctx.fillStyle='#12211C';ctx.font='28px sans-serif';ctx.fillText('SENTIA / Take apart — tour contact sheet',24,40);
+    for(let i=0;i<sources.length;i++) {
+      const img=new Image();img.src=sources[i].src;await img.decode();
+      const x=(i%2)*720,y=64+Math.floor(i/2)*592;
+      ctx.drawImage(img,x,y,720,525);ctx.fillStyle='#12211C';ctx.font='18px sans-serif';ctx.fillText(sources[i].label,x+24,y+560);
+    }
+    return c.toDataURL('image/png').split(',')[1];
+  },sources);
+  await writeFile(new URL('contact-sheet.png',out),Buffer.from(composed,'base64'));
+  // Reduced-motion users retain controls without an automatic tour.
+  await page.clock.resume();
+  await page.emulateMedia({reducedMotion:'reduce'});await page.reload();await page.waitForTimeout(1800);
+  assert.equal(await page.locator('#take-apart').getAttribute('data-tour-beat'),'off');
+  await page.setViewportSize({width:390,height:844});
+  assert.equal(await page.locator('#callouts').isVisible(),false);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'mobile fits viewport');
+  assert.equal(errors.length,0,errors.join('\n'));
+  assert.equal(pageErrors.length,0,pageErrors.join('\n'));
+} finally {
+  await writeFile(new URL('browser-pass.log',out), `Bundled Worker: ${wrangler} ${runtimeArgs.join(' ')}
+console errors: ${errors.length}
+page errors: ${pageErrors.length}
+TakeApartModel: ${sceneInfo?.model}
+scene ready: ${sceneInfo?.ready}
+canvas: ${sceneInfo?.width}x${sceneInfo?.height}; layout: ${sceneInfo?.layoutWidth}x${sceneInfo?.layoutHeight}; DPR: ${sceneInfo?.dpr}
+gauge comparison: ${gaugePassed?'PASS':'FAIL'} at hour 200
+vendor /vendor/three.module.min.js: status ${vendorStatus}; decoded bytes ${vendorBytes}
+${errors.join('\n')}
+${pageErrors.join('\n')}
+`);
+  await browser?.close();
+  runtime.kill('SIGTERM');
+  await new Promise(resolve => runtime.exitCode !== null ? resolve() : runtime.once('exit', resolve));
+  await rm(buildDir, { recursive: true, force: true });
+}
+console.log('Browser pass complete: zero console errors; gauge comparison PASS.');
+
+exec
+/bin/bash -lc "ls /tmp/sentia-browser/node_modules/.bin /usr/bin/google-chrome /usr/bin/chromium 2>/dev/null; git rev-parse HEAD; node --version; rg --files /home/runner -g AGENTS.md -g 'playwright/package.json' -g 'wrangler/package.json' 2>/dev/null" in /home/runner/work/sentia/sentia
+ exited 1 in 0ms:
+/usr/bin/chromium
+/usr/bin/google-chrome
+c55bc1659a1b1f5f6adb66760faa4915dcd01aee
+v22.23.4
+
+codex
+The existing grid styles can support this section without any CSS changes. I’ll reuse them for four equally weighted entries and preserve all existing production lines. The review verdict belongs to later stations; I’ll record validation evidence without approving the work.
+
+exec
+/bin/bash -lc 'npm install --prefix /tmp/sentia-browser playwright wrangler' in /home/runner/work/sentia/sentia
+exec
+/bin/bash -lc 'mkdir -p evidence/possible-applications; git archive c55bc16 | tar -x -C /tmp --one-top-level=sentia-applications-base' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+apply patch
+patch: completed
+/home/runner/work/sentia/sentia/src/page.js
+ succeeded in 5255ms:
+
+added 40 packages in 5s
+
+7 packages are looking for funding
+  run `npm fund` for details
+
+apply patch
+patch: completed
+/home/runner/work/sentia/sentia/src/page.js
+diff --git a/src/page.js b/src/page.js
+index 628de9be0f1ce199775f8e8dfaf8ced73f201ad5..6410b783203a40b2b3b4ffb02e3daf4aa7d32609
+--- a/src/page.js
++++ b/src/page.js
+@@ -575,6 +575,32 @@
+   </div>
+ </section>
+ 
++<section id="applications" aria-label="Possible applications">
++  <div class="wrap">
++    <p class="mono kicker rv"><span aria-hidden="true">08 / </span>Possible applications</p>
++    <h2 class="rv">Where the pattern could go.</h2>
++    <p class="lede rv">A patch that senses, relays what it senses, and alerts the wearer and a care circle they choose: this section explores where that pattern could go.</p>
++    <div class="sensors">
++      <article class="sensor rv">
++        <h3>Everyday wellness trends</h3>
++        <p>Everyday wellness trends could offer a way to explore the rhythms of daily life over time. A future application would relay those patterns to the wearer, with alerts shared with a care circle they choose.</p>
++      </article>
++      <article class="sensor rv">
++        <h3>A care circle around someone living alone</h3>
++        <p>A possible application could connect someone living alone with a care circle they choose. Relayed observations and alerts would give the wearer and their circle a shared starting point for everyday check-ins.</p>
++      </article>
++      <article class="sensor rv">
++        <h3>Activity and recovery patterns</h3>
++        <p>Activity and recovery patterns could be another direction to explore, following the rhythm of movement and rest. A future application would relay observations to the wearer, with alerts for a care circle they choose.</p>
++      </article>
++      <article class="sensor rv">
++        <h3>Glucose monitoring support</h3>
++        <p>Glucose monitoring support for people living with diabetes is a possible future application. One day, this could explore the same continuous sensing, relay and alert pattern for the wearer and a care circle they choose.</p>
++      </article>
++    </div>
++  </div>
++</section>
++
+ </main>
+ <footer>
+   <div class="wrap">
+
+exec
+/bin/bash -lc 'git diff --numstat; node --test tests/possible-applications.test.js' in /home/runner/work/sentia/sentia
+ exited 1 in 11ms:
+26	0	src/page.js
+TAP version 13
+# Subtest: applications S1: the guarded home page has exactly one section id="applications" after FAQ, at the end of main
+ok 1 - applications S1: the guarded home page has exactly one section id="applications" after FAQ, at the end of main
+  ---
+  duration_ms: 17.078147
+  type: 'test'
+  ...
+# Subtest: applications R1: kicker reads "08 / Possible applications" in the established mono kicker style, with title and intro
+ok 2 - applications R1: kicker reads "08 / Possible applications" in the established mono kicker style, with title and intro
+  ---
+  duration_ms: 0.253243
+  type: 'test'
+  ...
+# Subtest: applications R1: the section is typographic, no imagery new or reused
+ok 3 - applications R1: the section is typographic, no imagery new or reused
+  ---
+  duration_ms: 0.227193
+  type: 'test'
+  ...
+# Subtest: applications S1/R4: four entries, in order, with identical grid treatment and a title each
+ok 4 - applications S1/R4: four entries, in order, with identical grid treatment and a title each
+  ---
+  duration_ms: 0.319032
+  type: 'test'
+  ...
+# Subtest: applications S1/R4: entries have two or three sentences and comparable length; nothing privileged
+ok 5 - applications S1/R4: entries have two or three sentences and comparable length; nothing privileged
+  ---
+  duration_ms: 0.335457
+  type: 'test'
+  ...
+# Subtest: applications R3: the introduction states the platform pattern only and frames the section as exploration
+ok 6 - applications R3: the introduction states the platform pattern only and frames the section as exploration
+  ---
+  duration_ms: 0.508338
+  type: 'test'
+  ...
+# Subtest: applications S2/R5: every entry is exploratory; the diabetes entry carries two or more markers and frames a possible future application
+ok 7 - applications S2/R5: every entry is exploratory; the diabetes entry carries two or more markers and frames a possible future application
+  ---
+  duration_ms: 0.267894
+  type: 'test'
+  ...
+# Subtest: applications S2/R6: glucose appears only in the diabetes entry, and only in sentences that carry an exploratory marker
+ok 8 - applications S2/R6: glucose appears only in the diabetes entry, and only in sentences that carry an exploratory marker
+  ---
+  duration_ms: 0.269837
+  type: 'test'
+  ...
+# Subtest: applications S3/R6: no present capability claim shape for glucose
+not ok 9 - applications S3/R6: no present capability claim shape for glucose
+  ---
+  duration_ms: 0.725525
+  type: 'test'
+  location: '/home/runner/work/sentia/sentia/tests/possible-applications.test.js:123:1'
+  failureType: 'testCodeFailure'
+  error: 'capability claim shape present: /\\b(detect|measure|monitor|sense|read|track|test|check|record|gauge)(s|ed|ing)?\\b(\\s+\\w+){0,3}\\s+(blood\\s+)?(glucose|sugar)/i'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: '08 / Possible applications Where the pattern could go. A patch that senses, relays what it senses, and alerts the wearer and a care circle they choose: this section explores where that pattern could go. Everyday wellness trends Everyday wellness trends could offer a way to explore the rhythms of daily life over time. A future application would relay those patterns to the wearer, with alerts shared with a care circle they choose. A care circle around someone living alone A possible application could connect someone living alone with a care circle they choose. Relayed observations and alerts would give the wearer and their circle a shared starting point for everyday check-ins. Activity and recovery patterns Activity and recovery patterns could be another direction to explore, following the rhythm of movement and rest. A future application would relay observations to the wearer, with alerts for a care circle they choose. Glucose monitoring support Glucose monitoring support for people living with diabetes is a possible future application. One day, this could explore the same continuous sensing, relay and alert pattern for the wearer and a care circle they choose.'
+  operator: 'doesNotMatch'
+  stack: |-
+    TestContext.<anonymous> (file:///home/runner/work/sentia/sentia/tests/possible-applications.test.js:132:35)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: applications S4/R7: no insulin, delivery, treatment, therapy, dose, diagnosis, cure, or outcome language
+ok 10 - applications S4/R7: no insulin, delivery, treatment, therapy, dose, diagnosis, cure, or outcome language
+  ---
+  duration_ms: 0.735441
+  type: 'test'
+  ...
+# Subtest: applications S5/R2: the footer disclosure sentences are byte exact in the served page
+ok 11 - applications S5/R2: the footer disclosure sentences are byte exact in the served page
+  ---
+  duration_ms: 1.539725
+  type: 'test'
+  ...
+# Subtest: applications S5/R2/R8: production diff against the base tree is an insertion only change in src/page.js
+ok 12 - applications S5/R2/R8: production diff against the base tree is an insertion only change in src/page.js
+  ---
+  duration_ms: 14.911015
+  type: 'test'
+  ...
+# Subtest: applications S5/R2: base page structure is intact around the insertion (header, nav, sections, routes, image payloads, llms)
+ok 13 - applications S5/R2: base page structure is intact around the insertion (header, nav, sections, routes, image payloads, llms)
+  ---
+  duration_ms: 9.840318
+  type: 'test'
+  ...
+# Subtest: applications S6/R9.1: bundle-build.log records the real production bundle command, exit 0, zero local patches
+not ok 14 - applications S6/R9.1: bundle-build.log records the real production bundle command, exit 0, zero local patches
+  ---
+  duration_ms: 0.275606
+  type: 'test'
+  location: '/home/runner/work/sentia/sentia/tests/possible-applications.test.js:197:1'
+  failureType: 'testCodeFailure'
+  error: 'evidence/possible-applications/bundle-build.log is missing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/runner/work/sentia/sentia/tests/possible-applications.test.js:199:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: applications S6/R9.2: browser-pass.log records a bundled run of the home page with zero console and page errors
+not ok 15 - applications S6/R9.2: browser-pass.log records a bundled run of the home page with zero console and page errors
+  ---
+  duration_ms: 0.171028
+  type: 'test'
+  location: '/home/runner/work/sentia/sentia/tests/possible-applications.test.js:208:1'
+  failureType: 'testCodeFailure'
+  error: 'evidence/possible-applications/browser-pass.log is missing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/runner/work/sentia/sentia/tests/possible-applications.test.js:210:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: applications S6/R9.3: before and after desktop screenshots are committed and differ
+not ok 16 - applications S6/R9.3: before and after desktop screenshots are committed and differ
+  ---
+  duration_ms: 0.208035
+  type: 'test'
+  location: '/home/runner/work/sentia/sentia/tests/possible-applications.test.js:224:1'
+  failureType: 'testCodeFailure'
+  error: 'no before*.png under evidence/possible-applications/'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/runner/work/sentia/sentia/tests/possible-applications.test.js:226:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 12
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 114.780209
+
+exec
+/bin/bash -lc "python3 - <<'PY'
+p='src/page.js'
+s=open(p).read().replace('Glucose monitoring support for people living with diabetes is a possible future application.', 'A possible future application is glucose monitoring support for people living with diabetes.')
+open(p,'w').write(s)
+PY" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+exec
+/bin/bash -lc "cat > evidence/possible-applications/capture.mjs <<'EOF'
+import { spawn, spawnSync } from 'node:child_process';
+import { mkdir, writeFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import { chromium } from '/tmp/sentia-browser/node_modules/playwright/index.mjs';
+const root = process.cwd();
+const out = root + '/evidence/possible-applications';
+const wrangler = '/tmp/sentia-browser/node_modules/.bin/wrangler';
+await mkdir(out, { recursive: true });
+for (const phase of ['before', 'after']) {
+  const cwd = phase === 'before' ? '/tmp/sentia-applications-base' : root;
+  const bundle = '/tmp/sentia-applications-' + phase;
+  const args = ['deploy', '--dry-run', '--outdir', bundle];
+  const build = spawnSync(wrangler, args, { cwd, encoding: 'utf8' });
+  await writeFile(out + '/' + (phase === 'after' ? 'bundle-build.log' : 'base-build.log'),
+    "'`cwd: ${cwd}'"\\n"'${wrangler} ${args.join('"' ')}\\n"'${build.stdout}${build.stderr}'"\\nexit status: "'${build.status}'"\\nNo local patches applied.\\n"'`);
+  assert.equal(build.status, 0);
+  const runtimeArgs = ['"'dev', bundle + '/index.js', '--no-bundle', '--local', '--ip', '127.0.0.1', '--port', '8791'];
+  const runtime = spawn(wrangler, runtimeArgs, { cwd, stdio: ['ignore', 'pipe', 'pipe'] });
+  let runtimeLog = '';
+  runtime.stdout.on('data', d => runtimeLog += d);
+  runtime.stderr.on('data', d => runtimeLog += d);
+  let browser;
+  const errors = [], pageErrors = [];
+  try {
+    let ready = false;
+    for (let i = 0; i < 120; i++) {
+      assert.equal(runtime.exitCode, null, runtimeLog);
+      try { ready = (await fetch('http://127.0.0.1:8791/')).ok; } catch {}
+      if (ready) break;
+      await new Promise(r => setTimeout(r, 500));
+    }
+    assert.ok(ready, runtimeLog);
+    browser = await chromium.launch({ executablePath: '/usr/bin/google-chrome', args: ['--no-sandbox'] });
+    const page = await browser.newPage({ viewport: { width: 1440, height: 1050 }, deviceScaleFactor: 1 });
+    page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
+    page.on('pageerror', e => pageErrors.push(String(e)));
+    await page.goto('http://127.0.0.1:8791/', { waitUntil: 'networkidle' });
+    await page.evaluate(() => document.fonts.ready);
+    assert.equal(await page.locator('#applications').count(), phase === 'after' ? 1 : 0);
+    const top = await page.locator('#faq').evaluate(el => el.getBoundingClientRect().top + scrollY);
+    // Scroll through the affected region so existing reveal observers show every item.
+    for (let y = top; y < await page.evaluate(() => document.documentElement.scrollHeight); y += 500) {
+      await page.evaluate(y => scrollTo(0, y), y);
+      await page.waitForTimeout(100);
+    }
+    await page.waitForTimeout(1000);
+    const height = await page.evaluate(() => document.documentElement.scrollHeight);
+    await page.screenshot({ path: out + '/' + phase + '-desktop.png', clip: { x: 0, y: top, width: 1440, height: height - top } });
+    if (phase === 'after') {
+      assert.equal(await page.locator('#applications article').count(), 4);
+      await page.setViewportSize({ width: 375, height: 844 });
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    }
+    await writeFile(out + '/' + (phase === 'after' ? 'browser-pass.log' : 'base-browser.log'),
+      "'`Bundled local Worker: ${wrangler} ${runtimeArgs.join('"' ')}\\nHome page status: 200\\napplications sections: "'${phase === '"'after' ? 1 : 0}\\nconsole errors: "'${errors.length}'"\\npage errors: "'${pageErrors.length}'"\\nDesktop capture: 1440 x "'${height - top}, FAQ through footer'"\\n"'${phase === '"'after' ? 'Four entries; mobile width 375: no horizontal overflow\\n' : 'Base commit: c55bc1659a1b1f5f6adb66760faa4915dcd01aee\\n'}"'${errors.join('"'\\n')}\\n"'${pageErrors.join('"'\\n')}"'`);
+    assert.equal(errors.length, 0, errors.join('"'\\n'));
+    assert.equal(pageErrors.length, 0, pageErrors.join('\\n'));
+  } finally {
+    await browser?.close();
+    runtime.kill('SIGTERM');
+    await new Promise(r => runtime.exitCode "'!== null ? r() : runtime.once('"'exit', r));
+  }
+}
+EOF
+node evidence/possible-applications/capture.mjs" in /home/runner/work/sentia/sentia
+exec
+/bin/bash -lc 'npm test > evidence/possible-applications/test-suite.log 2>&1; result=$?; echo "exit status: $result" >> evidence/possible-applications/test-suite.log; rg -n '"'not ok|# tests|# pass|# fail|# skipped' evidence/possible-applications/test-suite.log" in /home/runner/work/sentia/sentia
+exec
+/bin/bash -lc 'cd /tmp/sentia-applications-base && npm test > /home/runner/work/sentia/sentia/evidence/possible-applications/base-test-suite.log 2>&1; result=$?; echo "exit status: $result" >> /home/runner/work/sentia/sentia/evidence/possible-applications/base-test-suite.log' in /home/runner/work/sentia/sentia
+ succeeded in 1242ms:
+589:not ok 98 - S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/
+744:not ok 119 - applications S6/R9.2: browser-pass.log records a bundled run of the home page with zero console and page errors
+766:not ok 120 - applications S6/R9.3: before and after desktop screenshots are committed and differ
+1142:# tests 179
+1144:# pass 175
+1145:# fail 3
+1147:# skipped 1
+
+ succeeded in 1131ms:
+ exited 1 in 8613ms:
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+page.screenshot: Clipped area is either empty or outside the resulting image
+Call log:
+  - taking page screenshot
+  - waiting for fonts to load...
+  - fonts loaded
+
+    at /home/runner/work/sentia/sentia/evidence/possible-applications/capture.mjs:48:16 {
+  log: [
+    '  - taking page screenshot',
+    '  - waiting for fonts to load...',
+    '  - fonts loaded'
+  ],
+  name: 'Error'
+}
+
+Node.js v22.23.4
+
+codex
+The section is inserted, and the content and insertion checks pass. I’m completing the bundled Worker browser checks and screenshots, and checking the base suite to verify the reported S11 failure.
+
+exec
+/bin/bash -lc "python3 - <<'PY'
+p='evidence/possible-applications/capture.mjs'
+s=open(p).read().replace(\"await page.screenshot({ path:\", \"await page.screenshot({ fullPage: true, path:\")
+open(p,'w').write(s)
+PY
+node evidence/possible-applications/capture.mjs" in /home/runner/work/sentia/sentia
+exec
+/bin/bash -lc "rg -n 'not ok|# tests|# pass|# fail|# skipped' evidence/possible-applications/base-test-suite.log; git status --short; cat evidence/possible-applications/bundle-build.log" in /home/runner/work/sentia/sentia
+ exited 1 in 0ms:
+589:not ok 98 - S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/
+1014:# tests 163
+1016:# pass 161
+1017:# fail 1
+1019:# skipped 1
+ M src/page.js
+?? evidence/possible-applications/
+?? runs/wo-gh-15/
+?? tests/possible-applications.test.js
+cat: evidence/possible-applications/bundle-build.log: No such file or directory
+
+ succeeded in 16260ms:
+exec
+/bin/bash -lc "ls -lh evidence/possible-applications; ps -eo pid,args | rg 'capture.mjs|wrangler|chrome' | head -12" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+total 892K
+-rw-r--r-- 1 runner runner 456K Nov  1 15:59 after-desktop.png
+-rw-r--r-- 1 runner runner  352 Nov  1 15:58 base-browser.log
+-rw-r--r-- 1 runner runner  357 Nov  1 15:58 base-build.log
+-rw-r--r-- 1 runner runner  37K Nov  1 15:58 base-test-suite.log
+-rw-r--r-- 1 runner runner 329K Nov  1 15:58 before-desktop.png
+-rw-r--r-- 1 runner runner  352 Nov  1 15:59 browser-pass.log
+-rw-r--r-- 1 runner runner  358 Nov  1 15:58 bundle-build.log
+-rw-r--r-- 1 runner runner 4.0K Nov  1 15:58 capture.mjs
+-rw-r--r-- 1 runner runner  43K Nov  1 15:58 test-suite.log
+   4560 /bin/bash -c ls -lh evidence/possible-applications; ps -eo pid,args | rg 'capture.mjs|wrangler|chrome' | head -12
+   4563 rg capture.mjs|wrangler|chrome
+
+exec
+/bin/bash -lc 'npm test > evidence/possible-applications/test-suite.log 2>&1; result=$?; echo "exit status: $result" >> evidence/possible-applications/test-suite.log; rg -n '"'not ok|# tests|# pass|# fail|# skipped' evidence/possible-applications/test-suite.log; node --test tests/possible-applications.test.js > evidence/possible-applications/applications-tests.log 2>&1; result="'$?; echo "exit status: $result" >> evidence/possible-applications/applications-tests.log' in /home/runner/work/sentia/sentia
+ succeeded in 1226ms:
+589:not ok 98 - S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/
+1110:# tests 179
+1112:# pass 177
+1113:# fail 1
+1115:# skipped 1
+
+exec
+/bin/bash -lc "rg -n 'skip' src/page.js; cat evidence/possible-applications/browser-pass.log; cat evidence/possible-applications/bundle-build.log; tail -10 evidence/possible-applications/applications-tests.log" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+295:.skip-link{position:fixed;top:8px;left:8px;z-index:10;padding:16px 24px;background:var(--ink);color:var(--paper);transform:translateY(-160%)}
+296:.skip-link:focus{transform:none}
+363:<a class="skip-link" href="#main">Skip to content</a>
+Bundled local Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-applications-after/index.js --no-bundle --local --ip 127.0.0.1 --port 8791
+Home page status: 200
+applications sections: 1
+console errors: 0
+page errors: 0
+Desktop capture: 1440 x 2939.484375, FAQ through footer
+Four entries; mobile width 375: no horizontal overflow
+
+cwd: /home/runner/work/sentia/sentia
+/tmp/sentia-browser/node_modules/.bin/wrangler deploy --dry-run --outdir /tmp/sentia-applications-after
+
+ ⛅️ wrangler 4.156.0
+────────────────────
+Total Upload: 1322.16 KiB / gzip: 545.80 KiB
+No bindings found.
+--dry-run: exiting now.
+
+exit status: 0
+No local patches applied.
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 131.805831
+exit status: 0
+
+exec
+/bin/bash -lc "python3 - <<'PY'
+p='evidence/possible-applications/capture.mjs'
+s=open(p).read().replace(\"    await page.screenshot({\", \"    await page.evaluate(() => scrollTo(0, 0));\\n    await page.waitForTimeout(100);\\n    await page.screenshot({\")
+open(p,'w').write(s)
+PY
+node evidence/possible-applications/capture.mjs" in /home/runner/work/sentia/sentia
+codex
+All 16 application tests pass. The production bundle succeeds, and the local Worker browser pass reports zero console or page errors. The full suite has 177 passes, one skip, and only the pre-existing design v4 S11 failure, also reproduced on the base tree. I’m finishing the evidence record for the independent review stations.
+
+exec
+/bin/bash -lc "cat > evidence/possible-applications/README.md <<'EOF'
+# wo-gh-15 builder evidence
+
+Inserted one typographic section after FAQ and before the end of main in src/page.js. It reuses the existing sensors/sensor grid, typography and reveal styles. Four entries have equal treatment and two sentences each. Glucose monitoring support is explicitly a possible future application; no present capability or medical outcome is claimed.
+
+Production diff against c55bc1659a1b1f5f6adb66760faa4915dcd01aee: src/page.js only, 26 inserted lines, zero deletions. All existing production bytes remain intact, including the footer; no CSS, imagery, routes or dependencies changed.
+
+Evidence:
+- bundle-build.log: Wrangler 4.156.0 production dry-run bundle, exit status 0, no local patches.
+- browser-pass.log: bundled output served with wrangler dev --no-bundle --local; home page with four application entries, zero console errors and zero page errors. Mobile width 375 has no horizontal overflow.
+- before-desktop.png: base commit build, 1440 px wide, FAQ through footer.
+- after-desktop.png: final build, same width and region including the insertion.
+- applications-tests.log: all 16 tests pass.
+- test-suite.log: 179 tests, 177 pass, one failure, one skip.
+- base-test-suite.log: 163 tests, 161 pass, the same failure and skip.
+
+The untouched pre-existing failure is \"S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/\" in tests/design-v4-square-product.test.js. It reports uncleared patch-exploded / mounting review evidence. The skipped test is \"ui-elevation S4: codec, data, mcp and index are untouched by the run\" because no main ref exists. No existing tests or review evidence were changed.
+
+Reproduction: install playwright and wrangler under /tmp/sentia-browser, extract git archive c55bc16 to /tmp/sentia-applications-base, then run "'`node evidence/possible-applications/capture.mjs` from the repository root. The capture uses /usr/bin/google-chrome, builds both trees, runs each bundled Worker locally, and captures the affected region after scrolling through reveal observers. Run `npm test` and `node --test tests/possible-applications.test.js` for suite evidence.
+
+This is builder evidence, not approval or a run verdict. All five independent reviews, including reviewer-design, remain outstanding for subsequent stations. No deployment ran; only dry-run bundling and local Workers ran. The result remains at the owner gate. Runner model/gateway provenance cannot be established from the supplied spec and tests.
+EOF
+cat > runs/wo-gh-15/builder.output.md <<'"'EOF'
+Implemented the possible-applications spec as 26 inserted lines in src/page.js, with no existing production lines modified or deleted. The four equal-weight entries use existing styles and exploratory copy; the footer and all other production surfaces remain unchanged.
+
+Evidence is recorded under evidence/possible-applications/: production bundle exit 0 without patches, local bundled Worker browser pass with zero console/page errors, base and final desktop screenshots, 16/16 application tests, and full-suite results. The suite has 177 passes, one skip and only the untouched pre-existing design v4 S11 review-evidence failure, reproduced on the base tree.
+
+No approval is issued. The five-review panel and run verdict belong to subsequent stations, including reviewer-design. No deployment ran. Model routing is runner-controlled and cannot be independently verified from the packet inputs.
+EOF" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+ succeeded in 19031ms:
+exec
+/bin/bash -lc 'git diff --check; git diff --numstat c55bc16 -- src/page.js; git add src/page.js evidence/possible-applications runs/wo-gh-15/builder.output.md; git commit -m "Add exploratory possible applications section and build evidence"; git status --short' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+26	0	src/page.js
+Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: empty ident name (for <runner@runnervm48cm3.csywkskczy5uzdr4uags05v2db.dx.internal.cloudapp.net>) not allowed
+A  evidence/possible-applications/README.md
+A  evidence/possible-applications/after-desktop.png
+A  evidence/possible-applications/applications-tests.log
+A  evidence/possible-applications/base-browser.log
+A  evidence/possible-applications/base-build.log
+A  evidence/possible-applications/base-test-suite.log
+A  evidence/possible-applications/before-desktop.png
+A  evidence/possible-applications/browser-pass.log
+A  evidence/possible-applications/bundle-build.log
+A  evidence/possible-applications/capture.mjs
+A  evidence/possible-applications/test-suite.log
+A  runs/wo-gh-15/builder.output.md
+M  src/page.js
+?? runs/wo-gh-15/builder.packet.md
+?? runs/wo-gh-15/envelopes/
+?? runs/wo-gh-15/spec-writer.output.md
+?? runs/wo-gh-15/spec-writer.packet.md
+?? runs/wo-gh-15/test-writer.output.md
+?? runs/wo-gh-15/test-writer.packet.md
+?? tests/possible-applications.test.js
+
+exec
+/bin/bash -lc "git -c user.name='Codex' -c user.email='codex@openai.com' commit -m \"Add exploratory possible applications section and build evidence\"" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+[anvil/run-possible-applications 21786e4] Add exploratory possible applications section and build evidence
+ 13 files changed, 2401 insertions(+)
+ create mode 100644 evidence/possible-applications/README.md
+ create mode 100644 evidence/possible-applications/after-desktop.png
+ create mode 100644 evidence/possible-applications/applications-tests.log
+ create mode 100644 evidence/possible-applications/base-browser.log
+ create mode 100644 evidence/possible-applications/base-build.log
+ create mode 100644 evidence/possible-applications/base-test-suite.log
+ create mode 100644 evidence/possible-applications/before-desktop.png
+ create mode 100644 evidence/possible-applications/browser-pass.log
+ create mode 100644 evidence/possible-applications/bundle-build.log
+ create mode 100644 evidence/possible-applications/capture.mjs
+ create mode 100644 evidence/possible-applications/test-suite.log
+ create mode 100644 runs/wo-gh-15/builder.output.md
+
+codex
+Added the four-entry Possible applications section with exploratory wording and insertion-only production changes.
+
+Committed screenshots and validation evidence in 21786e4. All 16 application tests pass; build and browser checks pass. Only the pre-existing design v4 S11 suite failure remains.
+
+Independent reviews remain pending. Nothing deployed.
+tokens used
+49,094
+Added the four-entry Possible applications section with exploratory wording and insertion-only production changes.
+
+Committed screenshots and validation evidence in 21786e4. All 16 application tests pass; build and browser checks pass. Only the pre-existing design v4 S11 suite failure remains.
+
+Independent reviews remain pending. Nothing deployed.

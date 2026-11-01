@@ -1,0 +1,28 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-security",
+  "to_station": "reviewer-tests",
+  "work_order_id": "wo-gh-15",
+  "artifact_path": "runs/wo-gh-15/reviewer-security.output.md",
+  "status": "executed",
+  "created_at": "2026-11-01T16:00:24.631880+00:00",
+  "review": {
+    "station": "reviewer-security",
+    "verdict": "pass",
+    "findings": [
+      "The production diff is a pure insertion of 26 lines in src/page.js, after the FAQ section and before </main>. No existing line, header, nav, footer or route is touched. package.json and wrangler config are unchanged.",
+      "The new section is static, hand-written HTML. It has no script, no inline event handler, no external URL, no form, no iframe, no interpolation of user input and no new network call. I found no XSS, injection or supply-chain surface.",
+      "The new content has no insulin, delivery, treatment, therapy, dosing or diagnosis wording. It has no efficacy claim and nothing that implies a medical device in clinical use. It has none of the forbidden shapes ('detects/measures/monitors/senses glucose', 'glucose sensor'). The diabetes entry reads 'A possible future application ... One day, this could explore ...', which carries at least three exploratory markers and frames glucose as a future possibility. This is the main safety and compliance risk, and it is handled.",
+      "Footer text is unchanged, since the diff does not touch it. The 'not a medical device' and concept-product disclaimers stay byte exact.",
+      "I searched the committed evidence files and run artifacts (logs, capture.mjs, builder.output.md.codex.txt) for credentials, bearer tokens, API keys and gateway headers. The only matches were the word 'tokens' in design-token test names and a token-usage count in the codex log. No secrets leaked.",
+      "Non-blocking: the entry title 'Glucose monitoring support' has no exploratory marker of its own. The body supplies them, and the spec only requires two markers within the entry, so this passes. A title such as 'Possible glucose monitoring support' would remove any ambiguity if the title is ever shown out of context, for example in a nav or a search snippet.",
+      "Non-blocking: 'the same continuous sensing, relay and alert pattern' in the diabetes entry refers to the platform pattern in general. It is not a present glucose capability, and the surrounding exploratory framing makes that clear."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}
