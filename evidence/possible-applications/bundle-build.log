@@ -1,0 +1,11 @@
+cwd: /home/runner/work/sentia/sentia
+/tmp/sentia-browser/node_modules/.bin/wrangler deploy --dry-run --outdir /tmp/sentia-applications-after
+
+ ⛅️ wrangler 4.156.0
+────────────────────
+Total Upload: 1322.16 KiB / gzip: 545.80 KiB
+No bindings found.
+--dry-run: exiting now.
+
+exit status: 0
+No local patches applied.

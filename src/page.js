@@ -575,6 +575,32 @@ ${faqItems}
   </div>
 </section>
 
+<section id="applications" aria-label="Possible applications">
+  <div class="wrap">
+    <p class="mono kicker rv"><span aria-hidden="true">08 / </span>Possible applications</p>
+    <h2 class="rv">Where the pattern could go.</h2>
+    <p class="lede rv">A patch that senses, relays what it senses, and alerts the wearer and a care circle they choose: this section explores where that pattern could go.</p>
+    <div class="sensors">
+      <article class="sensor rv">
+        <h3>Everyday wellness trends</h3>
+        <p>Everyday wellness trends could offer a way to explore the rhythms of daily life over time. A future application would relay those patterns to the wearer, with alerts shared with a care circle they choose.</p>
+      </article>
+      <article class="sensor rv">
+        <h3>A care circle around someone living alone</h3>
+        <p>A possible application could connect someone living alone with a care circle they choose. Relayed observations and alerts would give the wearer and their circle a shared starting point for everyday check-ins.</p>
+      </article>
+      <article class="sensor rv">
+        <h3>Activity and recovery patterns</h3>
+        <p>Activity and recovery patterns could be another direction to explore, following the rhythm of movement and rest. A future application would relay observations to the wearer, with alerts for a care circle they choose.</p>
+      </article>
+      <article class="sensor rv">
+        <h3>Glucose monitoring support</h3>
+        <p>A possible future application is glucose monitoring support for people living with diabetes. One day, this could explore the same continuous sensing, relay and alert pattern for the wearer and a care circle they choose.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
 </main>
 <footer>
   <div class="wrap">

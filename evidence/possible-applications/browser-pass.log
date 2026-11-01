@@ -1,0 +1,8 @@
+Bundled local Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-applications-after/index.js --no-bundle --local --ip 127.0.0.1 --port 8791
+Home page status: 200
+applications sections: 1
+console errors: 0
+page errors: 0
+Desktop capture: 1440 x 2939.484375, FAQ through footer
+Four entries; mobile width 375: no horizontal overflow
+
