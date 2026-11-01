@@ -70,6 +70,14 @@ export default {
     const path = url.pathname;
     const origin = url.origin;
 
+    if (path === '/home-layers.js') {
+      const { HOME_LAYERED_CLIENT_JS } = await import('./home-layered-client.js');
+      return text(HOME_LAYERED_CLIENT_JS, 'application/javascript; charset=utf-8');
+    }
+    if (path === '/img/home-layers.webp') {
+      const { HOME_LAYERS_WEBP_B64 } = await import('./home-layered-image.js');
+      return webp(HOME_LAYERS_WEBP_B64);
+    }
     if (path === '/models/patch-one.glb') {
       const { PATCH_ONE_GLB_B64 } = await import('./patch-one-glb.js');
       return text(Uint8Array.from(atob(PATCH_ONE_GLB_B64), c => c.charCodeAt(0)), 'model/gltf-binary', { 'cache-control': 'public, max-age=86400' });

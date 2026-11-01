@@ -2,6 +2,7 @@
 // the specs table, the FAQ and the JSON-LD graph can never drift apart.
 
 import { FACTS, GITHUB_URL, REPO_URL } from './facts.js';
+import { HOME_LAYERED_CSS, HOME_LAYERED_GATE, homeLayeredSection } from './home-layered.js';
 import { TOOLS } from './mcp.js';
 import { MCP_EXAMPLE } from './mcp-example.js';
 
@@ -356,7 +357,8 @@ export function renderPage(origin) {
 <script type="application/ld+json">
 ${jsonLd(origin)}
 </script>
-<style>${CSS}</style>
+<script type="importmap">{"imports":{"three":"/vendor/three.module.min.js","GLTFLoader":"/vendor/loaders/GLTFLoader.js"}}</script>
+<style>${CSS}${HOME_LAYERED_CSS}</style>
 <noscript><style>.rv{opacity:1;transform:none}</style></noscript>
 </head>
 <body>
@@ -432,6 +434,8 @@ ${sensorCards}
     </div>
   </div>
 </section>
+
+${homeLayeredSection()}
 
 <section id="how" aria-label="How it works">
   <div class="wrap">
@@ -593,6 +597,7 @@ ${faqItems}
 </footer>
 <script src="/browser-codec.js"></script>
 <script src="/client.js"></script>
+<script type="module">${HOME_LAYERED_GATE}</script>
 </body>
 </html>`;
 }

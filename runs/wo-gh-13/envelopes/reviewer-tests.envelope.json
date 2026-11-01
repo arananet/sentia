@@ -1,0 +1,25 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-tests",
+  "to_station": "reviewer-architecture",
+  "work_order_id": "wo-gh-13",
+  "artifact_path": "runs/wo-gh-13/reviewer-tests.output.md",
+  "status": "executed",
+  "created_at": "2026-11-01T01:06:01.640337+00:00",
+  "review": {
+    "station": "reviewer-tests",
+    "verdict": "changes_requested",
+    "findings": [
+      "The new tests are real and mapped. tests/home-layered-view.test.js has 41 tests, and all 41 pass when I run `node --test tests/home-layered-view.test.js`. Each test name carries its spec ids (S1\u2013S10, R1\u2013R14). Together they cover the section position and its aria-label, the five layer buttons in stack order, the copy and the single /take-apart link, model twin equality at t=0 and t=1 against src/take-apart-model.js, the lazy gate and the no-3D-bytes document, the fallback image route and the fallback content, the byte-stable invariants, the payload budgets, accessibility, and the evidence logs and screenshots.",
+      "Full suite: `npm test` gives 226 tests, 222 pass, 3 fail and 1 skips. R15 allows exactly one named pre-existing failure, `S11: when reviewer-design has reviewed...`. Two other failures are not covered by that exception: `product-model S7/R13: the bundled browser pass records zero errors, scene ready, the GLB fetched and the five node names` (the evidence text fails the assertion) and `product-model S7/R13: bundle-build.log records the production bundle command, exit 0, zero local patches` (evidence/take-apart-product-model/ has no bundle-build.log).",
+      "Those two product-model failures also appear in evidence/home-layered-view/baseline-tests.log (as tests 48 and 49), so they predate this order. The git status shows nothing under evidence/take-apart-product-model/ modified by this run. R15 and the work order require the run report to itemize only S11 by name. The builder output has no itemization of the two product-model failures, so the 'green except S11' claim does not hold. The run report must name both product-model failures as pre-existing on the base branch (their evidence belongs to the sibling stack), and the spec owner must either accept them as extra known exceptions or have them resolved on the stack. This order must not edit another run's evidence to fix them.",
+      "Several R13/S10 tests check log and screenshot files rather than behaviour. They are the bundle-build, browser-pass, payload-figures and screenshot checks (tests 35\u201338). The files exist and the tests pass. S3, S4 and S5 (slider, animation, reduced motion, legend sync) are covered by source-pattern checks plus the browser-pass.log text. No automated test drives the slider or legend in a browser. I accept this because the suite is the node test runner and scripts/capture-home.mjs is the capture of record. Reviewer-design should still confirm that the screenshots show the product, and that the assembled and exploded screenshots differ."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}
