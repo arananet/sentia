@@ -1,0 +1,264 @@
+{
+  "work_order_id": "wo-gh-14",
+  "pipeline": "sdlc-default",
+  "title": "Web render finish: board and cover materials read in the page rendering, then deploy on approval",
+  "kind": "feature",
+  "steps": [
+    {
+      "station": "intake",
+      "status": "completed",
+      "detail": "Work order normalized",
+      "duration_ms": 0.012,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-14/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "spec-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-14/spec-writer.output.md",
+      "duration_ms": 16596.691,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-14/spec-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "test-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-14/test-writer.output.md",
+      "duration_ms": 91882.129,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-14/test-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "builder",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-14/builder.output.md",
+      "duration_ms": 21497.962,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-14/builder.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-spec",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-14/reviewer-spec.output.md",
+      "duration_ms": 14149.857,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-14/reviewer-spec.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-security",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-14/reviewer-security.output.md",
+      "duration_ms": 15073.639,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-14/reviewer-security.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-tests",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-14/reviewer-tests.output.md",
+      "duration_ms": 22397.506,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-14/reviewer-tests.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-architecture",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-14/reviewer-architecture.output.md",
+      "duration_ms": 16465.097,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-14/reviewer-architecture.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-design",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-14/reviewer-design.output.md",
+      "duration_ms": 19138.016,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-14/reviewer-design.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "approver",
+      "status": "completed",
+      "detail": "Approver verdict: changes_requested",
+      "duration_ms": 0.036,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-14/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "approver",
+      "status": "loopback",
+      "return_to": "spec-writer",
+      "detail": "Loopback to spec-writer: The builder did not implement anything. runs/wo-gh-14/builder.output.md says 'blocked; implementation not performed' because the GPT-6 Astra route through the Cloudflare AI Gateway could not be verified. The code change is empty, so no scenario can pass.; S4, S5, R2, R3 and R4: src/take-apart-client.js is unchanged. It has no new lighting rig, tone mapping, exposure, environment or on-load material adjustments.; S1, S2 and S3: blender/build_patch_one.py and src/patch-one-glb.js are unchanged. No final GLB size is stated, and no reproducibility proof is needed or recorded.; R7, R8 and S7: evidence/web-render-finish/before/ and after/ do not exist. There are no before or after beats, no browser pass logs, no bundle command and exit status, and no regenerated evidence/take-apart/.; S8 and S9: no suite run is recorded, including the itemized design v4 S11 failure. tests/web-render-finish.test.js is untracked and has nothing to run against.; S10: the diff touches the spec file, tests/web-render-finish.test.js and runs/wo-gh-14/. The edit to .openspec/specs/web-render-finish/spec.md (R8 and S7 wording) is not on the S10 scope list.; The missing input is a builder run on the required model and gateway, with no fallback, that produces the change and evidence. The review is written to runs/wo-gh-14/reviewer-spec.output.md.; There is no code change to review. runs/wo-gh-14/builder.output.md says the builder was blocked because it could not verify the required GPT-6 Astra route through the Cloudflare AI Gateway. src/take-apart-client.js, blender/build_patch_one.py and the GLB module are unchanged from setup commit 4de668a.; The only differences from the setup commit are the R8 and S7 wording in .openspec/specs/web-render-finish/spec.md, the untracked tests/web-render-finish.test.js, and runs/wo-gh-14/. The spec edit is documentation only and adds no security risk.; tests/web-render-finish.test.js uses execFileSync with fixed git arguments and no shell, and a local worker.fetch. It also asserts that the Blender script downloads no models or textures (line 147). I found no unsafe patterns in it.; I did not assess the lighting, tone mapping and material changes in the client, the Blender build changes, or the bundled output, because they do not exist yet. Missing input: a builder run on the required model and gateway, with no fallback, that produces the change.; The work order carries the production-deploy risk hint. The run verdict cannot be approved, so nothing should deploy. The review is written to runs/wo-gh-14/reviewer-security.output.md.; I wrote the review to runs/wo-gh-14/reviewer-tests.output.md.; The 16 tests in tests/web-render-finish.test.js are real assertions and map to S1, S2, S3, S4/S5, S6, S7, S8, S10 and R2-R5. S9 has no test of its own. S4, S5 and S6 are judgement calls for reviewer-design, and the tests only check that the evidence for them exists.; The tests do not pass. `node --test tests/web-render-finish.test.js` gives 9 pass and 7 fail.; Passing: S1 (798,092 bytes, under the 819,200 budget), S2, S3 (asset unchanged), R5, S6 (the beauty renders exist), the S7 no-unbundled-import check, both S8 checks, S10.; Failing: R2-R4 (no change to the client, the build script or the GLB module), R7 (evidence/web-render-finish/ does not exist), the S4/S5 beat difference, the S4/S5 builder notes, the S7 browser pass logs, the S7 standard capture, and the S7 bundle-build.log.; The cause is missing builder work, not defective tests. runs/wo-gh-14/builder.output.md says the builder could not verify the required GPT-6 Astra route and made no changes. It produced no client or asset change, no before/after beats, no pass logs and no bundle log.; The S3 reproducibility-log regex needs one-line `export N ... GLB SHA256 <hex> ... bytes N ... exit 0` and `module SHA256 <hex>` entries. This only applies if the asset changes, and the builder's packet should state the format.; The S7 standard-capture test compares only PNG widths between evidence/take-apart/ and the after beats, though its comment says identical bytes. Either compare bytes or fix the comment.; Nothing in the tests checks that the design v4 S11 failure is itemized in the run report. That check is outside the script's reach.; Next step: a builder run on the mandated model that produces the client or asset change and the committed before/after evidence, then re-run this station.; There is no code change to review. runs/wo-gh-14/builder.output.md says the builder was blocked: it could not select or verify the required GPT-6 Astra route through the Cloudflare AI Gateway, and the packet forbids fallback. src/take-apart-client.js, blender/build_patch_one.py and the GLB are unchanged from the setup commit.; The working tree differs from the setup commit only in .openspec/specs/web-render-finish/spec.md (R8 and S7 wording), plus untracked tests/web-render-finish.test.js and runs/wo-gh-14/. None of that implements the order's two finish fixes in the page rendering.; evidence/web-render-finish/before/ and evidence/web-render-finish/after/ do not exist. Spec R7 requires both with zero-error browser pass logs. There are also no production shape records for R8 and S7: bundle command and exit status, scene ready, GLB fetched, five named nodes.; brain/decisions does not exist (brain/ holds only glossary.md, learnings.md, project.md and worklog.md), so the decisions input is missing. Fit with project decisions was checked only against the spec and L-1 to L-7, not against recorded decisions.; The frozen constraints cannot be checked because nothing was built: the five named nodes and their stack, the GLB budget of 819,200 bytes (current asset 798,092), byte identical build reproducibility, and the unchanged vendored three.js bytes.; To continue, rerun the builder in a session the operator has configured and verified for gpt-6-astra through the gateway, then rerun this review on the real diff. The review file is at runs/wo-gh-14/reviewer-architecture.output.md.; R1/R7/R8: evidence/web-render-finish/before/ and after/ are absent. Supply the required bundled-browser beats, contact sheets and browser logs so both finish fixes and preserved identity can be judged against the setup tree.; R2/S4 and design/reference/README.md material-realism bar: the existing evidence/take-apart/beat-board.png still shows dark, flat component faces without readable metallic highlight variation across the shield, battery and sensors. Adjust materials and lighting until these finishes read distinctly in the bundled page captures.; R3/S5 and the reference fine-detail and identity bars: evidence/take-apart/beat-assembled.png shows a uniformly smooth cover and a gray LED slot, without readable silicone micrograin or the reference's recessed teal emitter. Make both visible at beat resolution, preserving the approved wordmark and geometry, and demonstrate them in assembled and mid after beats.",
+      "reason": "The builder did not implement anything. runs/wo-gh-14/builder.output.md says 'blocked; implementation not performed' because the GPT-6 Astra route through the Cloudflare AI Gateway could not be verified. The code change is empty, so no scenario can pass.; S4, S5, R2, R3 and R4: src/take-apart-client.js is unchanged. It has no new lighting rig, tone mapping, exposure, environment or on-load material adjustments.; S1, S2 and S3: blender/build_patch_one.py and src/patch-one-glb.js are unchanged. No final GLB size is stated, and no reproducibility proof is needed or recorded.; R7, R8 and S7: evidence/web-render-finish/before/ and after/ do not exist. There are no before or after beats, no browser pass logs, no bundle command and exit status, and no regenerated evidence/take-apart/.; S8 and S9: no suite run is recorded, including the itemized design v4 S11 failure. tests/web-render-finish.test.js is untracked and has nothing to run against.; S10: the diff touches the spec file, tests/web-render-finish.test.js and runs/wo-gh-14/. The edit to .openspec/specs/web-render-finish/spec.md (R8 and S7 wording) is not on the S10 scope list.; The missing input is a builder run on the required model and gateway, with no fallback, that produces the change and evidence. The review is written to runs/wo-gh-14/reviewer-spec.output.md.; There is no code change to review. runs/wo-gh-14/builder.output.md says the builder was blocked because it could not verify the required GPT-6 Astra route through the Cloudflare AI Gateway. src/take-apart-client.js, blender/build_patch_one.py and the GLB module are unchanged from setup commit 4de668a.; The only differences from the setup commit are the R8 and S7 wording in .openspec/specs/web-render-finish/spec.md, the untracked tests/web-render-finish.test.js, and runs/wo-gh-14/. The spec edit is documentation only and adds no security risk.; tests/web-render-finish.test.js uses execFileSync with fixed git arguments and no shell, and a local worker.fetch. It also asserts that the Blender script downloads no models or textures (line 147). I found no unsafe patterns in it.; I did not assess the lighting, tone mapping and material changes in the client, the Blender build changes, or the bundled output, because they do not exist yet. Missing input: a builder run on the required model and gateway, with no fallback, that produces the change.; The work order carries the production-deploy risk hint. The run verdict cannot be approved, so nothing should deploy. The review is written to runs/wo-gh-14/reviewer-security.output.md.; I wrote the review to runs/wo-gh-14/reviewer-tests.output.md.; The 16 tests in tests/web-render-finish.test.js are real assertions and map to S1, S2, S3, S4/S5, S6, S7, S8, S10 and R2-R5. S9 has no test of its own. S4, S5 and S6 are judgement calls for reviewer-design, and the tests only check that the evidence for them exists.; The tests do not pass. `node --test tests/web-render-finish.test.js` gives 9 pass and 7 fail.; Passing: S1 (798,092 bytes, under the 819,200 budget), S2, S3 (asset unchanged), R5, S6 (the beauty renders exist), the S7 no-unbundled-import check, both S8 checks, S10.; Failing: R2-R4 (no change to the client, the build script or the GLB module), R7 (evidence/web-render-finish/ does not exist), the S4/S5 beat difference, the S4/S5 builder notes, the S7 browser pass logs, the S7 standard capture, and the S7 bundle-build.log.; The cause is missing builder work, not defective tests. runs/wo-gh-14/builder.output.md says the builder could not verify the required GPT-6 Astra route and made no changes. It produced no client or asset change, no before/after beats, no pass logs and no bundle log.; The S3 reproducibility-log regex needs one-line `export N ... GLB SHA256 <hex> ... bytes N ... exit 0` and `module SHA256 <hex>` entries. This only applies if the asset changes, and the builder's packet should state the format.; The S7 standard-capture test compares only PNG widths between evidence/take-apart/ and the after beats, though its comment says identical bytes. Either compare bytes or fix the comment.; Nothing in the tests checks that the design v4 S11 failure is itemized in the run report. That check is outside the script's reach.; Next step: a builder run on the mandated model that produces the client or asset change and the committed before/after evidence, then re-run this station.; There is no code change to review. runs/wo-gh-14/builder.output.md says the builder was blocked: it could not select or verify the required GPT-6 Astra route through the Cloudflare AI Gateway, and the packet forbids fallback. src/take-apart-client.js, blender/build_patch_one.py and the GLB are unchanged from the setup commit.; The working tree differs from the setup commit only in .openspec/specs/web-render-finish/spec.md (R8 and S7 wording), plus untracked tests/web-render-finish.test.js and runs/wo-gh-14/. None of that implements the order's two finish fixes in the page rendering.; evidence/web-render-finish/before/ and evidence/web-render-finish/after/ do not exist. Spec R7 requires both with zero-error browser pass logs. There are also no production shape records for R8 and S7: bundle command and exit status, scene ready, GLB fetched, five named nodes.; brain/decisions does not exist (brain/ holds only glossary.md, learnings.md, project.md and worklog.md), so the decisions input is missing. Fit with project decisions was checked only against the spec and L-1 to L-7, not against recorded decisions.; The frozen constraints cannot be checked because nothing was built: the five named nodes and their stack, the GLB budget of 819,200 bytes (current asset 798,092), byte identical build reproducibility, and the unchanged vendored three.js bytes.; To continue, rerun the builder in a session the operator has configured and verified for gpt-6-astra through the gateway, then rerun this review on the real diff. The review file is at runs/wo-gh-14/reviewer-architecture.output.md.; R1/R7/R8: evidence/web-render-finish/before/ and after/ are absent. Supply the required bundled-browser beats, contact sheets and browser logs so both finish fixes and preserved identity can be judged against the setup tree.; R2/S4 and design/reference/README.md material-realism bar: the existing evidence/take-apart/beat-board.png still shows dark, flat component faces without readable metallic highlight variation across the shield, battery and sensors. Adjust materials and lighting until these finishes read distinctly in the bundled page captures.; R3/S5 and the reference fine-detail and identity bars: evidence/take-apart/beat-assembled.png shows a uniformly smooth cover and a gray LED slot, without readable silicone micrograin or the reference's recessed teal emitter. Make both visible at beat resolution, preserving the approved wordmark and geometry, and demonstrate them in assembled and mid after beats.",
+      "duration_ms": 0.0,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": null,
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "triage-human",
+      "status": "completed",
+      "detail": "Human review: required",
+      "duration_ms": 0.006,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "deployer",
+      "status": "packet_ready",
+      "detail": "Packet written to runs/wo-gh-14/deployer.packet.md",
+      "duration_ms": 0.097,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-14/deployer.packet.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "observer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-14/observer.output.md",
+      "duration_ms": 18648.406,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-14/observer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    }
+  ],
+  "verdict": "changes_requested",
+  "human_required": true,
+  "max_loopbacks": 2,
+  "loopbacks": 1,
+  "deployment_status": null,
+  "verify_results": [],
+  "risk_hints": [
+    "production-deploy"
+  ],
+  "decision": {
+    "approver": {
+      "reviews_counted": [
+        {
+          "station": "reviewer-spec",
+          "verdict": "changes_requested"
+        },
+        {
+          "station": "reviewer-security",
+          "verdict": "changes_requested"
+        },
+        {
+          "station": "reviewer-tests",
+          "verdict": "changes_requested"
+        },
+        {
+          "station": "reviewer-architecture",
+          "verdict": "changes_requested"
+        },
+        {
+          "station": "reviewer-design",
+          "verdict": "changes_requested"
+        }
+      ],
+      "reviews_expected": [
+        "reviewer-spec",
+        "reviewer-security",
+        "reviewer-tests",
+        "reviewer-architecture",
+        "reviewer-design"
+      ],
+      "rule": "Reviewers reviewer-spec, reviewer-security, reviewer-tests, reviewer-architecture, reviewer-design requested changes."
+    },
+    "human_gate": {
+      "required": true,
+      "rule": "Verdict is changes_requested, not approved, so a human is required.",
+      "hints_matched": []
+    }
+  },
+  "warnings": []
+}
