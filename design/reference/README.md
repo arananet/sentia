@@ -33,3 +33,19 @@ that every product image for Sentia is measured against.
 The boards carry labels and marketing text because they are reference
 material. Website assets themselves stay free of text and labels. The
 anchor governs realism and finish, not layout or copy.
+
+## The identity anchor: product-reference.png
+
+product-reference.png is the hero image of the square product, added on
+2026-10-30 for work order wo-gh-8. The boards above anchor quality; this
+file anchors identity. The product it shows is the canonical Sentia
+Patch One: a flat, thin, matte off white square patch with strongly
+rounded corners, worn directly on the skin with no carrier or frame
+around it, the SENTIA wordmark in dark print, and a teal cyan LED line.
+
+Every product image is compared against this reference for identity:
+same matte finish, same direct skin mounting, same teal LED, same flat
+proportions. An image whose LED glows amber, whose cover reads glossy,
+which shows a fabric carrier frame, or whose patch reads thick or
+domed depicts a different product and fails review, however good it
+looks against the quality boards.

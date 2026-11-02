@@ -373,6 +373,61 @@ const ANCHOR_BASE = [
   'Exploded image: the previous material gaps are cleared.',
 ];
 
+// Same product test (wo-gh-8, imagery-consistency S1 to S3): reviewer-design reports a per image result on four identity
+// axes against design/reference/product-reference.png. Semantic like the anchor comparison: any natural naming, every
+// image x axis cleared, any failure or divergence named on an axis is a problem.
+const AXES = {
+  'LED color': /\bLED\b|\bteal\b|\bhue\b|\bamber\b/i,
+  finish: /\bfinish\b|\bmatte\b|\bglossy\b|\bglazed\b/i,
+  mounting: /\bmounting\b|\bmounted\b|\bcarrier\b|\bframe\b|\bborder\b|directly on (?:the )?skin/i,
+  proportions: /\bproportions?\b|\blow[- ]profile\b|\bplaque\b|\bthick\b|\bdomed\b/i,
+};
+// "directly on skin" is a mounting phrase, not the on-skin image.
+const SUBJECTS = { ...IMAGE_NAMING, 'patch-on-skin': /(?<!directly )(?<!worn )\bon[- ]skin\b/i };
+const ALL_AXES = /\bevery\b[^.;]*\baxis\b|\ball\b[^.;]*\baxes\b|\bboth\b[^.;]*\baxes\b/i;
+const PASS = /\b(?:pass(?:es|ed)?|clear(?:s|ed)?|match(?:es|ed)?|identical|holds?)\b/i;
+const FAIL = /\b(?:fail(?:s|ed|ure)?|diverg\w+|changes_requested)\b/i;
+const NOT_FAIL = /\b(?:no|not|never|without|zero)\s+(?:\w+\s+)?(?:fail\w*|diverg\w+)|\bnor\s+(?:\w+\s+)?(?:fail\w*|diverg\w+)/i;
+
+const sameProductProblems = (text) => {
+  const problems = [];
+  if (!/product-reference\.png/.test(text)) problems.push('no product-reference.png reference');
+  const state = {};
+  for (const img of Object.keys(SUBJECTS)) for (const axis of Object.keys(AXES)) state[`${img} / ${axis}`] = { cleared: false, failed: false };
+  for (const finding of text.split(/"\s*,\s*"|\n/)) {
+    let subjects = [];
+    for (const clause of finding.split(/[.!?;](?:\s+|$)|,?\s+but\s+/i)) {
+      const named = Object.keys(SUBJECTS).filter((img) => SUBJECTS[img].test(clause));
+      if (named.length) subjects = named;
+      const axes = ALL_AXES.test(clause) ? Object.keys(AXES) : Object.keys(AXES).filter((a) => AXES[a].test(clause));
+      const failed = FAIL.test(clause) && !NOT_FAIL.test(clause);
+      const cleared = PASS.test(clause) && !failed;
+      for (const img of subjects) for (const axis of axes) {
+        if (failed) state[`${img} / ${axis}`].failed = true;
+        if (cleared) state[`${img} / ${axis}`].cleared = true;
+      }
+    }
+  }
+  for (const [key, st] of Object.entries(state)) {
+    if (st.failed) problems.push(`${key} fails`);
+    else if (!st.cleared) problems.push(`${key} not cleared`);
+  }
+  return [...problems, ...anchorComparisonProblems(text)];
+};
+
+const SAME_PRODUCT_OK = [
+  'Same product test against design/reference/product-reference.png.',
+  'Hero image: LED color, finish, mounting and proportions pass.',
+  'On-skin image: LED color, finish, mounting and proportions pass.',
+  'Exploded image: passes on every identity axis.',
+  'Network image: LED color passes (teal); finish passes (matte); mounting passes (directly on skin, no carrier); proportions pass.',
+  'design/reference/ comparison by category: materials, light, scale and contact are cleared.',
+  'Hero image: no gaps.',
+  'On-skin image: no gaps.',
+  'Exploded image: no gaps.',
+  'Network image: no gaps.',
+];
+
 test('S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/',
   { skip: existsSync(root('runs/wo-gh-6/reviewer-design.output.md')) ? false : 'review not produced yet; the run report counts it' },
   () => {
@@ -405,4 +460,24 @@ test('S11: when reviewer-design has reviewed, it addresses and clears all four i
       .includes('network-scene has an uncleared gap'), 'earlier clearance cannot hide an open gap');
 
     assert.deepEqual(anchorComparisonProblems(read('runs/wo-gh-6/reviewer-design.output.md')), []);
+
+    // wo-gh-8: the same product test. The matching bites on each identity axis; the identity anchor exists.
+    assert.deepEqual(sameProductProblems(SAME_PRODUCT_OK.join('\n')), []);
+    assert.ok(sameProductProblems(SAME_PRODUCT_OK.join('\n').replace('product-reference.png', 'the hero')).includes('no product-reference.png reference'));
+    assert.ok(sameProductProblems(SAME_PRODUCT_OK.slice(0, 2).concat(SAME_PRODUCT_OK.slice(5)).join('\n')).includes('patch-exploded / finish not cleared'), 'missing image');
+    for (const [fail, key] of [
+      ['Exploded image: LED color fails, the line glows amber.', 'patch-exploded / LED color'],
+      ['Exploded image: the finish diverges, the cover reads glossy.', 'patch-exploded / finish'],
+      ['Network image: mounting fails, a fabric carrier frame surrounds the patch.', 'network-scene / mounting'],
+      ['Network image: proportions diverge from the hero, thick and domed.', 'network-scene / proportions'],
+      ['Hero image: the finish fails.', 'patch-hero / finish'],
+      ['On-skin image: mounting passes, but the LED color fails.', 'patch-on-skin / LED color'],
+    ]) assert.ok(sameProductProblems([...SAME_PRODUCT_OK, fail].join('\n')).includes(`${key} fails`), fail);
+    assert.deepEqual(sameProductProblems([...SAME_PRODUCT_OK, 'Network image: no divergence on any axis, nothing fails.'].join('\n')), []);
+    assert.deepEqual(sameProductProblems(SAME_PRODUCT_OK.join(' ')), [], 'sentences may share a line');
+    const png = readFileSync(root('design/reference/product-reference.png'));
+    assert.equal(png.subarray(1, 4).toString('ascii'), 'PNG', 'identity anchor is a PNG');
+    assert.match(read('design/reference/README.md'), /product-reference\.png/);
+    if (existsSync(root('runs/wo-gh-8/reviewer-design.output.md')))
+      assert.deepEqual(sameProductProblems(read('runs/wo-gh-8/reviewer-design.output.md')), []);
   });

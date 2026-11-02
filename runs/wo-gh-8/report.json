@@ -1,0 +1,262 @@
+{
+  "work_order_id": "wo-gh-8",
+  "pipeline": "sdlc-default",
+  "title": "Imagery consistency: one product across all four images, anchored on the hero",
+  "kind": "feature",
+  "steps": [
+    {
+      "station": "intake",
+      "status": "completed",
+      "detail": "Work order normalized",
+      "duration_ms": 0.015,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-8/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "spec-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-8/spec-writer.output.md",
+      "duration_ms": 9937.816,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-8/spec-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "test-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-8/test-writer.output.md",
+      "duration_ms": 64872.817,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-8/test-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "builder",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-8/builder.output.md",
+      "duration_ms": 34206.337,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-8/builder.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-spec",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-8/reviewer-spec.output.md",
+      "duration_ms": 27635.602,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-8/reviewer-spec.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-security",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-8/reviewer-security.output.md",
+      "duration_ms": 12166.058,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-8/reviewer-security.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-tests",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-8/reviewer-tests.output.md",
+      "duration_ms": 18231.767,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-8/reviewer-tests.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-architecture",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-8/reviewer-architecture.output.md",
+      "duration_ms": 15993.908,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-8/reviewer-architecture.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-design",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-8/reviewer-design.output.md",
+      "duration_ms": 60363.3,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-8/reviewer-design.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "approver",
+      "status": "completed",
+      "detail": "Approver verdict: changes_requested",
+      "duration_ms": 0.04,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-8/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "approver",
+      "status": "loopback",
+      "return_to": "builder",
+      "detail": "Loopback to builder: S4 passes: PATCH_HERO_WEBP_B64 (sha256 35d8c304...6b12) and PATCH_ON_SKIN_WEBP_B64 (40afbe64...1acb) match the pinned digests. src/images.js is unchanged against the setup commit, so the supplied exploded and network payloads were not regenerated or substituted.; Payload bounds pass: all four payloads are RIFF/WEBP at 28610, 23746, 82934 (exploded) and 60492 (network) bytes, all between 10 KB and 160 KB.; Suite passes: `npm test` reports 124 tests, 123 pass, 0 fail, 1 skipped.; S5 scope fails on a literal reading. The working tree modifies tests/design-v4-square-product.test.js (+75 lines), which is outside runs/wo-gh-8/ and is not one of the two named payloads. The spec contradicts itself here. The Suite requirement tells the line to fold the same product assertions into that test file. The Scope requirement, S5 and the done criteria say no file outside runs/wo-gh-8/ may change. The builder recorded this conflict. The operator must resolve it, either by allowing that one test file in the scope and done criterion or by moving the assertions into the setup commit.; The same product assertions (4 images x 4 axes, the product-reference.png reference, the anchor comparison and failure detection) are folded into S11, so the suite total stays 124 as required. They check runs/wo-gh-8/reviewer-design.output.md only if it exists. That file does not exist yet, so S1 and S2 (matte finish, teal LED, no carrier, five layers) are not yet evidenced. I did not judge image content from the code.; The test edit is uncommitted and still in the working tree. It belongs to the test-writer station and should not be counted as builder output.; The review is written to runs/wo-gh-8/reviewer-spec.output.md. Approval is left to a different station.; src/images.js has no diff against setup commit a0086c6, so no payload, embedded binary or dependency is added.; The only code change is tests/design-v4-square-product.test.js. It is test-only, with no network, child process, eval or writes. It reads local files only from fixed repo-relative paths (product-reference.png, README.md, the reviewer output).; The new regexes (AXES, ALL_AXES, PASS, FAIL, NOT_FAIL, SUBJECTS) use no nested quantifiers and run only on repo review text, so there is no ReDoS or untrusted-input exposure.; runs/wo-gh-8 evidence contains no secrets or credentials. builder.output.md records only the model id and runtime.; Not a security issue, for reviewer-spec or the operator: the modified tests/design-v4-square-product.test.js is outside runs/wo-gh-8/, which conflicts with the done criterion on run diff scope. The builder recorded this conflict in builder.output.md.; I wrote the review to runs/wo-gh-8/reviewer-security.output.md.; I ran the full suite on the working tree. It reports 124 tests, 123 pass, 0 fail and 1 pre-existing skip, which matches S5 and the spec's rule to fold the new assertions into S11.; The same product test (S1-S3) sits inside the S11 case in tests/design-v4-square-product.test.js. It requires every image x axis (LED color, finish, mounting, proportions) to be cleared, and it requires a product-reference.png reference. Its negative cases reject amber LED, glossy finish, carrier frame, diverging proportions, a missing image and a missing reference. It also runs against runs/wo-gh-8/reviewer-design.output.md, but that file doesn't exist yet, so that check hasn't run.; S4 is covered by the existing S9 digest pins at lines 277-278 of tests/design-v4-square-product.test.js, for hero 35d8c304... and on-skin 40afbe64.... Those tests pass.; Gap, non-blocking: no test asserts that the new exploded and network payload sizes differ from both earlier generations. The S3 test only compares against the retired v2.1 set.; Gap, non-blocking: the LED hue (about 169 degrees) can't be tested here, so it rests on the operator's crop evidence. The S5 changed-files scope check is a diff against the setup commit and is left to the run report.; Gap, non-blocking: the identity PNG is only checked as a PNG file and for a mention in the README. Nothing ties it to the hero payload bytes.; The review is written to runs/wo-gh-8/reviewer-tests.output.md.; Scope conflict: tests/design-v4-square-product.test.js has a 75-line uncommitted edit that folds the same product test into S11. The spec's Suite requirement asks for this fold. Its Scope requirement and the work order's done criterion say the run diff names no file outside runs/wo-gh-8/ except the two payloads in src/images.js. Both cannot hold. The builder recorded the conflict and did not resolve it. The operator must either move the test edit into the setup commit or amend the done criterion to allow this one file.; src/ is unchanged against setup commit a0086c6. The frozen hero and on-skin payloads and the supplied exploded and network payloads are untouched, and no imagery was regenerated. This fits the spec, L-5 and L-7.; Structure fit is fine. The only added files are runs/wo-gh-8/ evidence in the existing station layout, with no new modules, routes or dependencies.; The full suite reports 124 tests, 123 pass, 0 fail and 1 skip, which matches the spec.; Not verifiable yet: runs/wo-gh-8/reviewer-design.output.md does not exist, so the per-image, per-axis same product test result is unchecked here. brain/decisions does not exist, so I used brain/project.md and .openspec/specs as the decision record.; Review written to runs/wo-gh-8/reviewer-architecture.output.md.; Same product test against design/reference/product-reference.png, inspecting decoded src/images.js bytes: patch-hero passes LED color (sampled median hue 170.5\u00b0), finish (matte off white), mounting (direct skin contact without carrier), and proportions (thin rounded square).; Same product test: patch-on-skin passes LED color (171.4\u00b0), finish (matte), mounting (direct skin contact without frame), and proportions (the hero product reframed). Both frozen payload SHA-256 digests match the spec.; Same product test: patch-exploded passes LED color (173.5\u00b0), finish (matte off white under warm lighting), and proportions (flat thin cover). Mounting is not applicable to the exploded view; separate adhesive and release layers are appropriate. All five required layers appear in order at 1400\u00d71400.; Same product test: network-scene passes LED color (180\u00b0), finish (matte), mounting (directly on skin without fabric carrier or border), and proportions (thin square plaque). The 1600\u00d7893 scene includes a legible SENTIA wordmark, phone and blank gateway, without another wearable.; L-6 comparison against design/reference/quality-board-1.png and quality-board-2.png: patch-hero, patch-on-skin and network-scene pass materials, light, scale and contact. Skin texture, restrained surface reflections, coherent lighting and contact shadows establish believable physical objects; no gaps identified in these categories.; L-6 materials quality gap in patch-exploded: at native resolution, the uniformly smooth cover lacks the fine silicone texture visible in the boards, while the PCB's simplified components and pristine traces read as an illustrative render compared with the boards' photographic component detail. This falls short of design/DESIGN.md's photorealistic production quality bar. Obtain an operator-supplied correction restoring realistic cover and electronics detail while preserving the five layers and identity. Light and scale pass; skin contact is not applicable to this exploded view.",
+      "reason": "S4 passes: PATCH_HERO_WEBP_B64 (sha256 35d8c304...6b12) and PATCH_ON_SKIN_WEBP_B64 (40afbe64...1acb) match the pinned digests. src/images.js is unchanged against the setup commit, so the supplied exploded and network payloads were not regenerated or substituted.; Payload bounds pass: all four payloads are RIFF/WEBP at 28610, 23746, 82934 (exploded) and 60492 (network) bytes, all between 10 KB and 160 KB.; Suite passes: `npm test` reports 124 tests, 123 pass, 0 fail, 1 skipped.; S5 scope fails on a literal reading. The working tree modifies tests/design-v4-square-product.test.js (+75 lines), which is outside runs/wo-gh-8/ and is not one of the two named payloads. The spec contradicts itself here. The Suite requirement tells the line to fold the same product assertions into that test file. The Scope requirement, S5 and the done criteria say no file outside runs/wo-gh-8/ may change. The builder recorded this conflict. The operator must resolve it, either by allowing that one test file in the scope and done criterion or by moving the assertions into the setup commit.; The same product assertions (4 images x 4 axes, the product-reference.png reference, the anchor comparison and failure detection) are folded into S11, so the suite total stays 124 as required. They check runs/wo-gh-8/reviewer-design.output.md only if it exists. That file does not exist yet, so S1 and S2 (matte finish, teal LED, no carrier, five layers) are not yet evidenced. I did not judge image content from the code.; The test edit is uncommitted and still in the working tree. It belongs to the test-writer station and should not be counted as builder output.; The review is written to runs/wo-gh-8/reviewer-spec.output.md. Approval is left to a different station.; src/images.js has no diff against setup commit a0086c6, so no payload, embedded binary or dependency is added.; The only code change is tests/design-v4-square-product.test.js. It is test-only, with no network, child process, eval or writes. It reads local files only from fixed repo-relative paths (product-reference.png, README.md, the reviewer output).; The new regexes (AXES, ALL_AXES, PASS, FAIL, NOT_FAIL, SUBJECTS) use no nested quantifiers and run only on repo review text, so there is no ReDoS or untrusted-input exposure.; runs/wo-gh-8 evidence contains no secrets or credentials. builder.output.md records only the model id and runtime.; Not a security issue, for reviewer-spec or the operator: the modified tests/design-v4-square-product.test.js is outside runs/wo-gh-8/, which conflicts with the done criterion on run diff scope. The builder recorded this conflict in builder.output.md.; I wrote the review to runs/wo-gh-8/reviewer-security.output.md.; I ran the full suite on the working tree. It reports 124 tests, 123 pass, 0 fail and 1 pre-existing skip, which matches S5 and the spec's rule to fold the new assertions into S11.; The same product test (S1-S3) sits inside the S11 case in tests/design-v4-square-product.test.js. It requires every image x axis (LED color, finish, mounting, proportions) to be cleared, and it requires a product-reference.png reference. Its negative cases reject amber LED, glossy finish, carrier frame, diverging proportions, a missing image and a missing reference. It also runs against runs/wo-gh-8/reviewer-design.output.md, but that file doesn't exist yet, so that check hasn't run.; S4 is covered by the existing S9 digest pins at lines 277-278 of tests/design-v4-square-product.test.js, for hero 35d8c304... and on-skin 40afbe64.... Those tests pass.; Gap, non-blocking: no test asserts that the new exploded and network payload sizes differ from both earlier generations. The S3 test only compares against the retired v2.1 set.; Gap, non-blocking: the LED hue (about 169 degrees) can't be tested here, so it rests on the operator's crop evidence. The S5 changed-files scope check is a diff against the setup commit and is left to the run report.; Gap, non-blocking: the identity PNG is only checked as a PNG file and for a mention in the README. Nothing ties it to the hero payload bytes.; The review is written to runs/wo-gh-8/reviewer-tests.output.md.; Scope conflict: tests/design-v4-square-product.test.js has a 75-line uncommitted edit that folds the same product test into S11. The spec's Suite requirement asks for this fold. Its Scope requirement and the work order's done criterion say the run diff names no file outside runs/wo-gh-8/ except the two payloads in src/images.js. Both cannot hold. The builder recorded the conflict and did not resolve it. The operator must either move the test edit into the setup commit or amend the done criterion to allow this one file.; src/ is unchanged against setup commit a0086c6. The frozen hero and on-skin payloads and the supplied exploded and network payloads are untouched, and no imagery was regenerated. This fits the spec, L-5 and L-7.; Structure fit is fine. The only added files are runs/wo-gh-8/ evidence in the existing station layout, with no new modules, routes or dependencies.; The full suite reports 124 tests, 123 pass, 0 fail and 1 skip, which matches the spec.; Not verifiable yet: runs/wo-gh-8/reviewer-design.output.md does not exist, so the per-image, per-axis same product test result is unchecked here. brain/decisions does not exist, so I used brain/project.md and .openspec/specs as the decision record.; Review written to runs/wo-gh-8/reviewer-architecture.output.md.; Same product test against design/reference/product-reference.png, inspecting decoded src/images.js bytes: patch-hero passes LED color (sampled median hue 170.5\u00b0), finish (matte off white), mounting (direct skin contact without carrier), and proportions (thin rounded square).; Same product test: patch-on-skin passes LED color (171.4\u00b0), finish (matte), mounting (direct skin contact without frame), and proportions (the hero product reframed). Both frozen payload SHA-256 digests match the spec.; Same product test: patch-exploded passes LED color (173.5\u00b0), finish (matte off white under warm lighting), and proportions (flat thin cover). Mounting is not applicable to the exploded view; separate adhesive and release layers are appropriate. All five required layers appear in order at 1400\u00d71400.; Same product test: network-scene passes LED color (180\u00b0), finish (matte), mounting (directly on skin without fabric carrier or border), and proportions (thin square plaque). The 1600\u00d7893 scene includes a legible SENTIA wordmark, phone and blank gateway, without another wearable.; L-6 comparison against design/reference/quality-board-1.png and quality-board-2.png: patch-hero, patch-on-skin and network-scene pass materials, light, scale and contact. Skin texture, restrained surface reflections, coherent lighting and contact shadows establish believable physical objects; no gaps identified in these categories.; L-6 materials quality gap in patch-exploded: at native resolution, the uniformly smooth cover lacks the fine silicone texture visible in the boards, while the PCB's simplified components and pristine traces read as an illustrative render compared with the boards' photographic component detail. This falls short of design/DESIGN.md's photorealistic production quality bar. Obtain an operator-supplied correction restoring realistic cover and electronics detail while preserving the five layers and identity. Light and scale pass; skin contact is not applicable to this exploded view.",
+      "duration_ms": 0.0,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": null,
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "triage-human",
+      "status": "completed",
+      "detail": "Human review: required",
+      "duration_ms": 0.007,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "deployer",
+      "status": "packet_ready",
+      "detail": "Packet written to runs/wo-gh-8/deployer.packet.md",
+      "duration_ms": 0.082,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-8/deployer.packet.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "observer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-8/observer.output.md",
+      "duration_ms": 19151.409,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-8/observer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    }
+  ],
+  "verdict": "changes_requested",
+  "human_required": true,
+  "max_loopbacks": 2,
+  "loopbacks": 1,
+  "deployment_status": null,
+  "verify_results": [],
+  "risk_hints": [],
+  "decision": {
+    "approver": {
+      "reviews_counted": [
+        {
+          "station": "reviewer-spec",
+          "verdict": "changes_requested"
+        },
+        {
+          "station": "reviewer-security",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-tests",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-architecture",
+          "verdict": "changes_requested"
+        },
+        {
+          "station": "reviewer-design",
+          "verdict": "changes_requested"
+        }
+      ],
+      "reviews_expected": [
+        "reviewer-spec",
+        "reviewer-security",
+        "reviewer-tests",
+        "reviewer-architecture",
+        "reviewer-design"
+      ],
+      "rule": "Reviewers reviewer-spec, reviewer-architecture, reviewer-design requested changes."
+    },
+    "human_gate": {
+      "required": true,
+      "rule": "Verdict is changes_requested, not approved, so a human is required.",
+      "hints_matched": []
+    }
+  },
+  "warnings": []
+}
