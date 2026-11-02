@@ -1,0 +1,27 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-security",
+  "to_station": "reviewer-tests",
+  "work_order_id": "wo-gh-3",
+  "artifact_path": "runs/wo-gh-3/reviewer-security.output.md",
+  "status": "executed",
+  "created_at": "2026-10-29T11:52:57.981376+00:00",
+  "review": {
+    "station": "reviewer-security",
+    "verdict": "pass",
+    "findings": [
+      "The src/page.js diff is CSS, static markup (skip link, value strip, numbered kickers) and img attributes. It adds no script, inline handler, fetch or eval.",
+      "The new interpolations (FACTS.tagline, FACTS.product) come from the constant FACTS object, not from request input, so they add no injection path.",
+      "No new third-party origin or asset URL was added. The only external origin is the existing Google Fonts link, which has no SRI. That was already the case and is out of scope.",
+      "src/images.js is unmodified. The API, MCP server, codec and data layer are untouched. The diff contains no secrets and adds no routes.",
+      "The skip link is a same-page anchor to #main, and <main tabindex=-1> is a safe focus target.",
+      "The review is written to runs/wo-gh-3/reviewer-security.output.md."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

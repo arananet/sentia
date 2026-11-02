@@ -1,0 +1,437 @@
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-scohowu8"))
+Reading additional input from stdin...
+OpenAI Codex v0.165.0
+--------
+workdir: /home/runner/work/sentia/sentia
+model: openai/gpt-6-astra
+provider: cloudflare
+approval: never
+sandbox: danger-full-access
+reasoning effort: none
+reasoning summaries: none
+session id: 01a187b5-790c-7453-ad67-63c14317c69f
+--------
+user
+You are executing an ANVIL reviewer station packet inside this repository. You are read only: inspect the files the packet refers to, judge the work against the packet, and do not change anything. The wrapper verifies the tree is unchanged after your run and fails this station if it is not.
+
+## Station prompt
+
+# Reviewer Design
+
+## Role
+Judge interface output against the project's own design system: its design tokens, component and layout rules, motion rules, and quality bars.
+
+## Inputs
+- design system (tokens, rules, quality bars from design/DESIGN.md and design/tokens.json)
+- interface output (HTML, React components, CSS, user-facing pages, or other interface artifacts)
+
+## Outputs
+- review (JSON format with verdict and findings)
+
+## Rules
+- Work only from the inputs listed above and the work order in the packet.
+- If the project has no design system (no design/DESIGN.md), your verdict MUST be `changes_requested` with a finding stating that no design system exists for the project.
+- If the project has a design system, review the interface output against:
+  - Design tokens: Are the correct colors, typography, spacing values being used?
+  - Component and layout rules: Do components follow the documented patterns?
+  - Motion rules: Does any animation or transition follow the motion guidelines?
+  - Quality bars: Does the interface meet the stated quality bars for visual hierarchy, scale contrast, spacing rhythm, and responsive behavior?
+- Focus on the design system the project has defined. Do not impose external design opinions or preferences that are not documented in the project's design system.
+- A design token marked as "TODO" or placeholder means the project hasn't defined that value yet. Flag missing values as findings only if the interface output actually uses undefined tokens.
+- Findings should be specific and actionable: cite which quality bar was violated, which token was used incorrectly, or which rule was not followed.
+- Your verdict must be one of: `approved`, `changes_requested`, or `comment`.
+- Produce the output as a JSON object, not as chat text.
+
+## Output Format
+
+Return a JSON object with this structure:
+
+```json
+{
+  "station": "reviewer-design",
+  "verdict": "approved | changes_requested | comment",
+  "findings": [
+    "Specific finding with reference to design system rule or quality bar",
+    "Another finding if applicable"
+  ]
+}
+```
+
+## Examples
+
+### Example 1: No design system exists
+```json
+{
+  "station": "reviewer-design",
+  "verdict": "changes_requested",
+  "findings": [
+    "No design system exists for this project. The project must define design/DESIGN.md and design/tokens.json before interface output can be reviewed against design standards."
+  ]
+}
+```
+
+### Example 2: Interface violates quality bar
+```json
+{
+  "station": "reviewer-design",
+  "verdict": "changes_requested",
+  "findings": [
+    "Quality bar violation: Scale Contrast - The button text has only 2.8:1 contrast ratio against its background, failing the minimum 4.5:1 requirement stated in the quality bars.",
+    "Token usage: The page uses hardcoded color '#FF5733' instead of the defined primary color token."
+  ]
+}
+```
+
+### Example 3: Interface meets design system
+```json
+{
+  "station": "reviewer-design",
+  "verdict": "approved",
+  "findings": []
+}
+```
+
+
+## Work order
+
+- id: wo-gh-4
+- kind: feature
+- title: Credit line: add Developed by Eduardo Arana to the footer sentence
+- source: github-issue
+- description: Problem: the page footer credit line names ANVIL alone. Edu ordered the credit to also name the author, with exact text.
+
+The change: the sentence "Sentia is a concept product, designed and built end to end by ANVIL, an open source software factory." becomes "Sentia is a concept product, designed and built end to end by ANVIL, an open source software factory. Developed by Eduardo Arana."
+
+Occurrence record, verified by the operator against the production tree (branch anvil/run-design-v2-1 at 11007a1): the old sentence occurs exactly once, in the footer rendered by src/page.js, where the word ANVIL is wrapped in a link to the ANVIL repository and the rendered sentence is byte exact the old text. Every occurrence of the old sentence in the production tree gets the new text. Two related sentences are not this sentence and stay unchanged: the description sentence built in src/seo.js ("Sentia Patch One is a concept product from a mock startup, designed and built end to end by ANVIL, an open source software factory"), and the README.md line ("Sentia is a concept product built end to end with ANVIL"). The live llms.txt does not carry the old sentence.
+
+Base tree: production runs branch anvil/run-design-v2-1 at 11007a1, deployed on the human gate word after wo-gh-3 and never merged. Main does not contain the v2.1 page. This run branches from anvil/run-design-v2-1 at 11007a1, never from main.
+
+Scope: copy only. The expected production change is the footer line in src/page.js: append the sentence "Developed by Eduardo Arana." after "an open source software factory." inside the same footer paragraph, keeping the ANVIL link as it is. No layout change, no style change, no behaviour change, no other copy change. The governing spec is .openspec/specs/site-credit/spec.md.
+
+Model routing for this run: builder and reviewer-design on GPT-6 Astra (gpt-6-astra) through the Cloudflare AI Gateway; spec writer, test writer and the other reviewer stations on claude-sonnet-5-5 through the same gateway. No fallback to another model for the builder.
+
+Deployment happens outside the line, by the operator, and only if the verdict is approved and the final production diff is exactly this copy change: Edu ordered this exact text for the live site, so an approved run with exactly this diff deploys without a second gate round.
+
+Done criteria: the served footer sentence is byte exact the new text; the production diff touches only the credit line; run verdict approved with all five expected reviews counted, reviewer-design among them; full test suite green.
+
+
+GitHub issue: https://github.com/arananet/sentia/issues/4
+- risk_hints: 
+- status: new
+
+## Upstream steps
+
+- intake: completed
+- spec-writer: executed
+- test-writer: executed
+- builder: executed
+- reviewer-spec: executed
+- reviewer-security: executed
+- reviewer-tests: executed
+- reviewer-architecture: executed
+
+## Project design
+
+## Output contract
+
+Answer with a single JSON object and nothing else, in exactly this shape:
+{"station": "<your station id>", "verdict": "pass", "findings": ["..."]}
+The verdict must be one of: pass, fail, changes_requested. Findings must be concrete and checkable against the spec, the code and the tests.
+
+codex
+I’ll inspect the design system and footer change without modifying any files.
+
+exec
+/bin/bash -lc "pwd; rg --files -g 'AGENTS.md' -g 'design/**' -g '*page*' -g '.openspec/specs/site-credit/spec.md'; git diff -- src/page.js; git status --short" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+/home/runner/work/sentia/sentia
+src/page.js
+design/DESIGN.md
+diff --git a/src/page.js b/src/page.js
+index 370598a..bce4ee6 100644
+--- a/src/page.js
++++ b/src/page.js
+@@ -583,7 +583,7 @@ ${faqItems}
+         <p style="margin-top:8px">Wellness monitoring, not diagnosis. ${FACTS.product} is not a medical device.</p>
+       </div>
+     </div>
+-    <p class="fine">Sentia is a concept product, designed and built end to end by <a href="${GITHUB_URL}">ANVIL</a>, an open source software factory.</p>
++    <p class="fine">Sentia is a concept product, designed and built end to end by <a href="${GITHUB_URL}">ANVIL</a>, an open source software factory. Developed by Eduardo Arana.</p>
+   </div>
+ </footer>
+ <script src="/browser-codec.js"></script>
+ M src/page.js
+?? runs/wo-gh-4/
+?? tests/site-credit.test.js
+
+exec
+/bin/bash -lc "cat design/DESIGN.md; if [ -f design/tokens.json ]; then cat design/tokens.json; fi; cat .openspec/specs/site-credit/spec.md; rg -n 'fine|footer|GITHUB_URL' src/page.js; cat tests/site-credit.test.js" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+# Sentia design system v2.1
+
+Identity is governed by brand/BRAND.md. This system applies that identity to
+the launch page: imagery is the primary art direction, with a small physical
+instrument surrounded by generous empty space at true 38 mm scale.
+Sentia Patch One is the object; Sentia Cloud receives its measurements; the
+Sentia MCP Server makes those measurements available to assistants.
+
+## Tokens
+
+Paper #FAFAF6 occupies roughly 90 percent of the surface. Ink green #12211C
+forms text and instrument outlines. Signal teal #0E7C66 marks links, labels
+and the Find My network and LoRaWAN paths. Coral #FF6B4A is reserved for the
+status LED and alert dots. Soft mint #EFF4EE is a rare panel fill; hairline
+#DFE7DF divides information. Body text uses #4A5D54; secondary labels use
+#53685C for legibility on paper. White is reserved for the physical patch.
+No decorative gradients. Only the soft contact shadow baked into each product
+render is allowed; the page adds no shadow or tinted backdrop.
+
+## Type scale
+
+Space Grotesk at weight 300 is the display face. The hero runs from 56 to
+144 px with 0.96 leading and -0.055 em tracking. Section titles run from
+40 to 88 px with 1.04 leading and -0.04 em tracking, limited to 18 characters
+per line where space permits. Data values run from 32 to 56 px. Inter body
+text is 17 px with 1.65 leading; introductory text is 18–20 px, at most
+54 characters per line. System mono labels are 11 px, uppercase, with
+0.16 em tracking. Never shrink body copy to fit a composition.
+
+## Spacing rhythm
+
+Use an 8 px base: 8, 16, 24, 32, 48, 64, 96, 128, 160. The page container
+is at most 1440 px wide, with fluid 24–80 px gutters. Sections have 96–160 px
+vertical padding. A title, its introduction and its illustration form one
+idea; detailed lists follow with generous separation. Hairlines provide
+structure without enclosing every item in a card. Technical examples and
+tables remain dense enough to scan, with scrolling contained locally.
+Fixed margins, padding and gaps use multiples of 8 px, including the bounds
+of fluid spacing. One-pixel border overlaps and diagram coordinates are
+optical geometry rather than content spacing.
+
+## Hero art direction
+
+Place the existing headline at large scale on the left and the supplied
+hero render on the right. Keep the kicker, chips and introductory copy.
+The round 38 mm patch has a matte paper-white top disc, deep ink-green edge
+ring, one tiny coral LED dot and a thin profile. Below 1000 px, stack the
+headline, object and supporting copy. Preserve the whole object at narrow
+widths. Flat inline SVG is demoted to small supporting diagrams only; it
+must not carry the hero, hardware or connectivity art direction. The logo,
+functional live demo graphics and dashboard charts stay.
+
+## Composition and accessibility
+
+The brand sheet wins every conflict with the design knowledge pack. Use calm
+tactile softness from render scale and whitespace, never pastel or blue
+palettes, shadowed surfaces or decorative cards. A 12 column grid aligns the
+hero headline across seven columns and the object across five. Supporting
+text and chips complete that system; one value proposition strip follows,
+using the existing tagline. Measured facts (38 mm, 14 days, IP67 and network
+behaviour) establish trust before the hardware detail. State plainly here
+that Sentia Patch One is not a medical device. No invented proof, testimonials,
+customer logos or unsupported claims.
+
+Alternate generous statement sections (128 px / 8rem padding) with denser
+technical sections (96 px). Use hairline divided feature grids and recurring
+numbered mono section labels. Keep the existing modular type scale, pushing
+the desktop display toward 144 px without crowding the render. Use the 8 px
+spacing scale throughout. Load fonts with font-display swap and reserve image
+space using exact intrinsic dimensions to avoid image layout shift.
+
+Text contrast is at least 4.5:1; body text aims for 7:1 on paper. The primary
+CTA uses paper on ink (about 15.9:1); the second action remains a text link.
+Use semantic sections, one h1, a skip link to focusable main content, visible
+3 px focus rings, and touch targets at least 44 px with at least 8 px gaps.
+Keep below-fold images lazy and the hero eager. Review at mobile widths and
+zoom, with keyboard navigation, no script, and prefers-reduced-motion.
+
+## Asset inventory
+
+All four operator-supplied WebP renders come from src/images.js. Serve the
+original export bytes without editing, replacing or generating imagery.
+
+| Module export | Route | Page placement |
+| --- | --- | --- |
+| PATCH_HERO_WEBP_B64 | /img/patch-hero.webp | Hero, primary object beside the headline |
+| PATCH_EXPLODED_WEBP_B64 | /img/patch-exploded.webp | #patch, beside the six-layer factual list |
+| PATCH_ON_SKIN_WEBP_B64 | /img/patch-on-skin.webp | #patch, second visual with the inner forearm close-up and 14 day wear story |
+| NETWORK_SCENE_WEBP_B64 | /img/network-scene.webp | #how, before the five relay steps |
+
+The exploded render groups the hardware into four visible assemblies; the
+six-layer list remains the source for the individual layer names and facts.
+The on-skin render follows the layer and sensor details, paired with the
+existing wear paragraph and followed by the dimensional and wear metrics.
+The network scene presents the patch, phone, relay domes and LoRaWAN gateway
+with dotted teal paths. It does not replace the live packet visualization.
+
+## Image treatment
+
+Place renders directly on paper, with no frames, borders, rounded cards,
+filters or added drop shadows. The supplied soft grounding shadow provides
+physical presence; do not add another.
+Hero, exploded and network backgrounds are exactly paper #FAFAF6, uniform
+to every corner and edge: no gradient, vignette, backdrop or floor line.
+Final WebP corner and edge samples may differ by at most 3 per RGB channel
+from (250, 250, 246) due to lossy encoding. The operator verifies the bytes.
+The on-skin exception is a strict inner forearm close-up filling the frame:
+no torso, no chest, no shoulder, no upper arm, no face, no dominating hands,
+no clothing and no background visible. The patch spans about half the forearm width.
+True 38 mm scale governs every scale-bearing render: the hero disc occupies
+a quarter of its frame width or less, and the network patch remains small
+among the devices. Never crop or enlarge the disc into a plate sized centerpiece.
+Preserve original aspect ratios and
+show complete images without cropping or stretching. Use responsive full
+width images, with the hero capped at 640 px, the wear image at 640 px, and
+the network scene spanning the content width. Give each visual generous
+space on the 8 px rhythm. Stack the wear image and copy below 900 px.
+Use descriptive, calm alt text with the exact product and network names.
+Reserve intrinsic image space to prevent layout shifts. Load the hero
+eagerly with high priority; lazy-load the three lower-page renders.
+
+## Motion
+
+Existing reveal hooks stay intact. Fades and small rises use 800 ms ease-out.
+No scale animation, bounce, glow or perpetual hero movement. Hover feedback
+uses opacity or a rise under 2 px over 180 ms.
+Stagger up to eight children per section in 40 ms steps, capped at 280 ms.
+Reduced motion disables CSS reveals
+and smooth scrolling, and hides the moving packet dot; the measurements
+and existing controls continue to operate. Static content must remain
+readable without JavaScript through a noscript style override. With scripting
+enabled, reveal elements begin at zero opacity and 16 px below their final
+position; the existing observer adds the visible state. Reduced motion keeps
+both the initial and revealed states visible and stationary.
+
+## Launch page quality bars
+
+- S1: This document precedes implementation. CSS implements its palette,
+  type hierarchy, spacing and physical hero composition.
+- The first view has one focal object and a headline substantially larger
+  than body copy. The page has breathing room at 1440, 1024, 768 and 375 px.
+- S2: Preserve every section, content fact, SEO/GEO output, client hook,
+  simulation control and dashboard action. Measurements keep their units.
+- At 320 px and at browser zoom, text wraps without page overflow; wide
+  technical data scrolls in its own region. Keyboard focus is visible.
+- V2.1 S9: Implementation touches only src/page.js and this document.
+  Preserve the four image/webp routes and operator supplied src/images.js.
+  API, MCP, codec, data and all other routing behavior stay unchanged.
+- S5: Keep the existing calm copy and exact product and network names.
+  Wellness framing and the medical disclaimer remain visible.
+- Run the full scenario suite. Visual quality and S3 model provenance are
+  assessed by the independent review stations; passing tests is not approval.
+- S6: At small widths retain a 56 px hero minimum and 17 px body minimum.
+  Use #53685C for SVG annotations and paper for the simulation toggle.
+  Check the hidden reveal state, 800 ms ease-out transition and motion fallback.
+# Sentia Site Credit Line
+
+Status: active for wo-gh-4
+Slug: site-credit
+
+## Roles
+- implementer: builds the change described here
+- reviewer: checks the change against this spec
+- qa: checks the scenarios below with tests
+- product_owner: owns the purpose and accepts the result
+
+## Purpose
+The footer credit line names ANVIL as the factory that designed and built Sentia. Edu ordered the line to also name the author. This spec governs that single copy change and nothing else.
+
+## Requirements
+- The sentence "Sentia is a concept product, designed and built end to end by ANVIL, an open source software factory." becomes "Sentia is a concept product, designed and built end to end by ANVIL, an open source software factory. Developed by Eduardo Arana." wherever the old sentence occurs in the production tree.
+- Occurrence record: the old sentence occurs exactly once in the production tree, in the footer rendered by src/page.js, with the word ANVIL wrapped in a link to the ANVIL repository. The edit appends the added sentence inside the same footer paragraph and keeps the link unchanged.
+- Related but different sentences in src/seo.js and README.md are not this sentence and stay unchanged.
+- Copy only: no layout change, no style change, no route, API, MCP, codec, data or behaviour change. The full test suite passes after the change.
+
+## Scenarios
+
+### Scenario: The footer carries the new credit
+- S1: Given the change, when the home page is served, then the footer sentence reads byte exact "Sentia is a concept product, designed and built end to end by ANVIL, an open source software factory. Developed by Eduardo Arana." with the ANVIL link intact.
+
+### Scenario: Nothing else moves
+- S2: Given the production diff, when it is compared with the base tree, then the only production file changed is src/page.js and the only changed text is the credit line; the four image routes still answer 200 with image/webp at their established byte sizes (7,838 / 9,318 / 20,098 / 13,098 bytes) and /llms.txt still answers 200.
+
+### Scenario: Green suite, full review panel
+- S3: Given the executed run, when the run report is read, then the verdict is approved, all five expected reviews are counted with reviewer-design among them, and the project test suite passes.
+4:import { FACTS, GITHUB_URL, REPO_URL } from './facts.js';
+22:      sameAs: [REPO_URL, GITHUB_URL],
+234:footer{border-top:1px solid var(--line);padding:56px 0 64px;color:var(--soft);font-size:17px}
+235:footer .cols{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:flex-start}
+236:footer p{max-width:52ch}
+289:.nav a,footer a{display:inline-flex;align-items:center;min-height:44px}
+290:footer a{margin-right:8px}
+301:footer .fine{margin-top:24px;color:var(--faint);font-size:13px}
+574:<footer>
+586:    <p class="fine">Sentia is a concept product, designed and built end to end by <a href="${GITHUB_URL}">ANVIL</a>, an open source software factory. Developed by Eduardo Arana.</p>
+588:</footer>
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import worker from '../src/index.js';
+import { renderPage } from '../src/page.js';
+import { GITHUB_URL } from '../src/facts.js';
+
+// site-credit (wo-gh-4): S1 and S2. S3 is read from the run report, not tested here.
+
+const ORIGIN = 'https://sentia.test';
+const get = (p) => worker.fetch(new Request(ORIGIN + p));
+const OLD = 'Sentia is a concept product, designed and built end to end by ANVIL, an open source software factory.';
+const NEW = `${OLD} Developed by Eduardo Arana.`;
+const LINK = `<a href="${GITHUB_URL}">ANVIL</a>`;
+const plain = (s) => s.replace(LINK, 'ANVIL');
+
+test('site-credit S1: the served home page footer carries the new credit byte exact', async () => {
+  const res = await get('/');
+  assert.equal(res.status, 200);
+  const html = await res.text();
+  const fine = [...html.matchAll(/<p class="fine">([\s\S]*?)<\/p>/g)].map((m) => m[1]);
+  const credit = fine.filter((p) => plain(p).startsWith('Sentia is a concept product'));
+  assert.equal(credit.length, 1, 'exactly one credit paragraph');
+  assert.equal(plain(credit[0]), NEW);
+});
+
+test('site-credit S1: the ANVIL link is intact and the sentence sits in one footer paragraph', () => {
+  const html = renderPage(ORIGIN);
+  assert.ok(html.includes(
+    `<p class="fine">Sentia is a concept product, designed and built end to end by ${LINK}, an open source software factory. Developed by Eduardo Arana.</p>`));
+  assert.equal(html.split('Developed by Eduardo Arana.').length - 1, 1);
+});
+
+test('site-credit S2: the old sentence no longer ends the credit; related sentences are unchanged', () => {
+  const html = renderPage(ORIGIN);
+  assert.ok(!html.includes('open source software factory.</p>'), 'no footer paragraph ends at the old sentence');
+  const seo = readFileSync(new URL('../src/seo.js', import.meta.url), 'utf8');
+  assert.ok(seo.includes('is a concept product from a mock startup, designed and built end to end by ANVIL, an open source software factory ('));
+  assert.ok(!seo.includes('Developed by Eduardo Arana'));
+  const readme = readFileSync(new URL('../README.md', import.meta.url), 'utf8');
+  assert.ok(readme.includes('Sentia is a concept product built end to end with [ANVIL]'));
+  assert.ok(!readme.includes('Developed by Eduardo Arana'));
+});
+
+test('site-credit S2: /llms.txt does not carry the credit sentence and still answers 200', async () => {
+  const res = await get('/llms.txt');
+  assert.equal(res.status, 200);
+  const txt = await res.text();
+  assert.ok(!txt.includes(OLD));
+  assert.ok(!txt.includes('Developed by Eduardo Arana'));
+});
+
+const IMAGES = [
+  ['/img/patch-hero.webp', 7838],
+  ['/img/patch-exploded.webp', 9318],
+  ['/img/patch-on-skin.webp', 20098],
+  ['/img/network-scene.webp', 13098],
+];
+for (const [path, size] of IMAGES) {
+  test(`site-credit S2: ${path} still answers 200 image/webp at ${size} bytes`, async () => {
+    const res = await get(path);
+    assert.equal(res.status, 200);
+    assert.equal(res.headers.get('content-type'), 'image/webp');
+    assert.equal((await res.arrayBuffer()).byteLength, size);
+  });
+}
+
+codex
+{"station":"reviewer-design","verdict":"pass","findings":[]}
+tokens used
+16,822
+{"station":"reviewer-design","verdict":"pass","findings":[]}

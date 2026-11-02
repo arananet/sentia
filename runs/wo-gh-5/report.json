@@ -1,0 +1,262 @@
+{
+  "work_order_id": "wo-gh-5",
+  "pipeline": "sdlc-default",
+  "title": "Design v3: product first recomposition (verified learnings as acceptance criteria)",
+  "kind": "feature",
+  "steps": [
+    {
+      "station": "intake",
+      "status": "completed",
+      "detail": "Work order normalized",
+      "duration_ms": 0.021,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-5/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "spec-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-5/spec-writer.output.md",
+      "duration_ms": 11523.929,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-5/spec-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "test-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-5/test-writer.output.md",
+      "duration_ms": 59884.513,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-5/test-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "builder",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-5/builder.output.md",
+      "duration_ms": 61342.979,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-5/builder.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-spec",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-5/reviewer-spec.output.md",
+      "duration_ms": 26045.194,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-5/reviewer-spec.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-security",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-5/reviewer-security.output.md",
+      "duration_ms": 14457.592,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-5/reviewer-security.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-tests",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-5/reviewer-tests.output.md",
+      "duration_ms": 33835.97,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-5/reviewer-tests.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-architecture",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-5/reviewer-architecture.output.md",
+      "duration_ms": 24731.662,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-5/reviewer-architecture.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-design",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-5/reviewer-design.output.md",
+      "duration_ms": 27757.428,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-5/reviewer-design.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "approver",
+      "status": "completed",
+      "detail": "Approver verdict: changes_requested",
+      "duration_ms": 0.045,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-5/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "approver",
+      "status": "loopback",
+      "return_to": "spec-writer",
+      "detail": "Loopback to spec-writer: S3 holds: `git hash-object src/images.js` returns e10c0b4fa90f1f68b4518d8ae392fc4caca907fe and `src/images.js` has no diff. The full suite reports 102 tests, 101 pass, 0 fail, 1 skipped.; S1 holds on the CSS. In `src/page.js` the hero visual moves to columns 5/13 with `.hero-render` capped at 960 px (was 640), and the headline drops to columns 1/5. Below 1000 px the image follows the h1 directly (`margin-top:0`). The markup places `.hero-visual` right after the h1, ahead of the lede. I did not render the page at 1440 px or 390 px, so I did not check the fold position at either width.; S2 holds. Section padding goes from `clamp(96px,12vw,160px)` to `clamp(64px,7vw,96px)`. Display type is capped at 64 px for h1 and h2 (was 144 and 88). The spacing around `.wear-story`, `.network-render` and the exploded-view split is tightened. This matches the amended `design/DESIGN.md` type scale and spacing rhythm.; Copy: no headline, lede, chip or CTA text changed. The only additions are a hero `.spec-strip` (38 mm, 4.2 mm, 14 days, IP67) and the removal of the h1 inline `margin-top`, which is style rather than copy. The strip repeats facts already on the page, including the second `.spec-strip` near line 434 and the hero caption, so it invents no proof. `design/DESIGN.md` records the repetition explicitly. The diff identifies it, but it is an addition the spec's 'strictly requires' wording does not clearly cover. The owner should confirm it is acceptable.; `design/DESIGN.md` changes are limited to the title (v3), type scale, spacing rhythm, hero art direction and the hero image cap and mobile placement. The paper background, true-scale and forearm-framing rules are unchanged, as the spec requires. The brand tokens, fonts and the ban on hype and invented proof are untouched.; Test change to check: `tests/design-v2-1-corrections.test.js` S7 flips the hero cap assertion from `<= 640` to `>= 640`, with a comment citing v3 S1. This is traceable, but the test no longer guards an upper bound on the hero size. The new `tests/design-v3-product-first.test.js` should cover that, but I did not inspect it, so confirm it does.; Not verified by this review: S4 (the committed packets carry the learnings and reviewer-design judges against them) and S5 (run verdict and five counted reviews). Both belong to the run report and the other stations. The runtime image routes (200, `image/webp`, byte sizes) are only covered through the existing test suite.; The change to src/page.js is static CSS and HTML only. It adds no script, fetch calls, routes, inputs or inline event handlers. The only template interpolations in the new hero markup are the existing constants FACTS.definition and FACTS.platform, so there is no new injection surface.; src/images.js is byte identical: its git blob is e10c0b4fa90f1f68b4518d8ae392fc4caca907fe. The hero image still loads from the same-origin /img/patch-hero.webp, so no new third-party origins and no CSP or SRI impact. `git status` shows only src/page.js modified under src/.; The frozen layers (API, MCP server, packet codec, data layer, SEO/GEO) are untouched. The diff only touches src/page.js, design/DESIGN.md and tests/design-v2-1-corrections.test.js. The JSON-LD still lists Wear time 14 days and IP67.; The new hero spec strip values (14 days, IP67, 38 mm, 4.2 mm) match existing facts. src/facts.js lines 12, 17, 40 and 43 carry the 14 days and IP67 figures, and the 38 mm and 4.2 mm figures were already in the hero caption. So there is no invented proof and no security-relevant data exposure.; I did not run the test suite or render the page. The review output is saved at runs/wo-gh-5/reviewer-security.output.md.; The full suite is green. `npm test` ran 102 tests with 101 passing, 0 failing and 1 skipped. The skip is the existing ui-elevation S4 test, which is skipped because there is no main ref to diff against.; src/images.js hashes to e10c0b4fa90f1f68b4518d8ae392fc4caca907fe, and design-v3 S3 asserts it. The same S3 group checks that the four image routes answer 200 image/webp at 7838, 9318, 20098 and 13098 bytes.; tests/design-v3-product-first.test.js maps to spec scenarios S1 to S4. S5 is a run-level scenario with no unit test, so the run report has to cover it.; In tests/design-v2-1-corrections.test.js S7, the hero cap assertion was flipped from `<= 640` to `>= 640`. The edit is annotated and the spec requires it. The test title still says it keeps the patch small, and the assertion is now close to vacuous. Rename it or drop the assertion.; S1 only checks the CSS `max-width` cap (960 px) and the column spans, not the rendered width. The `.hero-visual` column may be narrower than 960 px at 1440 px. There is no above-the-fold check at 1440 or 390 px, because the tests are regex on CSS and no browser is available. The owner's local render gate must confirm this.; The S2 density test counts product-fact tokens in the hero block only. Beyond the hero, density is covered only by the section padding clamp and the h2 size cap.; S4 checks that the station packets carry the Verified learnings section. It does not check that reviewer-design's findings judge the recomposition against L-1 to L-5. That belongs to the run report.; The DESIGN.md S2 tests use loose regexes such as /density/i and /protagonist/i. They show the words are present but not what the rules say. This is acceptable.; The review is written to runs/wo-gh-5/reviewer-tests.output.md.; The change fits the project structure. Only src/page.js, design/DESIGN.md and two test files changed. No route, JSON API, MCP, packet codec, data layer or SEO/GEO file was touched. The review is at runs/wo-gh-5/reviewer-architecture.output.md.; There is no brain/decisions directory in the repo. I checked fit against brain/project.md, the spec and the frozen-layer list instead. Any decision records that were meant to be available are missing.; src/images.js hashes to e10c0b4fa90f1f68b4518d8ae392fc4caca907fe, the required blob. It does not appear in the diff, so L-5 holds. No image was regenerated or substituted.; The hero spec-strip reuses the existing .spec-strip component with scoped overrides (.hero .spec-strip). It carries only facts already on the page: 38 mm, 4.2 mm, 14 days and IP67. No new copy or invented proof was added. The h1 only loses an inline style.; The design/DESIGN.md amendments are limited to L-4 composition rules: hero scale (4/8 columns, 960 px cap), section density (64\u201396 px padding), and a display type cap of 64 px. The v2.1 imagery rules (paper background, true scale, forearm framing) stay as written. The tests/design-v2-1-corrections.test.js change is annotated as superseded by v3 S1.; The full suite ran 102 tests: 101 pass, 0 fail, 1 skipped. The skip is the existing ui-elevation S4 test, which has no main ref to diff against.; Non-blocking: the hero spec-strip repeats facts from the strip further down the page (line 434) and the '14 days \u00b7 IP67' chip. DESIGN.md records the repetition as intentional.; Non-blocking cosmetic: `.hero .spec-strip div:nth-child(odd){border-left:none}` removes the vertical hairline between columns in the desktop 2x2 grid.; Residual risk: the tests check CSS caps and column spans only. They do not check the rendered hero width at 1440 or 390 px. The owner's local render gate has to confirm that the patch is large and early.; L-4 density violation: src/page.js:288 sets #patch and #how vertical padding to 128px, overriding the new section clamp. This exceeds design/DESIGN.md:68's 64\u201396px requirement and preserves the previous empty spacing around both imagery sections. Reduce these overrides to the documented range; the S2 test currently checks only the overridden generic rule.; L-1, L-2, L-3 and L-5 preservation checks pass at source level: primary visuals remain the supplied images, image CSS preserves uncropped aspect ratios without added backgrounds or shadows, explicit 38 mm anchors remain, and src/images.js hashes to e10c0b4fa90f1f68b4518d8ae392fc4caca907fe. Corner sampling and rendered visual hierarchy were not independently verified.",
+      "reason": "S3 holds: `git hash-object src/images.js` returns e10c0b4fa90f1f68b4518d8ae392fc4caca907fe and `src/images.js` has no diff. The full suite reports 102 tests, 101 pass, 0 fail, 1 skipped.; S1 holds on the CSS. In `src/page.js` the hero visual moves to columns 5/13 with `.hero-render` capped at 960 px (was 640), and the headline drops to columns 1/5. Below 1000 px the image follows the h1 directly (`margin-top:0`). The markup places `.hero-visual` right after the h1, ahead of the lede. I did not render the page at 1440 px or 390 px, so I did not check the fold position at either width.; S2 holds. Section padding goes from `clamp(96px,12vw,160px)` to `clamp(64px,7vw,96px)`. Display type is capped at 64 px for h1 and h2 (was 144 and 88). The spacing around `.wear-story`, `.network-render` and the exploded-view split is tightened. This matches the amended `design/DESIGN.md` type scale and spacing rhythm.; Copy: no headline, lede, chip or CTA text changed. The only additions are a hero `.spec-strip` (38 mm, 4.2 mm, 14 days, IP67) and the removal of the h1 inline `margin-top`, which is style rather than copy. The strip repeats facts already on the page, including the second `.spec-strip` near line 434 and the hero caption, so it invents no proof. `design/DESIGN.md` records the repetition explicitly. The diff identifies it, but it is an addition the spec's 'strictly requires' wording does not clearly cover. The owner should confirm it is acceptable.; `design/DESIGN.md` changes are limited to the title (v3), type scale, spacing rhythm, hero art direction and the hero image cap and mobile placement. The paper background, true-scale and forearm-framing rules are unchanged, as the spec requires. The brand tokens, fonts and the ban on hype and invented proof are untouched.; Test change to check: `tests/design-v2-1-corrections.test.js` S7 flips the hero cap assertion from `<= 640` to `>= 640`, with a comment citing v3 S1. This is traceable, but the test no longer guards an upper bound on the hero size. The new `tests/design-v3-product-first.test.js` should cover that, but I did not inspect it, so confirm it does.; Not verified by this review: S4 (the committed packets carry the learnings and reviewer-design judges against them) and S5 (run verdict and five counted reviews). Both belong to the run report and the other stations. The runtime image routes (200, `image/webp`, byte sizes) are only covered through the existing test suite.; The change to src/page.js is static CSS and HTML only. It adds no script, fetch calls, routes, inputs or inline event handlers. The only template interpolations in the new hero markup are the existing constants FACTS.definition and FACTS.platform, so there is no new injection surface.; src/images.js is byte identical: its git blob is e10c0b4fa90f1f68b4518d8ae392fc4caca907fe. The hero image still loads from the same-origin /img/patch-hero.webp, so no new third-party origins and no CSP or SRI impact. `git status` shows only src/page.js modified under src/.; The frozen layers (API, MCP server, packet codec, data layer, SEO/GEO) are untouched. The diff only touches src/page.js, design/DESIGN.md and tests/design-v2-1-corrections.test.js. The JSON-LD still lists Wear time 14 days and IP67.; The new hero spec strip values (14 days, IP67, 38 mm, 4.2 mm) match existing facts. src/facts.js lines 12, 17, 40 and 43 carry the 14 days and IP67 figures, and the 38 mm and 4.2 mm figures were already in the hero caption. So there is no invented proof and no security-relevant data exposure.; I did not run the test suite or render the page. The review output is saved at runs/wo-gh-5/reviewer-security.output.md.; The full suite is green. `npm test` ran 102 tests with 101 passing, 0 failing and 1 skipped. The skip is the existing ui-elevation S4 test, which is skipped because there is no main ref to diff against.; src/images.js hashes to e10c0b4fa90f1f68b4518d8ae392fc4caca907fe, and design-v3 S3 asserts it. The same S3 group checks that the four image routes answer 200 image/webp at 7838, 9318, 20098 and 13098 bytes.; tests/design-v3-product-first.test.js maps to spec scenarios S1 to S4. S5 is a run-level scenario with no unit test, so the run report has to cover it.; In tests/design-v2-1-corrections.test.js S7, the hero cap assertion was flipped from `<= 640` to `>= 640`. The edit is annotated and the spec requires it. The test title still says it keeps the patch small, and the assertion is now close to vacuous. Rename it or drop the assertion.; S1 only checks the CSS `max-width` cap (960 px) and the column spans, not the rendered width. The `.hero-visual` column may be narrower than 960 px at 1440 px. There is no above-the-fold check at 1440 or 390 px, because the tests are regex on CSS and no browser is available. The owner's local render gate must confirm this.; The S2 density test counts product-fact tokens in the hero block only. Beyond the hero, density is covered only by the section padding clamp and the h2 size cap.; S4 checks that the station packets carry the Verified learnings section. It does not check that reviewer-design's findings judge the recomposition against L-1 to L-5. That belongs to the run report.; The DESIGN.md S2 tests use loose regexes such as /density/i and /protagonist/i. They show the words are present but not what the rules say. This is acceptable.; The review is written to runs/wo-gh-5/reviewer-tests.output.md.; The change fits the project structure. Only src/page.js, design/DESIGN.md and two test files changed. No route, JSON API, MCP, packet codec, data layer or SEO/GEO file was touched. The review is at runs/wo-gh-5/reviewer-architecture.output.md.; There is no brain/decisions directory in the repo. I checked fit against brain/project.md, the spec and the frozen-layer list instead. Any decision records that were meant to be available are missing.; src/images.js hashes to e10c0b4fa90f1f68b4518d8ae392fc4caca907fe, the required blob. It does not appear in the diff, so L-5 holds. No image was regenerated or substituted.; The hero spec-strip reuses the existing .spec-strip component with scoped overrides (.hero .spec-strip). It carries only facts already on the page: 38 mm, 4.2 mm, 14 days and IP67. No new copy or invented proof was added. The h1 only loses an inline style.; The design/DESIGN.md amendments are limited to L-4 composition rules: hero scale (4/8 columns, 960 px cap), section density (64\u201396 px padding), and a display type cap of 64 px. The v2.1 imagery rules (paper background, true scale, forearm framing) stay as written. The tests/design-v2-1-corrections.test.js change is annotated as superseded by v3 S1.; The full suite ran 102 tests: 101 pass, 0 fail, 1 skipped. The skip is the existing ui-elevation S4 test, which has no main ref to diff against.; Non-blocking: the hero spec-strip repeats facts from the strip further down the page (line 434) and the '14 days \u00b7 IP67' chip. DESIGN.md records the repetition as intentional.; Non-blocking cosmetic: `.hero .spec-strip div:nth-child(odd){border-left:none}` removes the vertical hairline between columns in the desktop 2x2 grid.; Residual risk: the tests check CSS caps and column spans only. They do not check the rendered hero width at 1440 or 390 px. The owner's local render gate has to confirm that the patch is large and early.; L-4 density violation: src/page.js:288 sets #patch and #how vertical padding to 128px, overriding the new section clamp. This exceeds design/DESIGN.md:68's 64\u201396px requirement and preserves the previous empty spacing around both imagery sections. Reduce these overrides to the documented range; the S2 test currently checks only the overridden generic rule.; L-1, L-2, L-3 and L-5 preservation checks pass at source level: primary visuals remain the supplied images, image CSS preserves uncropped aspect ratios without added backgrounds or shadows, explicit 38 mm anchors remain, and src/images.js hashes to e10c0b4fa90f1f68b4518d8ae392fc4caca907fe. Corner sampling and rendered visual hierarchy were not independently verified.",
+      "duration_ms": 0.0,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": null,
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "triage-human",
+      "status": "completed",
+      "detail": "Human review: required",
+      "duration_ms": 0.007,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "deployer",
+      "status": "packet_ready",
+      "detail": "Packet written to runs/wo-gh-5/deployer.packet.md",
+      "duration_ms": 0.1,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-5/deployer.packet.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "observer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-5/observer.output.md",
+      "duration_ms": 16453.932,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-5/observer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    }
+  ],
+  "verdict": "changes_requested",
+  "human_required": true,
+  "max_loopbacks": 2,
+  "loopbacks": 1,
+  "deployment_status": null,
+  "verify_results": [],
+  "risk_hints": [],
+  "decision": {
+    "approver": {
+      "reviews_counted": [
+        {
+          "station": "reviewer-spec",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-security",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-tests",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-architecture",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-design",
+          "verdict": "changes_requested"
+        }
+      ],
+      "reviews_expected": [
+        "reviewer-spec",
+        "reviewer-security",
+        "reviewer-tests",
+        "reviewer-architecture",
+        "reviewer-design"
+      ],
+      "rule": "Reviewer reviewer-design requested changes."
+    },
+    "human_gate": {
+      "required": true,
+      "rule": "Verdict is changes_requested, not approved, so a human is required.",
+      "hints_matched": []
+    }
+  },
+  "warnings": []
+}

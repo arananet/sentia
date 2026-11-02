@@ -1,0 +1,26 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-architecture",
+  "to_station": "reviewer-design",
+  "work_order_id": "wo-gh-1",
+  "artifact_path": "runs/wo-gh-1/reviewer-architecture.output.md",
+  "status": "executed",
+  "created_at": "2026-10-29T03:55:27.484702+00:00",
+  "review": {
+    "station": "reviewer-architecture",
+    "verdict": "pass",
+    "findings": [
+      "Scope holds: git status shows only src/page.js changed under src/. The codec, data layer, MCP server, API and facts layer are untouched. The page.js diff changes only CSS values, an SVG note colour, one <noscript> rule and inline margins. No logic or imports changed.",
+      ".rv is now hidden by default, with a <noscript> fallback and the existing prefers-reduced-motion override. The page stays readable without JS or with reduced motion, so the structure is sound.",
+      "brain/decisions does not exist in this repo. I checked against the work order's presentation-only constraint (the structure and decisions input was missing), and found no conflict. Consider adding a decisions record.",
+      "The test 'ui-elevation S4: codec, data, mcp and index are untouched by the run' is skipped here ('no main ref to diff against'). I confirmed the same property by hand from git status. Make the test fetch a base ref so it runs in CI.",
+      "npm test gave 44 tests: 43 pass, 0 fail, 1 skipped (the S4 test). The suite is green."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

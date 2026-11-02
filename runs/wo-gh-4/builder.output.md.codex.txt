@@ -1,0 +1,1003 @@
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-3k0s3ywu"))
+Reading additional input from stdin...
+OpenAI Codex v0.165.0
+--------
+workdir: /home/runner/work/sentia/sentia
+model: openai/gpt-6-astra
+provider: cloudflare
+approval: never
+sandbox: danger-full-access
+reasoning effort: none
+reasoning summaries: none
+session id: 01a187b3-4153-7d71-9bab-01579f570f3d
+--------
+user
+You are executing an ANVIL station packet inside this repository. Follow the packet exactly, edit the files it asks for, and finish with a brief plain text summary of what you changed.
+
+## Station prompt
+
+# Builder
+
+## Role
+Implement the spec so the scenario tests pass.
+
+## Inputs
+- spec
+- tests
+
+## Outputs
+- code change
+
+## Rules
+- Work only from the inputs listed above and the work order in the packet.
+- Produce the output as a file in the repo, not as chat text.
+- If the inputs are not enough, say what is missing instead of guessing.
+- Never approve your own work. Approval belongs to a different station.
+- Keep the change small and mapped to a spec scenario where one applies.
+
+
+## Work order
+
+- id: wo-gh-4
+- kind: feature
+- title: Credit line: add Developed by Eduardo Arana to the footer sentence
+- source: github-issue
+- description: Problem: the page footer credit line names ANVIL alone. Edu ordered the credit to also name the author, with exact text.
+
+The change: the sentence "Sentia is a concept product, designed and built end to end by ANVIL, an open source software factory." becomes "Sentia is a concept product, designed and built end to end by ANVIL, an open source software factory. Developed by Eduardo Arana."
+
+Occurrence record, verified by the operator against the production tree (branch anvil/run-design-v2-1 at 11007a1): the old sentence occurs exactly once, in the footer rendered by src/page.js, where the word ANVIL is wrapped in a link to the ANVIL repository and the rendered sentence is byte exact the old text. Every occurrence of the old sentence in the production tree gets the new text. Two related sentences are not this sentence and stay unchanged: the description sentence built in src/seo.js ("Sentia Patch One is a concept product from a mock startup, designed and built end to end by ANVIL, an open source software factory"), and the README.md line ("Sentia is a concept product built end to end with ANVIL"). The live llms.txt does not carry the old sentence.
+
+Base tree: production runs branch anvil/run-design-v2-1 at 11007a1, deployed on the human gate word after wo-gh-3 and never merged. Main does not contain the v2.1 page. This run branches from anvil/run-design-v2-1 at 11007a1, never from main.
+
+Scope: copy only. The expected production change is the footer line in src/page.js: append the sentence "Developed by Eduardo Arana." after "an open source software factory." inside the same footer paragraph, keeping the ANVIL link as it is. No layout change, no style change, no behaviour change, no other copy change. The governing spec is .openspec/specs/site-credit/spec.md.
+
+Model routing for this run: builder and reviewer-design on GPT-6 Astra (gpt-6-astra) through the Cloudflare AI Gateway; spec writer, test writer and the other reviewer stations on claude-sonnet-5-5 through the same gateway. No fallback to another model for the builder.
+
+Deployment happens outside the line, by the operator, and only if the verdict is approved and the final production diff is exactly this copy change: Edu ordered this exact text for the live site, so an approved run with exactly this diff deploys without a second gate round.
+
+Done criteria: the served footer sentence is byte exact the new text; the production diff touches only the credit line; run verdict approved with all five expected reviews counted, reviewer-design among them; full test suite green.
+
+
+GitHub issue: https://github.com/arananet/sentia/issues/4
+- risk_hints: 
+- status: new
+
+## Upstream steps
+
+- intake: completed
+- spec-writer: executed
+- test-writer: executed
+
+## Project design
+codex
+I’ll read the governing spec and tests, then make the footer copy change and run the test suite.
+exec
+/bin/bash -lc "pwd; rg --files -g AGENTS.md -g '*spec*' -g '*test*' -g package.json -g page.js -g '"'!node_modules'"' -g '"'!package-lock.json'"' -g '.openspec/**'" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+/home/runner/work/sentia/sentia
+tests/ui-elevation.test.js
+tests/api.test.js
+tests/design-v2-imagery.test.js
+tests/design-v2-1-corrections.test.js
+tests/site-credit.test.js
+tests/demo.test.js
+tests/mcp.test.js
+tests/codec.test.js
+src/page.js
+.openspec/config.yaml
+.openspec/specs/site-credit/spec.md
+.openspec/specs/ui-elevation/spec.md
+.openspec/specs/design-v2-imagery/spec.md
+.openspec/specs/live-demo/spec.md
+.openspec/specs/mcp-server/spec.md
+.openspec/specs/ingestion-api/spec.md
+.openspec/specs/dashboard-data/spec.md
+.openspec/specs/core-worker/spec.md
+.openspec/specs/packet-codec/spec.md
+package.json
+runs/wo-gh-1/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-1/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-1/envelopes/spec-writer.envelope.json
+runs/wo-gh-1/envelopes/test-writer.envelope.json
+runs/wo-gh-1/reviewer-tests.packet.md
+runs/wo-gh-1/reviewer-spec.packet.md
+runs/wo-gh-1/reviewer-tests.output.md
+runs/wo-gh-1/spec-writer.output.md
+runs/wo-gh-1/reviewer-spec.output.md
+runs/wo-gh-1/test-writer.packet.md
+runs/wo-gh-1/spec-writer.packet.md
+runs/wo-gh-1/test-writer.output.md
+reviews/core-worker/reviewer-spec.json
+reviews/core-worker/reviewer-tests.json
+reviews/live-demo/reviewer-spec.json
+reviews/live-demo/reviewer-tests.json
+reviews/packet-codec/reviewer-spec.json
+reviews/packet-codec/reviewer-tests.json
+reviews/mcp-server/reviewer-spec.json
+reviews/mcp-server/reviewer-tests.json
+reviews/dashboard-data/reviewer-spec.json
+reviews/dashboard-data/reviewer-tests.json
+reviews/ingestion-api/reviewer-spec.json
+reviews/ingestion-api/reviewer-tests.json
+runs/wo-gh-2/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-2/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-2/envelopes/spec-writer.envelope.json
+runs/wo-gh-2/envelopes/test-writer.envelope.json
+runs/wo-gh-2/reviewer-tests.packet.md
+runs/wo-gh-2/reviewer-spec.packet.md
+runs/wo-gh-2/reviewer-tests.output.md
+runs/wo-gh-2/spec-writer.output.md
+runs/wo-gh-2/reviewer-spec.output.md
+runs/wo-gh-2/test-writer.packet.md
+runs/wo-gh-2/spec-writer.packet.md
+runs/wo-gh-2/test-writer.output.md
+runs/wo-gh-4/spec-writer.packet.md
+runs/wo-gh-4/test-writer.output.md
+runs/wo-gh-4/test-writer.packet.md
+runs/wo-gh-4/spec-writer.output.md
+runs/wo-sentia-001/reviewer-spec.packet.md
+runs/wo-sentia-001/test-writer.packet.md
+runs/wo-sentia-001/spec-writer.packet.md
+runs/wo-sentia-001/envelopes/test-writer.envelope.json
+runs/wo-sentia-001/reviewer-tests.packet.md
+runs/wo-sentia-001/envelopes/spec-writer.envelope.json
+runs/wo-sentia-001/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-3/reviewer-spec.output.md
+runs/wo-gh-3/test-writer.packet.md
+runs/wo-gh-3/spec-writer.packet.md
+runs/wo-gh-3/test-writer.output.md
+runs/wo-gh-3/reviewer-tests.output.md
+runs/wo-gh-3/spec-writer.output.md
+runs/wo-gh-3/reviewer-spec.packet.md
+runs/wo-sentia-001/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-3/reviewer-tests.packet.md
+runs/wo-gh-4/envelopes/spec-writer.envelope.json
+runs/wo-gh-4/envelopes/test-writer.envelope.json
+runs/wo-gh-3/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-3/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-3/envelopes/spec-writer.envelope.json
+runs/wo-gh-3/envelopes/test-writer.envelope.json
+
+exec
+/bin/bash -lc 'git status --short; cat .openspec/specs/site-credit/spec.md; cat package.json' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+?? runs/wo-gh-4/
+?? tests/site-credit.test.js
+# Sentia Site Credit Line
+
+Status: active for wo-gh-4
+Slug: site-credit
+
+## Roles
+- implementer: builds the change described here
+- reviewer: checks the change against this spec
+- qa: checks the scenarios below with tests
+- product_owner: owns the purpose and accepts the result
+
+## Purpose
+The footer credit line names ANVIL as the factory that designed and built Sentia. Edu ordered the line to also name the author. This spec governs that single copy change and nothing else.
+
+## Requirements
+- The sentence "Sentia is a concept product, designed and built end to end by ANVIL, an open source software factory." becomes "Sentia is a concept product, designed and built end to end by ANVIL, an open source software factory. Developed by Eduardo Arana." wherever the old sentence occurs in the production tree.
+- Occurrence record: the old sentence occurs exactly once in the production tree, in the footer rendered by src/page.js, with the word ANVIL wrapped in a link to the ANVIL repository. The edit appends the added sentence inside the same footer paragraph and keeps the link unchanged.
+- Related but different sentences in src/seo.js and README.md are not this sentence and stay unchanged.
+- Copy only: no layout change, no style change, no route, API, MCP, codec, data or behaviour change. The full test suite passes after the change.
+
+## Scenarios
+
+### Scenario: The footer carries the new credit
+- S1: Given the change, when the home page is served, then the footer sentence reads byte exact "Sentia is a concept product, designed and built end to end by ANVIL, an open source software factory. Developed by Eduardo Arana." with the ANVIL link intact.
+
+### Scenario: Nothing else moves
+- S2: Given the production diff, when it is compared with the base tree, then the only production file changed is src/page.js and the only changed text is the credit line; the four image routes still answer 200 with image/webp at their established byte sizes (7,838 / 9,318 / 20,098 / 13,098 bytes) and /llms.txt still answers 200.
+
+### Scenario: Green suite, full review panel
+- S3: Given the executed run, when the run report is read, then the verdict is approved, all five expected reviews are counted with reviewer-design among them, and the project test suite passes.
+{
+  "name": "sentia",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  }
+}
+
+exec
+/bin/bash -lc "cat tests/site-credit.test.js; rg -n 'Sentia is a concept product' src/page.js; git log -3 --oneline; git merge-base --is-ancestor 11007a1 HEAD" in /home/runner/work/sentia/sentia
+ exited 1 in 0ms:
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import worker from '../src/index.js';
+import { renderPage } from '../src/page.js';
+import { GITHUB_URL } from '../src/facts.js';
+
+// site-credit (wo-gh-4): S1 and S2. S3 is read from the run report, not tested here.
+
+const ORIGIN = 'https://sentia.test';
+const get = (p) => worker.fetch(new Request(ORIGIN + p));
+const OLD = 'Sentia is a concept product, designed and built end to end by ANVIL, an open source software factory.';
+const NEW = `${OLD} Developed by Eduardo Arana.`;
+const LINK = `<a href="${GITHUB_URL}">ANVIL</a>`;
+const plain = (s) => s.replace(LINK, 'ANVIL');
+
+test('site-credit S1: the served home page footer carries the new credit byte exact', async () => {
+  const res = await get('/');
+  assert.equal(res.status, 200);
+  const html = await res.text();
+  const fine = [...html.matchAll(/<p class="fine">([\s\S]*?)<\/p>/g)].map((m) => m[1]);
+  const credit = fine.filter((p) => plain(p).startsWith('Sentia is a concept product'));
+  assert.equal(credit.length, 1, 'exactly one credit paragraph');
+  assert.equal(plain(credit[0]), NEW);
+});
+
+test('site-credit S1: the ANVIL link is intact and the sentence sits in one footer paragraph', () => {
+  const html = renderPage(ORIGIN);
+  assert.ok(html.includes(
+    `<p class="fine">Sentia is a concept product, designed and built end to end by ${LINK}, an open source software factory. Developed by Eduardo Arana.</p>`));
+  assert.equal(html.split('Developed by Eduardo Arana.').length - 1, 1);
+});
+
+test('site-credit S2: the old sentence no longer ends the credit; related sentences are unchanged', () => {
+  const html = renderPage(ORIGIN);
+  assert.ok(!html.includes('open source software factory.</p>'), 'no footer paragraph ends at the old sentence');
+  const seo = readFileSync(new URL('../src/seo.js', import.meta.url), 'utf8');
+  assert.ok(seo.includes('is a concept product from a mock startup, designed and built end to end by ANVIL, an open source software factory ('));
+  assert.ok(!seo.includes('Developed by Eduardo Arana'));
+  const readme = readFileSync(new URL('../README.md', import.meta.url), 'utf8');
+  assert.ok(readme.includes('Sentia is a concept product built end to end with [ANVIL]'));
+  assert.ok(!readme.includes('Developed by Eduardo Arana'));
+});
+
+test('site-credit S2: /llms.txt does not carry the credit sentence and still answers 200', async () => {
+  const res = await get('/llms.txt');
+  assert.equal(res.status, 200);
+  const txt = await res.text();
+  assert.ok(!txt.includes(OLD));
+  assert.ok(!txt.includes('Developed by Eduardo Arana'));
+});
+
+const IMAGES = [
+  ['/img/patch-hero.webp', 7838],
+  ['/img/patch-exploded.webp', 9318],
+  ['/img/patch-on-skin.webp', 20098],
+  ['/img/network-scene.webp', 13098],
+];
+for (const [path, size] of IMAGES) {
+  test(`site-credit S2: ${path} still answers 200 image/webp at ${size} bytes`, async () => {
+    const res = await get(path);
+    assert.equal(res.status, 200);
+    assert.equal(res.headers.get('content-type'), 'image/webp');
+    assert.equal((await res.arrayBuffer()).byteLength, size);
+  });
+}
+586:    <p class="fine">Sentia is a concept product, designed and built end to end by <a href="${GITHUB_URL}">ANVIL</a>, an open source software factory.</p>
+eae8173 Set up wo-gh-4 (issue 4): footer credit line work order, site-credit spec, execute workflow branch wiring
+
+apply patch
+patch: completed
+/home/runner/work/sentia/sentia/src/page.js
+diff --git a/src/page.js b/src/page.js
+index 370598a0de027e7b6a975266240a82836f8b73d1..bce4ee6e5170cc8873a0c0c6a65ddfe6be702043
+--- a/src/page.js
++++ b/src/page.js
+@@ -583,7 +583,7 @@
+         <p style="margin-top:8px">Wellness monitoring, not diagnosis. ${FACTS.product} is not a medical device.</p>
+       </div>
+     </div>
+-    <p class="fine">Sentia is a concept product, designed and built end to end by <a href="${GITHUB_URL}">ANVIL</a>, an open source software factory.</p>
++    <p class="fine">Sentia is a concept product, designed and built end to end by <a href="${GITHUB_URL}">ANVIL</a>, an open source software factory. Developed by Eduardo Arana.</p>
+   </div>
+ </footer>
+ <script src="/browser-codec.js"></script>
+
+exec
+/bin/bash -lc 'npm test' in /home/runner/work/sentia/sentia
+exec
+/bin/bash -lc 'git diff --check; git diff --stat; git diff -- src/page.js' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+ src/page.js | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+diff --git a/src/page.js b/src/page.js
+index 370598a..bce4ee6 100644
+--- a/src/page.js
++++ b/src/page.js
+@@ -583,7 +583,7 @@ ${faqItems}
+         <p style="margin-top:8px">Wellness monitoring, not diagnosis. ${FACTS.product} is not a medical device.</p>
+       </div>
+     </div>
+-    <p class="fine">Sentia is a concept product, designed and built end to end by <a href="${GITHUB_URL}">ANVIL</a>, an open source software factory.</p>
++    <p class="fine">Sentia is a concept product, designed and built end to end by <a href="${GITHUB_URL}">ANVIL</a>, an open source software factory. Developed by Eduardo Arana.</p>
+   </div>
+ </footer>
+ <script src="/browser-codec.js"></script>
+
+exec
+/bin/bash -lc "rg -n 'timeout|spawn|exec|fetch|test\\(' tests/design-v2-1-corrections.test.js tests/design-v2-imagery.test.js" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+tests/design-v2-imagery.test.js:10:const get = (p) => worker.fetch(new Request(ORIGIN + p));
+tests/design-v2-imagery.test.js:30:test('design-v2-imagery S1: DESIGN.md v2 makes imagery primary with inventory, treatment rules and SVG demotion', () => {
+tests/design-v2-imagery.test.js:46:test('design-v2-imagery S2: operator render set exports four non-empty base64 strings', () => {
+tests/design-v2-imagery.test.js:54:  test(`design-v2-imagery S3: ${r.path} answers 200 image/webp with the export bytes`, async () => {
+tests/design-v2-imagery.test.js:67:test('design-v2-imagery S2: served page references all four image paths', async () => {
+tests/design-v2-imagery.test.js:72:test('design-v2-imagery S2: hero, #patch, wear story and #how carry their renders', () => {
+tests/design-v2-imagery.test.js:81:test('design-v2-imagery S2: every render is an <img> with calm, hype-free alt text', () => {
+tests/design-v2-imagery.test.js:88:    assert.ok(!/border|box-shadow/i.test(tag[0]), 'no inline frame or shadow on image');
+tests/design-v2-imagery.test.js:92:test('design-v2-imagery S2: the live demo keeps its functional packet visualization', () => {
+tests/design-v2-imagery.test.js:94:  assert.ok(/<svg[\s>]|<canvas|id="[^"]*(packet|flow|viz)[^"]*"/i.test(demo));
+tests/design-v2-imagery.test.js:100:test('design-v2-imagery S3: no other new routes; unknown /img path is not served as webp', async () => {
+tests/design-v2-imagery.test.js:106:test('design-v2-imagery S3: existing png routes and SEO layer are unchanged', async () => {
+tests/design-v2-imagery.test.js:115:test('design-v2-imagery S3: new copy keeps brand naming and avoids hype words', () => {
+tests/design-v2-1-corrections.test.js:4:import { spawnSync } from 'node:child_process';
+tests/design-v2-1-corrections.test.js:69:  .find((b) => spawnSync(b, ['--version']).status === 0);
+tests/design-v2-1-corrections.test.js:79:    const res = spawnSync(CHROME, ['--headless=new', '--no-sandbox', '--disable-gpu',
+tests/design-v2-1-corrections.test.js:81:      `--screenshot=${join(dir, 'o.png')}`, `file://${join(dir, 'i.html')}`], { timeout: 60000 });
+tests/design-v2-1-corrections.test.js:92:  test(`S5: ${RENDERS[k].path} corners and edge midpoints sit on paper #FAFAF6 within 3 per channel`,
+tests/design-v2-1-corrections.test.js:107:test('S5: the page adds no border, frame, CSS shadow, filter or tint to renders', () => {
+tests/design-v2-1-corrections.test.js:108:  for (const r of Object.values(RENDERS)) assert.ok(!/style=|border|shadow|filter/i.test(imgTag(r)), r.path);
+tests/design-v2-1-corrections.test.js:111:    .filter(([, sel]) => /product-render|hero-render|network-render|wear-story[^,{]*img/.test(sel));
+tests/design-v2-1-corrections.test.js:114:    assert.ok(!/box-shadow|drop-shadow|filter|border|background|outline|mix-blend|radius/i.test(body), sel);
+tests/design-v2-1-corrections.test.js:117:test('S5: nothing tinted sits behind a render (no background or gradient on its wrapper)', () => {
+tests/design-v2-1-corrections.test.js:119:  assert.ok(!/(hero-art|hero-visual|render-wrap|figure|\.visual)[^{]*\{[^}]*(gradient|background)/i.test(css));
+tests/design-v2-1-corrections.test.js:120:  assert.ok(!/radial-gradient/i.test(css), 'no radial warmth behind the hero patch');
+tests/design-v2-1-corrections.test.js:125:test('S6: on-skin render is a forearm close-up and the page says forearm, not upper arm', () => {
+tests/design-v2-1-corrections.test.js:128:  assert.ok(!/upper arm|torso|chest|shoulder/i.test(alt));
+tests/design-v2-1-corrections.test.js:129:  assert.ok(!/upper[- ]arm/i.test(design.replace(/no upper arm/gi, '')), 'DESIGN.md no longer says upper arm');
+tests/design-v2-1-corrections.test.js:133:test('S6: on-skin corners are warm skin tones, not paper or studio background',
+tests/design-v2-1-corrections.test.js:145:test('S7: hero and network scene are served at a size that keeps the patch small', () => {
+tests/design-v2-1-corrections.test.js:154:test('S7: no render is placed full bleed or beyond its design cap', () => {
+tests/design-v2-1-corrections.test.js:155:  assert.ok(!/\.product-render\{[^}]*(100vw|min-width|transform:\s*scale)/.test(html));
+tests/design-v2-1-corrections.test.js:160:test('S8: DESIGN.md states the exact paper background rule', () => {
+tests/design-v2-1-corrections.test.js:167:test('S8: DESIGN.md states the true 38 mm scale rule with the quarter-frame hero bound', () => {
+tests/design-v2-1-corrections.test.js:173:test('S8: DESIGN.md absorbs the knowledge pack and the brand sheet wins', () => {
+tests/design-v2-1-corrections.test.js:183:test('S8: DESIGN.md asset inventory still names all four routes and exports', () => {
+tests/design-v2-1-corrections.test.js:191:test('S9: image width and height attributes match the intrinsic WebP dimensions (no layout shift)', () => {
+tests/design-v2-1-corrections.test.js:200:test('S9: hero stays eager and high priority; below-fold renders are lazy', () => {
+tests/design-v2-1-corrections.test.js:201:  assert.match(imgTag(RENDERS.hero), /fetchpriority="high"/);
+tests/design-v2-1-corrections.test.js:202:  assert.ok(!/loading="lazy"/.test(imgTag(RENDERS.hero)));
+tests/design-v2-1-corrections.test.js:206:test('S9: reveal motion has a reduced-motion path and a no-script fallback', () => {
+tests/design-v2-1-corrections.test.js:211:test('S9: accessibility basics: skip link, visible focus, one h1, font-display swap', () => {
+tests/design-v2-1-corrections.test.js:215:  if (/@font-face/.test(html)) assert.match(html, /font-display:\s*swap/);
+tests/design-v2-1-corrections.test.js:218:test('S9: trust stated plainly: not a medical device, and no invented proof', () => {
+tests/design-v2-1-corrections.test.js:220:  assert.ok(!/testimonial|as seen in|trusted by|★|stars?\b/i.test(html.replace(/<script[\s\S]*?<\/script>/g, '')));
+
+codex
+The diff is limited to the requested footer sentence, with the ANVIL link intact. The full suite is still running through its browser-based image checks.
+exec
+/bin/bash -lc "sed -n '60,106p' tests/design-v2-1-corrections.test.js" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+        v += pa <= pb && pa <= pc ? a : pb <= pc ? b : c;
+      }
+      out[dst + i] = v & 255;
+    }
+  }
+  return { w, h, ch, px: (x, y) => [...out.subarray(y * stride + x * ch, y * stride + x * ch + 3)] };
+}
+
+const CHROME = ['chromium', 'chromium-browser', 'google-chrome']
+  .find((b) => spawnSync(b, ['--version']).status === 0);
+
+// Decode a served WebP in headless Chrome on a #FAFAF6 page and return the pixel reader.
+function decodeWebp(r) {
+  const { w, h } = dims(bytes(r));
+  const dir = mkdtempSync(join(tmpdir(), 'sentia-img-'));
+  try {
+    writeFileSync(join(dir, 'i.webp'), bytes(r));
+    writeFileSync(join(dir, 'i.html'),
+      '<body style="margin:0;background:#FAFAF6"><img src="i.webp" style="display:block">');
+    const res = spawnSync(CHROME, ['--headless=new', '--no-sandbox', '--disable-gpu',
+      '--force-color-profile=srgb', '--hide-scrollbars', `--window-size=${w},${h}`,
+      `--screenshot=${join(dir, 'o.png')}`, `file://${join(dir, 'i.html')}`], { timeout: 60000 });
+    assert.equal(res.status, 0, 'headless render');
+    const png = decodePng(readFileSync(join(dir, 'o.png')));
+    assert.equal(png.w, w); assert.equal(png.h, h);
+    return png;
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+}
+
+// S5: renders blend with the page
+
+for (const k of ['hero', 'exploded', 'network']) {
+  test(`S5: ${RENDERS[k].path} corners and edge midpoints sit on paper #FAFAF6 within 3 per channel`,
+    { skip: CHROME ? false : 'no headless Chrome to decode WebP; operator sampling record applies' }, () => {
+      const png = decodePng_(k);
+      const { w, h } = png;
+      const pts = [[0, 0], [w - 1, 0], [0, h - 1], [w - 1, h - 1],
+        [w >> 1, 0], [w >> 1, h - 1], [0, h >> 1], [w - 1, h >> 1]];
+      for (const [x, y] of pts) {
+        const p = png.px(x, y);
+        PAPER.forEach((v, i) => assert.ok(Math.abs(p[i] - v) <= 3, `${k} (${x},${y}) = ${p}`));
+      }
+    });
+}
+const cache = {};
+function decodePng_(k) { return (cache[k] ??= decodeWebp(RENDERS[k])); }
+
+
+ succeeded in 46393ms:
+
+> sentia@0.1.0 test
+> node --test tests/*.test.js
+
+TAP version 13
+# Subtest: core-worker S1: GET / serves the site with wordmark, demo and dashboard
+ok 1 - core-worker S1: GET / serves the site with wordmark, demo and dashboard
+  ---
+  duration_ms: 38.477206
+  type: 'test'
+  ...
+# Subtest: core-worker S2: API healthy, unknown API route is a 404 JSON error
+ok 2 - core-worker S2: API healthy, unknown API route is a 404 JSON error
+  ---
+  duration_ms: 3.329812
+  type: 'test'
+  ...
+# Subtest: ingestion-api S1: fleet lists exactly 3 patches with battery and last sync path
+ok 3 - ingestion-api S1: fleet lists exactly 3 patches with battery and last sync path
+  ---
+  duration_ms: 2.526128
+  type: 'test'
+  ...
+# Subtest: ingestion-api S2: patch status carries current values, unknown id is 404 JSON
+ok 4 - ingestion-api S2: patch status carries current values, unknown id is 404 JSON
+  ---
+  duration_ms: 2.989505
+  type: 'test'
+  ...
+# Subtest: ingestion-api S3: measurements are deterministic, inside 24 h, 15 minute spacing
+ok 5 - ingestion-api S3: measurements are deterministic, inside 24 h, 15 minute spacing
+  ---
+  duration_ms: 3.244533
+  type: 'test'
+  ...
+# Subtest: ingestion-api S4: alerts follow the rule set and reference real patches
+ok 6 - ingestion-api S4: alerts follow the rule set and reference real patches
+  ---
+  duration_ms: 2.776526
+  type: 'test'
+  ...
+# Subtest: ingestion-api S5: network stats count both paths positively
+ok 7 - ingestion-api S5: network stats count both paths positively
+  ---
+  duration_ms: 1.573946
+  type: 'test'
+  ...
+# Subtest: dashboard-data S1: status endpoint values are the tile values, untransformed
+ok 8 - dashboard-data S1: status endpoint values are the tile values, untransformed
+  ---
+  duration_ms: 0.720398
+  type: 'test'
+  ...
+# Subtest: dashboard-data S2: the 24 h chart window carries exactly 96 points
+ok 9 - dashboard-data S2: the 24 h chart window carries exactly 96 points
+  ---
+  duration_ms: 1.008407
+  type: 'test'
+  ...
+# Subtest: dashboard-data S3: alerts can be filtered per wearer with no leakage
+ok 10 - dashboard-data S3: alerts can be filtered per wearer with no leakage
+  ---
+  duration_ms: 1.26061
+  type: 'test'
+  ...
+# Subtest: seo: robots, sitemap and llms endpoints respond with the right shapes
+ok 11 - seo: robots, sitemap and llms endpoints respond with the right shapes
+  ---
+  duration_ms: 1.759473
+  type: 'test'
+  ...
+# Subtest: geo: JSON-LD graph parses and carries the five entity types
+ok 12 - geo: JSON-LD graph parses and carries the five entity types
+  ---
+  duration_ms: 0.264755
+  type: 'test'
+  ...
+# Subtest: seo: homepage carries canonical, OG and the llms Link header
+ok 13 - seo: homepage carries canonical, OG and the llms Link header
+  ---
+  duration_ms: 0.68921
+  type: 'test'
+  ...
+# Subtest: regression: wear start is never frozen at module load (Workers epoch clock)
+ok 14 - regression: wear start is never frozen at module load (Workers epoch clock)
+  ---
+  duration_ms: 1.327685
+  type: 'test'
+  ...
+# Subtest: packet-codec S1: digest round trip preserves every field at 16 bytes
+ok 15 - packet-codec S1: digest round trip preserves every field at 16 bytes
+  ---
+  duration_ms: 1.23427
+  type: 'test'
+  ...
+# Subtest: packet-codec S2: a flipped payload byte is rejected by crc
+ok 16 - packet-codec S2: a flipped payload byte is rejected by crc
+  ---
+  duration_ms: 0.488024
+  type: 'test'
+  ...
+# Subtest: packet-codec S3: flag bits survive the wire
+ok 17 - packet-codec S3: flag bits survive the wire
+  ---
+  duration_ms: 1.095861
+  type: 'test'
+  ...
+# Subtest: packet-codec S4: LoRaWAN frame carries sweat rate and posture at 38 hex chars
+ok 18 - packet-codec S4: LoRaWAN frame carries sweat rate and posture at 38 hex chars
+  ---
+  duration_ms: 0.411119
+  type: 'test'
+  ...
+# Subtest: packet-codec S5: bad magic and bad crc are rejected on the LoRaWAN frame
+ok 19 - packet-codec S5: bad magic and bad crc are rejected on the LoRaWAN frame
+  ---
+  duration_ms: 0.44901
+  type: 'test'
+  ...
+# Subtest: packet-codec: digest rejects wrong length and wrong version
+ok 20 - packet-codec: digest rejects wrong length and wrong version
+  ---
+  duration_ms: 0.313276
+  type: 'test'
+  ...
+# Subtest: packet-codec: hydration and battery clamp to 0..100, temperature keeps two decimals
+ok 21 - packet-codec: hydration and battery clamp to 0..100, temperature keeps two decimals
+  ---
+  duration_ms: 0.285274
+  type: 'test'
+  ...
+# Subtest: packet-codec: crc8 is stable for a known vector
+ok 22 - packet-codec: crc8 is stable for a known vector
+  ---
+  duration_ms: 0.153167
+  type: 'test'
+  ...
+# Subtest: live-demo S1: city emissions are 16 byte digests labelled findmy
+ok 23 - live-demo S1: city emissions are 16 byte digests labelled findmy
+  ---
+  duration_ms: 2.159573
+  type: 'test'
+  ...
+# Subtest: live-demo S2: rural emissions are 38 character LoRaWAN hex labelled lora
+ok 24 - live-demo S2: rural emissions are 38 character LoRaWAN hex labelled lora
+  ---
+  duration_ms: 2.615085
+  type: 'test'
+  ...
+# Subtest: live-demo S3: latencies stay inside the plausible range per path
+ok 25 - live-demo S3: latencies stay inside the plausible range per path
+  ---
+  duration_ms: 2.866375
+  type: 'test'
+  ...
+# Subtest: parity: browser codec and server codec produce identical bytes
+ok 26 - parity: browser codec and server codec produce identical bytes
+  ---
+  duration_ms: 1.995284
+  type: 'test'
+  ...
+# Subtest: S5: /img/patch-hero.webp corners and edge midpoints sit on paper \#FAFAF6 within 3 per channel
+ok 27 - S5: /img/patch-hero.webp corners and edge midpoints sit on paper \#FAFAF6 within 3 per channel
+  ---
+  duration_ms: 31968.336839
+  type: 'test'
+  ...
+# Subtest: S5: /img/patch-exploded.webp corners and edge midpoints sit on paper \#FAFAF6 within 3 per channel
+ok 28 - S5: /img/patch-exploded.webp corners and edge midpoints sit on paper \#FAFAF6 within 3 per channel
+  ---
+  duration_ms: 1196.496847
+  type: 'test'
+  ...
+# Subtest: S5: /img/network-scene.webp corners and edge midpoints sit on paper \#FAFAF6 within 3 per channel
+ok 29 - S5: /img/network-scene.webp corners and edge midpoints sit on paper \#FAFAF6 within 3 per channel
+  ---
+  duration_ms: 4917.885403
+  type: 'test'
+  ...
+# Subtest: S5: the page adds no border, frame, CSS shadow, filter or tint to renders
+ok 30 - S5: the page adds no border, frame, CSS shadow, filter or tint to renders
+  ---
+  duration_ms: 1.086724
+  type: 'test'
+  ...
+# Subtest: S5: nothing tinted sits behind a render (no background or gradient on its wrapper)
+ok 31 - S5: nothing tinted sits behind a render (no background or gradient on its wrapper)
+  ---
+  duration_ms: 0.492882
+  type: 'test'
+  ...
+# Subtest: S6: on-skin render is a forearm close-up and the page says forearm, not upper arm
+ok 32 - S6: on-skin render is a forearm close-up and the page says forearm, not upper arm
+  ---
+  duration_ms: 0.453669
+  type: 'test'
+  ...
+# Subtest: S6: on-skin corners are warm skin tones, not paper or studio background
+ok 33 - S6: on-skin corners are warm skin tones, not paper or studio background
+  ---
+  duration_ms: 1239.334628
+  type: 'test'
+  ...
+# Subtest: S7: hero and network scene are served at a size that keeps the patch small
+ok 34 - S7: hero and network scene are served at a size that keeps the patch small
+  ---
+  duration_ms: 0.429524
+  type: 'test'
+  ...
+# Subtest: S7: no render is placed full bleed or beyond its design cap
+ok 35 - S7: no render is placed full bleed or beyond its design cap
+  ---
+  duration_ms: 0.438391
+  type: 'test'
+  ...
+# Subtest: S8: DESIGN.md states the exact paper background rule
+ok 36 - S8: DESIGN.md states the exact paper background rule
+  ---
+  duration_ms: 0.515405
+  type: 'test'
+  ...
+# Subtest: S8: DESIGN.md states the true 38 mm scale rule with the quarter-frame hero bound
+ok 37 - S8: DESIGN.md states the true 38 mm scale rule with the quarter-frame hero bound
+  ---
+  duration_ms: 0.363841
+  type: 'test'
+  ...
+# Subtest: S8: DESIGN.md absorbs the knowledge pack and the brand sheet wins
+ok 38 - S8: DESIGN.md absorbs the knowledge pack and the brand sheet wins
+  ---
+  duration_ms: 0.454059
+  type: 'test'
+  ...
+# Subtest: S8: DESIGN.md asset inventory still names all four routes and exports
+ok 39 - S8: DESIGN.md asset inventory still names all four routes and exports
+  ---
+  duration_ms: 0.12834
+  type: 'test'
+  ...
+# Subtest: S9: image width and height attributes match the intrinsic WebP dimensions (no layout shift)
+ok 40 - S9: image width and height attributes match the intrinsic WebP dimensions (no layout shift)
+  ---
+  duration_ms: 0.504504
+  type: 'test'
+  ...
+# Subtest: S9: hero stays eager and high priority; below-fold renders are lazy
+ok 41 - S9: hero stays eager and high priority; below-fold renders are lazy
+  ---
+  duration_ms: 0.196809
+  type: 'test'
+  ...
+# Subtest: S9: reveal motion has a reduced-motion path and a no-script fallback
+ok 42 - S9: reveal motion has a reduced-motion path and a no-script fallback
+  ---
+  duration_ms: 0.160189
+  type: 'test'
+  ...
+# Subtest: S9: accessibility basics: skip link, visible focus, one h1, font-display swap
+ok 43 - S9: accessibility basics: skip link, visible focus, one h1, font-display swap
+  ---
+  duration_ms: 0.24067
+  type: 'test'
+  ...
+# Subtest: S9: trust stated plainly: not a medical device, and no invented proof
+ok 44 - S9: trust stated plainly: not a medical device, and no invented proof
+  ---
+  duration_ms: 0.346208
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S1: DESIGN.md v2 makes imagery primary with inventory, treatment rules and SVG demotion
+ok 45 - design-v2-imagery S1: DESIGN.md v2 makes imagery primary with inventory, treatment rules and SVG demotion
+  ---
+  duration_ms: 2.382168
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S2: operator render set exports four non-empty base64 strings
+ok 46 - design-v2-imagery S2: operator render set exports four non-empty base64 strings
+  ---
+  duration_ms: 0.356948
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: /img/patch-hero.webp answers 200 image/webp with the export bytes
+ok 47 - design-v2-imagery S3: /img/patch-hero.webp answers 200 image/webp with the export bytes
+  ---
+  duration_ms: 32.692969
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: /img/patch-exploded.webp answers 200 image/webp with the export bytes
+ok 48 - design-v2-imagery S3: /img/patch-exploded.webp answers 200 image/webp with the export bytes
+  ---
+  duration_ms: 1.521688
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: /img/patch-on-skin.webp answers 200 image/webp with the export bytes
+ok 49 - design-v2-imagery S3: /img/patch-on-skin.webp answers 200 image/webp with the export bytes
+  ---
+  duration_ms: 2.366601
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: /img/network-scene.webp answers 200 image/webp with the export bytes
+ok 50 - design-v2-imagery S3: /img/network-scene.webp answers 200 image/webp with the export bytes
+  ---
+  duration_ms: 0.685373
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S2: served page references all four image paths
+ok 51 - design-v2-imagery S2: served page references all four image paths
+  ---
+  duration_ms: 1.291857
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S2: hero, \#patch, wear story and \#how carry their renders
+ok 52 - design-v2-imagery S2: hero, \#patch, wear story and \#how carry their renders
+  ---
+  duration_ms: 0.313496
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S2: every render is an <img> with calm, hype-free alt text
+ok 53 - design-v2-imagery S2: every render is an <img> with calm, hype-free alt text
+  ---
+  duration_ms: 0.820146
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S2: the live demo keeps its functional packet visualization
+ok 54 - design-v2-imagery S2: the live demo keeps its functional packet visualization
+  ---
+  duration_ms: 0.499004
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: no other new routes; unknown /img path is not served as webp
+ok 55 - design-v2-imagery S3: no other new routes; unknown /img path is not served as webp
+  ---
+  duration_ms: 0.500407
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: existing png routes and SEO layer are unchanged
+ok 56 - design-v2-imagery S3: existing png routes and SEO layer are unchanged
+  ---
+  duration_ms: 2.554771
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: new copy keeps brand naming and avoids hype words
+ok 57 - design-v2-imagery S3: new copy keeps brand naming and avoids hype words
+  ---
+  duration_ms: 1.393749
+  type: 'test'
+  ...
+# Subtest: mcp-server S1: initialize returns the protocol version and server name
+ok 58 - mcp-server S1: initialize returns the protocol version and server name
+  ---
+  duration_ms: 32.822562
+  type: 'test'
+  ...
+# Subtest: mcp-server S2: tools/list returns exactly the 6 tools with schemas
+ok 59 - mcp-server S2: tools/list returns exactly the 6 tools with schemas
+  ---
+  duration_ms: 1.628067
+  type: 'test'
+  ...
+# Subtest: mcp-server S3: get_patch_status returns the patch and its battery
+ok 60 - mcp-server S3: get_patch_status returns the patch and its battery
+  ---
+  duration_ms: 2.554772
+  type: 'test'
+  ...
+# Subtest: mcp-server S4: simulate_uplink round trips on both paths
+ok 61 - mcp-server S4: simulate_uplink round trips on both paths
+  ---
+  duration_ms: 3.663396
+  type: 'test'
+  ...
+# Subtest: mcp-server S5: errors are proper JSON-RPC errors, notifications get 202 empty
+ok 62 - mcp-server S5: errors are proper JSON-RPC errors, notifications get 202 empty
+  ---
+  duration_ms: 2.573707
+  type: 'test'
+  ...
+# Subtest: mcp-server: ping returns an empty result
+ok 63 - mcp-server: ping returns an empty result
+  ---
+  duration_ms: 0.839421
+  type: 'test'
+  ...
+# Subtest: site-credit S1: the served home page footer carries the new credit byte exact
+ok 64 - site-credit S1: the served home page footer carries the new credit byte exact
+  ---
+  duration_ms: 37.527038
+  type: 'test'
+  ...
+# Subtest: site-credit S1: the ANVIL link is intact and the sentence sits in one footer paragraph
+ok 65 - site-credit S1: the ANVIL link is intact and the sentence sits in one footer paragraph
+  ---
+  duration_ms: 0.36329
+  type: 'test'
+  ...
+# Subtest: site-credit S2: the old sentence no longer ends the credit; related sentences are unchanged
+ok 66 - site-credit S2: the old sentence no longer ends the credit; related sentences are unchanged
+  ---
+  duration_ms: 0.670825
+  type: 'test'
+  ...
+# Subtest: site-credit S2: /llms.txt does not carry the credit sentence and still answers 200
+ok 67 - site-credit S2: /llms.txt does not carry the credit sentence and still answers 200
+  ---
+  duration_ms: 0.639898
+  type: 'test'
+  ...
+# Subtest: site-credit S2: /img/patch-hero.webp still answers 200 image/webp at 7838 bytes
+ok 68 - site-credit S2: /img/patch-hero.webp still answers 200 image/webp at 7838 bytes
+  ---
+  duration_ms: 1.421821
+  type: 'test'
+  ...
+# Subtest: site-credit S2: /img/patch-exploded.webp still answers 200 image/webp at 9318 bytes
+ok 69 - site-credit S2: /img/patch-exploded.webp still answers 200 image/webp at 9318 bytes
+  ---
+  duration_ms: 2.837231
+  type: 'test'
+  ...
+# Subtest: site-credit S2: /img/patch-on-skin.webp still answers 200 image/webp at 20098 bytes
+ok 70 - site-credit S2: /img/patch-on-skin.webp still answers 200 image/webp at 20098 bytes
+  ---
+  duration_ms: 1.583302
+  type: 'test'
+  ...
+# Subtest: site-credit S2: /img/network-scene.webp still answers 200 image/webp at 13098 bytes
+ok 71 - site-credit S2: /img/network-scene.webp still answers 200 image/webp at 13098 bytes
+  ---
+  duration_ms: 0.771373
+  type: 'test'
+  ...
+# Subtest: ui-elevation S1: DESIGN.md has tokens, type scale, spacing, hero, motion and quality bars
+ok 72 - ui-elevation S1: DESIGN.md has tokens, type scale, spacing, hero, motion and quality bars
+  ---
+  duration_ms: 3.759236
+  type: 'test'
+  ...
+# Subtest: ui-elevation S1: page follows DESIGN.md tokens and typefaces
+ok 73 - ui-elevation S1: page follows DESIGN.md tokens and typefaces
+  ---
+  duration_ms: 0.708356
+  type: 'test'
+  ...
+# Subtest: ui-elevation S2: sections, demo/dashboard hooks and single h1 are preserved
+ok 74 - ui-elevation S2: sections, demo/dashboard hooks and single h1 are preserved
+  ---
+  duration_ms: 0.98302
+  type: 'test'
+  ...
+# Subtest: ui-elevation S2: content facts and SEO/GEO layer are preserved
+ok 75 - ui-elevation S2: content facts and SEO/GEO layer are preserved
+  ---
+  duration_ms: 0.467966
+  type: 'test'
+  ...
+# Subtest: ui-elevation S4: codec, data, mcp and index are untouched by the run
+ok 76 - ui-elevation S4: codec, data, mcp and index are untouched by the run # SKIP no main ref to diff against
+  ---
+  duration_ms: 11.715717
+  type: 'test'
+  ...
+# Subtest: ui-elevation S5: no hype words in page or DESIGN.md
+ok 77 - ui-elevation S5: no hype words in page or DESIGN.md
+  ---
+  duration_ms: 0.649926
+  type: 'test'
+  ...
+# Subtest: ui-elevation S5: product names match BRAND.md exactly
+ok 78 - ui-elevation S5: product names match BRAND.md exactly
+  ---
+  duration_ms: 0.428803
+  type: 'test'
+  ...
+# Subtest: ui-elevation S6 C1: hero type never drops below 56 px at any width
+ok 79 - ui-elevation S6 C1: hero type never drops below 56 px at any width
+  ---
+  duration_ms: 1.832269
+  type: 'test'
+  ...
+# Subtest: ui-elevation S6 C1: body copy never drops below 17 px
+ok 80 - ui-elevation S6 C1: body copy never drops below 17 px
+  ---
+  duration_ms: 0.963594
+  type: 'test'
+  ...
+# Subtest: ui-elevation S6 C2: spacing avoids the off-rhythm 30, 15, 28 and 26 px values
+ok 81 - ui-elevation S6 C2: spacing avoids the off-rhythm 30, 15, 28 and 26 px values
+  ---
+  duration_ms: 2.296769
+  type: 'test'
+  ...
+# Subtest: ui-elevation S6 C3: SVG annotations use \#53685C and the toggle has no white background
+ok 82 - ui-elevation S6 C3: SVG annotations use \#53685C and the toggle has no white background
+  ---
+  duration_ms: 0.645168
+  type: 'test'
+  ...
+# Subtest: ui-elevation S6 C4: .rv starts hidden and reveals over 800 ms ease-out
+ok 83 - ui-elevation S6 C4: .rv starts hidden and reveals over 800 ms ease-out
+  ---
+  duration_ms: 0.499905
+  type: 'test'
+  ...
+1..83
+# tests 83
+# suites 0
+# pass 82
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 46370.779414
+
+exec
+/bin/bash -lc 'node --test tests/site-credit.test.js' in /home/runner/work/sentia/sentia
+ succeeded in 9ms:
+TAP version 13
+# Subtest: site-credit S1: the served home page footer carries the new credit byte exact
+ok 1 - site-credit S1: the served home page footer carries the new credit byte exact
+  ---
+  duration_ms: 25.109179
+  type: 'test'
+  ...
+# Subtest: site-credit S1: the ANVIL link is intact and the sentence sits in one footer paragraph
+ok 2 - site-credit S1: the ANVIL link is intact and the sentence sits in one footer paragraph
+  ---
+  duration_ms: 0.322924
+  type: 'test'
+  ...
+# Subtest: site-credit S2: the old sentence no longer ends the credit; related sentences are unchanged
+ok 3 - site-credit S2: the old sentence no longer ends the credit; related sentences are unchanged
+  ---
+  duration_ms: 0.622124
+  type: 'test'
+  ...
+# Subtest: site-credit S2: /llms.txt does not carry the credit sentence and still answers 200
+ok 4 - site-credit S2: /llms.txt does not carry the credit sentence and still answers 200
+  ---
+  duration_ms: 0.640057
+  type: 'test'
+  ...
+# Subtest: site-credit S2: /img/patch-hero.webp still answers 200 image/webp at 7838 bytes
+ok 5 - site-credit S2: /img/patch-hero.webp still answers 200 image/webp at 7838 bytes
+  ---
+  duration_ms: 1.300062
+  type: 'test'
+  ...
+# Subtest: site-credit S2: /img/patch-exploded.webp still answers 200 image/webp at 9318 bytes
+ok 6 - site-credit S2: /img/patch-exploded.webp still answers 200 image/webp at 9318 bytes
+  ---
+  duration_ms: 1.068999
+  type: 'test'
+  ...
+# Subtest: site-credit S2: /img/patch-on-skin.webp still answers 200 image/webp at 20098 bytes
+ok 7 - site-credit S2: /img/patch-on-skin.webp still answers 200 image/webp at 20098 bytes
+  ---
+  duration_ms: 1.395541
+  type: 'test'
+  ...
+# Subtest: site-credit S2: /img/network-scene.webp still answers 200 image/webp at 13098 bytes
+ok 8 - site-credit S2: /img/network-scene.webp still answers 200 image/webp at 13098 bytes
+  ---
+  duration_ms: 0.583131
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 109.302704
+
+codex
+Updated src/page.js to append “Developed by Eduardo Arana.” inside the footer paragraph, preserving the ANVIL link. Only the credit line changed.
+
+Tests: 82 passed, 0 failed, 1 skipped because no main ref was available. All 8 site-credit tests passed. Approval remains with the review stations.
+tokens used
+24,812
+Updated src/page.js to append “Developed by Eduardo Arana.” inside the footer paragraph, preserving the ANVIL link. Only the credit line changed.
+
+Tests: 82 passed, 0 failed, 1 skipped because no main ref was available. All 8 site-credit tests passed. Approval remains with the review stations.

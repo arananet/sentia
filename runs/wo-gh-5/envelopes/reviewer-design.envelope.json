@@ -1,0 +1,23 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-design",
+  "to_station": "approver",
+  "work_order_id": "wo-gh-5",
+  "artifact_path": "runs/wo-gh-5/reviewer-design.output.md",
+  "status": "executed",
+  "created_at": "2026-10-29T22:36:06.137482+00:00",
+  "review": {
+    "station": "reviewer-design",
+    "verdict": "changes_requested",
+    "findings": [
+      "L-4 density violation: src/page.js:288 sets #patch and #how vertical padding to 128px, overriding the new section clamp. This exceeds design/DESIGN.md:68's 64\u201396px requirement and preserves the previous empty spacing around both imagery sections. Reduce these overrides to the documented range; the S2 test currently checks only the overridden generic rule.",
+      "L-1, L-2, L-3 and L-5 preservation checks pass at source level: primary visuals remain the supplied images, image CSS preserves uncropped aspect ratios without added backgrounds or shadows, explicit 38 mm anchors remain, and src/images.js hashes to e10c0b4fa90f1f68b4518d8ae392fc4caca907fe. Corner sampling and rendered visual hierarchy were not independently verified."
+    ]
+  },
+  "configured_model": "gpt-6-astra",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "gpt-6-astra"
+}

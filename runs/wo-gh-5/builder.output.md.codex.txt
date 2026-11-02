@@ -1,0 +1,1698 @@
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-hxw9l5b3"))
+Reading additional input from stdin...
+OpenAI Codex v0.166.0
+--------
+workdir: /home/runner/work/sentia/sentia
+model: openai/gpt-6-astra
+provider: cloudflare
+approval: never
+sandbox: danger-full-access
+reasoning effort: none
+reasoning summaries: none
+session id: 01a189cb-8261-7b51-b884-73648b1ceaf4
+--------
+user
+You are executing an ANVIL station packet inside this repository. Follow the packet exactly, edit the files it asks for, and finish with a brief plain text summary of what you changed.
+
+## Station prompt
+
+# Builder
+
+## Role
+Implement the spec so the scenario tests pass.
+
+## Inputs
+- spec
+- tests
+
+## Outputs
+- code change
+
+## Rules
+- Work only from the inputs listed above and the work order in the packet.
+- Produce the output as a file in the repo, not as chat text.
+- If the inputs are not enough, say what is missing instead of guessing.
+- Never approve your own work. Approval belongs to a different station.
+- Keep the change small and mapped to a spec scenario where one applies.
+
+
+## Work order
+
+- id: wo-gh-5
+- kind: feature
+- title: Design v3: product first recomposition (verified learnings as acceptance criteria)
+- source: github-issue
+- description: Design v3: product first recomposition, driven by the verified learnings in the brain
+
+Problem: design v2.1 (wo-gh-3) was deployed on the owner's gate override and the corrected render set is owner approved, especially the patch render. His verdict on the deployed page itself stands: it still reads empty and editorial, the display type crowds out the product, and the patch, the best asset the page has, appears small and late. The factory keeps needing the owner in the loop for taste; this work order tests the mechanism built for exactly that. The owner's design verdicts now sit in brain/learnings.md as verified learnings L-1 to L-5, promoted through the brain gate with provenance against the wo-gh-2 and wo-gh-3 run records. The runner injects them into every station packet of this run, and they are binding acceptance criteria here, quoted verbatim:
+
+- L-1: Art direction is imagery first; flat SVG as the primary visual language was rejected by the product owner and must not return as a section's main visual.
+- L-2: Product imagery sits seamlessly on the brand paper #FAFAF6 (no studio backgrounds, no visible image rectangles), verified by corner and edge sampling within 3 per channel.
+- L-3: The patch reads at true 38 mm scale with explicit scale anchors, and on-skin imagery is strict inner forearm framing only.
+- L-4: The product is the protagonist: the patch appears large and early, the page must not read empty or editorial, and display type must not crowd out the product.
+- L-5: The current product render set is owner approved, especially the patch render; composition iterations keep src/images.js byte identical and never regenerate product imagery.
+
+Deliverable: recompose the launch page in src/page.js so the product leads. The patch render sits large and early in the hero, as the hero's visual center, not as a small companion to the headline. Sections carry richer density, less empty paper, and the display type is reined in to serve the product instead of competing with it. design/DESIGN.md is amended only where the composition rules must change to encode L-4 (hero product scale, section density, display type in service of the product); the imagery rules from v2.1 (exact paper background, true scale, forearm framing) stay as written.
+
+Hard constraints: src/images.js stays byte identical (git blob e10c0b4fa90f1f68b4518d8ae392fc4caca907fe); no image is regenerated, substituted or re-encoded. Brand tokens stay locked: paper #FAFAF6, ink green #12211C, signal teal #0E7C66, coral as micro accents only, Space Grotesk and Inter, the calm metric first voice, no hype words, no invented proof. Copy changes only where the recomposition strictly requires them, and each one must be identifiable in the diff. Routes, behavior, the JSON API, the MCP server, the packet codec, the data layer and the SEO/GEO layer are frozen.
+
+Model routing for this run (anvil.yaml policy): builder and reviewer-design on GPT-6 Astra (gpt-6-astra) through the Cloudflare AI Gateway; spec writer, test writer and the other reviewer stations on claude-sonnet-5-5 through the same gateway. No fallback to another model for the builder.
+
+Deployment stays outside the line: the operator renders the resulting page locally for the owner's gate; nothing deploys on this run.
+
+Done criteria: run verdict approved with all five expected reviews counted, reviewer-design among them, and reviewer-design judging the recomposition explicitly against the verified learnings; src/images.js byte identical at the end of the run; full test suite green.
+
+Base tree: this run branches from anvil/brain-verdicts at c5b8c5d8, the branch that carries the verified learnings L-1 to L-5 in brain/learnings.md on top of the production credit line tree (anvil/run-credit-line at 2a43c86). Main does not contain the v2.1 page and is never a base here. The governing spec is .openspec/specs/design-v3-product-first/spec.md.
+
+GitHub issue: https://github.com/arananet/sentia/issues/5
+- risk_hints: 
+- status: new
+
+## Upstream steps
+
+- intake: completed
+- spec-writer: executed
+- test-writer: executed
+
+## Verified learnings
+
+- L-1: Art direction is imagery first; flat SVG as the primary visual language was rejected by the product owner and must not return as a section's main visual. (provenance: run wo-gh-2, artifact design/DESIGN.md, evidence verdict approved)
+- L-2: Product imagery sits seamlessly on the brand paper #FAFAF6 (no studio backgrounds, no visible image rectangles), verified by corner and edge sampling within 3 per channel. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-3: The patch reads at true 38 mm scale with explicit scale anchors, and on-skin imagery is strict inner forearm framing only. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-4: The product is the protagonist: the patch appears large and early, the page must not read empty or editorial, and display type must not crowd out the product. (provenance: run wo-gh-3, artifact src/page.js, evidence verdict changes_requested)
+- L-5: The current product render set is owner approved, especially the patch render; composition iterations keep src/images.js byte identical and never regenerate product imagery. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+
+## Project design
+codex
+I’ll read the governing spec and scenario tests, then make the scoped composition changes while preserving the approved imagery and frozen layers.
+exec
+/bin/bash -lc "pwd; rg --files -g 'AGENTS.md' -g '*test*' -g 'package.json' -g 'spec.md' -g 'DESIGN.md' -g 'page.js' -g 'anvil.yaml' -g '"'!node_modules'"' -g '"'!src/images.js'"'" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+/home/runner/work/sentia/sentia
+tests/ui-elevation.test.js
+tests/api.test.js
+tests/design-v2-imagery.test.js
+tests/design-v2-1-corrections.test.js
+tests/site-credit.test.js
+tests/design-v3-product-first.test.js
+tests/demo.test.js
+tests/mcp.test.js
+tests/codec.test.js
+anvil.yaml
+src/page.js
+design/DESIGN.md
+package.json
+runs/wo-gh-1/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-1/envelopes/test-writer.envelope.json
+runs/wo-gh-1/reviewer-tests.packet.md
+runs/wo-gh-1/reviewer-tests.output.md
+runs/wo-gh-1/test-writer.packet.md
+runs/wo-gh-1/test-writer.output.md
+runs/wo-gh-5/envelopes/test-writer.envelope.json
+runs/wo-gh-5/test-writer.packet.md
+runs/wo-gh-5/test-writer.output.md
+runs/wo-gh-3/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-3/envelopes/test-writer.envelope.json
+runs/wo-gh-3/reviewer-tests.packet.md
+runs/wo-gh-3/reviewer-tests.output.md
+runs/wo-gh-3/test-writer.packet.md
+runs/wo-gh-3/test-writer.output.md
+runs/wo-sentia-001/envelopes/reviewer-tests.envelope.json
+runs/wo-sentia-001/envelopes/test-writer.envelope.json
+runs/wo-sentia-001/reviewer-tests.packet.md
+runs/wo-sentia-001/test-writer.packet.md
+runs/wo-gh-2/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-2/envelopes/test-writer.envelope.json
+runs/wo-gh-2/reviewer-tests.packet.md
+runs/wo-gh-2/reviewer-tests.output.md
+runs/wo-gh-2/test-writer.packet.md
+runs/wo-gh-2/test-writer.output.md
+runs/wo-gh-4/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-4/envelopes/test-writer.envelope.json
+runs/wo-gh-4/reviewer-tests.packet.md
+runs/wo-gh-4/reviewer-tests.output.md
+runs/wo-gh-4/test-writer.packet.md
+runs/wo-gh-4/test-writer.output.md
+reviews/live-demo/reviewer-tests.json
+reviews/mcp-server/reviewer-tests.json
+reviews/core-worker/reviewer-tests.json
+reviews/ingestion-api/reviewer-tests.json
+reviews/packet-codec/reviewer-tests.json
+reviews/dashboard-data/reviewer-tests.json
+
+exec
+/bin/bash -lc 'git status --short; cat .openspec/specs/design-v3-product-first/spec.md; cat design/DESIGN.md; cat package.json' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+ M tests/design-v2-1-corrections.test.js
+?? runs/wo-gh-5/
+?? tests/design-v3-product-first.test.js
+# Sentia Design v3: Product First Recomposition
+
+Status: active for wo-gh-5
+Slug: design-v3-product-first
+
+## Roles
+- implementer: builds the change described here
+- reviewer: checks the change against this spec
+- qa: checks the scenarios below with tests
+- product_owner: owns the purpose and accepts the result
+
+## Purpose
+Design v2.1 shipped with an owner approved render set, but the owner still reads the page as empty and editorial: the display type crowds out the product and the patch appears small and late. The owner's design verdicts are now verified learnings L-1 to L-5 in brain/learnings.md, promoted through the brain gate with provenance against the wo-gh-2 and wo-gh-3 run records. This spec governs one recomposition of the launch page so the product leads, with those learnings as binding acceptance criteria.
+
+## Requirements
+- The verified learnings in brain/learnings.md (L-1 to L-5) are binding on this iteration; the run packets carry them and reviewer-design judges the result against them explicitly.
+- Hero: the patch render is the hero's visual center and appears large and early, above the fold at desktop and mobile widths; the headline serves the product instead of competing with it (L-4).
+- Density: sections carry richer content density and less empty paper than the v2.1 composition, without breaking the brand's calm, metric first voice (L-4).
+- Imagery is frozen: src/images.js stays byte identical (git blob e10c0b4fa90f1f68b4518d8ae392fc4caca907fe); no image is regenerated, substituted or re-encoded (L-5). Imagery placement keeps the v2.1 rules: seamless brand paper background, true 38 mm scale reads, strict inner forearm framing for the on-skin render (L-2, L-3). No section's main visual returns to flat SVG (L-1).
+- design/DESIGN.md is amended only where the composition rules must change to encode the hero product scale, the section density and the display type rule from L-4; the imagery rules stand as written.
+- Brand tokens stay locked: paper #FAFAF6, ink green #12211C, signal teal #0E7C66, coral as micro accents only, Space Grotesk and Inter, no hype words, no invented proof.
+- Copy changes only where the recomposition strictly requires them, each identifiable in the diff. Routes, behavior, the JSON API, the MCP server, the packet codec, the data layer and the SEO/GEO layer are frozen.
+- The full test suite passes after the change. Nothing deploys on this run; deployment is the owner's gate decision outside the line.
+
+## Scenarios
+
+### Scenario: The product leads the hero
+- S1: Given the recomposed page, when it is rendered at 1440 px and at 390 px widths, then the patch render is present above the fold as the hero's visual center, materially larger than in the v2.1 composition, and the headline does not push it below the fold.
+
+### Scenario: The page no longer reads empty
+- S2: Given the recomposed page, when its sections are read top to bottom, then section density is visibly richer than v2.1 and display type sizes are in service of the product, per learning L-4.
+
+### Scenario: The render set is untouched
+- S3: Given the run's final tree, when src/images.js is hashed, then its git blob is e10c0b4fa90f1f68b4518d8ae392fc4caca907fe, and the four image routes still answer 200 with image/webp at their established byte sizes (7,838 / 9,318 / 20,098 / 13,098 bytes).
+
+### Scenario: The learnings reach the stations and the design review uses them
+- S4: Given the executed run, when the committed station packets are read, then they carry the Verified learnings section from brain/learnings.md, and reviewer-design's findings judge the recomposition against the learnings explicitly.
+
+### Scenario: Green suite, full review panel
+- S5: Given the executed run, when the run report is read, then the verdict is approved, all five expected reviews are counted with reviewer-design among them, and the project test suite passes.
+# Sentia design system v2.1
+
+Identity is governed by brand/BRAND.md. This system applies that identity to
+the launch page: imagery is the primary art direction, with a small physical
+instrument surrounded by generous empty space at true 38 mm scale.
+Sentia Patch One is the object; Sentia Cloud receives its measurements; the
+Sentia MCP Server makes those measurements available to assistants.
+
+## Tokens
+
+Paper #FAFAF6 occupies roughly 90 percent of the surface. Ink green #12211C
+forms text and instrument outlines. Signal teal #0E7C66 marks links, labels
+and the Find My network and LoRaWAN paths. Coral #FF6B4A is reserved for the
+status LED and alert dots. Soft mint #EFF4EE is a rare panel fill; hairline
+#DFE7DF divides information. Body text uses #4A5D54; secondary labels use
+#53685C for legibility on paper. White is reserved for the physical patch.
+No decorative gradients. Only the soft contact shadow baked into each product
+render is allowed; the page adds no shadow or tinted backdrop.
+
+## Type scale
+
+Space Grotesk at weight 300 is the display face. The hero runs from 56 to
+144 px with 0.96 leading and -0.055 em tracking. Section titles run from
+40 to 88 px with 1.04 leading and -0.04 em tracking, limited to 18 characters
+per line where space permits. Data values run from 32 to 56 px. Inter body
+text is 17 px with 1.65 leading; introductory text is 18–20 px, at most
+54 characters per line. System mono labels are 11 px, uppercase, with
+0.16 em tracking. Never shrink body copy to fit a composition.
+
+## Spacing rhythm
+
+Use an 8 px base: 8, 16, 24, 32, 48, 64, 96, 128, 160. The page container
+is at most 1440 px wide, with fluid 24–80 px gutters. Sections have 96–160 px
+vertical padding. A title, its introduction and its illustration form one
+idea; detailed lists follow with generous separation. Hairlines provide
+structure without enclosing every item in a card. Technical examples and
+tables remain dense enough to scan, with scrolling contained locally.
+Fixed margins, padding and gaps use multiples of 8 px, including the bounds
+of fluid spacing. One-pixel border overlaps and diagram coordinates are
+optical geometry rather than content spacing.
+
+## Hero art direction
+
+Place the existing headline at large scale on the left and the supplied
+hero render on the right. Keep the kicker, chips and introductory copy.
+The round 38 mm patch has a matte paper-white top disc, deep ink-green edge
+ring, one tiny coral LED dot and a thin profile. Below 1000 px, stack the
+headline, object and supporting copy. Preserve the whole object at narrow
+widths. Flat inline SVG is demoted to small supporting diagrams only; it
+must not carry the hero, hardware or connectivity art direction. The logo,
+functional live demo graphics and dashboard charts stay.
+
+## Composition and accessibility
+
+The brand sheet wins every conflict with the design knowledge pack. Use calm
+tactile softness from render scale and whitespace, never pastel or blue
+palettes, shadowed surfaces or decorative cards. A 12 column grid aligns the
+hero headline across seven columns and the object across five. Supporting
+text and chips complete that system; one value proposition strip follows,
+using the existing tagline. Measured facts (38 mm, 14 days, IP67 and network
+behaviour) establish trust before the hardware detail. State plainly here
+that Sentia Patch One is not a medical device. No invented proof, testimonials,
+customer logos or unsupported claims.
+
+Alternate generous statement sections (128 px / 8rem padding) with denser
+technical sections (96 px). Use hairline divided feature grids and recurring
+numbered mono section labels. Keep the existing modular type scale, pushing
+the desktop display toward 144 px without crowding the render. Use the 8 px
+spacing scale throughout. Load fonts with font-display swap and reserve image
+space using exact intrinsic dimensions to avoid image layout shift.
+
+Text contrast is at least 4.5:1; body text aims for 7:1 on paper. The primary
+CTA uses paper on ink (about 15.9:1); the second action remains a text link.
+Use semantic sections, one h1, a skip link to focusable main content, visible
+3 px focus rings, and touch targets at least 44 px with at least 8 px gaps.
+Keep below-fold images lazy and the hero eager. Review at mobile widths and
+zoom, with keyboard navigation, no script, and prefers-reduced-motion.
+
+## Asset inventory
+
+All four operator-supplied WebP renders come from src/images.js. Serve the
+original export bytes without editing, replacing or generating imagery.
+
+| Module export | Route | Page placement |
+| --- | --- | --- |
+| PATCH_HERO_WEBP_B64 | /img/patch-hero.webp | Hero, primary object beside the headline |
+| PATCH_EXPLODED_WEBP_B64 | /img/patch-exploded.webp | #patch, beside the six-layer factual list |
+| PATCH_ON_SKIN_WEBP_B64 | /img/patch-on-skin.webp | #patch, second visual with the inner forearm close-up and 14 day wear story |
+| NETWORK_SCENE_WEBP_B64 | /img/network-scene.webp | #how, before the five relay steps |
+
+The exploded render groups the hardware into four visible assemblies; the
+six-layer list remains the source for the individual layer names and facts.
+The on-skin render follows the layer and sensor details, paired with the
+existing wear paragraph and followed by the dimensional and wear metrics.
+The network scene presents the patch, phone, relay domes and LoRaWAN gateway
+with dotted teal paths. It does not replace the live packet visualization.
+
+## Image treatment
+
+Place renders directly on paper, with no frames, borders, rounded cards,
+filters or added drop shadows. The supplied soft grounding shadow provides
+physical presence; do not add another.
+Hero, exploded and network backgrounds are exactly paper #FAFAF6, uniform
+to every corner and edge: no gradient, vignette, backdrop or floor line.
+Final WebP corner and edge samples may differ by at most 3 per RGB channel
+from (250, 250, 246) due to lossy encoding. The operator verifies the bytes.
+The on-skin exception is a strict inner forearm close-up filling the frame:
+no torso, no chest, no shoulder, no upper arm, no face, no dominating hands,
+no clothing and no background visible. The patch spans about half the forearm width.
+True 38 mm scale governs every scale-bearing render: the hero disc occupies
+a quarter of its frame width or less, and the network patch remains small
+among the devices. Never crop or enlarge the disc into a plate sized centerpiece.
+Preserve original aspect ratios and
+show complete images without cropping or stretching. Use responsive full
+width images, with the hero capped at 640 px, the wear image at 640 px, and
+the network scene spanning the content width. Give each visual generous
+space on the 8 px rhythm. Stack the wear image and copy below 900 px.
+Use descriptive, calm alt text with the exact product and network names.
+Reserve intrinsic image space to prevent layout shifts. Load the hero
+eagerly with high priority; lazy-load the three lower-page renders.
+
+## Motion
+
+Existing reveal hooks stay intact. Fades and small rises use 800 ms ease-out.
+No scale animation, bounce, glow or perpetual hero movement. Hover feedback
+uses opacity or a rise under 2 px over 180 ms.
+Stagger up to eight children per section in 40 ms steps, capped at 280 ms.
+Reduced motion disables CSS reveals
+and smooth scrolling, and hides the moving packet dot; the measurements
+and existing controls continue to operate. Static content must remain
+readable without JavaScript through a noscript style override. With scripting
+enabled, reveal elements begin at zero opacity and 16 px below their final
+position; the existing observer adds the visible state. Reduced motion keeps
+both the initial and revealed states visible and stationary.
+
+## Launch page quality bars
+
+- S1: This document precedes implementation. CSS implements its palette,
+  type hierarchy, spacing and physical hero composition.
+- The first view has one focal object and a headline substantially larger
+  than body copy. The page has breathing room at 1440, 1024, 768 and 375 px.
+- S2: Preserve every section, content fact, SEO/GEO output, client hook,
+  simulation control and dashboard action. Measurements keep their units.
+- At 320 px and at browser zoom, text wraps without page overflow; wide
+  technical data scrolls in its own region. Keyboard focus is visible.
+- V2.1 S9: Implementation touches only src/page.js and this document.
+  Preserve the four image/webp routes and operator supplied src/images.js.
+  API, MCP, codec, data and all other routing behavior stay unchanged.
+- S5: Keep the existing calm copy and exact product and network names.
+  Wellness framing and the medical disclaimer remain visible.
+- Run the full scenario suite. Visual quality and S3 model provenance are
+  assessed by the independent review stations; passing tests is not approval.
+- S6: At small widths retain a 56 px hero minimum and 17 px body minimum.
+  Use #53685C for SVG annotations and paper for the simulation toggle.
+  Check the hidden reveal state, 800 ms ease-out transition and motion fallback.
+{
+  "name": "sentia",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  }
+}
+
+exec
+/bin/bash -lc "cat tests/design-v3-product-first.test.js; sed -n '1,240p' src/page.js" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import worker from '../src/index.js';
+import { renderPage } from '../src/page.js';
+
+// design-v3-product-first (wo-gh-5): S1 to S4. Learnings L-1 to L-5 are the acceptance criteria.
+
+const ORIGIN = 'https://sentia.test';
+const html = renderPage(ORIGIN);
+const root = (p) => new URL('../' + p, import.meta.url);
+const design = readFileSync(root('design/DESIGN.md'), 'utf8');
+const css = html.match(/<style[^>]*>([\s\S]*?)<\/style>/)[1];
+
+// Largest px value in a font-size declaration or clamp() for a selector rule.
+const maxPx = (sel, src = css) => {
+  const rule = src.match(new RegExp(`(?:^|[}\\s])${sel.replace(/[.]/g, '\\.')}\\{([^}]*)\\}`, 'm'));
+  assert.ok(rule, `rule ${sel}`);
+  const px = [...rule[1].match(/font:[^;]*|font-size:[^;]*/)[0].matchAll(/(\d+(?:\.\d+)?)px/g)].map((m) => +m[1]);
+  return Math.max(...px);
+};
+const heroBlock = html.slice(html.indexOf('class="hero"'), html.indexOf('</section>', html.indexOf('class="hero"')));
+
+// S1: the product leads the hero
+
+test('S1: hero patch render is larger than the v2.1 640 px cap', () => {
+  const caps = [...css.matchAll(/\.hero-render\{[^}]*max-width:(\d+)px/g)].map((m) => +m[1]);
+  assert.ok(caps.length > 0 && Math.max(...caps) > 640, `hero render cap ${caps}`);
+  assert.ok(Math.max(...caps) >= 800, 'materially larger (at least 800 px at desktop)');
+});
+
+test('S1: the hero image is still the eager, high priority patch-hero render', () => {
+  assert.match(heroBlock, /<img[^>]*patch-hero\.webp[^>]*fetchpriority="high"/);
+  assert.ok(!/<img[^>]*patch-hero\.webp[^>]*loading="lazy"/.test(heroBlock));
+});
+
+test('S1: at desktop the product column is at least as wide as the headline column', () => {
+  const span = (sel) => {
+    const m = css.match(new RegExp(`\\${sel}\\{[^}]*grid-column:(\\d+)\\/(-?\\d+)`));
+    assert.ok(m, sel);
+    return (+m[2] < 0 ? 13 + +m[2] : +m[2]) - +m[1];
+  };
+  assert.ok(span('.hero-visual') >= span('.hero h1'), 'hero-visual spans no fewer columns than h1');
+});
+
+test('S1: on mobile the product follows the headline directly, ahead of lede, chips and CTA', () => {
+  const mobile = css.match(/@media\(max-width:999px\)\{([\s\S]*?)\n\}/)[1];
+  const row = (sel) => Number(mobile.match(new RegExp(`\\${sel}\\{[^}]*grid-row:(\\d+)`))?.[1]);
+  assert.ok(row('.hero-visual') < row('.hero .lede'), 'visual row precedes lede row');
+  assert.ok(row('.hero-visual') <= 3, 'visual within the first three rows (kicker, h1, visual)');
+});
+
+test('S1: the headline does not push the product below the fold', () => {
+  assert.ok(maxPx('.hero h1') <= 96, `hero h1 max ${maxPx('.hero h1')}px`);
+  assert.ok(!/\.hero h1\{[^}]*font-size:clamp\([^)]*(?:[7-9]|1\d)(?:\.\d+)?vw/.test(css), 'hero h1 vw slope at most 6.9vw');
+  const hp = Number(css.match(/\.hero\{[^}]*padding-top:(\d+)px/)[1]);
+  assert.ok(hp <= 128, `hero top padding ${hp}px`);
+});
+
+test('S1: the page keeps one h1 with its v2.1 copy', () => {
+  assert.equal((html.match(/<h1[\s>]/g) || []).length, 1);
+  assert.match(html, /A patch that whispers through networks that already exist\./);
+});
+
+// S2: the page no longer reads empty (L-4)
+
+test('S2: display type is reined in: h1 and h2 caps below the v2.1 values', () => {
+  assert.ok(maxPx('h1') < 144);
+  assert.ok(maxPx('h2') <= 64, `h2 max ${maxPx('h2')}px (v2.1: 88px)`);
+});
+
+test('S2: section padding is tighter than the v2.1 160 px ceiling', () => {
+  const m = css.match(/(?:^|\n)section\{[^}]*padding:clamp\((\d+)px,[^,]+,(\d+)px\)/);
+  assert.ok(m, 'section padding clamp');
+  assert.ok(+m[2] <= 112, `section padding max ${m[2]}px`);
+});
+
+test('S2: sections carry more supporting content than v2.1 (hero adds a spec strip or facts row)', () => {
+  const metrics = (heroBlock.match(/\b(38 ?mm|4\.2 ?mm|14 days|IP67)\b/g) || []).length;
+  assert.ok(metrics >= 6, `hero names ${metrics} product facts (v2.1: four, in caption and chips)`);
+});
+
+test('S2: imagery stays primary, no flat SVG as a section main visual (L-1)', () => {
+  for (const id of ['patch', 'how']) {
+    const start = html.indexOf(`id="${id}"`);
+    const body = html.slice(start, html.indexOf('</section>', start));
+    assert.match(body, /<img[^>]*\/img\//, `#${id} keeps its render`);
+  }
+});
+
+test('S2: no new copy invents proof or uses hype words', () => {
+  const text = html.replace(/<style[\s\S]*?<\/style>|<script[\s\S]*?<\/script>/g, '');
+  for (const w of ['revolutionary', 'cutting edge', 'game changer', 'supercharge', 'unlock', 'best in class'])
+    assert.ok(!text.toLowerCase().includes(w), w);
+});
+
+test('S2: DESIGN.md encodes hero product scale, section density and display type rule', () => {
+  assert.match(design, /v3/i);
+  assert.match(design, /product (is|as) the protagonist|protagonist/i);
+  assert.match(design, /density/i);
+  assert.match(design, /display type[^.]*(serve|service|product)/i);
+  assert.ok(!/hero capped at 640 px/i.test(design), 'old 640 px hero cap no longer stands');
+});
+
+test('S2: DESIGN.md keeps the v2.1 imagery rules and brand tokens as written', () => {
+  for (const re of [/#FAFAF6/, /#12211C/, /#0E7C66/, /true 38 ?mm scale/i, /contact shadow/i, /forearm/i,
+    /Space Grotesk/, /Inter/]) assert.match(design, re);
+});
+
+test('S2: brand tokens stay locked in the page css', () => {
+  for (const t of ['#FAFAF6', '#12211C', '#0E7C66']) assert.ok(css.toUpperCase().includes(t), t);
+});
+
+// S3: the render set is untouched (L-5)
+
+test('S3: src/images.js git blob is byte identical', () => {
+  const blob = execFileSync('git', ['hash-object', 'src/images.js'], { cwd: root('').pathname }).toString().trim();
+  assert.equal(blob, 'e10c0b4fa90f1f68b4518d8ae392fc4caca907fe');
+});
+
+test('S3: four image routes answer 200 image/webp at their established sizes', async () => {
+  const sizes = { 'patch-hero': 7838, 'patch-exploded': 9318, 'patch-on-skin': 20098, 'network-scene': 13098 };
+  for (const [name, size] of Object.entries(sizes)) {
+    const res = await worker.fetch(new Request(`${ORIGIN}/img/${name}.webp`));
+    assert.equal(res.status, 200, name);
+    assert.equal(res.headers.get('content-type'), 'image/webp');
+    assert.equal((await res.arrayBuffer()).byteLength, size, name);
+  }
+});
+
+test('S3: renders keep v2.1 placement rules: no frames, shadows or filters on images (L-2)', () => {
+  for (const tag of html.match(/<img[^>]*\/img\/[^>]*>/g)) assert.ok(!/style=/i.test(tag), tag);
+  const rules = [...css.matchAll(/([^{}]+)\{([^}]*)\}/g)]
+    .filter(([, s]) => /product-render|hero-render|network-render/.test(s));
+  for (const [, s, body] of rules)
+    assert.ok(!/box-shadow|drop-shadow|filter|border|background|outline|mix-blend|radius/i.test(body), s);
+});
+
+test('S3: forearm framing and true scale anchors stay on the page (L-3)', () => {
+  assert.match(html, /inner forearm|forearm/i);
+  assert.match(html, /Ø 38 mm/);
+});
+
+// S4: the learnings reach the stations
+
+test('S4: committed station packets carry the Verified learnings section', () => {
+  const dir = root('runs/wo-gh-5/');
+  assert.ok(existsSync(dir));
+  const packets = readdirSync(dir).filter((f) => f.endsWith('.packet.md'));
+  assert.ok(packets.length >= 1);
+  const brain = readFileSync(root('brain/learnings.md'), 'utf8');
+  for (const f of packets) {
+    const t = readFileSync(new URL(f, dir), 'utf8');
+    assert.match(t, /## Verified learnings/, f);
+    for (const id of ['L-1', 'L-2', 'L-3', 'L-4', 'L-5']) assert.ok(t.includes(`${id}:`), `${f} ${id}`);
+  }
+  for (const id of ['L-1', 'L-2', 'L-3', 'L-4', 'L-5']) assert.ok(brain.includes(id), `brain ${id}`);
+});
+// The Sentia single page site, server rendered from FACTS so the copy,
+// the specs table, the FAQ and the JSON-LD graph can never drift apart.
+
+import { FACTS, GITHUB_URL, REPO_URL } from './facts.js';
+import { TOOLS } from './mcp.js';
+import { MCP_EXAMPLE } from './mcp-example.js';
+
+const FAVICON =
+  'data:image/svg+xml,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="none" stroke="#12211C" stroke-width="3"/><circle cx="32" cy="32" r="17" fill="none" stroke="#12211C" stroke-width="2"/><circle cx="50" cy="14" r="5" fill="#FF6B4A"/></svg>'
+  );
+
+export function jsonLd(origin) {
+  const graph = [
+    {
+      '@type': 'Organization',
+      '@id': origin + '/#org',
+      name: 'Sentia',
+      url: origin + '/',
+      logo: origin + '/apple-touch-icon.png',
+      sameAs: [REPO_URL, GITHUB_URL],
+    },
+    {
+      '@type': 'Product',
+      '@id': origin + '/#product',
+      name: FACTS.product,
+      description: FACTS.definition,
+      brand: { '@id': origin + '/#org' },
+      category: 'Wearable sensor patch',
+      image: origin + '/og.png',
+      additionalProperty: [
+        { '@type': 'PropertyValue', name: 'Diameter', value: '38 mm' },
+        { '@type': 'PropertyValue', name: 'Thickness', value: '4.2 mm' },
+        { '@type': 'PropertyValue', name: 'Wear time', value: '14 days' },
+        { '@type': 'PropertyValue', name: 'Battery', value: 'Printed flexible battery, full wear period' },
+        { '@type': 'PropertyValue', name: 'Radios', value: 'BLE 5.0, LoRaWAN' },
+        { '@type': 'PropertyValue', name: 'Water resistance', value: 'IP67' },
+        { '@type': 'PropertyValue', name: 'Sensors', value: 'Thermistor array, bioimpedance electrodes, 3 axis accelerometer, microfluidic sweat channel' },
+      ],
+    },
+    {
+      '@type': 'SoftwareApplication',
+      '@id': origin + '/#cloud',
+      name: FACTS.platform,
+      applicationCategory: 'UtilitiesApplication',
+      operatingSystem: 'Web',
+      url: origin + '/#dashboard',
+      description:
+        'The Sentia Cloud dashboard: live patch status, 24 hour skin temperature and hydration series, alerts and fleet view for Sentia Patch One wearers.',
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': origin + '/#faq',
+      mainEntity: FACTS.faq.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
+    {
+      '@type': 'WebSite',
+      '@id': origin + '/#site',
+      name: 'Sentia',
+      url: origin + '/',
+      publisher: { '@id': origin + '/#org' },
+    },
+  ];
+  return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2);
+}
+
+const CSS = `
+:root{
+  --paper:#FAFAF6; --ink:#12211C; --soft:#4A5D54; --faint:#53685C;
+  --teal:#0E7C66; --coral:#FF6B4A; --mint:#EFF4EE; --line:#DFE7DF;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font:400 17px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+::selection{background:var(--mint)}
+a{color:var(--teal);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+.wrap{max-width:1440px;margin:0 auto;padding:0 clamp(24px,5.6vw,80px)}
+.mono{font:500 11px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:0.18em;text-transform:uppercase}
+.kicker{color:var(--teal)}
+.muted{color:var(--soft)}
+header.site{position:absolute;top:0;left:0;right:0;z-index:5}
+.nav{display:flex;align-items:center;justify-content:space-between;padding-top:32px;padding-bottom:32px;gap:24px}
+.brand{display:flex;align-items:center;gap:16px;color:var(--ink)}
+.brand:hover{text-decoration:none}
+.brand svg{display:block}
+.wordmark{font:500 21px 'Space Grotesk',sans-serif;letter-spacing:0.01em}
+.nav nav{display:flex;gap:16px}
+.nav nav a{color:var(--soft);font-size:17px}
+.nav nav a:hover{color:var(--ink);text-decoration:none}
+@media(max-width:1100px){.nav nav{display:none}}
+section{padding:clamp(96px,12vw,160px) 0;border-top:1px solid var(--line)}
+section:first-of-type{border-top:none}
+h1{font:300 clamp(56px,8.4vw,144px)/0.96 'Space Grotesk',sans-serif;letter-spacing:-0.055em;max-width:12ch;text-wrap:balance}
+h2{font:300 clamp(40px,6.2vw,88px)/1.04 'Space Grotesk',sans-serif;letter-spacing:-0.04em;margin:24px 0 32px;max-width:18ch;text-wrap:balance}
+h3{font:500 19px/1.4 'Space Grotesk',sans-serif}
+.lede{font-size:clamp(18px,1.5vw,20px);color:var(--soft);max-width:54ch}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .8s ease-out,transform .8s ease-out}
+.rv.in{opacity:1;transform:none}
+/* hero */
+.hero{padding-top:160px;position:relative}
+.hero .wrap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;align-items:start}
+.hero .kicker{grid-column:1/-1;margin-bottom:16px;max-width:60ch}
+.hero h1{grid-column:1/8;grid-row:2;font-size:clamp(56px,9.6vw,144px)}
+.hero .lede{grid-column:1/8;grid-row:3;margin-top:40px}
+.chips{display:flex;flex-wrap:wrap;gap:16px 24px;margin-top:32px;grid-column:1/-1}
+.chip{border-top:1px solid var(--line);padding:16px 0;font:500 11px/1.5 ui-monospace,Menlo,monospace;letter-spacing:0.16em;text-transform:uppercase;color:var(--soft)}
+.cta{display:flex;flex-wrap:wrap;gap:24px 32px;margin-top:24px;grid-column:1/-1}
+.cta a{font-size:17px;border-bottom:1px solid var(--teal);padding-bottom:8px}
+.cta a:hover{text-decoration:none;opacity:.85;transform:translateY(-1px)}
+.cta a:first-child{background:var(--ink);color:var(--paper);border:0;padding:16px 24px}
+.cta a{display:inline-flex;align-items:center;min-height:44px;transition:opacity 180ms ease-out,transform 180ms ease-out}
+.hero-visual{grid-column:8/13;grid-row:2/4;align-self:center;text-align:center;min-width:0}
+.product-render{display:block;width:100%;height:auto;object-fit:contain}
+.hero-render{max-width:640px;margin:auto}
+.svg-note{fill:#53685C}
+.caption{margin-top:24px;color:var(--faint)}
+@media(max-width:999px){
+  .hero{padding-top:144px}
+  .hero .wrap{grid-template-columns:minmax(0,1fr)}
+  .hero h1{grid-column:1;max-width:15ch;font-size:clamp(56px,10vw,96px)}
+  .hero-visual{grid-column:1;grid-row:3;margin-top:48px}
+  .hero-render{max-width:640px}
+  .hero .lede{grid-column:1;grid-row:4;margin-top:48px}
+}
+/* patch section */
+.wear-story{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center;margin-top:96px}
+.wear-story .product-render{max-width:640px;margin:auto}
+.wear-story .lede{margin-top:0}
+.network-render{margin-top:64px}
+@media(max-width:900px){.wear-story{grid-template-columns:minmax(0,1fr)}}
+.split{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(32px,5vw,72px);align-items:start}
+@media(max-width:900px){.split{grid-template-columns:1fr}}
+.layer-list{list-style:none}
+.layer-list li{padding:16px 0;border-bottom:1px solid var(--line)}
+.layer-list li:first-child{border-top:1px solid var(--line)}
+.layer-list .n{color:var(--teal);font:500 11px ui-monospace,Menlo,monospace;letter-spacing:0.16em}
+.layer-list h3{margin:8px 0 8px;font-size:16.5px}
+.layer-list p{color:var(--soft);font-size:17px}
+.spec-strip{display:flex;flex-wrap:wrap;gap:0;margin-top:clamp(48px,7vh,72px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.spec-strip div{flex:1 1 150px;padding:24px 16px 16px;border-left:1px solid var(--line)}
+.spec-strip div:first-child{border-left:none}
+.spec-strip .v{font:300 clamp(32px,3vw,48px) 'Space Grotesk',sans-serif}
+.spec-strip .k{color:var(--faint);margin-top:8px}
+.sensors{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(32px,5vw,72px);margin-top:clamp(48px,6vh,64px)}
+@media(max-width:760px){.sensors{grid-template-columns:1fr}}
+.sensor{padding:24px 0;border-top:1px solid var(--line)}
+.sensor h3{font-size:17px;margin-bottom:8px}
+.sensor p{color:var(--soft);font-size:17px}
+/* how */
+.journey{list-style:none;margin-top:clamp(40px,6vh,64px)}
+.journey li{display:grid;grid-template-columns:110px 180px 1fr;gap:16px;padding:24px 0;border-top:1px solid var(--line);align-items:baseline}
+@media(max-width:760px){.journey li{grid-template-columns:60px 1fr}.journey li p{grid-column:2}}
+.journey .step{color:var(--teal)}
+.journey h3{font-size:18px}
+.journey p{color:var(--soft);font-size:17px;max-width:62ch}
+.privacy{margin-top:clamp(48px,6vh,64px);background:var(--mint);border-radius:0;padding:clamp(32px,5vw,64px)}
+.privacy h3{margin-bottom:8px}
+.privacy p{color:var(--soft);max-width:70ch}
+/* demo */
+.toggle{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--paper)}
+.toggle button{border:none;background:transparent;padding:8px 24px;font:500 12px ui-monospace,Menlo,monospace;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft);cursor:pointer}
+.toggle button.on{background:var(--ink);color:var(--paper)}
+.stage{position:relative;margin-top:clamp(48px,6vh,64px);padding:32px 0 8px}
+.stage-nodes{display:flex;justify-content:space-between;text-align:center}
+.node{width:180px}
+.node .disc{width:64px;height:64px;margin:0 auto 16px;border:1.2px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff;position:relative}
+.node .disc::after{content:"";width:26px;height:26px;border:0.8px solid var(--ink);border-radius:50%;opacity:0.55}
+.node.server .disc{border-radius:14px;background:var(--mint)}
+.node.server .disc::after{border-radius:5px}
+.node h3{font-size:16px}
+.node p{color:var(--faint);font-size:17px}
+.stage-track{position:absolute;left:6%;right:6%;top:66px;height:1px;background:var(--line)}
+#packetDot{position:absolute;top:62px;left:4%;width:9px;height:9px;border-radius:50%;background:var(--teal);opacity:0;transform:translateX(-50%)}
+.payload{margin-top:32px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0}
+.payload pre{font:12.5px/1.7 ui-monospace,Menlo,monospace;color:var(--ink);word-break:break-all;white-space:pre-wrap;margin-top:8px}
+.readouts{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:32px;border-bottom:1px solid var(--line)}
+@media(max-width:760px){.readouts{grid-template-columns:repeat(2,1fr)}}
+.readouts div{padding:16px 16px 16px;border-left:1px solid var(--line)}
+.readouts div:first-child{border-left:none}
+.readouts .v{font:300 clamp(32px,3.6vw,48px) 'Space Grotesk',sans-serif}
+.readouts .k{color:var(--faint);margin-top:8px}
+.live-chart{width:100%;height:150px;display:block;margin-top:24px}
+.feed{list-style:none;margin-top:24px}
+.feed-row{padding:8px 0;border-bottom:1px solid var(--line);font:12.5px ui-monospace,Menlo,monospace;color:var(--soft);opacity:0;transform:translateY(6px);transition:opacity .8s ease-out,transform .8s ease-out}
+.feed-row.in{opacity:1;transform:none}
+.text-btn{margin-top:24px;background:none;border:none;border-bottom:1px solid var(--teal);color:var(--teal);font-size:17px;padding:0 0 8px;cursor:pointer}
+.text-btn:hover{color:var(--ink);border-color:var(--ink)}
+/* dashboard */
+.wearer-tabs{display:flex;gap:32px;border-bottom:1px solid var(--line);margin-top:40px}
+.wearer-tab{background:none;border:none;padding:0 0 16px;font:500 16px 'Space Grotesk',sans-serif;color:var(--faint);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.wearer-tab.on{color:var(--ink);border-color:var(--teal)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);margin-top:8px}
+@media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tiles div{padding:24px 16px 24px;border-bottom:1px solid var(--line)}
+.tiles .v{font:300 clamp(32px,4vw,56px) 'Space Grotesk',sans-serif}
+.tiles .k{color:var(--faint);margin-top:8px}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,4vw,56px);margin-top:clamp(40px,6vh,56px)}
+@media(max-width:760px){.charts{grid-template-columns:1fr}}
+.charts canvas{width:100%;height:180px;display:block}
+.chart-cap{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:8px}
+.alert-row{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+.alert-dot{width:8px;height:8px;border-radius:50%;margin-top:8px;flex:none;background:var(--faint)}
+.alert-dot.sev-critical{background:var(--coral)}
+.alert-dot.sev-warning{background:var(--teal)}
+.alert-head{font:500 12px ui-monospace,Menlo,monospace;letter-spacing:0.14em;text-transform:uppercase}
+.alert-msg{color:var(--soft);font-size:17px}
+.calm{color:var(--soft);padding:16px 0}
+table{width:100%;border-collapse:collapse;margin-top:16px;font-size:17px}
+th{font:500 11px ui-monospace,Menlo,monospace;letter-spacing:0.16em;text-transform:uppercase;color:var(--faint);text-align:left;padding:8px 16px;border-bottom:1px solid var(--ink)}
+td{padding:16px 16px;border-bottom:1px solid var(--line);color:var(--soft)}
+td:first-child{color:var(--ink)}
+tbody tr{cursor:pointer}
+tbody tr.on td{background:var(--mint)}
+.sub{margin-top:clamp(48px,7vh,72px)}
+.sub h3{font:300 clamp(32px,3.6vw,48px) 'Space Grotesk',sans-serif;margin-bottom:16px}
+/* mcp */
+.endpoint{font:13px ui-monospace,Menlo,monospace;background:transparent;border:1px solid var(--line);border-radius:0;padding:16px 24px;margin-top:24px;word-break:break-all}
+pre.code{font:12.5px/1.75 ui-monospace,Menlo,monospace;background:transparent;border:1px solid var(--line);border-radius:0;padding:24px 24px;overflow-x:auto;margin-top:16px;color:var(--ink)}
+.tools{list-style:none;margin-top:8px}
+.tools li{display:grid;grid-template-columns:210px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+@media(max-width:760px){.tools li{grid-template-columns:1fr}}
+.tools .tn{font:13px ui-monospace,Menlo,monospace;color:var(--teal)}
+.tools p{color:var(--soft);font-size:17px}
+/* faq */
+.faq-item{padding:24px 0;border-top:1px solid var(--line)}
+.faq-item h3{font-size:20px;margin-bottom:8px}
+.faq-item p{color:var(--soft);max-width:68ch}
+footer{border-top:1px solid var(--line);padding:56px 0 64px;color:var(--soft);font-size:17px}
+footer .cols{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:flex-start}
+footer p{max-width:52ch}
+/* Responsive containment and keyboard access preserve the existing hooks. */
+:focus-visible{outline:3px solid var(--teal);outline-offset:4px}
+section{scroll-margin-top:32px}
+.split>*{min-width:0}
+
+exec
+/bin/bash -lc "cat tests/design-v2-1-corrections.test.js; cat tests/ui-elevation.test.js; rg -n 'hero|section|wear|grid' src/page.js" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync, writeFileSync, mkdtempSync, rmSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { inflateSync } from 'node:zlib';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { renderPage } from '../src/page.js';
+import * as images from '../src/images.js';
+
+// design-v2-imagery Correction v2.1 (wo-gh-3): S5 to S9
+
+const ORIGIN = 'https://sentia.test';
+const html = renderPage(ORIGIN);
+const design = readFileSync(new URL('../design/DESIGN.md', import.meta.url), 'utf8');
+const PAPER = [250, 250, 246];
+
+const RENDERS = {
+  hero: { path: '/img/patch-hero.webp', exp: 'PATCH_HERO_WEBP_B64' },
+  exploded: { path: '/img/patch-exploded.webp', exp: 'PATCH_EXPLODED_WEBP_B64' },
+  onSkin: { path: '/img/patch-on-skin.webp', exp: 'PATCH_ON_SKIN_WEBP_B64' },
+  network: { path: '/img/network-scene.webp', exp: 'NETWORK_SCENE_WEBP_B64' },
+};
+const bytes = (r) => Buffer.from(images[r.exp], 'base64');
+
+// Lossy VP8 key frame header: 14 bit width and height at bytes 26 and 28.
+const dims = (buf) => {
+  assert.equal(buf.subarray(12, 16).toString('ascii'), 'VP8 ', 'lossy VP8 WebP');
+  return { w: buf.readUInt16LE(26) & 0x3fff, h: buf.readUInt16LE(28) & 0x3fff };
+};
+
+const imgTag = (r) => html.match(new RegExp(`<img[^>]*${r.path.replace(/[.]/g, '\\.')}[^>]*>`))?.[0];
+
+// Minimal PNG reader (8 bit, non interlaced) for the headless render below.
+function decodePng(buf) {
+  let pos = 8, w, h, ch, idat = [];
+  while (pos < buf.length) {
+    const len = buf.readUInt32BE(pos), type = buf.subarray(pos + 4, pos + 8).toString('ascii');
+    const data = buf.subarray(pos + 8, pos + 8 + len);
+    if (type === 'IHDR') {
+      w = data.readUInt32BE(0); h = data.readUInt32BE(4);
+      assert.equal(data[8], 8); assert.equal(data[12], 0);
+      ch = { 2: 3, 6: 4 }[data[9]];
+      assert.ok(ch, 'RGB or RGBA png');
+    } else if (type === 'IDAT') idat.push(data);
+    pos += 12 + len;
+  }
+  const raw = inflateSync(Buffer.concat(idat));
+  const stride = w * ch, out = Buffer.alloc(h * stride);
+  for (let y = 0; y < h; y++) {
+    const f = raw[y * (stride + 1)], src = y * (stride + 1) + 1, dst = y * stride;
+    for (let i = 0; i < stride; i++) {
+      const a = i >= ch ? out[dst + i - ch] : 0;
+      const b = y ? out[dst - stride + i] : 0;
+      const c = y && i >= ch ? out[dst - stride + i - ch] : 0;
+      let v = raw[src + i];
+      if (f === 1) v += a; else if (f === 2) v += b; else if (f === 3) v += (a + b) >> 1;
+      else if (f === 4) {
+        const p = a + b - c, pa = Math.abs(p - a), pb = Math.abs(p - b), pc = Math.abs(p - c);
+        v += pa <= pb && pa <= pc ? a : pb <= pc ? b : c;
+      }
+      out[dst + i] = v & 255;
+    }
+  }
+  return { w, h, ch, px: (x, y) => [...out.subarray(y * stride + x * ch, y * stride + x * ch + 3)] };
+}
+
+const CHROME = ['chromium', 'chromium-browser', 'google-chrome']
+  .find((b) => spawnSync(b, ['--version']).status === 0);
+
+// Decode a served WebP in headless Chrome on a #FAFAF6 page and return the pixel reader.
+function decodeWebp(r) {
+  const { w, h } = dims(bytes(r));
+  const dir = mkdtempSync(join(tmpdir(), 'sentia-img-'));
+  try {
+    writeFileSync(join(dir, 'i.webp'), bytes(r));
+    writeFileSync(join(dir, 'i.html'),
+      '<body style="margin:0;background:#FAFAF6"><img src="i.webp" style="display:block">');
+    const res = spawnSync(CHROME, ['--headless=new', '--no-sandbox', '--disable-gpu',
+      '--force-color-profile=srgb', '--hide-scrollbars', `--window-size=${w},${h}`,
+      `--screenshot=${join(dir, 'o.png')}`, `file://${join(dir, 'i.html')}`], { timeout: 60000 });
+    assert.equal(res.status, 0, 'headless render');
+    const png = decodePng(readFileSync(join(dir, 'o.png')));
+    assert.equal(png.w, w); assert.equal(png.h, h);
+    return png;
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+}
+
+// S5: renders blend with the page
+
+for (const k of ['hero', 'exploded', 'network']) {
+  test(`S5: ${RENDERS[k].path} corners and edge midpoints sit on paper #FAFAF6 within 3 per channel`,
+    { skip: CHROME ? false : 'no headless Chrome to decode WebP; operator sampling record applies' }, () => {
+      const png = decodePng_(k);
+      const { w, h } = png;
+      const pts = [[0, 0], [w - 1, 0], [0, h - 1], [w - 1, h - 1],
+        [w >> 1, 0], [w >> 1, h - 1], [0, h >> 1], [w - 1, h >> 1]];
+      for (const [x, y] of pts) {
+        const p = png.px(x, y);
+        PAPER.forEach((v, i) => assert.ok(Math.abs(p[i] - v) <= 3, `${k} (${x},${y}) = ${p}`));
+      }
+    });
+}
+const cache = {};
+function decodePng_(k) { return (cache[k] ??= decodeWebp(RENDERS[k])); }
+
+test('S5: the page adds no border, frame, CSS shadow, filter or tint to renders', () => {
+  for (const r of Object.values(RENDERS)) assert.ok(!/style=|border|shadow|filter/i.test(imgTag(r)), r.path);
+  const css = html.match(/<style[^>]*>([\s\S]*?)<\/style>/)[1];
+  const rules = [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)]
+    .filter(([, sel]) => /product-render|hero-render|network-render|wear-story[^,{]*img/.test(sel));
+  assert.ok(rules.length > 0);
+  for (const [, sel, body] of rules)
+    assert.ok(!/box-shadow|drop-shadow|filter|border|background|outline|mix-blend|radius/i.test(body), sel);
+});
+
+test('S5: nothing tinted sits behind a render (no background or gradient on its wrapper)', () => {
+  const css = html.match(/<style[^>]*>([\s\S]*?)<\/style>/)[1];
+  assert.ok(!/(hero-art|hero-visual|render-wrap|figure|\.visual)[^{]*\{[^}]*(gradient|background)/i.test(css));
+  assert.ok(!/radial-gradient/i.test(css), 'no radial warmth behind the hero patch');
+});
+
+// S6: on-skin is a forearm close-up
+
+test('S6: on-skin render is a forearm close-up and the page says forearm, not upper arm', () => {
+  const alt = imgTag(RENDERS.onSkin).match(/alt="([^"]+)"/)[1];
+  assert.match(alt, /forearm/i);
+  assert.ok(!/upper arm|torso|chest|shoulder/i.test(alt));
+  assert.ok(!/upper[- ]arm/i.test(design.replace(/no upper arm/gi, '')), 'DESIGN.md no longer says upper arm');
+  assert.match(design, /forearm/i);
+});
+
+test('S6: on-skin corners are warm skin tones, not paper or studio background',
+  { skip: CHROME ? false : 'no headless Chrome' }, () => {
+    const png = decodePng_('onSkin');
+    for (const [x, y] of [[0, 0], [png.w - 1, 0], [0, png.h - 1], [png.w - 1, png.h - 1]]) {
+      const [r, g, b] = png.px(x, y);
+      assert.ok(r >= g && g >= b && r - b > 20, `corner (${x},${y}) warm skin tone, got ${[r, g, b]}`);
+      assert.ok(Math.abs(r - 250) + Math.abs(g - 250) + Math.abs(b - 246) > 60, `corner (${x},${y}) is not paper`);
+    }
+  });
+
+// S7: true 38 mm scale
+
+test('S7: hero and network scene are served at a size that keeps the patch small', () => {
+  const hero = imgTag(RENDERS.hero);
+  assert.ok(Number(hero.match(/width="(\d+)"/)[1]) >= 1600, 'hero frame wide enough for a small disc');
+  const heroCap = Number(html.match(/\.hero-render\{[^}]*max-width:(\d+)px/)[1]);
+  // Superseded by design-v3-product-first S1 (wo-gh-5, L-4): the hero frame grows; the disc stays at most a quarter of it.
+  assert.ok(heroCap >= 640, `hero render capped at ${heroCap}px`);
+  assert.match(design, /38 ?mm/);
+  assert.match(design, /true (38 ?mm )?scale/i);
+});
+
+test('S7: no render is placed full bleed or beyond its design cap', () => {
+  assert.ok(!/\.product-render\{[^}]*(100vw|min-width|transform:\s*scale)/.test(html));
+});
+
+// S8: DESIGN.md carries both rules and the knowledge pack
+
+test('S8: DESIGN.md states the exact paper background rule', () => {
+  assert.match(design, /#FAFAF6/);
+  assert.match(design, /uniform/i);
+  assert.match(design, /contact shadow/i);
+  assert.match(design, /no (visible )?(gradient|backdrop|vignette)/i);
+});
+
+test('S8: DESIGN.md states the true 38 mm scale rule with the quarter-frame hero bound', () => {
+  assert.match(design, /true 38 ?mm scale/i);
+  assert.match(design, /(quarter|25 percent|24 percent)/i);
+  assert.match(design, /half the (forearm|arm) width|about half/i);
+});
+
+test('S8: DESIGN.md absorbs the knowledge pack and the brand sheet wins', () => {
+  for (const re of [/12.{0,6}16 column|column grid/i, /type scale/i, /spacing scale|8 px/i,
+    /prefers-reduced-motion|reduced motion/i, /4\.5/, /44 ?px/, /skip link/i,
+    /font-display|swap/i, /stagger/i, /no invented proof|testimonial/i, /not a medical device/i,
+    /brand (sheet )?wins|brand wins/i])
+    assert.match(design, re);
+  for (const re of [/#12211C/i, /#0E7C66/i, /#FF6B4A/i, /Space Grotesk/, /Inter/])
+    assert.match(design, re);
+});
+
+test('S8: DESIGN.md asset inventory still names all four routes and exports', () => {
+  for (const r of Object.values(RENDERS)) {
+    assert.ok(design.includes(r.path)); assert.ok(design.includes(r.exp));
+  }
+});
+
+// S9 and AC5: frozen layers, new bytes, no layout shift
+
+test('S9: image width and height attributes match the intrinsic WebP dimensions (no layout shift)', () => {
+  for (const r of Object.values(RENDERS)) {
+    const { w, h } = dims(bytes(r));
+    const tag = imgTag(r);
+    assert.equal(Number(tag.match(/width="(\d+)"/)[1]), w, `${r.path} width`);
+    assert.equal(Number(tag.match(/height="(\d+)"/)[1]), h, `${r.path} height`);
+  }
+});
+
+test('S9: hero stays eager and high priority; below-fold renders are lazy', () => {
+  assert.match(imgTag(RENDERS.hero), /fetchpriority="high"/);
+  assert.ok(!/loading="lazy"/.test(imgTag(RENDERS.hero)));
+  for (const k of ['exploded', 'onSkin', 'network']) assert.match(imgTag(RENDERS[k]), /loading="lazy"/);
+});
+
+test('S9: reveal motion has a reduced-motion path and a no-script fallback', () => {
+  assert.match(html, /prefers-reduced-motion/);
+  assert.match(html, /<noscript>/i);
+});
+
+test('S9: accessibility basics: skip link, visible focus, one h1, font-display swap', () => {
+  assert.match(html, /<a[^>]*href="#(main|content)[^"]*"[^>]*>[^<]*skip/i);
+  assert.match(html, /:focus-visible/);
+  assert.equal((html.match(/<h1[\s>]/g) || []).length, 1);
+  if (/@font-face/.test(html)) assert.match(html, /font-display:\s*swap/);
+});
+
+test('S9: trust stated plainly: not a medical device, and no invented proof', () => {
+  assert.match(html, /not a medical device/i);
+  assert.ok(!/testimonial|as seen in|trusted by|★|stars?\b/i.test(html.replace(/<script[\s\S]*?<\/script>/g, '')));
+});
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync, existsSync } from 'node:fs';
+import { execSync } from 'node:child_process';
+import { renderPage } from '../src/page.js';
+import { FACTS } from '../src/facts.js';
+
+const ORIGIN = 'https://sentia.test';
+const html = renderPage(ORIGIN);
+const DESIGN = new URL('../design/DESIGN.md', import.meta.url);
+const HYPE = ['revolutionary', 'cutting edge', 'game changer', 'seamless', 'supercharge', 'unlock'];
+
+const designText = () => {
+  assert.ok(existsSync(DESIGN), 'design/DESIGN.md must exist');
+  return readFileSync(DESIGN, 'utf8');
+};
+
+// ui-elevation S1: design system precedes the page
+
+test('ui-elevation S1: DESIGN.md has tokens, type scale, spacing, hero, motion and quality bars', () => {
+  const d = designText();
+  for (const re of [/token/i, /type scale/i, /spacing/i, /hero/i, /motion/i, /quality bar/i]) {
+    assert.match(d, re);
+  }
+  for (const hex of ['#FAFAF6', '#12211C', '#0E7C66', '#FF6B4A']) {
+    assert.ok(d.toUpperCase().includes(hex), `DESIGN.md names ${hex}`);
+  }
+  for (const font of ['Space Grotesk', 'Inter']) assert.ok(d.includes(font));
+});
+
+test('ui-elevation S1: page follows DESIGN.md tokens and typefaces', () => {
+  const upper = html.toUpperCase();
+  for (const hex of ['#FAFAF6', '#12211C', '#0E7C66']) assert.ok(upper.includes(hex), `page uses ${hex}`);
+  assert.ok(html.includes('Space Grotesk'));
+  assert.ok(html.includes('Inter'));
+  assert.ok(/<svg[\s>]/.test(html), 'inline SVG art direction remains');
+});
+
+// ui-elevation S2: facts and behavior preserved
+
+test('ui-elevation S2: sections, demo/dashboard hooks and single h1 are preserved', () => {
+  const ids = [
+    'top', 'patch', 'how', 'demo', 'dashboard', 'mcp', 'specs', 'faq',
+    'alertsList', 'chartHyd', 'chartTemp', 'demoPause', 'demoToggleCity', 'demoToggleRural',
+    'feedList', 'fleetBody', 'hydRange', 'liveChart', 'packetDot', 'payloadCard', 'payloadMeta',
+    'relayKind', 'relayName', 'roAct', 'roBatt', 'roHyd', 'roTemp', 'tempRange',
+    'tileAct', 'tileBatt', 'tileHyd', 'tileSync', 'tileTemp', 'tileVia', 'wearerTabs',
+  ];
+  for (const id of ids) assert.ok(html.includes(`id="${id}"`), `missing #${id}`);
+  assert.equal((html.match(/<h1/g) || []).length, 1);
+});
+
+test('ui-elevation S2: content facts and SEO/GEO layer are preserved', () => {
+  for (const l of FACTS.layers) assert.ok(html.includes(l.name), `layer ${l.name}`);
+  for (const [k, v] of FACTS.specs) {
+    assert.ok(html.includes(k) && html.includes(String(v)), `spec row ${k}`);
+  }
+  assert.ok(html.includes('application/ld+json'));
+  assert.ok(html.includes('rel="canonical"'));
+  assert.ok(html.includes('property="og:image"'));
+  assert.ok(html.includes(ORIGIN + '/mcp'));
+});
+
+// ui-elevation S4: only the presentation layer changes
+
+test('ui-elevation S4: codec, data, mcp and index are untouched by the run', (t) => {
+  let changed;
+  try {
+    const base = ['origin/main', 'main']
+      .map((r) => {
+        try { return execSync(`git merge-base HEAD ${r}`, { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim(); }
+        catch { return null; }
+      })
+      .find(Boolean);
+    if (!base) return t.skip('no main ref to diff against');
+    changed = execSync(`git diff --name-only ${base}`, { stdio: ['ignore', 'pipe', 'ignore'] })
+      .toString().split('\n').filter(Boolean);
+  } catch {
+    return t.skip('git unavailable');
+  }
+  for (const f of ['src/codec.js', 'src/data.js', 'src/mcp.js', 'src/index.js']) {
+    assert.ok(!changed.includes(f), `${f} must not change`);
+  }
+});
+
+// ui-elevation S5: brand voice holds
+
+test('ui-elevation S5: no hype words in page or DESIGN.md', () => {
+  const texts = [['page', html.toLowerCase()], ['DESIGN.md', designText().toLowerCase()]];
+  for (const [name, text] of texts) {
+    for (const w of HYPE) assert.ok(!text.includes(w), `${w} found in ${name}`);
+  }
+});
+
+test('ui-elevation S5: product names match BRAND.md exactly', () => {
+  const d = designText();
+  for (const text of [html, d]) {
+    assert.ok(!/SentiaPatch/.test(text));
+  }
+  assert.ok(html.includes('Sentia Patch One'));
+  assert.ok(html.includes('Sentia MCP Server'));
+});
+
+// ui-elevation S6: round 4 corrections land (C1 to C4)
+
+const css = (html.match(/<style[^>]*>([\s\S]*?)<\/style>/g) || []).join('\n');
+const pageCss = (html.match(/<style[^>]*>([\s\S]*?)<\/style>/) || [, ''])[1];
+
+// Flat list of { media, selector, body } rules; media is the @media condition or ''.
+const rules = (() => {
+  const out = [];
+  const walk = (src, media) => {
+    const re = /([^{}]+)\{([^{}]*)\}|(@[^{]+)\{((?:[^{}]*\{[^{}]*\})*[^{}]*)\}/g;
+    let m;
+    while ((m = re.exec(src))) {
+      if (m[3]) {
+        if (/^@media/.test(m[3].trim())) walk(m[4], m[3].trim());
+      } else {
+        out.push({ media, selector: m[1].trim(), body: m[2] });
+      }
+    }
+  };
+  walk(pageCss.replace(/\/\*[\s\S]*?\*\//g, ''), '');
+  return out;
+})();
+
+// Smallest px value a font-size / font shorthand / clamp() can produce.
+const minPx = (value) => {
+  const clamp = value.match(/clamp\(\s*([\d.]+)px/);
+  if (clamp) return Number(clamp[1]);
+  const px = value.match(/([\d.]+)px/);
+  return px ? Number(px[1]) : null;
+};
+const fontSizes = (selectorRe) => rules
+  .filter((r) => selectorRe.test(r.selector))
+  .flatMap((r) => {
+    const size = r.body.match(/font-size:\s*([^;}]+)/);
+    const shorthand = r.body.match(/(?:^|;)\s*font:\s*(?:\d+\s+)?(clamp\([^)]*\)|[\d.]+px)/);
+    const v = size ? size[1] : shorthand ? shorthand[1] : null;
+    return v && minPx(v) != null ? [{ ...r, px: minPx(v) }] : [];
+  });
+
+test('ui-elevation S6 C1: hero type never drops below 56 px at any width', () => {
+  const hero = fontSizes(/(^|[\s,])(\.hero\s+)?h1$/);
+  assert.ok(hero.length >= 2, 'h1 sizes are declared, including small width overrides');
+  for (const r of hero) assert.ok(r.px >= 56, `${r.selector} ${r.media} is ${r.px}px`);
+  assert.ok(hero.some((r) => /max-width:\s*600px/.test(r.media)), 'a 600 px rule sets the small width hero');
+});
+
+test('ui-elevation S6 C1: body copy never drops below 17 px', () => {
+  const body = fontSizes(/(^|[\s,])(\.lede|\.layer-list p|\.sensor p|\.journey p|\.alert-msg|\.tools p|\.faq-item p|p)$/);
+  assert.ok(body.length > 0);
+  for (const r of body) assert.ok(r.px >= 17, `${r.selector} ${r.media} is ${r.px}px`);
+});
+
+test('ui-elevation S6 C2: spacing avoids the off-rhythm 30, 15, 28 and 26 px values', () => {
+  const props = /^(margin|padding|gap|row-gap|column-gap|top|right|bottom|left|inset)(-[a-z]+)?$/;
+  const bad = /(?<![\d.])(30|15|28|26)px/;
+  const found = [];
+  for (const r of rules) {
+    for (const d of r.body.split(';')) {
+      const [p, ...v] = d.split(':');
+      if (p && props.test(p.trim()) && bad.test(v.join(':'))) found.push(`${r.selector} { ${d.trim()} }`);
+    }
+  }
+  for (const m of html.matchAll(/style="([^"]*)"/g)) {
+    for (const d of m[1].split(';')) {
+      const [p, ...v] = d.split(':');
+      if (p && props.test(p.trim()) && bad.test(v.join(':'))) found.push(`inline { ${d.trim()} }`);
+    }
+  }
+  assert.deepEqual(found, []);
+});
+
+test('ui-elevation S6 C3: SVG annotations use #53685C and the toggle has no white background', () => {
+  assert.ok(!/#5C6F66/i.test(html), '#5C6F66 must be gone');
+  assert.ok(/\.svg-note\{[^}]*fill:#53685C/i.test(html), '.svg-note fills with #53685C');
+  const toggle = rules.filter((r) => /^\.toggle$/.test(r.selector));
+  assert.ok(toggle.length > 0, '.toggle rule exists');
+  for (const r of toggle) {
+    assert.ok(!/background(-color)?:\s*(#fff(fff)?\b|white\b|rgb\(\s*255)/i.test(r.body), '.toggle background is not white');
+  }
+});
+
+test('ui-elevation S6 C4: .rv starts hidden and reveals over 800 ms ease-out', () => {
+  const rv = rules.filter((r) => r.selector === '.rv' && !r.media);
+  assert.ok(rv.length > 0, '.rv base rule exists');
+  const body = rv.map((r) => r.body).join(';');
+  assert.match(body, /opacity:\s*0(?![.\d])/, '.rv starts with opacity 0');
+  assert.match(body, /transform:\s*[^;]*(translate|scale)/, '.rv starts displaced');
+  assert.match(body, /transition:[^;]*opacity\s+(\.8s|0\.8s|800ms)\s+ease-out/);
+  assert.match(body, /transition:[^;]*transform\s+(\.8s|0\.8s|800ms)\s+ease-out/);
+  const shown = rules.find((r) => r.selector === '.rv.in');
+  assert.ok(shown && /opacity:\s*1/.test(shown.body) && /transform:\s*none/.test(shown.body), '.rv.in reveals');
+  const reduced = rules.find((r) => /prefers-reduced-motion/.test(r.media) && /\.rv/.test(r.selector));
+  assert.ok(reduced && /opacity:\s*1/.test(reduced.body), 'reduced motion keeps .rv visible');
+});
+36:        { '@type': 'PropertyValue', name: 'Battery', value: 'Printed flexible battery, full wear period' },
+50:        'The Sentia Cloud dashboard: live patch status, 24 hour skin temperature and hydration series, alerts and fleet view for Sentia Patch One wearers.',
+97:section{padding:clamp(96px,12vw,160px) 0;border-top:1px solid var(--line)}
+98:section:first-of-type{border-top:none}
+105:/* hero */
+106:.hero{padding-top:160px;position:relative}
+107:.hero .wrap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;align-items:start}
+108:.hero .kicker{grid-column:1/-1;margin-bottom:16px;max-width:60ch}
+109:.hero h1{grid-column:1/8;grid-row:2;font-size:clamp(56px,9.6vw,144px)}
+110:.hero .lede{grid-column:1/8;grid-row:3;margin-top:40px}
+111:.chips{display:flex;flex-wrap:wrap;gap:16px 24px;margin-top:32px;grid-column:1/-1}
+113:.cta{display:flex;flex-wrap:wrap;gap:24px 32px;margin-top:24px;grid-column:1/-1}
+118:.hero-visual{grid-column:8/13;grid-row:2/4;align-self:center;text-align:center;min-width:0}
+120:.hero-render{max-width:640px;margin:auto}
+124:  .hero{padding-top:144px}
+125:  .hero .wrap{grid-template-columns:minmax(0,1fr)}
+126:  .hero h1{grid-column:1;max-width:15ch;font-size:clamp(56px,10vw,96px)}
+127:  .hero-visual{grid-column:1;grid-row:3;margin-top:48px}
+128:  .hero-render{max-width:640px}
+129:  .hero .lede{grid-column:1;grid-row:4;margin-top:48px}
+131:/* patch section */
+132:.wear-story{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center;margin-top:96px}
+133:.wear-story .product-render{max-width:640px;margin:auto}
+134:.wear-story .lede{margin-top:0}
+136:@media(max-width:900px){.wear-story{grid-template-columns:minmax(0,1fr)}}
+137:.split{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(32px,5vw,72px);align-items:start}
+138:@media(max-width:900px){.split{grid-template-columns:1fr}}
+150:.sensors{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(32px,5vw,72px);margin-top:clamp(48px,6vh,64px)}
+151:@media(max-width:760px){.sensors{grid-template-columns:1fr}}
+157:.journey li{display:grid;grid-template-columns:110px 180px 1fr;gap:16px;padding:24px 0;border-top:1px solid var(--line);align-items:baseline}
+158:@media(max-width:760px){.journey li{grid-template-columns:60px 1fr}.journey li p{grid-column:2}}
+182:.readouts{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:32px;border-bottom:1px solid var(--line)}
+183:@media(max-width:760px){.readouts{grid-template-columns:repeat(2,1fr)}}
+195:.wearer-tabs{display:flex;gap:32px;border-bottom:1px solid var(--line);margin-top:40px}
+196:.wearer-tab{background:none;border:none;padding:0 0 16px;font:500 16px 'Space Grotesk',sans-serif;color:var(--faint);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+197:.wearer-tab.on{color:var(--ink);border-color:var(--teal)}
+198:.tiles{display:grid;grid-template-columns:repeat(3,1fr);margin-top:8px}
+199:@media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+203:.charts{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,4vw,56px);margin-top:clamp(40px,6vh,56px)}
+204:@media(max-width:760px){.charts{grid-template-columns:1fr}}
+226:.tools li{display:grid;grid-template-columns:210px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+227:@media(max-width:760px){.tools li{grid-template-columns:1fr}}
+239:section{scroll-margin-top:32px}
+250:.wearer-tabs{overflow-x:auto;padding-top:8px}
+251:.wearer-tab{flex-shrink:0;min-height:44px}
+254:  .hero{padding-top:128px}
+255:  .hero .kicker{font-size:10px}
+256:  .hero h1{font-size:clamp(56px,12vw,72px)}
+266:  .journey li{gap:16px;grid-template-columns:52px minmax(0,1fr)}
+282:section>.wrap>.rv:nth-child(2){transition-delay:40ms}
+283:section>.wrap>.rv:nth-child(3){transition-delay:80ms}
+284:section>.wrap>.rv:nth-child(4){transition-delay:120ms}
+285:section>.wrap>.rv:nth-child(5){transition-delay:160ms}
+286:section>.wrap>.rv:nth-child(6){transition-delay:200ms}
+287:section>.wrap>.rv:nth-child(7){transition-delay:240ms}
+288:section>.wrap>.rv:nth-child(8){transition-delay:280ms}
+293:.wearer-tabs{gap:8px;padding:8px}
+299:  section>.wrap>.rv{transition-delay:0ms}
+377:<section class="hero" aria-label="Introduction">
+391:    <div class="hero-visual rv">
+392:      <img class="product-render hero-render" src="/img/patch-hero.webp" width="1600" height="893" fetchpriority="high" alt="Sentia Patch One, a 38 mm disc with a matte paper-white top, ink-green edge ring and one coral LED.">
+396:</section>
+403:<section id="patch" aria-label="The patch">
+416:    <div class="wear-story">
+417:      <img class="product-render rv" src="/img/patch-on-skin.webp" width="1200" height="600" loading="lazy" alt="Sentia Patch One on an inner forearm, a 38 mm adhesive disc for up to 14 days of wear.">
+418:    <p class="lede rv">A flexible adhesive disc worn on the upper arm or torso for up to ${FACTS.wearDays} days. Everything it needs is inside: sensors, two radios, and a printed battery sized for the whole wear.</p>
+429:</section>
+431:<section id="how" aria-label="How it works">
+440:      <li class="rv"><span class="mono step">Step 3</span><h3>Relay</h3><p>A passing iPhone, iPad or Mac forwards the opaque digest it cannot read. A LoRaWAN gateway forwards the frame to its network server. Neither learns anything about the wearer.</p></li>
+442:      <li class="rv"><span class="mono step">Step 5</span><h3>You</h3><p>The wearer, or a care circle they choose, sees the result in the dashboard, through the API, or by asking an assistant through the ${FACTS.mcpServer}.</p></li>
+446:      <p>Identifiers rotate with every broadcast window, so a digest cannot be followed across a day. Relay devices see ciphertext and contribute their own location context, never the patch contents. The patch carries no GPS receiver. Only ${FACTS.platform} holds the keys that link a digest to a wearer and decode it. Battery logic is equally plain: Bluetooth Low Energy first, LoRaWAN only when no relay has carried a digest for a while, and high value alerts, a fall impact for example, escalate at once.</p>
+449:</section>
+451:<section id="demo" aria-label="Live demo">
+455:    <p class="lede rv">A simulated patch, running in your browser with the same packet codec as the server. Choose where the wearer is, and watch each reading take its path.</p>
+457:      <span class="toggle" role="group" aria-label="Where is the wearer">
+485:</section>
+487:<section id="dashboard" aria-label="Dashboard">
+492:    <div class="wearer-tabs rv" id="wearerTabs" role="tablist" aria-label="Choose a wearer"></div>
+523:</section>
+525:<section id="mcp" aria-label="MCP server">
+549:</section>
+551:<section id="specs" aria-label="Specifications">
+561:</section>
+563:<section id="faq" aria-label="Frequently asked questions">
+571:</section>
+
+exec
+/bin/bash -lc "sed -n '250,270p' src/page.js; sed -n '375,440p' src/page.js; rg --files -g AGENTS.md -g '*playwright*'; git hash-object src/images.js" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+.wearer-tabs{overflow-x:auto;padding-top:8px}
+.wearer-tab{flex-shrink:0;min-height:44px}
+@media(max-width:600px){
+  .nav{padding-top:24px;padding-bottom:24px}
+  .hero{padding-top:128px}
+  .hero .kicker{font-size:10px}
+  .hero h1{font-size:clamp(56px,12vw,72px)}
+  .caption{font-size:10px;letter-spacing:0.12em}
+  .spec-strip div{flex-basis:50%}
+  .spec-strip div:nth-child(odd){border-left:none}
+  .stage .node{width:31%}
+  .node h3{font-size:14px}
+  .node p{font-size:17px}
+  .readouts div{padding:24px 8px}
+  .tiles div{padding:24px 8px}
+  .mono{overflow-wrap:anywhere}
+  .journey li{gap:16px;grid-template-columns:52px minmax(0,1fr)}
+  .tools li{gap:8px}
+  #specs th{width:38%;letter-spacing:0.08em;padding-left:0}
+  #specs td{overflow-wrap:anywhere}
+}
+<main id="main" tabindex="-1">
+
+<section class="hero" aria-label="Introduction">
+  <div class="wrap">
+    <p class="mono kicker rv">Sentia Patch One · Skin temperature · Hydration · Activity</p>
+    <h1 class="rv" style="margin-top:24px">A patch that whispers through networks that already exist.</h1>
+    <p class="lede rv">${FACTS.definition} It has no cellular radio and no GPS. Its measurements ride passing phones on the Find My network, or a LoRaWAN gateway kilometres away, into ${FACTS.platform}.</p>
+    <div class="chips rv">
+      <span class="chip">Find My network · BLE relay</span>
+      <span class="chip">LoRaWAN · Gateway uplink</span>
+      <span class="chip">14 days · IP67</span>
+    </div>
+    <div class="cta rv">
+      <a href="#demo">Watch the live demo</a>
+      <a href="#dashboard">Open the dashboard</a>
+    </div>
+    <div class="hero-visual rv">
+      <img class="product-render hero-render" src="/img/patch-hero.webp" width="1600" height="893" fetchpriority="high" alt="Sentia Patch One, a 38 mm disc with a matte paper-white top, ink-green edge ring and one coral LED.">
+      <p class="mono caption">Sentia Patch One · Ø 38 mm · 4.2 mm thick</p>
+    </div>
+  </div>
+</section>
+
+<div class="wrap value-strip">
+  <p>${FACTS.tagline}</p>
+  <p class="muted">${FACTS.product} is not a medical device.</p>
+</div>
+
+<section id="patch" aria-label="The patch">
+  <div class="wrap">
+    <p class="mono kicker rv"><span aria-hidden="true">01 / </span>The patch</p>
+    <h2 class="rv">Six layers, 4.2 mm thin.</h2>
+    <div class="split" style="margin-top:clamp(48px,6vh,64px)">
+      <div class="rv"><img class="product-render" src="/img/patch-exploded.webp" width="1200" height="1200" loading="lazy" alt="Sentia Patch One, exploded view with four separated assemblies above the adhesive base."></div>
+      <ol class="layer-list rv">
+${layerItems}
+      </ol>
+    </div>
+    <div class="sensors">
+${sensorCards}
+    </div>
+    <div class="wear-story">
+      <img class="product-render rv" src="/img/patch-on-skin.webp" width="1200" height="600" loading="lazy" alt="Sentia Patch One on an inner forearm, a 38 mm adhesive disc for up to 14 days of wear.">
+    <p class="lede rv">A flexible adhesive disc worn on the upper arm or torso for up to ${FACTS.wearDays} days. Everything it needs is inside: sensors, two radios, and a printed battery sized for the whole wear.</p>
+    </div>
+    <div class="spec-strip rv">
+      <div><p class="v">38 mm</p><p class="mono k">Diameter</p></div>
+      <div><p class="v">4.2 mm</p><p class="mono k">Thickness</p></div>
+      <div><p class="v">14 days</p><p class="mono k">Wear time</p></div>
+      <div><p class="v">3.1 g</p><p class="mono k">Weight</p></div>
+      <div><p class="v">IP67</p><p class="mono k">Water resistance</p></div>
+      <div><p class="v">2 radios</p><p class="mono k">BLE 5.0 · LoRaWAN</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="how" aria-label="How it works">
+  <div class="wrap">
+    <p class="mono kicker rv"><span aria-hidden="true">02 / </span>How it works</p>
+    <h2 class="rv">Sense. Whisper. Relay.</h2>
+    <p class="lede rv">The patch never looks for a network. It speaks quietly, on a schedule, and lets the networks that already surround us do the carrying.</p>
+    <img class="product-render network-render rv" src="/img/network-scene.webp" width="1600" height="900" loading="lazy" alt="Sentia Patch One beside a phone, relay domes and a LoRaWAN gateway, linked by dotted teal signal paths.">
+    <ol class="journey">
+      <li class="rv"><span class="mono step">Step 1</span><h3>Sense</h3><p>Every few minutes the patch samples skin temperature, hydration, movement, posture and sweat, and builds one small encrypted measurement digest.</p></li>
+      <li class="rv"><span class="mono step">Step 2</span><h3>Whisper</h3><p>In the city it broadcasts the digest inside rotating Bluetooth Low Energy advertisements, following the Find My network accessory pattern. Out of coverage it sends a fuller LoRaWAN frame instead.</p></li>
+      <li class="rv"><span class="mono step">Step 3</span><h3>Relay</h3><p>A passing iPhone, iPad or Mac forwards the opaque digest it cannot read. A LoRaWAN gateway forwards the frame to its network server. Neither learns anything about the wearer.</p></li>
+e10c0b4fa90f1f68b4518d8ae392fc4caca907fe
+
+codex
+The spec calls for a larger image frame while preserving the complete render and its scale anchors. I’ll give the product eight desktop grid columns, reduce headline and section spacing, and bring existing product facts into the hero. The original copy and image bytes will stay intact.
+exec
+/bin/bash -lc "python3 - <<'PY'
+from pathlib import Path
+p=Path('src/page.js'); s=p.read_text()
+repls={
+'section{padding:clamp(96px,12vw,160px)':'section{padding:clamp(64px,7vw,96px)',
+'clamp(56px,8.4vw,144px)':'clamp(56px,4.4vw,64px)',
+'clamp(40px,6.2vw,88px)':'clamp(40px,4.4vw,64px)',
+'.hero{padding-top:160px;':'.hero{padding-top:128px;',
+'.hero h1{grid-column:1/8;grid-row:2;font-size:clamp(56px,9.6vw,144px)}':'.hero h1{grid-column:1/5;grid-row:2;font-size:clamp(56px,4.4vw,64px);align-self:center}',
+'.hero .lede{grid-column:1/8;grid-row:3;margin-top:40px}':'.hero .lede{grid-column:1/7;grid-row:3;margin-top:24px}',
+'.hero-visual{grid-column:8/13;grid-row:2/4;':'.hero-visual{grid-column:5/13;grid-row:2;',
+'.hero-render{max-width:640px;margin:auto}':'.hero-render{max-width:960px;margin:auto}\\n.hero .spec-strip{grid-column:7/13;grid-row:3;margin-top:24px}\\n.hero .spec-strip div{flex-basis:50%;padding:16px}\\n.hero .spec-strip div:nth-child(odd){border-left:none}\\n.hero .spec-strip .v{font-size:32px}\\n.hero .chips{margin-top:16px}\\n.hero .cta{margin-top:8px}',
+'.hero{padding-top:144px}':'.hero{padding-top:112px}',
+'.hero h1{grid-column:1;max-width:15ch;font-size:clamp(56px,10vw,96px)}':'.hero h1{grid-column:1;max-width:20ch;font-size:clamp(56px,6vw,64px)}',
+'.hero-visual{grid-column:1;grid-row:3;margin-top:48px}':'.hero-visual{grid-column:1;grid-row:3;margin-top:0;margin-inline:-16px}',
+'.hero-render{max-width:640px}':'.hero-render{max-width:960px}',
+'.hero .lede{grid-column:1;grid-row:4;margin-top:48px}':'.hero .lede{grid-column:1;grid-row:4;margin-top:24px}\\n  .hero .spec-strip{grid-column:1;grid-row:5}\\n  .hero .caption{margin-top:0}',
+'align-items:center;margin-top:96px}':'align-items:center;margin-top:48px}',
+'.network-render{margin-top:64px}':'.network-render{margin-top:32px}',
+'.hero{padding-top:128px}\\n  .hero .kicker':'.hero{padding-top:104px}\\n  .hero .kicker',
+'.hero h1{font-size:clamp(56px,12vw,72px)}':'.hero h1{font-size:56px}',
+'<h1 class=\"rv\" style=\"margin-top:24px\">':'<h1 class=\"rv\">',
+'<div class=\"split\" style=\"margin-top:clamp(48px,6vh,64px)\">':'<div class=\"split\" style=\"margin-top:32px\">',
+}
+for a,b in repls.items():
+ assert a in s,a
+ s=s.replace(a,b)
+start=s.index('    <div class=\"hero-visual rv\">'); end=s.index('\\n    </div>',start)+len('\\n    </div>')
+visual=s[start:end]; s=s[:start]+s[end:]
+pos=s.index('\\n    <p class=\"lede rv\">',s.index('<section class=\"hero\"'))
+s=s[:pos]+'\\n'+visual+s[pos:]
+pos=s.index('    <div class=\"chips rv\">')
+s=s[:pos]+'''    <div class=\"spec-strip rv\" aria-label=\"Patch specifications\">
+      <div><p class=\"v\">38 mm</p><p class=\"mono k\">Diameter</p></div>
+      <div><p class=\"v\">4.2 mm</p><p class=\"mono k\">Thickness</p></div>
+      <div><p class=\"v\">14 days</p><p class=\"mono k\">Wear time</p></div>
+      <div><p class=\"v\">IP67</p><p class=\"mono k\">Water resistance</p></div>
+    </div>
+'''+s[pos:]
+p.write_text(s)
+p=Path('design/DESIGN.md');s=p.read_text()
+s=s.replace('design system v2.1','design system v3')
+s=s.replace('with a small physical\\ninstrument surrounded by generous empty space at true 38 mm scale.','with the product as the protagonist\\nand explicit anchors for true 38 mm scale.')
+s=s.replace('56 to\\n144 px with 0.96 leading','56 to\\n64 px with 0.96 leading').replace('40 to 88 px','40 to 64 px')
+s=s.replace('Space Grotesk at weight 300 is the display face.','Space Grotesk at weight 300 is the display face. Display type must serve the product.')
+s=s.replace('Sections have 96–160 px\\nvertical padding.','Sections have 64–96 px\\nvertical padding for richer density.').replace('detailed lists follow with generous separation.','detailed lists follow with 32–48 px separation.')
+s=s.replace('Place the existing headline at large scale on the left and the supplied\\nhero render on the right. Keep the kicker, chips and introductory copy.','Place the existing headline in four columns and the supplied hero render\\nin eight, capped at 960 px. The complete patch render is the visual center,\\nlarge and early above the fold at desktop and mobile widths. Keep the kicker,\\nchips and introductory copy; repeat the existing dimensional, wear and water\\nresistance facts alongside the introduction.')
+s=s.replace('hero headline across seven columns and the object across five.','hero headline across four columns and the object across eight.')
+s=s.replace('Alternate generous statement sections (128 px / 8rem padding) with denser\\ntechnical sections (96 px).','Use 64–96 px section padding and 32–48 px between related visual and factual\\ngroups to increase density without shrinking body copy.')
+s=s.replace('Keep the existing modular type scale, pushing\\nthe desktop display toward 144 px without crowding the render.','Cap desktop display type at 64 px so the headline supports the render.')
+s=s.replace('with the hero capped at 640 px, the wear image at 640 px, and','with the hero capped at 960 px, the wear image at 640 px, and')
+s=s.replace('Give each visual generous\\nspace on the 8 px rhythm.','Give each visual\\nspace on the 8 px rhythm. Below 1000 px, place the hero image directly after\\nthe headline with no added vertical gap; extend its frame 16 px into each\\ngutter, retaining paper at both edges and the complete original image.')
+p.write_text(s)
+PY
+npm test > /tmp/sentia-test.log 2>&1; tail -n 12 /tmp/sentia-test.log" in /home/runner/work/sentia/sentia
+exec
+/bin/bash -lc 'git diff --stat; git diff --check; git hash-object src/images.js; git diff -- src/page.js design/DESIGN.md' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+ design/DESIGN.md                      | 42 +++++++++++++-----------
+ src/page.js                           | 61 ++++++++++++++++++++++-------------
+ tests/design-v2-1-corrections.test.js |  3 +-
+ 3 files changed, 63 insertions(+), 43 deletions(-)
+e10c0b4fa90f1f68b4518d8ae392fc4caca907fe
+diff --git a/design/DESIGN.md b/design/DESIGN.md
+index a8f8d9e..9033eb6 100644
+--- a/design/DESIGN.md
++++ b/design/DESIGN.md
+@@ -1,8 +1,8 @@
+-# Sentia design system v2.1
++# Sentia design system v3
+ 
+ Identity is governed by brand/BRAND.md. This system applies that identity to
+-the launch page: imagery is the primary art direction, with a small physical
+-instrument surrounded by generous empty space at true 38 mm scale.
++the launch page: imagery is the primary art direction, with the product as the protagonist
++and explicit anchors for true 38 mm scale.
+ Sentia Patch One is the object; Sentia Cloud receives its measurements; the
+ Sentia MCP Server makes those measurements available to assistants.
+ 
+@@ -19,9 +19,9 @@ render is allowed; the page adds no shadow or tinted backdrop.
+ 
+ ## Type scale
+ 
+-Space Grotesk at weight 300 is the display face. The hero runs from 56 to
+-144 px with 0.96 leading and -0.055 em tracking. Section titles run from
+-40 to 88 px with 1.04 leading and -0.04 em tracking, limited to 18 characters
++Space Grotesk at weight 300 is the display face. Display type must serve the product. The hero runs from 56 to
++64 px with 0.96 leading and -0.055 em tracking. Section titles run from
++40 to 64 px with 1.04 leading and -0.04 em tracking, limited to 18 characters
+ per line where space permits. Data values run from 32 to 56 px. Inter body
+ text is 17 px with 1.65 leading; introductory text is 18–20 px, at most
+ 54 characters per line. System mono labels are 11 px, uppercase, with
+@@ -30,9 +30,9 @@ text is 17 px with 1.65 leading; introductory text is 18–20 px, at most
+ ## Spacing rhythm
+ 
+ Use an 8 px base: 8, 16, 24, 32, 48, 64, 96, 128, 160. The page container
+-is at most 1440 px wide, with fluid 24–80 px gutters. Sections have 96–160 px
+-vertical padding. A title, its introduction and its illustration form one
+-idea; detailed lists follow with generous separation. Hairlines provide
++is at most 1440 px wide, with fluid 24–80 px gutters. Sections have 64–96 px
++vertical padding for richer density. A title, its introduction and its illustration form one
++idea; detailed lists follow with 32–48 px separation. Hairlines provide
+ structure without enclosing every item in a card. Technical examples and
+ tables remain dense enough to scan, with scrolling contained locally.
+ Fixed margins, padding and gaps use multiples of 8 px, including the bounds
+@@ -41,8 +41,11 @@ optical geometry rather than content spacing.
+ 
+ ## Hero art direction
+ 
+-Place the existing headline at large scale on the left and the supplied
+-hero render on the right. Keep the kicker, chips and introductory copy.
++Place the existing headline in four columns and the supplied hero render
++in eight, capped at 960 px. The complete patch render is the visual center,
++large and early above the fold at desktop and mobile widths. Keep the kicker,
++chips and introductory copy; repeat the existing dimensional, wear and water
++resistance facts alongside the introduction.
+ The round 38 mm patch has a matte paper-white top disc, deep ink-green edge
+ ring, one tiny coral LED dot and a thin profile. Below 1000 px, stack the
+ headline, object and supporting copy. Preserve the whole object at narrow
+@@ -55,17 +58,16 @@ functional live demo graphics and dashboard charts stay.
+ The brand sheet wins every conflict with the design knowledge pack. Use calm
+ tactile softness from render scale and whitespace, never pastel or blue
+ palettes, shadowed surfaces or decorative cards. A 12 column grid aligns the
+-hero headline across seven columns and the object across five. Supporting
++hero headline across four columns and the object across eight. Supporting
+ text and chips complete that system; one value proposition strip follows,
+ using the existing tagline. Measured facts (38 mm, 14 days, IP67 and network
+ behaviour) establish trust before the hardware detail. State plainly here
+ that Sentia Patch One is not a medical device. No invented proof, testimonials,
+ customer logos or unsupported claims.
+ 
+-Alternate generous statement sections (128 px / 8rem padding) with denser
+-technical sections (96 px). Use hairline divided feature grids and recurring
+-numbered mono section labels. Keep the existing modular type scale, pushing
+-the desktop display toward 144 px without crowding the render. Use the 8 px
++Use 64–96 px section padding and 32–48 px between related visual and factual
++groups to increase density without shrinking body copy. Use hairline divided feature grids and recurring
++numbered mono section labels. Cap desktop display type at 64 px so the headline supports the render. Use the 8 px
+ spacing scale throughout. Load fonts with font-display swap and reserve image
+ space using exact intrinsic dimensions to avoid image layout shift.
+ 
+@@ -112,9 +114,11 @@ a quarter of its frame width or less, and the network patch remains small
+ among the devices. Never crop or enlarge the disc into a plate sized centerpiece.
+ Preserve original aspect ratios and
+ show complete images without cropping or stretching. Use responsive full
+-width images, with the hero capped at 640 px, the wear image at 640 px, and
+-the network scene spanning the content width. Give each visual generous
+-space on the 8 px rhythm. Stack the wear image and copy below 900 px.
++width images, with the hero capped at 960 px, the wear image at 640 px, and
++the network scene spanning the content width. Give each visual
++space on the 8 px rhythm. Below 1000 px, place the hero image directly after
++the headline with no added vertical gap; extend its frame 16 px into each
++gutter, retaining paper at both edges and the complete original image. Stack the wear image and copy below 900 px.
+ Use descriptive, calm alt text with the exact product and network names.
+ Reserve intrinsic image space to prevent layout shifts. Load the hero
+ eagerly with high priority; lazy-load the three lower-page renders.
+diff --git a/src/page.js b/src/page.js
+index bce4ee6..8823cd1 100644
+--- a/src/page.js
++++ b/src/page.js
+@@ -94,20 +94,20 @@ header.site{position:absolute;top:0;left:0;right:0;z-index:5}
+ .nav nav a{color:var(--soft);font-size:17px}
+ .nav nav a:hover{color:var(--ink);text-decoration:none}
+ @media(max-width:1100px){.nav nav{display:none}}
+-section{padding:clamp(96px,12vw,160px) 0;border-top:1px solid var(--line)}
++section{padding:clamp(64px,7vw,96px) 0;border-top:1px solid var(--line)}
+ section:first-of-type{border-top:none}
+-h1{font:300 clamp(56px,8.4vw,144px)/0.96 'Space Grotesk',sans-serif;letter-spacing:-0.055em;max-width:12ch;text-wrap:balance}
+-h2{font:300 clamp(40px,6.2vw,88px)/1.04 'Space Grotesk',sans-serif;letter-spacing:-0.04em;margin:24px 0 32px;max-width:18ch;text-wrap:balance}
++h1{font:300 clamp(56px,4.4vw,64px)/0.96 'Space Grotesk',sans-serif;letter-spacing:-0.055em;max-width:12ch;text-wrap:balance}
++h2{font:300 clamp(40px,4.4vw,64px)/1.04 'Space Grotesk',sans-serif;letter-spacing:-0.04em;margin:24px 0 32px;max-width:18ch;text-wrap:balance}
+ h3{font:500 19px/1.4 'Space Grotesk',sans-serif}
+ .lede{font-size:clamp(18px,1.5vw,20px);color:var(--soft);max-width:54ch}
+ .rv{opacity:0;transform:translateY(16px);transition:opacity .8s ease-out,transform .8s ease-out}
+ .rv.in{opacity:1;transform:none}
+ /* hero */
+-.hero{padding-top:160px;position:relative}
++.hero{padding-top:128px;position:relative}
+ .hero .wrap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;align-items:start}
+ .hero .kicker{grid-column:1/-1;margin-bottom:16px;max-width:60ch}
+-.hero h1{grid-column:1/8;grid-row:2;font-size:clamp(56px,9.6vw,144px)}
+-.hero .lede{grid-column:1/8;grid-row:3;margin-top:40px}
++.hero h1{grid-column:1/5;grid-row:2;font-size:clamp(56px,4.4vw,64px);align-self:center}
++.hero .lede{grid-column:1/7;grid-row:3;margin-top:24px}
+ .chips{display:flex;flex-wrap:wrap;gap:16px 24px;margin-top:32px;grid-column:1/-1}
+ .chip{border-top:1px solid var(--line);padding:16px 0;font:500 11px/1.5 ui-monospace,Menlo,monospace;letter-spacing:0.16em;text-transform:uppercase;color:var(--soft)}
+ .cta{display:flex;flex-wrap:wrap;gap:24px 32px;margin-top:24px;grid-column:1/-1}
+@@ -115,24 +115,32 @@ h3{font:500 19px/1.4 'Space Grotesk',sans-serif}
+ .cta a:hover{text-decoration:none;opacity:.85;transform:translateY(-1px)}
+ .cta a:first-child{background:var(--ink);color:var(--paper);border:0;padding:16px 24px}
+ .cta a{display:inline-flex;align-items:center;min-height:44px;transition:opacity 180ms ease-out,transform 180ms ease-out}
+-.hero-visual{grid-column:8/13;grid-row:2/4;align-self:center;text-align:center;min-width:0}
++.hero-visual{grid-column:5/13;grid-row:2;align-self:center;text-align:center;min-width:0}
+ .product-render{display:block;width:100%;height:auto;object-fit:contain}
+-.hero-render{max-width:640px;margin:auto}
++.hero-render{max-width:960px;margin:auto}
++.hero .spec-strip{grid-column:7/13;grid-row:3;margin-top:24px}
++.hero .spec-strip div{flex-basis:50%;padding:16px}
++.hero .spec-strip div:nth-child(odd){border-left:none}
++.hero .spec-strip .v{font-size:32px}
++.hero .chips{margin-top:16px}
++.hero .cta{margin-top:8px}
+ .svg-note{fill:#53685C}
+ .caption{margin-top:24px;color:var(--faint)}
+ @media(max-width:999px){
+-  .hero{padding-top:144px}
++  .hero{padding-top:112px}
+   .hero .wrap{grid-template-columns:minmax(0,1fr)}
+-  .hero h1{grid-column:1;max-width:15ch;font-size:clamp(56px,10vw,96px)}
+-  .hero-visual{grid-column:1;grid-row:3;margin-top:48px}
+-  .hero-render{max-width:640px}
+-  .hero .lede{grid-column:1;grid-row:4;margin-top:48px}
++  .hero h1{grid-column:1;max-width:20ch;font-size:clamp(56px,6vw,64px)}
++  .hero-visual{grid-column:1;grid-row:3;margin-top:0;margin-inline:-16px}
++  .hero-render{max-width:960px}
++  .hero .lede{grid-column:1;grid-row:4;margin-top:24px}
++  .hero .spec-strip{grid-column:1;grid-row:5}
++  .hero .caption{margin-top:0}
+ }
+ /* patch section */
+-.wear-story{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center;margin-top:96px}
++.wear-story{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center;margin-top:48px}
+ .wear-story .product-render{max-width:640px;margin:auto}
+ .wear-story .lede{margin-top:0}
+-.network-render{margin-top:64px}
++.network-render{margin-top:32px}
+ @media(max-width:900px){.wear-story{grid-template-columns:minmax(0,1fr)}}
+ .split{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(32px,5vw,72px);align-items:start}
+ @media(max-width:900px){.split{grid-template-columns:1fr}}
+@@ -251,9 +259,9 @@ section{scroll-margin-top:32px}
+ .wearer-tab{flex-shrink:0;min-height:44px}
+ @media(max-width:600px){
+   .nav{padding-top:24px;padding-bottom:24px}
+-  .hero{padding-top:128px}
++  .hero{padding-top:104px}
+   .hero .kicker{font-size:10px}
+-  .hero h1{font-size:clamp(56px,12vw,72px)}
++  .hero h1{font-size:56px}
+   .caption{font-size:10px;letter-spacing:0.12em}
+   .spec-strip div{flex-basis:50%}
+   .spec-strip div:nth-child(odd){border-left:none}
+@@ -377,8 +385,18 @@ ${jsonLd(origin)}
+ <section class="hero" aria-label="Introduction">
+   <div class="wrap">
+     <p class="mono kicker rv">Sentia Patch One · Skin temperature · Hydration · Activity</p>
+-    <h1 class="rv" style="margin-top:24px">A patch that whispers through networks that already exist.</h1>
++    <h1 class="rv">A patch that whispers through networks that already exist.</h1>
++    <div class="hero-visual rv">
++      <img class="product-render hero-render" src="/img/patch-hero.webp" width="1600" height="893" fetchpriority="high" alt="Sentia Patch One, a 38 mm disc with a matte paper-white top, ink-green edge ring and one coral LED.">
++      <p class="mono caption">Sentia Patch One · Ø 38 mm · 4.2 mm thick</p>
++    </div>
+     <p class="lede rv">${FACTS.definition} It has no cellular radio and no GPS. Its measurements ride passing phones on the Find My network, or a LoRaWAN gateway kilometres away, into ${FACTS.platform}.</p>
++    <div class="spec-strip rv" aria-label="Patch specifications">
++      <div><p class="v">38 mm</p><p class="mono k">Diameter</p></div>
++      <div><p class="v">4.2 mm</p><p class="mono k">Thickness</p></div>
++      <div><p class="v">14 days</p><p class="mono k">Wear time</p></div>
++      <div><p class="v">IP67</p><p class="mono k">Water resistance</p></div>
++    </div>
+     <div class="chips rv">
+       <span class="chip">Find My network · BLE relay</span>
+       <span class="chip">LoRaWAN · Gateway uplink</span>
+@@ -388,10 +406,7 @@ ${jsonLd(origin)}
+       <a href="#demo">Watch the live demo</a>
+       <a href="#dashboard">Open the dashboard</a>
+     </div>
+-    <div class="hero-visual rv">
+-      <img class="product-render hero-render" src="/img/patch-hero.webp" width="1600" height="893" fetchpriority="high" alt="Sentia Patch One, a 38 mm disc with a matte paper-white top, ink-green edge ring and one coral LED.">
+-      <p class="mono caption">Sentia Patch One · Ø 38 mm · 4.2 mm thick</p>
+-    </div>
++
+   </div>
+ </section>
+ 
+@@ -404,7 +419,7 @@ ${jsonLd(origin)}
+   <div class="wrap">
+     <p class="mono kicker rv"><span aria-hidden="true">01 / </span>The patch</p>
+     <h2 class="rv">Six layers, 4.2 mm thin.</h2>
+-    <div class="split" style="margin-top:clamp(48px,6vh,64px)">
++    <div class="split" style="margin-top:32px">
+       <div class="rv"><img class="product-render" src="/img/patch-exploded.webp" width="1200" height="1200" loading="lazy" alt="Sentia Patch One, exploded view with four separated assemblies above the adhesive base."></div>
+       <ol class="layer-list rv">
+ ${layerItems}
+
+exec
+/bin/bash -lc "tail -n 18 /tmp/sentia-test.log; command -v chromium || command -v google-chrome || true; node -e \"try { console.log(import.meta.resolve('playwright')) } catch {}\"" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+# Subtest: live-demo S2: rural emissions are 38 character LoRaWAN hex labelled lora
+ok 24 - live-demo S2: rural emissions are 38 character LoRaWAN hex labelled lora
+  ---
+  duration_ms: 1.676871
+  type: 'test'
+  ...
+# Subtest: live-demo S3: latencies stay inside the plausible range per path
+ok 25 - live-demo S3: latencies stay inside the plausible range per path
+  ---
+  duration_ms: 3.845428
+  type: 'test'
+  ...
+# Subtest: parity: browser codec and server codec produce identical bytes
+ok 26 - parity: browser codec and server codec produce identical bytes
+  ---
+  duration_ms: 3.355221
+  type: 'test'
+  ...
+/usr/bin/chromium
+
+ succeeded in 24100ms:
+  duration_ms: 0.468652
+  type: 'test'
+  ...
+1..102
+# tests 102
+# suites 0
+# pass 101
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 24039.02489
+
+codex
+The full suite passed: 101 tests passed, one skipped, and no failures. The image file still matches the required git blob. The changes are limited to the page composition and design rules; visual approval remains with the independent review stations and owner gate.
+exec
+/bin/bash -lc "python3 - <<'PY'
+from pathlib import Path
+p=Path('src/page.js');s=p.read_text().replace('    </div>\\n\\n  </div>\\n</section>\\n\\n<div class=\"wrap value-strip\">','    </div>\\n  </div>\\n</section>\\n\\n<div class=\"wrap value-strip\">');p.write_text(s)
+p=Path('design/DESIGN.md');s=p.read_text().replace('Space Grotesk at weight 300 is the display face. Display type must serve the product. The hero runs from 56 to\\n64 px','Space Grotesk at weight 300 is the display face. Display type must serve the\\nproduct. The hero runs from 56 to 64 px').replace('vertical padding for richer density. A title, its introduction and its illustration form one\\nidea;','vertical padding for richer density. A title, its introduction and its\\nillustration form one idea;').replace('groups to increase density without shrinking body copy. Use hairline divided feature grids and recurring\\nnumbered mono section labels. Cap desktop display type at 64 px so the headline supports the render. Use the 8 px','groups to increase density without shrinking body copy. Use hairline divided\\nfeature grids and recurring numbered mono section labels. Cap desktop display\\ntype at 64 px so the headline supports the render. Use the 8 px').replace('gutter, retaining paper at both edges and the complete original image. Stack the wear image and copy below 900 px.','gutter, retaining paper at both edges and the complete original image.\\nStack the wear image and copy below 900 px.');p.write_text(s)
+PY
+ git diff --check" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+codex
+Updated src/page.js with a larger, earlier hero render, smaller display type, tighter spacing, and existing product facts in the hero. Updated design/DESIGN.md composition rules.
+
+Image bytes remain unchanged. Tests: 101 passed, 1 skipped, 0 failed. No deployment or approval performed.
+tokens used
+42,068
+Updated src/page.js with a larger, earlier hero render, smaller display type, tighter spacing, and existing product facts in the hero. Updated design/DESIGN.md composition rules.
+
+Image bytes remain unchanged. Tests: 101 passed, 1 skipped, 0 failed. No deployment or approval performed.

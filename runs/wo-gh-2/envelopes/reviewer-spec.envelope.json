@@ -1,0 +1,28 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-spec",
+  "to_station": "reviewer-security",
+  "work_order_id": "wo-gh-2",
+  "artifact_path": "runs/wo-gh-2/reviewer-spec.output.md",
+  "status": "executed",
+  "created_at": "2026-10-29T04:27:25.714788+00:00",
+  "review": {
+    "station": "reviewer-spec",
+    "verdict": "pass",
+    "findings": [
+      "S1: design/DESIGN.md is the v2 revision. It has an asset inventory table naming each module export, route and page placement for all four renders. It also has image treatment rules and states that flat inline SVG is demoted to small supporting diagrams. The demo and dashboard graphics stay.",
+      "S2: The hero uses /img/patch-hero.webp and the large inline SVG is gone. #patch presents /img/patch-exploded.webp and /img/patch-on-skin.webp (with the wear paragraph). #how presents /img/network-scene.webp before the five steps. The demo section keeps its functional visualization. All four img tags have calm alt text with no hype words. Their width and height attributes match the real WebP dimensions (1600x893 and 1200x1200). The images carry no inline border or shadow.",
+      "S3: src/index.js adds exactly four routes and a webp() helper beside png(), with the same cache-control header as /og.png. src/images.js is untouched. The suite shows 56 pass, 0 fail and 1 skipped (no main ref), including the new tests for the four image routes and the page references.",
+      "S4: The builder envelope shows gpt-6-astra. The count of five reviews is outside this station's inputs, so it was not checked.",
+      "Non-blocking: the wear lede paragraph moved from the top of #patch into the new wear-story block. The copy is intact but its position changed.",
+      "Non-blocking: the lede line inside wear-story has stray indentation, and the `.svg-note{fill:#53685C}` CSS rule is now unused.",
+      "Review written to runs/wo-gh-2/reviewer-spec.output.md."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

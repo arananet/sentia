@@ -69,78 +69,9 @@ export function jsonLd(origin) {
   return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2);
 }
 
-export function patchTopSvg() {
-  return `<svg class="patch-top" viewBox="0 0 480 480" role="img" aria-label="Sentia Patch One, top view: a 38 mm disc with concentric sensor rings and one coral status LED">
-  <ellipse cx="240" cy="428" rx="168" ry="20" fill="#12211C" opacity="0.08"/>
-  <circle cx="240" cy="240" r="196" fill="#FFFFFF" stroke="#12211C" stroke-width="1.4"/>
-  <circle cx="240" cy="240" r="158" fill="none" stroke="#12211C" stroke-width="0.8" opacity="0.55"/>
-  <circle cx="240" cy="240" r="112" fill="none" stroke="#0E7C66" stroke-width="0.8" opacity="0.65"/>
-  <circle cx="240" cy="240" r="64" fill="#EFF4EE" stroke="#12211C" stroke-width="0.8"/>
-  <circle cx="240" cy="240" r="10" fill="none" stroke="#12211C" stroke-width="1"/>
-  <g stroke="#12211C" stroke-width="0.8" opacity="0.5">
-    <line x1="240" y1="52" x2="240" y2="76"/><line x1="240" y1="404" x2="240" y2="428"/>
-    <line x1="52" y1="240" x2="76" y2="240"/><line x1="404" y1="240" x2="428" y2="240"/>
-  </g>
-  <circle cx="352" cy="128" r="7" fill="#FF6B4A"/>
-</svg>`;
-}
-
-export function explodedSvg() {
-  const layers = FACTS.layers;
-  const step = 76;
-  const parts = layers
-    .map((l, i) => {
-      const y = 58 + i * step;
-      const fill = i % 2 === 0 ? '#FFFFFF' : '#EFF4EE';
-      return `<g>
-    <ellipse cx="215" cy="${y}" rx="148" ry="24" fill="${fill}" stroke="#12211C" stroke-width="1"/>
-    <line x1="363" y1="${y}" x2="452" y2="${y}" stroke="#DFE7DF" stroke-width="1"/>
-    <text x="466" y="${y - 2}" class="svg-name">${l.name}</text>
-    <text x="466" y="${y + 16}" class="svg-note">${shorten(l.detail)}</text>
-  </g>`;
-    })
-    .join('\n');
-  return `<svg class="plate" viewBox="0 0 980 560" role="img" aria-label="Exploded view of Sentia Patch One showing its six layers">
-  <style>.svg-name{font:500 15px Inter,sans-serif;fill:#12211C}.svg-note{font:12px ui-monospace,Menlo,monospace;fill:#5C6F66}</style>
-  ${parts}
-  <text x="215" y="540" text-anchor="middle" class="svg-note">DIAMETER 38 MM · TOTAL THICKNESS 4.2 MM</text>
-</svg>`;
-}
-
-function shorten(s) {
-  return s.length > 62 ? s.slice(0, 60).trimEnd() + '…' : s;
-}
-
-export function pathsSvg() {
-  return `<svg class="plate" viewBox="0 0 1120 320" role="img" aria-label="Two paths from the patch to Sentia Cloud: through phones on the Find My network in the city, and through a LoRaWAN gateway out of coverage">
-  <style>.svg-name{font:500 15px Inter,sans-serif;fill:#12211C}.svg-note{font:11px ui-monospace,Menlo,monospace;fill:#5C6F66;letter-spacing:0.14em}.svg-teal{font:11px ui-monospace,Menlo,monospace;fill:#0E7C66;letter-spacing:0.14em}</style>
-  <circle cx="90" cy="160" r="34" fill="#FFFFFF" stroke="#12211C" stroke-width="1.2"/>
-  <circle cx="90" cy="160" r="18" fill="none" stroke="#12211C" stroke-width="0.8"/>
-  <circle cx="114" cy="136" r="4" fill="#FF6B4A"/>
-  <text x="90" y="222" text-anchor="middle" class="svg-name">The patch</text>
-  <path d="M 128 148 C 320 60, 480 60, 620 96" fill="none" stroke="#0E7C66" stroke-width="1.4"/>
-  <path d="M 128 176 C 320 262, 480 262, 620 224" fill="none" stroke="#0E7C66" stroke-width="1.4"/>
-  <rect x="622" y="66" width="52" height="88" rx="9" fill="#FFFFFF" stroke="#12211C" stroke-width="1.1"/>
-  <text x="648" y="182" text-anchor="middle" class="svg-name">A passing phone</text>
-  <text x="648" y="202" text-anchor="middle" class="svg-note">IPHONE · IPAD · MAC</text>
-  <path d="M 676 104 C 800 92, 880 108, 968 138" fill="none" stroke="#0E7C66" stroke-width="1.4"/>
-  <g stroke="#12211C" stroke-width="1.1" fill="none">
-    <path d="M 648 226 L 612 292 M 648 226 L 648 292 M 648 226 L 684 292"/>
-    <circle cx="648" cy="222" r="5" fill="#12211C"/>
-  </g>
-  <text x="648" y="308" text-anchor="middle" class="svg-name">A LoRaWAN gateway</text>
-  <path d="M 688 238 C 800 246, 890 226, 968 186" fill="none" stroke="#0E7C66" stroke-width="1.4"/>
-  <rect x="970" y="106" width="118" height="104" rx="10" fill="#EFF4EE" stroke="#12211C" stroke-width="1.1"/>
-  <text x="1029" y="152" text-anchor="middle" class="svg-name">Sentia</text>
-  <text x="1029" y="172" text-anchor="middle" class="svg-name">Cloud</text>
-  <text x="380" y="52" text-anchor="middle" class="svg-teal">IN THE CITY · FIND MY NETWORK · 16 BYTE DIGEST</text>
-  <text x="380" y="292" text-anchor="middle" class="svg-teal">OUT OF COVERAGE · LORAWAN · 19 BYTE FRAME</text>
-</svg>`;
-}
-
 const CSS = `
 :root{
-  --paper:#FAFAF6; --ink:#12211C; --soft:#4A5D54; --faint:#71837A;
+  --paper:#FAFAF6; --ink:#12211C; --soft:#4A5D54; --faint:#53685C;
   --teal:#0E7C66; --coral:#FF6B4A; --mint:#EFF4EE; --line:#DFE7DF;
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -149,143 +80,233 @@ body{background:var(--paper);color:var(--ink);font:400 17px/1.65 Inter,system-ui
 ::selection{background:var(--mint)}
 a{color:var(--teal);text-decoration:none}
 a:hover{text-decoration:underline;text-underline-offset:3px}
-.wrap{max-width:1160px;margin:0 auto;padding:0 clamp(20px,6vw,72px)}
+.wrap{max-width:1440px;margin:0 auto;padding:0 clamp(24px,5.6vw,80px)}
 .mono{font:500 11px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:0.18em;text-transform:uppercase}
 .kicker{color:var(--teal)}
 .muted{color:var(--soft)}
 header.site{position:absolute;top:0;left:0;right:0;z-index:5}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0}
-.brand{display:flex;align-items:center;gap:12px;color:var(--ink)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding-top:32px;padding-bottom:32px;gap:24px}
+.brand{display:flex;align-items:center;gap:16px;color:var(--ink)}
 .brand:hover{text-decoration:none}
 .brand svg{display:block}
 .wordmark{font:500 21px 'Space Grotesk',sans-serif;letter-spacing:0.01em}
-.nav nav{display:flex;gap:30px}
-.nav nav a{color:var(--soft);font-size:14.5px}
+.nav nav{display:flex;gap:16px}
+.nav nav a{color:var(--soft);font-size:17px}
 .nav nav a:hover{color:var(--ink);text-decoration:none}
-@media(max-width:820px){.nav nav{display:none}}
-section{padding:clamp(84px,15vh,148px) 0;border-top:1px solid var(--line)}
+@media(max-width:1100px){.nav nav{display:none}}
+section{padding:clamp(64px,7vw,96px) 0;border-top:1px solid var(--line)}
 section:first-of-type{border-top:none}
-h1{font:300 clamp(46px,7vw,88px)/1.05 'Space Grotesk',sans-serif;letter-spacing:-0.015em;max-width:13ch}
-h2{font:300 clamp(34px,4.6vw,54px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-0.01em;margin:18px 0 20px}
+h1{font:300 clamp(56px,4.4vw,64px)/0.96 'Space Grotesk',sans-serif;letter-spacing:-0.055em;max-width:12ch;text-wrap:balance}
+h2{font:300 clamp(40px,4.4vw,64px)/1.04 'Space Grotesk',sans-serif;letter-spacing:-0.04em;margin:24px 0 32px;max-width:18ch;text-wrap:balance}
 h3{font:500 19px/1.4 'Space Grotesk',sans-serif}
-.lede{font-size:19px;color:var(--soft);max-width:56ch}
-.rv{opacity:0;transform:translateY(16px);transition:opacity .85s ease,transform .85s ease}
+.lede{font-size:clamp(18px,1.5vw,20px);color:var(--soft);max-width:54ch}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .8s ease-out,transform .8s ease-out}
 .rv.in{opacity:1;transform:none}
 /* hero */
-.hero{padding-top:clamp(150px,24vh,220px);position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(640px 420px at 72% 34%,rgba(255,214,196,0.20),rgba(250,250,246,0) 70%);pointer-events:none}
-.hero .lede{margin-top:28px}
-.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
-.chip{border:1px solid var(--line);border-radius:999px;padding:8px 16px;font:500 11px ui-monospace,Menlo,monospace;letter-spacing:0.16em;text-transform:uppercase;color:var(--soft);background:#fff}
-.cta{display:flex;gap:34px;margin-top:30px}
-.cta a{font-size:15.5px;border-bottom:1px solid var(--teal);padding-bottom:2px}
-.cta a:hover{text-decoration:none;border-color:var(--ink);color:var(--ink)}
-.hero-visual{margin:clamp(56px,9vh,96px) auto 0;text-align:center}
-.patch-top{width:min(430px,78vw);height:auto}
-.caption{margin-top:22px;color:var(--faint)}
+.hero{padding-top:128px;position:relative}
+.hero .wrap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;align-items:start}
+.hero .kicker{grid-column:1/-1;margin-bottom:16px;max-width:60ch}
+.hero h1{grid-column:1/5;grid-row:2;font-size:clamp(56px,4.4vw,64px);align-self:center}
+.hero .lede{grid-column:1/7;grid-row:3;margin-top:24px}
+.chips{display:flex;flex-wrap:wrap;gap:16px 24px;margin-top:32px;grid-column:1/-1}
+.chip{border-top:1px solid var(--line);padding:16px 0;font:500 11px/1.5 ui-monospace,Menlo,monospace;letter-spacing:0.16em;text-transform:uppercase;color:var(--soft)}
+.cta{display:flex;flex-wrap:wrap;gap:24px 32px;margin-top:24px;grid-column:1/-1}
+.cta a{font-size:17px;border-bottom:1px solid var(--teal);padding-bottom:8px}
+.cta a:hover{text-decoration:none;opacity:.85;transform:translateY(-1px)}
+.cta a:first-child{background:var(--ink);color:var(--paper);border:0;padding:16px 24px}
+.cta a{display:inline-flex;align-items:center;min-height:44px;transition:opacity 180ms ease-out,transform 180ms ease-out}
+.hero-visual{grid-column:5/13;grid-row:2;align-self:center;text-align:center;min-width:0}
+.product-render{display:block;width:100%;height:auto;object-fit:contain}
+.hero-render{max-width:960px;margin:auto}
+.hero .spec-strip{grid-column:7/13;grid-row:3;margin-top:24px}
+.hero .spec-strip div{flex-basis:50%;padding:16px}
+.hero .spec-strip div:nth-child(odd){border-left:none}
+.hero .spec-strip .v{font-size:32px}
+.hero .chips{margin-top:16px}
+.hero .cta{margin-top:8px}
+.svg-note{fill:#53685C}
+.caption{margin-top:24px;color:var(--faint)}
+@media(max-width:999px){
+  .hero{padding-top:112px}
+  .hero .wrap{grid-template-columns:minmax(0,1fr)}
+  .hero h1{grid-column:1;max-width:20ch;font-size:clamp(56px,6vw,64px)}
+  .hero-visual{grid-column:1;grid-row:3;margin-top:0;margin-inline:-16px}
+  .hero-render{max-width:960px}
+  .hero .lede{grid-column:1;grid-row:4;margin-top:24px}
+  .hero .spec-strip{grid-column:1;grid-row:5}
+  .hero .caption{margin-top:0}
+}
 /* patch section */
-.plate{width:100%;height:auto;display:block}
-.split{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(30px,5vw,70px);align-items:start}
+.wear-story{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center;margin-top:48px}
+.wear-story .product-render{max-width:640px;margin:auto}
+.wear-story .lede{margin-top:0}
+.network-render{margin-top:32px}
+@media(max-width:900px){.wear-story{grid-template-columns:minmax(0,1fr)}}
+.split{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(32px,5vw,72px);align-items:start}
 @media(max-width:900px){.split{grid-template-columns:1fr}}
 .layer-list{list-style:none}
-.layer-list li{padding:15px 0;border-bottom:1px solid var(--line)}
+.layer-list li{padding:16px 0;border-bottom:1px solid var(--line)}
 .layer-list li:first-child{border-top:1px solid var(--line)}
 .layer-list .n{color:var(--teal);font:500 11px ui-monospace,Menlo,monospace;letter-spacing:0.16em}
-.layer-list h3{margin:4px 0 3px;font-size:16.5px}
-.layer-list p{color:var(--soft);font-size:14.5px}
+.layer-list h3{margin:8px 0 8px;font-size:16.5px}
+.layer-list p{color:var(--soft);font-size:17px}
 .spec-strip{display:flex;flex-wrap:wrap;gap:0;margin-top:clamp(48px,7vh,72px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.spec-strip div{flex:1 1 150px;padding:20px 18px 18px;border-left:1px solid var(--line)}
+.spec-strip div{flex:1 1 150px;padding:24px 16px 16px;border-left:1px solid var(--line)}
 .spec-strip div:first-child{border-left:none}
-.spec-strip .v{font:300 27px 'Space Grotesk',sans-serif}
-.spec-strip .k{color:var(--faint);margin-top:4px}
-.sensors{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(30px,5vw,70px);margin-top:clamp(44px,6vh,64px)}
+.spec-strip .v{font:300 clamp(32px,3vw,48px) 'Space Grotesk',sans-serif}
+.spec-strip .k{color:var(--faint);margin-top:8px}
+.sensors{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(32px,5vw,72px);margin-top:clamp(48px,6vh,64px)}
 @media(max-width:760px){.sensors{grid-template-columns:1fr}}
-.sensor{padding:20px 0;border-top:1px solid var(--line)}
-.sensor h3{font-size:17px;margin-bottom:4px}
-.sensor p{color:var(--soft);font-size:15px}
+.sensor{padding:24px 0;border-top:1px solid var(--line)}
+.sensor h3{font-size:17px;margin-bottom:8px}
+.sensor p{color:var(--soft);font-size:17px}
 /* how */
-.journey{list-style:none;margin-top:clamp(40px,6vh,60px)}
-.journey li{display:grid;grid-template-columns:110px 180px 1fr;gap:18px;padding:20px 0;border-top:1px solid var(--line);align-items:baseline}
+.journey{list-style:none;margin-top:clamp(40px,6vh,64px)}
+.journey li{display:grid;grid-template-columns:110px 180px 1fr;gap:16px;padding:24px 0;border-top:1px solid var(--line);align-items:baseline}
 @media(max-width:760px){.journey li{grid-template-columns:60px 1fr}.journey li p{grid-column:2}}
 .journey .step{color:var(--teal)}
 .journey h3{font-size:18px}
-.journey p{color:var(--soft);font-size:15.5px;max-width:62ch}
-.privacy{margin-top:clamp(44px,6vh,64px);background:var(--mint);border-radius:14px;padding:clamp(26px,4vw,44px)}
-.privacy h3{margin-bottom:10px}
+.journey p{color:var(--soft);font-size:17px;max-width:62ch}
+.privacy{margin-top:clamp(48px,6vh,64px);background:var(--mint);border-radius:0;padding:clamp(32px,5vw,64px)}
+.privacy h3{margin-bottom:8px}
 .privacy p{color:var(--soft);max-width:70ch}
 /* demo */
-.toggle{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:#fff}
-.toggle button{border:none;background:transparent;padding:10px 22px;font:500 12px ui-monospace,Menlo,monospace;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft);cursor:pointer}
+.toggle{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--paper)}
+.toggle button{border:none;background:transparent;padding:8px 24px;font:500 12px ui-monospace,Menlo,monospace;letter-spacing:0.14em;text-transform:uppercase;color:var(--soft);cursor:pointer}
 .toggle button.on{background:var(--ink);color:var(--paper)}
-.stage{position:relative;margin-top:clamp(44px,6vh,64px);padding:34px 0 8px}
+.stage{position:relative;margin-top:clamp(48px,6vh,64px);padding:32px 0 8px}
 .stage-nodes{display:flex;justify-content:space-between;text-align:center}
 .node{width:180px}
-.node .disc{width:64px;height:64px;margin:0 auto 12px;border:1.2px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff;position:relative}
+.node .disc{width:64px;height:64px;margin:0 auto 16px;border:1.2px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff;position:relative}
 .node .disc::after{content:"";width:26px;height:26px;border:0.8px solid var(--ink);border-radius:50%;opacity:0.55}
 .node.server .disc{border-radius:14px;background:var(--mint)}
 .node.server .disc::after{border-radius:5px}
 .node h3{font-size:16px}
-.node p{color:var(--faint);font-size:12.5px}
+.node p{color:var(--faint);font-size:17px}
 .stage-track{position:absolute;left:6%;right:6%;top:66px;height:1px;background:var(--line)}
 #packetDot{position:absolute;top:62px;left:4%;width:9px;height:9px;border-radius:50%;background:var(--teal);opacity:0;transform:translateX(-50%)}
-.payload{margin-top:30px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0}
+.payload{margin-top:32px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0}
 .payload pre{font:12.5px/1.7 ui-monospace,Menlo,monospace;color:var(--ink);word-break:break-all;white-space:pre-wrap;margin-top:8px}
-.readouts{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:30px;border-bottom:1px solid var(--line)}
+.readouts{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:32px;border-bottom:1px solid var(--line)}
 @media(max-width:760px){.readouts{grid-template-columns:repeat(2,1fr)}}
-.readouts div{padding:16px 14px 18px;border-left:1px solid var(--line)}
+.readouts div{padding:16px 16px 16px;border-left:1px solid var(--line)}
 .readouts div:first-child{border-left:none}
-.readouts .v{font:300 26px 'Space Grotesk',sans-serif}
-.readouts .k{color:var(--faint);margin-top:3px}
-.live-chart{width:100%;height:150px;display:block;margin-top:26px}
+.readouts .v{font:300 clamp(32px,3.6vw,48px) 'Space Grotesk',sans-serif}
+.readouts .k{color:var(--faint);margin-top:8px}
+.live-chart{width:100%;height:150px;display:block;margin-top:24px}
 .feed{list-style:none;margin-top:24px}
-.feed-row{padding:9px 0;border-bottom:1px solid var(--line);font:12.5px ui-monospace,Menlo,monospace;color:var(--soft);opacity:0;transform:translateY(6px);transition:opacity .7s ease,transform .7s ease}
+.feed-row{padding:8px 0;border-bottom:1px solid var(--line);font:12.5px ui-monospace,Menlo,monospace;color:var(--soft);opacity:0;transform:translateY(6px);transition:opacity .8s ease-out,transform .8s ease-out}
 .feed-row.in{opacity:1;transform:none}
-.text-btn{margin-top:22px;background:none;border:none;border-bottom:1px solid var(--teal);color:var(--teal);font-size:15px;padding:0 0 2px;cursor:pointer}
+.text-btn{margin-top:24px;background:none;border:none;border-bottom:1px solid var(--teal);color:var(--teal);font-size:17px;padding:0 0 8px;cursor:pointer}
 .text-btn:hover{color:var(--ink);border-color:var(--ink)}
 /* dashboard */
-.wearer-tabs{display:flex;gap:28px;border-bottom:1px solid var(--line);margin-top:36px}
-.wearer-tab{background:none;border:none;padding:0 0 12px;font:500 16px 'Space Grotesk',sans-serif;color:var(--faint);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.wearer-tabs{display:flex;gap:32px;border-bottom:1px solid var(--line);margin-top:40px}
+.wearer-tab{background:none;border:none;padding:0 0 16px;font:500 16px 'Space Grotesk',sans-serif;color:var(--faint);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
 .wearer-tab.on{color:var(--ink);border-color:var(--teal)}
 .tiles{display:grid;grid-template-columns:repeat(3,1fr);margin-top:8px}
 @media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
-.tiles div{padding:22px 16px 20px;border-bottom:1px solid var(--line)}
-.tiles .v{font:300 clamp(24px,2.6vw,32px) 'Space Grotesk',sans-serif}
-.tiles .k{color:var(--faint);margin-top:4px}
-.charts{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,56px);margin-top:clamp(40px,6vh,56px)}
+.tiles div{padding:24px 16px 24px;border-bottom:1px solid var(--line)}
+.tiles .v{font:300 clamp(32px,4vw,56px) 'Space Grotesk',sans-serif}
+.tiles .k{color:var(--faint);margin-top:8px}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,4vw,56px);margin-top:clamp(40px,6vh,56px)}
 @media(max-width:760px){.charts{grid-template-columns:1fr}}
 .charts canvas{width:100%;height:180px;display:block}
-.chart-cap{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:10px}
-.alert-row{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+.chart-cap{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:8px}
+.alert-row{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);align-items:flex-start}
 .alert-dot{width:8px;height:8px;border-radius:50%;margin-top:8px;flex:none;background:var(--faint)}
 .alert-dot.sev-critical{background:var(--coral)}
 .alert-dot.sev-warning{background:var(--teal)}
 .alert-head{font:500 12px ui-monospace,Menlo,monospace;letter-spacing:0.14em;text-transform:uppercase}
-.alert-msg{color:var(--soft);font-size:15px}
-.calm{color:var(--soft);padding:14px 0}
-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:15px}
-th{font:500 11px ui-monospace,Menlo,monospace;letter-spacing:0.16em;text-transform:uppercase;color:var(--faint);text-align:left;padding:10px 12px;border-bottom:1px solid var(--ink)}
-td{padding:13px 12px;border-bottom:1px solid var(--line);color:var(--soft)}
+.alert-msg{color:var(--soft);font-size:17px}
+.calm{color:var(--soft);padding:16px 0}
+table{width:100%;border-collapse:collapse;margin-top:16px;font-size:17px}
+th{font:500 11px ui-monospace,Menlo,monospace;letter-spacing:0.16em;text-transform:uppercase;color:var(--faint);text-align:left;padding:8px 16px;border-bottom:1px solid var(--ink)}
+td{padding:16px 16px;border-bottom:1px solid var(--line);color:var(--soft)}
 td:first-child{color:var(--ink)}
 tbody tr{cursor:pointer}
 tbody tr.on td{background:var(--mint)}
-.sub{margin-top:clamp(48px,7vh,68px)}
-.sub h3{font:300 26px 'Space Grotesk',sans-serif;margin-bottom:12px}
+.sub{margin-top:clamp(48px,7vh,72px)}
+.sub h3{font:300 clamp(32px,3.6vw,48px) 'Space Grotesk',sans-serif;margin-bottom:16px}
 /* mcp */
-.endpoint{font:13px ui-monospace,Menlo,monospace;background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin-top:26px;word-break:break-all}
-pre.code{font:12.5px/1.75 ui-monospace,Menlo,monospace;background:#fff;border:1px solid var(--line);border-radius:10px;padding:20px 22px;overflow-x:auto;margin-top:14px;color:var(--ink)}
-.tools{list-style:none;margin-top:10px}
-.tools li{display:grid;grid-template-columns:210px 1fr;gap:18px;padding:14px 0;border-bottom:1px solid var(--line)}
+.endpoint{font:13px ui-monospace,Menlo,monospace;background:transparent;border:1px solid var(--line);border-radius:0;padding:16px 24px;margin-top:24px;word-break:break-all}
+pre.code{font:12.5px/1.75 ui-monospace,Menlo,monospace;background:transparent;border:1px solid var(--line);border-radius:0;padding:24px 24px;overflow-x:auto;margin-top:16px;color:var(--ink)}
+.tools{list-style:none;margin-top:8px}
+.tools li{display:grid;grid-template-columns:210px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
 @media(max-width:760px){.tools li{grid-template-columns:1fr}}
 .tools .tn{font:13px ui-monospace,Menlo,monospace;color:var(--teal)}
-.tools p{color:var(--soft);font-size:15px}
+.tools p{color:var(--soft);font-size:17px}
 /* faq */
-.faq-item{padding:26px 0;border-top:1px solid var(--line)}
+.faq-item{padding:24px 0;border-top:1px solid var(--line)}
 .faq-item h3{font-size:20px;margin-bottom:8px}
 .faq-item p{color:var(--soft);max-width:68ch}
-footer{border-top:1px solid var(--line);padding:54px 0 64px;color:var(--soft);font-size:14.5px}
-footer .cols{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:flex-start}
+footer{border-top:1px solid var(--line);padding:56px 0 64px;color:var(--soft);font-size:17px}
+footer .cols{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:flex-start}
 footer p{max-width:52ch}
-footer .fine{margin-top:26px;color:var(--faint);font-size:13px}
+/* Responsive containment and keyboard access preserve the existing hooks. */
+:focus-visible{outline:3px solid var(--teal);outline-offset:4px}
+section{scroll-margin-top:32px}
+.split>*{min-width:0}
+.spec-strip div{padding:32px 16px}
+.journey li{padding:32px 0}
+.journey h3{font-size:24px}
+.faq-item{padding:32px 0}
+#specs th{width:32%;line-height:1.6}
+#specs td{padding:24px 16px}
+#dashboard .sub:has(table){overflow-x:auto}
+#dashboard table{min-width:640px}
+.tiles .v{overflow-wrap:anywhere}
+.wearer-tabs{overflow-x:auto;padding-top:8px}
+.wearer-tab{flex-shrink:0;min-height:44px}
+@media(max-width:600px){
+  .nav{padding-top:24px;padding-bottom:24px}
+  .hero{padding-top:104px}
+  .hero .kicker{font-size:10px}
+  .hero h1{font-size:56px}
+  .caption{font-size:10px;letter-spacing:0.12em}
+  .spec-strip div{flex-basis:50%}
+  .spec-strip div:nth-child(odd){border-left:none}
+  .stage .node{width:31%}
+  .node h3{font-size:14px}
+  .node p{font-size:17px}
+  .readouts div{padding:24px 8px}
+  .tiles div{padding:24px 8px}
+  .mono{overflow-wrap:anywhere}
+  .journey li{gap:16px;grid-template-columns:52px minmax(0,1fr)}
+  .tools li{gap:8px}
+  #specs th{width:38%;letter-spacing:0.08em;padding-left:0}
+  #specs td{overflow-wrap:anywhere}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv,.feed-row{opacity:1;transform:none;transition:none}
+  #packetDot{visibility:hidden}
+}
+/* v2.1: factual hierarchy, bounded motion and accessible controls. */
+.value-strip{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;padding-top:32px;padding-bottom:32px;border-top:1px solid var(--line)}
+.value-strip p:first-child{font:300 clamp(24px,3vw,40px)/1.2 'Space Grotesk',sans-serif;max-width:24ch}
+.value-strip p:last-child{max-width:32ch;align-self:center}
+#patch,#how{padding-top:128px;padding-bottom:128px}
+#demo,#dashboard,#mcp,#specs,#faq{padding-top:96px;padding-bottom:96px}
+section>.wrap>.rv:nth-child(2){transition-delay:40ms}
+section>.wrap>.rv:nth-child(3){transition-delay:80ms}
+section>.wrap>.rv:nth-child(4){transition-delay:120ms}
+section>.wrap>.rv:nth-child(5){transition-delay:160ms}
+section>.wrap>.rv:nth-child(6){transition-delay:200ms}
+section>.wrap>.rv:nth-child(7){transition-delay:240ms}
+section>.wrap>.rv:nth-child(8){transition-delay:280ms}
+.nav a,footer a{display:inline-flex;align-items:center;min-height:44px}
+footer a{margin-right:8px}
+button,.text-btn{min-height:44px;min-width:44px}
+.toggle{gap:8px;overflow:visible}
+.wearer-tabs{gap:8px;padding:8px}
+.skip-link{position:fixed;top:8px;left:8px;z-index:10;padding:16px 24px;background:var(--ink);color:var(--paper);transform:translateY(-160%)}
+.skip-link:focus{transform:none}
+@media(prefers-reduced-motion:reduce){
+  .cta a{transition:none}
+  .cta a:hover{transform:none}
+  section>.wrap>.rv{transition-delay:0ms}
+}
+footer .fine{margin-top:24px;color:var(--faint);font-size:13px}
 `;
 
 export function renderPage(origin) {
@@ -343,8 +364,10 @@ export function renderPage(origin) {
 ${jsonLd(origin)}
 </script>
 <style>${CSS}</style>
+<noscript><style>.rv{opacity:1;transform:none}</style></noscript>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 <header class="site">
   <div class="wrap nav">
     <a class="brand" href="#top" aria-label="Sentia home">
@@ -356,13 +379,24 @@ ${jsonLd(origin)}
     </nav>
   </div>
 </header>
-<main id="top">
+<div id="top"></div>
+<main id="main" tabindex="-1">
 
 <section class="hero" aria-label="Introduction">
   <div class="wrap">
     <p class="mono kicker rv">Sentia Patch One · Skin temperature · Hydration · Activity</p>
-    <h1 class="rv" style="margin-top:26px">A patch that whispers through networks that already exist.</h1>
+    <h1 class="rv">A patch that whispers through networks that already exist.</h1>
+    <div class="hero-visual rv">
+      <img class="product-render hero-render" src="/img/patch-hero.webp" width="1600" height="893" fetchpriority="high" alt="Sentia Patch One, a 38 mm disc with a matte paper-white top, ink-green edge ring and one coral LED.">
+      <p class="mono caption">Sentia Patch One · Ø 38 mm · 4.2 mm thick</p>
+    </div>
     <p class="lede rv">${FACTS.definition} It has no cellular radio and no GPS. Its measurements ride passing phones on the Find My network, or a LoRaWAN gateway kilometres away, into ${FACTS.platform}.</p>
+    <div class="spec-strip rv" aria-label="Patch specifications">
+      <div><p class="v">38 mm</p><p class="mono k">Diameter</p></div>
+      <div><p class="v">4.2 mm</p><p class="mono k">Thickness</p></div>
+      <div><p class="v">14 days</p><p class="mono k">Wear time</p></div>
+      <div><p class="v">IP67</p><p class="mono k">Water resistance</p></div>
+    </div>
     <div class="chips rv">
       <span class="chip">Find My network · BLE relay</span>
       <span class="chip">LoRaWAN · Gateway uplink</span>
@@ -372,26 +406,30 @@ ${jsonLd(origin)}
       <a href="#demo">Watch the live demo</a>
       <a href="#dashboard">Open the dashboard</a>
     </div>
-    <div class="hero-visual rv">
-      ${patchTopSvg()}
-      <p class="mono caption">Sentia Patch One · Ø 38 mm · 4.2 mm thick</p>
-    </div>
   </div>
 </section>
 
+<div class="wrap value-strip">
+  <p>${FACTS.tagline}</p>
+  <p class="muted">${FACTS.product} is not a medical device.</p>
+</div>
+
 <section id="patch" aria-label="The patch">
   <div class="wrap">
-    <p class="mono kicker rv">The patch</p>
+    <p class="mono kicker rv"><span aria-hidden="true">01 / </span>The patch</p>
     <h2 class="rv">Six layers, 4.2 mm thin.</h2>
-    <p class="lede rv">A flexible adhesive disc worn on the upper arm or torso for up to ${FACTS.wearDays} days. Everything it needs is inside: sensors, two radios, and a printed battery sized for the whole wear.</p>
-    <div class="split" style="margin-top:clamp(44px,6vh,64px)">
-      <div class="rv">${explodedSvg()}</div>
+    <div class="split" style="margin-top:32px">
+      <div class="rv"><img class="product-render" src="/img/patch-exploded.webp" width="1200" height="1200" loading="lazy" alt="Sentia Patch One, exploded view with four separated assemblies above the adhesive base."></div>
       <ol class="layer-list rv">
 ${layerItems}
       </ol>
     </div>
     <div class="sensors">
 ${sensorCards}
+    </div>
+    <div class="wear-story">
+      <img class="product-render rv" src="/img/patch-on-skin.webp" width="1200" height="600" loading="lazy" alt="Sentia Patch One on an inner forearm, a 38 mm adhesive disc for up to 14 days of wear.">
+    <p class="lede rv">A flexible adhesive disc worn on the upper arm or torso for up to ${FACTS.wearDays} days. Everything it needs is inside: sensors, two radios, and a printed battery sized for the whole wear.</p>
     </div>
     <div class="spec-strip rv">
       <div><p class="v">38 mm</p><p class="mono k">Diameter</p></div>
@@ -406,9 +444,10 @@ ${sensorCards}
 
 <section id="how" aria-label="How it works">
   <div class="wrap">
-    <p class="mono kicker rv">How it works</p>
+    <p class="mono kicker rv"><span aria-hidden="true">02 / </span>How it works</p>
     <h2 class="rv">Sense. Whisper. Relay.</h2>
     <p class="lede rv">The patch never looks for a network. It speaks quietly, on a schedule, and lets the networks that already surround us do the carrying.</p>
+    <img class="product-render network-render rv" src="/img/network-scene.webp" width="1600" height="900" loading="lazy" alt="Sentia Patch One beside a phone, relay domes and a LoRaWAN gateway, linked by dotted teal signal paths.">
     <ol class="journey">
       <li class="rv"><span class="mono step">Step 1</span><h3>Sense</h3><p>Every few minutes the patch samples skin temperature, hydration, movement, posture and sweat, and builds one small encrypted measurement digest.</p></li>
       <li class="rv"><span class="mono step">Step 2</span><h3>Whisper</h3><p>In the city it broadcasts the digest inside rotating Bluetooth Low Energy advertisements, following the Find My network accessory pattern. Out of coverage it sends a fuller LoRaWAN frame instead.</p></li>
@@ -416,7 +455,6 @@ ${sensorCards}
       <li class="rv"><span class="mono step">Step 4</span><h3>Server</h3><p>${FACTS.platform} retrieves and decrypts the payloads addressed to it, decodes both formats with one codec, stores the time series and evaluates the alert rules.</p></li>
       <li class="rv"><span class="mono step">Step 5</span><h3>You</h3><p>The wearer, or a care circle they choose, sees the result in the dashboard, through the API, or by asking an assistant through the ${FACTS.mcpServer}.</p></li>
     </ol>
-    <div class="rv" style="margin-top:clamp(44px,6vh,64px)">${pathsSvg()}</div>
     <div class="privacy rv">
       <h3>Private by construction</h3>
       <p>Identifiers rotate with every broadcast window, so a digest cannot be followed across a day. Relay devices see ciphertext and contribute their own location context, never the patch contents. The patch carries no GPS receiver. Only ${FACTS.platform} holds the keys that link a digest to a wearer and decode it. Battery logic is equally plain: Bluetooth Low Energy first, LoRaWAN only when no relay has carried a digest for a while, and high value alerts, a fall impact for example, escalate at once.</p>
@@ -426,10 +464,10 @@ ${sensorCards}
 
 <section id="demo" aria-label="Live demo">
   <div class="wrap">
-    <p class="mono kicker rv">Live demo</p>
+    <p class="mono kicker rv"><span aria-hidden="true">03 / </span>Live demo</p>
     <h2 class="rv">Watch a packet travel.</h2>
     <p class="lede rv">A simulated patch, running in your browser with the same packet codec as the server. Choose where the wearer is, and watch each reading take its path.</p>
-    <div style="margin-top:30px" class="rv">
+    <div style="margin-top:32px" class="rv">
       <span class="toggle" role="group" aria-label="Where is the wearer">
         <button id="demoToggleCity" class="on" type="button">City</button>
         <button id="demoToggleRural" type="button">Rural</button>
@@ -462,7 +500,7 @@ ${sensorCards}
 
 <section id="dashboard" aria-label="Dashboard">
   <div class="wrap">
-    <p class="mono kicker rv">Dashboard</p>
+    <p class="mono kicker rv"><span aria-hidden="true">04 / </span>Dashboard</p>
     <h2 class="rv">${FACTS.platform}, quietly.</h2>
     <p class="lede rv">The product interface. Three patches from the demonstration fleet, served live by the same API an assistant would use.</p>
     <div class="wearer-tabs rv" id="wearerTabs" role="tablist" aria-label="Choose a wearer"></div>
@@ -500,7 +538,7 @@ ${sensorCards}
 
 <section id="mcp" aria-label="MCP server">
   <div class="wrap">
-    <p class="mono kicker rv">For assistants</p>
+    <p class="mono kicker rv"><span aria-hidden="true">05 / </span>For assistants</p>
     <h2 class="rv">The ${FACTS.mcpServer}.</h2>
     <p class="lede rv">Sentia ships an MCP server, so an AI assistant can answer plain questions about a patch: how did hydration trend today, which patches are low on battery, what just arrived and how. It speaks JSON-RPC 2.0 and reads the same data as this page.</p>
     <div class="endpoint rv">POST ${mcpUrl}</div>
@@ -516,9 +554,9 @@ ${toolItems}
     </div>
     <div class="sub rv">
       <h3>A real exchange</h3>
-      <p class="muted" style="margin-bottom:6px">An assistant asks the server to demonstrate the whisper for Marina Soler's patch. Request:</p>
+      <p class="muted" style="margin-bottom:8px">An assistant asks the server to demonstrate the whisper for Marina Soler's patch. Request:</p>
       <pre class="code">${JSON.stringify(ex.request, null, 2)}</pre>
-      <p class="muted" style="margin:18px 0 6px">Response, trimmed to the essentials:</p>
+      <p class="muted" style="margin:16px 0 8px">Response, trimmed to the essentials:</p>
       <pre class="code">${JSON.stringify(ex.response, null, 2)}</pre>
     </div>
   </div>
@@ -526,7 +564,7 @@ ${toolItems}
 
 <section id="specs" aria-label="Specifications">
   <div class="wrap">
-    <p class="mono kicker rv">Specifications</p>
+    <p class="mono kicker rv"><span aria-hidden="true">06 / </span>Specifications</p>
     <h2 class="rv">${FACTS.product}, in numbers.</h2>
     <table aria-label="Sentia Patch One specifications">
       <tbody>
@@ -538,9 +576,9 @@ ${specRows}
 
 <section id="faq" aria-label="Frequently asked questions">
   <div class="wrap">
-    <p class="mono kicker rv">Questions</p>
+    <p class="mono kicker rv"><span aria-hidden="true">07 / </span>Questions</p>
     <h2 class="rv">Asked, answered.</h2>
-    <div style="margin-top:20px">
+    <div style="margin-top:24px">
 ${faqItems}
     </div>
   </div>
@@ -552,14 +590,14 @@ ${faqItems}
     <div class="cols">
       <div>
         <p><strong style="color:var(--ink)">Sentia</strong> · ${FACTS.tagline}</p>
-        <p style="margin-top:10px">${FACTS.definition}</p>
+        <p style="margin-top:8px">${FACTS.definition}</p>
       </div>
       <div>
         <p><a href="#demo">Live demo</a> · <a href="#dashboard">Dashboard</a> · <a href="#mcp">MCP</a> · <a href="${REPO_URL}">Source</a></p>
-        <p style="margin-top:10px">Wellness monitoring, not diagnosis. ${FACTS.product} is not a medical device.</p>
+        <p style="margin-top:8px">Wellness monitoring, not diagnosis. ${FACTS.product} is not a medical device.</p>
       </div>
     </div>
-    <p class="fine">Sentia is a concept product, designed and built end to end by <a href="${GITHUB_URL}">ANVIL</a>, an open source software factory.</p>
+    <p class="fine">Sentia is a concept product, designed and built end to end by <a href="${GITHUB_URL}">ANVIL</a>, an open source software factory. Developed by Eduardo Arana.</p>
   </div>
 </footer>
 <script src="/browser-codec.js"></script>

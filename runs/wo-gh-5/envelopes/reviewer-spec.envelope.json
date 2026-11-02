@@ -1,0 +1,28 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-spec",
+  "to_station": "reviewer-security",
+  "work_order_id": "wo-gh-5",
+  "artifact_path": "runs/wo-gh-5/reviewer-spec.output.md",
+  "status": "executed",
+  "created_at": "2026-10-29T22:34:25.354033+00:00",
+  "review": {
+    "station": "reviewer-spec",
+    "verdict": "pass",
+    "findings": [
+      "S3 holds: `git hash-object src/images.js` returns e10c0b4fa90f1f68b4518d8ae392fc4caca907fe and `src/images.js` has no diff. The full suite reports 102 tests, 101 pass, 0 fail, 1 skipped.",
+      "S1 holds on the CSS. In `src/page.js` the hero visual moves to columns 5/13 with `.hero-render` capped at 960 px (was 640), and the headline drops to columns 1/5. Below 1000 px the image follows the h1 directly (`margin-top:0`). The markup places `.hero-visual` right after the h1, ahead of the lede. I did not render the page at 1440 px or 390 px, so I did not check the fold position at either width.",
+      "S2 holds. Section padding goes from `clamp(96px,12vw,160px)` to `clamp(64px,7vw,96px)`. Display type is capped at 64 px for h1 and h2 (was 144 and 88). The spacing around `.wear-story`, `.network-render` and the exploded-view split is tightened. This matches the amended `design/DESIGN.md` type scale and spacing rhythm.",
+      "Copy: no headline, lede, chip or CTA text changed. The only additions are a hero `.spec-strip` (38 mm, 4.2 mm, 14 days, IP67) and the removal of the h1 inline `margin-top`, which is style rather than copy. The strip repeats facts already on the page, including the second `.spec-strip` near line 434 and the hero caption, so it invents no proof. `design/DESIGN.md` records the repetition explicitly. The diff identifies it, but it is an addition the spec's 'strictly requires' wording does not clearly cover. The owner should confirm it is acceptable.",
+      "`design/DESIGN.md` changes are limited to the title (v3), type scale, spacing rhythm, hero art direction and the hero image cap and mobile placement. The paper background, true-scale and forearm-framing rules are unchanged, as the spec requires. The brand tokens, fonts and the ban on hype and invented proof are untouched.",
+      "Test change to check: `tests/design-v2-1-corrections.test.js` S7 flips the hero cap assertion from `<= 640` to `>= 640`, with a comment citing v3 S1. This is traceable, but the test no longer guards an upper bound on the hero size. The new `tests/design-v3-product-first.test.js` should cover that, but I did not inspect it, so confirm it does.",
+      "Not verified by this review: S4 (the committed packets carry the learnings and reviewer-design judges against them) and S5 (run verdict and five counted reviews). Both belong to the run report and the other stations. The runtime image routes (200, `image/webp`, byte sizes) are only covered through the existing test suite."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-security",
+  "to_station": "reviewer-tests",
+  "work_order_id": "wo-gh-1",
+  "artifact_path": "runs/wo-gh-1/reviewer-security.output.md",
+  "status": "executed",
+  "created_at": "2026-10-29T03:54:45.899225+00:00",
+  "review": {
+    "station": "reviewer-security",
+    "verdict": "pass",
+    "findings": [
+      "The src/page.js diff touches only presentation. It changes CSS values, inline SVG fill colours (for example #5C6F66 to #53685C) and inline margin values. It adds no script, event handler, external URL or new third-party origin.",
+      "The `${...}` interpolations in the changed lines (FACTS.definition, FACTS.product, pathsSvg()) were already in the file. They come from the static facts layer, not from user input, so the diff adds no injection surface.",
+      "The JSON API, MCP server, codec and data layer are not in the diff. Only src/page.js and tests/ui-elevation.test.js changed under src and tests.",
+      "Pre-existing and out of scope for this change: the Google Fonts stylesheet link has no SRI, and the page sets no CSP. Both could be tracked as separate hardening work.",
+      "The review is written to runs/wo-gh-1/reviewer-security.output.md."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

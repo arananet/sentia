@@ -5,6 +5,7 @@ import { renderPage } from './page.js';
 import { BROWSER_CODEC_JS } from './browser-codec.js';
 import { CLIENT_JS } from './client.js';
 import { OG_PNG_B64, ICON_PNG_B64 } from './og.js';
+import { PATCH_HERO_WEBP_B64, PATCH_EXPLODED_WEBP_B64, PATCH_ON_SKIN_WEBP_B64, NETWORK_SCENE_WEBP_B64 } from './images.js';
 import { robotsTxt, sitemapXml, llmsTxt, llmsFullTxt } from './seo.js';
 import { fleet, patchStatus, measurements, alerts, networkStats, getPatch } from './data.js';
 import { handleMcp } from './mcp.js';
@@ -26,6 +27,15 @@ function png(b64) {
   for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
   return new Response(bytes, {
     headers: { 'content-type': 'image/png', 'cache-control': 'public, max-age=86400' },
+  });
+}
+
+function webp(b64) {
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return new Response(bytes, {
+    headers: { 'content-type': 'image/webp', 'cache-control': 'public, max-age=86400' },
   });
 }
 
@@ -75,6 +85,10 @@ export default {
     }
     if (path === '/browser-codec.js') return text(BROWSER_CODEC_JS, 'application/javascript; charset=utf-8', { 'cache-control': 'public, max-age=3600' });
     if (path === '/client.js') return text(CLIENT_JS, 'application/javascript; charset=utf-8', { 'cache-control': 'public, max-age=3600' });
+    if (path === '/img/patch-hero.webp') return webp(PATCH_HERO_WEBP_B64);
+    if (path === '/img/patch-exploded.webp') return webp(PATCH_EXPLODED_WEBP_B64);
+    if (path === '/img/patch-on-skin.webp') return webp(PATCH_ON_SKIN_WEBP_B64);
+    if (path === '/img/network-scene.webp') return webp(NETWORK_SCENE_WEBP_B64);
     if (path === '/og.png') return png(OG_PNG_B64);
     if (path === '/apple-touch-icon.png') return png(ICON_PNG_B64);
     if (path === '/robots.txt') return text(robotsTxt(origin), 'text/plain; charset=utf-8');

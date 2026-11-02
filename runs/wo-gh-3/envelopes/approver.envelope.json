@@ -1,0 +1,10 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "approver",
+  "to_station": "triage-human",
+  "work_order_id": "wo-gh-3",
+  "artifact_path": "runs/wo-gh-3/report.json",
+  "status": "completed",
+  "created_at": "2026-10-29T11:54:16.803464+00:00",
+  "configured_model": "default"
+}

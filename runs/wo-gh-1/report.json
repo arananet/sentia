@@ -1,0 +1,262 @@
+{
+  "work_order_id": "wo-gh-1",
+  "pipeline": "sdlc-default",
+  "title": "Elevate the launch page to flagship product standard (UI built by Astra)",
+  "kind": "feature",
+  "steps": [
+    {
+      "station": "intake",
+      "status": "completed",
+      "detail": "Work order normalized",
+      "duration_ms": 0.012,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "spec-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-1/spec-writer.output.md",
+      "duration_ms": 18433.159,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/spec-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "test-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-1/test-writer.output.md",
+      "duration_ms": 49956.128,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/test-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "builder",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-1/builder.output.md",
+      "duration_ms": 32168.414,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/builder.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-spec",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-1/reviewer-spec.output.md",
+      "duration_ms": 33239.599,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/reviewer-spec.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-security",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-1/reviewer-security.output.md",
+      "duration_ms": 15175.831,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/reviewer-security.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-tests",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-1/reviewer-tests.output.md",
+      "duration_ms": 19481.558,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/reviewer-tests.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-architecture",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-1/reviewer-architecture.output.md",
+      "duration_ms": 22103.281,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/reviewer-architecture.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-design",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-1/reviewer-design.output.md",
+      "duration_ms": 20188.894,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/reviewer-design.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "approver",
+      "status": "completed",
+      "detail": "Approver verdict: changes_requested",
+      "duration_ms": 0.036,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "approver",
+      "status": "loopback",
+      "return_to": "builder",
+      "detail": "Loopback to builder: S6/C1: at max-width 600px, src/page.js:326 sets .hero h1 to clamp(56px,12vw,72px), up from 48px. Body copy that was 14.5-15.5px is now 17px (nav, cta, layer-list, sensor, journey, alert, table, tools, footer, .node p). The body base is 17px at line 158. Mono labels, code blocks and footer .fine (11-13px) are still small. I read them as labels and code, not body copy, which matches DESIGN.md.; S6/C2: the off-rhythm 30, 15, 28 and 26px values are gone from padding, margin and gap. They are now 32/16/32/24 and clamp bounds on the 8px grid. DESIGN.md adds the rhythm rule and exempts border overlaps and diagram coordinates.; S6/C3: both SVG .svg-note rules use #53685C (lines 113 and 125) and #5C6F66 no longer appears. .toggle background is var(--paper), not #fff. White remains on the patch SVG, the node disc and the alternating exploded-view fills. The node disc is not named in C3.; S6/C4: .rv starts at opacity 0 and translateY(16px) with an .8s ease-out transition, and .rv.in reveals it. src/client.js adds 'in' through IntersectionObserver, with a fallback that adds it for all elements. A <noscript> override and the reduced-motion rule keep content visible without JS or with reduced motion.; S1/S4: design/DESIGN.md is updated with the rhythm, motion and S6 bars. Changes under src/ are limited to src/page.js. src/codec.js, src/data.js, src/mcp.js and src/index.js are untouched.; S5: none of revolutionary, cutting edge, game changer, seamless, supercharge or unlock appears in src/page.js or design/DESIGN.md.; S2: npm test gives 44 tests, 43 pass, 0 fail, 1 skipped. The skip is the git-diff scope test, which skips when no main ref exists. I checked S4 by hand instead. Not blocking.; S3: the inputs only show model gpt-6-astra in builder.output.md. Run-level confirmation is for the report and the other stations.; Minor, not blocking: .node p at 17px inside a 31%-wide node at 375px is tight and should be checked visually by reviewer-design.; The src/page.js diff touches only presentation. It changes CSS values, inline SVG fill colours (for example #5C6F66 to #53685C) and inline margin values. It adds no script, event handler, external URL or new third-party origin.; The `${...}` interpolations in the changed lines (FACTS.definition, FACTS.product, pathsSvg()) were already in the file. They come from the static facts layer, not from user input, so the diff adds no injection surface.; The JSON API, MCP server, codec and data layer are not in the diff. Only src/page.js and tests/ui-elevation.test.js changed under src and tests.; Pre-existing and out of scope for this change: the Google Fonts stylesheet link has no SRI, and the page sets no CSP. Both could be tracked as separate hardening work.; The review is written to runs/wo-gh-1/reviewer-security.output.md.; `npm test` ran 44 tests: 43 pass, 0 fail, 1 skipped.; The skipped test is the ui-elevation S4 git-diff check, which reports 'no main ref to diff against' in this checkout. S4 holds by the changed-file list: outside runs/, only design/DESIGN.md, src/page.js and tests/ui-elevation.test.js changed. src/codec.js, src/data.js, src/mcp.js and src/index.js are untouched. I checked this by hand, not through the skipped test.; Spec scenarios S1, S2, S5 and S6 (C1 to C4) each map to named tests in tests/ui-elevation.test.js.; The S6 tests parse the rendered CSS rules, media queries included. They check these limits: hero h1 at least 56px with a 600px rule present, body copy at least 17px, none of the 30/15/28/26px spacing values (inline styles included), `.svg-note` fill #53685C with no white `.toggle` background, and `.rv` starting hidden with 800ms ease-out on opacity and transform.; The reveal works at runtime. src/client.js adds `.in` through an IntersectionObserver and falls back to adding it to every `.rv`. The page also has a `<noscript>` override and a reduced-motion override, so hidden-by-default `.rv` content stays reachable.; S3 (builder model gpt-6-astra) has no unit test. It belongs to the run report, so this is acceptable.; Review written to runs/wo-gh-1/reviewer-tests.output.md.; Scope holds: git status shows only src/page.js changed under src/. The codec, data layer, MCP server, API and facts layer are untouched. The page.js diff changes only CSS values, an SVG note colour, one <noscript> rule and inline margins. No logic or imports changed.; .rv is now hidden by default, with a <noscript> fallback and the existing prefers-reduced-motion override. The page stays readable without JS or with reduced motion, so the structure is sound.; brain/decisions does not exist in this repo. I checked against the work order's presentation-only constraint (the structure and decisions input was missing), and found no conflict. Consider adding a decisions record.; The test 'ui-elevation S4: codec, data, mcp and index are untouched by the run' is skipped here ('no main ref to diff against'). I confirmed the same property by hand from git status. Make the test fetch a base ref so it runs in CI.; npm test gave 44 tests: 43 pass, 0 fail, 1 skipped (the S4 test). The suite is green.; Spacing: src/page.js:166 sets .nav padding to 32px 0, overriding the horizontal gutters inherited from .wrap. The mobile override changes only vertical padding. Preserve the documented 24\u201380px horizontal gutters required by design/DESIGN.md:31.; Typography: src/page.js:346 renders footer prose at 13px, violating the 17px body minimum in design/DESIGN.md:80. Increase .fine body copy to at least 17px.; Label tokens: src/page.js:162 uses 0.18em tracking, while lines 325\u2013327 reduce hero labels and captions to 10px with caption tracking of 0.12em. Apply the documented 11px mono label size and 0.16em tracking from design/DESIGN.md:25\u201326.; Palette: src/page.js:132 fills the passing-phone illustration white, and line 242 applies white to the demo relay disc. design/DESIGN.md:15 reserves white for the physical patch. Use paper or another documented permitted fill for these non-patch elements.",
+      "reason": "S6/C1: at max-width 600px, src/page.js:326 sets .hero h1 to clamp(56px,12vw,72px), up from 48px. Body copy that was 14.5-15.5px is now 17px (nav, cta, layer-list, sensor, journey, alert, table, tools, footer, .node p). The body base is 17px at line 158. Mono labels, code blocks and footer .fine (11-13px) are still small. I read them as labels and code, not body copy, which matches DESIGN.md.; S6/C2: the off-rhythm 30, 15, 28 and 26px values are gone from padding, margin and gap. They are now 32/16/32/24 and clamp bounds on the 8px grid. DESIGN.md adds the rhythm rule and exempts border overlaps and diagram coordinates.; S6/C3: both SVG .svg-note rules use #53685C (lines 113 and 125) and #5C6F66 no longer appears. .toggle background is var(--paper), not #fff. White remains on the patch SVG, the node disc and the alternating exploded-view fills. The node disc is not named in C3.; S6/C4: .rv starts at opacity 0 and translateY(16px) with an .8s ease-out transition, and .rv.in reveals it. src/client.js adds 'in' through IntersectionObserver, with a fallback that adds it for all elements. A <noscript> override and the reduced-motion rule keep content visible without JS or with reduced motion.; S1/S4: design/DESIGN.md is updated with the rhythm, motion and S6 bars. Changes under src/ are limited to src/page.js. src/codec.js, src/data.js, src/mcp.js and src/index.js are untouched.; S5: none of revolutionary, cutting edge, game changer, seamless, supercharge or unlock appears in src/page.js or design/DESIGN.md.; S2: npm test gives 44 tests, 43 pass, 0 fail, 1 skipped. The skip is the git-diff scope test, which skips when no main ref exists. I checked S4 by hand instead. Not blocking.; S3: the inputs only show model gpt-6-astra in builder.output.md. Run-level confirmation is for the report and the other stations.; Minor, not blocking: .node p at 17px inside a 31%-wide node at 375px is tight and should be checked visually by reviewer-design.; The src/page.js diff touches only presentation. It changes CSS values, inline SVG fill colours (for example #5C6F66 to #53685C) and inline margin values. It adds no script, event handler, external URL or new third-party origin.; The `${...}` interpolations in the changed lines (FACTS.definition, FACTS.product, pathsSvg()) were already in the file. They come from the static facts layer, not from user input, so the diff adds no injection surface.; The JSON API, MCP server, codec and data layer are not in the diff. Only src/page.js and tests/ui-elevation.test.js changed under src and tests.; Pre-existing and out of scope for this change: the Google Fonts stylesheet link has no SRI, and the page sets no CSP. Both could be tracked as separate hardening work.; The review is written to runs/wo-gh-1/reviewer-security.output.md.; `npm test` ran 44 tests: 43 pass, 0 fail, 1 skipped.; The skipped test is the ui-elevation S4 git-diff check, which reports 'no main ref to diff against' in this checkout. S4 holds by the changed-file list: outside runs/, only design/DESIGN.md, src/page.js and tests/ui-elevation.test.js changed. src/codec.js, src/data.js, src/mcp.js and src/index.js are untouched. I checked this by hand, not through the skipped test.; Spec scenarios S1, S2, S5 and S6 (C1 to C4) each map to named tests in tests/ui-elevation.test.js.; The S6 tests parse the rendered CSS rules, media queries included. They check these limits: hero h1 at least 56px with a 600px rule present, body copy at least 17px, none of the 30/15/28/26px spacing values (inline styles included), `.svg-note` fill #53685C with no white `.toggle` background, and `.rv` starting hidden with 800ms ease-out on opacity and transform.; The reveal works at runtime. src/client.js adds `.in` through an IntersectionObserver and falls back to adding it to every `.rv`. The page also has a `<noscript>` override and a reduced-motion override, so hidden-by-default `.rv` content stays reachable.; S3 (builder model gpt-6-astra) has no unit test. It belongs to the run report, so this is acceptable.; Review written to runs/wo-gh-1/reviewer-tests.output.md.; Scope holds: git status shows only src/page.js changed under src/. The codec, data layer, MCP server, API and facts layer are untouched. The page.js diff changes only CSS values, an SVG note colour, one <noscript> rule and inline margins. No logic or imports changed.; .rv is now hidden by default, with a <noscript> fallback and the existing prefers-reduced-motion override. The page stays readable without JS or with reduced motion, so the structure is sound.; brain/decisions does not exist in this repo. I checked against the work order's presentation-only constraint (the structure and decisions input was missing), and found no conflict. Consider adding a decisions record.; The test 'ui-elevation S4: codec, data, mcp and index are untouched by the run' is skipped here ('no main ref to diff against'). I confirmed the same property by hand from git status. Make the test fetch a base ref so it runs in CI.; npm test gave 44 tests: 43 pass, 0 fail, 1 skipped (the S4 test). The suite is green.; Spacing: src/page.js:166 sets .nav padding to 32px 0, overriding the horizontal gutters inherited from .wrap. The mobile override changes only vertical padding. Preserve the documented 24\u201380px horizontal gutters required by design/DESIGN.md:31.; Typography: src/page.js:346 renders footer prose at 13px, violating the 17px body minimum in design/DESIGN.md:80. Increase .fine body copy to at least 17px.; Label tokens: src/page.js:162 uses 0.18em tracking, while lines 325\u2013327 reduce hero labels and captions to 10px with caption tracking of 0.12em. Apply the documented 11px mono label size and 0.16em tracking from design/DESIGN.md:25\u201326.; Palette: src/page.js:132 fills the passing-phone illustration white, and line 242 applies white to the demo relay disc. design/DESIGN.md:15 reserves white for the physical patch. Use paper or another documented permitted fill for these non-patch elements.",
+      "duration_ms": 0.0,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": null,
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "triage-human",
+      "status": "completed",
+      "detail": "Human review: required",
+      "duration_ms": 0.006,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "deployer",
+      "status": "packet_ready",
+      "detail": "Packet written to runs/wo-gh-1/deployer.packet.md",
+      "duration_ms": 0.24,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/deployer.packet.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "observer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-1/observer.output.md",
+      "duration_ms": 20144.311,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-1/observer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    }
+  ],
+  "verdict": "changes_requested",
+  "human_required": true,
+  "max_loopbacks": 2,
+  "loopbacks": 1,
+  "deployment_status": null,
+  "verify_results": [],
+  "risk_hints": [],
+  "decision": {
+    "approver": {
+      "reviews_counted": [
+        {
+          "station": "reviewer-spec",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-security",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-tests",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-architecture",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-design",
+          "verdict": "changes_requested"
+        }
+      ],
+      "reviews_expected": [
+        "reviewer-spec",
+        "reviewer-security",
+        "reviewer-tests",
+        "reviewer-architecture",
+        "reviewer-design"
+      ],
+      "rule": "Reviewer reviewer-design requested changes."
+    },
+    "human_gate": {
+      "required": true,
+      "rule": "Verdict is changes_requested, not approved, so a human is required.",
+      "hints_matched": []
+    }
+  },
+  "warnings": []
+}

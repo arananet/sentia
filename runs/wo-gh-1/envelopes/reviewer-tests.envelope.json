@@ -1,0 +1,28 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-tests",
+  "to_station": "reviewer-architecture",
+  "work_order_id": "wo-gh-1",
+  "artifact_path": "runs/wo-gh-1/reviewer-tests.output.md",
+  "status": "executed",
+  "created_at": "2026-10-29T03:55:05.381107+00:00",
+  "review": {
+    "station": "reviewer-tests",
+    "verdict": "pass",
+    "findings": [
+      "`npm test` ran 44 tests: 43 pass, 0 fail, 1 skipped.",
+      "The skipped test is the ui-elevation S4 git-diff check, which reports 'no main ref to diff against' in this checkout. S4 holds by the changed-file list: outside runs/, only design/DESIGN.md, src/page.js and tests/ui-elevation.test.js changed. src/codec.js, src/data.js, src/mcp.js and src/index.js are untouched. I checked this by hand, not through the skipped test.",
+      "Spec scenarios S1, S2, S5 and S6 (C1 to C4) each map to named tests in tests/ui-elevation.test.js.",
+      "The S6 tests parse the rendered CSS rules, media queries included. They check these limits: hero h1 at least 56px with a 600px rule present, body copy at least 17px, none of the 30/15/28/26px spacing values (inline styles included), `.svg-note` fill #53685C with no white `.toggle` background, and `.rv` starting hidden with 800ms ease-out on opacity and transform.",
+      "The reveal works at runtime. src/client.js adds `.in` through an IntersectionObserver and falls back to adding it to every `.rv`. The page also has a `<noscript>` override and a reduced-motion override, so hidden-by-default `.rv` content stays reachable.",
+      "S3 (builder model gpt-6-astra) has no unit test. It belongs to the run report, so this is acceptable.",
+      "Review written to runs/wo-gh-1/reviewer-tests.output.md."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}
