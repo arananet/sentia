@@ -8,7 +8,7 @@
       "station": "intake",
       "status": "completed",
       "detail": "Work order normalized",
-      "duration_ms": 0.017,
+      "duration_ms": 0.008,
       "cost": null,
       "artifacts": [
         "runs/wo-gh-13/report.json"
@@ -21,7 +21,7 @@
       "station": "spec-writer",
       "status": "executed",
       "detail": "Executed by command; output written to runs/wo-gh-13/spec-writer.output.md",
-      "duration_ms": 41681.531,
+      "duration_ms": 34562.488,
       "cost": null,
       "artifacts": [
         "runs/wo-gh-13/spec-writer.output.md"
@@ -37,7 +37,7 @@
       "station": "test-writer",
       "status": "executed",
       "detail": "Executed by command; output written to runs/wo-gh-13/test-writer.output.md",
-      "duration_ms": 297911.432,
+      "duration_ms": 116196.901,
       "cost": null,
       "artifacts": [
         "runs/wo-gh-13/test-writer.output.md"
@@ -53,7 +53,7 @@
       "station": "builder",
       "status": "executed",
       "detail": "Executed by command; output written to runs/wo-gh-13/builder.output.md",
-      "duration_ms": 156618.492,
+      "duration_ms": 211781.643,
       "cost": null,
       "artifacts": [
         "runs/wo-gh-13/builder.output.md"
@@ -67,15 +67,15 @@
     },
     {
       "station": "reviewer-spec",
-      "status": "executed",
-      "detail": "Executed by command; output written to runs/wo-gh-13/reviewer-spec.output.md",
-      "duration_ms": 28359.467,
+      "status": "failed",
+      "detail": "Executor failed: command executor exited 2: claude_station: claude exited 1 for station reviewer-spec: API Error: 402 Insufficient unified billing balance for this request. Your available balance is $0.45. Add credits on the AI Gateway Cloudflare dashboard, or use your own provider key (BYOK).",
+      "duration_ms": 823.348,
       "cost": null,
       "artifacts": [
-        "runs/wo-gh-13/reviewer-spec.output.md"
+        "runs/wo-gh-13/reviewer-spec.packet.md"
       ],
       "configured_model": "claude-sonnet-5-5",
-      "executed_model": "claude-sonnet-5-5",
+      "executed_model": null,
       "executor": {
         "kind": "command",
         "detail": "python3"
@@ -83,15 +83,15 @@
     },
     {
       "station": "reviewer-security",
-      "status": "executed",
-      "detail": "Executed by command; output written to runs/wo-gh-13/reviewer-security.output.md",
-      "duration_ms": 15239.611,
+      "status": "failed",
+      "detail": "Executor failed: command executor exited 2: claude_station: claude exited 1 for station reviewer-security: API Error: 402 Insufficient unified billing balance for this request. Your available balance is $0.99. Add credits on the AI Gateway Cloudflare dashboard, or use your own provider key (BYOK).",
+      "duration_ms": 557.504,
       "cost": null,
       "artifacts": [
-        "runs/wo-gh-13/reviewer-security.output.md"
+        "runs/wo-gh-13/reviewer-security.packet.md"
       ],
       "configured_model": "claude-sonnet-5-5",
-      "executed_model": "claude-sonnet-5-5",
+      "executed_model": null,
       "executor": {
         "kind": "command",
         "detail": "python3"
@@ -99,15 +99,15 @@
     },
     {
       "station": "reviewer-tests",
-      "status": "executed",
-      "detail": "Executed by command; output written to runs/wo-gh-13/reviewer-tests.output.md",
-      "duration_ms": 24426.98,
+      "status": "failed",
+      "detail": "Executor failed: command executor exited 2: claude_station: claude exited 1 for station reviewer-tests: API Error: 402 Insufficient unified billing balance for this request. Your available balance is $0.99. Add credits on the AI Gateway Cloudflare dashboard, or use your own provider key (BYOK).",
+      "duration_ms": 543.556,
       "cost": null,
       "artifacts": [
-        "runs/wo-gh-13/reviewer-tests.output.md"
+        "runs/wo-gh-13/reviewer-tests.packet.md"
       ],
       "configured_model": "claude-sonnet-5-5",
-      "executed_model": "claude-sonnet-5-5",
+      "executed_model": null,
       "executor": {
         "kind": "command",
         "detail": "python3"
@@ -115,15 +115,15 @@
     },
     {
       "station": "reviewer-architecture",
-      "status": "executed",
-      "detail": "Executed by command; output written to runs/wo-gh-13/reviewer-architecture.output.md",
-      "duration_ms": 24574.979,
+      "status": "failed",
+      "detail": "Executor failed: command executor exited 2: claude_station: claude exited 1 for station reviewer-architecture: API Error: 402 Insufficient unified billing balance for this request. Your available balance is $0.99. Add credits on the AI Gateway Cloudflare dashboard, or use your own provider key (BYOK).",
+      "duration_ms": 566.557,
       "cost": null,
       "artifacts": [
-        "runs/wo-gh-13/reviewer-architecture.output.md"
+        "runs/wo-gh-13/reviewer-architecture.packet.md"
       ],
       "configured_model": "claude-sonnet-5-5",
-      "executed_model": "claude-sonnet-5-5",
+      "executed_model": null,
       "executor": {
         "kind": "command",
         "detail": "python3"
@@ -133,7 +133,7 @@
       "station": "reviewer-design",
       "status": "executed",
       "detail": "Executed by command; output written to runs/wo-gh-13/reviewer-design.output.md",
-      "duration_ms": 25010.387,
+      "duration_ms": 14708.834,
       "cost": null,
       "artifacts": [
         "runs/wo-gh-13/reviewer-design.output.md"
@@ -149,7 +149,7 @@
       "station": "approver",
       "status": "completed",
       "detail": "Approver verdict: changes_requested",
-      "duration_ms": 0.042,
+      "duration_ms": 0.026,
       "cost": null,
       "artifacts": [
         "runs/wo-gh-13/report.json"
@@ -162,8 +162,8 @@
       "station": "approver",
       "status": "loopback",
       "return_to": "builder",
-      "detail": "Loopback to builder: R15 not met: the final suite has 3 failures (226 tests, 222 pass, 3 fail, 1 skipped), but the spec allows only the design v4 S11 failure. The other two are 'product-model S7/R13' tests in tests/take-apart-product-model.test.js (lines 394 and 409). evidence/take-apart-product-model/ has no bundle-build.log, and its browser pass log has no page-errors line. They are pre-existing on the base, but they are not the one allowed exception, and no run report lists the failures by name. The builder summary says only 'three confirmed baseline suite failures remain'.; R11/R13 evidence gap: the run report with the measured figures is not in the repo as a file. The figures exist only in evidence/home-layered-view/browser-pass.log and the builder summary: document 48,037 B (+3,603 over 44,434), fallback image 40,672 B, lazy payload 1,209,685 B with the GLB counted once. All three are inside budget, but the spec requires them stated in the run report.; R1-R14 and S1-S10 otherwise hold in code, tests and the bundled browser pass. The section sits between #patch and #how. The importmap, the IntersectionObserver gate (200px margin) and the literal client source (no function.toString) are in place. No new vendored copies were added, and the GLB is fetched once. The browser pass records zero console and page errors, and the lazy gate fires nothing below the fold. The reduced-motion, slider, legend-sync and fallback checks (no JavaScript, no WebGL, bad GLB) all pass. The assembled and exploded screenshots show the product recognisably, with the slider focus ring visible. The 41 home tests pass, and the production bundle builds with exit 0 and no local patches. Reviewer-design still owns the R14 product-test judgement.; R7 minor: the onward link href is '/take-apart?from=home' rather than plain '/take-apart'. It still leads to the study page, but the query string is not in the spec.; Process note: the spec file .openspec/specs/home-layered-view/spec.md is modified in the working tree, with R8, R9, R11 and S6 tightened. It looks like the spec-writer's edit, and the implementation was reviewed against that updated text.; No injection surface: the section markup interpolates only static FACTS values. No request input reaches the HTML or the served JS. The /take-apart?from=home link is fixed and same-origin.; The new routes /home-layers.js and /img/home-layers.webp serve build-time constants with explicit content types through the existing text() and webp() helpers. They take no parameters, so there is no traversal or reflection.; The client module has no innerHTML, eval or document.write. It sets only dataset and aria attributes from numeric and index values. All imports are same-origin: the existing vendored routes, /models/patch-one.glb and /take-apart-model.js. There are no third-party origins and no new vendored copies.; The lazy gate and the mount function fail safe. The dynamic import has a catch, and mount has a try/catch that disposes the renderer. On failure the static fallback image and the HTML layer list remain.; Non-blocking: the repo sets no CSP or nosniff headers on any route. The inline module script and inline import map would need hashes or unsafe-inline if a CSP is added later. This was already the case before this change. The new routes set no cache-control header. The GLB keeps its existing 24 h cache header.; The review is written to runs/wo-gh-13/reviewer-security.output.md.; The new tests are real and mapped. tests/home-layered-view.test.js has 41 tests, and all 41 pass when I run `node --test tests/home-layered-view.test.js`. Each test name carries its spec ids (S1\u2013S10, R1\u2013R14). Together they cover the section position and its aria-label, the five layer buttons in stack order, the copy and the single /take-apart link, model twin equality at t=0 and t=1 against src/take-apart-model.js, the lazy gate and the no-3D-bytes document, the fallback image route and the fallback content, the byte-stable invariants, the payload budgets, accessibility, and the evidence logs and screenshots.; Full suite: `npm test` gives 226 tests, 222 pass, 3 fail and 1 skips. R15 allows exactly one named pre-existing failure, `S11: when reviewer-design has reviewed...`. Two other failures are not covered by that exception: `product-model S7/R13: the bundled browser pass records zero errors, scene ready, the GLB fetched and the five node names` (the evidence text fails the assertion) and `product-model S7/R13: bundle-build.log records the production bundle command, exit 0, zero local patches` (evidence/take-apart-product-model/ has no bundle-build.log).; Those two product-model failures also appear in evidence/home-layered-view/baseline-tests.log (as tests 48 and 49), so they predate this order. The git status shows nothing under evidence/take-apart-product-model/ modified by this run. R15 and the work order require the run report to itemize only S11 by name. The builder output has no itemization of the two product-model failures, so the 'green except S11' claim does not hold. The run report must name both product-model failures as pre-existing on the base branch (their evidence belongs to the sibling stack), and the spec owner must either accept them as extra known exceptions or have them resolved on the stack. This order must not edit another run's evidence to fix them.; Several R13/S10 tests check log and screenshot files rather than behaviour. They are the bundle-build, browser-pass, payload-figures and screenshot checks (tests 35\u201338). The files exist and the tests pass. S3, S4 and S5 (slider, animation, reduced motion, legend sync) are covered by source-pattern checks plus the browser-pass.log text. No automated test drives the slider or legend in a browser. I accept this because the suite is the node test runner and scripts/capture-home.mjs is the capture of record. Reviewer-design should still confirm that the screenshots show the product, and that the assembled and exploded screenshots differ.; Fit: the section reuses the take-apart stack as specified. The import map has the same two entries as src/take-apart-page.js, the routes are the existing /vendor/* and /models/patch-one.glb, /take-apart-model.js supplies the model, and no vendored copy is added. The new routes in src/index.js (/home-layers.js, /img/home-layers.webp) follow the dynamic-import and text()/webp() helper pattern of the neighbouring routes.; Layering: src/page.js only imports home-layered.js and inserts the section between #patch and #how. The client and image bytes live in separate lazily imported modules. src/images.js and the four existing image routes are untouched.; Bundling: the client is a literal string with no function.toString and a static dynamic-import path, consistent with the take-apart bundling decision. The gate is small and inline. The home document grows by 3,603 B and the lazy payload is 1,209,685 B (GLB counted once), both inside budget.; Not blocking: brain/decisions does not exist in the repo, so I judged fit against brain/project.md, the spec and the take-apart code. No decision record was available to contradict.; Minor: the home client duplicates scene setup (camera, lights, material fade, framing) from take-apart-client.js instead of sharing it. This is acceptable because the take-apart page must stay untouched, but it risks drift.; Minor: the onward link href is /take-apart?from=home, not plain /take-apart as in R7. It resolves to the same page.; Process, for the approving station: the working tree edits .openspec/specs/home-layered-view/spec.md (R8, R9, R11, S6), so the approver should confirm those amendments were authorised. The suite shows 3 failures (design v4 S11 plus two product-model S7/R13 tests), not the single S11 failure the work order allows. The two extra failures predate this change but must be itemized by name in the run report, as reviewer-spec already noted. My review output is saved at runs/wo-gh-13/reviewer-architecture.output.md.; R14 product test fails against design/reference/quality-board-1.png and quality-board-2.png: evidence/home-layered-view/home-exploded.png shows adhesive and release liner as solid rimmed slabs rather than translucent films, with flat lighting and simplified PCB components that read as a toy-like render. The wordmark, teal LED and layer order are present, but materials and lighting do not meet design/DESIGN.md's production-quality bar. Improve the home rendering while preserving the required asset and model semantics, then recapture both states for review.; src/home-layered.js:23 renders the section label as ordinary mixed-case body text. design/DESIGN.md requires recurring numbered mono section labels and specifies 11 px uppercase system mono with 0.16 em tracking. Apply that treatment to the new section without changing existing section markup.",
-      "reason": "R15 not met: the final suite has 3 failures (226 tests, 222 pass, 3 fail, 1 skipped), but the spec allows only the design v4 S11 failure. The other two are 'product-model S7/R13' tests in tests/take-apart-product-model.test.js (lines 394 and 409). evidence/take-apart-product-model/ has no bundle-build.log, and its browser pass log has no page-errors line. They are pre-existing on the base, but they are not the one allowed exception, and no run report lists the failures by name. The builder summary says only 'three confirmed baseline suite failures remain'.; R11/R13 evidence gap: the run report with the measured figures is not in the repo as a file. The figures exist only in evidence/home-layered-view/browser-pass.log and the builder summary: document 48,037 B (+3,603 over 44,434), fallback image 40,672 B, lazy payload 1,209,685 B with the GLB counted once. All three are inside budget, but the spec requires them stated in the run report.; R1-R14 and S1-S10 otherwise hold in code, tests and the bundled browser pass. The section sits between #patch and #how. The importmap, the IntersectionObserver gate (200px margin) and the literal client source (no function.toString) are in place. No new vendored copies were added, and the GLB is fetched once. The browser pass records zero console and page errors, and the lazy gate fires nothing below the fold. The reduced-motion, slider, legend-sync and fallback checks (no JavaScript, no WebGL, bad GLB) all pass. The assembled and exploded screenshots show the product recognisably, with the slider focus ring visible. The 41 home tests pass, and the production bundle builds with exit 0 and no local patches. Reviewer-design still owns the R14 product-test judgement.; R7 minor: the onward link href is '/take-apart?from=home' rather than plain '/take-apart'. It still leads to the study page, but the query string is not in the spec.; Process note: the spec file .openspec/specs/home-layered-view/spec.md is modified in the working tree, with R8, R9, R11 and S6 tightened. It looks like the spec-writer's edit, and the implementation was reviewed against that updated text.; No injection surface: the section markup interpolates only static FACTS values. No request input reaches the HTML or the served JS. The /take-apart?from=home link is fixed and same-origin.; The new routes /home-layers.js and /img/home-layers.webp serve build-time constants with explicit content types through the existing text() and webp() helpers. They take no parameters, so there is no traversal or reflection.; The client module has no innerHTML, eval or document.write. It sets only dataset and aria attributes from numeric and index values. All imports are same-origin: the existing vendored routes, /models/patch-one.glb and /take-apart-model.js. There are no third-party origins and no new vendored copies.; The lazy gate and the mount function fail safe. The dynamic import has a catch, and mount has a try/catch that disposes the renderer. On failure the static fallback image and the HTML layer list remain.; Non-blocking: the repo sets no CSP or nosniff headers on any route. The inline module script and inline import map would need hashes or unsafe-inline if a CSP is added later. This was already the case before this change. The new routes set no cache-control header. The GLB keeps its existing 24 h cache header.; The review is written to runs/wo-gh-13/reviewer-security.output.md.; The new tests are real and mapped. tests/home-layered-view.test.js has 41 tests, and all 41 pass when I run `node --test tests/home-layered-view.test.js`. Each test name carries its spec ids (S1\u2013S10, R1\u2013R14). Together they cover the section position and its aria-label, the five layer buttons in stack order, the copy and the single /take-apart link, model twin equality at t=0 and t=1 against src/take-apart-model.js, the lazy gate and the no-3D-bytes document, the fallback image route and the fallback content, the byte-stable invariants, the payload budgets, accessibility, and the evidence logs and screenshots.; Full suite: `npm test` gives 226 tests, 222 pass, 3 fail and 1 skips. R15 allows exactly one named pre-existing failure, `S11: when reviewer-design has reviewed...`. Two other failures are not covered by that exception: `product-model S7/R13: the bundled browser pass records zero errors, scene ready, the GLB fetched and the five node names` (the evidence text fails the assertion) and `product-model S7/R13: bundle-build.log records the production bundle command, exit 0, zero local patches` (evidence/take-apart-product-model/ has no bundle-build.log).; Those two product-model failures also appear in evidence/home-layered-view/baseline-tests.log (as tests 48 and 49), so they predate this order. The git status shows nothing under evidence/take-apart-product-model/ modified by this run. R15 and the work order require the run report to itemize only S11 by name. The builder output has no itemization of the two product-model failures, so the 'green except S11' claim does not hold. The run report must name both product-model failures as pre-existing on the base branch (their evidence belongs to the sibling stack), and the spec owner must either accept them as extra known exceptions or have them resolved on the stack. This order must not edit another run's evidence to fix them.; Several R13/S10 tests check log and screenshot files rather than behaviour. They are the bundle-build, browser-pass, payload-figures and screenshot checks (tests 35\u201338). The files exist and the tests pass. S3, S4 and S5 (slider, animation, reduced motion, legend sync) are covered by source-pattern checks plus the browser-pass.log text. No automated test drives the slider or legend in a browser. I accept this because the suite is the node test runner and scripts/capture-home.mjs is the capture of record. Reviewer-design should still confirm that the screenshots show the product, and that the assembled and exploded screenshots differ.; Fit: the section reuses the take-apart stack as specified. The import map has the same two entries as src/take-apart-page.js, the routes are the existing /vendor/* and /models/patch-one.glb, /take-apart-model.js supplies the model, and no vendored copy is added. The new routes in src/index.js (/home-layers.js, /img/home-layers.webp) follow the dynamic-import and text()/webp() helper pattern of the neighbouring routes.; Layering: src/page.js only imports home-layered.js and inserts the section between #patch and #how. The client and image bytes live in separate lazily imported modules. src/images.js and the four existing image routes are untouched.; Bundling: the client is a literal string with no function.toString and a static dynamic-import path, consistent with the take-apart bundling decision. The gate is small and inline. The home document grows by 3,603 B and the lazy payload is 1,209,685 B (GLB counted once), both inside budget.; Not blocking: brain/decisions does not exist in the repo, so I judged fit against brain/project.md, the spec and the take-apart code. No decision record was available to contradict.; Minor: the home client duplicates scene setup (camera, lights, material fade, framing) from take-apart-client.js instead of sharing it. This is acceptable because the take-apart page must stay untouched, but it risks drift.; Minor: the onward link href is /take-apart?from=home, not plain /take-apart as in R7. It resolves to the same page.; Process, for the approving station: the working tree edits .openspec/specs/home-layered-view/spec.md (R8, R9, R11, S6), so the approver should confirm those amendments were authorised. The suite shows 3 failures (design v4 S11 plus two product-model S7/R13 tests), not the single S11 failure the work order allows. The two extra failures predate this change but must be itemized by name in the run report, as reviewer-spec already noted. My review output is saved at runs/wo-gh-13/reviewer-architecture.output.md.; R14 product test fails against design/reference/quality-board-1.png and quality-board-2.png: evidence/home-layered-view/home-exploded.png shows adhesive and release liner as solid rimmed slabs rather than translucent films, with flat lighting and simplified PCB components that read as a toy-like render. The wordmark, teal LED and layer order are present, but materials and lighting do not meet design/DESIGN.md's production-quality bar. Improve the home rendering while preserving the required asset and model semantics, then recapture both states for review.; src/home-layered.js:23 renders the section label as ordinary mixed-case body text. design/DESIGN.md requires recurring numbered mono section labels and specifies 11 px uppercase system mono with 0.16 em tracking. Apply that treatment to the new section without changing existing section markup.",
+      "detail": "Loopback to builder: R14 / design/DESIGN.md production quality: evidence/home-layered-view/home-exploded.png still shows the adhesive as a thick, pale rimmed slab and the release liner as a flat gray plate. Neither convincingly reads as translucent film against design/reference/quality-board-1.png and quality-board-2.png. Adjust the home scene's material handling and lighting in src/home-layered-client.js, preserving the frozen GLB and model semantics, and recapture both states.; R14 / design/DESIGN.md production quality: the recaptured exploded view still renders PCB components as uniformly shaded blocks with weak metallic highlights and little visible fine detail compared with both reference boards. The assembled cover also remains broadly flat-lit. Refine the home environment and lighting so existing board detail and physical material differences survive at the displayed size; the required production-quality product test remains unmet.",
+      "reason": "R14 / design/DESIGN.md production quality: evidence/home-layered-view/home-exploded.png still shows the adhesive as a thick, pale rimmed slab and the release liner as a flat gray plate. Neither convincingly reads as translucent film against design/reference/quality-board-1.png and quality-board-2.png. Adjust the home scene's material handling and lighting in src/home-layered-client.js, preserving the frozen GLB and model semantics, and recapture both states.; R14 / design/DESIGN.md production quality: the recaptured exploded view still renders PCB components as uniformly shaded blocks with weak metallic highlights and little visible fine detail compared with both reference boards. The assembled cover also remains broadly flat-lit. Refine the home environment and lighting so existing board detail and physical material differences survive at the displayed size; the required production-quality product test remains unmet.",
       "duration_ms": 0.0,
       "cost": null,
       "artifacts": [],
@@ -186,7 +186,7 @@
       "station": "deployer",
       "status": "packet_ready",
       "detail": "Packet written to runs/wo-gh-13/deployer.packet.md",
-      "duration_ms": 0.073,
+      "duration_ms": 0.213,
       "cost": null,
       "artifacts": [
         "runs/wo-gh-13/deployer.packet.md"
@@ -197,15 +197,15 @@
     },
     {
       "station": "observer",
-      "status": "executed",
-      "detail": "Executed by command; output written to runs/wo-gh-13/observer.output.md",
-      "duration_ms": 16969.843,
+      "status": "failed",
+      "detail": "Executor failed: command executor exited 2: claude_station: claude exited 1 for station observer: API Error: 402 Insufficient unified billing balance for this request. Your available balance is $1.01. Add credits on the AI Gateway Cloudflare dashboard, or use your own provider key (BYOK).",
+      "duration_ms": 617.88,
       "cost": null,
       "artifacts": [
-        "runs/wo-gh-13/observer.output.md"
+        "runs/wo-gh-13/observer.packet.md"
       ],
       "configured_model": "claude-sonnet-5-5",
-      "executed_model": "claude-sonnet-5-5",
+      "executed_model": null,
       "executor": {
         "kind": "command",
         "detail": "python3"
@@ -223,22 +223,6 @@
     "approver": {
       "reviews_counted": [
         {
-          "station": "reviewer-spec",
-          "verdict": "changes_requested"
-        },
-        {
-          "station": "reviewer-security",
-          "verdict": "pass"
-        },
-        {
-          "station": "reviewer-tests",
-          "verdict": "changes_requested"
-        },
-        {
-          "station": "reviewer-architecture",
-          "verdict": "pass"
-        },
-        {
           "station": "reviewer-design",
           "verdict": "changes_requested"
         }
@@ -250,7 +234,7 @@
         "reviewer-architecture",
         "reviewer-design"
       ],
-      "rule": "Reviewers reviewer-spec, reviewer-tests, reviewer-design requested changes."
+      "rule": "Reviewer reviewer-design requested changes."
     },
     "human_gate": {
       "required": true,

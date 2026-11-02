@@ -2,8 +2,8 @@
   "station": "reviewer-design",
   "verdict": "changes_requested",
   "findings": [
-    "R14 product test fails against design/reference/quality-board-1.png and quality-board-2.png: evidence/home-layered-view/home-exploded.png shows adhesive and release liner as solid rimmed slabs rather than translucent films, with flat lighting and simplified PCB components that read as a toy-like render. The wordmark, teal LED and layer order are present, but materials and lighting do not meet design/DESIGN.md's production-quality bar. Improve the home rendering while preserving the required asset and model semantics, then recapture both states for review.",
-    "src/home-layered.js:23 renders the section label as ordinary mixed-case body text. design/DESIGN.md requires recurring numbered mono section labels and specifies 11 px uppercase system mono with 0.16 em tracking. Apply that treatment to the new section without changing existing section markup."
+    "R14 / design/DESIGN.md production quality: evidence/home-layered-view/home-exploded.png still shows the adhesive as a thick, pale rimmed slab and the release liner as a flat gray plate. Neither convincingly reads as translucent film against design/reference/quality-board-1.png and quality-board-2.png. Adjust the home scene's material handling and lighting in src/home-layered-client.js, preserving the frozen GLB and model semantics, and recapture both states.",
+    "R14 / design/DESIGN.md production quality: the recaptured exploded view still renders PCB components as uniformly shaded blocks with weak metallic highlights and little visible fine detail compared with both reference boards. The assembled cover also remains broadly flat-lit. Refine the home environment and lighting so existing board detail and physical material differences survive at the displayed size; the required production-quality product test remains unmet."
   ]
 }
 
