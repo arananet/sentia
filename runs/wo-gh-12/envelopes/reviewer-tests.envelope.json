@@ -1,0 +1,28 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-tests",
+  "to_station": "reviewer-architecture",
+  "work_order_id": "wo-gh-12",
+  "artifact_path": "runs/wo-gh-12/reviewer-tests.output.md",
+  "status": "executed",
+  "created_at": "2026-11-01T01:14:13.366596+00:00",
+  "review": {
+    "station": "reviewer-tests",
+    "verdict": "pass",
+    "findings": [
+      "I ran `node --test tests/*.test.js` on the final tree. 198 tests ran: 196 pass, 1 fail, 1 skip. The only failure is `design-v4 S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/`. It is the itemized pre-existing exception and was not absorbed or fixed by editing evidence.",
+      "`tests/take-apart-product-model.test.js` alone: 35 of 35 pass. The new S11 (board, 5 tests), S12 (cover, 4 tests), S13 (footer, 2 tests) and S14 (budget, determinism, comparison doc) tests map to the loopback spec scenarios.",
+      "The tests check the GLB itself, not just file names. The board has 217 meshes and 9 distinct finishes, against round 1's 17 and 4 (test floors: 30 and 7). Other checks cover the 0.5 mm envelope, LED socket depth and teal emitter, wordmark equality with round 1, and the cover microtexture recorded in the build notes.",
+      "The footer test asserts the exact line `Five layers \u00b7 2.5 mm assembled profile \u00b7 Blender built product model`, that the tour-status span is untouched, and that page bytes are otherwise pinned by sha256 to round 1.",
+      "The GLB size is stated in the test output: 798,092 bytes (779.4 KB) against the 819,200 byte (800 KiB) budget. The margin is thin, about 21 KB, but it is within budget.",
+      "The finish tests are structural, so whether the board and cover look real stays with reviewer-design. I did not rerun Blender. I relied on `reproducibility.log` and the committed-asset equality tests for that.",
+      "`runs/wo-gh-12/reviewer-tests.output.md` showed as deleted at the start of this review. I recreated it with this review's contents."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

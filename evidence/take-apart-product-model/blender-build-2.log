@@ -1,0 +1,969 @@
+INFO Draco mesh compression is available, use library at /home/runner/blender-4.5.15/4.5/scripts/addons_core/io_scene_gltf2/libextern_draco.so
+01:10:10 | INFO: Starting glTF 2.0 export
+01:10:10 | INFO: Extracting primitive: Crowned silicone shell
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.001
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.003
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Text
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.002
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Microcell comfort foam
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.096
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.120
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.144
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.168
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.290
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.291
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.288
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.289
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.007
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.005
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.006
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.008
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.010
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.012
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.014
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.016
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.018
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.020
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.022
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.024
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.026
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.028
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.216
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.226
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.236
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.246
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.256
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.266
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.276
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.112
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.136
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.160
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.184
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.004
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.104
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.128
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.152
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.176
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.097
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.099
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.105
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.107
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.113
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.115
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.121
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.123
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.129
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.131
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.137
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.139
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.145
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.147
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.153
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.155
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.161
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.163
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.169
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.171
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.177
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.179
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.185
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.187
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.036
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.039
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.042
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.045
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.048
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.051
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.054
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.057
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.060
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.063
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.066
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.069
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.072
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.075
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.078
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.081
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.084
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.087
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.090
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.093
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: PCB substrate
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.008
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.034
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.101
+01:10:10 | INFO: Primitives created: 2
+01:10:10 | INFO: Extracting primitive: Cube.109
+01:10:10 | INFO: Primitives created: 2
+01:10:10 | INFO: Extracting primitive: Cube.125
+01:10:10 | INFO: Primitives created: 2
+01:10:10 | INFO: Extracting primitive: Cube.133
+01:10:10 | INFO: Primitives created: 2
+01:10:10 | INFO: Extracting primitive: Cylinder.002
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.005
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.001
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.004
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.003
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.286
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.287
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.221
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.231
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.241
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.251
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.261
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.271
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.281
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.098
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.100
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.106
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.108
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.114
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.116
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.122
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.124
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.130
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.132
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.138
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.140
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.146
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.148
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.154
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.156
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.162
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.164
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.170
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.172
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.178
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.180
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.186
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.188
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.037
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.038
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.040
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.041
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.043
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.044
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.046
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.047
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.049
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.050
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.052
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.053
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.055
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.056
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.058
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.059
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.061
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.062
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.064
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.065
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.067
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.068
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.070
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.071
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.073
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.074
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.076
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.077
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.079
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.080
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.082
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.083
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.085
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.086
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.088
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.089
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.091
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.092
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.094
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.095
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.030
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.031
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.032
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.033
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.006
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.217
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.218
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.222
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.223
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.227
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.228
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.232
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.233
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.237
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.238
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.242
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.243
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.247
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.248
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.252
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.253
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.257
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.258
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.262
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.263
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.267
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.268
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.272
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.273
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.277
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.278
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.282
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cube.283
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.007
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.009
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.011
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.013
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.015
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.017
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.019
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.021
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.023
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.025
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.027
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Cylinder.029
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Optically translucent adhesive
+01:10:10 | INFO: Primitives created: 1
+01:10:10 | INFO: Extracting primitive: Peeled release liner
+01:10:10 | INFO: Primitives created: 1
+01:10:11 | INFO: Finished glTF 2.0 export in 0.458573579788208 s
+Blender 4.5.15 LTS (hash 5afeabba6097 built 2026-10-22 01:33:47)
+Fra:1 Mem:31.95M (Peak 31.95M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Crowned silicone shell
+Fra:1 Mem:31.95M (Peak 31.95M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | LED recessed socket
+Fra:1 Mem:31.96M (Peak 31.96M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Teal LED line
+Fra:1 Mem:31.96M (Peak 31.96M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Recessed optical lens
+Fra:1 Mem:31.97M (Peak 31.97M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Microcell comfort foam
+Fra:1 Mem:32.00M (Peak 32.00M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | PCB substrate
+Fra:1 Mem:32.01M (Peak 32.01M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Main processing chip
+Fra:1 Mem:32.02M (Peak 32.02M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Chip shield
+Fra:1 Mem:32.03M (Peak 32.03M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Thin film battery
+Fra:1 Mem:32.12M (Peak 32.12M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Battery insulating rim
+Fra:1 Mem:32.13M (Peak 32.13M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sensor plated rim
+Fra:1 Mem:32.13M (Peak 32.13M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sensor disc
+Fra:1 Mem:32.14M (Peak 32.14M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sensor aperture
+Fra:1 Mem:32.14M (Peak 32.14M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sensor plated rim.001
+Fra:1 Mem:32.15M (Peak 32.15M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sensor disc.001
+Fra:1 Mem:32.16M (Peak 32.16M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sensor aperture.001
+Fra:1 Mem:32.16M (Peak 32.16M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Processor pin
+Fra:1 Mem:32.19M (Peak 32.19M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package
+Fra:1 Mem:32.19M (Peak 32.19M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination
+Fra:1 Mem:32.20M (Peak 32.20M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.001
+Fra:1 Mem:32.21M (Peak 32.21M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.001
+Fra:1 Mem:32.22M (Peak 32.22M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.002
+Fra:1 Mem:32.23M (Peak 32.23M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.003
+Fra:1 Mem:32.23M (Peak 32.23M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.002
+Fra:1 Mem:32.24M (Peak 32.24M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.004
+Fra:1 Mem:32.25M (Peak 32.25M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.005
+Fra:1 Mem:32.25M (Peak 32.25M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.003
+Fra:1 Mem:32.26M (Peak 32.26M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.006
+Fra:1 Mem:32.27M (Peak 32.27M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.007
+Fra:1 Mem:32.28M (Peak 32.28M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.004
+Fra:1 Mem:32.29M (Peak 32.29M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.008
+Fra:1 Mem:32.29M (Peak 32.29M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.009
+Fra:1 Mem:32.30M (Peak 32.30M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.005
+Fra:1 Mem:32.31M (Peak 32.31M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.010
+Fra:1 Mem:32.32M (Peak 32.32M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.011
+Fra:1 Mem:32.32M (Peak 32.32M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.006
+Fra:1 Mem:32.33M (Peak 32.33M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.012
+Fra:1 Mem:32.34M (Peak 32.34M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.013
+Fra:1 Mem:32.35M (Peak 32.35M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.007
+Fra:1 Mem:32.36M (Peak 32.36M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.014
+Fra:1 Mem:32.36M (Peak 32.36M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.015
+Fra:1 Mem:32.37M (Peak 32.37M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.008
+Fra:1 Mem:32.38M (Peak 32.38M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Plane
+Fra:1 Mem:32.38M (Peak 32.38M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Area
+Fra:1 Mem:32.38M (Peak 32.38M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Peeled release liner
+Fra:1 Mem:32.39M (Peak 32.39M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.017
+Fra:1 Mem:32.41M (Peak 32.41M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.009
+Fra:1 Mem:32.42M (Peak 32.42M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.018
+Fra:1 Mem:32.42M (Peak 32.42M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.019
+Fra:1 Mem:32.43M (Peak 32.43M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.010
+Fra:1 Mem:32.44M (Peak 32.44M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.020
+Fra:1 Mem:32.44M (Peak 32.44M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.021
+Fra:1 Mem:32.45M (Peak 32.45M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.011
+Fra:1 Mem:32.45M (Peak 32.45M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.022
+Fra:1 Mem:32.46M (Peak 32.46M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.023
+Fra:1 Mem:32.46M (Peak 32.46M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.012
+Fra:1 Mem:32.47M (Peak 32.47M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.024
+Fra:1 Mem:32.47M (Peak 32.47M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.025
+Fra:1 Mem:32.48M (Peak 32.48M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.013
+Fra:1 Mem:32.48M (Peak 32.48M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.026
+Fra:1 Mem:32.49M (Peak 32.49M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.027
+Fra:1 Mem:32.50M (Peak 32.50M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.014
+Fra:1 Mem:32.50M (Peak 32.50M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.028
+Fra:1 Mem:32.51M (Peak 32.51M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.029
+Fra:1 Mem:32.51M (Peak 32.51M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.015
+Fra:1 Mem:32.52M (Peak 32.52M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.030
+Fra:1 Mem:32.52M (Peak 32.52M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.031
+Fra:1 Mem:32.53M (Peak 32.53M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.016
+Fra:1 Mem:32.53M (Peak 32.53M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.032
+Fra:1 Mem:32.54M (Peak 32.54M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.033
+Fra:1 Mem:32.55M (Peak 32.55M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Battery contact tab.001
+Fra:1 Mem:32.56M (Peak 32.56M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.017
+Fra:1 Mem:32.57M (Peak 32.57M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Battery contact tab
+Fra:1 Mem:32.57M (Peak 32.57M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.034
+Fra:1 Mem:32.58M (Peak 32.58M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Battery foil seam.001
+Fra:1 Mem:32.58M (Peak 32.58M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.035
+Fra:1 Mem:32.59M (Peak 32.59M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Battery foil seam
+Fra:1 Mem:32.59M (Peak 32.59M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.018
+Fra:1 Mem:32.59M (Peak 32.59M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Processor pin one dimple
+Fra:1 Mem:32.60M (Peak 32.60M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Shield folded flange.001
+Fra:1 Mem:32.61M (Peak 32.61M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.036
+Fra:1 Mem:32.61M (Peak 32.61M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Shield folded flange
+Fra:1 Mem:32.61M (Peak 32.61M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.037
+Fra:1 Mem:32.63M (Peak 32.63M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.027
+Fra:1 Mem:32.62M (Peak 32.63M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.019
+Fra:1 Mem:32.63M (Peak 32.63M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.026
+Fra:1 Mem:32.63M (Peak 32.63M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.038
+Fra:1 Mem:32.64M (Peak 32.64M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.039
+Fra:1 Mem:32.65M (Peak 32.65M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Auxiliary IC
+Fra:1 Mem:32.65M (Peak 32.65M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal
+Fra:1 Mem:32.67M (Peak 32.67M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet
+Fra:1 Mem:32.67M (Peak 32.67M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.025
+Fra:1 Mem:32.67M (Peak 32.67M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.001
+Fra:1 Mem:32.69M (Peak 32.69M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.024
+Fra:1 Mem:32.69M (Peak 32.69M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Decoupling capacitor.006
+Fra:1 Mem:32.71M (Peak 32.71M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.023
+Fra:1 Mem:32.70M (Peak 32.71M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.001
+Fra:1 Mem:32.71M (Peak 32.71M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.022
+Fra:1 Mem:32.71M (Peak 32.71M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Routed copper trace
+Fra:1 Mem:32.75M (Peak 32.75M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Signal resistor.005
+Fra:1 Mem:32.76M (Peak 32.76M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus
+Fra:1 Mem:32.76M (Peak 32.76M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill
+Fra:1 Mem:32.76M (Peak 32.76M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.021
+Fra:1 Mem:32.77M (Peak 32.77M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | MLCC capacitor
+Fra:1 Mem:32.78M (Peak 32.78M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.020
+Fra:1 Mem:32.78M (Peak 32.78M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.002
+Fra:1 Mem:32.79M (Peak 32.79M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Decoupling capacitor.005
+Fra:1 Mem:32.79M (Peak 32.79M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.002
+Fra:1 Mem:32.81M (Peak 32.81M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.019
+Fra:1 Mem:32.80M (Peak 32.81M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.003
+Fra:1 Mem:32.81M (Peak 32.81M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.018
+Fra:1 Mem:32.81M (Peak 32.81M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Routed copper trace.003
+Fra:1 Mem:32.83M (Peak 32.83M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.001
+Fra:1 Mem:32.83M (Peak 32.83M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.001
+Fra:1 Mem:32.83M (Peak 32.83M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Ferrite inductor
+Fra:1 Mem:32.84M (Peak 32.84M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.004
+Fra:1 Mem:32.85M (Peak 32.85M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.004
+Fra:1 Mem:32.85M (Peak 32.85M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.005
+Fra:1 Mem:32.86M (Peak 32.86M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.005
+Fra:1 Mem:32.86M (Peak 32.86M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.002
+Fra:1 Mem:32.87M (Peak 32.87M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.002
+Fra:1 Mem:32.87M (Peak 32.87M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Auxiliary IC.001
+Fra:1 Mem:32.88M (Peak 32.88M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.006
+Fra:1 Mem:32.88M (Peak 32.88M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.006
+Fra:1 Mem:32.89M (Peak 32.89M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.007
+Fra:1 Mem:32.90M (Peak 32.90M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.007
+Fra:1 Mem:32.90M (Peak 32.90M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Routed copper trace.009
+Fra:1 Mem:32.91M (Peak 32.91M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.003
+Fra:1 Mem:32.92M (Peak 32.92M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.003
+Fra:1 Mem:32.92M (Peak 32.92M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | MLCC capacitor.001
+Fra:1 Mem:32.93M (Peak 32.93M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.008
+Fra:1 Mem:32.93M (Peak 32.93M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.008
+Fra:1 Mem:32.94M (Peak 32.94M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.009
+Fra:1 Mem:32.94M (Peak 32.94M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.009
+Fra:1 Mem:32.95M (Peak 32.95M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Routed copper trace.012
+Fra:1 Mem:32.96M (Peak 32.96M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.004
+Fra:1 Mem:32.97M (Peak 32.97M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.004
+Fra:1 Mem:32.97M (Peak 32.97M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Ferrite inductor.001
+Fra:1 Mem:32.98M (Peak 32.98M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.010
+Fra:1 Mem:32.99M (Peak 32.99M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.010
+Fra:1 Mem:32.99M (Peak 32.99M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.011
+Fra:1 Mem:33.01M (Peak 33.01M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.011
+Fra:1 Mem:33.02M (Peak 33.02M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.017
+Fra:1 Mem:33.01M (Peak 33.02M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.005
+Fra:1 Mem:33.02M (Peak 33.02M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.005
+Fra:1 Mem:33.02M (Peak 33.02M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Auxiliary IC.002
+Fra:1 Mem:33.03M (Peak 33.03M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.016
+Fra:1 Mem:33.04M (Peak 33.04M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.012
+Fra:1 Mem:33.04M (Peak 33.04M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Decoupling capacitor.004
+Fra:1 Mem:33.05M (Peak 33.05M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.012
+Fra:1 Mem:33.05M (Peak 33.05M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.013
+Fra:1 Mem:33.06M (Peak 33.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.013
+Fra:1 Mem:33.06M (Peak 33.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.006
+Fra:1 Mem:33.07M (Peak 33.07M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.006
+Fra:1 Mem:33.07M (Peak 33.07M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | MLCC capacitor.002
+Fra:1 Mem:33.08M (Peak 33.08M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.014
+Fra:1 Mem:33.08M (Peak 33.08M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.014
+Fra:1 Mem:33.09M (Peak 33.09M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.015
+Fra:1 Mem:33.10M (Peak 33.10M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.015
+Fra:1 Mem:33.12M (Peak 33.12M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.007
+Fra:1 Mem:33.12M (Peak 33.12M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.014
+Fra:1 Mem:33.14M (Peak 33.14M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.007
+Fra:1 Mem:33.14M (Peak 33.14M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Ferrite inductor.002
+Fra:1 Mem:33.15M (Peak 33.15M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Signal resistor.003
+Fra:1 Mem:33.15M (Peak 33.15M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.016
+Fra:1 Mem:33.15M (Peak 33.15M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.013
+Fra:1 Mem:33.17M (Peak 33.17M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.016
+Fra:1 Mem:33.16M (Peak 33.17M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.012
+Fra:1 Mem:33.17M (Peak 33.17M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Decoupling capacitor.003
+Fra:1 Mem:33.17M (Peak 33.17M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.017
+Fra:1 Mem:33.18M (Peak 33.18M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.011
+Fra:1 Mem:33.19M (Peak 33.19M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.010
+Fra:1 Mem:33.19M (Peak 33.19M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Signal resistor.002
+Fra:1 Mem:33.20M (Peak 33.20M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.009
+Fra:1 Mem:33.21M (Peak 33.21M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.008
+Fra:1 Mem:33.22M (Peak 33.22M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.008
+Fra:1 Mem:33.22M (Peak 33.22M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.008
+Fra:1 Mem:33.22M (Peak 33.22M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Decoupling capacitor.002
+Fra:1 Mem:33.23M (Peak 33.23M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Auxiliary IC.003
+Fra:1 Mem:33.23M (Peak 33.23M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.007
+Fra:1 Mem:33.24M (Peak 33.24M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.018
+Fra:1 Mem:33.25M (Peak 33.25M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.006
+Fra:1 Mem:33.25M (Peak 33.25M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.018
+Fra:1 Mem:33.26M (Peak 33.26M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Signal resistor.001
+Fra:1 Mem:33.26M (Peak 33.26M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.005
+Fra:1 Mem:33.27M (Peak 33.27M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.004
+Fra:1 Mem:33.27M (Peak 33.27M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Decoupling capacitor.001
+Fra:1 Mem:33.28M (Peak 33.28M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.003
+Fra:1 Mem:33.28M (Peak 33.28M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.002
+Fra:1 Mem:33.29M (Peak 33.29M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Signal resistor
+Fra:1 Mem:33.29M (Peak 33.29M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.001
+Fra:1 Mem:33.30M (Peak 33.30M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact
+Fra:1 Mem:33.31M (Peak 33.31M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Decoupling capacitor
+Fra:1 Mem:33.32M (Peak 33.32M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Test contact pad.003
+Fra:1 Mem:33.32M (Peak 33.32M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.019
+Fra:1 Mem:33.32M (Peak 33.32M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Test contact pad.002
+Fra:1 Mem:33.34M (Peak 33.34M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Test contact pad.001
+Fra:1 Mem:33.34M (Peak 33.34M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.009
+Fra:1 Mem:33.35M (Peak 33.35M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.009
+Fra:1 Mem:33.35M (Peak 33.35M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | MLCC capacitor.003
+Fra:1 Mem:33.36M (Peak 33.36M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.020
+Fra:1 Mem:33.36M (Peak 33.36M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.020
+Fra:1 Mem:33.37M (Peak 33.37M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.021
+Fra:1 Mem:33.38M (Peak 33.38M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.021
+Fra:1 Mem:33.39M (Peak 33.39M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.011
+Fra:1 Mem:33.39M (Peak 33.39M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.011
+Fra:1 Mem:33.39M (Peak 33.39M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.010
+Fra:1 Mem:33.40M (Peak 33.40M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.010
+Fra:1 Mem:33.41M (Peak 33.41M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Ferrite inductor.003
+Fra:1 Mem:33.41M (Peak 33.41M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.022
+Fra:1 Mem:33.41M (Peak 33.41M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.023
+Fra:1 Mem:33.42M (Peak 33.42M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.022
+Fra:1 Mem:33.43M (Peak 33.43M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.023
+Fra:1 Mem:33.43M (Peak 33.43M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:32.51M (Peak 33.43M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Generated foam pore normals
+Fra:1 Mem:32.76M (Peak 33.43M) | Time:00:00.04 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Generated silicone micrograin normals
+Fra:1 Mem:32.83M (Peak 33.43M) | Time:00:00.04 | Mem:0.06M, Peak:0.06M | Scene, ViewLayer | Updating Images | Loading Generated foam microcells
+Fra:1 Mem:25.94M (Peak 33.43M) | Time:00:00.05 | Mem:0.56M, Peak:0.56M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:25.94M (Peak 33.43M) | Time:00:00.05 | Mem:0.56M, Peak:0.56M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:25.94M (Peak 33.43M) | Time:00:00.05 | Mem:0.56M, Peak:0.56M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:25.94M (Peak 33.43M) | Time:00:00.05 | Mem:0.56M, Peak:0.56M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:26.03M (Peak 33.43M) | Time:00:00.05 | Mem:0.57M, Peak:0.57M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:26.03M (Peak 33.43M) | Time:00:00.05 | Mem:0.57M, Peak:0.57M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:26.03M (Peak 33.43M) | Time:00:00.05 | Mem:0.57M, Peak:0.57M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:26.03M (Peak 33.43M) | Time:00:00.05 | Mem:0.57M, Peak:0.57M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:26.03M (Peak 33.43M) | Time:00:00.05 | Mem:0.57M, Peak:0.57M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:26.03M (Peak 33.43M) | Time:00:00.05 | Mem:0.57M, Peak:0.57M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:26.08M (Peak 33.43M) | Time:00:00.05 | Mem:0.63M, Peak:0.63M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:26.08M (Peak 33.43M) | Time:00:00.05 | Mem:0.63M, Peak:0.63M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:26.08M (Peak 33.43M) | Time:00:00.05 | Mem:0.63M, Peak:0.63M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:26.17M (Peak 33.43M) | Time:00:00.05 | Mem:0.63M, Peak:0.63M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:26.17M (Peak 33.43M) | Time:00:00.05 | Mem:0.63M, Peak:0.63M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:26.57M (Peak 33.43M) | Time:00:00.05 | Mem:0.64M, Peak:0.64M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:26.54M (Peak 33.43M) | Time:00:00.05 | Mem:0.99M, Peak:0.99M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:26.54M (Peak 33.43M) | Time:00:00.05 | Mem:0.99M, Peak:0.99M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:26.54M (Peak 33.43M) | Time:00:00.05 | Mem:1.49M, Peak:1.49M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:26.54M (Peak 33.43M) | Time:00:00.06 | Mem:2.08M, Peak:2.57M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:26.54M (Peak 33.43M) | Time:00:00.06 | Mem:2.08M, Peak:2.57M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:27.28M (Peak 33.43M) | Time:00:00.06 | Mem:2.08M, Peak:2.57M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:27.28M (Peak 33.43M) | Time:00:00.06 | Mem:2.82M, Peak:2.82M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:27.28M (Peak 33.43M) | Time:00:00.06 | Mem:2.82M, Peak:2.82M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:27.28M (Peak 33.43M) | Time:00:00.06 | Mem:2.82M, Peak:2.82M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:27.28M (Peak 33.43M) | Time:00:00.06 | Mem:2.82M, Peak:2.82M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:27.28M (Peak 33.43M) | Time:00:00.06 | Mem:2.82M, Peak:2.82M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:27.28M (Peak 33.43M) | Time:00:00.06 | Mem:2.90M, Peak:2.90M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:27.28M (Peak 33.43M) | Time:00:00.06 | Mem:2.90M, Peak:2.90M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:27.29M (Peak 33.43M) | Time:00:00.06 | Mem:2.90M, Peak:2.90M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:27.29M (Peak 33.43M) | Time:00:00.06 | Mem:2.90M, Peak:2.90M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:27.29M (Peak 33.43M) | Time:00:00.06 | Mem:2.82M, Peak:2.90M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:27.29M (Peak 33.43M) | Time:00:00.06 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:27.29M (Peak 33.43M) | Time:00:00.06 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:27.30M (Peak 33.43M) | Time:00:00.06 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
+Fra:1 Mem:27.30M (Peak 33.43M) | Time:00:00.06 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Sample 0/48
+Fra:1 Mem:157.04M (Peak 157.04M) | Time:00:01.88 | Remaining:01:25.54 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 1/48
+Fra:1 Mem:157.04M (Peak 157.04M) | Time:00:33.18 | Remaining:01:00.39 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 17/48
+Fra:1 Mem:157.04M (Peak 157.04M) | Time:01:02.56 | Remaining:00:28.40 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 33/48
+Fra:1 Mem:187.56M (Peak 233.34M) | Time:01:51.24 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 48/48
+Fra:1 Mem:187.56M (Peak 233.34M) | Time:01:51.24 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Finished
+Fra:1 Mem:54.58M (Peak 233.34M) | Time:01:51.24 | Compositing
+Saved: '/home/runner/work/sentia/sentia/evidence/take-apart-product-model/render-assembled.png'
+Time: 01:51.43 (Saving: 00:00.15)
+
+Fra:1 Mem:32.03M (Peak 32.03M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Crowned silicone shell
+Fra:1 Mem:32.04M (Peak 32.04M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | LED recessed socket
+Fra:1 Mem:32.05M (Peak 32.05M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Teal LED line
+Fra:1 Mem:32.06M (Peak 32.06M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Recessed optical lens
+Fra:1 Mem:32.14M (Peak 32.14M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | PCB substrate
+Fra:1 Mem:32.13M (Peak 32.14M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Main processing chip
+Fra:1 Mem:32.18M (Peak 32.18M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Chip shield
+Fra:1 Mem:32.18M (Peak 32.18M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Thin film battery
+Fra:1 Mem:32.19M (Peak 32.19M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Battery insulating rim
+Fra:1 Mem:32.18M (Peak 32.19M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sensor plated rim
+Fra:1 Mem:32.19M (Peak 32.19M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sensor disc
+Fra:1 Mem:32.20M (Peak 32.20M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sensor plated rim.001
+Fra:1 Mem:32.20M (Peak 32.20M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sensor disc.001
+Fra:1 Mem:32.21M (Peak 32.21M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sensor aperture.001
+Fra:1 Mem:32.22M (Peak 32.22M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Processor pin
+Fra:1 Mem:32.24M (Peak 32.24M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination
+Fra:1 Mem:32.24M (Peak 32.24M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.001
+Fra:1 Mem:32.25M (Peak 32.25M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.001
+Fra:1 Mem:32.25M (Peak 32.25M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.002
+Fra:1 Mem:32.27M (Peak 32.27M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.003
+Fra:1 Mem:32.28M (Peak 32.28M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.002
+Fra:1 Mem:32.28M (Peak 32.28M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.004
+Fra:1 Mem:32.29M (Peak 32.29M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.005
+Fra:1 Mem:32.29M (Peak 32.29M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.003
+Fra:1 Mem:32.30M (Peak 32.30M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.006
+Fra:1 Mem:32.30M (Peak 32.30M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.007
+Fra:1 Mem:32.31M (Peak 32.31M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.004
+Fra:1 Mem:32.32M (Peak 32.32M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.008
+Fra:1 Mem:32.33M (Peak 32.33M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.009
+Fra:1 Mem:32.33M (Peak 32.33M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.005
+Fra:1 Mem:32.34M (Peak 32.34M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.010
+Fra:1 Mem:32.34M (Peak 32.34M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.011
+Fra:1 Mem:32.35M (Peak 32.35M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.006
+Fra:1 Mem:32.35M (Peak 32.35M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.012
+Fra:1 Mem:32.35M (Peak 32.35M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.013
+Fra:1 Mem:32.37M (Peak 32.37M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.007
+Fra:1 Mem:32.37M (Peak 32.37M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Area
+Fra:1 Mem:32.37M (Peak 32.37M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Peeled release liner
+Fra:1 Mem:32.38M (Peak 32.38M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Optically translucent adhesive
+Fra:1 Mem:32.39M (Peak 32.39M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.015
+Fra:1 Mem:32.41M (Peak 32.41M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Battery contact tab.001
+Fra:1 Mem:32.41M (Peak 32.41M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.008
+Fra:1 Mem:32.42M (Peak 32.42M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Battery contact tab
+Fra:1 Mem:32.42M (Peak 32.42M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.016
+Fra:1 Mem:32.43M (Peak 32.43M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Battery foil seam.001
+Fra:1 Mem:32.43M (Peak 32.43M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.017
+Fra:1 Mem:32.44M (Peak 32.44M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Battery foil seam
+Fra:1 Mem:32.45M (Peak 32.45M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.009
+Fra:1 Mem:32.45M (Peak 32.45M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Processor pin one dimple
+Fra:1 Mem:32.45M (Peak 32.45M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Shield folded flange.001
+Fra:1 Mem:32.45M (Peak 32.45M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.018
+Fra:1 Mem:32.49M (Peak 32.49M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.019
+Fra:1 Mem:32.49M (Peak 32.49M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Shield folded flange
+Fra:1 Mem:32.50M (Peak 32.50M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.010
+Fra:1 Mem:32.51M (Peak 32.51M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.027
+Fra:1 Mem:32.51M (Peak 32.51M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.020
+Fra:1 Mem:32.52M (Peak 32.52M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.026
+Fra:1 Mem:32.52M (Peak 32.52M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.021
+Fra:1 Mem:32.53M (Peak 32.53M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Signal resistor.006
+Fra:1 Mem:32.53M (Peak 32.53M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.011
+Fra:1 Mem:32.54M (Peak 32.54M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.025
+Fra:1 Mem:32.54M (Peak 32.54M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.022
+Fra:1 Mem:32.55M (Peak 32.55M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.024
+Fra:1 Mem:32.55M (Peak 32.55M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.023
+Fra:1 Mem:32.55M (Peak 32.55M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Decoupling capacitor.006
+Fra:1 Mem:32.56M (Peak 32.56M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.012
+Fra:1 Mem:32.57M (Peak 32.57M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.023
+Fra:1 Mem:32.57M (Peak 32.57M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.024
+Fra:1 Mem:32.58M (Peak 32.58M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.025
+Fra:1 Mem:32.58M (Peak 32.58M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.013
+Fra:1 Mem:32.59M (Peak 32.59M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.026
+Fra:1 Mem:32.59M (Peak 32.59M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.027
+Fra:1 Mem:32.60M (Peak 32.60M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.014
+Fra:1 Mem:32.60M (Peak 32.60M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.028
+Fra:1 Mem:32.60M (Peak 32.60M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.029
+Fra:1 Mem:32.61M (Peak 32.61M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.015
+Fra:1 Mem:32.62M (Peak 32.62M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.031
+Fra:1 Mem:32.62M (Peak 32.62M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.016
+Fra:1 Mem:32.64M (Peak 32.64M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.032
+Fra:1 Mem:32.65M (Peak 32.65M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.033
+Fra:1 Mem:32.66M (Peak 32.66M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.034
+Fra:1 Mem:32.65M (Peak 32.66M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.022
+Fra:1 Mem:32.66M (Peak 32.66M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.035
+Fra:1 Mem:32.66M (Peak 32.66M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.018
+Fra:1 Mem:32.68M (Peak 32.68M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.036
+Fra:1 Mem:32.67M (Peak 32.68M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.021
+Fra:1 Mem:32.69M (Peak 32.69M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.037
+Fra:1 Mem:32.69M (Peak 32.69M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Passive package.019
+Fra:1 Mem:32.69M (Peak 32.69M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.038
+Fra:1 Mem:32.71M (Peak 32.71M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.020
+Fra:1 Mem:32.71M (Peak 32.71M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder termination.039
+Fra:1 Mem:32.72M (Peak 32.72M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Auxiliary IC
+Fra:1 Mem:32.73M (Peak 32.73M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Decoupling capacitor.005
+Fra:1 Mem:32.72M (Peak 32.73M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal
+Fra:1 Mem:32.74M (Peak 32.74M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.019
+Fra:1 Mem:32.74M (Peak 32.74M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.018
+Fra:1 Mem:32.74M (Peak 32.74M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Signal resistor.004
+Fra:1 Mem:32.75M (Peak 32.75M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.017
+Fra:1 Mem:32.75M (Peak 32.75M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.016
+Fra:1 Mem:32.76M (Peak 32.76M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Decoupling capacitor.004
+Fra:1 Mem:32.78M (Peak 32.78M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Routed copper trace
+Fra:1 Mem:32.77M (Peak 32.78M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.015
+Fra:1 Mem:32.80M (Peak 32.80M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus
+Fra:1 Mem:32.81M (Peak 32.81M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill
+Fra:1 Mem:32.81M (Peak 32.81M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | MLCC capacitor
+Fra:1 Mem:32.81M (Peak 32.81M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.002
+Fra:1 Mem:32.82M (Peak 32.82M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.002
+Fra:1 Mem:32.82M (Peak 32.82M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.003
+Fra:1 Mem:32.83M (Peak 32.83M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.003
+Fra:1 Mem:32.83M (Peak 32.83M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Routed copper trace.003
+Fra:1 Mem:32.84M (Peak 32.84M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.001
+Fra:1 Mem:32.84M (Peak 32.84M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.001
+Fra:1 Mem:32.85M (Peak 32.85M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Ferrite inductor
+Fra:1 Mem:32.85M (Peak 32.85M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.004
+Fra:1 Mem:32.86M (Peak 32.86M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.004
+Fra:1 Mem:32.86M (Peak 32.86M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.005
+Fra:1 Mem:32.87M (Peak 32.87M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.005
+Fra:1 Mem:32.87M (Peak 32.87M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.002
+Fra:1 Mem:32.88M (Peak 32.88M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.002
+Fra:1 Mem:32.88M (Peak 32.88M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Auxiliary IC.001
+Fra:1 Mem:32.89M (Peak 32.89M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.006
+Fra:1 Mem:32.89M (Peak 32.89M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.006
+Fra:1 Mem:32.90M (Peak 32.90M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.007
+Fra:1 Mem:32.90M (Peak 32.90M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.007
+Fra:1 Mem:32.91M (Peak 32.91M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Routed copper trace.009
+Fra:1 Mem:32.92M (Peak 32.92M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.003
+Fra:1 Mem:32.92M (Peak 32.92M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.003
+Fra:1 Mem:32.93M (Peak 32.93M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | MLCC capacitor.001
+Fra:1 Mem:32.93M (Peak 32.93M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.008
+Fra:1 Mem:32.94M (Peak 32.94M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.008
+Fra:1 Mem:32.94M (Peak 32.94M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.009
+Fra:1 Mem:32.95M (Peak 32.95M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.009
+Fra:1 Mem:32.96M (Peak 32.96M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Routed copper trace.012
+Fra:1 Mem:32.97M (Peak 32.97M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.004
+Fra:1 Mem:32.98M (Peak 32.98M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.004
+Fra:1 Mem:32.98M (Peak 32.98M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Ferrite inductor.001
+Fra:1 Mem:32.99M (Peak 32.99M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.010
+Fra:1 Mem:32.99M (Peak 32.99M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.010
+Fra:1 Mem:33.00M (Peak 33.00M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.011
+Fra:1 Mem:33.01M (Peak 33.01M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.011
+Fra:1 Mem:33.01M (Peak 33.01M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.005
+Fra:1 Mem:33.02M (Peak 33.02M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.005
+Fra:1 Mem:33.02M (Peak 33.02M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Auxiliary IC.002
+Fra:1 Mem:33.03M (Peak 33.03M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.012
+Fra:1 Mem:33.03M (Peak 33.03M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.012
+Fra:1 Mem:33.04M (Peak 33.04M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.013
+Fra:1 Mem:33.04M (Peak 33.04M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.013
+Fra:1 Mem:33.05M (Peak 33.05M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.006
+Fra:1 Mem:33.05M (Peak 33.05M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.006
+Fra:1 Mem:33.06M (Peak 33.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | MLCC capacitor.002
+Fra:1 Mem:33.06M (Peak 33.06M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.014
+Fra:1 Mem:33.07M (Peak 33.07M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.014
+Fra:1 Mem:33.07M (Peak 33.07M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.015
+Fra:1 Mem:33.08M (Peak 33.08M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.015
+Fra:1 Mem:33.08M (Peak 33.08M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.007
+Fra:1 Mem:33.09M (Peak 33.09M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.007
+Fra:1 Mem:33.09M (Peak 33.09M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Ferrite inductor.002
+Fra:1 Mem:33.10M (Peak 33.10M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.016
+Fra:1 Mem:33.10M (Peak 33.10M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.016
+Fra:1 Mem:33.11M (Peak 33.11M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.017
+Fra:1 Mem:33.11M (Peak 33.11M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.017
+Fra:1 Mem:33.12M (Peak 33.12M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.008
+Fra:1 Mem:33.12M (Peak 33.12M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.008
+Fra:1 Mem:33.13M (Peak 33.13M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Auxiliary IC.003
+Fra:1 Mem:33.13M (Peak 33.13M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.018
+Fra:1 Mem:33.14M (Peak 33.14M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.018
+Fra:1 Mem:33.14M (Peak 33.14M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.019
+Fra:1 Mem:33.15M (Peak 33.15M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.019
+Fra:1 Mem:33.15M (Peak 33.15M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.009
+Fra:1 Mem:33.16M (Peak 33.16M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.009
+Fra:1 Mem:33.16M (Peak 33.16M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | MLCC capacitor.003
+Fra:1 Mem:33.17M (Peak 33.17M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.020
+Fra:1 Mem:33.17M (Peak 33.17M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.020
+Fra:1 Mem:33.19M (Peak 33.19M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Signal resistor.003
+Fra:1 Mem:33.20M (Peak 33.20M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.013
+Fra:1 Mem:33.20M (Peak 33.20M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.012
+Fra:1 Mem:33.21M (Peak 33.21M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Decoupling capacitor.003
+Fra:1 Mem:33.21M (Peak 33.21M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.011
+Fra:1 Mem:33.22M (Peak 33.22M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.010
+Fra:1 Mem:33.22M (Peak 33.22M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Signal resistor.002
+Fra:1 Mem:33.23M (Peak 33.23M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.009
+Fra:1 Mem:33.23M (Peak 33.23M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.008
+Fra:1 Mem:33.24M (Peak 33.24M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Decoupling capacitor.002
+Fra:1 Mem:33.24M (Peak 33.24M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.007
+Fra:1 Mem:33.25M (Peak 33.25M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.006
+Fra:1 Mem:33.25M (Peak 33.25M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Signal resistor.001
+Fra:1 Mem:33.26M (Peak 33.26M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.005
+Fra:1 Mem:33.26M (Peak 33.26M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.004
+Fra:1 Mem:33.27M (Peak 33.27M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Decoupling capacitor.001
+Fra:1 Mem:33.27M (Peak 33.27M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.003
+Fra:1 Mem:33.28M (Peak 33.28M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.002
+Fra:1 Mem:33.28M (Peak 33.28M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Signal resistor
+Fra:1 Mem:33.29M (Peak 33.29M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact.001
+Fra:1 Mem:33.29M (Peak 33.29M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Tinned contact
+Fra:1 Mem:33.30M (Peak 33.30M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Decoupling capacitor
+Fra:1 Mem:33.30M (Peak 33.30M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Test contact pad.003
+Fra:1 Mem:33.31M (Peak 33.31M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Test contact pad.002
+Fra:1 Mem:33.31M (Peak 33.31M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Test contact pad.001
+Fra:1 Mem:33.32M (Peak 33.32M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Test contact pad
+Fra:1 Mem:33.32M (Peak 33.32M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.011
+Fra:1 Mem:33.33M (Peak 33.33M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.011
+Fra:1 Mem:33.33M (Peak 33.33M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.023
+Fra:1 Mem:33.34M (Peak 33.34M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.023
+Fra:1 Mem:33.34M (Peak 33.34M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.022
+Fra:1 Mem:33.35M (Peak 33.35M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.022
+Fra:1 Mem:33.35M (Peak 33.35M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Ferrite inductor.003
+Fra:1 Mem:33.36M (Peak 33.36M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Via drill.010
+Fra:1 Mem:33.36M (Peak 33.36M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Copper via annulus.010
+Fra:1 Mem:33.37M (Peak 33.37M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Solder joint fillet.021
+Fra:1 Mem:33.37M (Peak 33.37M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Nickel terminal.021
+Fra:1 Mem:33.37M (Peak 33.37M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:32.45M (Peak 33.37M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Generated foam pore normals
+Fra:1 Mem:32.45M (Peak 33.37M) | Time:00:00.03 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Generated foam microcells
+Fra:1 Mem:25.95M (Peak 33.37M) | Time:00:00.04 | Mem:0.56M, Peak:0.56M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:25.95M (Peak 33.37M) | Time:00:00.04 | Mem:0.56M, Peak:0.56M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:25.95M (Peak 33.37M) | Time:00:00.04 | Mem:0.56M, Peak:0.56M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:25.95M (Peak 33.37M) | Time:00:00.04 | Mem:0.56M, Peak:0.56M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:26.04M (Peak 33.37M) | Time:00:00.04 | Mem:0.57M, Peak:0.57M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:26.04M (Peak 33.37M) | Time:00:00.04 | Mem:0.57M, Peak:0.57M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:26.04M (Peak 33.37M) | Time:00:00.04 | Mem:0.57M, Peak:0.57M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:26.04M (Peak 33.37M) | Time:00:00.04 | Mem:0.57M, Peak:0.57M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:26.04M (Peak 33.37M) | Time:00:00.04 | Mem:0.57M, Peak:0.57M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:26.04M (Peak 33.37M) | Time:00:00.04 | Mem:0.57M, Peak:0.57M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:26.10M (Peak 33.37M) | Time:00:00.04 | Mem:0.63M, Peak:0.63M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:26.10M (Peak 33.37M) | Time:00:00.04 | Mem:0.63M, Peak:0.63M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:26.10M (Peak 33.37M) | Time:00:00.04 | Mem:0.63M, Peak:0.63M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:26.19M (Peak 33.37M) | Time:00:00.04 | Mem:0.63M, Peak:0.63M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:26.19M (Peak 33.37M) | Time:00:00.04 | Mem:0.63M, Peak:0.63M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:26.58M (Peak 33.37M) | Time:00:00.04 | Mem:0.64M, Peak:0.64M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:26.56M (Peak 33.37M) | Time:00:00.04 | Mem:0.99M, Peak:0.99M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:26.56M (Peak 33.37M) | Time:00:00.04 | Mem:0.99M, Peak:0.99M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:26.56M (Peak 33.37M) | Time:00:00.04 | Mem:1.48M, Peak:1.48M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:26.56M (Peak 33.37M) | Time:00:00.04 | Mem:2.08M, Peak:2.57M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:26.56M (Peak 33.37M) | Time:00:00.04 | Mem:2.08M, Peak:2.57M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:27.30M (Peak 33.37M) | Time:00:00.04 | Mem:2.08M, Peak:2.57M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:27.30M (Peak 33.37M) | Time:00:00.04 | Mem:2.81M, Peak:2.81M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:27.30M (Peak 33.37M) | Time:00:00.04 | Mem:2.82M, Peak:2.82M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:27.30M (Peak 33.37M) | Time:00:00.04 | Mem:2.82M, Peak:2.82M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:27.30M (Peak 33.37M) | Time:00:00.04 | Mem:2.82M, Peak:2.82M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:27.30M (Peak 33.37M) | Time:00:00.04 | Mem:2.82M, Peak:2.82M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:27.30M (Peak 33.37M) | Time:00:00.04 | Mem:2.90M, Peak:2.90M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:27.30M (Peak 33.37M) | Time:00:00.04 | Mem:2.90M, Peak:2.90M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:27.30M (Peak 33.37M) | Time:00:00.04 | Mem:2.90M, Peak:2.90M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:27.30M (Peak 33.37M) | Time:00:00.04 | Mem:2.90M, Peak:2.90M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:27.30M (Peak 33.37M) | Time:00:00.04 | Mem:2.82M, Peak:2.90M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:27.30M (Peak 33.37M) | Time:00:00.05 | Mem:2.90M, Peak:2.90M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:27.30M (Peak 33.37M) | Time:00:00.05 | Mem:2.90M, Peak:2.90M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:27.31M (Peak 33.37M) | Time:00:00.05 | Mem:2.90M, Peak:2.90M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
+Fra:1 Mem:27.31M (Peak 33.37M) | Time:00:00.05 | Mem:2.90M, Peak:2.90M | Scene, ViewLayer | Sample 0/48
+Fra:1 Mem:99.83M (Peak 99.83M) | Time:00:00.71 | Remaining:00:31.39 | Mem:75.40M, Peak:75.40M | Scene, ViewLayer | Sample 1/48
+Fra:1 Mem:99.83M (Peak 99.83M) | Time:00:18.58 | Remaining:00:08.42 | Mem:75.40M, Peak:75.40M | Scene, ViewLayer | Sample 33/48
+Fra:1 Mem:130.35M (Peak 176.13M) | Time:00:37.79 | Mem:75.40M, Peak:75.40M | Scene, ViewLayer | Sample 48/48
+Fra:1 Mem:130.35M (Peak 176.13M) | Time:00:37.79 | Mem:75.40M, Peak:75.40M | Scene, ViewLayer | Finished
+Fra:1 Mem:54.60M (Peak 176.13M) | Time:00:37.79 | Compositing
+Saved: '/home/runner/work/sentia/sentia/evidence/take-apart-product-model/render-exploded.png'
+Time: 00:37.87 (Saving: 00:00.06)
+
+
+patch-one.glb bytes: 798092
+
+Blender quit

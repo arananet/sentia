@@ -7,10 +7,12 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import assert from 'node:assert/strict';
 import { pathToFileURL } from 'node:url';
-import { gaugeReadout } from '../src/take-apart-model.js';
+import { gaugeReadout, NODE_NAMES } from '../src/take-apart-model.js';
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ? pathToFileURL(process.env.PLAYWRIGHT_MODULE).href : 'playwright');
-const out = new URL('../evidence/take-apart-bundling/', import.meta.url);
+const out = new URL('../evidence/take-apart-product-model/', import.meta.url);
 await mkdir(out, { recursive: true });
+const beatsOut = new URL('../evidence/take-apart/', import.meta.url);
+await mkdir(beatsOut, { recursive: true });
 const buildDir = await mkdtemp(join(tmpdir(), 'sentia-bundle-'));
 const wrangler = process.env.WRANGLER_BIN || 'wrangler';
 const buildArgs = ['deploy', '--dry-run', '--outdir', buildDir];
@@ -30,7 +32,7 @@ runtime.stdout.on('data', chunk => { runtimeLog += chunk; });
 runtime.stderr.on('data', chunk => { runtimeLog += chunk; });
 let browser;
 const errors=[], pageErrors=[];
-let gaugePassed=false, sceneInfo, vendorStatus, vendorBytes;
+let gaugePassed=false, sceneInfo, vendorStatus, vendorBytes, assetStatus, assetBytes, nodeNames, assetFailureChecks=false;
 try {
   let ready = false;
   for (let tries = 0; tries < 120; tries++) {
@@ -48,10 +50,17 @@ browser = await chromium.launch({ executablePath: process.env.CHROME_BIN || '/us
   page.on('console',msg=>{if(msg.type()==='error')errors.push(msg.text());});
   page.on('pageerror',error=>pageErrors.push(String(error)));
   const vendorResponse = page.waitForResponse(response => response.url() === origin + '/vendor/three.module.min.js');
+  const assetResponse = page.waitForResponse(response => response.url() === origin + '/models/patch-one.glb');
   console.log('Loading study');
   await page.goto(`${origin}/take-apart?tour=fast`);
   await page.waitForFunction(()=>document.querySelector('#take-apart').dataset.sceneReady==='true');
   await page.evaluate(()=>document.fonts.ready);
+  const asset = await assetResponse;
+  assetStatus = asset.status(); assetBytes = (await asset.body()).byteLength;
+  assert.equal(assetStatus, 200); assert.ok(assetBytes <= 800 * 1024);
+  nodeNames = await page.evaluate(() => JSON.parse(document.querySelector('#take-apart').dataset.modelNodes));
+  assert.deepEqual(nodeNames, NODE_NAMES);
+  assert.equal(await page.locator('#take-apart').getAttribute('data-model-source'), 'glb');
   const vendor = await vendorResponse;
   vendorStatus = vendor.status(); vendorBytes = (await vendor.body()).byteLength;
   assert.equal(vendorStatus, 200); assert.equal(vendorBytes, 670681);
@@ -100,7 +109,8 @@ browser = await chromium.launch({ executablePath: process.env.CHROME_BIN || '/us
     const file=beat==='settle'?'mid':beat;
     const {data}=await cdp.send('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});
     const png=Buffer.from(data,'base64');
-    await writeFile(new URL(`beat-${file}.png`,out),png);
+    await writeFile(new URL(`beat-${file}.png`,beatsOut),png);
+    if(beat==='assembled') await writeFile(new URL('browser-assembled.png',out),png);
     console.log('Captured '+beat);
     sources.push({label,src:'data:image/png;base64,'+png.toString('base64')});
   }
@@ -117,7 +127,7 @@ browser = await chromium.launch({ executablePath: process.env.CHROME_BIN || '/us
     }
     return c.toDataURL('image/png').split(',')[1];
   },sources);
-  await writeFile(new URL('contact-sheet.png',out),Buffer.from(composed,'base64'));
+  await writeFile(new URL('contact-sheet.png',beatsOut),Buffer.from(composed,'base64'));
   // Reduced-motion users retain controls without an automatic tour.
   await page.clock.resume();
   await page.emulateMedia({reducedMotion:'reduce'});await page.reload();await page.waitForTimeout(1800);
@@ -125,6 +135,24 @@ browser = await chromium.launch({ executablePath: process.env.CHROME_BIN || '/us
   await page.setViewportSize({width:390,height:844});
   assert.equal(await page.locator('#callouts').isVisible(),false);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'mobile fits viewport');
+  // Release the capture contexts before compiling the two asset-failure scenes.
+  await page.close();await sheet.close();
+  // Exercise both asset failure paths against the same production bundle.
+  for (const failure of ['fetch', 'parse']) {
+    console.log('Checking asset failure: '+failure);
+    const probe=await browser.newPage({ reducedMotion:'reduce' });
+    const probeErrors=[];probe.on('pageerror',error=>probeErrors.push(String(error)));
+    await probe.route('**/models/patch-one.glb',route=>failure==='fetch'
+      ? route.abort('failed')
+      : route.fulfill({status:200,contentType:'model/gltf-binary',body:'invalid GLB'}));
+    await probe.goto(origin+'/take-apart');
+    await probe.waitForFunction(()=>document.querySelector('#take-apart').dataset.sceneReady==='true', null, {timeout:60000});
+    assert.equal(await probe.locator('#take-apart').getAttribute('data-model-source'),'procedural');
+    assert.equal(await probe.locator('#fallback').isVisible(),false);
+    assert.deepEqual(probeErrors,[]);
+    await probe.close();
+  }
+  assetFailureChecks=true;
   assert.equal(errors.length,0,errors.join('\n'));
   assert.equal(pageErrors.length,0,pageErrors.join('\n'));
 } finally {
@@ -135,6 +163,9 @@ TakeApartModel: ${sceneInfo?.model}
 scene ready: ${sceneInfo?.ready}
 canvas: ${sceneInfo?.width}x${sceneInfo?.height}; layout: ${sceneInfo?.layoutWidth}x${sceneInfo?.layoutHeight}; DPR: ${sceneInfo?.dpr}
 gauge comparison: ${gaugePassed?'PASS':'FAIL'} at hour 200
+asset failure checks: ${assetFailureChecks?'PASS':'FAIL'} (fetch and parse)
+GLB /models/patch-one.glb: status ${assetStatus}; bytes ${assetBytes}
+loaded nodes: ${nodeNames?.length}; ${nodeNames?.join('; ')}
 vendor /vendor/three.module.min.js: status ${vendorStatus}; decoded bytes ${vendorBytes}
 ${errors.join('\n')}
 ${pageErrors.join('\n')}

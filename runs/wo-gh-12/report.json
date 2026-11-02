@@ -1,0 +1,262 @@
+{
+  "work_order_id": "wo-gh-12",
+  "pipeline": "sdlc-default",
+  "title": "Take apart product model: replace the block primitives with a faithful Blender built Patch One",
+  "kind": "feature",
+  "steps": [
+    {
+      "station": "intake",
+      "status": "completed",
+      "detail": "Work order normalized",
+      "duration_ms": 0.025,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "spec-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-12/spec-writer.output.md",
+      "duration_ms": 20524.86,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/spec-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "test-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-12/test-writer.output.md",
+      "duration_ms": 179810.629,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/test-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "builder",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-12/builder.output.md",
+      "duration_ms": 949935.607,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/builder.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-spec",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-12/reviewer-spec.output.md",
+      "duration_ms": 26424.456,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/reviewer-spec.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-security",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-12/reviewer-security.output.md",
+      "duration_ms": 14681.482,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/reviewer-security.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-tests",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-12/reviewer-tests.output.md",
+      "duration_ms": 20426.051,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/reviewer-tests.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-architecture",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-12/reviewer-architecture.output.md",
+      "duration_ms": 16522.891,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/reviewer-architecture.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-design",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-12/reviewer-design.output.md",
+      "duration_ms": 26849.195,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/reviewer-design.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "approver",
+      "status": "completed",
+      "detail": "Approver verdict: changes_requested",
+      "duration_ms": 0.043,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "approver",
+      "status": "loopback",
+      "return_to": "builder",
+      "detail": "Loopback to builder: L3/S13: the footer in src/take-apart-page.js now ends 'Blender built product model' in place of 'Procedural geometry'. Only that one line changed, the markup is unchanged, and test S13 asserts it and passes.; Budget: patch-one.glb is 798092 bytes (779.4 KB), under the 800 KB budget. The size is stated in the test output and in browser-pass.log, and /models/patch-one.glb answers 200 with the five named nodes.; Reproducibility: reproducibility.log shows two full Blender 4.5.15 builds with identical GLB and module SHA256, and the committed module equals the export.; L2/S12: a generated silicone micrograin normal texture is built in blender/build_patch_one.py and recorded in builder-notes.md. The LED is now a boolean-cut recessed pocket with a socket and a lens. The teal color, x/y position and 9.6x0.55 proportions match round 1. The wordmark hash test is unchanged.; L1/S11: the board is tested against the round 1 baseline of 17 meshes and 4 finishes. tests/take-apart-product-model.test.js passes 35 of 35 when run by itself.; Suite: 196 pass, 1 fail, 1 skip. The one failure is the pre-existing design v4 case 'S11: when reviewer-design has reviewed, it addresses and clears all four images', itemized and not absorbed.; Production shape: browser-pass.log records zero console errors and zero page errors, the scene ready, the GLB fetched, and the five named nodes. It ran against the bundled worker with --no-bundle.; Scope: the code changes are blender/build_patch_one.py, src/patch-one-glb.js, the one footer line and the product-model test file. facts.js, images.js, tests/take-apart.test.js and the scripts are untouched.; Working tree: .openspec/specs/take-apart-product-model/spec.md shows +7 lines, the 'Scenarios for this round' S11 to S14. The spec says the operator setup commit is not part of the line's change, so check at the gate that it is excluded.; Not judged here: finish realism against the quality boards and identity on the renders. Those belong to reviewer-design. I wrote my review to runs/wo-gh-12/reviewer-spec.output.md.; Footer change in src/take-apart-page.js is a static literal ('Blender built product model'). No new interpolation or user input reaches the template, so there is no injection surface.; /models/patch-one.glb (src/index.js:73) serves a build-time base64 constant on a fixed same-origin route with a fixed content type. It takes no user input, so there is no path traversal or SSRF risk. The client loads only '/models/patch-one.glb'.; blender/build_patch_one.py uses a seeded RNG (random.Random(4515)) for the generated microtexture. I found no network calls, subprocesses or environment reads in the added lines, so the build stays deterministic.; Low, non-blocking: the workflow downloads the Blender 4.5.15 tarball from download.blender.org over HTTPS with no checksum verification. The version is pinned and cached, but a SHA-256 check would harden the supply chain.; No secrets, deployment or merge steps are introduced. The review is written to runs/wo-gh-12/reviewer-security.output.md.; I ran `node --test tests/*.test.js` on the final tree. 198 tests ran: 196 pass, 1 fail, 1 skip. The only failure is `design-v4 S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/`. It is the itemized pre-existing exception and was not absorbed or fixed by editing evidence.; `tests/take-apart-product-model.test.js` alone: 35 of 35 pass. The new S11 (board, 5 tests), S12 (cover, 4 tests), S13 (footer, 2 tests) and S14 (budget, determinism, comparison doc) tests map to the loopback spec scenarios.; The tests check the GLB itself, not just file names. The board has 217 meshes and 9 distinct finishes, against round 1's 17 and 4 (test floors: 30 and 7). Other checks cover the 0.5 mm envelope, LED socket depth and teal emitter, wordmark equality with round 1, and the cover microtexture recorded in the build notes.; The footer test asserts the exact line `Five layers \u00b7 2.5 mm assembled profile \u00b7 Blender built product model`, that the tour-status span is untouched, and that page bytes are otherwise pinned by sha256 to round 1.; The GLB size is stated in the test output: 798,092 bytes (779.4 KB) against the 819,200 byte (800 KiB) budget. The margin is thin, about 21 KB, but it is within budget.; The finish tests are structural, so whether the board and cover look real stays with reviewer-design. I did not rerun Blender. I relied on `reproducibility.log` and the committed-asset equality tests for that.; `runs/wo-gh-12/reviewer-tests.output.md` showed as deleted at the start of this review. I recreated it with this review's contents.; Scope is small and fits the structure. In `src` only `src/patch-one-glb.js` (the regenerated asset module) and `src/take-apart-page.js` (the footer line) changed. The build change is in `blender/build_patch_one.py`. The route `/models/patch-one.glb` in `src/index.js:73` and the client loader in `src/take-apart-client.js:97` are untouched, so the route shape and interaction model stay frozen as the spec requires.; I decoded the committed `src/patch-one-glb.js`. It is 798,092 bytes, which is under 800 KB (800,000 bytes), but only about 1.9 KB under the decimal reading of the budget, so there is almost no headroom. Its SHA256 is 3a845765\u20269c58. That matches both export hashes in `evidence/take-apart-product-model/reproducibility.log`, so the committed module equals the build output byte for byte and the two exports are identical. Any further finish work must shrink the asset. The size must be stated in the run summary.; The GLB's five top-level scene nodes are exactly 'Top cover', 'Comfort foam', 'Sensing and processing board', 'Adhesive layer' and 'Release liner'. These are the page's layer names, so the node binding to the existing state function is preserved.; The footer in `src/take-apart-page.js` now reads 'Five layers \u00b7 \u2026 mm assembled profile \u00b7 Blender built product model'. The change is one line, in the same span and class, with no other chrome change. The tests file `tests/take-apart-product-model.test.js` was also modified, which fits the requirement that the footer be test asserted. I did not run the suite.; Deleting `runs/wo-gh-12/reviewer-architecture.output.md` in the working tree is the pipeline's regeneration of this station's own output. I treated it as expected, not as a stray change. The rest of the diff outside `src`, `blender` and `tests` is evidence and run artifacts, with no edits to other runs' evidence. I did not check the S11 itemization, and `brain/decisions` does not exist in this repo (only `brain/glossary.md`, `learnings.md`, `project.md` and `worklog.md`). So I judged architecture fit against the spec and the existing code layout only. I could not check against decision records.; L1/S11 finish failure: evidence/take-apart-product-model/render-exploded.png still shows the shield, battery and sensor faces as flat gray surfaces with little metallic highlight variation. Added components and terminals improve density, but the board still reads schematic against design/reference/quality-board-1.png and quality-board-2.png. The browser contact sheet likewise lacks convincing metal finishes. Refine the board materials and surface detail within the frozen thickness and lighting constraints until metal, solder and package finishes read distinctly in both outputs.; L2/S12 browser finish failure: the beauty render shows silicone grain and a recessed teal optical element, but evidence/take-apart/beat-assembled.png shows a uniformly smooth cover and a gray-looking LED slot without a readable teal emitter or optical highlight; this also appears in the contact sheet. Ensure the generated grain and recessed optical assembly remain visibly effective under the unchanged browser lighting and study scale, preserving the approved wordmark and LED dimensions.; The rounded-square product identity and five-layer construction remain recognizable. L3 is satisfied: src/take-apart-page.js changes only the footer claim to 'Blender built product model', with corresponding assertions in tests/take-apart-product-model.test.js.",
+      "reason": "L3/S13: the footer in src/take-apart-page.js now ends 'Blender built product model' in place of 'Procedural geometry'. Only that one line changed, the markup is unchanged, and test S13 asserts it and passes.; Budget: patch-one.glb is 798092 bytes (779.4 KB), under the 800 KB budget. The size is stated in the test output and in browser-pass.log, and /models/patch-one.glb answers 200 with the five named nodes.; Reproducibility: reproducibility.log shows two full Blender 4.5.15 builds with identical GLB and module SHA256, and the committed module equals the export.; L2/S12: a generated silicone micrograin normal texture is built in blender/build_patch_one.py and recorded in builder-notes.md. The LED is now a boolean-cut recessed pocket with a socket and a lens. The teal color, x/y position and 9.6x0.55 proportions match round 1. The wordmark hash test is unchanged.; L1/S11: the board is tested against the round 1 baseline of 17 meshes and 4 finishes. tests/take-apart-product-model.test.js passes 35 of 35 when run by itself.; Suite: 196 pass, 1 fail, 1 skip. The one failure is the pre-existing design v4 case 'S11: when reviewer-design has reviewed, it addresses and clears all four images', itemized and not absorbed.; Production shape: browser-pass.log records zero console errors and zero page errors, the scene ready, the GLB fetched, and the five named nodes. It ran against the bundled worker with --no-bundle.; Scope: the code changes are blender/build_patch_one.py, src/patch-one-glb.js, the one footer line and the product-model test file. facts.js, images.js, tests/take-apart.test.js and the scripts are untouched.; Working tree: .openspec/specs/take-apart-product-model/spec.md shows +7 lines, the 'Scenarios for this round' S11 to S14. The spec says the operator setup commit is not part of the line's change, so check at the gate that it is excluded.; Not judged here: finish realism against the quality boards and identity on the renders. Those belong to reviewer-design. I wrote my review to runs/wo-gh-12/reviewer-spec.output.md.; Footer change in src/take-apart-page.js is a static literal ('Blender built product model'). No new interpolation or user input reaches the template, so there is no injection surface.; /models/patch-one.glb (src/index.js:73) serves a build-time base64 constant on a fixed same-origin route with a fixed content type. It takes no user input, so there is no path traversal or SSRF risk. The client loads only '/models/patch-one.glb'.; blender/build_patch_one.py uses a seeded RNG (random.Random(4515)) for the generated microtexture. I found no network calls, subprocesses or environment reads in the added lines, so the build stays deterministic.; Low, non-blocking: the workflow downloads the Blender 4.5.15 tarball from download.blender.org over HTTPS with no checksum verification. The version is pinned and cached, but a SHA-256 check would harden the supply chain.; No secrets, deployment or merge steps are introduced. The review is written to runs/wo-gh-12/reviewer-security.output.md.; I ran `node --test tests/*.test.js` on the final tree. 198 tests ran: 196 pass, 1 fail, 1 skip. The only failure is `design-v4 S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/`. It is the itemized pre-existing exception and was not absorbed or fixed by editing evidence.; `tests/take-apart-product-model.test.js` alone: 35 of 35 pass. The new S11 (board, 5 tests), S12 (cover, 4 tests), S13 (footer, 2 tests) and S14 (budget, determinism, comparison doc) tests map to the loopback spec scenarios.; The tests check the GLB itself, not just file names. The board has 217 meshes and 9 distinct finishes, against round 1's 17 and 4 (test floors: 30 and 7). Other checks cover the 0.5 mm envelope, LED socket depth and teal emitter, wordmark equality with round 1, and the cover microtexture recorded in the build notes.; The footer test asserts the exact line `Five layers \u00b7 2.5 mm assembled profile \u00b7 Blender built product model`, that the tour-status span is untouched, and that page bytes are otherwise pinned by sha256 to round 1.; The GLB size is stated in the test output: 798,092 bytes (779.4 KB) against the 819,200 byte (800 KiB) budget. The margin is thin, about 21 KB, but it is within budget.; The finish tests are structural, so whether the board and cover look real stays with reviewer-design. I did not rerun Blender. I relied on `reproducibility.log` and the committed-asset equality tests for that.; `runs/wo-gh-12/reviewer-tests.output.md` showed as deleted at the start of this review. I recreated it with this review's contents.; Scope is small and fits the structure. In `src` only `src/patch-one-glb.js` (the regenerated asset module) and `src/take-apart-page.js` (the footer line) changed. The build change is in `blender/build_patch_one.py`. The route `/models/patch-one.glb` in `src/index.js:73` and the client loader in `src/take-apart-client.js:97` are untouched, so the route shape and interaction model stay frozen as the spec requires.; I decoded the committed `src/patch-one-glb.js`. It is 798,092 bytes, which is under 800 KB (800,000 bytes), but only about 1.9 KB under the decimal reading of the budget, so there is almost no headroom. Its SHA256 is 3a845765\u20269c58. That matches both export hashes in `evidence/take-apart-product-model/reproducibility.log`, so the committed module equals the build output byte for byte and the two exports are identical. Any further finish work must shrink the asset. The size must be stated in the run summary.; The GLB's five top-level scene nodes are exactly 'Top cover', 'Comfort foam', 'Sensing and processing board', 'Adhesive layer' and 'Release liner'. These are the page's layer names, so the node binding to the existing state function is preserved.; The footer in `src/take-apart-page.js` now reads 'Five layers \u00b7 \u2026 mm assembled profile \u00b7 Blender built product model'. The change is one line, in the same span and class, with no other chrome change. The tests file `tests/take-apart-product-model.test.js` was also modified, which fits the requirement that the footer be test asserted. I did not run the suite.; Deleting `runs/wo-gh-12/reviewer-architecture.output.md` in the working tree is the pipeline's regeneration of this station's own output. I treated it as expected, not as a stray change. The rest of the diff outside `src`, `blender` and `tests` is evidence and run artifacts, with no edits to other runs' evidence. I did not check the S11 itemization, and `brain/decisions` does not exist in this repo (only `brain/glossary.md`, `learnings.md`, `project.md` and `worklog.md`). So I judged architecture fit against the spec and the existing code layout only. I could not check against decision records.; L1/S11 finish failure: evidence/take-apart-product-model/render-exploded.png still shows the shield, battery and sensor faces as flat gray surfaces with little metallic highlight variation. Added components and terminals improve density, but the board still reads schematic against design/reference/quality-board-1.png and quality-board-2.png. The browser contact sheet likewise lacks convincing metal finishes. Refine the board materials and surface detail within the frozen thickness and lighting constraints until metal, solder and package finishes read distinctly in both outputs.; L2/S12 browser finish failure: the beauty render shows silicone grain and a recessed teal optical element, but evidence/take-apart/beat-assembled.png shows a uniformly smooth cover and a gray-looking LED slot without a readable teal emitter or optical highlight; this also appears in the contact sheet. Ensure the generated grain and recessed optical assembly remain visibly effective under the unchanged browser lighting and study scale, preserving the approved wordmark and LED dimensions.; The rounded-square product identity and five-layer construction remain recognizable. L3 is satisfied: src/take-apart-page.js changes only the footer claim to 'Blender built product model', with corresponding assertions in tests/take-apart-product-model.test.js.",
+      "duration_ms": 0.0,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": null,
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "triage-human",
+      "status": "completed",
+      "detail": "Human review: required",
+      "duration_ms": 0.006,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "deployer",
+      "status": "packet_ready",
+      "detail": "Packet written to runs/wo-gh-12/deployer.packet.md",
+      "duration_ms": 0.198,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/deployer.packet.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "observer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-12/observer.output.md",
+      "duration_ms": 14422.02,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-12/observer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    }
+  ],
+  "verdict": "changes_requested",
+  "human_required": true,
+  "max_loopbacks": 2,
+  "loopbacks": 1,
+  "deployment_status": null,
+  "verify_results": [],
+  "risk_hints": [],
+  "decision": {
+    "approver": {
+      "reviews_counted": [
+        {
+          "station": "reviewer-spec",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-security",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-tests",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-architecture",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-design",
+          "verdict": "changes_requested"
+        }
+      ],
+      "reviews_expected": [
+        "reviewer-spec",
+        "reviewer-security",
+        "reviewer-tests",
+        "reviewer-architecture",
+        "reviewer-design"
+      ],
+      "rule": "Reviewer reviewer-design requested changes."
+    },
+    "human_gate": {
+      "required": true,
+      "rule": "Verdict is changes_requested, not approved, so a human is required.",
+      "hints_matched": []
+    }
+  },
+  "warnings": []
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-architecture",
+  "to_station": "reviewer-design",
+  "work_order_id": "wo-gh-12",
+  "artifact_path": "runs/wo-gh-12/reviewer-architecture.output.md",
+  "status": "executed",
+  "created_at": "2026-11-01T01:14:29.889764+00:00",
+  "review": {
+    "station": "reviewer-architecture",
+    "verdict": "pass",
+    "findings": [
+      "Scope is small and fits the structure. In `src` only `src/patch-one-glb.js` (the regenerated asset module) and `src/take-apart-page.js` (the footer line) changed. The build change is in `blender/build_patch_one.py`. The route `/models/patch-one.glb` in `src/index.js:73` and the client loader in `src/take-apart-client.js:97` are untouched, so the route shape and interaction model stay frozen as the spec requires.",
+      "I decoded the committed `src/patch-one-glb.js`. It is 798,092 bytes, which is under 800 KB (800,000 bytes), but only about 1.9 KB under the decimal reading of the budget, so there is almost no headroom. Its SHA256 is 3a845765\u20269c58. That matches both export hashes in `evidence/take-apart-product-model/reproducibility.log`, so the committed module equals the build output byte for byte and the two exports are identical. Any further finish work must shrink the asset. The size must be stated in the run summary.",
+      "The GLB's five top-level scene nodes are exactly 'Top cover', 'Comfort foam', 'Sensing and processing board', 'Adhesive layer' and 'Release liner'. These are the page's layer names, so the node binding to the existing state function is preserved.",
+      "The footer in `src/take-apart-page.js` now reads 'Five layers \u00b7 \u2026 mm assembled profile \u00b7 Blender built product model'. The change is one line, in the same span and class, with no other chrome change. The tests file `tests/take-apart-product-model.test.js` was also modified, which fits the requirement that the footer be test asserted. I did not run the suite.",
+      "Deleting `runs/wo-gh-12/reviewer-architecture.output.md` in the working tree is the pipeline's regeneration of this station's own output. I treated it as expected, not as a stray change. The rest of the diff outside `src`, `blender` and `tests` is evidence and run artifacts, with no edits to other runs' evidence. I did not check the S11 itemization, and `brain/decisions` does not exist in this repo (only `brain/glossary.md`, `learnings.md`, `project.md` and `worklog.md`). So I judged architecture fit against the spec and the existing code layout only. I could not check against decision records."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}
