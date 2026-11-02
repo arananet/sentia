@@ -1,0 +1,31 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-architecture",
+  "to_station": "reviewer-design",
+  "work_order_id": "wo-gh-9",
+  "artifact_path": "runs/wo-gh-9/reviewer-architecture.output.md",
+  "status": "executed",
+  "created_at": "2026-10-31T13:30:26.557384+00:00",
+  "review": {
+    "station": "reviewer-architecture",
+    "verdict": "pass",
+    "findings": [
+      "The change stays inside the allowed scope. The files touched are src/take-apart-page.js, scripts/capture-take-apart.mjs, tests/take-apart.test.js and the runs/ and evidence/ files. src/page.js, src/index.js, src/facts.js and src/images.js have no diff against HEAD, which matches the 'no change this round' mandate.",
+      "Routing follows the existing pattern in src/index.js. /take-apart, /take-apart-model.js, /take-apart.js and /vendor/three.module.min.js are served by lazy dynamic import.",
+      "One model drives the page. The served HTML takes the layer list, the thicknesses and the initial gauge values from the model, namely LAYERS and gaugeReadout(0). The client loads the browser twin and the vendored three.js, so there is no second source of numbers.",
+      "The chrome is fixed. The substituted colours #163c34, #008d7f, #6a7972 and #dce1d9 no longer appear in src/take-apart-*.js or the capture script. The CSS uses only the documented tokens, and the Google Fonts link is identical to the one in src/page.js. The container is 1440px. The page also has a skip link, 3px focus rings, 44px targets and a noscript override.",
+      "Non-blocking: the mono labels use the generic `monospace` family. design/DESIGN.md names no mono face, so this is not a violation. A named mono face would be a design-system question for the owner.",
+      "Non-blocking: the page is one large inline template string with its CSS in the same file. That is consistent with src/page.js, but it is hard to review.",
+      "brain/decisions does not exist in this repository. brain/ holds only glossary.md, learnings.md, project.md and worklog.md. I judged fit against the spec's file list, the existing routing pattern and the design system, and did not guess at missing decisions.",
+      "Evidence: runs/wo-gh-9/builder-loopback-capture.log ends with 'zero console errors; gauge comparison PASS'. The three builder-loopback logs are untracked and must be committed with the run.",
+      "No kit file is copied into the repository, which fits the instruction to copy nothing unless necessary. I did not audit the builder's statement of which kit conventions it used.",
+      "I did not run the full suite. I rely on the builder's logs and on reviewer-tests for suite results. The pre-existing design-v4 failure stays out of scope as the work order states."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

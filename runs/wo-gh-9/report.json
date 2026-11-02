@@ -1,0 +1,262 @@
+{
+  "work_order_id": "wo-gh-9",
+  "pipeline": "sdlc-default",
+  "title": "Take apart: an interactive page that separates the Patch One layer by layer from one simulation model",
+  "kind": "feature",
+  "steps": [
+    {
+      "station": "intake",
+      "status": "completed",
+      "detail": "Work order normalized",
+      "duration_ms": 0.02,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-9/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "spec-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-9/spec-writer.output.md",
+      "duration_ms": 25850.684,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-9/spec-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "test-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-9/test-writer.output.md",
+      "duration_ms": 25691.569,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-9/test-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "builder",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-9/builder.output.md",
+      "duration_ms": 146249.214,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-9/builder.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-spec",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-9/reviewer-spec.output.md",
+      "duration_ms": 25586.995,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-9/reviewer-spec.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-security",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-9/reviewer-security.output.md",
+      "duration_ms": 16708.108,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-9/reviewer-security.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-tests",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-9/reviewer-tests.output.md",
+      "duration_ms": 16267.51,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-9/reviewer-tests.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-architecture",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-9/reviewer-architecture.output.md",
+      "duration_ms": 22541.374,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-9/reviewer-architecture.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-design",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-9/reviewer-design.output.md",
+      "duration_ms": 28212.962,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-9/reviewer-design.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "approver",
+      "status": "completed",
+      "detail": "Approver verdict: changes_requested",
+      "duration_ms": 0.044,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-9/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "approver",
+      "status": "loopback",
+      "return_to": "spec-writer",
+      "detail": "Loopback to spec-writer: Palette: src/take-apart-page.js, src/take-apart-client.js and scripts/capture-take-apart.mjs now use only the documented tokens (#FAFAF6, #12211C, #0E7C66, #EFF4EE, #DFE7DF, #4A5D54, #53685C). The substituted values #163c34, #008d7f, #6a7972 and #dce1d9 are gone. No coral is used as text.; Typography: the page head carries the same Google Fonts link as the main page (Inter 400 and 500, Space Grotesk 300, 400 and 500, display=swap). Body is 17px at 1.65 line height, the intro is 18px, and gauge values are 32 to 56px at weight 300. Mono labels are 11px with 0.16em tracking.; Container and spacing: main and header are capped at max-width 1440px, with gutters of clamp(24px, 5vw, 80px). The declared margins, paddings and gaps are 8, 16, 24 or 32px.; Accessibility: the skip link targets main#take-apart, which has tabindex=-1. Focus rings are 3px (:focus-visible). Buttons and header links have min-height 44px, range inputs are 44px high, and gaps between targets are 8px.; No script behaviour: the served HTML carries the layer list with thicknesses, gaugeReadout(0) values in the data-gauge spans, and a fallback note. The noscript style override keeps the static content visible.; Scope: src/page.js and src/index.js have no diff against SETUP_COMMIT f06bd4a, which matches the re-based assertion. Apart from runs/ and evidence/ files, the working-tree changes are limited to scripts/capture-take-apart.mjs, src/take-apart-page.js and tests/take-apart.test.js. The scope test excludes the four harness files.; Evidence: evidence/take-apart/browser-pass.log records 'console errors: 0' and 'gauge comparison: PASS at hour 200'. The five beat stills and contact-sheet.png are present, along with the builder's loopback capture, test and suite logs.; Suite: runs/wo-gh-9/builder-loopback-suite.log shows 147 tests, 145 pass, 1 skip and 1 fail. The only failure is test 98, tests/design-v4-square-product.test.js S11, which the work order lists as pre-existing and out of scope. All take-apart tests pass.; Minor, not blocking: some non-spacing sizes are off the 8px rhythm, namely the 25px tour cursor, the 250px and 195px panel columns, the 6px dot and the 5px cursor shadow. Several small captions use 12px, while the spec sets 11px for mono labels. The addendum's 8px rule covers margins, paddings and gaps, so these are not violations. The reviewer-design station may want to note them.; Not verified here: the builder's statement of kit conventions and the contact sheet's visual content. Both are outside this station's brief, and reviewer-design owns the contact sheet.; /take-apart is a static page. renderTakeApartPage() interpolates only FACTS.product and gaugeReadout(0), which are server constants. It reflects no request data, so there is no reflected XSS.; src/take-apart-client.js writes to the DOM only with textContent and SVG tspan elements. It has no innerHTML, eval, new Function or document.write. The only URL input it reads is ?tour=fast, which it compares to a literal.; The new routes in src/index.js (/take-apart, /take-apart-model.js, /take-apart.js, /vendor/three.module.min.js) match exact paths and serve in-memory constants. There is no filesystem access or path traversal. The vendored three.js 0.160.0 (MIT header) is decoded in memory and served with an immutable cache header.; The only external origins are the Google Fonts stylesheet and fonts.gstatic.com, which the spec mandates and the main page already uses. There is no SRI or CSP, same as the main page. This is a residual risk, not a regression.; The change adds no secrets, client network calls or write endpoints. The /api method guard is unchanged.; The code diff touches only scripts/capture-take-apart.mjs, src/take-apart-page.js, tests/take-apart.test.js and evidence files, all within the allowed scope. I did not verify the vendored three.js bytes against the npm package. The review is at runs/wo-gh-9/reviewer-security.output.md.; I ran `node --test tests/take-apart.test.js` and 23 of 23 tests pass. That covers the model scenarios and the new chrome tests: token-only colours, contrast of the documented pairs, font link, skip link, noscript content, 1440 px container with 3 px focus rings.; The token-only colour test scans src/take-apart-page.js, src/take-apart-client.js and scripts/capture-take-apart.mjs. It allows only hex values from the design token set and explicitly rejects #163c34, #008d7f, #6a7972 and #dce1d9. A grep confirms none of the four remain in those files.; The contrast test computes WCAG ratios and checks them against the documented values: ink 15.93, body 6.72, secondary 5.73, teal 4.90. Each is also asserted at or above 4.5.; The scope test is re-based. `SETUP_COMMIT` is `f06bd4a`, which is the branch head. `HARNESS_FILES` lists suite-output.txt, suite-result.txt, run-diff.txt and comment.md. The src/page.js diff assertion now compares against the setup commit.; The full-suite log at runs/wo-gh-9/builder-loopback-suite.log shows 147 tests: 145 pass, 1 skipped, 1 fails. The failure is `not ok 98 - S11: ... addresses and clears all four images against design/reference/`. That is the itemized pre-existing design-v4 failure, which is out of scope, so no take-apart test fails. The run report should list it separately.; evidence/take-apart/browser-pass.log exists and records 'console errors: 0' and 'gauge comparison: PASS at hour 200'. The five beat stills and contact-sheet.png sit beside it.; Minor gap: the accessibility test only checks that a 44 px min-height is declared somewhere in the page. It does not check range inputs specifically or the 8 px gaps between targets. The spec lists both, so a regression there would not be caught. This does not block a pass.; Minor gap: the noscript test asserts a style override inside `<noscript>`. It does not render the page with JavaScript disabled, so whether the content stays visible rests on that static check. This does not block a pass.; reviewer-tests.output.md is shown as deleted in the working tree. This review replaces it, and the file needs to be written back to the repo.; The change stays inside the allowed scope. The files touched are src/take-apart-page.js, scripts/capture-take-apart.mjs, tests/take-apart.test.js and the runs/ and evidence/ files. src/page.js, src/index.js, src/facts.js and src/images.js have no diff against HEAD, which matches the 'no change this round' mandate.; Routing follows the existing pattern in src/index.js. /take-apart, /take-apart-model.js, /take-apart.js and /vendor/three.module.min.js are served by lazy dynamic import.; One model drives the page. The served HTML takes the layer list, the thicknesses and the initial gauge values from the model, namely LAYERS and gaugeReadout(0). The client loads the browser twin and the vendored three.js, so there is no second source of numbers.; The chrome is fixed. The substituted colours #163c34, #008d7f, #6a7972 and #dce1d9 no longer appear in src/take-apart-*.js or the capture script. The CSS uses only the documented tokens, and the Google Fonts link is identical to the one in src/page.js. The container is 1440px. The page also has a skip link, 3px focus rings, 44px targets and a noscript override.; Non-blocking: the mono labels use the generic `monospace` family. design/DESIGN.md names no mono face, so this is not a violation. A named mono face would be a design-system question for the owner.; Non-blocking: the page is one large inline template string with its CSS in the same file. That is consistent with src/page.js, but it is hard to review.; brain/decisions does not exist in this repository. brain/ holds only glossary.md, learnings.md, project.md and worklog.md. I judged fit against the spec's file list, the existing routing pattern and the design system, and did not guess at missing decisions.; Evidence: runs/wo-gh-9/builder-loopback-capture.log ends with 'zero console errors; gauge comparison PASS'. The three builder-loopback logs are untracked and must be committed with the run.; No kit file is copied into the repository, which fits the instruction to copy nothing unless necessary. I did not audit the builder's statement of which kit conventions it used.; I did not run the full suite. I rely on the builder's logs and on reviewer-tests for suite results. The pre-existing design-v4 failure stays out of scope as the work order states.; Typography requires correction: src/take-apart-page.js sets h1 to 43px, falling to 36px below 720px, with inherited 1.65 leading. design/DESIGN.md specifies a 56\u201364px hero heading, a 56px mobile minimum, 0.96 leading and -0.055em tracking. Apply those heading rules. Font loading, 18px introduction, 17px body copy, weight-300 display faces and 32\u201356px gauge values otherwise meet the loopback requirements.; Palette and contrast cleared: page chrome, chart, callouts and contact-sheet composition use documented colors; the documented foreground/background text combinations exceed 4.5:1.; Spacing and container cleared: content margins, padding and gaps follow the 8px rhythm; containers cap at 1440px and gutters use 24\u201380px bounds.; Accessibility chrome cleared by source inspection: skip link targets main with tabindex=-1, focus outlines are 3px, header links and controls have at least 44px height, and control groups have at least 8px gaps. Range inputs explicitly have 44px operable height.; No-script behavior cleared: served HTML includes the explanation, five model-derived layer thicknesses, gaugeReadout(0) values and fallback note; the noscript override exposes the fallback and layer list.; Assembled beat cleared under S11: layers appear flush, labels identify the correct layers without covering them, and gauges show the hour-zero state. No visible intersection or clipped text.; Apart beat cleared under S11: five layers separate in order with consistent gaps, unobstructed labels and unchanged hour-zero gauges. No unexplained floating layer or clipped text.; Board beat cleared under S11: the board is lifted and emphasized while other layers fade and step aside; labels remain correctly assigned and gauges retain hour-zero values. No visible unintended intersection or clipped text.; X ray beat cleared under S11: the cover becomes faint while board focus remains visible; callouts remain unobstructed and gauges match hour zero. No unexplained displacement or clipped text.; Mid / Settle beat cleared under S11: partial separation restores the unfocused stack; 36.9\u00b0C, hydration 69, battery 59% and day 7 match hour 156. Labels remain correctly assigned without covering their layers; no visible intersection or clipped text.; Motion cleared against the study-specific rules: interaction stops the tour, reduced motion prevents automatic touring and disables transitions, and camera interpolation becomes instant.; Evidence completeness cleared: all five stills, contact-sheet.png and browser-pass.log are tracked under evidence/take-apart/. The log records zero console errors and a passing hour-200 gauge comparison.",
+      "reason": "Palette: src/take-apart-page.js, src/take-apart-client.js and scripts/capture-take-apart.mjs now use only the documented tokens (#FAFAF6, #12211C, #0E7C66, #EFF4EE, #DFE7DF, #4A5D54, #53685C). The substituted values #163c34, #008d7f, #6a7972 and #dce1d9 are gone. No coral is used as text.; Typography: the page head carries the same Google Fonts link as the main page (Inter 400 and 500, Space Grotesk 300, 400 and 500, display=swap). Body is 17px at 1.65 line height, the intro is 18px, and gauge values are 32 to 56px at weight 300. Mono labels are 11px with 0.16em tracking.; Container and spacing: main and header are capped at max-width 1440px, with gutters of clamp(24px, 5vw, 80px). The declared margins, paddings and gaps are 8, 16, 24 or 32px.; Accessibility: the skip link targets main#take-apart, which has tabindex=-1. Focus rings are 3px (:focus-visible). Buttons and header links have min-height 44px, range inputs are 44px high, and gaps between targets are 8px.; No script behaviour: the served HTML carries the layer list with thicknesses, gaugeReadout(0) values in the data-gauge spans, and a fallback note. The noscript style override keeps the static content visible.; Scope: src/page.js and src/index.js have no diff against SETUP_COMMIT f06bd4a, which matches the re-based assertion. Apart from runs/ and evidence/ files, the working-tree changes are limited to scripts/capture-take-apart.mjs, src/take-apart-page.js and tests/take-apart.test.js. The scope test excludes the four harness files.; Evidence: evidence/take-apart/browser-pass.log records 'console errors: 0' and 'gauge comparison: PASS at hour 200'. The five beat stills and contact-sheet.png are present, along with the builder's loopback capture, test and suite logs.; Suite: runs/wo-gh-9/builder-loopback-suite.log shows 147 tests, 145 pass, 1 skip and 1 fail. The only failure is test 98, tests/design-v4-square-product.test.js S11, which the work order lists as pre-existing and out of scope. All take-apart tests pass.; Minor, not blocking: some non-spacing sizes are off the 8px rhythm, namely the 25px tour cursor, the 250px and 195px panel columns, the 6px dot and the 5px cursor shadow. Several small captions use 12px, while the spec sets 11px for mono labels. The addendum's 8px rule covers margins, paddings and gaps, so these are not violations. The reviewer-design station may want to note them.; Not verified here: the builder's statement of kit conventions and the contact sheet's visual content. Both are outside this station's brief, and reviewer-design owns the contact sheet.; /take-apart is a static page. renderTakeApartPage() interpolates only FACTS.product and gaugeReadout(0), which are server constants. It reflects no request data, so there is no reflected XSS.; src/take-apart-client.js writes to the DOM only with textContent and SVG tspan elements. It has no innerHTML, eval, new Function or document.write. The only URL input it reads is ?tour=fast, which it compares to a literal.; The new routes in src/index.js (/take-apart, /take-apart-model.js, /take-apart.js, /vendor/three.module.min.js) match exact paths and serve in-memory constants. There is no filesystem access or path traversal. The vendored three.js 0.160.0 (MIT header) is decoded in memory and served with an immutable cache header.; The only external origins are the Google Fonts stylesheet and fonts.gstatic.com, which the spec mandates and the main page already uses. There is no SRI or CSP, same as the main page. This is a residual risk, not a regression.; The change adds no secrets, client network calls or write endpoints. The /api method guard is unchanged.; The code diff touches only scripts/capture-take-apart.mjs, src/take-apart-page.js, tests/take-apart.test.js and evidence files, all within the allowed scope. I did not verify the vendored three.js bytes against the npm package. The review is at runs/wo-gh-9/reviewer-security.output.md.; I ran `node --test tests/take-apart.test.js` and 23 of 23 tests pass. That covers the model scenarios and the new chrome tests: token-only colours, contrast of the documented pairs, font link, skip link, noscript content, 1440 px container with 3 px focus rings.; The token-only colour test scans src/take-apart-page.js, src/take-apart-client.js and scripts/capture-take-apart.mjs. It allows only hex values from the design token set and explicitly rejects #163c34, #008d7f, #6a7972 and #dce1d9. A grep confirms none of the four remain in those files.; The contrast test computes WCAG ratios and checks them against the documented values: ink 15.93, body 6.72, secondary 5.73, teal 4.90. Each is also asserted at or above 4.5.; The scope test is re-based. `SETUP_COMMIT` is `f06bd4a`, which is the branch head. `HARNESS_FILES` lists suite-output.txt, suite-result.txt, run-diff.txt and comment.md. The src/page.js diff assertion now compares against the setup commit.; The full-suite log at runs/wo-gh-9/builder-loopback-suite.log shows 147 tests: 145 pass, 1 skipped, 1 fails. The failure is `not ok 98 - S11: ... addresses and clears all four images against design/reference/`. That is the itemized pre-existing design-v4 failure, which is out of scope, so no take-apart test fails. The run report should list it separately.; evidence/take-apart/browser-pass.log exists and records 'console errors: 0' and 'gauge comparison: PASS at hour 200'. The five beat stills and contact-sheet.png sit beside it.; Minor gap: the accessibility test only checks that a 44 px min-height is declared somewhere in the page. It does not check range inputs specifically or the 8 px gaps between targets. The spec lists both, so a regression there would not be caught. This does not block a pass.; Minor gap: the noscript test asserts a style override inside `<noscript>`. It does not render the page with JavaScript disabled, so whether the content stays visible rests on that static check. This does not block a pass.; reviewer-tests.output.md is shown as deleted in the working tree. This review replaces it, and the file needs to be written back to the repo.; The change stays inside the allowed scope. The files touched are src/take-apart-page.js, scripts/capture-take-apart.mjs, tests/take-apart.test.js and the runs/ and evidence/ files. src/page.js, src/index.js, src/facts.js and src/images.js have no diff against HEAD, which matches the 'no change this round' mandate.; Routing follows the existing pattern in src/index.js. /take-apart, /take-apart-model.js, /take-apart.js and /vendor/three.module.min.js are served by lazy dynamic import.; One model drives the page. The served HTML takes the layer list, the thicknesses and the initial gauge values from the model, namely LAYERS and gaugeReadout(0). The client loads the browser twin and the vendored three.js, so there is no second source of numbers.; The chrome is fixed. The substituted colours #163c34, #008d7f, #6a7972 and #dce1d9 no longer appear in src/take-apart-*.js or the capture script. The CSS uses only the documented tokens, and the Google Fonts link is identical to the one in src/page.js. The container is 1440px. The page also has a skip link, 3px focus rings, 44px targets and a noscript override.; Non-blocking: the mono labels use the generic `monospace` family. design/DESIGN.md names no mono face, so this is not a violation. A named mono face would be a design-system question for the owner.; Non-blocking: the page is one large inline template string with its CSS in the same file. That is consistent with src/page.js, but it is hard to review.; brain/decisions does not exist in this repository. brain/ holds only glossary.md, learnings.md, project.md and worklog.md. I judged fit against the spec's file list, the existing routing pattern and the design system, and did not guess at missing decisions.; Evidence: runs/wo-gh-9/builder-loopback-capture.log ends with 'zero console errors; gauge comparison PASS'. The three builder-loopback logs are untracked and must be committed with the run.; No kit file is copied into the repository, which fits the instruction to copy nothing unless necessary. I did not audit the builder's statement of which kit conventions it used.; I did not run the full suite. I rely on the builder's logs and on reviewer-tests for suite results. The pre-existing design-v4 failure stays out of scope as the work order states.; Typography requires correction: src/take-apart-page.js sets h1 to 43px, falling to 36px below 720px, with inherited 1.65 leading. design/DESIGN.md specifies a 56\u201364px hero heading, a 56px mobile minimum, 0.96 leading and -0.055em tracking. Apply those heading rules. Font loading, 18px introduction, 17px body copy, weight-300 display faces and 32\u201356px gauge values otherwise meet the loopback requirements.; Palette and contrast cleared: page chrome, chart, callouts and contact-sheet composition use documented colors; the documented foreground/background text combinations exceed 4.5:1.; Spacing and container cleared: content margins, padding and gaps follow the 8px rhythm; containers cap at 1440px and gutters use 24\u201380px bounds.; Accessibility chrome cleared by source inspection: skip link targets main with tabindex=-1, focus outlines are 3px, header links and controls have at least 44px height, and control groups have at least 8px gaps. Range inputs explicitly have 44px operable height.; No-script behavior cleared: served HTML includes the explanation, five model-derived layer thicknesses, gaugeReadout(0) values and fallback note; the noscript override exposes the fallback and layer list.; Assembled beat cleared under S11: layers appear flush, labels identify the correct layers without covering them, and gauges show the hour-zero state. No visible intersection or clipped text.; Apart beat cleared under S11: five layers separate in order with consistent gaps, unobstructed labels and unchanged hour-zero gauges. No unexplained floating layer or clipped text.; Board beat cleared under S11: the board is lifted and emphasized while other layers fade and step aside; labels remain correctly assigned and gauges retain hour-zero values. No visible unintended intersection or clipped text.; X ray beat cleared under S11: the cover becomes faint while board focus remains visible; callouts remain unobstructed and gauges match hour zero. No unexplained displacement or clipped text.; Mid / Settle beat cleared under S11: partial separation restores the unfocused stack; 36.9\u00b0C, hydration 69, battery 59% and day 7 match hour 156. Labels remain correctly assigned without covering their layers; no visible intersection or clipped text.; Motion cleared against the study-specific rules: interaction stops the tour, reduced motion prevents automatic touring and disables transitions, and camera interpolation becomes instant.; Evidence completeness cleared: all five stills, contact-sheet.png and browser-pass.log are tracked under evidence/take-apart/. The log records zero console errors and a passing hour-200 gauge comparison.",
+      "duration_ms": 0.0,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": null,
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "triage-human",
+      "status": "completed",
+      "detail": "Human review: required",
+      "duration_ms": 0.006,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "deployer",
+      "status": "packet_ready",
+      "detail": "Packet written to runs/wo-gh-9/deployer.packet.md",
+      "duration_ms": 0.203,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-9/deployer.packet.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "observer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-9/observer.output.md",
+      "duration_ms": 22002.871,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-9/observer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    }
+  ],
+  "verdict": "changes_requested",
+  "human_required": true,
+  "max_loopbacks": 2,
+  "loopbacks": 1,
+  "deployment_status": null,
+  "verify_results": [],
+  "risk_hints": [],
+  "decision": {
+    "approver": {
+      "reviews_counted": [
+        {
+          "station": "reviewer-spec",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-security",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-tests",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-architecture",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-design",
+          "verdict": "changes_requested"
+        }
+      ],
+      "reviews_expected": [
+        "reviewer-spec",
+        "reviewer-security",
+        "reviewer-tests",
+        "reviewer-architecture",
+        "reviewer-design"
+      ],
+      "rule": "Reviewer reviewer-design requested changes."
+    },
+    "human_gate": {
+      "required": true,
+      "rule": "Verdict is changes_requested, not approved, so a human is required.",
+      "hints_matched": []
+    }
+  },
+  "warnings": []
+}

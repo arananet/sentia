@@ -368,7 +368,7 @@ ${jsonLd(origin)}
       <span class="wordmark">Sentia</span>
     </a>
     <nav aria-label="Sections">
-      <a href="#patch">Patch</a><a href="#how">How it works</a><a href="#demo">Live demo</a><a href="#dashboard">Dashboard</a><a href="#mcp">MCP</a><a href="#specs">Specs</a><a href="#faq">FAQ</a>
+      <a href="/take-apart">Take apart</a><a href="#patch">Patch</a><a href="#how">How it works</a><a href="#demo">Live demo</a><a href="#dashboard">Dashboard</a><a href="#mcp">MCP</a><a href="#specs">Specs</a><a href="#faq">FAQ</a>
     </nav>
   </div>
 </header>

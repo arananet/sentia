@@ -1,0 +1,30 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-tests",
+  "to_station": "reviewer-architecture",
+  "work_order_id": "wo-gh-9",
+  "artifact_path": "runs/wo-gh-9/reviewer-tests.output.md",
+  "status": "executed",
+  "created_at": "2026-10-31T13:30:04.015719+00:00",
+  "review": {
+    "station": "reviewer-tests",
+    "verdict": "pass",
+    "findings": [
+      "I ran `node --test tests/take-apart.test.js` and 23 of 23 tests pass. That covers the model scenarios and the new chrome tests: token-only colours, contrast of the documented pairs, font link, skip link, noscript content, 1440 px container with 3 px focus rings.",
+      "The token-only colour test scans src/take-apart-page.js, src/take-apart-client.js and scripts/capture-take-apart.mjs. It allows only hex values from the design token set and explicitly rejects #163c34, #008d7f, #6a7972 and #dce1d9. A grep confirms none of the four remain in those files.",
+      "The contrast test computes WCAG ratios and checks them against the documented values: ink 15.93, body 6.72, secondary 5.73, teal 4.90. Each is also asserted at or above 4.5.",
+      "The scope test is re-based. `SETUP_COMMIT` is `f06bd4a`, which is the branch head. `HARNESS_FILES` lists suite-output.txt, suite-result.txt, run-diff.txt and comment.md. The src/page.js diff assertion now compares against the setup commit.",
+      "The full-suite log at runs/wo-gh-9/builder-loopback-suite.log shows 147 tests: 145 pass, 1 skipped, 1 fails. The failure is `not ok 98 - S11: ... addresses and clears all four images against design/reference/`. That is the itemized pre-existing design-v4 failure, which is out of scope, so no take-apart test fails. The run report should list it separately.",
+      "evidence/take-apart/browser-pass.log exists and records 'console errors: 0' and 'gauge comparison: PASS at hour 200'. The five beat stills and contact-sheet.png sit beside it.",
+      "Minor gap: the accessibility test only checks that a 44 px min-height is declared somewhere in the page. It does not check range inputs specifically or the 8 px gaps between targets. The spec lists both, so a regression there would not be caught. This does not block a pass.",
+      "Minor gap: the noscript test asserts a style override inside `<noscript>`. It does not render the page with JavaScript disabled, so whether the content stays visible rests on that static check. This does not block a pass.",
+      "reviewer-tests.output.md is shown as deleted in the working tree. This review replaces it, and the file needs to be written back to the repo."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}
