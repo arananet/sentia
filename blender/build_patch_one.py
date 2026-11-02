@@ -152,9 +152,9 @@ def silicone_texture(mat):
     img.colorspace_settings.name='Non-Color';img.pixels=pixels;img.pack()
     nt=mat.node_tree;tex=nt.nodes.new('ShaderNodeTexImage');tex.image=img
     uv=nt.nodes.new('ShaderNodeTexCoord');mapping=nt.nodes.new('ShaderNodeMapping')
-    mapping.inputs['Scale'].default_value=(2,2,1)
+    mapping.inputs['Scale'].default_value=(3,3,1)
     nt.links.new(uv.outputs['UV'],mapping.inputs['Vector']);nt.links.new(mapping.outputs[0],tex.inputs['Vector'])
-    normal=nt.nodes.new('ShaderNodeNormalMap');normal.inputs['Strength'].default_value=.85
+    normal=nt.nodes.new('ShaderNodeNormalMap');normal.inputs['Strength'].default_value=.5
     nt.links.new(tex.outputs['Color'],normal.inputs['Color']);nt.links.new(normal.outputs[0],nt.nodes.get('Principled BSDF').inputs['Normal'])
 
 

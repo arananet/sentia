@@ -131,13 +131,21 @@ async function initScene() {
       const owned = materials.map(material => {
         const copy = material.clone();
         copy.envMapIntensity = copy.metalness > .5 ? 1.25 : .35;
-        // The translucent lens must retain its tint over the emitting surface.
-        if (copy.name === 'Optical silicone window') {
-          copy.envMapIntensity = .2; copy.roughness = .22; copy.opacity = .85;
-          // Carry the emitter through the lens at the study's exaggerated vertical scale.
-          copy.color.setRGB(.015,.65,.59); copy.emissive.setRGB(.01,.65,.59); copy.emissiveIntensity = .8;
+        // Keep the optical strip saturated under the metal studio's bright cards.
+        // Its existing recessed geometry and dark socket provide the depth border.
+        if (copy.name === 'Optical silicone window' || copy.name === 'Teal cyan LED') {
+          copy.envMapIntensity = 0; copy.roughness = .5;
+          copy.color.setRGB(.002,.025,.018);
+          copy.emissive.setRGB(.003,.48,.32); copy.emissiveIntensity = 1;
+          copy.toneMapped = false;
+          if (copy.name === 'Optical silicone window') {
+            copy.opacity = 1; copy.clearcoat = 0;
+          }
         }
         if (copy.name === 'Matte off white silicone') {
+          // Preserve beat-scale grain while the true-scale beauty uses a finer finish.
+          copy.normalMap = copy.normalMap.clone(); copy.normalMap.repeat.set(2,2);
+          copy.normalScale.setScalar(.85);
           // Vertical exaggeration also stretches side normals; keep grain on the crown.
           copy.onBeforeCompile = shader => {
             shader.vertexShader = 'varying float grainCrown;\\n' + shader.vertexShader;
@@ -153,6 +161,12 @@ async function initScene() {
     });
     scene.add(node);
   });
+  // Local emitter spill lights the pocket walls at the exaggerated study scale.
+  // The sources stay inside the existing optical recess and follow its cover.
+  for (const x of [-3,0,3]) {
+    const spill = new THREE.PointLight(0x08d9b5,.7,2,2);
+    spill.position.set(x,.27,3.2); meshes[0].add(spill);
+  }
   const ns='http://www.w3.org/2000/svg';
   M.LAYERS.forEach((layer,i) => {
     const group=document.createElementNS(ns,'g'); group.dataset.layer=i;

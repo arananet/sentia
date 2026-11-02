@@ -27,7 +27,7 @@ assert.equal(build.status, 0, build.error?.message || build.stderr);
 const port = Number(process.env.CAPTURE_PORT || 8791);
 const origin = `http://127.0.0.1:${port}`;
 const runtimeArgs = ['dev', join(buildDir, 'index.js'), '--no-bundle', '--local', '--ip', '127.0.0.1', '--port', String(port)];
-const runtime = spawn(wrangler, runtimeArgs, { stdio: ['ignore', 'pipe', 'pipe'] });
+const runtime = spawn(wrangler, runtimeArgs, { detached: true, stdio: ['ignore', 'pipe', 'pipe'] });
 let runtimeLog = '';
 runtime.stdout.on('data', chunk => { runtimeLog += chunk; });
 runtime.stderr.on('data', chunk => { runtimeLog += chunk; });

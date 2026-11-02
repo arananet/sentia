@@ -1,11 +1,10 @@
-I made no changes to `.openspec/specs/web-render-finish/spec.md` this round. The work order says it stands exactly as it now reads. The new loopback content is about the builder's model route, which is a station and wrapper matter, not a product requirement.
+I made no change to `.openspec/specs/web-render-finish/spec.md`. The work order says it stands exactly as it now reads, and it already covers this round's one surviving item.
 
-The spec already covers what the order needs:
-- **Evidence and capture:** the before and after beats, and the rule that no evidence step imports the unbundled source (R8, S7).
-- **Scope:** the byte budget, the frozen items, and deployment as the operator's gated step.
+- **LED:** R3 and S5 already require a recessed teal emitter in its socket, with the teal visible in the assembled and mid beats. R4 and R5 already put the client and Blender LED material handling in scope.
+- **Geometry:** R6 and S2 already freeze the five nodes, the layer thicknesses, the footprint, the wordmark and the LED position and proportions.
+- **Cover grain:** the spec has no requirement on grain coarseness. Softening it is a reviewer-design judgement under R3/S5 and S6.
+- **Evidence and capture:** the work order's rule that this round's before beats are round 2's committed after beats is a capture instruction for the builder, so the spec doesn't change. R7 and R8 already require bundled-output-only capture.
 
-I rewrote `runs/wo-gh-14/spec-writer.output.md` to record this. It had been deleted in the working tree, and the version in the last commit described a round 1 edit to R8 and S7 that is already in the spec.
-
-I didn't commit anything. I did not touch the tests or any product file.
+I rewrote `runs/wo-gh-14/spec-writer.output.md` to record this. The file had been deleted in the working tree. I didn't commit anything or touch tests or product files.
 
 {"model": "claude-sonnet-5-5", "runtime": "claude-code"}

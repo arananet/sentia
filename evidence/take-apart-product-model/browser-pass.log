@@ -1,4 +1,4 @@
-Bundled Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-bundle-GILIsF/index.js --no-bundle --local --ip 127.0.0.1 --port 8796
+Bundled Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-bundle-Vq8JZD/index.js --no-bundle --local --ip 127.0.0.1 --port 8793
 console errors: 0
 page errors: 0
 TakeApartModel: object
@@ -6,7 +6,7 @@ scene ready: true
 canvas: 1022x559; layout: 1022x559; DPR: 1
 gauge comparison: PASS at hour 200
 asset failure checks: PASS (fetch and parse)
-GLB /models/patch-one.glb: status 200; bytes 798088
+GLB /models/patch-one.glb: status 200; bytes 798072
 loaded nodes: 5; Top cover; Comfort foam; Sensing and processing board; Adhesive layer; Release liner
 vendor /vendor/three.module.min.js: status 200; decoded bytes 670681
 
