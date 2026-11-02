@@ -1,5 +1,5 @@
-// First party application source served by the worker.
-async function takeApartApp() {
+// Literal browser source: Worker bundlers must treat this as data, not executable code.
+export const TAKE_APART_CLIENT_JS = `(async function takeApartApp() {
 const THREE = await import('/vendor/three.module.min.js');
 const M = globalThis.TakeApartModel;
 const $ = s => document.querySelector(s);
@@ -141,7 +141,7 @@ function updateScene(instant=false) {
     const g=overlay.children[l.i], x=l.left?8:w-8, elbow=l.left?150:w-150;
     const color=state.focus===l.i?'#0E7C66':'#53685C';
     g.setAttribute('fill',color);g.querySelector('path').setAttribute('stroke',color);
-    g.querySelector('path').setAttribute('d',`M ${l.x} ${l.y} L ${elbow} ${l.labelY} L ${l.left?x+3:x-3} ${l.labelY}`);
+    g.querySelector('path').setAttribute('d',\`M \${l.x} \${l.y} L \${elbow} \${l.labelY} L \${l.left?x+3:x-3} \${l.labelY}\`);
     const circle=g.querySelector('circle');circle.setAttribute('cx',l.x);circle.setAttribute('cy',l.y);
     const text=g.querySelector('text');text.setAttribute('text-anchor',l.left?'start':'end');text.setAttribute('y',l.labelY-9-(l.i===2?15:0));
     text.querySelectorAll('tspan').forEach(t=>t.setAttribute('x',x));
@@ -204,5 +204,4 @@ window.addEventListener('resize',()=> {lastChartHour=-Infinity;});
 function frame(now){tour(now);updateScene();updatePanel(now);requestAnimationFrame(frame);}
 requestAnimationFrame(frame);
 
-}
-export const TAKE_APART_CLIENT_JS = `(${takeApartApp.toString()})();`;
+})();`;

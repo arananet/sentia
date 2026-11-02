@@ -4,5 +4,6 @@ node_modules/
 .dev.vars.*
 *.log
 !evidence/take-apart/browser-pass.log
+!evidence/take-apart-bundling/*.log
 !runs/wo-gh-9/*.log
 .anvil-factory/

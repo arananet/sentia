@@ -1,0 +1,23 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-design",
+  "to_station": "approver",
+  "work_order_id": "wo-gh-11",
+  "artifact_path": "runs/wo-gh-11/reviewer-design.output.md",
+  "status": "executed",
+  "created_at": "2026-10-31T13:51:55.398583+00:00",
+  "review": {
+    "station": "reviewer-design",
+    "verdict": "changes_requested",
+    "findings": [
+      "Bundled-browser screenshots show the rendered patch across all five tour states. The interface preserves the documented palette and existing composition; the source diff leaves page styling and behavior unchanged. browser-pass.log records zero console errors, zero page errors, and scene ready=true.",
+      "R7 remains unmet: evidence/take-apart-bundling/test-suite.log records one failure, 'S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/'. The evidence README explicitly says sibling-branch resolution is not established. Provide a passing suite or establish the permitted sibling-resolution exception without modifying another run's evidence."
+    ]
+  },
+  "configured_model": "gpt-6-astra",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "gpt-6-astra"
+}
