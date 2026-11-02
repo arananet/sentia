@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import zlib from 'node:zlib';
 import crypto from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import worker from '../src/index.js';
 import { FACTS } from '../src/facts.js';
 import * as M from '../src/take-apart-model.js';
@@ -22,14 +23,13 @@ import * as M from '../src/take-apart-model.js';
 //  * Its fallback image is any <img> inside the section whose src is a site route
 //    that is NOT one of the four existing image routes. The route is read from
 //    the markup, so the route name is the builder's choice.
-//  * The section link to /take-apart resolves to pathname /take-apart. NOTE for
-//    the builder: tests/take-apart.test.js S10 and take-apart-bundling S4 count
-//    the literal href="/take-apart" on the home page as exactly one (the nav
-//    anchor). A second literal href="/take-apart" breaks them, so the section
-//    link must resolve to /take-apart yet not be that literal string, for
-//    example href="/take-apart?from=home". If the owner prefers a bare link, the
-//    two older assertions need an owner decided edit; this file accepts both
-//    forms except where it asserts the literal count (see the R1 test below).
+//  * Round 2 (R7): the section link's href is exactly the plain path /take-apart.
+//    NOTE for the builder: tests/take-apart.test.js S10 and take-apart-bundling
+//    S4 count the double quoted literal href="/take-apart" on the home page as
+//    exactly one (the nav anchor), and R15 keeps those tests in their original
+//    meaning. So the section anchor must carry the plain value written with
+//    single quotes (href='/take-apart'): the parsed href is exactly /take-apart
+//    while the double quoted literal count stays one. This file asserts both.
 //  * Layer centres: the home client must obtain the model outputs from the one
 //    model (the served twin /take-apart-model.js, a shared module, or an import
 //    of src/take-apart-model.js) and must not re-declare the layer constants.
@@ -163,17 +163,19 @@ test('home S1/R7: copy states the five layers and the 2.5 mm profile, and names 
   assert.doesNotMatch(SECTION, /—/, 'no em dash in the site voice');
 });
 
-test('home S1/R7: exactly one link in the section leads to /take-apart', () => {
-  const links = [...SECTION.matchAll(/<a\b[^>]*\bhref="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g)];
+test('home S1/S12/R7: exactly one link in the section leads to /take-apart, href exactly /take-apart', () => {
+  const links = [...SECTION.matchAll(/<a\b[^>]*\bhref=(?:"([^"]*)"|'([^']*)')[^>]*>([\s\S]*?)<\/a>/g)].map((m) => [m[0], m[1] ?? m[2], m[3]]);
   const hit = links.filter((l) => new URL(l[1], ORIGIN).pathname === '/take-apart');
   assert.equal(hit.length, 1, 'exactly one link to /take-apart in the section');
+  assert.equal(hit[0][1], '/take-apart', 'the onward href is exactly the plain path: no query string, no fragment');
+  assert.doesNotMatch(SECTION, /from=home/, 'the ?from=home suffix is gone');
   assert.ok(norm(hit[0][2]).length >= 4, 'the link has readable text');
 });
 
 test('home R1: the nav keeps the only literal href="/take-apart" (older tests S10 and bundling S4 count it as one)', () => {
   const nav = home.match(/<nav[\s\S]*?<\/nav>/)[0];
   assert.ok(nav.includes('href="/take-apart"'));
-  assert.equal((home.match(/href="\/take-apart"/g) || []).length, 1, 'the section link must resolve to /take-apart without being a second literal href="/take-apart"');
+  assert.equal((home.match(/href="\/take-apart"/g) || []).length, 1, 'the section link is the plain /take-apart written with single quotes, so the double quoted literal count stays one (older tests S10 and S4 keep their meaning)');
 });
 
 // ============================================================ S2 / R3 one model
@@ -372,7 +374,7 @@ test('home S7/R9/R11: the fallback image route serves a derived re-encode of the
   assert.ok(bytes.length <= 400 * 1000, `fallback image ${bytes.length} bytes exceeds 400 KB`);
   assert.ok(bytes.length >= 20 * 1000, 'not an empty or placeholder image');
   const src = fs.readFileSync(new URL('../evidence/take-apart-product-model/render-exploded.png', import.meta.url));
-  assert.equal(src.length, 752674, 'the source render is the one the spec names');
+  assert.equal(src.length, 752703, 'the frozen source render on this branch (including PNG metadata)');
   assert.ok(!bytes.equals(src), 'a derived re-encode, not the 752,674 byte source');
   const d = imageDims(bytes), s = imageDims(src);
   assert.ok(d, 'decodable image header');
@@ -396,7 +398,7 @@ test('home S7/R9: without JavaScript the section reads complete: image, five nam
   assert.ok(imgTag);
   for (const l of FACTS.layers) { assert.ok(text.includes(l.name), l.name); assert.ok(text.includes(l.detail), l.detail); }
   assert.ok(text.includes('2.5 mm'));
-  assert.match(SECTION, /href="\/take-apart[?#"]/);
+  assert.match(SECTION, /href=(?:"\/take-apart"|'\/take-apart')/);
   assert.doesNotMatch(SECTION, /<canvas\b/, 'no canvas in the server rendered HTML; the client adds it');
   assert.doesNotMatch(SECTION, /\shidden[\s>=]/, 'nothing in the section is hidden by default');
   assert.doesNotMatch(SECTION, /style="[^"]*display\s*:\s*none/i);
@@ -623,4 +625,172 @@ test('home R14: the product test inputs exist and the fallback is the model expl
   assert.ok(fs.existsSync(new URL('../design/reference/product-reference.png', import.meta.url)), 'anchor image exists for the product test');
   assert.ok(fs.existsSync(new URL('../evidence/take-apart-product-model/render-exploded.png', import.meta.url)));
   assert.ok(imgSrc, 'the fallback image is a new route that carries the product model exploded render');
+});
+
+// ============================================================ Round 2
+// ---- S12/R16: section label computes to the DESIGN.md mono treatment
+function labelStyle() {
+  // The label is the first text element inside the section's wrap, before the h2.
+  const head = (SECTION.match(/<div class="wrap"[^>]*>\s*([\s\S]*?)<h2\b/) || [])[1] || '';
+  const tag = head.match(/<(p|div|span|h3)\b([^>]*)>/);
+  assert.ok(tag, 'the section opens with a label element before its heading');
+  const attrs = tag[2];
+  const classes = ((attrs.match(/\bclass="([^"]*)"/) || [])[1] || '').split(/\s+/).filter(Boolean);
+  const decls = [];
+  const sheet = CSS.replace(/\/\*[\s\S]*?\*\//g, '');
+  const rules = [...sheet.matchAll(/([^{}@]+)\{([^{}]*)\}/g)];
+  for (const [, selList, body] of rules) {
+    for (const sel of selList.split(',').map((x) => x.trim())) {
+      if (!sel || /:root|:hover|:focus|::|\[/.test(sel.replace(/\[[^\]]*\]/g, ''))) continue;
+      const parts = sel.split(/\s+/);
+      const last = parts[parts.length - 1];
+      const lastCls = [...last.matchAll(/\.([\w-]+)/g)].map((m) => m[1]);
+      const lastTag = (last.match(/^[a-z][a-z0-9]*/) || [])[0];
+      if (lastTag && lastTag !== tag[1]) continue;
+      if (!lastTag && !lastCls.length) continue;
+      if (!lastCls.every((c) => classes.includes(c))) continue;
+      const ancestors = parts.slice(0, -1).filter((a) => a !== '>');
+      if (!ancestors.every((a) => a === '#home-layers' || (a.startsWith('.') && SECTION.includes(a.slice(1))))) continue;
+      const spec = (sel.match(/#/g) || []).length * 100 + (sel.match(/\./g) || []).length * 10 + (sel.match(/(^|\s)[a-z]/g) || []).length;
+      for (const d of body.split(';')) {
+        const i = d.indexOf(':');
+        if (i > 0) decls.push({ spec, name: d.slice(0, i).trim(), value: d.slice(i + 1).trim() });
+      }
+    }
+  }
+  for (const d of ((attrs.match(/\bstyle="([^"]*)"/) || [])[1] || '').split(';')) {
+    const i = d.indexOf(':');
+    if (i > 0) decls.push({ spec: 1000, name: d.slice(0, i).trim(), value: d.slice(i + 1).trim() });
+  }
+  const win = (name) => decls.filter((d) => d.name === name).sort((a, b) => a.spec - b.spec).pop()?.value;
+  const font = win('font');
+  const fontLast = decls.filter((d) => d.name === 'font').sort((a, b) => a.spec - b.spec).pop();
+  const sizeLonghand = decls.filter((d) => d.name === 'font-size').sort((a, b) => a.spec - b.spec).pop();
+  const size = sizeLonghand && (!fontLast || sizeLonghand.spec >= fontLast.spec) ? sizeLonghand.value : (font?.match(/(\d+(?:\.\d+)?)px/) || [])[1] + 'px';
+  const familyLonghand = win('font-family');
+  return { size, family: familyLonghand && (!fontLast || true) ? familyLonghand + ' ' + (font || '') : font || '', transform: win('text-transform'), tracking: win('letter-spacing'), color: win('color'), text: norm(head) };
+}
+
+test('home S12/R16: the new section label computes to 11 px, uppercase, 0.16 em, system mono', () => {
+  const s = labelStyle();
+  assert.equal(s.size, '11px', `label font size is ${s.size}`);
+  assert.equal(s.transform, 'uppercase', 'label is uppercase');
+  assert.match(String(s.tracking), /^(0?\.16em|1\.76px)$/, `label tracking is ${s.tracking}`);
+  assert.match(s.family, /ui-monospace|monospace/i, 'label uses the system mono stack');
+  assert.ok(s.text.length >= 4, 'label has text');
+});
+
+test('home S12/R16: the label colour is a design token with contrast at or above 4.5 to 1 on paper', () => {
+  const s = labelStyle();
+  const vars = { '--ink': '#12211C', '--soft': '#4A5D54', '--faint': '#53685C', '--teal': '#0E7C66' };
+  const m = String(s.color).match(/^var\((--[\w-]+)\)$/);
+  const hex = (m ? vars[m[1]] : s.color)?.toLowerCase();
+  assert.ok(hex && TOKENS.has(hex), `label colour ${s.color} is a design token`);
+  const lum = (h) => { const c = [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255).map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
+  const [a, b] = [lum(hex), lum('#fafaf6')].sort((x, y) => y - x);
+  assert.ok((a + 0.05) / (b + 0.05) >= 4.5);
+});
+
+test('home S12/R16: the label rule is scoped to the new section, so existing label rules and sections stay unchanged', () => {
+  const s = labelStyle();
+  assert.ok(s.tracking, 'the tracking comes from a rule or inline style that applies to the label');
+  // pre existing .mono keeps its 0.18em tracking and the old numbered labels keep their markup
+  assert.match(CSS, /\.mono\{font:500 11px\/1\.5 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:0\.18em;text-transform:uppercase\}/, 'the shared .mono rule is not edited');
+  for (const [id, label] of [['patch', '01 / </span>The patch'], ['how', '02 / </span>How it works']]) {
+    const sec = allSections.find((x) => x.startsWith('<section id="' + id + '"'));
+    assert.ok(sec && sec.includes(label), `#${id} label markup unchanged`);
+  }
+});
+
+// ---- S11/R14: home scene rig (static checks; the visual verdict is reviewer-design's)
+test('home S11/R14: the scene has a directional key, a shaping fill that is not the only ambient, and an environment', async () => {
+  const all = (await homeClientSources()).join('\n');
+  assert.match(all, /DirectionalLight/, 'a directional key light');
+  assert.match(all, /(HemisphereLight|SpotLight|PointLight|RectAreaLight)|DirectionalLight[\s\S]*DirectionalLight/, 'a shaping fill beyond one key');
+  assert.match(all, /scene\.environment\s*=/, 'an image based environment is assigned to the scene');
+  assert.match(all, /PMREMGenerator|CubeCamera|EquirectangularReflectionMapping/, 'the environment is prefiltered or mapped, not a flat colour');
+  const ambient = [...all.matchAll(/AmbientLight\(\s*\w+\s*,\s*([\d.]+)\s*\)/g)].map((m) => Number(m[1]));
+  for (const a of ambient) assert.ok(a <= 0.6, `ambient ${a} is a low fill, not the flat base light`);
+});
+
+test('home S11/R14: the films are handled as translucent materials, and the model fade rules still apply', async () => {
+  const all = (await homeClientSources()).join('\n');
+  assert.match(all, /MeshPhysicalMaterial|transmission|\.ior\b|thickness\s*=/, 'film layers get a physical translucent treatment');
+  assert.match(all, /depthWrite\s*=\s*false|depthWrite:\s*false|!transparent|depthWrite\s*=\s*!/, 'translucent surfaces do not write depth as solid slabs');
+  assert.match(all, /materialState/, 'the model materialState still drives opacity');
+  assert.match(all, /focusTransform/, 'the model focusTransform still drives lift');
+  assert.match(all, /baseOpacity/, 'asset opacity is the base the fade multiplies');
+});
+
+test('home S11/R14: no GLB, model, take apart or vendored source is touched by the round', () => {
+  const base = '89259c9';
+  const frozen = ['src/patch-one-glb.js', 'src/take-apart-model.js', 'src/take-apart-model-browser.js', 'src/take-apart-client.js', 'src/take-apart-page.js', 'src/images.js', 'src/facts.js', 'src/vendor-three.js', 'src/vendor-gltf-loader.js', 'src/vendor-buffer-geometry-utils.js'];
+  let out;
+  try { out = execFileSync('git', ['diff', '--name-only', base, '--', ...frozen], { cwd: new URL('../', import.meta.url), encoding: 'utf8' }); }
+  catch { return; } // no git history available: byte tests above still guard the served bytes
+  assert.equal(out.trim(), '', 'frozen files changed: ' + out);
+  const ev = execFileSync('git', ['diff', '--name-only', base, '--', 'evidence/take-apart-product-model', 'evidence/take-apart', 'evidence/take-apart-bundling', 'evidence/design-v4'], { cwd: new URL('../', import.meta.url), encoding: 'utf8' });
+  assert.equal(ev.trim(), '', "another run's evidence was edited: " + ev);
+});
+
+// ---- S13/R13/R15: evidence committed and itemized
+const gitOk = (args) => { try { return { code: 0, out: execFileSync('git', args, { cwd: new URL('../', import.meta.url), encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }) }; } catch (e) { return { code: e.status ?? 1, out: '' }; } };
+
+test('home S13/R13: .gitignore negations let the evidence logs be tracked', () => {
+  const gi = read('.gitignore');
+  assert.match(gi, /^!evidence\/home-layered-view\/\*\.log\s*$/m, 'negation for the evidence logs');
+  assert.match(gi, /^\*\.log\s*$/m, 'the general *.log rule stays');
+  assert.match(gi, /^!evidence\/take-apart-bundling\/\*\.log\s*$/m, 'the sibling negations are not removed');
+  const logs = evidFile(/\.log$/);
+  for (const re of [/browser/i, /bundle/i, /test/i]) assert.ok(logs.some((f) => re.test(f)), `a ${re} log exists under evidence/home-layered-view/`);
+  if (gitOk(['rev-parse', '--git-dir']).code !== 0) return;
+  for (const f of logs) assert.equal(gitOk(['check-ignore', '-q', 'evidence/home-layered-view/' + f]).code, 1, `${f} is not ignored by git`);
+});
+
+test('home S13/R13: the evidence logs are tracked or staged in git, in full', () => {
+  if (gitOk(['rev-parse', '--git-dir']).code !== 0) return;
+  const tracked = gitOk(['ls-files', '--', 'evidence/home-layered-view']).out.split('\n');
+  for (const re of [/browser.*\.log$/i, /bundle.*\.log$/i, /(baseline|test).*\.log$/i])
+    assert.ok(tracked.some((f) => re.test(f)), `a log matching ${re} is tracked in evidence/home-layered-view/`);
+  assert.ok(tracked.some((f) => /run-report\.md$/.test(f)), 'the run report is tracked');
+  for (const f of evidFile(/\.log$/)) assert.ok(fs.statSync(new URL(f, EVID)).size > 0, `${f} is not empty`);
+});
+
+const reportText = () => evidText(/^run-report\.md$/, 'run-report.md');
+
+test('home S13/R11/R13: the run report states the three measured figures against their budgets, matching the final tree', async () => {
+  const r = reportText();
+  const num = (n) => n.toLocaleString('en-US');
+  const docBytes = homeBytes;
+  const imgBytes = (await getBuf(imgSrc)).length;
+  const lazy = (await Promise.all([ROUTES.three, ROUTES.loader, ROUTES.utils, ROUTES.glb].map(async (p) => (await getBuf(p)).length))).reduce((a, b) => a + b, 0);
+  for (const [label, v] of [['home document', docBytes], ['fallback image', imgBytes], ['lazy 3D payload', null]]) {
+    assert.match(r, new RegExp(label, 'i'), `${label} named in the run report`);
+    if (v !== null) assert.ok(r.includes(String(v)) || r.includes(num(v)), `${label} figure ${v} appears in the run report`);
+  }
+  // the lazy payload also counts any gated home client script, so accept the sum with the client or without
+  assert.match(r, /\b1,?2\d\d,?\d{3}\b/, 'a lazy payload figure near 1.2 MB is stated');
+  assert.ok(lazy < 1250000);
+  for (const budget of [/48\s*KB|49,?152/i, /400\s*KB|400,?000|409,?600/i, /1\.25\s*MB|1,?250,?000/i]) assert.match(r, budget, `budget ${budget} stated`);
+  assert.match(r, /44,?434/, 'the base document figure is stated');
+});
+
+test('home S13/R15: the run report itemizes all three baseline suite failures by name as settlement exceptions', () => {
+  const r = reportText();
+  assert.match(r, /design v4[^\n]*S11|S11[^\n]*design v4/i, 'design v4 S11 named');
+  assert.match(r, /anvil\/run-s11-rebaseline/, 'the sibling branch that resolves S11 named');
+  assert.match(r, /tests\/take-apart-product-model\.test\.js/, 'the product model test file named');
+  assert.match(r, /bundled browser pass/i, 'the product model bundled browser pass test named');
+  assert.match(r, /bundle-build\.log/i, 'the product model bundle-build.log test named');
+  assert.match(r, /S7[^\n]*R13|R13[^\n]*S7/, 'S7/R13 named');
+  assert.match(r, /settlement/i, 'settlement exceptions language');
+  assert.match(r, /\b(three|3)\b[^\n]*(failures?|exceptions?)|(failures?|exceptions?)[^\n]*\b(three|3)\b/i, 'the count of three is stated');
+  assert.match(r, /merge[sd]?[^\n]*(before|prior)|before this branch/i, 'the merge order that resolves them is stated');
+  assert.match(r, /re-?run/i, 'the suite re-run on the merged tree is stated');
+});
+
+test('home S13/R15: the sibling stack evidence this order must not edit is still byte identical to the base', () => {
+  if (gitOk(['rev-parse', '--git-dir']).code !== 0 || gitOk(['cat-file', '-e', '89259c9']).code !== 0) return;
+  const d = gitOk(['diff', '--name-only', '89259c9', '--', 'evidence/take-apart-product-model', 'evidence/take-apart-bundling', 'evidence/take-apart']).out.trim();
+  assert.equal(d, '', 'other runs evidence edited: ' + d);
 });

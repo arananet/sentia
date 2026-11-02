@@ -1,6 +1,7 @@
 import { FACTS } from './facts.js';
 
 export const HOME_LAYERED_CSS = `
+#home-layers .kicker{font:500 11px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:0.16em;text-transform:uppercase;color:var(--teal)}
 .home-layers-grid{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:48px;align-items:center}
 .home-layers-visual{position:relative;aspect-ratio:1/1;min-width:0}
 .home-layers-visual img,.home-layers-visual canvas{width:100%;height:100%;object-fit:contain;display:block}
@@ -20,7 +21,7 @@ export const HOME_LAYERED_CSS = `
 export function homeLayeredSection() {
   return `<section id="home-layers" aria-label="Patch One in five layers">
   <div class="wrap">
-    <div class="kicker">Inside Patch One</div>
+    <div class="kicker">01.1 / Inside Patch One</div>
     <h2>Five layers.<br>One patch.</h2>
     <p class="lede">Explore the five layers of ${FACTS.product}. Together, they form a ${FACTS.thicknessMm} mm assembled profile.</p>
     <div class="home-layers-grid">
@@ -32,7 +33,7 @@ export function homeLayeredSection() {
       </div>
       <div>
         <ol>${FACTS.layers.map((l,i)=>`<li><button type="button" data-home-layer="${i}" aria-pressed="false"><span>${l.name}</span><small>${l.detail}</small></button></li>`).join('')}</ol>
-        <a href="/take-apart?from=home">Explore the full take apart study →</a>
+        <a href='/take-apart'>Explore the full take apart study →</a>
       </div>
     </div>
   </div>

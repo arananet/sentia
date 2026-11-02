@@ -1,0 +1,24 @@
+Bundled Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-bundle-3bWq4I/index.js --no-bundle --local --ip 127.0.0.1 --port 8791
+console errors: 0
+page errors: 0
+section present: true
+lazy gate: PASS; below the fold: 0 /models/ or /vendor/ requests
+reduced motion: rests assembled; no animation
+slider: keyboard Home assembled and End 100 exploded; model centers match at 0, .25, .5, .75, 1
+hover and focus: layer button highlights match model; selection clears
+GLB fetches: 1
+first view animation: PASS once, reaches exploded in 2000 ms; interaction and revisit retain chosen value
+fallback no-javascript: PASS image, five buttons, copy, link; 375px no overflow
+fallback no-webgl: PASS image, five buttons, copy, link; 375px no overflow
+fallback bad-glb: PASS image, five buttons, copy, link; 375px no overflow
+/vendor/three.module.min.js: 670681 decoded bytes
+/vendor/loaders/GLTFLoader.js: 109610 decoded bytes
+/vendor/utils/BufferGeometryUtils.js: 32994 decoded bytes
+/models/patch-one.glb: 386708 decoded bytes
+/home-layers.js: 8874 decoded bytes
+/take-apart-model.js: 3226 decoded bytes
+home document: 48183 bytes; growth: 3749 bytes
+fallback image: 40672 bytes
+lazy 3D payload: 1212093 bytes (including model twin and home client, GLB once)
+
+

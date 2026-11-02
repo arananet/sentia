@@ -7,3 +7,4 @@ node_modules/
 !evidence/take-apart-bundling/*.log
 !runs/wo-gh-9/*.log
 .anvil-factory/
+!evidence/home-layered-view/*.log
