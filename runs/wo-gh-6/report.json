@@ -1,0 +1,249 @@
+{
+  "work_order_id": "wo-gh-6",
+  "pipeline": "sdlc-default",
+  "title": "Design v4: the square low profile product, all imagery regenerated at production quality",
+  "kind": "feature",
+  "steps": [
+    {
+      "station": "intake",
+      "status": "completed",
+      "detail": "Work order normalized",
+      "duration_ms": 0.022,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "spec-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-6/spec-writer.output.md",
+      "duration_ms": 19000.379,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/spec-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "test-writer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-6/test-writer.output.md",
+      "duration_ms": 53110.253,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/test-writer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "builder",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-6/builder.output.md",
+      "duration_ms": 14039.709,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/builder.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-spec",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-6/reviewer-spec.output.md",
+      "duration_ms": 22123.919,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/reviewer-spec.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-security",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-6/reviewer-security.output.md",
+      "duration_ms": 12437.018,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/reviewer-security.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-tests",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-6/reviewer-tests.output.md",
+      "duration_ms": 13035.177,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/reviewer-tests.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-architecture",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-6/reviewer-architecture.output.md",
+      "duration_ms": 12736.465,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/reviewer-architecture.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "reviewer-design",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-6/reviewer-design.output.md",
+      "duration_ms": 25105.056,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/reviewer-design.output.md"
+      ],
+      "configured_model": "gpt-6-astra",
+      "executed_model": "gpt-6-astra",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    },
+    {
+      "station": "approver",
+      "status": "completed",
+      "detail": "Approver verdict: approved",
+      "duration_ms": 0.074,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/report.json"
+      ],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "triage-human",
+      "status": "completed",
+      "detail": "Human review: not_required",
+      "duration_ms": 0.013,
+      "cost": null,
+      "artifacts": [],
+      "configured_model": "default",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "deployer",
+      "status": "packet_ready",
+      "detail": "Packet written to runs/wo-gh-6/deployer.packet.md",
+      "duration_ms": 0.179,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/deployer.packet.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": null,
+      "executor": null
+    },
+    {
+      "station": "observer",
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-6/observer.output.md",
+      "duration_ms": 13591.285,
+      "cost": null,
+      "artifacts": [
+        "runs/wo-gh-6/observer.output.md"
+      ],
+      "configured_model": "claude-sonnet-5-5",
+      "executed_model": "claude-sonnet-5-5",
+      "executor": {
+        "kind": "command",
+        "detail": "python3"
+      }
+    }
+  ],
+  "verdict": "approved",
+  "human_required": false,
+  "max_loopbacks": 2,
+  "loopbacks": 0,
+  "deployment_status": null,
+  "verify_results": [],
+  "risk_hints": [],
+  "decision": {
+    "approver": {
+      "reviews_counted": [
+        {
+          "station": "reviewer-spec",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-security",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-tests",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-architecture",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-design",
+          "verdict": "pass"
+        }
+      ],
+      "reviews_expected": [
+        "reviewer-spec",
+        "reviewer-security",
+        "reviewer-tests",
+        "reviewer-architecture",
+        "reviewer-design"
+      ],
+      "rule": "All counted reviews passed."
+    },
+    "human_gate": {
+      "required": false,
+      "rule": "Verdict approved and no risk hints matched (scanned: auth, payments, data-deletion, production-deploy, secrets, publishing), so no human is required.",
+      "hints_matched": []
+    }
+  },
+  "warnings": []
+}

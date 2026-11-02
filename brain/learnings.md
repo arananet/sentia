@@ -24,3 +24,6 @@ Provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_reques
 
 ## L-6: Product imagery for Sentia meets the production quality bar anchored in design/reference/: photorealistic studio quality with real materials and physically consistent light; stylized or toy-like renders fail review. Reviewer-design compares every new product image against the anchor boards and names the gaps.
 Provenance: run wo-gh-5, artifact src/images.js, evidence verdict changes_requested
+
+## L-7: The product is the square low profile patch anchored in design/reference/ and the round disc renders are retired; L-2, L-3 and L-5 stand as amended by the design v4 spec: photographic treatment instead of seamless paper backgrounds, limb close ups (inner forearm or upper arm) instead of inner forearm only, and the render set replaceable through an owner decided work order instead of frozen byte identical.
+Provenance: run wo-gh-6, artifact src/images.js, evidence verdict approved

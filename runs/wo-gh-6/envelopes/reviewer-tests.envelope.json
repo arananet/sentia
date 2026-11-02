@@ -1,0 +1,29 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-tests",
+  "to_station": "reviewer-architecture",
+  "work_order_id": "wo-gh-6",
+  "artifact_path": "runs/wo-gh-6/reviewer-tests.output.md",
+  "status": "executed",
+  "created_at": "2026-10-30T17:56:02.281155+00:00",
+  "review": {
+    "station": "reviewer-tests",
+    "verdict": "pass",
+    "findings": [
+      "I ran `npm test` (`node --test tests/*.test.js`). 124 tests ran: 123 passed, 0 failed, 1 skipped.",
+      "The one skip is `ui-elevation S4`, which diffs codec, data, mcp and index against main. It skips with 'no main ref to diff against'. That is an environment limit, not a defect, but the frozen-files check was not exercised in this run.",
+      "Two tests in `design-v4-square-product.test.js` skip until `runs/wo-gh-6/reviewer-design.output.md` exists (lines 201 and 327). They are the S7 count and the S11 check that all four images are named against design/reference/. They will run once reviewer-design produces its review. They are the L-6 anchor-comparison gate, so the run verdict should not be approved until they run and pass.",
+      "Loopback Fix 2 is covered. S8 (lines 255 and 262) asserts that the '#patch,#how{padding-top:128px...}' override is absent and that no rule gives #patch or #how more than 96 px. A grep of `src/page.js` finds no `#patch,#how` override. The only 128px rule left is `.hero`, which is outside this order's scope.",
+      "Loopback Fix 1 is covered. S9 asserts the hero and on-skin payloads are byte identical to the first round, and that the exploded and network payloads differ from the first-round bytes. S9 also checks that every payload is a WebP between 10 KB and 160 KB. S10 checks the 1400x1400 and 1600x893 dimensions in the file and in the markup.",
+      "Retired facts are covered. S1 and S2 grep the copy set for 38 mm, 4.2 mm, diameter, the diameter symbol and disc, round and circular language. The same pattern also matches 'round' as a word, so it is stricter than the order requires. A manual grep over src, brand, DESIGN.md and tests finds those terms only inside the test's own assertion patterns.",
+      "The footer credit sentence has a byte-identity test (S6, line 210), and it passes.",
+      "I did not inspect the image bytes visually. The tests check that the payloads exist, decode as WebP, are within size limits and differ from the first round. The L-6 judgment on materials, light, scale and contact stays with reviewer-design."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

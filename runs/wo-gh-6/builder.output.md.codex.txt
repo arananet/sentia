@@ -1,0 +1,1404 @@
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-fhwnxtpf"))
+Reading additional input from stdin...
+OpenAI Codex v0.166.0
+--------
+workdir: /home/runner/work/sentia/sentia
+model: openai/gpt-6-astra
+provider: cloudflare
+approval: never
+sandbox: danger-full-access
+reasoning effort: none
+reasoning summaries: none
+session id: 01a18df3-6488-7792-a661-ddf9ca610338
+--------
+user
+You are executing an ANVIL station packet inside this repository. Follow the packet exactly, edit the files it asks for, and finish with a brief plain text summary of what you changed.
+
+## Station prompt
+
+# Builder
+
+## Role
+Implement the spec so the scenario tests pass.
+
+## Inputs
+- spec
+- tests
+
+## Outputs
+- code change
+
+## Rules
+- Work only from the inputs listed above and the work order in the packet.
+- Produce the output as a file in the repo, not as chat text.
+- If the inputs are not enough, say what is missing instead of guessing.
+- Never approve your own work. Approval belongs to a different station.
+- Keep the change small and mapped to a spec scenario where one applies.
+
+
+## Work order
+
+- id: wo-gh-6
+- kind: feature
+- title: Design v4: the square low profile product, all imagery regenerated at production quality
+- source: github-issue
+- description: Design v4: adopt the square low profile product and regenerate all imagery at production quality
+
+Owner decisions of 2026-10-30 govern this work order. The reference boards in design/reference/, supplied by the owner, are the product and the quality bar. Sentia Patch One changes from the round 38 mm disc to a square rounded corner patch with a low profile of about 2.5 mm, the SENTIA wordmark and an LED line on the top cover, and five layers: top cover, comfort foam, sensing and processing board, adhesive layer, release liner. The owner's verdict on the current page stands: its round disc renders are not realistic, and production quality is the bar for every image and project.
+
+Deliverable: the product definition changes everywhere it is stated, and the render set is replaced wholesale with photoreal production quality imagery. The definition surfaces are brand/BRAND.md, design/DESIGN.md (bumped to v4), src/facts.js and every surface generated from it (page copy, both spec strips, the specs table, JSON-LD, llms.txt and llms-full.txt), the page copy, captions and alt texts in src/page.js, and the MCP tool descriptions where they state the form. The retired facts 38 mm and 4.2 mm are replaced by the facts the adopted design actually states: 2.5 mm profile, 14 days wear, IP67. No width figure is invented or stated anywhere. The footer credit sentence stays byte identical.
+
+Imagery: the operator supplies the four new renders as run inputs in src/images.js (patch-hero: the patch worn on an upper arm, photoreal studio quality like the first board's main shot; patch-exploded: the five square layers separated vertically, photoreal, no text; patch-on-skin: a strict limb close up at true scale; network-scene: the patch in its connected context, photoreal, the same product). Each was generated with Magnific photoreal models and read back by the operator against the anchor boards before entering the tree, with the wordmark spelling verified letter by letter. The builder integrates them (routes unchanged, img dimensions and alt texts updated) and carries the copy and design changes. The line must not regenerate or substitute the supplied imagery.
+
+Learnings, as amended by the owner's decisions of 2026-10-30: the packets carry the Verified learnings L-1 to L-6 from brain/learnings.md. L-6 is binding: reviewer-design compares every new product image against design/reference/ and names gaps by category (materials, light, scale, contact) or states none. L-5 is lifted for this order by owner decision (the render set is replaced wholesale). L-2's paper background treatment is superseded by the boards' full photographic treatment; its spirit survives as no visible rectangle seams against the page, with DESIGN.md v4 defining how each image integrates. L-3 is relaxed to limb close ups (inner forearm or upper arm crop), never torso framing. The SENTIA wordmark and LED line are physical markings of the product and belong in the renders, spelled exactly; captions and labels inside website images remain banned.
+
+Tests: the project suite is updated to the governing spec. Tests asserting retired facts (paper background sampling, the frozen v2.1 images.js blob, 38 mm scale, the round disc) are rewritten to the v4 scenarios or removed with the reason recorded in the test file. The full suite passes after the change.
+
+Hard constraints: brand tokens stay locked (paper #FAFAF6, ink green #12211C, signal teal #0E7C66, coral as micro accents only, Space Grotesk and Inter, the calm metric first voice, no hype words, no invented proof). The v3 composition rules not amended by the spec stand (product large and early, section density, display type in service of the product). Routes, the JSON API behavior, the MCP tools and their behavior, the packet codec, the data layer and the live demo logic are frozen.
+
+Model routing for this run (anvil.yaml policy): builder and reviewer-design on GPT-6 Astra (gpt-6-astra) through the Cloudflare AI Gateway; spec writer, test writer and the other reviewer stations on claude-sonnet-5-5 through the same gateway. No fallback to another model for the builder.
+
+Deployment stays outside the line: the operator renders the resulting page locally for the owner's gate; nothing deploys on this run.
+
+Done criteria: run verdict approved with all five expected reviews counted, reviewer-design among them, and reviewer-design's review containing an explicit anchor comparison per L-6; the retired facts gone from the copy set at grep level (no 38 mm, no 4.2 mm, no Diameter, no disc language); each new image serving at its route with a payload between 10 KB and 160 KB; the footer credit sentence byte identical; full test suite green.
+
+Base tree: this run branches from anvil/quality-anchor at 9e88be90ad6335f6e7a7538eafa186cc6bde39e8, the branch that carries the verified learnings L-1 to L-6, the anchor boards in design/reference/ and the deployed v3 page. Main does not contain the v2.1 or later page and is never a base here. The governing spec is .openspec/specs/design-v4-square-product/spec.md.
+
+GitHub issue: https://github.com/arananet/sentia/issues/6
+
+LOOPBACK ROUND (owner decision, 2026-10-30). The first round's verdict was changes_requested on reviewer-design's L-6 anchor comparison, and the owner ruled: correct the exploded and network images, kill the padding override, and re review against the anchor. This round is scoped to exactly those three fixes; everything else in this work order stands as written and already delivered.
+
+Fix 1, imagery, operator supplied: src/images.js in this round's input tree carries a corrected exploded payload and a corrected network payload, generated by the operator with Magnific (Seedream 4.5) and verified on native resolution crops of the actual bytes. The corrected exploded view shows the five layers in DESIGN.md v4 order with their true identities: matte top cover with a crisp printed SENTIA wordmark and a distinct LED line, porous comfort foam second, the sensing and processing board third, and thin translucent adhesive and release films last. The corrected network scene composes closer on the arm: the same matte square patch, large and sharp, its wordmark crisp beside the phone and the plain gateway. The hero and on-skin payloads are byte identical to the first round and remain owner accepted; do not touch them. The builder integrates the two new payloads as before: routes, dimensions (exploded 1400x1400, network 1600x893) and alt texts are unchanged, and the line must not regenerate or substitute any imagery.
+
+Fix 2, the padding override, builder scope: remove the '#patch,#how{padding-top:128px;padding-bottom:128px}' override from src/page.js so those sections follow DESIGN.md v4's 64 to 96 px vertical section range like the rest of the page (the base section rule already carries the documented clamp). This finding has now been counted in two consecutive runs and dies here; no other page.js change is in scope.
+
+Fix 3, re review: reviewer-design repeats the explicit L-6 anchor comparison against design/reference/ for all four images and must clear or re name the exploded and network gaps by category (materials, light, scale, contact). The full panel re runs and the brain learnings L-1 to L-6 ride in the packets as before, with L-2, L-3 and L-5 as amended by this work order.
+
+Done criteria for this round: verdict approved with all five expected reviews counted and zero parse failures; the padding override absent from src/page.js at grep level; the exploded and network payloads replaced while the hero and on-skin payloads stay byte identical to the first round; every image payload within 10 KB and 160 KB; the footer credit sentence byte identical; full test suite green.
+- risk_hints: 
+- status: new
+
+## Upstream steps
+
+- intake: completed
+- spec-writer: executed
+- test-writer: executed
+
+## Verified learnings
+
+- L-1: Art direction is imagery first; flat SVG as the primary visual language was rejected by the product owner and must not return as a section's main visual. (provenance: run wo-gh-2, artifact design/DESIGN.md, evidence verdict approved)
+- L-2: Product imagery sits seamlessly on the brand paper #FAFAF6 (no studio backgrounds, no visible image rectangles), verified by corner and edge sampling within 3 per channel. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-3: The patch reads at true 38 mm scale with explicit scale anchors, and on-skin imagery is strict inner forearm framing only. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-4: The product is the protagonist: the patch appears large and early, the page must not read empty or editorial, and display type must not crowd out the product. (provenance: run wo-gh-3, artifact src/page.js, evidence verdict changes_requested)
+- L-5: The current product render set is owner approved, especially the patch render; composition iterations keep src/images.js byte identical and never regenerate product imagery. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-6: Product imagery for Sentia meets the production quality bar anchored in design/reference/: photorealistic studio quality with real materials and physically consistent light; stylized or toy-like renders fail review. Reviewer-design compares every new product image against the anchor boards and names the gaps. (provenance: run wo-gh-5, artifact src/images.js, evidence verdict changes_requested)
+
+## Project design
+codex
+I’ll check the governing spec and tests, remove the padding override, and run the suite while preserving the supplied imagery and all other page content.
+exec
+/bin/bash -lc "pwd && rg --files -g 'AGENTS.md' -g 'package.json' -g '*test*' -g 'spec.md' -g 'page.js' -g 'images.js' -g 'anvil.yaml' -g '"'!node_modules'"' -g '"'!package-lock.json'"'" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+/home/runner/work/sentia/sentia
+tests/ui-elevation.test.js
+tests/api.test.js
+tests/design-v2-imagery.test.js
+tests/design-v2-1-corrections.test.js
+tests/site-credit.test.js
+tests/design-v3-product-first.test.js
+tests/demo.test.js
+tests/design-v4-square-product.test.js
+tests/mcp.test.js
+tests/codec.test.js
+anvil.yaml
+src/page.js
+src/images.js
+package.json
+runs/wo-gh-1/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-1/envelopes/test-writer.envelope.json
+runs/wo-gh-1/reviewer-tests.packet.md
+runs/wo-gh-1/reviewer-tests.output.md
+runs/wo-gh-1/test-writer.packet.md
+runs/wo-gh-1/test-writer.output.md
+runs/wo-gh-5/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-5/envelopes/test-writer.envelope.json
+runs/wo-gh-5/reviewer-tests.packet.md
+runs/wo-gh-5/reviewer-tests.output.md
+runs/wo-gh-5/test-writer.packet.md
+runs/wo-gh-5/test-writer.output.md
+runs/wo-gh-3/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-3/envelopes/test-writer.envelope.json
+runs/wo-gh-3/reviewer-tests.packet.md
+runs/wo-gh-3/reviewer-tests.output.md
+runs/wo-gh-3/test-writer.packet.md
+runs/wo-gh-3/test-writer.output.md
+runs/wo-sentia-001/envelopes/reviewer-tests.envelope.json
+runs/wo-sentia-001/envelopes/test-writer.envelope.json
+runs/wo-sentia-001/reviewer-tests.packet.md
+runs/wo-sentia-001/test-writer.packet.md
+runs/wo-gh-6/test-writer.output.md
+runs/wo-gh-6/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-6/envelopes/test-writer.envelope.json
+runs/wo-gh-6/reviewer-tests.packet.md
+runs/wo-gh-6/reviewer-tests.output.md
+runs/wo-gh-6/test-writer.packet.md
+reviews/live-demo/reviewer-tests.json
+reviews/mcp-server/reviewer-tests.json
+reviews/ingestion-api/reviewer-tests.json
+reviews/dashboard-data/reviewer-tests.json
+reviews/core-worker/reviewer-tests.json
+reviews/packet-codec/reviewer-tests.json
+runs/wo-gh-2/test-writer.packet.md
+runs/wo-gh-2/test-writer.output.md
+runs/wo-gh-4/test-writer.packet.md
+runs/wo-gh-4/test-writer.output.md
+runs/wo-gh-4/reviewer-tests.packet.md
+runs/wo-gh-4/reviewer-tests.output.md
+runs/wo-gh-2/reviewer-tests.output.md
+runs/wo-gh-2/reviewer-tests.packet.md
+runs/wo-gh-2/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-2/envelopes/test-writer.envelope.json
+runs/wo-gh-4/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-4/envelopes/test-writer.envelope.json
+
+exec
+/bin/bash -lc "git status --short && cat package.json && cat .openspec/specs/design-v4-square-product/spec.md && cat tests/design-v4-square-product.test.js && rg -n '128px|section\\{' src/page.js" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+ M .openspec/specs/design-v4-square-product/spec.md
+ D runs/wo-gh-6/builder.output.md
+ M runs/wo-gh-6/builder.packet.md
+ M runs/wo-gh-6/envelopes/intake.envelope.json
+ M runs/wo-gh-6/envelopes/spec-writer.envelope.json
+ M runs/wo-gh-6/envelopes/test-writer.envelope.json
+ M runs/wo-gh-6/spec-writer.output.md
+ M runs/wo-gh-6/spec-writer.packet.md
+ M runs/wo-gh-6/test-writer.output.md
+ M runs/wo-gh-6/test-writer.packet.md
+ M tests/design-v4-square-product.test.js
+{
+  "name": "sentia",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  }
+}
+# Sentia Design v4: The Square Low Profile Product
+
+Status: active for wo-gh-6
+Slug: design-v4-square-product
+
+## Roles
+- implementer: builds the change described here
+- reviewer: checks the change against this spec
+- qa: checks the scenarios below with tests
+- product_owner: owns the purpose and accepts the result
+
+## Purpose
+The product owner supplied two reference boards on 2026-10-30 (design/reference/) and decided they are the product and the quality bar. Sentia Patch One changes from the round 38 mm disc to a square rounded corner patch with a low profile of about 2.5 mm, the SENTIA wordmark and an LED line on the top cover, and five layers. Every site image is regenerated at the boards' photoreal production quality. This spec governs the product definition change across every surface that states it, the new render set, and the amendments it makes to verified learnings L-2, L-3 and L-5. Verified learning L-6, the production quality bar with its anchor comparison duty, is binding on this run.
+
+## Owner decisions recorded (2026-10-30)
+
+1. The product definition changes everywhere it is stated: brand/BRAND.md, design/DESIGN.md (bumped to v4), src/facts.js and every surface generated from it (page copy, spec strips, the specs table, JSON-LD, llms.txt and llms-full.txt), the page copy and alt texts in src/page.js, and the MCP tool descriptions where they state the form. The retired facts 38 mm and 4.2 mm are replaced by the facts the adopted design actually states: 2.5 mm profile, 14 days wear, IP67. No width figure is invented or stated anywhere. The footer credit sentence stays byte identical.
+2. L-5 is lifted for this order by owner decision: the render set is replaced wholesale and src/images.js changes.
+3. L-2's paper background treatment is superseded by the anchor boards' full photographic treatment (warm neutral studio scenes). Its spirit survives as: no visible rectangle seams against the page, with DESIGN.md v4 defining how each image integrates.
+4. L-3 is relaxed to limb close ups (inner forearm or upper arm crop), never torso framing.
+5. The SENTIA wordmark and the LED line are physical markings of the product and belong in the renders, spelled exactly SENTIA. Captions and labels inside website images remain banned.
+
+## Supersession of earlier specs
+
+Where this spec and an earlier spec disagree, this spec governs for wo-gh-6 and later work:
+
+- design-v2-imagery: the exact paper background rule (#FAFAF6 sampling), the true 38 mm scale rule and the round disc product description no longer apply. The no text and no labels rule for website images stands.
+- design-v3-product-first: the frozen v2.1 images.js blob (e10c0b4fa90f1f68b4518d8ae392fc4caca907fe), the 38 mm scale reads and the paper background placement rules no longer apply. The v3 composition rules (product large and early, section density, display type in service of the product) stand.
+- Tests that encode the superseded rules are rewritten or removed as the Tests requirement states.
+
+## Loopback round (owner decision, 2026-10-30)
+
+The first round ended changes_requested on reviewer-design's L-6 anchor comparison. The owner ruled: correct the exploded and network images, remove the padding override, and re review against the anchor. This round is scoped to exactly these three fixes; everything else in this spec stands as delivered.
+
+- Corrected imagery: the operator supplies a corrected PATCH_EXPLODED_WEBP_B64 and a corrected NETWORK_SCENE_WEBP_B64 in src/images.js, generated with Magnific (Seedream 4.5) and verified on native resolution crops of the actual bytes. The exploded view shows the five layers in the v4 order with their true identities: matte top cover with a crisp printed SENTIA wordmark and a distinct LED line, porous comfort foam second, the sensing and processing board third, thin translucent adhesive and release films last. The network scene composes closer on the arm: the same matte square patch, large and sharp, wordmark crisp beside the phone and the plain gateway. Routes, dimensions (exploded 1400x1400, network 1600x893) and alt texts are unchanged. The builder integrates the payloads and never regenerates or substitutes imagery.
+- Accepted imagery untouched: PATCH_HERO_WEBP_B64 and PATCH_ON_SKIN_WEBP_B64 stay byte identical to the first round's tree.
+- Padding override removed: the rule `#patch,#how{padding-top:128px;padding-bottom:128px}` is deleted from src/page.js so #patch and #how follow the v4 vertical section range of 64 to 96 px carried by the base section rule. No other src/page.js change is in scope.
+- Re review: reviewer-design repeats the explicit L-6 anchor comparison against design/reference/ for all four images and clears or re names the exploded and network gaps by category (materials, light, scale, contact). The full panel re runs with L-1 to L-6 in the packets, L-2, L-3 and L-5 as amended by this spec, and the run records zero parse failures.
+
+## Requirements
+
+- Product identity: a square patch with strongly rounded corners, matte warm white top cover, low profile of about 2.5 mm, SENTIA wordmark and one LED line on the cover. The five layers, in order: top cover, comfort foam, sensing and processing board, adhesive layer, release liner. src/facts.js states this identity and these five layers, and every list derived from it (the page layer list, the specs table, llms-full.txt) matches.
+- Retired facts removed: the served copy set (src/facts.js, the copy strings in src/page.js including meta tags, captions, alt texts, headings and JSON-LD values, the generated llms.txt and llms-full.txt, brand/BRAND.md, design/DESIGN.md) contains no 38 mm, no 4.2 mm, no Diameter entry, no diameter symbol, and no disc language for the product. Layer count copy states five layers and the 2.5 mm profile.
+- Spec strips: the hero spec strip states the 2.5 mm profile, 14 days wear and IP67, with no width or diameter entry. The second spec strip likewise carries no diameter and no 4.2 mm; its remaining facts (wear time, weight, water resistance, radios) stand.
+- Imagery: four new photoreal renders, supplied by the operator as run inputs in src/images.js (PATCH_HERO_WEBP_B64, PATCH_EXPLODED_WEBP_B64, PATCH_ON_SKIN_WEBP_B64, NETWORK_SCENE_WEBP_B64), generated against the anchor boards and read back by the operator against them before entering the tree. The product identity holds in every render: square rounded patch, low profile, wordmark spelled SENTIA, LED line. The on-skin render is a strict limb close up. The hero render shows the patch worn on an upper arm in a warm photographic studio scene. Image routes are unchanged. Each image payload is between 10 KB and 160 KB. The builder updates the img width and height attributes and alt texts to the new files and the square product.
+- Design system v4: design/DESIGN.md is bumped to v4. Its art direction describes the square product and the photographic treatment: images are full photographs in warm neutral studio scenes, framed by the page without visible seams, added shadows or tinted backdrops. The round disc description, the 38 mm scale anchors and the paper background sampling rules are removed or amended. The limb framing rule stands as amended by decision 4. Brand tokens stay locked: paper #FAFAF6, ink green #12211C, signal teal #0E7C66, coral as micro accents only, Space Grotesk and Inter, the calm metric first voice, no hype words, no invented proof.
+- Brand sheet: brand/BRAND.md states the square product in its definition sentence, and its mark description is amended to the adopted product within the brand's voice rules. The footer credit sentence stays byte identical everywhere it appears.
+- Learnings in the packets and the design review: the run packets carry the Verified learnings section from brain/learnings.md, L-1 to L-6 included. Reviewer-design's review contains an explicit anchor comparison against design/reference/, naming gaps by category (materials, light, scale, contact) or stating none, per L-6.
+- Tests: the project suite is updated to this spec. Tests that assert retired facts (paper background sampling, the frozen v2.1 images.js blob, 38 mm scale, the round disc, torso or diameter copy) are rewritten to the v4 scenarios or removed with the reason recorded in the test file. The full suite passes after the change.
+- Frozen: routes and behavior of the JSON API, the MCP server tools and their behavior, the packet codec, the data layer, the live demo logic, and the page composition rules from v3 that this spec does not amend (product large and early, section density, display type in service of the product). Nothing deploys on this run; deployment is the owner's gate decision outside the line.
+
+## Scenarios
+
+### Scenario: The retired facts are gone from the copy set
+- S1: Given the run's final tree, when the copy set (src/facts.js, the copy strings in src/page.js, the generated llms.txt and llms-full.txt text, brand/BRAND.md, design/DESIGN.md) is searched, then there is no 38 mm, no 4.2 mm, no Diameter entry and no disc language for the product, and the layer copy states five layers at a 2.5 mm profile.
+
+### Scenario: The spec strips state the adopted facts
+- S2: Given the rendered page, when the hero spec strip is read, then it states 2.5 mm profile, 14 days and IP67 with no width or diameter entry, and the second spec strip carries no diameter and no 4.2 mm.
+
+### Scenario: The new render set serves at sane payloads
+- S3: Given the run's final tree, when the four image routes are requested, then each answers 200 with image/webp and a payload between 10 KB and 160 KB, and src/images.js exports the four image constants for the square product set.
+
+### Scenario: The five adopted layers are stated in order
+- S4: Given the rendered page and llms-full.txt, when the layer lists are read, then they state exactly the five adopted layers in order: top cover, comfort foam, sensing and processing board, adhesive layer, release liner.
+
+### Scenario: The learnings reach the stations and the design review compares against the anchor
+- S5: Given the executed run, when the committed station packets are read, then they carry the Verified learnings section including L-6, and reviewer-design's review contains an explicit anchor comparison against design/reference/ naming gaps by category (materials, light, scale, contact) or stating none.
+
+### Scenario: The credit sentence is untouched
+- S6: Given the run's final tree, when the footer credit sentence is compared with the pre run tree, then it is byte identical.
+
+### Scenario: Green suite, full review panel
+- S7: Given the executed run, when the run report is read, then the verdict is approved, all five expected reviews are counted with reviewer-design among them, and the project test suite passes in full.
+
+### Scenario: The padding override is gone
+- S8: Given the loopback tree, when src/page.js is searched, then the string `#patch,#how{padding-top:128px;padding-bottom:128px}` is absent and no rule gives #patch or #how a vertical padding above 96 px.
+
+### Scenario: Accepted images are byte identical, corrected images replaced
+- S9: Given the loopback tree and the first round's tree, when the four image constants in src/images.js are compared, then PATCH_HERO_WEBP_B64 and PATCH_ON_SKIN_WEBP_B64 are byte identical, PATCH_EXPLODED_WEBP_B64 and NETWORK_SCENE_WEBP_B64 differ, and every payload decodes to between 10 KB and 160 KB.
+
+### Scenario: Corrected image dimensions and routes hold
+- S10: Given the rendered page, when the image routes and img attributes are read, then routes are unchanged, the exploded image is 1400x1400, the network image is 1600x893, and alt texts are unchanged.
+
+### Scenario: The anchor comparison is repeated for all four images
+- S11: Given the loopback run, when reviewer-design's review is read, then it compares all four images against design/reference/ and, for the exploded and network images, clears the gaps or names them by category (materials, light, scale, contact); the run report shows five reviews counted, verdict approved and zero parse failures.
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import worker from '../src/index.js';
+import { renderPage } from '../src/page.js';
+import * as images from '../src/images.js';
+import { FACTS, GITHUB_URL } from '../src/facts.js';
+
+// design-v4-square-product (wo-gh-6): S1 to S6. S7 (verdict, review panel) is read from the run report, not tested here.
+
+const ORIGIN = 'https://sentia.test';
+const root = (p) => new URL('../' + p, import.meta.url);
+const read = (p) => readFileSync(root(p), 'utf8');
+const get = (p) => worker.fetch(new Request(ORIGIN + p));
+const html = renderPage(ORIGIN);
+const css = html.match(/<style[^>]*>([\s\S]*?)<\/style>/)[1];
+const visible = html.replace(/<style[\s\S]*?<\/style>|<script(?![^>]*ld\+json)[\s\S]*?<\/script>/g, '');
+
+const ROUTES = [
+  { path: '/img/patch-hero.webp', exp: 'PATCH_HERO_WEBP_B64' },
+  { path: '/img/patch-exploded.webp', exp: 'PATCH_EXPLODED_WEBP_B64' },
+  { path: '/img/patch-on-skin.webp', exp: 'PATCH_ON_SKIN_WEBP_B64' },
+  { path: '/img/network-scene.webp', exp: 'NETWORK_SCENE_WEBP_B64' },
+];
+const LAYERS = ['top cover', 'comfort foam', 'sensing and processing board', 'adhesive layer', 'release liner'];
+
+// Retired facts and disc language. "diameter" and the diameter symbol are banned outright in the copy set.
+const RETIRED = [/\b38 ?mm/i, /\b4\.2 ?mm/i, /diameter/i, /[Ø⌀]/, /\bdisc\b/i, /\bdisk\b/i, /\bround\b/i, /\bcircular\b/i];
+
+const copySet = async () => ({
+  'src/facts.js': read('src/facts.js'),
+  'brand/BRAND.md': read('brand/BRAND.md'),
+  'design/DESIGN.md': read('design/DESIGN.md'),
+  'page html (copy, meta, alt, JSON-LD)': visible,
+  '/llms.txt': await (await get('/llms.txt')).text(),
+  '/llms-full.txt': await (await get('/llms-full.txt')).text(),
+});
+
+// S1: the retired facts are gone
+
+test('S1: no 38 mm, 4.2 mm, diameter entry, diameter symbol or disc language anywhere in the copy set', async () => {
+  for (const [name, text] of Object.entries(await copySet()))
+    for (const re of RETIRED) {
+      const hit = text.match(re);
+      // DESIGN.md may name a retired rule only to say it was removed; flag any other occurrence.
+      if (name === 'design/DESIGN.md' && hit) {
+        const line = text.split('\n').find((l) => re.test(l));
+        assert.match(line, /retired|removed|superseded|no longer|never|not /i, `${name} ${re}: ${line}`);
+      } else assert.ok(!hit, `${name} contains ${re}: ${hit && hit[0]}`);
+    }
+});
+
+test('S1: src/facts.js carries no diameter or 4.2 mm thickness field and states the 2.5 mm profile', () => {
+  assert.ok(!('diameterMm' in FACTS));
+  assert.ok(!('thicknessMm' in FACTS) || FACTS.thicknessMm === 2.5);
+  assert.ok(!FACTS.specs.some(([k]) => /diameter/i.test(k)));
+  assert.match(FACTS.definition, /square/i);
+  assert.match(FACTS.definition, /2\.5 ?mm/);
+});
+
+test('S1: layer copy states five layers at a 2.5 mm profile; no width figure is invented', async () => {
+  assert.match(html, /five layers/i);
+  assert.match(html, /2\.5 ?mm/);
+  const all = Object.values(await copySet()).join('\n');
+  // Any "<n> mm" figure other than the 2.5 mm profile would be an invented dimension.
+  const mm = [...all.matchAll(/(\d+(?:\.\d+)?) ?mm\b/g)].map((m) => m[1]);
+  assert.ok(mm.length > 0);
+  for (const v of mm) assert.equal(v, '2.5', `unexpected mm figure ${v}`);
+  assert.ok(!/\b\d+ ?(cm|centimet|inch|in\b|×|x \d+ ?mm)/i.test(visible.replace(/\b\d+ ?x \d+ ?px/g, '')), 'no width x height size');
+});
+
+test('S1: BRAND.md and DESIGN.md state the square product; DESIGN.md is bumped to v4', () => {
+  assert.match(read('brand/BRAND.md'), /square/i);
+  const d = read('design/DESIGN.md');
+  assert.match(d, /v4/i);
+  assert.match(d, /square/i);
+  assert.match(d, /photograph/i);
+  assert.match(d, /warm neutral/i);
+  assert.match(d, /seam/i);
+  for (const t of ['#FAFAF6', '#12211C', '#0E7C66', 'Space Grotesk', 'Inter']) assert.ok(d.includes(t), t);
+});
+
+// S2: the spec strips
+
+test('S2: the hero spec strip states 2.5 mm profile, 14 days and IP67 with no width entry', () => {
+  const start = html.indexOf('class="hero"');
+  const hero = html.slice(start, html.indexOf('</section>', start));
+  for (const re of [/2\.5 ?mm/, /14 days/, /IP67/]) assert.match(hero, re);
+  assert.ok(!/diameter|\b38 ?mm|\bwidth\b/i.test(hero.replace(/width="\d+"/g, '')));
+});
+
+test('S2: the second spec strip carries no diameter and no 4.2 mm, and keeps wear, weight, water and radios', () => {
+  const marker = 'class="spec-strip rv">';
+  const start = html.indexOf(marker);
+  assert.ok(start >= 0, 'a second spec strip exists outside the hero');
+  const text = html.slice(start, html.indexOf('</section>', start));
+  assert.ok(!/diameter|4\.2 ?mm|38 ?mm/i.test(text));
+  for (const re of [/14 days/, /3\.1 ?g/, /IP67/, /Bluetooth|LoRaWAN/]) assert.match(html, re);
+});
+
+test('S2: the specs table has no Diameter row and lists the 2.5 mm profile', () => {
+  const start = html.indexOf('id="specs"');
+  const table = html.slice(start, html.indexOf('</section>', start));
+  assert.ok(!/diameter/i.test(table));
+  assert.match(table, /2\.5 ?mm/);
+  assert.match(table, /IP67/);
+});
+
+// S3: the new render set
+
+test('S3: src/images.js exports the four image constants as non-empty base64 strings', () => {
+  for (const r of ROUTES) {
+    assert.equal(typeof images[r.exp], 'string', r.exp);
+    assert.ok(images[r.exp].length > 100, r.exp);
+  }
+});
+
+for (const r of ROUTES) {
+  test(`S3: ${r.path} answers 200 image/webp with a payload between 10 KB and 160 KB`, async () => {
+    const res = await get(r.path);
+    assert.equal(res.status, 200);
+    assert.equal(res.headers.get('content-type'), 'image/webp');
+    const buf = Buffer.from(await res.arrayBuffer());
+    assert.deepEqual(buf, Buffer.from(images[r.exp], 'base64'));
+    assert.equal(buf.subarray(0, 4).toString('ascii'), 'RIFF');
+    assert.equal(buf.subarray(8, 12).toString('ascii'), 'WEBP');
+    assert.ok(buf.length >= 10 * 1024, `${r.path} is ${buf.length} bytes, below 10 KB`);
+    assert.ok(buf.length <= 160 * 1024, `${r.path} is ${buf.length} bytes, above 160 KB`);
+  });
+}
+
+test('S3: the render set is not the v2.1 set (each payload differs from the retired bytes)', async () => {
+  const retired = { 'patch-hero': 7838, 'patch-exploded': 9318, 'patch-on-skin': 20098, 'network-scene': 13098 };
+  for (const [name, size] of Object.entries(retired)) {
+    const res = await get(`/img/${name}.webp`);
+    assert.notEqual((await res.arrayBuffer()).byteLength, size, `${name} still has the v2.1 byte size`);
+  }
+});
+
+test('S3: alt texts describe the square product, are calm, and the on-skin alt names a limb close up', () => {
+  for (const r of ROUTES) {
+    const tag = html.match(new RegExp(`<img[^>]*${r.path.replace(/[.]/g, '\\.')}[^>]*>`))[0];
+    const alt = tag.match(/alt="([^"]+)"/)[1];
+    assert.ok(alt.length >= 20, r.path);
+    assert.match(alt, /square|SENTIA|low profile|patch/i, `${r.path} alt names the product`);
+    for (const re of RETIRED) assert.ok(!re.test(alt), `${r.path} alt matches ${re}`);
+    if (r.path.includes('on-skin')) {
+      assert.match(alt, /forearm|upper arm/i);
+      assert.ok(!/torso|chest/i.test(alt));
+    }
+    if (r.path.includes('hero')) assert.match(alt, /upper arm/i);
+  }
+});
+
+test('S3: routes are unchanged and the images carry no text or captions in the page markup', () => {
+  for (const r of ROUTES) assert.ok(html.includes(`src="${r.path}"`), r.path);
+  assert.ok(!/<svg[^>]*>[\s\S]*SENTIA[\s\S]*<\/svg>/i.test(html.slice(html.indexOf('id="patch"'), html.indexOf('id="how"'))), 'no overlaid wordmark labels');
+});
+
+// S4: the five adopted layers in order
+
+test('S4: facts, the page layer list and llms-full.txt state exactly the five layers in order', async () => {
+  assert.deepEqual(FACTS.layers.map((l) => l.name.toLowerCase()), LAYERS);
+  const order = (text, label) => {
+    const lower = text.toLowerCase();
+    let last = -1;
+    for (const l of LAYERS) {
+      const i = lower.indexOf(l, last + 1);
+      assert.ok(i > last, `${label}: "${l}" missing or out of order`);
+      last = i;
+    }
+  };
+  const start = html.indexOf('id="patch"');
+  order(html.slice(start, html.indexOf('</section>', start)), 'page #patch');
+  order(await (await get('/llms-full.txt')).text(), 'llms-full.txt');
+});
+
+test('S4: no retired layer names remain', async () => {
+  const text = (visible + (await (await get('/llms-full.txt')).text())).toLowerCase();
+  for (const old of ['printed flexible battery', 'dual radio board', 'flexible pcb', 'sensor array', 'medical grade top film'])
+    assert.ok(!text.includes(old), old);
+});
+
+// S5: the learnings reach the stations
+
+test('S5: committed wo-gh-6 packets carry the Verified learnings section including L-6', () => {
+  const dir = root('runs/wo-gh-6/');
+  assert.ok(existsSync(dir));
+  const packets = readdirSync(dir).filter((f) => f.endsWith('.packet.md'));
+  assert.ok(packets.length >= 1);
+  for (const f of packets) {
+    const t = readFileSync(new URL(f, dir), 'utf8');
+    assert.match(t, /## Verified learnings/, f);
+    for (const id of ['L-1', 'L-2', 'L-3', 'L-4', 'L-5', 'L-6']) assert.ok(t.includes(`${id}:`), `${f} ${id}`);
+  }
+  assert.ok(read('brain/learnings.md').includes('## L-6'));
+});
+
+test('S5: when reviewer-design has reviewed, its review compares against design/reference/ by category',
+  { skip: existsSync(root('runs/wo-gh-6/reviewer-design.output.md')) ? false : 'review not produced yet; the run report counts it (S7)' },
+  () => {
+    const t = read('runs/wo-gh-6/reviewer-design.output.md');
+    assert.match(t, /design\/reference\//);
+    for (const c of ['materials', 'light', 'scale', 'contact']) assert.match(t, new RegExp(c, 'i'), c);
+  });
+
+// S6: the credit sentence
+
+test('S6: the footer credit sentence is byte identical', () => {
+  const credit = `Sentia is a concept product, designed and built end to end by <a href="${GITHUB_URL}">ANVIL</a>, an open source software factory. Developed by Eduardo Arana.`;
+  const m = html.match(/<p class="fine">(Sentia is a concept product[\s\S]*?)<\/p>/);
+  assert.ok(m);
+  const plain = (s) => s.replace(/<a href="[^"]*">ANVIL<\/a>/, 'ANVIL');
+  assert.equal(plain(m[1]), plain(credit));
+  assert.ok(m[1].includes('designed and built end to end by <a href="'));
+  assert.equal(html.split('Developed by Eduardo Arana.').length - 1, 1);
+});
+
+// Frozen: calm voice and brand tokens
+
+test('frozen: brand tokens and the calm voice hold in the v4 page', () => {
+  for (const t of ['#FAFAF6', '#12211C', '#0E7C66']) assert.ok(css.toUpperCase().includes(t), t);
+  for (const w of ['revolutionary', 'cutting edge', 'game changer', 'seamless', 'supercharge', 'unlock', 'best in class'])
+    assert.ok(!visible.toLowerCase().includes(w), w);
+  assert.match(visible, /not a medical device/i);
+});
+
+test('frozen: MCP tool descriptions that state the form no longer say disc or 38 mm', async () => {
+  const res = await worker.fetch(new Request(ORIGIN + '/mcp', {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'tools/list' }),
+  }));
+  const text = await res.text();
+  for (const re of RETIRED) assert.ok(!re.test(text), `tools/list matches ${re}`);
+});
+
+// Loopback round (wo-gh-6, owner decision 2026-10-30): S8 to S11. S11's run report half (five reviews, approved,
+// zero parse failures) is read from the run report, not tested here.
+
+const sha = (name) => createHash('sha256').update(Buffer.from(images[name], 'base64')).digest('hex');
+const webpDims = (buf) => {
+  const fourcc = buf.subarray(12, 16).toString('ascii');
+  if (fourcc === 'VP8 ') return { w: buf.readUInt16LE(26) & 0x3fff, h: buf.readUInt16LE(28) & 0x3fff };
+  if (fourcc === 'VP8L') {
+    const b = buf.readUInt32LE(21);
+    return { w: (b & 0x3fff) + 1, h: ((b >> 14) & 0x3fff) + 1 };
+  }
+  assert.equal(fourcc, 'VP8X');
+  return { w: buf.readUIntLE(24, 3) + 1, h: buf.readUIntLE(27, 3) + 1 };
+};
+
+// S8: the padding override is gone
+
+test('S8: src/page.js does not contain the #patch,#how 128px padding override', () => {
+  const src = read('src/page.js').replace(/\s+/g, '');
+  assert.ok(!src.includes('#patch,#how{padding-top:128px;padding-bottom:128px}'));
+  assert.ok(!/#how\{[^}]*padding[^}]*128px/.test(src));
+  assert.ok(!/#patch\{[^}]*padding[^}]*128px/.test(src));
+});
+
+test('S8: no rule gives #patch or #how a vertical padding above 96 px', () => {
+  const px = (v) => [...v.matchAll(/(\d+(?:\.\d+)?)px/g)].map((m) => Number(m[1]));
+  for (const [, sel, body] of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    if (!/#(patch|how)\b/.test(sel)) continue;
+    for (const [, prop, val] of body.matchAll(/(padding(?:-top|-bottom|-block(?:-start|-end)?)?)\s*:\s*([^;]+)/g))
+      for (const n of px(val)) assert.ok(n <= 96, `${sel.trim()} ${prop}: ${val} (${n}px)`);
+  }
+  // The base section rule carries the documented 64 to 96 px clamp.
+  assert.match(css, /section\{padding:clamp\(64px,7vw,96px\) 0/);
+});
+
+// S9: accepted images byte identical, corrected images replaced
+
+// First round digests of the owner accepted renders (decoded bytes): 28610 and 23746 bytes.
+const ACCEPTED = {
+  PATCH_HERO_WEBP_B64: '35d8c304d9d77ca7ba5c909a8be2acda734902b25ac1110702a994f799006b12',
+  PATCH_ON_SKIN_WEBP_B64: '40afbe6459d38a5e881835dbae6628186fda5ba47b1cdc97766c6325a6a41acb',
+};
+// First round byte sizes of the renders the owner asked to correct (from the first round review).
+const FIRST_ROUND_SIZE = { PATCH_EXPLODED_WEBP_B64: 44588, NETWORK_SCENE_WEBP_B64: 59356 };
+
+test('S9: the hero and on-skin payloads are byte identical to the first round', () => {
+  for (const [name, digest] of Object.entries(ACCEPTED)) assert.equal(sha(name), digest, `${name} changed`);
+});
+
+test('S9: the exploded and network payloads are the corrected ones, not the first round bytes', () => {
+  for (const [name, size] of Object.entries(FIRST_ROUND_SIZE))
+    assert.notEqual(Buffer.from(images[name], 'base64').length, size, `${name} still has the first round byte size`);
+  assert.notEqual(sha('PATCH_EXPLODED_WEBP_B64'), sha('NETWORK_SCENE_WEBP_B64'));
+});
+
+test('S9: every payload decodes to a WebP between 10 KB and 160 KB', () => {
+  for (const r of ROUTES) {
+    const buf = Buffer.from(images[r.exp], 'base64');
+    assert.equal(buf.subarray(8, 12).toString('ascii'), 'WEBP', r.exp);
+    assert.ok(buf.length >= 10 * 1024 && buf.length <= 160 * 1024, `${r.exp} is ${buf.length} bytes`);
+  }
+});
+
+// S10: dimensions, routes and alt texts hold
+
+test('S10: the exploded image is 1400x1400 and the network image 1600x893, in file and in markup', () => {
+  const want = { PATCH_EXPLODED_WEBP_B64: [1400, 1400], PATCH_ON_SKIN_WEBP_B64: [1600, 800], PATCH_HERO_WEBP_B64: [1600, 893], NETWORK_SCENE_WEBP_B64: [1600, 893] };
+  for (const r of ROUTES) {
+    const [w, h] = want[r.exp];
+    const d = webpDims(Buffer.from(images[r.exp], 'base64'));
+    assert.deepEqual([d.w, d.h], [w, h], `${r.exp} intrinsic size`);
+    const tag = html.match(new RegExp(`<img[^>]*${r.path.replace(/[.]/g, '\\.')}[^>]*>`))[0];
+    assert.match(tag, new RegExp(`width="${w}"`), r.path);
+    assert.match(tag, new RegExp(`height="${h}"`), r.path);
+  }
+});
+
+test('S10: routes are unchanged and alt texts are the delivered ones', () => {
+  const alts = {
+    '/img/patch-exploded.webp': 'Sentia Patch One, five square layers separated vertically: top cover, comfort foam, sensing and processing board, adhesive layer and release liner.',
+    '/img/network-scene.webp': 'The square Sentia Patch One with its SENTIA wordmark and LED line beside a phone and LoRaWAN gateway in a warm photographic scene.',
+    '/img/patch-on-skin.webp': 'Sentia Patch One, a low profile square adhesive patch with SENTIA wordmark and LED line, in a close up of an upper arm.',
+  };
+  for (const [path, alt] of Object.entries(alts)) assert.ok(html.includes(`src="${path}"`) && html.includes(`alt="${alt}"`), path);
+});
+
+// S11: the anchor comparison covers all four images (the run report half is read at S7/S11 by the reviewer)
+
+test('S11: when reviewer-design has reviewed, it names all four images against design/reference/',
+  { skip: existsSync(root('runs/wo-gh-6/reviewer-design.output.md')) ? false : 'review not produced yet; the run report counts it' },
+  () => {
+    const t = read('runs/wo-gh-6/reviewer-design.output.md');
+    assert.match(t, /design\/reference\//);
+    for (const n of ['patch-hero', 'patch-exploded', 'patch-on-skin', 'network-scene']) assert.match(t, new RegExp(n), n);
+    for (const c of ['materials', 'light', 'scale', 'contact']) assert.match(t, new RegExp(c, 'i'), c);
+  });
+91:section{padding:clamp(64px,7vw,96px) 0;border-top:1px solid var(--line)}
+100:.hero{padding-top:128px;position:relative}
+241:section{scroll-margin-top:32px}
+282:#patch,#how{padding-top:128px;padding-bottom:128px}
+
+exec
+/bin/bash -lc "python - <<'PY'
+from pathlib import Path
+p=Path('src/page.js')
+s=p.read_text()
+rule='#patch,#how{padding-top:128px;padding-bottom:128px}\\n'
+assert s.count(rule)==1
+p.write_text(s.replace(rule,''))
+PY
+npm test" in /home/runner/work/sentia/sentia
+ succeeded in 554ms:
+
+> sentia@0.1.0 test
+> node --test tests/*.test.js
+
+TAP version 13
+# Subtest: core-worker S1: GET / serves the site with wordmark, demo and dashboard
+ok 1 - core-worker S1: GET / serves the site with wordmark, demo and dashboard
+  ---
+  duration_ms: 33.692295
+  type: 'test'
+  ...
+# Subtest: core-worker S2: API healthy, unknown API route is a 404 JSON error
+ok 2 - core-worker S2: API healthy, unknown API route is a 404 JSON error
+  ---
+  duration_ms: 2.995893
+  type: 'test'
+  ...
+# Subtest: ingestion-api S1: fleet lists exactly 3 patches with battery and last sync path
+ok 3 - ingestion-api S1: fleet lists exactly 3 patches with battery and last sync path
+  ---
+  duration_ms: 2.36805
+  type: 'test'
+  ...
+# Subtest: ingestion-api S2: patch status carries current values, unknown id is 404 JSON
+ok 4 - ingestion-api S2: patch status carries current values, unknown id is 404 JSON
+  ---
+  duration_ms: 1.895159
+  type: 'test'
+  ...
+# Subtest: ingestion-api S3: measurements are deterministic, inside 24 h, 15 minute spacing
+ok 5 - ingestion-api S3: measurements are deterministic, inside 24 h, 15 minute spacing
+  ---
+  duration_ms: 3.67913
+  type: 'test'
+  ...
+# Subtest: ingestion-api S4: alerts follow the rule set and reference real patches
+ok 6 - ingestion-api S4: alerts follow the rule set and reference real patches
+  ---
+  duration_ms: 2.69438
+  type: 'test'
+  ...
+# Subtest: ingestion-api S5: network stats count both paths positively
+ok 7 - ingestion-api S5: network stats count both paths positively
+  ---
+  duration_ms: 1.462338
+  type: 'test'
+  ...
+# Subtest: dashboard-data S1: status endpoint values are the tile values, untransformed
+ok 8 - dashboard-data S1: status endpoint values are the tile values, untransformed
+  ---
+  duration_ms: 0.650669
+  type: 'test'
+  ...
+# Subtest: dashboard-data S2: the 24 h chart window carries exactly 96 points
+ok 9 - dashboard-data S2: the 24 h chart window carries exactly 96 points
+  ---
+  duration_ms: 1.017099
+  type: 'test'
+  ...
+# Subtest: dashboard-data S3: alerts can be filtered per wearer with no leakage
+ok 10 - dashboard-data S3: alerts can be filtered per wearer with no leakage
+  ---
+  duration_ms: 1.24359
+  type: 'test'
+  ...
+# Subtest: seo: robots, sitemap and llms endpoints respond with the right shapes
+ok 11 - seo: robots, sitemap and llms endpoints respond with the right shapes
+  ---
+  duration_ms: 1.341907
+  type: 'test'
+  ...
+# Subtest: geo: JSON-LD graph parses and carries the five entity types
+ok 12 - geo: JSON-LD graph parses and carries the five entity types
+  ---
+  duration_ms: 0.660463
+  type: 'test'
+  ...
+# Subtest: seo: homepage carries canonical, OG and the llms Link header
+ok 13 - seo: homepage carries canonical, OG and the llms Link header
+  ---
+  duration_ms: 0.642716
+  type: 'test'
+  ...
+# Subtest: regression: wear start is never frozen at module load (Workers epoch clock)
+ok 14 - regression: wear start is never frozen at module load (Workers epoch clock)
+  ---
+  duration_ms: 1.315407
+  type: 'test'
+  ...
+# Subtest: packet-codec S1: digest round trip preserves every field at 16 bytes
+ok 15 - packet-codec S1: digest round trip preserves every field at 16 bytes
+  ---
+  duration_ms: 1.149058
+  type: 'test'
+  ...
+# Subtest: packet-codec S2: a flipped payload byte is rejected by crc
+ok 16 - packet-codec S2: a flipped payload byte is rejected by crc
+  ---
+  duration_ms: 0.470557
+  type: 'test'
+  ...
+# Subtest: packet-codec S3: flag bits survive the wire
+ok 17 - packet-codec S3: flag bits survive the wire
+  ---
+  duration_ms: 1.173143
+  type: 'test'
+  ...
+# Subtest: packet-codec S4: LoRaWAN frame carries sweat rate and posture at 38 hex chars
+ok 18 - packet-codec S4: LoRaWAN frame carries sweat rate and posture at 38 hex chars
+  ---
+  duration_ms: 0.409395
+  type: 'test'
+  ...
+# Subtest: packet-codec S5: bad magic and bad crc are rejected on the LoRaWAN frame
+ok 19 - packet-codec S5: bad magic and bad crc are rejected on the LoRaWAN frame
+  ---
+  duration_ms: 0.463868
+  type: 'test'
+  ...
+# Subtest: packet-codec: digest rejects wrong length and wrong version
+ok 20 - packet-codec: digest rejects wrong length and wrong version
+  ---
+  duration_ms: 0.301703
+  type: 'test'
+  ...
+# Subtest: packet-codec: hydration and battery clamp to 0..100, temperature keeps two decimals
+ok 21 - packet-codec: hydration and battery clamp to 0..100, temperature keeps two decimals
+  ---
+  duration_ms: 0.2726
+  type: 'test'
+  ...
+# Subtest: packet-codec: crc8 is stable for a known vector
+ok 22 - packet-codec: crc8 is stable for a known vector
+  ---
+  duration_ms: 0.147942
+  type: 'test'
+  ...
+# Subtest: live-demo S1: city emissions are 16 byte digests labelled findmy
+ok 23 - live-demo S1: city emissions are 16 byte digests labelled findmy
+  ---
+  duration_ms: 1.791794
+  type: 'test'
+  ...
+# Subtest: live-demo S2: rural emissions are 38 character LoRaWAN hex labelled lora
+ok 24 - live-demo S2: rural emissions are 38 character LoRaWAN hex labelled lora
+  ---
+  duration_ms: 1.69607
+  type: 'test'
+  ...
+# Subtest: live-demo S3: latencies stay inside the plausible range per path
+ok 25 - live-demo S3: latencies stay inside the plausible range per path
+  ---
+  duration_ms: 2.675622
+  type: 'test'
+  ...
+# Subtest: parity: browser codec and server codec produce identical bytes
+ok 26 - parity: browser codec and server codec produce identical bytes
+  ---
+  duration_ms: 1.846666
+  type: 'test'
+  ...
+# Subtest: S5: the page adds no border, frame, CSS shadow, filter or tint to renders
+ok 27 - S5: the page adds no border, frame, CSS shadow, filter or tint to renders
+  ---
+  duration_ms: 2.84726
+  type: 'test'
+  ...
+# Subtest: S5: nothing tinted sits behind a render (no background or gradient on its wrapper)
+ok 28 - S5: nothing tinted sits behind a render (no background or gradient on its wrapper)
+  ---
+  duration_ms: 0.46592
+  type: 'test'
+  ...
+# Subtest: S6: on-skin alt names a limb close-up and never torso framing
+ok 29 - S6: on-skin alt names a limb close-up and never torso framing
+  ---
+  duration_ms: 0.577297
+  type: 'test'
+  ...
+# Subtest: S7: hero frame is served wide enough for the hero cap
+ok 30 - S7: hero frame is served wide enough for the hero cap
+  ---
+  duration_ms: 0.31975
+  type: 'test'
+  ...
+# Subtest: S7: no render is placed full bleed or beyond its design cap
+ok 31 - S7: no render is placed full bleed or beyond its design cap
+  ---
+  duration_ms: 0.260622
+  type: 'test'
+  ...
+# Subtest: S8: DESIGN.md absorbs the knowledge pack and the brand sheet wins
+ok 32 - S8: DESIGN.md absorbs the knowledge pack and the brand sheet wins
+  ---
+  duration_ms: 0.692852
+  type: 'test'
+  ...
+# Subtest: S8: DESIGN.md asset inventory still names all four routes and exports
+ok 33 - S8: DESIGN.md asset inventory still names all four routes and exports
+  ---
+  duration_ms: 0.290326
+  type: 'test'
+  ...
+# Subtest: S9: image width and height attributes match the intrinsic WebP dimensions (no layout shift)
+ok 34 - S9: image width and height attributes match the intrinsic WebP dimensions (no layout shift)
+  ---
+  duration_ms: 1.002327
+  type: 'test'
+  ...
+# Subtest: S9: hero stays eager and high priority; below-fold renders are lazy
+ok 35 - S9: hero stays eager and high priority; below-fold renders are lazy
+  ---
+  duration_ms: 0.564669
+  type: 'test'
+  ...
+# Subtest: S9: reveal motion has a reduced-motion path and a no-script fallback
+ok 36 - S9: reveal motion has a reduced-motion path and a no-script fallback
+  ---
+  duration_ms: 0.634614
+  type: 'test'
+  ...
+# Subtest: S9: accessibility basics: skip link, visible focus, one h1, font-display swap
+ok 37 - S9: accessibility basics: skip link, visible focus, one h1, font-display swap
+  ---
+  duration_ms: 0.430548
+  type: 'test'
+  ...
+# Subtest: S9: trust stated plainly: not a medical device, and no invented proof
+ok 38 - S9: trust stated plainly: not a medical device, and no invented proof
+  ---
+  duration_ms: 0.51237
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S1: DESIGN.md v4 makes imagery primary with inventory, treatment rules and SVG demotion
+ok 39 - design-v2-imagery S1: DESIGN.md v4 makes imagery primary with inventory, treatment rules and SVG demotion
+  ---
+  duration_ms: 7.726244
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S2: operator render set exports four non-empty base64 strings
+ok 40 - design-v2-imagery S2: operator render set exports four non-empty base64 strings
+  ---
+  duration_ms: 0.90444
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: /img/patch-hero.webp answers 200 image/webp with the export bytes
+ok 41 - design-v2-imagery S3: /img/patch-hero.webp answers 200 image/webp with the export bytes
+  ---
+  duration_ms: 43.050141
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: /img/patch-exploded.webp answers 200 image/webp with the export bytes
+ok 42 - design-v2-imagery S3: /img/patch-exploded.webp answers 200 image/webp with the export bytes
+  ---
+  duration_ms: 3.704608
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: /img/patch-on-skin.webp answers 200 image/webp with the export bytes
+ok 43 - design-v2-imagery S3: /img/patch-on-skin.webp answers 200 image/webp with the export bytes
+  ---
+  duration_ms: 1.20382
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: /img/network-scene.webp answers 200 image/webp with the export bytes
+ok 44 - design-v2-imagery S3: /img/network-scene.webp answers 200 image/webp with the export bytes
+  ---
+  duration_ms: 1.502459
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S2: served page references all four image paths
+ok 45 - design-v2-imagery S2: served page references all four image paths
+  ---
+  duration_ms: 1.788738
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S2: hero, \#patch, wear story and \#how carry their renders
+ok 46 - design-v2-imagery S2: hero, \#patch, wear story and \#how carry their renders
+  ---
+  duration_ms: 0.395985
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S2: every render is an <img> with calm, hype-free alt text
+ok 47 - design-v2-imagery S2: every render is an <img> with calm, hype-free alt text
+  ---
+  duration_ms: 1.181526
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S2: the live demo keeps its functional packet visualization
+ok 48 - design-v2-imagery S2: the live demo keeps its functional packet visualization
+  ---
+  duration_ms: 0.692491
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: no other new routes; unknown /img path is not served as webp
+ok 49 - design-v2-imagery S3: no other new routes; unknown /img path is not served as webp
+  ---
+  duration_ms: 0.630878
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: existing png routes and SEO layer are unchanged
+ok 50 - design-v2-imagery S3: existing png routes and SEO layer are unchanged
+  ---
+  duration_ms: 4.072241
+  type: 'test'
+  ...
+# Subtest: design-v2-imagery S3: new copy keeps brand naming and avoids hype words
+ok 51 - design-v2-imagery S3: new copy keeps brand naming and avoids hype words
+  ---
+  duration_ms: 0.483627
+  type: 'test'
+  ...
+# Subtest: S1: hero patch render is larger than the v2.1 640 px cap
+ok 52 - S1: hero patch render is larger than the v2.1 640 px cap
+  ---
+  duration_ms: 1.561788
+  type: 'test'
+  ...
+# Subtest: S1: the hero image is still the eager, high priority patch-hero render
+ok 53 - S1: the hero image is still the eager, high priority patch-hero render
+  ---
+  duration_ms: 0.409346
+  type: 'test'
+  ...
+# Subtest: S1: at desktop the product column is at least as wide as the headline column
+ok 54 - S1: at desktop the product column is at least as wide as the headline column
+  ---
+  duration_ms: 0.289565
+  type: 'test'
+  ...
+# Subtest: S1: on mobile the product follows the headline directly, ahead of lede, chips and CTA
+ok 55 - S1: on mobile the product follows the headline directly, ahead of lede, chips and CTA
+  ---
+  duration_ms: 0.382595
+  type: 'test'
+  ...
+# Subtest: S1: the headline does not push the product below the fold
+ok 56 - S1: the headline does not push the product below the fold
+  ---
+  duration_ms: 0.620423
+  type: 'test'
+  ...
+# Subtest: S1: the page keeps one h1 with its v2.1 copy
+ok 57 - S1: the page keeps one h1 with its v2.1 copy
+  ---
+  duration_ms: 0.268764
+  type: 'test'
+  ...
+# Subtest: S2: display type is reined in: h1 and h2 caps below the v2.1 values
+ok 58 - S2: display type is reined in: h1 and h2 caps below the v2.1 values
+  ---
+  duration_ms: 0.334192
+  type: 'test'
+  ...
+# Subtest: S2: section padding is tighter than the v2.1 160 px ceiling
+ok 59 - S2: section padding is tighter than the v2.1 160 px ceiling
+  ---
+  duration_ms: 0.205479
+  type: 'test'
+  ...
+# Subtest: S2: sections carry more supporting content than v2.1 (hero adds a spec strip or facts row)
+ok 60 - S2: sections carry more supporting content than v2.1 (hero adds a spec strip or facts row)
+  ---
+  duration_ms: 0.522115
+  type: 'test'
+  ...
+# Subtest: S2: imagery stays primary, no flat SVG as a section main visual (L-1)
+ok 61 - S2: imagery stays primary, no flat SVG as a section main visual (L-1)
+  ---
+  duration_ms: 0.679091
+  type: 'test'
+  ...
+# Subtest: S2: no new copy invents proof or uses hype words
+ok 62 - S2: no new copy invents proof or uses hype words
+  ---
+  duration_ms: 1.822439
+  type: 'test'
+  ...
+# Subtest: S2: DESIGN.md encodes hero product scale, section density and display type rule
+ok 63 - S2: DESIGN.md encodes hero product scale, section density and display type rule
+  ---
+  duration_ms: 0.361053
+  type: 'test'
+  ...
+# Subtest: S2: DESIGN.md keeps physical contact, limb framing and locked brand tokens
+ok 64 - S2: DESIGN.md keeps physical contact, limb framing and locked brand tokens
+  ---
+  duration_ms: 0.245459
+  type: 'test'
+  ...
+# Subtest: S2: brand tokens stay locked in the page css
+ok 65 - S2: brand tokens stay locked in the page css
+  ---
+  duration_ms: 0.490447
+  type: 'test'
+  ...
+# Subtest: S3: renders keep v2.1 placement rules: no frames, shadows or filters on images (L-2)
+ok 66 - S3: renders keep v2.1 placement rules: no frames, shadows or filters on images (L-2)
+  ---
+  duration_ms: 0.855656
+  type: 'test'
+  ...
+# Subtest: S3: limb close up framing stays on the page (L-3 as amended)
+ok 67 - S3: limb close up framing stays on the page (L-3 as amended)
+  ---
+  duration_ms: 0.229334
+  type: 'test'
+  ...
+# Subtest: S4: committed station packets carry the Verified learnings section
+ok 68 - S4: committed station packets carry the Verified learnings section
+  ---
+  duration_ms: 1.028456
+  type: 'test'
+  ...
+# Subtest: S1: no 38 mm, 4.2 mm, diameter entry, diameter symbol or disc language anywhere in the copy set
+ok 69 - S1: no 38 mm, 4.2 mm, diameter entry, diameter symbol or disc language anywhere in the copy set
+  ---
+  duration_ms: 42.647667
+  type: 'test'
+  ...
+# Subtest: S1: src/facts.js carries no diameter or 4.2 mm thickness field and states the 2.5 mm profile
+ok 70 - S1: src/facts.js carries no diameter or 4.2 mm thickness field and states the 2.5 mm profile
+  ---
+  duration_ms: 0.440352
+  type: 'test'
+  ...
+# Subtest: S1: layer copy states five layers at a 2.5 mm profile; no width figure is invented
+ok 71 - S1: layer copy states five layers at a 2.5 mm profile; no width figure is invented
+  ---
+  duration_ms: 2.509142
+  type: 'test'
+  ...
+# Subtest: S1: BRAND.md and DESIGN.md state the square product; DESIGN.md is bumped to v4
+ok 72 - S1: BRAND.md and DESIGN.md state the square product; DESIGN.md is bumped to v4
+  ---
+  duration_ms: 0.646312
+  type: 'test'
+  ...
+# Subtest: S2: the hero spec strip states 2.5 mm profile, 14 days and IP67 with no width entry
+ok 73 - S2: the hero spec strip states 2.5 mm profile, 14 days and IP67 with no width entry
+  ---
+  duration_ms: 0.35945
+  type: 'test'
+  ...
+# Subtest: S2: the second spec strip carries no diameter and no 4.2 mm, and keeps wear, weight, water and radios
+ok 74 - S2: the second spec strip carries no diameter and no 4.2 mm, and keeps wear, weight, water and radios
+  ---
+  duration_ms: 0.352871
+  type: 'test'
+  ...
+# Subtest: S2: the specs table has no Diameter row and lists the 2.5 mm profile
+ok 75 - S2: the specs table has no Diameter row and lists the 2.5 mm profile
+  ---
+  duration_ms: 0.227882
+  type: 'test'
+  ...
+# Subtest: S3: src/images.js exports the four image constants as non-empty base64 strings
+ok 76 - S3: src/images.js exports the four image constants as non-empty base64 strings
+  ---
+  duration_ms: 0.181883
+  type: 'test'
+  ...
+# Subtest: S3: /img/patch-hero.webp answers 200 image/webp with a payload between 10 KB and 160 KB
+ok 77 - S3: /img/patch-hero.webp answers 200 image/webp with a payload between 10 KB and 160 KB
+  ---
+  duration_ms: 9.649474
+  type: 'test'
+  ...
+# Subtest: S3: /img/patch-exploded.webp answers 200 image/webp with a payload between 10 KB and 160 KB
+ok 78 - S3: /img/patch-exploded.webp answers 200 image/webp with a payload between 10 KB and 160 KB
+  ---
+  duration_ms: 2.535611
+  type: 'test'
+  ...
+# Subtest: S3: /img/patch-on-skin.webp answers 200 image/webp with a payload between 10 KB and 160 KB
+ok 79 - S3: /img/patch-on-skin.webp answers 200 image/webp with a payload between 10 KB and 160 KB
+  ---
+  duration_ms: 1.34437
+  type: 'test'
+  ...
+# Subtest: S3: /img/network-scene.webp answers 200 image/webp with a payload between 10 KB and 160 KB
+ok 80 - S3: /img/network-scene.webp answers 200 image/webp with a payload between 10 KB and 160 KB
+  ---
+  duration_ms: 0.981335
+  type: 'test'
+  ...
+# Subtest: S3: the render set is not the v2.1 set (each payload differs from the retired bytes)
+ok 81 - S3: the render set is not the v2.1 set (each payload differs from the retired bytes)
+  ---
+  duration_ms: 3.301202
+  type: 'test'
+  ...
+# Subtest: S3: alt texts describe the square product, are calm, and the on-skin alt names a limb close up
+ok 82 - S3: alt texts describe the square product, are calm, and the on-skin alt names a limb close up
+  ---
+  duration_ms: 0.737348
+  type: 'test'
+  ...
+# Subtest: S3: routes are unchanged and the images carry no text or captions in the page markup
+ok 83 - S3: routes are unchanged and the images carry no text or captions in the page markup
+  ---
+  duration_ms: 0.552921
+  type: 'test'
+  ...
+# Subtest: S4: facts, the page layer list and llms-full.txt state exactly the five layers in order
+ok 84 - S4: facts, the page layer list and llms-full.txt state exactly the five layers in order
+  ---
+  duration_ms: 0.608204
+  type: 'test'
+  ...
+# Subtest: S4: no retired layer names remain
+ok 85 - S4: no retired layer names remain
+  ---
+  duration_ms: 0.611029
+  type: 'test'
+  ...
+# Subtest: S5: committed wo-gh-6 packets carry the Verified learnings section including L-6
+ok 86 - S5: committed wo-gh-6 packets carry the Verified learnings section including L-6
+  ---
+  duration_ms: 0.707083
+  type: 'test'
+  ...
+# Subtest: S5: when reviewer-design has reviewed, its review compares against design/reference/ by category
+ok 87 - S5: when reviewer-design has reviewed, its review compares against design/reference/ by category
+  ---
+  duration_ms: 0.281914
+  type: 'test'
+  ...
+# Subtest: S6: the footer credit sentence is byte identical
+ok 88 - S6: the footer credit sentence is byte identical
+  ---
+  duration_ms: 0.290397
+  type: 'test'
+  ...
+# Subtest: frozen: brand tokens and the calm voice hold in the v4 page
+ok 89 - frozen: brand tokens and the calm voice hold in the v4 page
+  ---
+  duration_ms: 2.087037
+  type: 'test'
+  ...
+# Subtest: frozen: MCP tool descriptions that state the form no longer say disc or 38 mm
+ok 90 - frozen: MCP tool descriptions that state the form no longer say disc or 38 mm
+  ---
+  duration_ms: 0.869788
+  type: 'test'
+  ...
+# Subtest: S8: src/page.js does not contain the \#patch,\#how 128px padding override
+ok 91 - S8: src/page.js does not contain the \#patch,\#how 128px padding override
+  ---
+  duration_ms: 0.509466
+  type: 'test'
+  ...
+# Subtest: S8: no rule gives \#patch or \#how a vertical padding above 96 px
+ok 92 - S8: no rule gives \#patch or \#how a vertical padding above 96 px
+  ---
+  duration_ms: 0.492451
+  type: 'test'
+  ...
+# Subtest: S9: the hero and on-skin payloads are byte identical to the first round
+ok 93 - S9: the hero and on-skin payloads are byte identical to the first round
+  ---
+  duration_ms: 0.559191
+  type: 'test'
+  ...
+# Subtest: S9: the exploded and network payloads are the corrected ones, not the first round bytes
+ok 94 - S9: the exploded and network payloads are the corrected ones, not the first round bytes
+  ---
+  duration_ms: 0.499571
+  type: 'test'
+  ...
+# Subtest: S9: every payload decodes to a WebP between 10 KB and 160 KB
+ok 95 - S9: every payload decodes to a WebP between 10 KB and 160 KB
+  ---
+  duration_ms: 0.345679
+  type: 'test'
+  ...
+# Subtest: S10: the exploded image is 1400x1400 and the network image 1600x893, in file and in markup
+ok 96 - S10: the exploded image is 1400x1400 and the network image 1600x893, in file and in markup
+  ---
+  duration_ms: 0.594163
+  type: 'test'
+  ...
+# Subtest: S10: routes are unchanged and alt texts are the delivered ones
+ok 97 - S10: routes are unchanged and alt texts are the delivered ones
+  ---
+  duration_ms: 0.198909
+  type: 'test'
+  ...
+# Subtest: S11: when reviewer-design has reviewed, it names all four images against design/reference/
+ok 98 - S11: when reviewer-design has reviewed, it names all four images against design/reference/
+  ---
+  duration_ms: 0.258128
+  type: 'test'
+  ...
+# Subtest: mcp-server S1: initialize returns the protocol version and server name
+ok 99 - mcp-server S1: initialize returns the protocol version and server name
+  ---
+  duration_ms: 34.680951
+  type: 'test'
+  ...
+# Subtest: mcp-server S2: tools/list returns exactly the 6 tools with schemas
+ok 100 - mcp-server S2: tools/list returns exactly the 6 tools with schemas
+  ---
+  duration_ms: 1.827126
+  type: 'test'
+  ...
+# Subtest: mcp-server S3: get_patch_status returns the patch and its battery
+ok 101 - mcp-server S3: get_patch_status returns the patch and its battery
+  ---
+  duration_ms: 3.236705
+  type: 'test'
+  ...
+# Subtest: mcp-server S4: simulate_uplink round trips on both paths
+ok 102 - mcp-server S4: simulate_uplink round trips on both paths
+  ---
+  duration_ms: 5.474118
+  type: 'test'
+  ...
+# Subtest: mcp-server S5: errors are proper JSON-RPC errors, notifications get 202 empty
+ok 103 - mcp-server S5: errors are proper JSON-RPC errors, notifications get 202 empty
+  ---
+  duration_ms: 4.208266
+  type: 'test'
+  ...
+# Subtest: mcp-server: ping returns an empty result
+ok 104 - mcp-server: ping returns an empty result
+  ---
+  duration_ms: 1.133203
+  type: 'test'
+  ...
+# Subtest: site-credit S1: the served home page footer carries the new credit byte exact
+ok 105 - site-credit S1: the served home page footer carries the new credit byte exact
+  ---
+  duration_ms: 52.292354
+  type: 'test'
+  ...
+# Subtest: site-credit S1: the ANVIL link is intact and the sentence sits in one footer paragraph
+ok 106 - site-credit S1: the ANVIL link is intact and the sentence sits in one footer paragraph
+  ---
+  duration_ms: 0.5454
+  type: 'test'
+  ...
+# Subtest: site-credit S2: the old sentence no longer ends the credit; related sentences are unchanged
+ok 107 - site-credit S2: the old sentence no longer ends the credit; related sentences are unchanged
+  ---
+  duration_ms: 0.796868
+  type: 'test'
+  ...
+# Subtest: site-credit S2: /llms.txt does not carry the credit sentence and still answers 200
+ok 108 - site-credit S2: /llms.txt does not carry the credit sentence and still answers 200
+  ---
+  duration_ms: 1.073213
+  type: 'test'
+  ...
+# Subtest: site-credit S2: /img/patch-hero.webp still answers 200 image/webp
+ok 109 - site-credit S2: /img/patch-hero.webp still answers 200 image/webp
+  ---
+  duration_ms: 4.836931
+  type: 'test'
+  ...
+# Subtest: site-credit S2: /img/patch-exploded.webp still answers 200 image/webp
+ok 110 - site-credit S2: /img/patch-exploded.webp still answers 200 image/webp
+  ---
+  duration_ms: 1.106504
+  type: 'test'
+  ...
+# Subtest: site-credit S2: /img/patch-on-skin.webp still answers 200 image/webp
+ok 111 - site-credit S2: /img/patch-on-skin.webp still answers 200 image/webp
+  ---
+  duration_ms: 0.863118
+  type: 'test'
+  ...
+# Subtest: site-credit S2: /img/network-scene.webp still answers 200 image/webp
+ok 112 - site-credit S2: /img/network-scene.webp still answers 200 image/webp
+  ---
+  duration_ms: 1.074415
+  type: 'test'
+  ...
+# Subtest: ui-elevation S1: DESIGN.md has tokens, type scale, spacing, hero, motion and quality bars
+ok 113 - ui-elevation S1: DESIGN.md has tokens, type scale, spacing, hero, motion and quality bars
+  ---
+  duration_ms: 4.158411
+  type: 'test'
+  ...
+# Subtest: ui-elevation S1: page follows DESIGN.md tokens and typefaces
+ok 114 - ui-elevation S1: page follows DESIGN.md tokens and typefaces
+  ---
+  duration_ms: 0.541845
+  type: 'test'
+  ...
+# Subtest: ui-elevation S2: sections, demo/dashboard hooks and single h1 are preserved
+ok 115 - ui-elevation S2: sections, demo/dashboard hooks and single h1 are preserved
+  ---
+  duration_ms: 0.882917
+  type: 'test'
+  ...
+# Subtest: ui-elevation S2: content facts and SEO/GEO layer are preserved
+ok 116 - ui-elevation S2: content facts and SEO/GEO layer are preserved
+  ---
+  duration_ms: 0.235274
+  type: 'test'
+  ...
+# Subtest: ui-elevation S4: codec, data, mcp and index are untouched by the run
+ok 117 - ui-elevation S4: codec, data, mcp and index are untouched by the run # SKIP no main ref to diff against
+  ---
+  duration_ms: 10.405371
+  type: 'test'
+  ...
+# Subtest: ui-elevation S5: no hype words in page or DESIGN.md
+ok 118 - ui-elevation S5: no hype words in page or DESIGN.md
+  ---
+  duration_ms: 0.592741
+  type: 'test'
+  ...
+# Subtest: ui-elevation S5: product names match BRAND.md exactly
+ok 119 - ui-elevation S5: product names match BRAND.md exactly
+  ---
+  duration_ms: 1.054104
+  type: 'test'
+  ...
+# Subtest: ui-elevation S6 C1: hero type never drops below 56 px at any width
+ok 120 - ui-elevation S6 C1: hero type never drops below 56 px at any width
+  ---
+  duration_ms: 0.842667
+  type: 'test'
+  ...
+# Subtest: ui-elevation S6 C1: body copy never drops below 17 px
+ok 121 - ui-elevation S6 C1: body copy never drops below 17 px
+  ---
+  duration_ms: 0.832392
+  type: 'test'
+  ...
+# Subtest: ui-elevation S6 C2: spacing avoids the off-rhythm 30, 15, 28 and 26 px values
+ok 122 - ui-elevation S6 C2: spacing avoids the off-rhythm 30, 15, 28 and 26 px values
+  ---
+  duration_ms: 1.900677
+  type: 'test'
+  ...
+# Subtest: ui-elevation S6 C3: SVG annotations use \#53685C and the toggle has no white background
+ok 123 - ui-elevation S6 C3: SVG annotations use \#53685C and the toggle has no white background
+  ---
+  duration_ms: 0.54552
+  type: 'test'
+  ...
+# Subtest: ui-elevation S6 C4: .rv starts hidden and reveals over 800 ms ease-out
+ok 124 - ui-elevation S6 C4: .rv starts hidden and reveals over 800 ms ease-out
+  ---
+  duration_ms: 0.480322
+  type: 'test'
+  ...
+1..124
+# tests 124
+# suites 0
+# pass 123
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 516.380981
+
+exec
+/bin/bash -lc 'git diff -- src/page.js && git diff --exit-code -- src/images.js && git diff --check' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+diff --git a/src/page.js b/src/page.js
+index d10555f..572b5ac 100644
+--- a/src/page.js
++++ b/src/page.js
+@@ -279,7 +279,6 @@ section{scroll-margin-top:32px}
+ .value-strip{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;padding-top:32px;padding-bottom:32px;border-top:1px solid var(--line)}
+ .value-strip p:first-child{font:300 clamp(24px,3vw,40px)/1.2 'Space Grotesk',sans-serif;max-width:24ch}
+ .value-strip p:last-child{max-width:32ch;align-self:center}
+-#patch,#how{padding-top:128px;padding-bottom:128px}
+ #demo,#dashboard,#mcp,#specs,#faq{padding-top:96px;padding-bottom:96px}
+ section>.wrap>.rv:nth-child(2){transition-delay:40ms}
+ section>.wrap>.rv:nth-child(3){transition-delay:80ms}
+
+codex
+Removed the padding override from src/page.js so both sections use the documented 64–96 px range. Supplied imagery and footer credit remain unchanged.
+
+Tests: 123 passed, 1 skipped, 0 failed. Approval remains with the review stations.
+tokens used
+25,711
+Removed the padding override from src/page.js so both sections use the documented 64–96 px range. Supplied imagery and footer credit remain unchanged.
+
+Tests: 123 passed, 1 skipped, 0 failed. Approval remains with the review stations.

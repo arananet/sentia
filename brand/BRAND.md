@@ -16,7 +16,7 @@ One page of rules. Everything Sentia publishes follows it: the site, the dashboa
 "Measurements that find their own way home."
 
 Definition sentence, used verbatim where a one line definition is needed:
-"Sentia Patch One is a 38 mm adhesive sensor patch that measures skin temperature, hydration and activity for up to 14 days without a phone."
+"Sentia Patch One is a square adhesive sensor patch with strongly rounded corners and a 2.5 mm profile that measures skin temperature, hydration and activity for up to 14 days without a phone."
 
 ## Palette
 
@@ -26,7 +26,7 @@ Definition sentence, used verbatim where a one line definition is needed:
 - Coral: #FF6B4A (micro accents only: the patch LED, an alert dot, at most one word in the hero)
 - Soft mint: #EFF4EE (rare panel fill), hairline: #DFE7DF
 
-No gradients except a barely visible radial warmth behind the hero patch. No drop shadows except one very soft, wide shadow under the patch visual.
+Warm neutral photographic scenes carry their own physical light and contact shadows. The page adds no gradients, shadows or tinted backdrops.
 
 ## Typography
 
@@ -43,7 +43,7 @@ Wellness and monitoring framing only. Sentia Patch One is not a medical device, 
 
 ## Logo mark
 
-A plain disc: one thin ink circle, a smaller concentric ring, and a single coral point at the upper right edge for the LED. No letters inside the mark. The wordmark is the name "Sentia" set in Space Grotesk next to it.
+A square with strongly rounded corners: a thin ink outline and a short coral line for the LED. No letters inside the mark. The wordmark is the name "Sentia" set in Space Grotesk next to it.
 
 ## Motion
 

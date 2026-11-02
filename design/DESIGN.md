@@ -1,8 +1,8 @@
-# Sentia design system v3
+# Sentia design system v4
 
 Identity is governed by brand/BRAND.md. This system applies that identity to
 the launch page: imagery is the primary art direction, with the product as the protagonist
-and explicit anchors for true 38 mm scale.
+and natural limb proportions as anchors for true scale.
 Sentia Patch One is the object; Sentia Cloud receives its measurements; the
 Sentia MCP Server makes those measurements available to assistants.
 
@@ -46,8 +46,9 @@ in eight, capped at 960 px. The complete patch render is the visual center,
 large and early above the fold at desktop and mobile widths. Keep the kicker,
 chips and introductory copy; repeat the existing dimensional, wear and water
 resistance facts alongside the introduction.
-The round 38 mm patch has a matte paper-white top disc, deep ink-green edge
-ring, one tiny coral LED dot and a thin profile. Below 1000 px, stack the
+The square patch has strongly rounded corners, a matte warm white top cover,
+the physical SENTIA wordmark and one LED line, with a low 2.5 mm profile.
+The hero shows it worn on an upper arm in a warm neutral studio photograph. Below 1000 px, stack the
 headline, object and supporting copy. Preserve the whole object at narrow
 widths. Flat inline SVG is demoted to small supporting diagrams only; it
 must not carry the hero, hardware or connectivity art direction. The logo,
@@ -60,7 +61,7 @@ tactile softness from render scale and whitespace, never pastel or blue
 palettes, shadowed surfaces or decorative cards. A 12 column grid aligns the
 hero headline across four columns and the object across eight. Supporting
 text and chips complete that system; one value proposition strip follows,
-using the existing tagline. Measured facts (38 mm, 14 days, IP67 and network
+using the existing tagline. Measured facts (2.5 mm profile, 14 days, IP67 and network
 behaviour) establish trust before the hardware detail. State plainly here
 that Sentia Patch One is not a medical device. No invented proof, testimonials,
 customer logos or unsupported claims.
@@ -87,43 +88,55 @@ original export bytes without editing, replacing or generating imagery.
 | Module export | Route | Page placement |
 | --- | --- | --- |
 | PATCH_HERO_WEBP_B64 | /img/patch-hero.webp | Hero, primary object beside the headline |
-| PATCH_EXPLODED_WEBP_B64 | /img/patch-exploded.webp | #patch, beside the six-layer factual list |
-| PATCH_ON_SKIN_WEBP_B64 | /img/patch-on-skin.webp | #patch, second visual with the inner forearm close-up and 14 day wear story |
+| PATCH_EXPLODED_WEBP_B64 | /img/patch-exploded.webp | #patch, beside the five-layer factual list |
+| PATCH_ON_SKIN_WEBP_B64 | /img/patch-on-skin.webp | #patch, second visual with the upper arm close-up and 14 day wear story |
 | NETWORK_SCENE_WEBP_B64 | /img/network-scene.webp | #how, before the five relay steps |
 
-The exploded render groups the hardware into four visible assemblies; the
-six-layer list remains the source for the individual layer names and facts.
-The on-skin render follows the layer and sensor details, paired with the
-existing wear paragraph and followed by the dimensional and wear metrics.
-The network scene presents the patch, phone, relay domes and LoRaWAN gateway
-with dotted teal paths. It does not replace the live packet visualization.
+The exploded photograph separates the five square layers vertically, in order:
+top cover, comfort foam, sensing and processing board, adhesive layer,
+release liner. The page list and specs table use the same names.
+The on-skin photograph follows the layer and sensor details, paired with the
+wear paragraph and followed by profile and wear metrics.
+The network photograph presents the same patch in its connected context,
+beside a phone and LoRaWAN gateway. It does not replace the live packet visualization.
 
 ## Image treatment
 
-Place renders directly on paper, with no frames, borders, rounded cards,
-filters or added drop shadows. The supplied soft grounding shadow provides
-physical presence; do not add another.
-Hero, exploded and network backgrounds are exactly paper #FAFAF6, uniform
-to every corner and edge: no gradient, vignette, backdrop or floor line.
-Final WebP corner and edge samples may differ by at most 3 per RGB channel
-from (250, 250, 246) due to lossy encoding. The operator verifies the bytes.
-The on-skin exception is a strict inner forearm close-up filling the frame:
-no torso, no chest, no shoulder, no upper arm, no face, no dominating hands,
-no clothing and no background visible. The patch spans about half the forearm width.
-True 38 mm scale governs every scale-bearing render: the hero disc occupies
-a quarter of its frame width or less, and the network patch remains small
-among the devices. Never crop or enlarge the disc into a plate sized centerpiece.
-Preserve original aspect ratios and
-show complete images without cropping or stretching. Use responsive full
+Full photographs in warm neutral studio scenes replace the earlier isolated
+product treatment. Preserve the supplied bytes and original aspect ratios:
+hero 1600 × 893, exploded 1400 × 1400, on-skin 1600 × 800, network 1600 × 893.
+The physical SENTIA wordmark and LED line belong on the product; captions,
+labels and explanatory text inside images remain banned.
+
+Each image is an intentional photographic frame within the page grid, with
+no visible rectangle seams from mismatched background extensions. Do not
+attempt to blend the photographic backgrounds into paper. The hero fills
+its eight-column visual area; the exploded photograph fills its column
+beside the layer list; the limb close up fills the wear image area; the
+network photograph spans the content width. Paper gutters separate each
+complete photograph from copy. No borders, rounded cards, filters, added
+shadows or tinted backdrops. Physical light and contact shadows come from
+the supplied photographs.
+
+Hero and on-skin framing is a strict limb close up (upper arm or inner
+forearm), never torso framing. Skin texture, limb proportions and adhesive
+contact establish scale without inventing a width measurement.
+Preserve complete images without cropping or stretching. Use responsive full
 width images, with the hero capped at 960 px, the wear image at 640 px, and
 the network scene spanning the content width. Give each visual
 space on the 8 px rhythm. Below 1000 px, place the hero image directly after
 the headline with no added vertical gap; extend its frame 16 px into each
-gutter, retaining paper at both edges and the complete original image.
+gutter, retaining the complete original image.
 Stack the wear image and copy below 900 px.
 Use descriptive, calm alt text with the exact product and network names.
 Reserve intrinsic image space to prevent layout shifts. Load the hero
 eagerly with high priority; lazy-load the three lower-page renders.
+
+Production quality is anchored in design/reference/. L-6 remains binding:
+reviewer-design compares every new image against the boards and names gaps
+in materials, light, scale and contact, or states none. L-5 is lifted for
+this order; the operator has supplied the entire replacement set. L-2 now
+governs integration without seams; L-3 allows limb close ups as stated above.
 
 ## Motion
 
@@ -149,8 +162,8 @@ both the initial and revealed states visible and stationary.
   simulation control and dashboard action. Measurements keep their units.
 - At 320 px and at browser zoom, text wraps without page overflow; wide
   technical data scrolls in its own region. Keyboard focus is visible.
-- V2.1 S9: Implementation touches only src/page.js and this document.
-  Preserve the four image/webp routes and operator supplied src/images.js.
+- V4: Update product definition surfaces and integrate the operator supplied
+  renders. Preserve the four image/webp routes and supplied src/images.js bytes.
   API, MCP, codec, data and all other routing behavior stay unchanged.
 - S5: Keep the existing calm copy and exact product and network names.
   Wellness framing and the medical disclaimer remain visible.

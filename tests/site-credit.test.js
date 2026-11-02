@@ -50,17 +50,12 @@ test('site-credit S2: /llms.txt does not carry the credit sentence and still ans
   assert.ok(!txt.includes('Developed by Eduardo Arana'));
 });
 
-const IMAGES = [
-  ['/img/patch-hero.webp', 7838],
-  ['/img/patch-exploded.webp', 9318],
-  ['/img/patch-on-skin.webp', 20098],
-  ['/img/network-scene.webp', 13098],
-];
-for (const [path, size] of IMAGES) {
-  test(`site-credit S2: ${path} still answers 200 image/webp at ${size} bytes`, async () => {
+// Removed by design-v4 (wo-gh-6): the v2.1 per image byte sizes are retired with the render set.
+// Payload bounds for the new set live in tests/design-v4-square-product.test.js (S3).
+for (const path of ['/img/patch-hero.webp', '/img/patch-exploded.webp', '/img/patch-on-skin.webp', '/img/network-scene.webp']) {
+  test(`site-credit S2: ${path} still answers 200 image/webp`, async () => {
     const res = await get(path);
     assert.equal(res.status, 200);
     assert.equal(res.headers.get('content-type'), 'image/webp');
-    assert.equal((await res.arrayBuffer()).byteLength, size);
   });
 }
