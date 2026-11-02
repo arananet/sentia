@@ -1,0 +1,28 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-security",
+  "to_station": "reviewer-tests",
+  "work_order_id": "wo-gh-7",
+  "artifact_path": "runs/wo-gh-7/reviewer-security.output.md",
+  "status": "executed",
+  "created_at": "2026-10-30T21:47:27.521931+00:00",
+  "review": {
+    "station": "reviewer-security",
+    "verdict": "pass",
+    "findings": [
+      "Scope is clean. The only tracked change is tests/design-v4-square-product.test.js. Nothing under src/, brand/, design/, brain/ or .github/ is modified, and runs/wo-gh-7/ is untracked operator evidence.",
+      "The change adds no new I/O, network, process-spawn, eval or dynamic-require paths. The only file read is the existing runs/wo-gh-6/reviewer-design.output.md, through the existing read() helper and guarded by the existing existsSync skip. The skip semantics are unchanged.",
+      "The dynamic RegExp calls (`new RegExp(c, 'i')`) are built only from the hard-coded literals materials, light, scale and contact, so no untrusted input reaches a regex constructor.",
+      "The regexes run on a repo-local review file. The `[^.;:]*` constructs are bounded by clause punctuation and are at worst polynomial, so there is no practical ReDoS exposure. The input is not attacker-controlled at runtime.",
+      "Unsafe-default check: the matcher fails closed. An image that is not addressed, not cleared, or has an open gap is reported as a problem, and the negative cases are asserted inside S11. It cannot silently pass when the review is missing a design/reference/ reference or a gap category.",
+      "I ran `node --test tests/design-v4-square-product.test.js`: 30 tests passed, 0 failed, 0 skipped. I did not run the full 124-test suite, so that done criterion is unconfirmed here.",
+      "No secrets, credentials or model-routing config are touched. No security issues found."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}

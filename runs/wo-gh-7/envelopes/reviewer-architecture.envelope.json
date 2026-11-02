@@ -1,0 +1,27 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-architecture",
+  "to_station": "reviewer-design",
+  "work_order_id": "wo-gh-7",
+  "artifact_path": "runs/wo-gh-7/reviewer-architecture.output.md",
+  "status": "executed",
+  "created_at": "2026-10-30T21:47:54.427815+00:00",
+  "review": {
+    "station": "reviewer-architecture",
+    "verdict": "pass",
+    "findings": [
+      "Scope: the working-tree change is limited to tests/design-v4-square-product.test.js. Nothing under src/, brand/, design/, brain/ or .github/ is touched, and no earlier spec or earlier run evidence changed. The only other change is the untracked runs/wo-gh-7/, which the order allows.",
+      "Structure: the matching logic is factored into the helper `anchorComparisonProblems`, with `IMAGE_NAMING` and the gap regexes defined next to it. The helper is exercised by synthetic texts inside the single S11 test case, so the suite stays at 124 tests. `npm test` reports 124 tests, 123 pass, 0 fail, 1 skipped. Running `node --test tests/` directly fails, but the project script is `node --test tests/*.test.js`, so that is not a regression.",
+      "Required behavior kept: S11 still has the skip when runs/wo-gh-6/reviewer-design.output.md is absent. It still requires the design/reference/ reference and the four gap categories (materials, light, scale, contact). The real wo-gh-6 review is asserted with `deepEqual(..., [])`.",
+      "Semantic requirement covered: descriptive namings (hero, on-skin, exploded, network) and the file-name forms, with or without .webp, are accepted. Negative cases are asserted: three images addressed, an uncleared or open gap, a missing anchor reference and each missing category.",
+      "Caveat: the brain/decisions input does not exist in the repo (brain/ holds glossary, learnings, project and worklog only), so I could not check fit against recorded decisions. I judged fit from the work order scope and the existing test file conventions.",
+      "Minor, non-blocking: the clause-splitting heuristics (`OPEN`, `CLEARING`, subject carry-over across clauses) are fairly intricate for a test helper. They are well covered by the in-test negative cases, so I would leave them as they are."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}
