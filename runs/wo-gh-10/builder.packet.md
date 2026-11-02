@@ -1,0 +1,70 @@
+# Task packet: builder
+
+## Station prompt
+
+# Builder
+
+## Role
+Implement the spec so the scenario tests pass.
+
+## Inputs
+- spec
+- tests
+
+## Outputs
+- code change
+
+## Rules
+- Work only from the inputs listed above and the work order in the packet.
+- Produce the output as a file in the repo, not as chat text.
+- If the inputs are not enough, say what is missing instead of guessing.
+- Never approve your own work. Approval belongs to a different station.
+- Keep the change small and mapped to a spec scenario where one applies.
+
+
+## Work order
+
+- id: wo-gh-10
+- kind: bug
+- title: Re-baseline S11: the anchor comparison test learns to read owner acceptance
+- source: github-issue
+- description: Problem: test S11 in tests/design-v4-square-product.test.js evaluates runs/wo-gh-8/reviewer-design.output.md and fails permanently. The wo-gh-8 review records an L-6 materials quality gap on the exploded view (the cover lacks the fine silicone texture of the quality boards and the board reads as an illustrative render against their photographic detail), and it states the mounting axis as not applicable for the exploded view, which the evaluator does not recognize as a judgement. The owner accepted the gap: on 2026-10-30 he ordered the wo-gh-8 build published, and it deployed to production as version b33fd7f2 from head 9305937197f83e40a244841bdb987a0cbb599ce2. The wo-gh-8 evidence carries no record of that deploy, so the test can never see the acceptance and every later run inherits the failure (the wo-gh-9 suite showed it as one of its two failures). The owner decided on 2026-10-31 that a separate re-baseline order teaches the test to read owner acceptance, instead of a waiver for one run.
+
+Deliverable, governed by .openspec/specs/s11-rebaseline/spec.md: S11 learns two rules. Rule A: a recorded quality gap counts as resolved when the run's evidence directory carries a valid owner acceptance record (a new file, owner-acceptance.json, stating the acceptance act and citing it, for a deploy by production version and source commit); acceptance resolves only problems caused by a recorded negative judgement on judged material (an uncleared gap, the missing clearance that same gap fully explains, a recorded axis failure) and never problems of absence (a missing anchor reference, a missing category, an unaddressed image, an unjudged axis). Rule B: an axis the review states as not applicable for an image counts as judged and satisfied, unless the review also records that axis as failed for that image. The evaluation gains a run directory level entry point that reads the review output and the acceptance record together; the existing pure text matchers keep their signatures, the wo-gh-6 assertion is unchanged, and the wo-gh-7 in-test negative cases keep failing exactly as designed.
+
+The addendum: this order adds runs/wo-gh-8/owner-acceptance.json recording the acceptance act that already happened (accepted true, the owner, date 2026-10-30, deployed to production on the owner's publish order accepting the recorded exploded view gap, production version b33fd7f2, source commit 9305937197f83e40a244841bdb987a0cbb599ce2). It is a new file; no existing file under runs/wo-gh-8/ changes, and reviewer-design.output.md stays byte identical.
+
+Fixtures: new cases under tests/fixtures/s11-rebaseline/ prove both directions: F1 an accepted gap passes, F2 the same gap without the record fails, F3 missing coverage fails even with a valid record, F4 a not applicable axis counts as judged while an unmentioned axis still fails, F5 an invalid record (accepted not true, or the citation missing) resolves nothing.
+
+Scope: tests/design-v4-square-product.test.js, new fixture files under tests/fixtures/, runs/wo-gh-8/owner-acceptance.json, and runs/wo-gh-10/ evidence. Nothing else. In particular tests/take-apart.test.js is not touched: its scope case fails at this stack position because suite-output.txt sits in the tree, and the wo-gh-9 loopback running in parallel on the base branch owns that fix. No changes under src/, brand/, design/, brain/ or .github/, no changes to earlier specs, and no change to any earlier run evidence beyond the one added addendum file. The operator setup commit (the spec, this work order, the execute wiring) is not part of the line's change.
+
+Stack position: this branch starts from anvil/run-take-apart at 6355af4a5e8d320e55b00a9aab3cdd3ea8262a93, the wo-gh-9 evidence head. The wo-gh-9 loopback runs in parallel on that branch's line and does not touch this test.
+
+Model routing for this run: builder and reviewer-design on GPT-6 Astra (gpt-6-astra) through the Cloudflare AI Gateway; spec writer, test writer and the other reviewer stations on claude-sonnet-5-5 through the same gateway, as recorded in anvil.yaml. No fallback to another model for the builder. The brain's verified learnings L-1 to L-7 are part of the run's packets.
+
+Deployment: none. Nothing deploys and nothing merges on this order; the result is reported at the human gate. The deployer station stays a packet.
+
+Done criteria: run verdict approved with all five expected reviews counted and no parse failures; S11 passes against the real wo-gh-8 evidence in the post run suite, with the fixture cases F1 to F5 behaving as the spec states and the wo-gh-7 negative cases unchanged; the full suite on the final tree matches the stack baseline everywhere else, with the one take-apart scope failure itemized apart as pre-existing at this base and owned by the parallel wo-gh-9 loopback; the run diff against the setup commit names no file outside the allowed scope, and runs/wo-gh-8/reviewer-design.output.md keeps its base blob hash.
+
+GitHub issue: https://github.com/arananet/sentia/issues/10
+- risk_hints: 
+- status: new
+
+## Upstream steps
+
+- intake: completed
+- spec-writer: executed
+- test-writer: executed
+
+## Verified learnings
+
+- L-1: Art direction is imagery first; flat SVG as the primary visual language was rejected by the product owner and must not return as a section's main visual. (provenance: run wo-gh-2, artifact design/DESIGN.md, evidence verdict approved)
+- L-2: Product imagery sits seamlessly on the brand paper #FAFAF6 (no studio backgrounds, no visible image rectangles), verified by corner and edge sampling within 3 per channel. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-3: The patch reads at true 38 mm scale with explicit scale anchors, and on-skin imagery is strict inner forearm framing only. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-4: The product is the protagonist: the patch appears large and early, the page must not read empty or editorial, and display type must not crowd out the product. (provenance: run wo-gh-3, artifact src/page.js, evidence verdict changes_requested)
+- L-5: The current product render set is owner approved, especially the patch render; composition iterations keep src/images.js byte identical and never regenerate product imagery. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-6: Product imagery for Sentia meets the production quality bar anchored in design/reference/: photorealistic studio quality with real materials and physically consistent light; stylized or toy-like renders fail review. Reviewer-design compares every new product image against the anchor boards and names the gaps. (provenance: run wo-gh-5, artifact src/images.js, evidence verdict changes_requested)
+- L-7: The product is the square low profile patch anchored in design/reference/ and the round disc renders are retired; L-2, L-3 and L-5 stand as amended by the design v4 spec: photographic treatment instead of seamless paper backgrounds, limb close ups (inner forearm or upper arm) instead of inner forearm only, and the render set replaceable through an owner decided work order instead of frozen byte identical. (provenance: run wo-gh-6, artifact src/images.js, evidence verdict approved)
+
+## Project design
+

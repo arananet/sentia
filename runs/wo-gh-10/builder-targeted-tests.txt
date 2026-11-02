@@ -1,0 +1,226 @@
+TAP version 13
+# Subtest: S1: no 38 mm, 4.2 mm, diameter entry, diameter symbol or disc language anywhere in the copy set
+ok 1 - S1: no 38 mm, 4.2 mm, diameter entry, diameter symbol or disc language anywhere in the copy set
+  ---
+  duration_ms: 13.217615
+  type: 'test'
+  ...
+# Subtest: S1: src/facts.js carries no diameter or 4.2 mm thickness field and states the 2.5 mm profile
+ok 2 - S1: src/facts.js carries no diameter or 4.2 mm thickness field and states the 2.5 mm profile
+  ---
+  duration_ms: 0.206805
+  type: 'test'
+  ...
+# Subtest: S1: layer copy states five layers at a 2.5 mm profile; no width figure is invented
+ok 3 - S1: layer copy states five layers at a 2.5 mm profile; no width figure is invented
+  ---
+  duration_ms: 1.043981
+  type: 'test'
+  ...
+# Subtest: S1: BRAND.md and DESIGN.md state the square product; DESIGN.md is bumped to v4
+ok 4 - S1: BRAND.md and DESIGN.md state the square product; DESIGN.md is bumped to v4
+  ---
+  duration_ms: 0.304925
+  type: 'test'
+  ...
+# Subtest: S2: the hero spec strip states 2.5 mm profile, 14 days and IP67 with no width entry
+ok 5 - S2: the hero spec strip states 2.5 mm profile, 14 days and IP67 with no width entry
+  ---
+  duration_ms: 0.650812
+  type: 'test'
+  ...
+# Subtest: S2: the second spec strip carries no diameter and no 4.2 mm, and keeps wear, weight, water and radios
+ok 6 - S2: the second spec strip carries no diameter and no 4.2 mm, and keeps wear, weight, water and radios
+  ---
+  duration_ms: 0.164651
+  type: 'test'
+  ...
+# Subtest: S2: the specs table has no Diameter row and lists the 2.5 mm profile
+ok 7 - S2: the specs table has no Diameter row and lists the 2.5 mm profile
+  ---
+  duration_ms: 0.080192
+  type: 'test'
+  ...
+# Subtest: S3: src/images.js exports the four image constants as non-empty base64 strings
+ok 8 - S3: src/images.js exports the four image constants as non-empty base64 strings
+  ---
+  duration_ms: 0.054683
+  type: 'test'
+  ...
+# Subtest: S3: /img/patch-hero.webp answers 200 image/webp with a payload between 10 KB and 160 KB
+ok 9 - S3: /img/patch-hero.webp answers 200 image/webp with a payload between 10 KB and 160 KB
+  ---
+  duration_ms: 1.831892
+  type: 'test'
+  ...
+# Subtest: S3: /img/patch-exploded.webp answers 200 image/webp with a payload between 10 KB and 160 KB
+ok 10 - S3: /img/patch-exploded.webp answers 200 image/webp with a payload between 10 KB and 160 KB
+  ---
+  duration_ms: 0.993334
+  type: 'test'
+  ...
+# Subtest: S3: /img/patch-on-skin.webp answers 200 image/webp with a payload between 10 KB and 160 KB
+ok 11 - S3: /img/patch-on-skin.webp answers 200 image/webp with a payload between 10 KB and 160 KB
+  ---
+  duration_ms: 0.48529
+  type: 'test'
+  ...
+# Subtest: S3: /img/network-scene.webp answers 200 image/webp with a payload between 10 KB and 160 KB
+ok 12 - S3: /img/network-scene.webp answers 200 image/webp with a payload between 10 KB and 160 KB
+  ---
+  duration_ms: 0.492351
+  type: 'test'
+  ...
+# Subtest: S3: the render set is not the v2.1 set (each payload differs from the retired bytes)
+ok 13 - S3: the render set is not the v2.1 set (each payload differs from the retired bytes)
+  ---
+  duration_ms: 1.910181
+  type: 'test'
+  ...
+# Subtest: S3: alt texts describe the square product, are calm, and the on-skin alt names a limb close up
+ok 14 - S3: alt texts describe the square product, are calm, and the on-skin alt names a limb close up
+  ---
+  duration_ms: 0.458689
+  type: 'test'
+  ...
+# Subtest: S3: routes are unchanged and the images carry no text or captions in the page markup
+ok 15 - S3: routes are unchanged and the images carry no text or captions in the page markup
+  ---
+  duration_ms: 0.330835
+  type: 'test'
+  ...
+# Subtest: S4: facts, the page layer list and llms-full.txt state exactly the five layers in order
+ok 16 - S4: facts, the page layer list and llms-full.txt state exactly the five layers in order
+  ---
+  duration_ms: 0.389574
+  type: 'test'
+  ...
+# Subtest: S4: no retired layer names remain
+ok 17 - S4: no retired layer names remain
+  ---
+  duration_ms: 0.357926
+  type: 'test'
+  ...
+# Subtest: S5: committed wo-gh-6 packets carry the Verified learnings section including L-6
+ok 18 - S5: committed wo-gh-6 packets carry the Verified learnings section including L-6
+  ---
+  duration_ms: 0.500242
+  type: 'test'
+  ...
+# Subtest: S5: when reviewer-design has reviewed, its review compares against design/reference/ by category
+ok 19 - S5: when reviewer-design has reviewed, its review compares against design/reference/ by category
+  ---
+  duration_ms: 0.180475
+  type: 'test'
+  ...
+# Subtest: S6: the footer credit sentence is byte identical
+ok 20 - S6: the footer credit sentence is byte identical
+  ---
+  duration_ms: 0.175608
+  type: 'test'
+  ...
+# Subtest: frozen: brand tokens and the calm voice hold in the v4 page
+ok 21 - frozen: brand tokens and the calm voice hold in the v4 page
+  ---
+  duration_ms: 1.053375
+  type: 'test'
+  ...
+# Subtest: frozen: MCP tool descriptions that state the form no longer say disc or 38 mm
+ok 22 - frozen: MCP tool descriptions that state the form no longer say disc or 38 mm
+  ---
+  duration_ms: 0.540865
+  type: 'test'
+  ...
+# Subtest: S8: src/page.js does not contain the \#patch,\#how 128px padding override
+ok 23 - S8: src/page.js does not contain the \#patch,\#how 128px padding override
+  ---
+  duration_ms: 0.415223
+  type: 'test'
+  ...
+# Subtest: S8: no rule gives \#patch or \#how a vertical padding above 96 px
+ok 24 - S8: no rule gives \#patch or \#how a vertical padding above 96 px
+  ---
+  duration_ms: 0.323042
+  type: 'test'
+  ...
+# Subtest: S9: the hero and on-skin payloads are byte identical to the first round
+ok 25 - S9: the hero and on-skin payloads are byte identical to the first round
+  ---
+  duration_ms: 0.363774
+  type: 'test'
+  ...
+# Subtest: S9: the exploded and network payloads are the corrected ones, not the first round bytes
+ok 26 - S9: the exploded and network payloads are the corrected ones, not the first round bytes
+  ---
+  duration_ms: 0.215639
+  type: 'test'
+  ...
+# Subtest: S9: every payload decodes to a WebP between 10 KB and 160 KB
+ok 27 - S9: every payload decodes to a WebP between 10 KB and 160 KB
+  ---
+  duration_ms: 0.096186
+  type: 'test'
+  ...
+# Subtest: S10: the exploded image is 1400x1400 and the network image 1600x893, in file and in markup
+ok 28 - S10: the exploded image is 1400x1400 and the network image 1600x893, in file and in markup
+  ---
+  duration_ms: 0.28206
+  type: 'test'
+  ...
+# Subtest: S10: routes are unchanged and alt texts are the delivered ones
+ok 29 - S10: routes are unchanged and alt texts are the delivered ones
+  ---
+  duration_ms: 0.12418
+  type: 'test'
+  ...
+# Subtest: S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/
+ok 30 - S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/
+  ---
+  duration_ms: 3.827794
+  type: 'test'
+  ...
+# Subtest: S11 re-baseline S2/S3: an accepted gap resolves (F1); the same gap without a record fails (F2)
+ok 31 - S11 re-baseline S2/S3: an accepted gap resolves (F1); the same gap without a record fails (F2)
+  ---
+  duration_ms: 0.408052
+  type: 'test'
+  ...
+# Subtest: S11 re-baseline S1/S4: acceptance never creates coverage (F3)
+ok 32 - S11 re-baseline S1/S4: acceptance never creates coverage (F3)
+  ---
+  duration_ms: 0.507734
+  type: 'test'
+  ...
+# Subtest: S11 re-baseline S5: not applicable counts as judged (F4); unmentioned axis still fails
+ok 33 - S11 re-baseline S5: not applicable counts as judged (F4); unmentioned axis still fails
+  ---
+  duration_ms: 0.365307
+  type: 'test'
+  ...
+# Subtest: S11 re-baseline S6: an invalid acceptance record resolves nothing (F5)
+ok 34 - S11 re-baseline S6: an invalid acceptance record resolves nothing (F5)
+  ---
+  duration_ms: 0.359068
+  type: 'test'
+  ...
+# Subtest: S11 re-baseline Rule A: acceptance resolves a recorded axis failure only
+ok 35 - S11 re-baseline Rule A: acceptance resolves a recorded axis failure only
+  ---
+  duration_ms: 0.289512
+  type: 'test'
+  ...
+# Subtest: S11 re-baseline S7: the real wo-gh-8 evidence carries the acceptance addendum and an untouched review
+ok 36 - S11 re-baseline S7: the real wo-gh-8 evidence carries the acceptance addendum and an untouched review
+  ---
+  duration_ms: 0.390916
+  type: 'test'
+  ...
+1..36
+# tests 36
+# suites 0
+# pass 36
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 98.654688

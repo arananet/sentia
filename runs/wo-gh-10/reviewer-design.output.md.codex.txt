@@ -1,0 +1,655 @@
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-3emb4ai1"))
+Reading additional input from stdin...
+OpenAI Codex v0.166.0
+--------
+workdir: /home/runner/work/sentia/sentia
+model: openai/gpt-6-astra
+provider: cloudflare
+approval: never
+sandbox: danger-full-access
+reasoning effort: none
+reasoning summaries: none
+session id: 01a19215-ec7d-7bf2-915a-fbb93feaa879
+--------
+user
+You are executing an ANVIL reviewer station packet inside this repository. You are read only: inspect the files the packet refers to, judge the work against the packet, and do not change anything. The wrapper verifies the tree is unchanged after your run and fails this station if it is not.
+
+## Station prompt
+
+# Reviewer Design
+
+## Role
+Judge interface output against the project's own design system: its design tokens, component and layout rules, motion rules, and quality bars.
+
+## Inputs
+- design system (tokens, rules, quality bars from design/DESIGN.md and design/tokens.json)
+- interface output (HTML, React components, CSS, user-facing pages, or other interface artifacts)
+
+## Outputs
+- review (JSON format with verdict and findings)
+
+## Rules
+- Work only from the inputs listed above and the work order in the packet.
+- If the project has no design system (no design/DESIGN.md), your verdict MUST be `changes_requested` with a finding stating that no design system exists for the project.
+- If the project has a design system, review the interface output against:
+  - Design tokens: Are the correct colors, typography, spacing values being used?
+  - Component and layout rules: Do components follow the documented patterns?
+  - Motion rules: Does any animation or transition follow the motion guidelines?
+  - Quality bars: Does the interface meet the stated quality bars for visual hierarchy, scale contrast, spacing rhythm, and responsive behavior?
+- Focus on the design system the project has defined. Do not impose external design opinions or preferences that are not documented in the project's design system.
+- A design token marked as "TODO" or placeholder means the project hasn't defined that value yet. Flag missing values as findings only if the interface output actually uses undefined tokens.
+- Findings should be specific and actionable: cite which quality bar was violated, which token was used incorrectly, or which rule was not followed.
+- Your verdict must be one of: `approved`, `changes_requested`, or `comment`.
+- Produce the output as a JSON object, not as chat text.
+
+## Output Format
+
+Return a JSON object with this structure:
+
+```json
+{
+  "station": "reviewer-design",
+  "verdict": "approved | changes_requested | comment",
+  "findings": [
+    "Specific finding with reference to design system rule or quality bar",
+    "Another finding if applicable"
+  ]
+}
+```
+
+## Examples
+
+### Example 1: No design system exists
+```json
+{
+  "station": "reviewer-design",
+  "verdict": "changes_requested",
+  "findings": [
+    "No design system exists for this project. The project must define design/DESIGN.md and design/tokens.json before interface output can be reviewed against design standards."
+  ]
+}
+```
+
+### Example 2: Interface violates quality bar
+```json
+{
+  "station": "reviewer-design",
+  "verdict": "changes_requested",
+  "findings": [
+    "Quality bar violation: Scale Contrast - The button text has only 2.8:1 contrast ratio against its background, failing the minimum 4.5:1 requirement stated in the quality bars.",
+    "Token usage: The page uses hardcoded color '#FF5733' instead of the defined primary color token."
+  ]
+}
+```
+
+### Example 3: Interface meets design system
+```json
+{
+  "station": "reviewer-design",
+  "verdict": "approved",
+  "findings": []
+}
+```
+
+
+## Work order
+
+- id: wo-gh-10
+- kind: bug
+- title: Re-baseline S11: the anchor comparison test learns to read owner acceptance
+- source: github-issue
+- description: Problem: test S11 in tests/design-v4-square-product.test.js evaluates runs/wo-gh-8/reviewer-design.output.md and fails permanently. The wo-gh-8 review records an L-6 materials quality gap on the exploded view (the cover lacks the fine silicone texture of the quality boards and the board reads as an illustrative render against their photographic detail), and it states the mounting axis as not applicable for the exploded view, which the evaluator does not recognize as a judgement. The owner accepted the gap: on 2026-10-30 he ordered the wo-gh-8 build published, and it deployed to production as version b33fd7f2 from head 9305937197f83e40a244841bdb987a0cbb599ce2. The wo-gh-8 evidence carries no record of that deploy, so the test can never see the acceptance and every later run inherits the failure (the wo-gh-9 suite showed it as one of its two failures). The owner decided on 2026-10-31 that a separate re-baseline order teaches the test to read owner acceptance, instead of a waiver for one run.
+
+Deliverable, governed by .openspec/specs/s11-rebaseline/spec.md: S11 learns two rules. Rule A: a recorded quality gap counts as resolved when the run's evidence directory carries a valid owner acceptance record (a new file, owner-acceptance.json, stating the acceptance act and citing it, for a deploy by production version and source commit); acceptance resolves only problems caused by a recorded negative judgement on judged material (an uncleared gap, the missing clearance that same gap fully explains, a recorded axis failure) and never problems of absence (a missing anchor reference, a missing category, an unaddressed image, an unjudged axis). Rule B: an axis the review states as not applicable for an image counts as judged and satisfied, unless the review also records that axis as failed for that image. The evaluation gains a run directory level entry point that reads the review output and the acceptance record together; the existing pure text matchers keep their signatures, the wo-gh-6 assertion is unchanged, and the wo-gh-7 in-test negative cases keep failing exactly as designed.
+
+The addendum: this order adds runs/wo-gh-8/owner-acceptance.json recording the acceptance act that already happened (accepted true, the owner, date 2026-10-30, deployed to production on the owner's publish order accepting the recorded exploded view gap, production version b33fd7f2, source commit 9305937197f83e40a244841bdb987a0cbb599ce2). It is a new file; no existing file under runs/wo-gh-8/ changes, and reviewer-design.output.md stays byte identical.
+
+Fixtures: new cases under tests/fixtures/s11-rebaseline/ prove both directions: F1 an accepted gap passes, F2 the same gap without the record fails, F3 missing coverage fails even with a valid record, F4 a not applicable axis counts as judged while an unmentioned axis still fails, F5 an invalid record (accepted not true, or the citation missing) resolves nothing.
+
+Scope: tests/design-v4-square-product.test.js, new fixture files under tests/fixtures/, runs/wo-gh-8/owner-acceptance.json, and runs/wo-gh-10/ evidence. Nothing else. In particular tests/take-apart.test.js is not touched: its scope case fails at this stack position because suite-output.txt sits in the tree, and the wo-gh-9 loopback running in parallel on the base branch owns that fix. No changes under src/, brand/, design/, brain/ or .github/, no changes to earlier specs, and no change to any earlier run evidence beyond the one added addendum file. The operator setup commit (the spec, this work order, the execute wiring) is not part of the line's change.
+
+Stack position: this branch starts from anvil/run-take-apart at 6355af4a5e8d320e55b00a9aab3cdd3ea8262a93, the wo-gh-9 evidence head. The wo-gh-9 loopback runs in parallel on that branch's line and does not touch this test.
+
+Model routing for this run: builder and reviewer-design on GPT-6 Astra (gpt-6-astra) through the Cloudflare AI Gateway; spec writer, test writer and the other reviewer stations on claude-sonnet-5-5 through the same gateway, as recorded in anvil.yaml. No fallback to another model for the builder. The brain's verified learnings L-1 to L-7 are part of the run's packets.
+
+Deployment: none. Nothing deploys and nothing merges on this order; the result is reported at the human gate. The deployer station stays a packet.
+
+Done criteria: run verdict approved with all five expected reviews counted and no parse failures; S11 passes against the real wo-gh-8 evidence in the post run suite, with the fixture cases F1 to F5 behaving as the spec states and the wo-gh-7 negative cases unchanged; the full suite on the final tree matches the stack baseline everywhere else, with the one take-apart scope failure itemized apart as pre-existing at this base and owned by the parallel wo-gh-9 loopback; the run diff against the setup commit names no file outside the allowed scope, and runs/wo-gh-8/reviewer-design.output.md keeps its base blob hash.
+
+GitHub issue: https://github.com/arananet/sentia/issues/10
+- risk_hints: 
+- status: new
+
+## Upstream steps
+
+- intake: completed
+- spec-writer: executed
+- test-writer: executed
+- builder: executed
+- reviewer-spec: executed
+- reviewer-security: executed
+- reviewer-tests: executed
+- reviewer-architecture: executed
+
+## Verified learnings
+
+- L-1: Art direction is imagery first; flat SVG as the primary visual language was rejected by the product owner and must not return as a section's main visual. (provenance: run wo-gh-2, artifact design/DESIGN.md, evidence verdict approved)
+- L-2: Product imagery sits seamlessly on the brand paper #FAFAF6 (no studio backgrounds, no visible image rectangles), verified by corner and edge sampling within 3 per channel. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-3: The patch reads at true 38 mm scale with explicit scale anchors, and on-skin imagery is strict inner forearm framing only. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-4: The product is the protagonist: the patch appears large and early, the page must not read empty or editorial, and display type must not crowd out the product. (provenance: run wo-gh-3, artifact src/page.js, evidence verdict changes_requested)
+- L-5: The current product render set is owner approved, especially the patch render; composition iterations keep src/images.js byte identical and never regenerate product imagery. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-6: Product imagery for Sentia meets the production quality bar anchored in design/reference/: photorealistic studio quality with real materials and physically consistent light; stylized or toy-like renders fail review. Reviewer-design compares every new product image against the anchor boards and names the gaps. (provenance: run wo-gh-5, artifact src/images.js, evidence verdict changes_requested)
+- L-7: The product is the square low profile patch anchored in design/reference/ and the round disc renders are retired; L-2, L-3 and L-5 stand as amended by the design v4 spec: photographic treatment instead of seamless paper backgrounds, limb close ups (inner forearm or upper arm) instead of inner forearm only, and the render set replaceable through an owner decided work order instead of frozen byte identical. (provenance: run wo-gh-6, artifact src/images.js, evidence verdict approved)
+
+## Project design
+
+## Output contract
+
+Answer with a single JSON object and nothing else, in exactly this shape:
+{"station": "<your station id>", "verdict": "pass", "findings": ["..."]}
+The verdict must be one of: pass, fail, changes_requested. Findings must be concrete and checkable against the spec, the code and the tests.
+
+codex
+I’ll inspect the design system and scoped changes without modifying files.
+
+exec
+/bin/bash -lc "pwd; git status --short; rg --files -g 'AGENTS.md' -g 'design/DESIGN.md' -g 'design/tokens.json' -g '*s11*' -g 'runs/wo-gh-10/**' -g '.openspec/specs/s11-rebaseline/spec.md'" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+/home/runner/work/sentia/sentia
+ M tests/design-v4-square-product.test.js
+?? runs/wo-gh-10/
+?? runs/wo-gh-8/owner-acceptance.json
+?? tests/fixtures/
+design/DESIGN.md
+runs/wo-gh-10/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-10/envelopes/reviewer-security.envelope.json
+runs/wo-gh-10/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-10/envelopes/builder.envelope.json
+runs/wo-gh-10/envelopes/reviewer-architecture.envelope.json
+runs/wo-gh-10/envelopes/spec-writer.envelope.json
+runs/wo-gh-10/envelopes/test-writer.envelope.json
+runs/wo-gh-10/envelopes/intake.envelope.json
+runs/wo-gh-10/reviewer-tests.packet.md
+runs/wo-gh-10/builder-suite-output.txt
+runs/wo-gh-10/reviewer-design.packet.md
+runs/wo-gh-10/reviewer-architecture.packet.md
+runs/wo-gh-10/reviewer-architecture.output.md
+runs/wo-gh-10/builder.output.md
+runs/wo-gh-10/reviewer-security.output.md
+runs/wo-gh-10/builder.packet.md
+runs/wo-gh-10/reviewer-spec.packet.md
+runs/wo-gh-10/reviewer-tests.output.md
+runs/wo-gh-10/spec-writer.output.md
+runs/wo-gh-10/builder-targeted-tests.txt
+runs/wo-gh-10/builder.output.md.codex.txt
+runs/wo-gh-10/reviewer-spec.output.md
+runs/wo-gh-10/test-writer.packet.md
+runs/wo-gh-10/builder-baseline-suite.txt
+runs/wo-gh-10/spec-writer.packet.md
+runs/wo-gh-10/test-writer.output.md
+runs/wo-gh-10/reviewer-security.packet.md
+
+exec
+/bin/bash -lc 'cat design/DESIGN.md; if test -f design/tokens.json; then cat design/tokens.json; fi; cat .openspec/specs/s11-rebaseline/spec.md; git diff -- tests/design-v4-square-product.test.js; cat runs/wo-gh-8/owner-acceptance.json; rg --files tests/fixtures' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+# Sentia design system v4
+
+Identity is governed by brand/BRAND.md. This system applies that identity to
+the launch page: imagery is the primary art direction, with the product as the protagonist
+and natural limb proportions as anchors for true scale.
+Sentia Patch One is the object; Sentia Cloud receives its measurements; the
+Sentia MCP Server makes those measurements available to assistants.
+
+## Tokens
+
+Paper #FAFAF6 occupies roughly 90 percent of the surface. Ink green #12211C
+forms text and instrument outlines. Signal teal #0E7C66 marks links, labels
+and the Find My network and LoRaWAN paths. Coral #FF6B4A is reserved for the
+status LED and alert dots. Soft mint #EFF4EE is a rare panel fill; hairline
+#DFE7DF divides information. Body text uses #4A5D54; secondary labels use
+#53685C for legibility on paper. White is reserved for the physical patch.
+No decorative gradients. Only the soft contact shadow baked into each product
+render is allowed; the page adds no shadow or tinted backdrop.
+
+## Type scale
+
+Space Grotesk at weight 300 is the display face. Display type must serve the
+product. The hero runs from 56 to 64 px with 0.96 leading and -0.055 em tracking. Section titles run from
+40 to 64 px with 1.04 leading and -0.04 em tracking, limited to 18 characters
+per line where space permits. Data values run from 32 to 56 px. Inter body
+text is 17 px with 1.65 leading; introductory text is 18–20 px, at most
+54 characters per line. System mono labels are 11 px, uppercase, with
+0.16 em tracking. Never shrink body copy to fit a composition.
+
+## Spacing rhythm
+
+Use an 8 px base: 8, 16, 24, 32, 48, 64, 96, 128, 160. The page container
+is at most 1440 px wide, with fluid 24–80 px gutters. Sections have 64–96 px
+vertical padding for richer density. A title, its introduction and its
+illustration form one idea; detailed lists follow with 32–48 px separation. Hairlines provide
+structure without enclosing every item in a card. Technical examples and
+tables remain dense enough to scan, with scrolling contained locally.
+Fixed margins, padding and gaps use multiples of 8 px, including the bounds
+of fluid spacing. One-pixel border overlaps and diagram coordinates are
+optical geometry rather than content spacing.
+
+## Hero art direction
+
+Place the existing headline in four columns and the supplied hero render
+in eight, capped at 960 px. The complete patch render is the visual center,
+large and early above the fold at desktop and mobile widths. Keep the kicker,
+chips and introductory copy; repeat the existing dimensional, wear and water
+resistance facts alongside the introduction.
+The square patch has strongly rounded corners, a matte warm white top cover,
+the physical SENTIA wordmark and one LED line, with a low 2.5 mm profile.
+The hero shows it worn on an upper arm in a warm neutral studio photograph. Below 1000 px, stack the
+headline, object and supporting copy. Preserve the whole object at narrow
+widths. Flat inline SVG is demoted to small supporting diagrams only; it
+must not carry the hero, hardware or connectivity art direction. The logo,
+functional live demo graphics and dashboard charts stay.
+
+## Composition and accessibility
+
+The brand sheet wins every conflict with the design knowledge pack. Use calm
+tactile softness from render scale and whitespace, never pastel or blue
+palettes, shadowed surfaces or decorative cards. A 12 column grid aligns the
+hero headline across four columns and the object across eight. Supporting
+text and chips complete that system; one value proposition strip follows,
+using the existing tagline. Measured facts (2.5 mm profile, 14 days, IP67 and network
+behaviour) establish trust before the hardware detail. State plainly here
+that Sentia Patch One is not a medical device. No invented proof, testimonials,
+customer logos or unsupported claims.
+
+Use 64–96 px section padding and 32–48 px between related visual and factual
+groups to increase density without shrinking body copy. Use hairline divided
+feature grids and recurring numbered mono section labels. Cap desktop display
+type at 64 px so the headline supports the render. Use the 8 px
+spacing scale throughout. Load fonts with font-display swap and reserve image
+space using exact intrinsic dimensions to avoid image layout shift.
+
+Text contrast is at least 4.5:1; body text aims for 7:1 on paper. The primary
+CTA uses paper on ink (about 15.9:1); the second action remains a text link.
+Use semantic sections, one h1, a skip link to focusable main content, visible
+3 px focus rings, and touch targets at least 44 px with at least 8 px gaps.
+Keep below-fold images lazy and the hero eager. Review at mobile widths and
+zoom, with keyboard navigation, no script, and prefers-reduced-motion.
+
+## Asset inventory
+
+All four operator-supplied WebP renders come from src/images.js. Serve the
+original export bytes without editing, replacing or generating imagery.
+
+| Module export | Route | Page placement |
+| --- | --- | --- |
+| PATCH_HERO_WEBP_B64 | /img/patch-hero.webp | Hero, primary object beside the headline |
+| PATCH_EXPLODED_WEBP_B64 | /img/patch-exploded.webp | #patch, beside the five-layer factual list |
+| PATCH_ON_SKIN_WEBP_B64 | /img/patch-on-skin.webp | #patch, second visual with the upper arm close-up and 14 day wear story |
+| NETWORK_SCENE_WEBP_B64 | /img/network-scene.webp | #how, before the five relay steps |
+
+The exploded photograph separates the five square layers vertically, in order:
+top cover, comfort foam, sensing and processing board, adhesive layer,
+release liner. The page list and specs table use the same names.
+The on-skin photograph follows the layer and sensor details, paired with the
+wear paragraph and followed by profile and wear metrics.
+The network photograph presents the same patch in its connected context,
+beside a phone and LoRaWAN gateway. It does not replace the live packet visualization.
+
+## Image treatment
+
+Full photographs in warm neutral studio scenes replace the earlier isolated
+product treatment. Preserve the supplied bytes and original aspect ratios:
+hero 1600 × 893, exploded 1400 × 1400, on-skin 1600 × 800, network 1600 × 893.
+The physical SENTIA wordmark and LED line belong on the product; captions,
+labels and explanatory text inside images remain banned.
+
+Each image is an intentional photographic frame within the page grid, with
+no visible rectangle seams from mismatched background extensions. Do not
+attempt to blend the photographic backgrounds into paper. The hero fills
+its eight-column visual area; the exploded photograph fills its column
+beside the layer list; the limb close up fills the wear image area; the
+network photograph spans the content width. Paper gutters separate each
+complete photograph from copy. No borders, rounded cards, filters, added
+shadows or tinted backdrops. Physical light and contact shadows come from
+the supplied photographs.
+
+Hero and on-skin framing is a strict limb close up (upper arm or inner
+forearm), never torso framing. Skin texture, limb proportions and adhesive
+contact establish scale without inventing a width measurement.
+Preserve complete images without cropping or stretching. Use responsive full
+width images, with the hero capped at 960 px, the wear image at 640 px, and
+the network scene spanning the content width. Give each visual
+space on the 8 px rhythm. Below 1000 px, place the hero image directly after
+the headline with no added vertical gap; extend its frame 16 px into each
+gutter, retaining the complete original image.
+Stack the wear image and copy below 900 px.
+Use descriptive, calm alt text with the exact product and network names.
+Reserve intrinsic image space to prevent layout shifts. Load the hero
+eagerly with high priority; lazy-load the three lower-page renders.
+
+Production quality is anchored in design/reference/. L-6 remains binding:
+reviewer-design compares every new image against the boards and names gaps
+in materials, light, scale and contact, or states none. L-5 is lifted for
+this order; the operator has supplied the entire replacement set. L-2 now
+governs integration without seams; L-3 allows limb close ups as stated above.
+
+## Motion
+
+Existing reveal hooks stay intact. Fades and small rises use 800 ms ease-out.
+No scale animation, bounce, glow or perpetual hero movement. Hover feedback
+uses opacity or a rise under 2 px over 180 ms.
+Stagger up to eight children per section in 40 ms steps, capped at 280 ms.
+Reduced motion disables CSS reveals
+and smooth scrolling, and hides the moving packet dot; the measurements
+and existing controls continue to operate. Static content must remain
+readable without JavaScript through a noscript style override. With scripting
+enabled, reveal elements begin at zero opacity and 16 px below their final
+position; the existing observer adds the visible state. Reduced motion keeps
+both the initial and revealed states visible and stationary.
+
+## Launch page quality bars
+
+- S1: This document precedes implementation. CSS implements its palette,
+  type hierarchy, spacing and physical hero composition.
+- The first view has one focal object and a headline substantially larger
+  than body copy. The page has breathing room at 1440, 1024, 768 and 375 px.
+- S2: Preserve every section, content fact, SEO/GEO output, client hook,
+  simulation control and dashboard action. Measurements keep their units.
+- At 320 px and at browser zoom, text wraps without page overflow; wide
+  technical data scrolls in its own region. Keyboard focus is visible.
+- V4: Update product definition surfaces and integrate the operator supplied
+  renders. Preserve the four image/webp routes and supplied src/images.js bytes.
+  API, MCP, codec, data and all other routing behavior stay unchanged.
+- S5: Keep the existing calm copy and exact product and network names.
+  Wellness framing and the medical disclaimer remain visible.
+- Run the full scenario suite. Visual quality and S3 model provenance are
+  assessed by the independent review stations; passing tests is not approval.
+- S6: At small widths retain a 56 px hero minimum and 17 px body minimum.
+  Use #53685C for SVG annotations and paper for the simulation toggle.
+  Check the hidden reveal state, 800 ms ease-out transition and motion fallback.
+# Sentia: S11 re-baseline (owner acceptance)
+
+Status: active for wo-gh-10
+Slug: s11-rebaseline
+
+## Roles
+- implementer: builds the change described here
+- reviewer: checks the change against this spec
+- qa: checks the scenarios below with tests
+- product_owner: owns the purpose and accepts the result
+
+## Purpose
+
+S11 in tests/design-v4-square-product.test.js is the project's memory of two judgements: reviewer-design's anchor comparison and its same product test, read from the committed run evidence. It fails permanently on runs/wo-gh-8/reviewer-design.output.md for two reasons that are not defects in the product. First, the review records a quality gap the owner later accepted by deploying that build. Second, the review states one identity axis as not applicable for one image, and the evaluator does not recognize that as a judgement. This order re-baselines S11 so it reads both facts truthfully, without weakening what it guards and without naming wo-gh-8 anywhere in the logic.
+
+## Background facts (the record this spec stands on)
+
+- The wo-gh-8 reviewer-design output records: all four images pass the same product test, with the mounting axis stated not applicable for the exploded view; hero, on-skin and network pass the L-6 anchor comparison with no gaps; the exploded view carries an L-6 materials gap (the cover lacks the fine silicone texture of the boards and the board reads as an illustrative render against their photographic detail).
+- The owner accepted that gap by ordering the build published. It deployed to production on 2026-10-30 as version b33fd7f2, from source head 9305937197f83e40a244841bdb987a0cbb599ce2. The wo-gh-8 run evidence itself carries no record of that deploy: the run closed with verdict changes_requested and deployment status null, and the deploy happened outside the line, after the human gate.
+- The wo-gh-9 suite at this stack position reports 141 tests with exactly two failures: this S11 case, and a take-apart scope case that belongs to the wo-gh-9 loopback running in parallel. This order fixes the first and does not touch the second.
+
+## The owner acceptance record (the signal)
+
+A run's build is owner accepted when the run's evidence directory (runs/<work order id>/) contains a file named owner-acceptance.json that parses as JSON and carries all of: "accepted" set to true; "accepted_by" naming the owner; "date" with the acceptance date; "act" stating what the owner did; and a citation of that act, which for a deploy is "production_version" and "source_commit", or for a gate decision an equivalent gate record reference. A record missing any of these, or with "accepted" not true, is not an acceptance and resolves nothing.
+
+Why this signal is truthful: acceptance is an act, not an opinion about a review. Deploying a build whose reviews recorded gaps is the strongest acceptance evidence this project produces, and an addendum file in the run evidence states exactly that act and nothing more. It is append only: it never edits the review it accepts, so the gap stays on the record and the acceptance sits next to it. Any future run whose build the owner accepts carries the same file, written by the deploy step or by the gate record at acceptance time. The test reads the signal, never a work order id, a date or a file name peculiar to one run.
+
+## Evaluation rules (what changes in S11)
+
+S11's evaluation of a run's reviewer-design output keeps its current structure (anchor comparison problems plus same product problems, computed by the existing semantic matchers) and gains two rules.
+
+Rule A: acceptance resolves recorded gaps. When the run carries a valid owner acceptance record, the problems that exist only because the review recorded a negative judgement on material it actually judged are resolved:
+
+- "<image> has an uncleared gap";
+- "<image> not cleared", but only for an image whose "has an uncleared gap" problem the same acceptance resolves (the missing clearance is fully explained by the accepted gap);
+- "<image> / <axis> fails", for an axis the review judged and marked failed or diverged.
+
+Problems of absence are never resolved by acceptance: a missing design/reference/ reference, a missing category, an image not addressed, an axis never judged, and "<image> not cleared" for an image with no recorded gap. If the review never judged it, there is nothing to accept.
+
+Rule B: not applicable is a judgement. In the same product evaluation, when a clause names an image (under the existing subject tracking) and an axis, and states that axis is not applicable to that image, that image and axis counts as judged and satisfied, unless the same review also records that axis as failed for that image, in which case the failure stands. An axis the review never mentions is unchanged: still not cleared, still a problem.
+
+Both rules live inside the S11 case of tests/design-v4-square-product.test.js. The wo-gh-6 anchor comparison assertion earlier in the same case is unchanged: wo-gh-6 carries no acceptance record and its review clears every image, so it passes exactly as before. The wo-gh-7 in-test negative cases keep failing exactly as designed.
+
+## The wo-gh-8 addendum
+
+This order adds one new file, runs/wo-gh-8/owner-acceptance.json, recording the acceptance act that already happened: accepted true, accepted by the owner, date 2026-10-30, act: the build was deployed to production on the owner's publish order, accepting the recorded exploded view quality gap, with production version b33fd7f2 and source commit 9305937197f83e40a244841bdb987a0cbb599ce2. No existing file under runs/wo-gh-8/ changes; reviewer-design.output.md stays byte identical, and the run diff for this order must show the addendum as the only change under runs/wo-gh-8/.
+
+## Fixtures
+
+New fixtures under tests/fixtures/s11-rebaseline/, each shaped like a small run directory holding a reviewer-design output file and, where the case needs one, an owner acceptance record:
+
+- F1, accepted gap: a review text that addresses all four images, clears three, and records an open gap on the fourth, plus a valid acceptance record. The evaluation returns no problems.
+- F2, unaccepted gap: the identical review text with no acceptance record. The evaluation returns the gap problems.
+- F3, missing coverage with acceptance: a review text missing one image (or the anchor reference), plus a valid acceptance record. The evaluation still returns the coverage problems.
+- F4, not applicable: a review text stating one axis not applicable for one image with everything else cleared and no acceptance record. No problem names that axis. The same text with that axis simply unmentioned returns the axis not cleared problem.
+- F5, invalid acceptance: the F1 review text plus an acceptance record with "accepted" not true or with the citation missing. The gap problems remain.
+
+Implementation shape, binding on structure and free on wording: the acceptance aware evaluation is a function of a run directory (it reads the review output and the acceptance record from that directory) and is what the wo-gh-8 assertion and the fixtures call. The existing pure text matchers keep their signatures for the wo-gh-6 assertion and the in-test negative cases. The wo-gh-8 assertion keeps its existsSync guard.
+
+## Verification (what the run must produce)
+
+- The full project suite on the final tree. Expected shape: S11 passes against the real wo-gh-8 evidence; the new fixture cases pass; every other case matches the baseline of this stack position. The one known exception, itemized apart and not touched by this order: the take-apart scope case in tests/take-apart.test.js fails at this base because suite-output.txt sits in the tree; the wo-gh-9 loopback running in parallel owns that fix. The suite total grows by the new fixture cases, and the run report states the new total and the baseline comparison.
+- The run diff against the setup commit names no file outside: tests/design-v4-square-product.test.js, new files under tests/fixtures/, runs/wo-gh-8/owner-acceptance.json (new, the only change under runs/wo-gh-8/), and runs/wo-gh-10/ evidence.
+
+## Scope
+
+Allowed changes: the one test file named above, new fixture files under tests/, the acceptance addendum, and this run's evidence. Out of scope: everything else, including src/, the take-apart test and page, earlier specs, and any earlier run evidence beyond the one added addendum file. The operator setup commit (this spec, the work order and the execute wiring for this branch) is not part of the line's change.
+
+Stack position: this branch starts from anvil/run-take-apart at 6355af4a5e8d320e55b00a9aab3cdd3ea8262a93, the wo-gh-9 evidence head. The wo-gh-9 loopback runs in parallel on that branch's line; it does not touch this test, and this order does not touch the take-apart files.
+
+## Scenarios
+
+### Scenario: Coverage still fails
+- S1: Given a review text that addresses only three images, or lacks the design/reference/ reference, or drops a category, when S11 evaluates it, with or without an acceptance record in scope, then the same problems as before this change are returned.
+
+### Scenario: An unaccepted gap still fails
+- S2: Given the F2 fixture (a recorded open gap and no acceptance record), when S11 evaluates the run directory, then the gap problems are returned.
+
+### Scenario: An accepted gap resolves
+- S3: Given the F1 fixture (the same recorded gap plus a valid owner acceptance record), when S11 evaluates the run directory, then no problems are returned.
+
+### Scenario: Acceptance never creates coverage
+- S4: Given the F3 fixture (missing coverage plus a valid acceptance record), when S11 evaluates the run directory, then the coverage problems are still returned.
+
+### Scenario: Not applicable is judged
+- S5: Given the F4 fixture (one axis stated not applicable for one image, the rest cleared), when S11 evaluates it, then no problem names that axis; and with the axis unmentioned instead, the axis not cleared problem is returned.
+
+### Scenario: An invalid record resolves nothing
+- S6: Given the F5 fixture (a recorded gap plus an acceptance record with "accepted" not true or a missing citation), when S11 evaluates the run directory, then the gap problems are returned.
+
+### Scenario: The real evidence re-baselines
+- S7: Given runs/wo-gh-8/ with its original reviewer-design output byte identical and the owner acceptance addendum added by this order, when the suite runs, then S11 passes on the real evidence and no other case changes result against the stack baseline (the take-apart scope case excepted and itemized).
+diff --git a/tests/design-v4-square-product.test.js b/tests/design-v4-square-product.test.js
+index d8cdcd6..0eae889 100644
+--- a/tests/design-v4-square-product.test.js
++++ b/tests/design-v4-square-product.test.js
+@@ -401,7 +401,7 @@ const sameProductProblems = (text) => {
+       if (named.length) subjects = named;
+       const axes = ALL_AXES.test(clause) ? Object.keys(AXES) : Object.keys(AXES).filter((a) => AXES[a].test(clause));
+       const failed = FAIL.test(clause) && !NOT_FAIL.test(clause);
+-      const cleared = PASS.test(clause) && !failed;
++      const cleared = (PASS.test(clause) || /\bnot applicable\b/i.test(clause)) && !failed;
+       for (const img of subjects) for (const axis of axes) {
+         if (failed) state[`${img} / ${axis}`].failed = true;
+         if (cleared) state[`${img} / ${axis}`].cleared = true;
+@@ -415,6 +415,32 @@ const sameProductProblems = (text) => {
+   return [...problems, ...anchorComparisonProblems(text)];
+ };
+ 
++// Acceptance can resolve a judgement, but cannot supply missing review coverage.
++const runDirectoryProblems = (dirUrl) => {
++  const problems = sameProductProblems(readFileSync(new URL('reviewer-design.output.md', dirUrl), 'utf8'));
++  let record;
++  try {
++    record = JSON.parse(readFileSync(new URL('owner-acceptance.json', dirUrl), 'utf8'));
++  } catch {
++    return problems;
++  }
++  const present = (value) => typeof value === 'string' && value.trim().length > 0;
++  // gate_record is the equivalent citation for an owner decision at the human gate.
++  const cited = record && (present(record.production_version) && present(record.source_commit)
++    || !/deploy/i.test(record.act || '') && present(record.gate_record));
++  if (!record || record.accepted !== true || !present(record.accepted_by)
++    || !present(record.date) || !present(record.act) || !cited) return problems;
++  const acceptedGaps = new Set(Object.keys(IMAGE_NAMING)
++    .filter((img) => problems.includes(`${img} has an uncleared gap`)));
++  return problems.filter((problem) => {
++    for (const img of acceptedGaps)
++      if (problem === `${img} has an uncleared gap` || problem === `${img} not cleared`) return false;
++    for (const img of Object.keys(SUBJECTS)) for (const axis of Object.keys(AXES))
++      if (problem === `${img} / ${axis} fails`) return false;
++    return true;
++  });
++};
++
+ const SAME_PRODUCT_OK = [
+   'Same product test against design/reference/product-reference.png.',
+   'Hero image: LED color, finish, mounting and proportions pass.',
+@@ -478,6 +504,64 @@ test('S11: when reviewer-design has reviewed, it addresses and clears all four i
+     const png = readFileSync(root('design/reference/product-reference.png'));
+     assert.equal(png.subarray(1, 4).toString('ascii'), 'PNG', 'identity anchor is a PNG');
+     assert.match(read('design/reference/README.md'), /product-reference\.png/);
++    // wo-gh-10: the run directory entry point reads the review and the owner acceptance record together.
+     if (existsSync(root('runs/wo-gh-8/reviewer-design.output.md')))
+-      assert.deepEqual(sameProductProblems(read('runs/wo-gh-8/reviewer-design.output.md')), []);
++      assert.deepEqual(runDirectoryProblems(root('runs/wo-gh-8/')), []);
++  });
++
++// wo-gh-10 (s11-rebaseline): fixtures are small run directories; runDirectoryProblems(dirUrl) reads reviewer-design.output.md
++// and owner-acceptance.json from the directory and returns the problem list with Rule A and Rule B applied.
++const FIX = (name) => root(`tests/fixtures/s11-rebaseline/${name}/`);
++const fixtureText = (name) => readFileSync(new URL('reviewer-design.output.md', FIX(name)), 'utf8');
++const GAP_PROBLEMS = ['patch-exploded has an uncleared gap', 'patch-exploded not cleared'];
++
++test('S11 re-baseline S2/S3: an accepted gap resolves (F1); the same gap without a record fails (F2)', () => {
++  assert.deepEqual(runDirectoryProblems(FIX('F1-accepted-gap')), []);
++  assert.deepEqual(runDirectoryProblems(FIX('F2-unaccepted-gap')), GAP_PROBLEMS);
++  assert.equal(fixtureText('F1-accepted-gap'), fixtureText('F2-unaccepted-gap'), 'F1 and F2 carry the identical review text');
++  assert.deepEqual(sameProductProblems(fixtureText('F1-accepted-gap')), GAP_PROBLEMS, 'the pure matcher still reports the gap');
++});
++
++test('S11 re-baseline S1/S4: acceptance never creates coverage (F3)', () => {
++  for (const name of ['F3-missing-image', 'F3-missing-anchor']) {
++    const problems = runDirectoryProblems(FIX(name));
++    assert.ok(problems.length > 0, name);
++    assert.deepEqual(problems, sameProductProblems(fixtureText(name)), `${name}: same problems as without any record`);
++  }
++  assert.ok(runDirectoryProblems(FIX('F3-missing-image')).includes('network-scene not addressed'));
++  assert.ok(runDirectoryProblems(FIX('F3-missing-anchor')).includes('no design/reference/ reference'));
++});
++
++test('S11 re-baseline S5: not applicable counts as judged (F4); unmentioned axis still fails', () => {
++  assert.deepEqual(runDirectoryProblems(FIX('F4-not-applicable')), []);
++  assert.deepEqual(runDirectoryProblems(FIX('F4-axis-unmentioned')), ['patch-exploded / mounting not cleared']);
++  // acceptance does not resolve an axis the review never judged
++  assert.deepEqual(runDirectoryProblems(FIX('F4-axis-unmentioned-accepted')), ['patch-exploded / mounting not cleared']);
++  // not applicable does not hide a failure recorded for the same image and axis
++  assert.deepEqual(runDirectoryProblems(FIX('F4-not-applicable-but-failed')), ['patch-exploded / mounting fails']);
++});
++
++test('S11 re-baseline S6: an invalid acceptance record resolves nothing (F5)', () => {
++  for (const name of ['F5-invalid-accepted-false', 'F5-invalid-citation-missing', 'F5-invalid-not-json']) {
++    assert.deepEqual(runDirectoryProblems(FIX(name)), GAP_PROBLEMS, name);
++  }
++});
++
++test('S11 re-baseline Rule A: acceptance resolves a recorded axis failure only', () => {
++  assert.deepEqual(runDirectoryProblems(FIX('F6-axis-failure-unaccepted')), ['patch-exploded / mounting fails']);
++  assert.deepEqual(runDirectoryProblems(FIX('F6-axis-failure-accepted')), []);
++});
++
++test('S11 re-baseline S7: the real wo-gh-8 evidence carries the acceptance addendum and an untouched review',
++  { skip: existsSync(root('runs/wo-gh-8/reviewer-design.output.md')) ? false : 'wo-gh-8 evidence not present' },
++  () => {
++    const record = JSON.parse(read('runs/wo-gh-8/owner-acceptance.json'));
++    assert.equal(record.accepted, true);
++    assert.equal(record.date, '2026-10-30');
++    assert.equal(record.production_version, 'b33fd7f2');
++    assert.equal(record.source_commit, '9305937197f83e40a244841bdb987a0cbb599ce2');
++    assert.ok(record.accepted_by && record.act);
++    // the review itself is not edited: the gap stays on the record, so the pure matcher still sees it
++    assert.ok(sameProductProblems(read('runs/wo-gh-8/reviewer-design.output.md')).includes('patch-exploded has an uncleared gap'));
++    assert.deepEqual(runDirectoryProblems(root('runs/wo-gh-8/')), []);
+   });
+{
+  "accepted": true,
+  "accepted_by": "owner",
+  "date": "2026-10-30",
+  "act": "Deployed to production on the owner's publish order, accepting the recorded exploded view quality gap.",
+  "production_version": "b33fd7f2",
+  "source_commit": "9305937197f83e40a244841bdb987a0cbb599ce2"
+}
+tests/fixtures/s11-rebaseline/F5-invalid-accepted-false/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F5-invalid-accepted-false/owner-acceptance.json
+tests/fixtures/s11-rebaseline/F4-axis-unmentioned-accepted/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F4-axis-unmentioned-accepted/owner-acceptance.json
+tests/fixtures/s11-rebaseline/F6-axis-failure-unaccepted/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F2-unaccepted-gap/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F5-invalid-not-json/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F5-invalid-not-json/owner-acceptance.json
+tests/fixtures/s11-rebaseline/F4-axis-unmentioned/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F1-accepted-gap/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F1-accepted-gap/owner-acceptance.json
+tests/fixtures/s11-rebaseline/F3-missing-anchor/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F3-missing-anchor/owner-acceptance.json
+tests/fixtures/s11-rebaseline/F3-missing-image/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F3-missing-image/owner-acceptance.json
+tests/fixtures/s11-rebaseline/F5-invalid-citation-missing/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F5-invalid-citation-missing/owner-acceptance.json
+tests/fixtures/s11-rebaseline/F4-not-applicable-but-failed/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F6-axis-failure-accepted/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F6-axis-failure-accepted/owner-acceptance.json
+tests/fixtures/s11-rebaseline/F4-not-applicable/reviewer-design.output.md
+
+exec
+/bin/bash -lc 'git diff --name-only HEAD; git log -3 --oneline; git hash-object runs/wo-gh-8/reviewer-design.output.md; git rev-parse 6355af4a5e8d320e55b00a9aab3cdd3ea8262a93:runs/wo-gh-8/reviewer-design.output.md; cat runs/wo-gh-8/reviewer-design.output.md; cat tests/fixtures/s11-rebaseline/F1-accepted-gap/reviewer-design.output.md; cat tests/fixtures/s11-rebaseline/F4-not-applicable/reviewer-design.output.md' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+tests/design-v4-square-product.test.js
+a69a853 Operator setup for wo-gh-10 (issue 10): S11 re-baseline spec, work order and execute wiring
+418275a51efaeb60fd86e6299c6c16fe98537d6b
+fatal: path 'runs/wo-gh-8/reviewer-design.output.md' exists on disk, but not in '6355af4a5e8d320e55b00a9aab3cdd3ea8262a93'
+6355af4a5e8d320e55b00a9aab3cdd3ea8262a93:runs/wo-gh-8/reviewer-design.output.md
+{
+  "station": "reviewer-design",
+  "verdict": "changes_requested",
+  "findings": [
+    "Same product test against design/reference/product-reference.png, inspecting decoded src/images.js bytes: patch-hero passes LED color (sampled median hue 170.5°), finish (matte off white), mounting (direct skin contact without carrier), and proportions (thin rounded square).",
+    "Same product test: patch-on-skin passes LED color (171.4°), finish (matte), mounting (direct skin contact without frame), and proportions (the hero product reframed). Both frozen payload SHA-256 digests match the spec.",
+    "Same product test: patch-exploded passes LED color (173.5°), finish (matte off white under warm lighting), and proportions (flat thin cover). Mounting is not applicable to the exploded view; separate adhesive and release layers are appropriate. All five required layers appear in order at 1400×1400.",
+    "Same product test: network-scene passes LED color (180°), finish (matte), mounting (directly on skin without fabric carrier or border), and proportions (thin square plaque). The 1600×893 scene includes a legible SENTIA wordmark, phone and blank gateway, without another wearable.",
+    "L-6 comparison against design/reference/quality-board-1.png and quality-board-2.png: patch-hero, patch-on-skin and network-scene pass materials, light, scale and contact. Skin texture, restrained surface reflections, coherent lighting and contact shadows establish believable physical objects; no gaps identified in these categories.",
+    "L-6 materials quality gap in patch-exploded: at native resolution, the uniformly smooth cover lacks the fine silicone texture visible in the boards, while the PCB's simplified components and pristine traces read as an illustrative render compared with the boards' photographic component detail. This falls short of design/DESIGN.md's photorealistic production quality bar. Obtain an operator-supplied correction restoring realistic cover and electronics detail while preserving the five layers and identity. Light and scale pass; skin contact is not applicable to this exploded view."
+  ]
+}
+
+{"model": "gpt-6-astra", "runtime": "codex"}
+Same product test against design/reference/product-reference.png.
+Hero image: LED color, finish, mounting and proportions pass.
+On-skin image: LED color, finish, mounting and proportions pass.
+Exploded image: passes on every identity axis.
+Network image: LED color passes (teal); finish passes (matte); mounting passes (directly on skin, no carrier); proportions pass.
+Network image: no gaps.
+design/reference/ comparison by category: materials, light, scale and contact are cleared.
+Hero image: no gaps.
+On-skin image: no gaps.
+Exploded image: the materials gap remains open.
+Same product test against design/reference/product-reference.png.
+Hero image: LED color, finish, mounting and proportions pass.
+On-skin image: LED color, finish, mounting and proportions pass.
+Exploded image: LED color, finish and proportions pass. Mounting is not applicable to the exploded view.
+Network image: LED color passes (teal); finish passes (matte); mounting passes (directly on skin, no carrier); proportions pass.
+Network image: no gaps.
+design/reference/ comparison by category: materials, light, scale and contact are cleared.
+Hero image: no gaps.
+On-skin image: no gaps.
+Exploded image: no gaps.
+
+exec
+/bin/bash -lc 'git rev-parse HEAD:runs/wo-gh-8/reviewer-design.output.md; git diff HEAD -- src/ brand/ design/; git ls-files design/tokens.json' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+418275a51efaeb60fd86e6299c6c16fe98537d6b
+
+codex
+{"station":"reviewer-design","verdict":"pass","findings":[]}
+tokens used
+23,039
+{"station":"reviewer-design","verdict":"pass","findings":[]}

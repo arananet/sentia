@@ -1,0 +1,27 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-tests",
+  "to_station": "reviewer-architecture",
+  "work_order_id": "wo-gh-10",
+  "artifact_path": "runs/wo-gh-10/reviewer-tests.output.md",
+  "status": "executed",
+  "created_at": "2026-10-31T13:10:58.084616+00:00",
+  "review": {
+    "station": "reviewer-tests",
+    "verdict": "pass",
+    "findings": [
+      "Tests are real and map to the spec. `tests/design-v4-square-product.test.js` adds `runDirectoryProblems(dirUrl)`, which reads `reviewer-design.output.md` and `owner-acceptance.json` from a run directory. The wo-gh-8 assertion now calls it and keeps its existsSync guard. `sameProductProblems` and `anchorComparisonProblems` keep their signatures. The wo-gh-6 assertion and the wo-gh-7 in-test negative cases are unchanged.",
+      "Fixture-to-scenario mapping is complete. F1 and F2 cover S3 and S2: identical review text, with `[]` expected for F1 and the two gap problems for F2. F3-missing-image and F3-missing-anchor cover S1 and S4: acceptance returns exactly the problems the pure matcher returns. F4 covers S5 in four variants: not applicable passes, an unmentioned axis gives `patch-exploded / mounting not cleared`, acceptance does not rescue the unmentioned axis, and not applicable plus a recorded failure still gives `fails`. F5 covers S6 in three variants: accepted false, citation missing, and not JSON. F6 pins Rule A for axis failures. S7 covers the real wo-gh-8 evidence.",
+      "Test results: `node --test tests/design-v4-square-product.test.js` gives 36/36 passing, including S11 on the real wo-gh-8 evidence. The full suite (`tests/*.test.js`) gives 147 tests, 145 pass and 1 fails. The builder's baseline run at the stack position gave 141 tests, 138 pass and 2 fail (S11 and take-apart S8). The post-change suite is the baseline plus 6 new cases, with S11 now passing and nothing else changed.",
+      "Discrepancy to correct in the run report: the one remaining failure in my run is `take-apart S8: browser-pass.log...`. It fails with ENOENT on `evidence/take-apart/browser-pass.log`. The work order and spec describe it as the take-apart *scope* case failing because `suite-output.txt` is in the tree. In this tree the scope case passes (take-apart test 17) and S8 is the one that fails. The failure is pre-existing (it appears in `builder-baseline-suite.txt` as test 127), unrelated to S11, and in a file this order does not touch. Itemize it as pre-existing and owned by the wo-gh-9 loopback, but name the case correctly.",
+      "Scope and integrity checks pass. `git status` shows only the modified test file, new `tests/fixtures/`, new `runs/wo-gh-8/owner-acceptance.json`, and `runs/wo-gh-10/`. `runs/wo-gh-8/reviewer-design.output.md` is unchanged, with blob 418275a5... in both HEAD and the working tree. The addendum is the only new file under `runs/wo-gh-8/` and has accepted true, the owner, 2026-10-30, the act, version b33fd7f2 and the full source commit.",
+      "Minor, non-blocking: Rule B is implemented in the shared `sameProductProblems`, so the pure matcher also counts 'not applicable' as cleared. This is intended (the clause is treated as failed first, so a recorded failure still wins), and the wo-gh-7 negatives still fail as designed. `runDirectoryProblems` also accepts a `gate_record` citation for non-deploy acts. The spec allows this, but no fixture tests that path."
+    ]
+  },
+  "configured_model": "claude-sonnet-5-5",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "claude-sonnet-5-5"
+}
