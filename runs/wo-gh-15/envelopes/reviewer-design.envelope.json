@@ -1,0 +1,24 @@
+{
+  "schema": "anvil/envelope@1",
+  "from_station": "reviewer-design",
+  "to_station": "approver",
+  "work_order_id": "wo-gh-15",
+  "artifact_path": "runs/wo-gh-15/reviewer-design.output.md",
+  "status": "executed",
+  "created_at": "2026-11-01T16:01:15.538222+00:00",
+  "review": {
+    "station": "reviewer-design",
+    "verdict": "pass",
+    "findings": [
+      "src/page.js:578\u2013602 and the desktop screenshots show the required typographic section after FAQ, with four equally styled entries, hairline dividers, established colors and responsive typography, and no imagery.",
+      "The section inherits the existing 800 ms ease-out reveals, reduced-motion handling and noscript fallback. Browser evidence records no horizontal overflow at 375 px.",
+      "The diabetes entry explicitly describes a possible future application; the new section contains no present glucose capability, medical-use or outcome claim. Existing footer disclosures remain unchanged."
+    ]
+  },
+  "configured_model": "gpt-6-astra",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
+  },
+  "executed_model": "gpt-6-astra"
+}

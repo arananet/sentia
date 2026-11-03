@@ -1,0 +1,107 @@
+TAP version 13
+# Subtest: applications S1: the guarded home page has exactly one section id="applications" after FAQ, at the end of main
+ok 1 - applications S1: the guarded home page has exactly one section id="applications" after FAQ, at the end of main
+  ---
+  duration_ms: 21.079177
+  type: 'test'
+  ...
+# Subtest: applications R1: kicker reads "08 / Possible applications" in the established mono kicker style, with title and intro
+ok 2 - applications R1: kicker reads "08 / Possible applications" in the established mono kicker style, with title and intro
+  ---
+  duration_ms: 0.345793
+  type: 'test'
+  ...
+# Subtest: applications R1: the section is typographic, no imagery new or reused
+ok 3 - applications R1: the section is typographic, no imagery new or reused
+  ---
+  duration_ms: 0.258029
+  type: 'test'
+  ...
+# Subtest: applications S1/R4: four entries, in order, with identical grid treatment and a title each
+ok 4 - applications S1/R4: four entries, in order, with identical grid treatment and a title each
+  ---
+  duration_ms: 0.382437
+  type: 'test'
+  ...
+# Subtest: applications S1/R4: entries have two or three sentences and comparable length; nothing privileged
+ok 5 - applications S1/R4: entries have two or three sentences and comparable length; nothing privileged
+  ---
+  duration_ms: 0.349698
+  type: 'test'
+  ...
+# Subtest: applications R3: the introduction states the platform pattern only and frames the section as exploration
+ok 6 - applications R3: the introduction states the platform pattern only and frames the section as exploration
+  ---
+  duration_ms: 0.57655
+  type: 'test'
+  ...
+# Subtest: applications S2/R5: every entry is exploratory; the diabetes entry carries two or more markers and frames a possible future application
+ok 7 - applications S2/R5: every entry is exploratory; the diabetes entry carries two or more markers and frames a possible future application
+  ---
+  duration_ms: 0.282546
+  type: 'test'
+  ...
+# Subtest: applications S2/R6: glucose appears only in the diabetes entry, and only in sentences that carry an exploratory marker
+ok 8 - applications S2/R6: glucose appears only in the diabetes entry, and only in sentences that carry an exploratory marker
+  ---
+  duration_ms: 0.28441
+  type: 'test'
+  ...
+# Subtest: applications S3/R6: no present capability claim shape for glucose
+ok 9 - applications S3/R6: no present capability claim shape for glucose
+  ---
+  duration_ms: 0.667849
+  type: 'test'
+  ...
+# Subtest: applications S4/R7: no insulin, delivery, treatment, therapy, dose, diagnosis, cure, or outcome language
+ok 10 - applications S4/R7: no insulin, delivery, treatment, therapy, dose, diagnosis, cure, or outcome language
+  ---
+  duration_ms: 0.725876
+  type: 'test'
+  ...
+# Subtest: applications S5/R2: the footer disclosure sentences are byte exact in the served page
+ok 11 - applications S5/R2: the footer disclosure sentences are byte exact in the served page
+  ---
+  duration_ms: 1.888061
+  type: 'test'
+  ...
+# Subtest: applications S5/R2/R8: production diff against the base tree is an insertion only change in src/page.js
+ok 12 - applications S5/R2/R8: production diff against the base tree is an insertion only change in src/page.js
+  ---
+  duration_ms: 19.556939
+  type: 'test'
+  ...
+# Subtest: applications S5/R2: base page structure is intact around the insertion (header, nav, sections, routes, image payloads, llms)
+ok 13 - applications S5/R2: base page structure is intact around the insertion (header, nav, sections, routes, image payloads, llms)
+  ---
+  duration_ms: 12.434655
+  type: 'test'
+  ...
+# Subtest: applications S6/R9.1: bundle-build.log records the real production bundle command, exit 0, zero local patches
+ok 14 - applications S6/R9.1: bundle-build.log records the real production bundle command, exit 0, zero local patches
+  ---
+  duration_ms: 0.593346
+  type: 'test'
+  ...
+# Subtest: applications S6/R9.2: browser-pass.log records a bundled run of the home page with zero console and page errors
+ok 15 - applications S6/R9.2: browser-pass.log records a bundled run of the home page with zero console and page errors
+  ---
+  duration_ms: 0.348926
+  type: 'test'
+  ...
+# Subtest: applications S6/R9.3: before and after desktop screenshots are committed and differ
+ok 16 - applications S6/R9.3: before and after desktop screenshots are committed and differ
+  ---
+  duration_ms: 2.113111
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 131.805831
+exit status: 0

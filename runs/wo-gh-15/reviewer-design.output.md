@@ -1,0 +1,3 @@
+{"station":"reviewer-design","verdict":"pass","findings":["src/page.js:578–602 and the desktop screenshots show the required typographic section after FAQ, with four equally styled entries, hairline dividers, established colors and responsive typography, and no imagery.","The section inherits the existing 800 ms ease-out reveals, reduced-motion handling and noscript fallback. Browser evidence records no horizontal overflow at 375 px.","The diabetes entry explicitly describes a possible future application; the new section contains no present glucose capability, medical-use or outcome claim. Existing footer disclosures remain unchanged."]}
+
+{"model": "gpt-6-astra", "runtime": "codex"}

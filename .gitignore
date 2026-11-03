@@ -5,6 +5,7 @@ node_modules/
 *.log
 !evidence/take-apart/browser-pass.log
 !evidence/take-apart-bundling/*.log
+!evidence/possible-applications/*.log
 !runs/wo-gh-9/*.log
 !evidence/take-apart-product-model/*.log
 !evidence/web-render-finish/*.log
