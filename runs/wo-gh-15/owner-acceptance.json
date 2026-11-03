@@ -1,0 +1,8 @@
+{
+  "accepted": true,
+  "accepted_by": "owner",
+  "date": "2026-11-02",
+  "act": "Deployed to production in the same settlement deploy, on the owner's finish-everything order (termina lo pendiente, 2026-11-02). Approved by the line in its own run: 5 of 5 reviews counted, all pass, no human required (runs/wo-gh-15/report.json). The product change is the pure +26 line insertion into src/page.js adding the Possible applications section; glucose monitoring is named only as a possible future application of the platform, in the exploratory wording the spec guardrails require, with no claim that Sentia detects glucose today.",
+  "production_version": "b169ea3a-8ca2-42bc-a32e-b7b8977f6626",
+  "source_commit": "98d385faf20187b2c23815065425260727b43a77"
+}

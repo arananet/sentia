@@ -1,0 +1,8 @@
+{
+  "accepted": true,
+  "accepted_by": "owner",
+  "date": "2026-11-02",
+  "act": "Deployed to production on the owner's finish-everything order (termina lo pendiente, 2026-11-02), which is the human decision the production-deploy risk hint required. The review completion re-run produced the verdict of record: approved, 5 of 5 reviews counted, all pass, no parse failures (runs/wo-gh-14/report.json). reviewer-design confirmed the LED as a readable cyan-teal emitter separated from its darker recessed socket edge, board finishes closed without regression, cover grain fine and consistent with the reference boards. The branch suite item S11 is the pre-existing formalism settled on main by the wo-gh-10 re-baseline, itemized apart throughout.",
+  "production_version": "b169ea3a-8ca2-42bc-a32e-b7b8977f6626",
+  "source_commit": "98d385faf20187b2c23815065425260727b43a77"
+}
