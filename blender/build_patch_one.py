@@ -152,9 +152,9 @@ def silicone_texture(mat):
     img.colorspace_settings.name='Non-Color';img.pixels=pixels;img.pack()
     nt=mat.node_tree;tex=nt.nodes.new('ShaderNodeTexImage');tex.image=img
     uv=nt.nodes.new('ShaderNodeTexCoord');mapping=nt.nodes.new('ShaderNodeMapping')
-    mapping.inputs['Scale'].default_value=(8,8,1)
+    mapping.inputs['Scale'].default_value=(3,3,1)
     nt.links.new(uv.outputs['UV'],mapping.inputs['Vector']);nt.links.new(mapping.outputs[0],tex.inputs['Vector'])
-    normal=nt.nodes.new('ShaderNodeNormalMap');normal.inputs['Strength'].default_value=.65
+    normal=nt.nodes.new('ShaderNodeNormalMap');normal.inputs['Strength'].default_value=.5
     nt.links.new(tex.outputs['Color'],normal.inputs['Color']);nt.links.new(normal.outputs[0],nt.nodes.get('Principled BSDF').inputs['Normal'])
 
 
@@ -174,7 +174,7 @@ def build():
     silicone=material('Matte off white silicone',(.83,.82,.77),.82);silicone_texture(silicone)
     ink=material('SENTIA charcoal ink',(.018,.024,.021),.9)
     teal=material('Teal cyan LED',(.015,.65,.59),.3)
-    p=teal.node_tree.nodes.get('Principled BSDF');p.inputs['Emission Color'].default_value=(.01,.65,.59,1);p.inputs['Emission Strength'].default_value=.5
+    p=teal.node_tree.nodes.get('Principled BSDF');p.inputs['Emission Color'].default_value=(.01,.65,.59,1);p.inputs['Emission Strength'].default_value=1.4
     foam=material('Porous warm gray foam',(.72,.70,.65),.95);foam_texture(foam)
     pcb=material('Ink green solder mask',(.014,.052,.037),.65)
     chip=material('Molded epoxy packages',(.018,.022,.021),.64)
@@ -184,7 +184,7 @@ def build():
     resin=material('Ferrite inductors',(.095,.105,.11),.46)
     copper=material('Copper under solder mask',(.16,.20,.10),.4,.65)
     metal=material('Brushed component shielding',(.56,.59,.57),.27,.88)
-    trace=material('Muted plated contacts',(.39,.33,.20),.4,.72)
+    trace=material('Muted plated contacts',(.58,.38,.12),.28,.85)
     film=material('Translucent adhesive film',(.77,.83,.78),.28,alpha=.38)
     liner=material('Frosted release film',(.9,.91,.86),.52,alpha=.82)
     parents=[]

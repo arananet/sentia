@@ -1,0 +1,4 @@
+Before source: git archive 62f98b32144b2e64fd0227d4ff403d67e777bec3 (operator loopback setup).
+Original client and asset, production bundle with no patches.
+src/take-apart-client.js SHA256 df8d643504723a089f986d784a80d72fbbf1cb3389a02d9f00ae8ce4c6d61ef1
+src/patch-one-glb.js SHA256 aea8040575ffa9ce600ed7db779e911d48ee4f49d87192a841e4180ab2ce7132

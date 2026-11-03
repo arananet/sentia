@@ -6,4 +6,7 @@ node_modules/
 !evidence/take-apart/browser-pass.log
 !evidence/take-apart-bundling/*.log
 !runs/wo-gh-9/*.log
+!evidence/take-apart-product-model/*.log
+!evidence/web-render-finish/*.log
+!runs/wo-gh-14/*.log
 .anvil-factory/

@@ -1,0 +1,10 @@
+/tmp/sentia-browser/node_modules/.bin/wrangler deploy --dry-run --outdir /tmp/sentia-bundle-ndrMRX
+
+ ⛅️ wrangler 4.156.0
+────────────────────
+Total Upload: 2551.18 KiB / gzip: 826.66 KiB
+No bindings found.
+--dry-run: exiting now.
+
+exit status: 0
+No local patches applied.

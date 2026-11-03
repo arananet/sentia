@@ -1,0 +1,2 @@
+Compared against round 2 HEAD before this implementation.
+PASS: nodes, meshes, accessors, scenes, buffers, bufferViews and entire binary payload byte identical. Only material JSON changed; geometry, wordmark, LED placement, proportions and layer stack preserved.

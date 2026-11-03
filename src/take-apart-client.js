@@ -82,11 +82,24 @@ async function initScene() {
   renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
   renderer.setPixelRatio(quality.pixelRatioCap); renderer.setClearColor(0xfafaf6);
   renderer.shadowMap.enabled = quality.shadowMapSize > 0; renderer.shadowMap.type = THREE.VSMShadowMap;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = .95;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   scene = new THREE.Scene(); camera = new THREE.OrthographicCamera(-50,50,80,-40,.1,1000);
-  scene.add(new THREE.AmbientLight(0xffffff,1.3));
-  const key = new THREE.DirectionalLight(0xfff5df,2.5); key.position.set(-65,160,65); key.castShadow = quality.shadowMapSize > 0;
+  // A dark studio with broad luminous cards gives metals something to reflect.
+  const studio = new THREE.Scene(); studio.background = new THREE.Color(0x252b30);
+  for (const [position, size, intensity] of [
+    [[-30,45,15],[35,65],5], [[40,20,-25],[16,55],3], [[0,35,-45],[60,12],2]
+  ]) {
+    const card = new THREE.Mesh(new THREE.PlaneGeometry(...size),
+      new THREE.MeshBasicMaterial({ color:new THREE.Color(intensity,intensity,intensity), side:THREE.DoubleSide }));
+    card.position.set(...position); card.lookAt(0,0,0); studio.add(card);
+  }
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(studio,.04).texture;
+  pmrem.dispose(); studio.traverse(object => { if(object.isMesh){object.geometry.dispose();object.material.dispose();} });
+  scene.add(new THREE.AmbientLight(0xffffff,.25));
+  const rim = new THREE.DirectionalLight(0xdceaff,.7); rim.position.set(45,25,-55); scene.add(rim);
+  const key = new THREE.DirectionalLight(0xfff5eb,3.2); key.position.set(-65,65,35); key.castShadow = quality.shadowMapSize > 0;
   key.shadow.mapSize.set(quality.shadowMapSize, quality.shadowMapSize);
   Object.assign(key.shadow.camera, { left:-100,right:100,top:170,bottom:-100,near:.1,far:400 });
   key.shadow.bias = -.0003; key.shadow.normalBias = .15; key.shadow.radius = 5; key.shadow.blurSamples = 8; scene.add(key);
@@ -116,13 +129,44 @@ async function initScene() {
       const materials = Array.isArray(object.material) ? object.material : [object.material];
       // A layer owns its material state even when glTF shares a material.
       const owned = materials.map(material => {
-        const copy = material.clone(); copy.userData.baseOpacity = copy.opacity; return copy;
+        const copy = material.clone();
+        copy.envMapIntensity = copy.metalness > .5 ? 1.25 : .35;
+        // Keep the optical strip saturated under the metal studio's bright cards.
+        // Its existing recessed geometry and dark socket provide the depth border.
+        if (copy.name === 'Optical silicone window' || copy.name === 'Teal cyan LED') {
+          copy.envMapIntensity = 0; copy.roughness = .5;
+          copy.color.setRGB(.002,.025,.018);
+          copy.emissive.setRGB(.003,.48,.32); copy.emissiveIntensity = 1;
+          copy.toneMapped = false;
+          if (copy.name === 'Optical silicone window') {
+            copy.opacity = 1; copy.clearcoat = 0;
+          }
+        }
+        if (copy.name === 'Matte off white silicone') {
+          // Preserve beat-scale grain while the true-scale beauty uses a finer finish.
+          copy.normalMap = copy.normalMap.clone(); copy.normalMap.repeat.set(2,2);
+          copy.normalScale.setScalar(.85);
+          // Vertical exaggeration also stretches side normals; keep grain on the crown.
+          copy.onBeforeCompile = shader => {
+            shader.vertexShader = 'varying float grainCrown;\\n' + shader.vertexShader;
+            shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\\ngrainCrown = smoothstep(.98, .999, abs(normal.y));');
+            shader.fragmentShader = 'varying float grainCrown;\\n' + shader.fragmentShader;
+            shader.fragmentShader = shader.fragmentShader.replace('#include <normal_fragment_maps>', THREE.ShaderChunk.normal_fragment_maps.replace('normalScale;', 'normalScale * mix(.005, .65, grainCrown);'));
+          };
+        }
+        copy.userData.baseOpacity = copy.opacity; return copy;
       });
       object.material = Array.isArray(object.material) ? owned : owned[0];
       object.castShadow = true; object.receiveShadow = true;
     });
     scene.add(node);
   });
+  // Local emitter spill lights the pocket walls at the exaggerated study scale.
+  // The sources stay inside the existing optical recess and follow its cover.
+  for (const x of [-3,0,3]) {
+    const spill = new THREE.PointLight(0x08d9b5,.7,2,2);
+    spill.position.set(x,.27,3.2); meshes[0].add(spill);
+  }
   const ns='http://www.w3.org/2000/svg';
   M.LAYERS.forEach((layer,i) => {
     const group=document.createElementNS(ns,'g'); group.dataset.layer=i;
