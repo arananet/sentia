@@ -1,322 +1,339 @@
 TAP version 13
+# fatal: bad revision '89259c9'
 # Subtest: home S1/R1: exactly one new section, between \#patch and \#how, with its own aria-label; no other section changes
 ok 1 - home S1/R1: exactly one new section, between \#patch and \#how, with its own aria-label; no other section changes
   ---
-  duration_ms: 1.577294
+  duration_ms: 1.851636
   type: 'test'
   ...
 # Subtest: home S1/R1: the nav is unchanged
 ok 2 - home S1/R1: the nav is unchanged
   ---
-  duration_ms: 0.27156
+  duration_ms: 0.961031
   type: 'test'
   ...
 # Subtest: home S1/R6: the five FACTS layer names are real buttons in stack order, each with its FACTS detail
 ok 3 - home S1/R6: the five FACTS layer names are real buttons in stack order, each with its FACTS detail
   ---
-  duration_ms: 1.093462
+  duration_ms: 0.478498
   type: 'test'
   ...
 # Subtest: home S1/R7: copy states the five layers and the 2.5 mm profile, and names no capability outside FACTS
 ok 4 - home S1/R7: copy states the five layers and the 2.5 mm profile, and names no capability outside FACTS
   ---
-  duration_ms: 0.418442
+  duration_ms: 0.462774
   type: 'test'
   ...
 # Subtest: home S1/S12/R7: exactly one link in the section leads to /take-apart, href exactly /take-apart
 ok 5 - home S1/S12/R7: exactly one link in the section leads to /take-apart, href exactly /take-apart
   ---
-  duration_ms: 0.193402
+  duration_ms: 0.224617
   type: 'test'
   ...
 # Subtest: home R1: the nav keeps the only literal href="/take-apart" (older tests S10 and bundling S4 count it as one)
 ok 6 - home R1: the nav keeps the only literal href="/take-apart" (older tests S10 and bundling S4 count it as one)
   ---
-  duration_ms: 0.156456
+  duration_ms: 0.28667
   type: 'test'
   ...
 # Subtest: home S2/R3: the served model twin equals src/take-apart-model.js layer centres at t=0, t=1 and samples
 ok 7 - home S2/R3: the served model twin equals src/take-apart-model.js layer centres at t=0, t=1 and samples
   ---
-  duration_ms: 2.115196
+  duration_ms: 2.42815
   type: 'test'
   ...
 # Subtest: home S2/R3: assembled stacks flush at the 2.5 mm profile and exploded adds the study gaps
 ok 8 - home S2/R3: assembled stacks flush at the 2.5 mm profile and exploded adds the study gaps
   ---
-  duration_ms: 0.135184
+  duration_ms: 0.144517
   type: 'test'
   ...
 # Subtest: home S2/R3: the home client takes positions from the one model and re-declares none of its constants
 ok 9 - home S2/R3: the home client takes positions from the one model and re-declares none of its constants
   ---
-  duration_ms: 1.281376
+  duration_ms: 1.419688
   type: 'test'
   ...
 # Subtest: home S5/R6: the home client uses the model focus semantics (focusTransform and materialState) and wires hover, focus and clear
 ok 10 - home S5/R6: the home client uses the model focus semantics (focusTransform and materialState) and wires hover, focus and clear
   ---
-  duration_ms: 0.699657
+  duration_ms: 0.781101
   type: 'test'
   ...
 # Subtest: home S3/R4/R12: a labelled range slider 0..100 sits in the section, 44 px tall
 ok 11 - home S3/R4/R12: a labelled range slider 0..100 sits in the section, 44 px tall
   ---
-  duration_ms: 0.305271
+  duration_ms: 0.372007
   type: 'test'
   ...
 # Subtest: home S4/R5: the client runs the first view animation once, honours reduced motion, and stops on interaction
 ok 12 - home S4/R5: the client runs the first view animation once, honours reduced motion, and stops on interaction
   ---
-  duration_ms: 0.537883
+  duration_ms: 0.627601
   type: 'test'
   ...
 # Subtest: home S6/R8: the document has no eager reference to the 3D chain: no script src, link preload or static import
 ok 13 - home S6/R8: the document has no eager reference to the 3D chain: no script src, link preload or static import
   ---
-  duration_ms: 0.355357
+  duration_ms: 0.466649
   type: 'test'
   ...
 # Subtest: home S6/R8: the document carries no three, loader, utils or GLB bytes
 ok 14 - home S6/R8: the document carries no three, loader, utils or GLB bytes
   ---
-  duration_ms: 6.166558
+  duration_ms: 9.107744
   type: 'test'
   ...
 # Subtest: home S6/R8: the take apart import map pattern is present and the gate is an IntersectionObserver with a dynamic import
 ok 15 - home S6/R8: the take apart import map pattern is present and the gate is an IntersectionObserver with a dynamic import
   ---
-  duration_ms: 0.608579
+  duration_ms: 0.754641
   type: 'test'
   ...
 # Subtest: home R2/R8: no new vendored copy and no second GLB anywhere in the repo
 ok 16 - home R2/R8: no new vendored copy and no second GLB anywhere in the repo
   ---
-  duration_ms: 63.806816
+  duration_ms: 84.865422
   type: 'test'
   ...
 # Subtest: home R8: the 3D chain routes serve the base bytes: three, loader, utils and the GLB
 ok 17 - home R8: the 3D chain routes serve the base bytes: three, loader, utils and the GLB
   ---
-  duration_ms: 77.807479
+  duration_ms: 102.406463
   type: 'test'
   ...
 # Subtest: home S7/R9: the section HTML carries the exploded render as an image from a new site route, never inlined
 ok 18 - home S7/R9: the section HTML carries the exploded render as an image from a new site route, never inlined
   ---
-  duration_ms: 0.414246
+  duration_ms: 0.420129
   type: 'test'
   ...
 # Subtest: home S7/R9/R11: the fallback image route serves a derived re-encode of the exploded render, at most 400 KB, cached
-ok 19 - home S7/R9/R11: the fallback image route serves a derived re-encode of the exploded render, at most 400 KB, cached
+not ok 19 - home S7/R9/R11: the fallback image route serves a derived re-encode of the exploded render, at most 400 KB, cached
   ---
-  duration_ms: 2.300176
+  duration_ms: 3.202291
   type: 'test'
+  location: '/home/runner/work/sentia/sentia/tests/home-layered-view.test.js:367:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the frozen source render on this branch (including PNG metadata)
+    
+    752674 !== 752703
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 752703
+  actual: 752674
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/runner/work/sentia/sentia/tests/home-layered-view.test.js:377:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
   ...
 # Subtest: home S7/R9: the image bytes live in a new module, and src/images.js keeps its four exports
 ok 20 - home S7/R9: the image bytes live in a new module, and src/images.js keeps its four exports
   ---
-  duration_ms: 26.163501
+  duration_ms: 33.226221
   type: 'test'
   ...
 # Subtest: home S7/R9: without JavaScript the section reads complete: image, five names with details, copy, link
 ok 21 - home S7/R9: without JavaScript the section reads complete: image, five names with details, copy, link
   ---
-  duration_ms: 0.321836
+  duration_ms: 0.288773
   type: 'test'
   ...
 # Subtest: home S7/R9: a WebGL or GLB failure is caught, and the client never removes the layer list
 ok 22 - home S7/R9: a WebGL or GLB failure is caught, and the client never removes the layer list
   ---
-  duration_ms: 0.738936
+  duration_ms: 0.711297
   type: 'test'
   ...
 # Subtest: home S7/SEO: the facts generated head, JSON-LD and llms files do not depend on the canvas and are unchanged
 ok 23 - home S7/SEO: the facts generated head, JSON-LD and llms files do not depend on the canvas and are unchanged
   ---
-  duration_ms: 0.895142
+  duration_ms: 0.951166
   type: 'test'
   ...
 # Subtest: home S8/R10: page title and footer credit paragraph are byte identical
 ok 24 - home S8/R10: page title and footer credit paragraph are byte identical
   ---
-  duration_ms: 0.138159
+  duration_ms: 0.151848
   type: 'test'
   ...
 # Subtest: home S8/R10: every pre existing section is byte identical to the base head
 ok 25 - home S8/R10: every pre existing section is byte identical to the base head
   ---
-  duration_ms: 0.255827
+  duration_ms: 0.284837
   type: 'test'
   ...
 # Subtest: home S8/R10: the four image routes serve byte identical responses
 ok 26 - home S8/R10: the four image routes serve byte identical responses
   ---
-  duration_ms: 1.289107
+  duration_ms: 1.68778
   type: 'test'
   ...
 # Subtest: home S8/R10: /take-apart page, client, model twin and the GLB route are byte identical to the base head
 ok 27 - home S8/R10: /take-apart page, client, model twin and the GLB route are byte identical to the base head
   ---
-  duration_ms: 46.548801
+  duration_ms: 59.472158
   type: 'test'
   ...
 # Subtest: home S8/R10: the model module values the home view reuses are unchanged
 ok 28 - home S8/R10: the model module values the home view reuses are unchanged
   ---
-  duration_ms: 0.214184
+  duration_ms: 0.188102
   type: 'test'
   ...
 # Subtest: home S9/R11: served home document grows by at most 48 KB over the base head 44,434 bytes
 ok 29 - home S9/R11: served home document grows by at most 48 KB over the base head 44,434 bytes
   ---
-  duration_ms: 0.065639
+  duration_ms: 0.078838
   type: 'test'
   ...
 # Subtest: home S9/R11: lazy 3D payload with the GLB counted once, plus any gated home script, is at most 1,250,000 bytes
 ok 30 - home S9/R11: lazy 3D payload with the GLB counted once, plus any gated home script, is at most 1,250,000 bytes
   ---
-  duration_ms: 67.156297
+  duration_ms: 87.254177
   type: 'test'
   ...
 # Subtest: home S9/R11: the pre existing eager scripts are the only script routes, so no 3D weight reaches the first render
 ok 31 - home S9/R11: the pre existing eager scripts are the only script routes, so no 3D weight reaches the first render
   ---
-  duration_ms: 0.222526
+  duration_ms: 0.212949
   type: 'test'
   ...
 # Subtest: home R12: layer buttons reach 44 px, the 3 px focus ring stays, contrast pairs meet 4.5 to 1, tokens only
 ok 32 - home R12: layer buttons reach 44 px, the 3 px focus ring stays, contrast pairs meet 4.5 to 1, tokens only
   ---
-  duration_ms: 0.594408
+  duration_ms: 0.616675
   type: 'test'
   ...
 # Subtest: home R12: the canvas is hidden or labelled, reduced motion is honoured in CSS and script, no positive tabindex
 ok 33 - home R12: the canvas is hidden or labelled, reduced motion is honoured in CSS and script, no positive tabindex
   ---
-  duration_ms: 0.47643
+  duration_ms: 0.416254
   type: 'test'
   ...
 # Subtest: home R12: spacing follows the 8 px rhythm in the section inline styles
 ok 34 - home R12: spacing follows the 8 px rhythm in the section inline styles
   ---
-  duration_ms: 0.115504
+  duration_ms: 0.124326
   type: 'test'
   ...
 # Subtest: home S10/R13: bundle-build.log records the production bundle with exit status 0 and zero local patches
 ok 35 - home S10/R13: bundle-build.log records the production bundle with exit status 0 and zero local patches
   ---
-  duration_ms: 0.593747
+  duration_ms: 0.616304
   type: 'test'
   ...
 # Subtest: home S10/R13: browser-pass.log records zero errors, the section, the lazy gate, one GLB fetch, slider, reduced motion, legend
 ok 36 - home S10/R13: browser-pass.log records zero errors, the section, the lazy gate, one GLB fetch, slider, reduced motion, legend
   ---
-  duration_ms: 0.471462
+  duration_ms: 0.487331
   type: 'test'
   ...
 # Subtest: home S10/R11/R13: the browser pass states the measured payload figures
 ok 37 - home S10/R11/R13: the browser pass states the measured payload figures
   ---
-  duration_ms: 0.178309
+  duration_ms: 0.227391
   type: 'test'
   ...
 # Subtest: home S10/R13: assembled and exploded screenshots of the section exist, show a rendered product, and differ
 ok 38 - home S10/R13: assembled and exploded screenshots of the section exist, show a rendered product, and differ
   ---
-  duration_ms: 183.474202
+  duration_ms: 255.973323
   type: 'test'
   ...
 # Subtest: home S10/R13: scripts/capture-home.mjs is the bundled capture of record and does not import the unbundled Worker
 ok 39 - home S10/R13: scripts/capture-home.mjs is the bundled capture of record and does not import the unbundled Worker
   ---
-  duration_ms: 0.490251
+  duration_ms: 0.482243
   type: 'test'
   ...
 # Subtest: home R13: wrangler.toml still points at src/index.js and no source carries a deploy patch marker
 ok 40 - home R13: wrangler.toml still points at src/index.js and no source carries a deploy patch marker
   ---
-  duration_ms: 1.596021
+  duration_ms: 1.886038
   type: 'test'
   ...
 # Subtest: home R14: the product test inputs exist and the fallback is the model exploded render
 ok 41 - home R14: the product test inputs exist and the fallback is the model exploded render
   ---
-  duration_ms: 0.120202
+  duration_ms: 0.116825
   type: 'test'
   ...
 # Subtest: home S12/R16: the new section label computes to 11 px, uppercase, 0.16 em, system mono
 ok 42 - home S12/R16: the new section label computes to 11 px, uppercase, 0.16 em, system mono
   ---
-  duration_ms: 1.302007
+  duration_ms: 1.432238
   type: 'test'
   ...
 # Subtest: home S12/R16: the label colour is a design token with contrast at or above 4.5 to 1 on paper
 ok 43 - home S12/R16: the label colour is a design token with contrast at or above 4.5 to 1 on paper
   ---
-  duration_ms: 0.680317
+  duration_ms: 0.772218
   type: 'test'
   ...
 # Subtest: home S12/R16: the label rule is scoped to the new section, so existing label rules and sections stay unchanged
 ok 44 - home S12/R16: the label rule is scoped to the new section, so existing label rules and sections stay unchanged
   ---
-  duration_ms: 0.43062
+  duration_ms: 0.55369
   type: 'test'
   ...
 # Subtest: home S11/R14: the scene has a directional key, a shaping fill that is not the only ambient, and an environment
 ok 45 - home S11/R14: the scene has a directional key, a shaping fill that is not the only ambient, and an environment
   ---
-  duration_ms: 0.705967
+  duration_ms: 0.715072
   type: 'test'
   ...
 # Subtest: home S11/R14: the films are handled as translucent materials, and the model fade rules still apply
 ok 46 - home S11/R14: the films are handled as translucent materials, and the model fade rules still apply
   ---
-  duration_ms: 0.489429
+  duration_ms: 0.456114
   type: 'test'
   ...
 # Subtest: home S11/R14: no GLB, model, take apart or vendored source is touched by the round
 ok 47 - home S11/R14: no GLB, model, take apart or vendored source is touched by the round
   ---
-  duration_ms: 11.623482
+  duration_ms: 7.175267
   type: 'test'
   ...
 # Subtest: home S13/R13: .gitignore negations let the evidence logs be tracked
 ok 48 - home S13/R13: .gitignore negations let the evidence logs be tracked
   ---
-  duration_ms: 21.157167
+  duration_ms: 22.30977
   type: 'test'
   ...
 # Subtest: home S13/R13: the evidence logs are tracked or staged in git, in full
 ok 49 - home S13/R13: the evidence logs are tracked or staged in git, in full
   ---
-  duration_ms: 8.397597
+  duration_ms: 8.642146
   type: 'test'
   ...
 # Subtest: home S13/R11/R13: the run report states the three measured figures against their budgets, matching the final tree
 ok 50 - home S13/R11/R13: the run report states the three measured figures against their budgets, matching the final tree
   ---
-  duration_ms: 75.527254
+  duration_ms: 97.987778
   type: 'test'
   ...
 # Subtest: home S13/R15: the run report itemizes all three baseline suite failures by name as settlement exceptions
 ok 51 - home S13/R15: the run report itemizes all three baseline suite failures by name as settlement exceptions
   ---
-  duration_ms: 0.50989
+  duration_ms: 0.527711
   type: 'test'
   ...
 # Subtest: home S13/R15: the sibling stack evidence this order must not edit is still byte identical to the base
 ok 52 - home S13/R15: the sibling stack evidence this order must not edit is still byte identical to the base
   ---
-  duration_ms: 14.711403
+  duration_ms: 9.582776
   type: 'test'
   ...
 1..52
 # tests 52
 # suites 0
-# pass 52
-# fail 0
+# pass 51
+# fail 1
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 729.261416
+# duration_ms 929.937673

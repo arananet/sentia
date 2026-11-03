@@ -3,14 +3,24 @@
   "from_station": "reviewer-spec",
   "to_station": "reviewer-security",
   "work_order_id": "wo-gh-13",
-  "artifact_path": "runs/wo-gh-13/reviewer-spec.packet.md",
-  "status": "failed",
-  "created_at": "2026-11-02T03:26:59.594827+00:00",
-  "error": "command executor exited 2: claude_station: claude exited 1 for station reviewer-spec: API Error: 402 Insufficient unified billing balance for this request. Your available balance is $0.45. Add credits on the AI Gateway Cloudflare dashboard, or use your own provider key (BYOK).",
+  "artifact_path": "runs/wo-gh-13/reviewer-spec.output.md",
+  "status": "executed",
+  "created_at": "2026-11-03T04:23:13.700163+00:00",
+  "review": {
+    "station": "reviewer-spec",
+    "verdict": "changes_requested",
+    "findings": [
+      "R15/S13: `node --test tests/home-layered-view.test.js` fails test 51 (the run report must itemize the suite failures) on the final tree. evidence/home-layered-view/run-report.md no longer has the wording the test requires. It lacks the sibling branch name `anvil/run-s11-rebaseline`, the statement that the sibling branches merge before this one, and the statement that the suite is re-run on the merged tree. It also has no 'design v4 ... S11' line the test's regex accepts.",
+      "R11/R13/S9: test 50 fails. The run report states a home document of 48,183 bytes. The test measures 48,145 on this tree, so the report's figure does not match the final tree. Re-measure and restate it.",
+      "R7/R9/R11/S7: test 19 fails. Line 377 of the frozen test expects the source render to be 752,703 bytes, but the committed evidence/take-apart-product-model/render-exploded.png is 752,674 bytes. The builder did not touch the test or the asset. This is not one of the three named settlement exceptions in R15, so the done criterion of all home layered view tests passing is not met. It needs an operator decision on the test or the input.",
+      "The run report says 51 of 52 pass. I ran the suite and got 49 of 52, with failures 19, 50 and 51. The report's test figures are not accurate for this tree.",
+      "Scope is respected. The product diff is only src/home-layered-client.js, with no GLB, model, take apart, src/home-layered.js, test or spec edits. The browser-pass log shows zero console and page errors, zero model or vendor requests below the fold, and one GLB fetch. The lazy payload is 1,213,788 bytes and the fallback image is 40,672 bytes, both inside budget. Whether R14 and S11 are met (translucent films, board detail, no flat lighting) is for reviewer-design. I did not judge it."
+    ]
+  },
   "configured_model": "claude-sonnet-5-5",
   "executor": {
     "kind": "command",
     "detail": "python3"
   },
-  "executed_model": null
+  "executed_model": "claude-sonnet-5-5"
 }

@@ -8,7 +8,7 @@
       "station": "intake",
       "status": "completed",
       "detail": "Work order normalized",
-      "duration_ms": 0.008,
+      "duration_ms": 0.013,
       "cost": null,
       "artifacts": [
         "runs/wo-gh-13/report.json"
@@ -21,7 +21,7 @@
       "station": "spec-writer",
       "status": "executed",
       "detail": "Executed by command; output written to runs/wo-gh-13/spec-writer.output.md",
-      "duration_ms": 34562.488,
+      "duration_ms": 16231.221,
       "cost": null,
       "artifacts": [
         "runs/wo-gh-13/spec-writer.output.md"
@@ -37,7 +37,7 @@
       "station": "test-writer",
       "status": "executed",
       "detail": "Executed by command; output written to runs/wo-gh-13/test-writer.output.md",
-      "duration_ms": 116196.901,
+      "duration_ms": 21787.569,
       "cost": null,
       "artifacts": [
         "runs/wo-gh-13/test-writer.output.md"
@@ -53,7 +53,7 @@
       "station": "builder",
       "status": "executed",
       "detail": "Executed by command; output written to runs/wo-gh-13/builder.output.md",
-      "duration_ms": 211781.643,
+      "duration_ms": 165736.054,
       "cost": null,
       "artifacts": [
         "runs/wo-gh-13/builder.output.md"
@@ -67,15 +67,15 @@
     },
     {
       "station": "reviewer-spec",
-      "status": "failed",
-      "detail": "Executor failed: command executor exited 2: claude_station: claude exited 1 for station reviewer-spec: API Error: 402 Insufficient unified billing balance for this request. Your available balance is $0.45. Add credits on the AI Gateway Cloudflare dashboard, or use your own provider key (BYOK).",
-      "duration_ms": 823.348,
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-13/reviewer-spec.output.md",
+      "duration_ms": 26603.455,
       "cost": null,
       "artifacts": [
-        "runs/wo-gh-13/reviewer-spec.packet.md"
+        "runs/wo-gh-13/reviewer-spec.output.md"
       ],
       "configured_model": "claude-sonnet-5-5",
-      "executed_model": null,
+      "executed_model": "claude-sonnet-5-5",
       "executor": {
         "kind": "command",
         "detail": "python3"
@@ -83,15 +83,15 @@
     },
     {
       "station": "reviewer-security",
-      "status": "failed",
-      "detail": "Executor failed: command executor exited 2: claude_station: claude exited 1 for station reviewer-security: API Error: 402 Insufficient unified billing balance for this request. Your available balance is $0.99. Add credits on the AI Gateway Cloudflare dashboard, or use your own provider key (BYOK).",
-      "duration_ms": 557.504,
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-13/reviewer-security.output.md",
+      "duration_ms": 15647.336,
       "cost": null,
       "artifacts": [
-        "runs/wo-gh-13/reviewer-security.packet.md"
+        "runs/wo-gh-13/reviewer-security.output.md"
       ],
       "configured_model": "claude-sonnet-5-5",
-      "executed_model": null,
+      "executed_model": "claude-sonnet-5-5",
       "executor": {
         "kind": "command",
         "detail": "python3"
@@ -99,15 +99,15 @@
     },
     {
       "station": "reviewer-tests",
-      "status": "failed",
-      "detail": "Executor failed: command executor exited 2: claude_station: claude exited 1 for station reviewer-tests: API Error: 402 Insufficient unified billing balance for this request. Your available balance is $0.99. Add credits on the AI Gateway Cloudflare dashboard, or use your own provider key (BYOK).",
-      "duration_ms": 543.556,
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-13/reviewer-tests.output.md",
+      "duration_ms": 14395.546,
       "cost": null,
       "artifacts": [
-        "runs/wo-gh-13/reviewer-tests.packet.md"
+        "runs/wo-gh-13/reviewer-tests.output.md"
       ],
       "configured_model": "claude-sonnet-5-5",
-      "executed_model": null,
+      "executed_model": "claude-sonnet-5-5",
       "executor": {
         "kind": "command",
         "detail": "python3"
@@ -115,15 +115,15 @@
     },
     {
       "station": "reviewer-architecture",
-      "status": "failed",
-      "detail": "Executor failed: command executor exited 2: claude_station: claude exited 1 for station reviewer-architecture: API Error: 402 Insufficient unified billing balance for this request. Your available balance is $0.99. Add credits on the AI Gateway Cloudflare dashboard, or use your own provider key (BYOK).",
-      "duration_ms": 566.557,
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-13/reviewer-architecture.output.md",
+      "duration_ms": 17757.606,
       "cost": null,
       "artifacts": [
-        "runs/wo-gh-13/reviewer-architecture.packet.md"
+        "runs/wo-gh-13/reviewer-architecture.output.md"
       ],
       "configured_model": "claude-sonnet-5-5",
-      "executed_model": null,
+      "executed_model": "claude-sonnet-5-5",
       "executor": {
         "kind": "command",
         "detail": "python3"
@@ -133,7 +133,7 @@
       "station": "reviewer-design",
       "status": "executed",
       "detail": "Executed by command; output written to runs/wo-gh-13/reviewer-design.output.md",
-      "duration_ms": 14708.834,
+      "duration_ms": 23278.477,
       "cost": null,
       "artifacts": [
         "runs/wo-gh-13/reviewer-design.output.md"
@@ -149,7 +149,7 @@
       "station": "approver",
       "status": "completed",
       "detail": "Approver verdict: changes_requested",
-      "duration_ms": 0.026,
+      "duration_ms": 0.039,
       "cost": null,
       "artifacts": [
         "runs/wo-gh-13/report.json"
@@ -162,8 +162,8 @@
       "station": "approver",
       "status": "loopback",
       "return_to": "builder",
-      "detail": "Loopback to builder: R14 / design/DESIGN.md production quality: evidence/home-layered-view/home-exploded.png still shows the adhesive as a thick, pale rimmed slab and the release liner as a flat gray plate. Neither convincingly reads as translucent film against design/reference/quality-board-1.png and quality-board-2.png. Adjust the home scene's material handling and lighting in src/home-layered-client.js, preserving the frozen GLB and model semantics, and recapture both states.; R14 / design/DESIGN.md production quality: the recaptured exploded view still renders PCB components as uniformly shaded blocks with weak metallic highlights and little visible fine detail compared with both reference boards. The assembled cover also remains broadly flat-lit. Refine the home environment and lighting so existing board detail and physical material differences survive at the displayed size; the required production-quality product test remains unmet.",
-      "reason": "R14 / design/DESIGN.md production quality: evidence/home-layered-view/home-exploded.png still shows the adhesive as a thick, pale rimmed slab and the release liner as a flat gray plate. Neither convincingly reads as translucent film against design/reference/quality-board-1.png and quality-board-2.png. Adjust the home scene's material handling and lighting in src/home-layered-client.js, preserving the frozen GLB and model semantics, and recapture both states.; R14 / design/DESIGN.md production quality: the recaptured exploded view still renders PCB components as uniformly shaded blocks with weak metallic highlights and little visible fine detail compared with both reference boards. The assembled cover also remains broadly flat-lit. Refine the home environment and lighting so existing board detail and physical material differences survive at the displayed size; the required production-quality product test remains unmet.",
+      "detail": "Loopback to builder: R15/S13: `node --test tests/home-layered-view.test.js` fails test 51 (the run report must itemize the suite failures) on the final tree. evidence/home-layered-view/run-report.md no longer has the wording the test requires. It lacks the sibling branch name `anvil/run-s11-rebaseline`, the statement that the sibling branches merge before this one, and the statement that the suite is re-run on the merged tree. It also has no 'design v4 ... S11' line the test's regex accepts.; R11/R13/S9: test 50 fails. The run report states a home document of 48,183 bytes. The test measures 48,145 on this tree, so the report's figure does not match the final tree. Re-measure and restate it.; R7/R9/R11/S7: test 19 fails. Line 377 of the frozen test expects the source render to be 752,703 bytes, but the committed evidence/take-apart-product-model/render-exploded.png is 752,674 bytes. The builder did not touch the test or the asset. This is not one of the three named settlement exceptions in R15, so the done criterion of all home layered view tests passing is not met. It needs an operator decision on the test or the input.; The run report says 51 of 52 pass. I ran the suite and got 49 of 52, with failures 19, 50 and 51. The report's test figures are not accurate for this tree.; Scope is respected. The product diff is only src/home-layered-client.js, with no GLB, model, take apart, src/home-layered.js, test or spec edits. The browser-pass log shows zero console and page errors, zero model or vendor requests below the fold, and one GLB fetch. The lazy payload is 1,213,788 bytes and the fallback image is 40,672 bytes, both inside budget. Whether R14 and S11 are met (translucent films, board detail, no flat lighting) is for reviewer-design. I did not judge it.; Scope: the product diff is only src/home-layered-client.js (renderer, environment, lights, on-load material tweaks). No server, routing, header, CSP, dependency or asset changes.; No new network surface: the environment is built locally with PMREM from in-memory planes, and the only fetch is the existing same-origin /models/patch-one.glb.; The shader patches in onBeforeCompile are static string literals with no user, URL or DOM input, so there is no injection path. They use String.replace on three.js chunk names. If a chunk name changed in a three.js upgrade the patch would silently not apply, which is a robustness issue and not a security one.; Material changes match names from the frozen GLB via regex tests. They add no eval, innerHTML or dynamic code.; Shadow maps are gated on quality.shadowMapSize>0 from the existing qualityFor tiers, so the lowest tier disables shadows and the GPU cost does not grow on weak devices. This is the same gating as src/take-apart-client.js.; Resource handling is unchanged: the studio scene geometry and materials are disposed and the PMREM generator is disposed after use. The lazy gate is untouched.; Out of scope for security: the reviewer-spec output reports failing tests 19, 50 and 51 (stale run report and a render byte size). They are not security defects.; The committed suite does not pass on the final tree. I ran `node --test tests/home-layered-view.test.js`: 49 pass and 3 fail out of 52. The work order's done criterion says all home layered view tests must pass, and the task description says all 52 pass.; Test 19 (S7/R9/R11, fallback image route) fails with `752674 !== 752703`. The message is 'the frozen source render on this branch (including PNG metadata)'. The frozen exploded-render size differs from the size the test expects, by 29 bytes. Either the asset or its metadata differs from the pinned value, or the pin is environment-dependent. Either way the claim that the GLB and render assets are frozen is not verified as it stands.; Test 50 (S13/R11/R13, run report figures) fails with 'home document figure 48145 appears in the run report'. The working-tree `evidence/home-layered-view/run-report.md` is modified and does not state the measured home document size. The payload figures are not backed by the report for the final tree.; Test 51 (S13/R15, baseline failure itemization) fails with 'design v4 S11 named'. The current run-report.md, headed 'Home layered view \u2014 wo-gh-13 final gate round', does not name the design v4 S11 suite item. The work order requires it to be itemized apart, so this is an unmet requirement.; The evidence logs under evidence/home-layered-view/ (home-tests.log, baseline-tests.log, browser-pass.log, bundle-build.log) and the PNG captures are all modified and uncommitted in the working tree. They cannot be treated as a record of this tree's passing run, because the live suite currently shows 3 failures. I did not check the logs' contents against the tests.; The only code change in the diff is src/home-layered-client.js (39 insertions, 18 deletions), which is within scope. The tests and spec were not edited, consistent with the frozen contract. I did not inspect the diff for scenario mapping.; Structural check: all 52 tests are in one file, and the spec has 13 scenarios (S1 to S13). Lighting, material and exposure changes are covered mainly by the evidence PNGs and the reviewer-design judgment, not by assertions on the new client code. I did not verify what the tests assert about the R14 changes. Fix the three failing tests (or the report and asset state they check), recapture the evidence, and resubmit.; Scope: the only source change in the working tree is src/home-layered-client.js. The GLB, src/home-layered.js, src/page.js, src/index.js, the take-apart files, the tests and the spec are untouched. The other modified files are evidence and runs artifacts. This matches the frozen scope.; Fit with the proven handling: the home client now matches src/take-apart-client.js. It uses ACESFilmic tone mapping at exposure 1.05 (take-apart uses 1). It enables the shadow map from quality.shadowMapSize, which comes from the shared M.qualityFor in src/take-apart-model-browser.js. It uses a directional key light with shadow bias and normalBias, and a local PMREM studio environment. The home scene keeps its own composition and camera, and the lazy mount(root) gate is unchanged.; Per-material tuning on load: the films get lower roughness, thickness .015, ior 1.46 and higher envMapIntensity. The board shielding and plated contacts are metallic, and the silicone, ceramic and solder mask materials have their own roughness. Materials are cloned and never mutate the GLB asset, so the model semantics hold. Films are excluded from shadow casting, and baseOpacity is preserved for the focus-fade maths.; Minor deviations, not blocking: the home scene uses PCFSoftShadowMap where take-apart uses VSMShadowMap. The film shader patch discards fragments where filmFace < 0.85 and perturbs the shading normal. This depends on three.js shader chunk names (#include <alphamap_fragment>, <normal_fragment_maps>, <beginnormal_vertex>), so a three.js upgrade could break it silently. The patch is local to this module and does not touch the take-apart handling.; Limits of this review: brain/decisions does not exist as a directory. I checked against brain/ (project.md, learnings.md, glossary.md, worklog.md) and the L-1 to L-7 learnings in the packet. I found no conflict with them. I did not judge the visuals of the recaptured evidence images. That belongs to reviewer-design under R14.; R14/S11 and DESIGN.md's production-quality bar remain unmet in evidence/home-layered-view/home-exploded.png: the films no longer have thick rims, but appear as faint white silhouettes with broad reflection bands. Their edges and translucent material differences remain poorly resolved compared with both quality boards. Refine film shading and environment reflections in src/home-layered-client.js so both layers read convincingly as physical translucent films, then recapture.; R14/S11: metallic differentiation has improved, but the exploded PCB's large shields read as uniformly white faces with dark sides; fine contacts and component finishes remain weak at the displayed size compared with design/reference/quality-board-1.png and quality-board-2.png. Adjust the home environment and metal roughness to retain highlight gradients and existing component detail without clipping the shield faces. The assembled cover now has directional shaping, closing the previous flat-lighting concern.",
+      "reason": "R15/S13: `node --test tests/home-layered-view.test.js` fails test 51 (the run report must itemize the suite failures) on the final tree. evidence/home-layered-view/run-report.md no longer has the wording the test requires. It lacks the sibling branch name `anvil/run-s11-rebaseline`, the statement that the sibling branches merge before this one, and the statement that the suite is re-run on the merged tree. It also has no 'design v4 ... S11' line the test's regex accepts.; R11/R13/S9: test 50 fails. The run report states a home document of 48,183 bytes. The test measures 48,145 on this tree, so the report's figure does not match the final tree. Re-measure and restate it.; R7/R9/R11/S7: test 19 fails. Line 377 of the frozen test expects the source render to be 752,703 bytes, but the committed evidence/take-apart-product-model/render-exploded.png is 752,674 bytes. The builder did not touch the test or the asset. This is not one of the three named settlement exceptions in R15, so the done criterion of all home layered view tests passing is not met. It needs an operator decision on the test or the input.; The run report says 51 of 52 pass. I ran the suite and got 49 of 52, with failures 19, 50 and 51. The report's test figures are not accurate for this tree.; Scope is respected. The product diff is only src/home-layered-client.js, with no GLB, model, take apart, src/home-layered.js, test or spec edits. The browser-pass log shows zero console and page errors, zero model or vendor requests below the fold, and one GLB fetch. The lazy payload is 1,213,788 bytes and the fallback image is 40,672 bytes, both inside budget. Whether R14 and S11 are met (translucent films, board detail, no flat lighting) is for reviewer-design. I did not judge it.; Scope: the product diff is only src/home-layered-client.js (renderer, environment, lights, on-load material tweaks). No server, routing, header, CSP, dependency or asset changes.; No new network surface: the environment is built locally with PMREM from in-memory planes, and the only fetch is the existing same-origin /models/patch-one.glb.; The shader patches in onBeforeCompile are static string literals with no user, URL or DOM input, so there is no injection path. They use String.replace on three.js chunk names. If a chunk name changed in a three.js upgrade the patch would silently not apply, which is a robustness issue and not a security one.; Material changes match names from the frozen GLB via regex tests. They add no eval, innerHTML or dynamic code.; Shadow maps are gated on quality.shadowMapSize>0 from the existing qualityFor tiers, so the lowest tier disables shadows and the GPU cost does not grow on weak devices. This is the same gating as src/take-apart-client.js.; Resource handling is unchanged: the studio scene geometry and materials are disposed and the PMREM generator is disposed after use. The lazy gate is untouched.; Out of scope for security: the reviewer-spec output reports failing tests 19, 50 and 51 (stale run report and a render byte size). They are not security defects.; The committed suite does not pass on the final tree. I ran `node --test tests/home-layered-view.test.js`: 49 pass and 3 fail out of 52. The work order's done criterion says all home layered view tests must pass, and the task description says all 52 pass.; Test 19 (S7/R9/R11, fallback image route) fails with `752674 !== 752703`. The message is 'the frozen source render on this branch (including PNG metadata)'. The frozen exploded-render size differs from the size the test expects, by 29 bytes. Either the asset or its metadata differs from the pinned value, or the pin is environment-dependent. Either way the claim that the GLB and render assets are frozen is not verified as it stands.; Test 50 (S13/R11/R13, run report figures) fails with 'home document figure 48145 appears in the run report'. The working-tree `evidence/home-layered-view/run-report.md` is modified and does not state the measured home document size. The payload figures are not backed by the report for the final tree.; Test 51 (S13/R15, baseline failure itemization) fails with 'design v4 S11 named'. The current run-report.md, headed 'Home layered view \u2014 wo-gh-13 final gate round', does not name the design v4 S11 suite item. The work order requires it to be itemized apart, so this is an unmet requirement.; The evidence logs under evidence/home-layered-view/ (home-tests.log, baseline-tests.log, browser-pass.log, bundle-build.log) and the PNG captures are all modified and uncommitted in the working tree. They cannot be treated as a record of this tree's passing run, because the live suite currently shows 3 failures. I did not check the logs' contents against the tests.; The only code change in the diff is src/home-layered-client.js (39 insertions, 18 deletions), which is within scope. The tests and spec were not edited, consistent with the frozen contract. I did not inspect the diff for scenario mapping.; Structural check: all 52 tests are in one file, and the spec has 13 scenarios (S1 to S13). Lighting, material and exposure changes are covered mainly by the evidence PNGs and the reviewer-design judgment, not by assertions on the new client code. I did not verify what the tests assert about the R14 changes. Fix the three failing tests (or the report and asset state they check), recapture the evidence, and resubmit.; Scope: the only source change in the working tree is src/home-layered-client.js. The GLB, src/home-layered.js, src/page.js, src/index.js, the take-apart files, the tests and the spec are untouched. The other modified files are evidence and runs artifacts. This matches the frozen scope.; Fit with the proven handling: the home client now matches src/take-apart-client.js. It uses ACESFilmic tone mapping at exposure 1.05 (take-apart uses 1). It enables the shadow map from quality.shadowMapSize, which comes from the shared M.qualityFor in src/take-apart-model-browser.js. It uses a directional key light with shadow bias and normalBias, and a local PMREM studio environment. The home scene keeps its own composition and camera, and the lazy mount(root) gate is unchanged.; Per-material tuning on load: the films get lower roughness, thickness .015, ior 1.46 and higher envMapIntensity. The board shielding and plated contacts are metallic, and the silicone, ceramic and solder mask materials have their own roughness. Materials are cloned and never mutate the GLB asset, so the model semantics hold. Films are excluded from shadow casting, and baseOpacity is preserved for the focus-fade maths.; Minor deviations, not blocking: the home scene uses PCFSoftShadowMap where take-apart uses VSMShadowMap. The film shader patch discards fragments where filmFace < 0.85 and perturbs the shading normal. This depends on three.js shader chunk names (#include <alphamap_fragment>, <normal_fragment_maps>, <beginnormal_vertex>), so a three.js upgrade could break it silently. The patch is local to this module and does not touch the take-apart handling.; Limits of this review: brain/decisions does not exist as a directory. I checked against brain/ (project.md, learnings.md, glossary.md, worklog.md) and the L-1 to L-7 learnings in the packet. I found no conflict with them. I did not judge the visuals of the recaptured evidence images. That belongs to reviewer-design under R14.; R14/S11 and DESIGN.md's production-quality bar remain unmet in evidence/home-layered-view/home-exploded.png: the films no longer have thick rims, but appear as faint white silhouettes with broad reflection bands. Their edges and translucent material differences remain poorly resolved compared with both quality boards. Refine film shading and environment reflections in src/home-layered-client.js so both layers read convincingly as physical translucent films, then recapture.; R14/S11: metallic differentiation has improved, but the exploded PCB's large shields read as uniformly white faces with dark sides; fine contacts and component finishes remain weak at the displayed size compared with design/reference/quality-board-1.png and quality-board-2.png. Adjust the home environment and metal roughness to retain highlight gradients and existing component detail without clipping the shield faces. The assembled cover now has directional shaping, closing the previous flat-lighting concern.",
       "duration_ms": 0.0,
       "cost": null,
       "artifacts": [],
@@ -186,7 +186,7 @@
       "station": "deployer",
       "status": "packet_ready",
       "detail": "Packet written to runs/wo-gh-13/deployer.packet.md",
-      "duration_ms": 0.213,
+      "duration_ms": 0.233,
       "cost": null,
       "artifacts": [
         "runs/wo-gh-13/deployer.packet.md"
@@ -197,15 +197,15 @@
     },
     {
       "station": "observer",
-      "status": "failed",
-      "detail": "Executor failed: command executor exited 2: claude_station: claude exited 1 for station observer: API Error: 402 Insufficient unified billing balance for this request. Your available balance is $1.01. Add credits on the AI Gateway Cloudflare dashboard, or use your own provider key (BYOK).",
-      "duration_ms": 617.88,
+      "status": "executed",
+      "detail": "Executed by command; output written to runs/wo-gh-13/observer.output.md",
+      "duration_ms": 21210.335,
       "cost": null,
       "artifacts": [
-        "runs/wo-gh-13/observer.packet.md"
+        "runs/wo-gh-13/observer.output.md"
       ],
       "configured_model": "claude-sonnet-5-5",
-      "executed_model": null,
+      "executed_model": "claude-sonnet-5-5",
       "executor": {
         "kind": "command",
         "detail": "python3"
@@ -223,6 +223,22 @@
     "approver": {
       "reviews_counted": [
         {
+          "station": "reviewer-spec",
+          "verdict": "changes_requested"
+        },
+        {
+          "station": "reviewer-security",
+          "verdict": "pass"
+        },
+        {
+          "station": "reviewer-tests",
+          "verdict": "changes_requested"
+        },
+        {
+          "station": "reviewer-architecture",
+          "verdict": "pass"
+        },
+        {
           "station": "reviewer-design",
           "verdict": "changes_requested"
         }
@@ -234,7 +250,7 @@
         "reviewer-architecture",
         "reviewer-design"
       ],
-      "rule": "Reviewer reviewer-design requested changes."
+      "rule": "Reviewers reviewer-spec, reviewer-tests, reviewer-design requested changes."
     },
     "human_gate": {
       "required": true,

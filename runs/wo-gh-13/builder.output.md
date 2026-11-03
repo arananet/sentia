@@ -1,5 +1,5 @@
-Committed f87cfc1: refined home lighting and film materials, styled the numbered label, fixed the onward link, and recorded screenshots, full logs, payload measurements, and all three settlement exceptions.
+Refined home lighting, film transparency and board materials; recaptured production evidence with zero browser errors and payloads within budget.
 
-All 52 home tests pass. Builder output is in runs/wo-gh-13/builder.output.md. Independent approval remains pending; no merge or deployment performed.
+Recorded results in runs/wo-gh-13/builder.output.md. Home tests pass 51/52; the remaining failure is a frozen PNG-size mismatch documented for review. Independent approval remains pending.
 
 {"model": "gpt-6-astra", "runtime": "codex"}

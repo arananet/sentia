@@ -1,4 +1,4 @@
-Bundled Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-bundle-3bWq4I/index.js --no-bundle --local --ip 127.0.0.1 --port 8791
+Bundled Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-bundle-m3HCKu/index.js --no-bundle --local --ip 127.0.0.1 --port 8791
 console errors: 0
 page errors: 0
 section present: true
@@ -15,10 +15,10 @@ fallback bad-glb: PASS image, five buttons, copy, link; 375px no overflow
 /vendor/loaders/GLTFLoader.js: 109610 decoded bytes
 /vendor/utils/BufferGeometryUtils.js: 32994 decoded bytes
 /models/patch-one.glb: 386708 decoded bytes
-/home-layers.js: 8874 decoded bytes
+/home-layers.js: 10569 decoded bytes
 /take-apart-model.js: 3226 decoded bytes
 home document: 48183 bytes; growth: 3749 bytes
 fallback image: 40672 bytes
-lazy 3D payload: 1212093 bytes (including model twin and home client, GLB once)
+lazy 3D payload: 1213788 bytes (including model twin and home client, GLB once)
 
 

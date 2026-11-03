@@ -2,8 +2,8 @@
   "station": "reviewer-design",
   "verdict": "changes_requested",
   "findings": [
-    "R14 / design/DESIGN.md production quality: evidence/home-layered-view/home-exploded.png still shows the adhesive as a thick, pale rimmed slab and the release liner as a flat gray plate. Neither convincingly reads as translucent film against design/reference/quality-board-1.png and quality-board-2.png. Adjust the home scene's material handling and lighting in src/home-layered-client.js, preserving the frozen GLB and model semantics, and recapture both states.",
-    "R14 / design/DESIGN.md production quality: the recaptured exploded view still renders PCB components as uniformly shaded blocks with weak metallic highlights and little visible fine detail compared with both reference boards. The assembled cover also remains broadly flat-lit. Refine the home environment and lighting so existing board detail and physical material differences survive at the displayed size; the required production-quality product test remains unmet."
+    "R14/S11 and DESIGN.md's production-quality bar remain unmet in evidence/home-layered-view/home-exploded.png: the films no longer have thick rims, but appear as faint white silhouettes with broad reflection bands. Their edges and translucent material differences remain poorly resolved compared with both quality boards. Refine film shading and environment reflections in src/home-layered-client.js so both layers read convincingly as physical translucent films, then recapture.",
+    "R14/S11: metallic differentiation has improved, but the exploded PCB's large shields read as uniformly white faces with dark sides; fine contacts and component finishes remain weak at the displayed size compared with design/reference/quality-board-1.png and quality-board-2.png. Adjust the home environment and metal roughness to retain highlight gradients and existing component detail without clipping the shield faces. The assembled cover now has directional shaping, closing the previous flat-lighting concern."
   ]
 }
 

@@ -3,14 +3,26 @@
   "from_station": "reviewer-tests",
   "to_station": "reviewer-architecture",
   "work_order_id": "wo-gh-13",
-  "artifact_path": "runs/wo-gh-13/reviewer-tests.packet.md",
-  "status": "failed",
-  "created_at": "2026-11-02T03:27:00.696732+00:00",
-  "error": "command executor exited 2: claude_station: claude exited 1 for station reviewer-tests: API Error: 402 Insufficient unified billing balance for this request. Your available balance is $0.99. Add credits on the AI Gateway Cloudflare dashboard, or use your own provider key (BYOK).",
+  "artifact_path": "runs/wo-gh-13/reviewer-tests.output.md",
+  "status": "executed",
+  "created_at": "2026-11-03T04:23:43.743714+00:00",
+  "review": {
+    "station": "reviewer-tests",
+    "verdict": "changes_requested",
+    "findings": [
+      "The committed suite does not pass on the final tree. I ran `node --test tests/home-layered-view.test.js`: 49 pass and 3 fail out of 52. The work order's done criterion says all home layered view tests must pass, and the task description says all 52 pass.",
+      "Test 19 (S7/R9/R11, fallback image route) fails with `752674 !== 752703`. The message is 'the frozen source render on this branch (including PNG metadata)'. The frozen exploded-render size differs from the size the test expects, by 29 bytes. Either the asset or its metadata differs from the pinned value, or the pin is environment-dependent. Either way the claim that the GLB and render assets are frozen is not verified as it stands.",
+      "Test 50 (S13/R11/R13, run report figures) fails with 'home document figure 48145 appears in the run report'. The working-tree `evidence/home-layered-view/run-report.md` is modified and does not state the measured home document size. The payload figures are not backed by the report for the final tree.",
+      "Test 51 (S13/R15, baseline failure itemization) fails with 'design v4 S11 named'. The current run-report.md, headed 'Home layered view \u2014 wo-gh-13 final gate round', does not name the design v4 S11 suite item. The work order requires it to be itemized apart, so this is an unmet requirement.",
+      "The evidence logs under evidence/home-layered-view/ (home-tests.log, baseline-tests.log, browser-pass.log, bundle-build.log) and the PNG captures are all modified and uncommitted in the working tree. They cannot be treated as a record of this tree's passing run, because the live suite currently shows 3 failures. I did not check the logs' contents against the tests.",
+      "The only code change in the diff is src/home-layered-client.js (39 insertions, 18 deletions), which is within scope. The tests and spec were not edited, consistent with the frozen contract. I did not inspect the diff for scenario mapping.",
+      "Structural check: all 52 tests are in one file, and the spec has 13 scenarios (S1 to S13). Lighting, material and exposure changes are covered mainly by the evidence PNGs and the reviewer-design judgment, not by assertions on the new client code. I did not verify what the tests assert about the R14 changes. Fix the three failing tests (or the report and asset state they check), recapture the evidence, and resubmit."
+    ]
+  },
   "configured_model": "claude-sonnet-5-5",
   "executor": {
     "kind": "command",
     "detail": "python3"
   },
-  "executed_model": null
+  "executed_model": "claude-sonnet-5-5"
 }

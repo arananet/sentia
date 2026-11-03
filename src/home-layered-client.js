@@ -50,7 +50,8 @@ export async function mount(root) {
     const quality=M.qualityFor({devicePixelRatio,hardwareConcurrency:navigator.hardwareConcurrency,coarsePointer:matchMedia('(pointer:coarse)').matches});
     renderer=new THREE.WebGLRenderer({canvas,context,antialias:true});
     renderer.setPixelRatio(quality.pixelRatioCap);renderer.setClearColor(0xfafaf6);
-    renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1;
+    renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
+    renderer.shadowMap.enabled=quality.shadowMapSize>0;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
     renderer.outputColorSpace=THREE.SRGBColorSpace;
     const scene=new THREE.Scene();
     scene.background=new THREE.Color(0xfafaf6);
@@ -58,22 +59,26 @@ export async function mount(root) {
     camera.position.set(52,42,62);camera.lookAt(0,10,0);camera.updateMatrixWorld();
     // A local studio environment supplies broad reflections without another download.
     const studio=new THREE.Scene();
-    studio.background=new THREE.Color(0x626860);
+    studio.background=new THREE.Color(0x181c1b);
     const panel=(color,intensity,x,y,z,w,h)=>{
       const mesh=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({color,side:THREE.DoubleSide}));
       mesh.material.color.multiplyScalar(intensity);mesh.position.set(x,y,z);mesh.lookAt(0,0,0);studio.add(mesh);
     };
-    panel(0xfff5df,5,-70,100,60,100,140);
-    panel(0xffffff,2,90,40,-40,50,120);
-    panel(0xffffff,.5,0,-80,0,160,160);
+    panel(0xfff5df,7,-65,80,-55,45,130);
+    panel(0xffffff,3,75,35,-65,20,110);
+    panel(0xffffff,.7,-20,90,75,90,100);
     const pmrem=new THREE.PMREMGenerator(renderer);
     const environment=pmrem.fromScene(studio,.04);
     scene.environment=environment.texture;
     pmrem.dispose();
     studio.traverse(object=>{object.geometry?.dispose();object.material?.dispose();});
-    scene.add(new THREE.HemisphereLight(0xfafaf6,0x53685c,.45));
-    const fill=new THREE.DirectionalLight(0xffffff,.7);fill.position.set(70,35,-60);scene.add(fill);
-    const light=new THREE.DirectionalLight(0xfff5df,3);light.position.set(-65,160,65);scene.add(light);
+    scene.add(new THREE.HemisphereLight(0xfafaf6,0x53685c,.25));
+    const fill=new THREE.DirectionalLight(0xffffff,.35);fill.position.set(70,35,-60);scene.add(fill);
+    const light=new THREE.DirectionalLight(0xfff5df,2.8);light.position.set(-65,65,45);
+    light.castShadow=quality.shadowMapSize>0;
+    light.shadow.mapSize.set(quality.shadowMapSize,quality.shadowMapSize);
+    Object.assign(light.shadow.camera,{left:-65,right:65,top:100,bottom:-65,near:.1,far:300});
+    light.shadow.bias=-.001;light.shadow.normalBias=.2;scene.add(light);
     const gltf=await new GLTFLoader().loadAsync('/models/patch-one.glb');
     const nodes=M.NODE_NAMES.map(name=>{
       const node=gltf.scene.children.find(child=>(child.userData.name||child.name)===name);
@@ -85,28 +90,44 @@ export async function mount(root) {
           const film=/adhesive film|release film/i.test(material.name);
           const copy=film ? new THREE.MeshPhysicalMaterial({
             name:material.name,color:material.color,opacity:material.opacity,
-            roughness:/adhesive/i.test(material.name)?.22:.38,
-            metalness:0,transmission:.88,ior:1.36,thickness:.08,
+            roughness:/adhesive/i.test(material.name)?.12:.26,
+            metalness:0,transmission:.82,ior:1.46,thickness:.015,
             transparent:true,depthWrite:false,side:THREE.FrontSide,
-            envMapIntensity:.8
+            envMapIntensity:1.25
           }) : material.clone();
           // Preserve the asset opacity; model focus fade multiplies this below.
           copy.userData.baseOpacity=material.opacity;
           if(film) {
-            // The study exaggerates vertical thickness eightfold. Keep its transforms,
-            // but suppress the optical density of those exaggerated edge faces.
+            // The frozen study exaggerates thickness eightfold. Render the film's
+            // upper optical surface only, avoiding a second rim from the solid shell.
+            // Geometry, layer transforms and model opacity remain unchanged.
             copy.onBeforeCompile=shader=>{
-              shader.vertexShader='varying float filmFace;\\n'+shader.vertexShader;
+              shader.vertexShader='varying float filmFace; varying vec3 filmPosition;\\n'+shader.vertexShader;
               shader.vertexShader=shader.vertexShader.replace('#include <beginnormal_vertex>',
-                '#include <beginnormal_vertex>\\nfilmFace=abs(objectNormal.y);');
-              shader.fragmentShader='varying float filmFace;\\n'+shader.fragmentShader;
+                '#include <beginnormal_vertex>\\nfilmFace=objectNormal.y; filmPosition=position;');
+              shader.fragmentShader='varying float filmFace; varying vec3 filmPosition;\\n'+shader.fragmentShader;
               shader.fragmentShader=shader.fragmentShader.replace('#include <alphamap_fragment>',
-                '#include <alphamap_fragment>\\ndiffuseColor.a *= mix(0.06, 1.0, smoothstep(0.2, 0.85, filmFace));');
+                '#include <alphamap_fragment>\\nif(filmFace < 0.85) discard;');
+              // Small optical waviness breaks up the studio reflection across a film;
+              // it changes the shading normal, never the frozen mesh or its bounds.
+              shader.fragmentShader=shader.fragmentShader.replace('#include <normal_fragment_maps>',
+                '#include <normal_fragment_maps>\\nnormal = normalize(normal + vec3(0.12 * sin(filmPosition.x * 0.22 + filmPosition.z * 0.13), 0.06 * cos(filmPosition.z * 0.3), 0.0));');
             };
-          } else copy.envMapIntensity=.65;
+          } else {
+            copy.envMapIntensity=1;
+            if(/silicone/i.test(material.name)) copy.roughness=.48;
+            if(/shielding/i.test(material.name)) {copy.metalness=.95;copy.roughness=.24;}
+            if(/plated contacts/i.test(material.name)) {copy.metalness=.9;copy.roughness=.22;}
+            if(/ceramic/i.test(material.name)) copy.roughness=.38;
+            if(/solder mask/i.test(material.name)) {copy.roughness=.65;copy.envMapIntensity=.25;}
+          }
           return copy;
         };
         object.material=Array.isArray(object.material)?object.material.map(clone):clone(object.material);
+        // Transparent films do not cast opaque slab shadows.
+        const materials=Array.isArray(object.material)?object.material:[object.material];
+        object.castShadow=materials.every(material=>material.opacity===1);
+        object.receiveShadow=object.castShadow && /board/i.test(name);
       });
       scene.add(node);return node;
     });

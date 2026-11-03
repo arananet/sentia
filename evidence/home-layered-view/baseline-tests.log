@@ -6,589 +6,589 @@ TAP version 13
 # Subtest: core-worker S1: GET / serves the site with wordmark, demo and dashboard
 ok 1 - core-worker S1: GET / serves the site with wordmark, demo and dashboard
   ---
-  duration_ms: 21.226892
+  duration_ms: 27.629191
   type: 'test'
   ...
 # Subtest: core-worker S2: API healthy, unknown API route is a 404 JSON error
 ok 2 - core-worker S2: API healthy, unknown API route is a 404 JSON error
   ---
-  duration_ms: 2.582031
+  duration_ms: 3.261149
   type: 'test'
   ...
 # Subtest: ingestion-api S1: fleet lists exactly 3 patches with battery and last sync path
 ok 3 - ingestion-api S1: fleet lists exactly 3 patches with battery and last sync path
   ---
-  duration_ms: 1.93241
+  duration_ms: 3.044525
   type: 'test'
   ...
 # Subtest: ingestion-api S2: patch status carries current values, unknown id is 404 JSON
 ok 4 - ingestion-api S2: patch status carries current values, unknown id is 404 JSON
   ---
-  duration_ms: 3.451295
+  duration_ms: 3.977163
   type: 'test'
   ...
 # Subtest: ingestion-api S3: measurements are deterministic, inside 24 h, 15 minute spacing
 ok 5 - ingestion-api S3: measurements are deterministic, inside 24 h, 15 minute spacing
   ---
-  duration_ms: 2.682303
+  duration_ms: 3.440007
   type: 'test'
   ...
 # Subtest: ingestion-api S4: alerts follow the rule set and reference real patches
 ok 6 - ingestion-api S4: alerts follow the rule set and reference real patches
   ---
-  duration_ms: 2.277722
+  duration_ms: 3.437263
   type: 'test'
   ...
 # Subtest: ingestion-api S5: network stats count both paths positively
 ok 7 - ingestion-api S5: network stats count both paths positively
   ---
-  duration_ms: 1.322498
+  duration_ms: 1.74116
   type: 'test'
   ...
 # Subtest: dashboard-data S1: status endpoint values are the tile values, untransformed
 ok 8 - dashboard-data S1: status endpoint values are the tile values, untransformed
   ---
-  duration_ms: 0.650203
+  duration_ms: 0.80026
   type: 'test'
   ...
 # Subtest: dashboard-data S2: the 24 h chart window carries exactly 96 points
 ok 9 - dashboard-data S2: the 24 h chart window carries exactly 96 points
   ---
-  duration_ms: 0.9267
+  duration_ms: 1.156934
   type: 'test'
   ...
 # Subtest: dashboard-data S3: alerts can be filtered per wearer with no leakage
 ok 10 - dashboard-data S3: alerts can be filtered per wearer with no leakage
   ---
-  duration_ms: 1.295567
+  duration_ms: 1.582713
   type: 'test'
   ...
 # Subtest: seo: robots, sitemap and llms endpoints respond with the right shapes
 ok 11 - seo: robots, sitemap and llms endpoints respond with the right shapes
   ---
-  duration_ms: 1.597364
+  duration_ms: 1.497235
   type: 'test'
   ...
 # Subtest: geo: JSON-LD graph parses and carries the five entity types
 ok 12 - geo: JSON-LD graph parses and carries the five entity types
   ---
-  duration_ms: 0.222636
+  duration_ms: 0.687321
   type: 'test'
   ...
 # Subtest: seo: homepage carries canonical, OG and the llms Link header
 ok 13 - seo: homepage carries canonical, OG and the llms Link header
   ---
-  duration_ms: 0.614048
+  duration_ms: 0.815042
   type: 'test'
   ...
 # Subtest: regression: wear start is never frozen at module load (Workers epoch clock)
 ok 14 - regression: wear start is never frozen at module load (Workers epoch clock)
   ---
-  duration_ms: 1.299172
+  duration_ms: 1.502382
   type: 'test'
   ...
 # Subtest: packet-codec S1: digest round trip preserves every field at 16 bytes
 ok 15 - packet-codec S1: digest round trip preserves every field at 16 bytes
   ---
-  duration_ms: 0.718075
+  duration_ms: 0.877315
   type: 'test'
   ...
 # Subtest: packet-codec S2: a flipped payload byte is rejected by crc
 ok 16 - packet-codec S2: a flipped payload byte is rejected by crc
   ---
-  duration_ms: 0.299132
+  duration_ms: 0.34013
   type: 'test'
   ...
 # Subtest: packet-codec S3: flag bits survive the wire
 ok 17 - packet-codec S3: flag bits survive the wire
   ---
-  duration_ms: 0.804145
+  duration_ms: 1.024681
   type: 'test'
   ...
 # Subtest: packet-codec S4: LoRaWAN frame carries sweat rate and posture at 38 hex chars
 ok 18 - packet-codec S4: LoRaWAN frame carries sweat rate and posture at 38 hex chars
   ---
-  duration_ms: 0.282627
+  duration_ms: 0.319519
   type: 'test'
   ...
 # Subtest: packet-codec S5: bad magic and bad crc are rejected on the LoRaWAN frame
 ok 19 - packet-codec S5: bad magic and bad crc are rejected on the LoRaWAN frame
   ---
-  duration_ms: 0.29787
+  duration_ms: 0.449734
   type: 'test'
   ...
 # Subtest: packet-codec: digest rejects wrong length and wrong version
 ok 20 - packet-codec: digest rejects wrong length and wrong version
   ---
-  duration_ms: 0.176647
+  duration_ms: 0.31995
   type: 'test'
   ...
 # Subtest: packet-codec: hydration and battery clamp to 0..100, temperature keeps two decimals
 ok 21 - packet-codec: hydration and battery clamp to 0..100, temperature keeps two decimals
   ---
-  duration_ms: 0.133171
+  duration_ms: 0.269684
   type: 'test'
   ...
 # Subtest: packet-codec: crc8 is stable for a known vector
 ok 22 - packet-codec: crc8 is stable for a known vector
   ---
-  duration_ms: 0.069175
+  duration_ms: 0.137757
   type: 'test'
   ...
 # Subtest: live-demo S1: city emissions are 16 byte digests labelled findmy
 ok 23 - live-demo S1: city emissions are 16 byte digests labelled findmy
   ---
-  duration_ms: 1.03882
+  duration_ms: 0.958547
   type: 'test'
   ...
 # Subtest: live-demo S2: rural emissions are 38 character LoRaWAN hex labelled lora
 ok 24 - live-demo S2: rural emissions are 38 character LoRaWAN hex labelled lora
   ---
-  duration_ms: 1.158771
+  duration_ms: 1.074621
   type: 'test'
   ...
 # Subtest: live-demo S3: latencies stay inside the plausible range per path
 ok 25 - live-demo S3: latencies stay inside the plausible range per path
   ---
-  duration_ms: 1.614459
+  duration_ms: 1.84755
   type: 'test'
   ...
 # Subtest: parity: browser codec and server codec produce identical bytes
 ok 26 - parity: browser codec and server codec produce identical bytes
   ---
-  duration_ms: 1.16478
+  duration_ms: 1.318236
   type: 'test'
   ...
 # Subtest: S5: the page adds no border, frame, CSS shadow, filter or tint to renders
 ok 27 - S5: the page adds no border, frame, CSS shadow, filter or tint to renders
   ---
-  duration_ms: 1.994914
+  duration_ms: 3.333237
   type: 'test'
   ...
 # Subtest: S5: nothing tinted sits behind a render (no background or gradient on its wrapper)
 ok 28 - S5: nothing tinted sits behind a render (no background or gradient on its wrapper)
   ---
-  duration_ms: 0.243398
+  duration_ms: 0.262573
   type: 'test'
   ...
 # Subtest: S6: on-skin alt names a limb close-up and never torso framing
 ok 29 - S6: on-skin alt names a limb close-up and never torso framing
   ---
-  duration_ms: 0.249677
+  duration_ms: 0.313881
   type: 'test'
   ...
 # Subtest: S7: hero frame is served wide enough for the hero cap
 ok 30 - S7: hero frame is served wide enough for the hero cap
   ---
-  duration_ms: 0.171099
+  duration_ms: 0.192289
   type: 'test'
   ...
 # Subtest: S7: no render is placed full bleed or beyond its design cap
 ok 31 - S7: no render is placed full bleed or beyond its design cap
   ---
-  duration_ms: 0.17834
+  duration_ms: 0.215593
   type: 'test'
   ...
 # Subtest: S8: DESIGN.md absorbs the knowledge pack and the brand sheet wins
 ok 32 - S8: DESIGN.md absorbs the knowledge pack and the brand sheet wins
   ---
-  duration_ms: 0.439194
+  duration_ms: 0.514491
   type: 'test'
   ...
 # Subtest: S8: DESIGN.md asset inventory still names all four routes and exports
 ok 33 - S8: DESIGN.md asset inventory still names all four routes and exports
   ---
-  duration_ms: 0.18541
+  duration_ms: 0.238037
   type: 'test'
   ...
 # Subtest: S9: image width and height attributes match the intrinsic WebP dimensions (no layout shift)
 ok 34 - S9: image width and height attributes match the intrinsic WebP dimensions (no layout shift)
   ---
-  duration_ms: 0.525113
+  duration_ms: 0.635052
   type: 'test'
   ...
 # Subtest: S9: hero stays eager and high priority; below-fold renders are lazy
 ok 35 - S9: hero stays eager and high priority; below-fold renders are lazy
   ---
-  duration_ms: 0.4234
+  duration_ms: 0.60028
   type: 'test'
   ...
 # Subtest: S9: reveal motion has a reduced-motion path and a no-script fallback
 ok 36 - S9: reveal motion has a reduced-motion path and a no-script fallback
   ---
-  duration_ms: 0.407406
+  duration_ms: 0.530585
   type: 'test'
   ...
 # Subtest: S9: accessibility basics: skip link, visible focus, one h1, font-display swap
 ok 37 - S9: accessibility basics: skip link, visible focus, one h1, font-display swap
   ---
-  duration_ms: 0.310799
+  duration_ms: 0.379019
   type: 'test'
   ...
 # Subtest: S9: trust stated plainly: not a medical device, and no invented proof
 ok 38 - S9: trust stated plainly: not a medical device, and no invented proof
   ---
-  duration_ms: 0.365212
+  duration_ms: 0.408062
   type: 'test'
   ...
 # Subtest: design-v2-imagery S1: DESIGN.md v4 makes imagery primary with inventory, treatment rules and SVG demotion
 ok 39 - design-v2-imagery S1: DESIGN.md v4 makes imagery primary with inventory, treatment rules and SVG demotion
   ---
-  duration_ms: 2.298433
+  duration_ms: 7.269198
   type: 'test'
   ...
 # Subtest: design-v2-imagery S2: operator render set exports four non-empty base64 strings
 ok 40 - design-v2-imagery S2: operator render set exports four non-empty base64 strings
   ---
-  duration_ms: 0.237889
+  duration_ms: 0.372068
   type: 'test'
   ...
 # Subtest: design-v2-imagery S3: /img/patch-hero.webp answers 200 image/webp with the export bytes
 ok 41 - design-v2-imagery S3: /img/patch-hero.webp answers 200 image/webp with the export bytes
   ---
-  duration_ms: 27.365086
+  duration_ms: 32.062737
   type: 'test'
   ...
 # Subtest: design-v2-imagery S3: /img/patch-exploded.webp answers 200 image/webp with the export bytes
 ok 42 - design-v2-imagery S3: /img/patch-exploded.webp answers 200 image/webp with the export bytes
   ---
-  duration_ms: 2.822104
+  duration_ms: 2.891645
   type: 'test'
   ...
 # Subtest: design-v2-imagery S3: /img/patch-on-skin.webp answers 200 image/webp with the export bytes
 ok 43 - design-v2-imagery S3: /img/patch-on-skin.webp answers 200 image/webp with the export bytes
   ---
-  duration_ms: 0.786018
+  duration_ms: 0.879048
   type: 'test'
   ...
 # Subtest: design-v2-imagery S3: /img/network-scene.webp answers 200 image/webp with the export bytes
 ok 44 - design-v2-imagery S3: /img/network-scene.webp answers 200 image/webp with the export bytes
   ---
-  duration_ms: 0.893209
+  duration_ms: 1.035663
   type: 'test'
   ...
 # Subtest: design-v2-imagery S2: served page references all four image paths
 ok 45 - design-v2-imagery S2: served page references all four image paths
   ---
-  duration_ms: 1.064909
+  duration_ms: 1.496103
   type: 'test'
   ...
 # Subtest: design-v2-imagery S2: hero, \#patch, wear story and \#how carry their renders
 ok 46 - design-v2-imagery S2: hero, \#patch, wear story and \#how carry their renders
   ---
-  duration_ms: 0.21816
+  duration_ms: 0.333049
   type: 'test'
   ...
 # Subtest: design-v2-imagery S2: every render is an <img> with calm, hype-free alt text
 ok 47 - design-v2-imagery S2: every render is an <img> with calm, hype-free alt text
   ---
-  duration_ms: 0.70794
+  duration_ms: 0.826168
   type: 'test'
   ...
 # Subtest: design-v2-imagery S2: the live demo keeps its functional packet visualization
 ok 48 - design-v2-imagery S2: the live demo keeps its functional packet visualization
   ---
-  duration_ms: 0.401877
+  duration_ms: 0.492538
   type: 'test'
   ...
 # Subtest: design-v2-imagery S3: no other new routes; unknown /img path is not served as webp
 ok 49 - design-v2-imagery S3: no other new routes; unknown /img path is not served as webp
   ---
-  duration_ms: 0.39682
+  duration_ms: 0.479579
   type: 'test'
   ...
 # Subtest: design-v2-imagery S3: existing png routes and SEO layer are unchanged
 ok 50 - design-v2-imagery S3: existing png routes and SEO layer are unchanged
   ---
-  duration_ms: 3.381729
+  duration_ms: 3.911674
   type: 'test'
   ...
 # Subtest: design-v2-imagery S3: new copy keeps brand naming and avoids hype words
 ok 51 - design-v2-imagery S3: new copy keeps brand naming and avoids hype words
   ---
-  duration_ms: 0.387195
+  duration_ms: 0.365758
   type: 'test'
   ...
 # Subtest: S1: hero patch render is larger than the v2.1 640 px cap
 ok 52 - S1: hero patch render is larger than the v2.1 640 px cap
   ---
-  duration_ms: 1.143037
+  duration_ms: 1.102673
   type: 'test'
   ...
 # Subtest: S1: the hero image is still the eager, high priority patch-hero render
 ok 53 - S1: the hero image is still the eager, high priority patch-hero render
   ---
-  duration_ms: 0.540276
+  duration_ms: 0.342744
   type: 'test'
   ...
 # Subtest: S1: at desktop the product column is at least as wide as the headline column
 ok 54 - S1: at desktop the product column is at least as wide as the headline column
   ---
-  duration_ms: 0.197418
+  duration_ms: 0.22034
   type: 'test'
   ...
 # Subtest: S1: on mobile the product follows the headline directly, ahead of lede, chips and CTA
 ok 55 - S1: on mobile the product follows the headline directly, ahead of lede, chips and CTA
   ---
-  duration_ms: 0.262937
+  duration_ms: 0.271917
   type: 'test'
   ...
 # Subtest: S1: the headline does not push the product below the fold
 ok 56 - S1: the headline does not push the product below the fold
   ---
-  duration_ms: 0.482359
+  duration_ms: 0.526159
   type: 'test'
   ...
 # Subtest: S1: the page keeps one h1 with its v2.1 copy
 ok 57 - S1: the page keeps one h1 with its v2.1 copy
   ---
-  duration_ms: 0.19179
+  duration_ms: 0.222714
   type: 'test'
   ...
 # Subtest: S2: display type is reined in: h1 and h2 caps below the v2.1 values
 ok 58 - S2: display type is reined in: h1 and h2 caps below the v2.1 values
   ---
-  duration_ms: 0.276337
+  duration_ms: 0.270987
   type: 'test'
   ...
 # Subtest: S2: section padding is tighter than the v2.1 160 px ceiling
 ok 59 - S2: section padding is tighter than the v2.1 160 px ceiling
   ---
-  duration_ms: 0.177979
+  duration_ms: 0.399629
   type: 'test'
   ...
 # Subtest: S2: sections carry more supporting content than v2.1 (hero adds a spec strip or facts row)
 ok 60 - S2: sections carry more supporting content than v2.1 (hero adds a spec strip or facts row)
   ---
-  duration_ms: 0.346033
+  duration_ms: 0.40691
   type: 'test'
   ...
 # Subtest: S2: imagery stays primary, no flat SVG as a section main visual (L-1)
 ok 61 - S2: imagery stays primary, no flat SVG as a section main visual (L-1)
   ---
-  duration_ms: 0.963305
+  duration_ms: 0.663314
   type: 'test'
   ...
 # Subtest: S2: no new copy invents proof or uses hype words
 ok 62 - S2: no new copy invents proof or uses hype words
   ---
-  duration_ms: 1.42974
+  duration_ms: 1.550625
   type: 'test'
   ...
 # Subtest: S2: DESIGN.md encodes hero product scale, section density and display type rule
 ok 63 - S2: DESIGN.md encodes hero product scale, section density and display type rule
   ---
-  duration_ms: 0.255456
+  duration_ms: 0.345088
   type: 'test'
   ...
 # Subtest: S2: DESIGN.md keeps physical contact, limb framing and locked brand tokens
 ok 64 - S2: DESIGN.md keeps physical contact, limb framing and locked brand tokens
   ---
-  duration_ms: 0.148705
+  duration_ms: 0.185568
   type: 'test'
   ...
 # Subtest: S2: brand tokens stay locked in the page css
 ok 65 - S2: brand tokens stay locked in the page css
   ---
-  duration_ms: 0.307154
+  duration_ms: 0.386279
   type: 'test'
   ...
 # Subtest: S3: renders keep v2.1 placement rules: no frames, shadows or filters on images (L-2)
 ok 66 - S3: renders keep v2.1 placement rules: no frames, shadows or filters on images (L-2)
   ---
-  duration_ms: 0.5818
+  duration_ms: 0.582443
   type: 'test'
   ...
 # Subtest: S3: limb close up framing stays on the page (L-3 as amended)
 ok 67 - S3: limb close up framing stays on the page (L-3 as amended)
   ---
-  duration_ms: 0.177288
+  duration_ms: 0.156415
   type: 'test'
   ...
 # Subtest: S4: committed station packets carry the Verified learnings section
 ok 68 - S4: committed station packets carry the Verified learnings section
   ---
-  duration_ms: 0.790244
+  duration_ms: 0.699148
   type: 'test'
   ...
 # Subtest: S1: no 38 mm, 4.2 mm, diameter entry, diameter symbol or disc language anywhere in the copy set
 ok 69 - S1: no 38 mm, 4.2 mm, diameter entry, diameter symbol or disc language anywhere in the copy set
   ---
-  duration_ms: 28.760064
+  duration_ms: 29.138213
   type: 'test'
   ...
 # Subtest: S1: src/facts.js carries no diameter or 4.2 mm thickness field and states the 2.5 mm profile
 ok 70 - S1: src/facts.js carries no diameter or 4.2 mm thickness field and states the 2.5 mm profile
   ---
-  duration_ms: 0.286153
+  duration_ms: 0.36736
   type: 'test'
   ...
 # Subtest: S1: layer copy states five layers at a 2.5 mm profile; no width figure is invented
 ok 71 - S1: layer copy states five layers at a 2.5 mm profile; no width figure is invented
   ---
-  duration_ms: 1.381438
+  duration_ms: 1.883534
   type: 'test'
   ...
 # Subtest: S1: BRAND.md and DESIGN.md state the square product; DESIGN.md is bumped to v4
 ok 72 - S1: BRAND.md and DESIGN.md state the square product; DESIGN.md is bumped to v4
   ---
-  duration_ms: 0.343439
+  duration_ms: 0.474692
   type: 'test'
   ...
 # Subtest: S2: the hero spec strip states 2.5 mm profile, 14 days and IP67 with no width entry
 ok 73 - S2: the hero spec strip states 2.5 mm profile, 14 days and IP67 with no width entry
   ---
-  duration_ms: 0.294325
+  duration_ms: 1.124545
   type: 'test'
   ...
 # Subtest: S2: the second spec strip carries no diameter and no 4.2 mm, and keeps wear, weight, water and radios
 ok 74 - S2: the second spec strip carries no diameter and no 4.2 mm, and keeps wear, weight, water and radios
   ---
-  duration_ms: 0.242606
+  duration_ms: 0.277817
   type: 'test'
   ...
 # Subtest: S2: the specs table has no Diameter row and lists the 2.5 mm profile
 ok 75 - S2: the specs table has no Diameter row and lists the 2.5 mm profile
   ---
-  duration_ms: 1.576181
+  duration_ms: 0.159809
   type: 'test'
   ...
 # Subtest: S3: src/images.js exports the four image constants as non-empty base64 strings
 ok 76 - S3: src/images.js exports the four image constants as non-empty base64 strings
   ---
-  duration_ms: 0.133191
+  duration_ms: 0.143695
   type: 'test'
   ...
 # Subtest: S3: /img/patch-hero.webp answers 200 image/webp with a payload between 10 KB and 160 KB
 ok 77 - S3: /img/patch-hero.webp answers 200 image/webp with a payload between 10 KB and 160 KB
   ---
-  duration_ms: 4.207517
+  duration_ms: 4.443251
   type: 'test'
   ...
 # Subtest: S3: /img/patch-exploded.webp answers 200 image/webp with a payload between 10 KB and 160 KB
 ok 78 - S3: /img/patch-exploded.webp answers 200 image/webp with a payload between 10 KB and 160 KB
   ---
-  duration_ms: 1.144339
+  duration_ms: 1.462913
   type: 'test'
   ...
 # Subtest: S3: /img/patch-on-skin.webp answers 200 image/webp with a payload between 10 KB and 160 KB
 ok 79 - S3: /img/patch-on-skin.webp answers 200 image/webp with a payload between 10 KB and 160 KB
   ---
-  duration_ms: 0.65549
+  duration_ms: 0.88
   type: 'test'
   ...
 # Subtest: S3: /img/network-scene.webp answers 200 image/webp with a payload between 10 KB and 160 KB
 ok 80 - S3: /img/network-scene.webp answers 200 image/webp with a payload between 10 KB and 160 KB
   ---
-  duration_ms: 0.738737
+  duration_ms: 0.975032
   type: 'test'
   ...
 # Subtest: S3: the render set is not the v2.1 set (each payload differs from the retired bytes)
 ok 81 - S3: the render set is not the v2.1 set (each payload differs from the retired bytes)
   ---
-  duration_ms: 2.649423
+  duration_ms: 3.918534
   type: 'test'
   ...
 # Subtest: S3: alt texts describe the square product, are calm, and the on-skin alt names a limb close up
 ok 82 - S3: alt texts describe the square product, are calm, and the on-skin alt names a limb close up
   ---
-  duration_ms: 0.633558
+  duration_ms: 0.761331
   type: 'test'
   ...
 # Subtest: S3: routes are unchanged and the images carry no text or captions in the page markup
 ok 83 - S3: routes are unchanged and the images carry no text or captions in the page markup
   ---
-  duration_ms: 0.475509
+  duration_ms: 0.576725
   type: 'test'
   ...
 # Subtest: S4: facts, the page layer list and llms-full.txt state exactly the five layers in order
 ok 84 - S4: facts, the page layer list and llms-full.txt state exactly the five layers in order
   ---
-  duration_ms: 0.546315
+  duration_ms: 0.623995
   type: 'test'
   ...
 # Subtest: S4: no retired layer names remain
 ok 85 - S4: no retired layer names remain
   ---
-  duration_ms: 0.522509
+  duration_ms: 0.632869
   type: 'test'
   ...
 # Subtest: S5: committed wo-gh-6 packets carry the Verified learnings section including L-6
 ok 86 - S5: committed wo-gh-6 packets carry the Verified learnings section including L-6
   ---
-  duration_ms: 0.633487
+  duration_ms: 0.846169
   type: 'test'
   ...
 # Subtest: S5: when reviewer-design has reviewed, its review compares against design/reference/ by category
 ok 87 - S5: when reviewer-design has reviewed, its review compares against design/reference/ by category
   ---
-  duration_ms: 0.257159
+  duration_ms: 0.350836
   type: 'test'
   ...
 # Subtest: S6: the footer credit sentence is byte identical
 ok 88 - S6: the footer credit sentence is byte identical
   ---
-  duration_ms: 0.253964
+  duration_ms: 0.318778
   type: 'test'
   ...
 # Subtest: frozen: brand tokens and the calm voice hold in the v4 page
 ok 89 - frozen: brand tokens and the calm voice hold in the v4 page
   ---
-  duration_ms: 4.297724
+  duration_ms: 2.635852
   type: 'test'
   ...
 # Subtest: frozen: MCP tool descriptions that state the form no longer say disc or 38 mm
 ok 90 - frozen: MCP tool descriptions that state the form no longer say disc or 38 mm
   ---
-  duration_ms: 0.823875
+  duration_ms: 0.871316
   type: 'test'
   ...
 # Subtest: S8: src/page.js does not contain the \#patch,\#how 128px padding override
 ok 91 - S8: src/page.js does not contain the \#patch,\#how 128px padding override
   ---
-  duration_ms: 0.345842
+  duration_ms: 0.695343
   type: 'test'
   ...
 # Subtest: S8: no rule gives \#patch or \#how a vertical padding above 96 px
 ok 92 - S8: no rule gives \#patch or \#how a vertical padding above 96 px
   ---
-  duration_ms: 0.410941
+  duration_ms: 0.552969
   type: 'test'
   ...
 # Subtest: S9: the hero and on-skin payloads are byte identical to the first round
 ok 93 - S9: the hero and on-skin payloads are byte identical to the first round
   ---
-  duration_ms: 0.363369
+  duration_ms: 0.531106
   type: 'test'
   ...
 # Subtest: S9: the exploded and network payloads are the corrected ones, not the first round bytes
 ok 94 - S9: the exploded and network payloads are the corrected ones, not the first round bytes
   ---
-  duration_ms: 0.212822
+  duration_ms: 0.37967
   type: 'test'
   ...
 # Subtest: S9: every payload decodes to a WebP between 10 KB and 160 KB
 ok 95 - S9: every payload decodes to a WebP between 10 KB and 160 KB
   ---
-  duration_ms: 0.100652
+  duration_ms: 0.230676
   type: 'test'
   ...
 # Subtest: S10: the exploded image is 1400x1400 and the network image 1600x893, in file and in markup
 ok 96 - S10: the exploded image is 1400x1400 and the network image 1600x893, in file and in markup
   ---
-  duration_ms: 0.347275
+  duration_ms: 0.563705
   type: 'test'
   ...
 # Subtest: S10: routes are unchanged and alt texts are the delivered ones
 ok 97 - S10: routes are unchanged and alt texts are the delivered ones
   ---
-  duration_ms: 0.111568
+  duration_ms: 0.19377
   type: 'test'
   ...
 # Subtest: S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/
 not ok 98 - S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/
   ---
-  duration_ms: 3.781915
+  duration_ms: 7.933634
   type: 'test'
   location: '/home/runner/work/sentia/sentia/tests/design-v4-square-product.test.js:431:1'
   failureType: 'testCodeFailure'
@@ -620,605 +620,622 @@ not ok 98 - S11: when reviewer-design has reviewed, it addresses and clears all 
     Test.run (node:internal/test_runner/test:1101:12)
     async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
   ...
+# fatal: bad revision '89259c9'
 # Subtest: home S1/R1: exactly one new section, between \#patch and \#how, with its own aria-label; no other section changes
 ok 99 - home S1/R1: exactly one new section, between \#patch and \#how, with its own aria-label; no other section changes
   ---
-  duration_ms: 2.013612
+  duration_ms: 2.681991
   type: 'test'
   ...
 # Subtest: home S1/R1: the nav is unchanged
 ok 100 - home S1/R1: the nav is unchanged
   ---
-  duration_ms: 0.354145
+  duration_ms: 0.420391
   type: 'test'
   ...
 # Subtest: home S1/R6: the five FACTS layer names are real buttons in stack order, each with its FACTS detail
 ok 101 - home S1/R6: the five FACTS layer names are real buttons in stack order, each with its FACTS detail
   ---
-  duration_ms: 0.580047
+  duration_ms: 0.690284
   type: 'test'
   ...
 # Subtest: home S1/R7: copy states the five layers and the 2.5 mm profile, and names no capability outside FACTS
 ok 102 - home S1/R7: copy states the five layers and the 2.5 mm profile, and names no capability outside FACTS
   ---
-  duration_ms: 0.485584
+  duration_ms: 0.624967
   type: 'test'
   ...
 # Subtest: home S1/S12/R7: exactly one link in the section leads to /take-apart, href exactly /take-apart
 ok 103 - home S1/S12/R7: exactly one link in the section leads to /take-apart, href exactly /take-apart
   ---
-  duration_ms: 0.278761
+  duration_ms: 2.195541
   type: 'test'
   ...
 # Subtest: home R1: the nav keeps the only literal href="/take-apart" (older tests S10 and bundling S4 count it as one)
 ok 104 - home R1: the nav keeps the only literal href="/take-apart" (older tests S10 and bundling S4 count it as one)
   ---
-  duration_ms: 1.723444
+  duration_ms: 0.330426
   type: 'test'
   ...
 # Subtest: home S2/R3: the served model twin equals src/take-apart-model.js layer centres at t=0, t=1 and samples
 ok 105 - home S2/R3: the served model twin equals src/take-apart-model.js layer centres at t=0, t=1 and samples
   ---
-  duration_ms: 2.539788
+  duration_ms: 5.004758
   type: 'test'
   ...
 # Subtest: home S2/R3: assembled stacks flush at the 2.5 mm profile and exploded adds the study gaps
 ok 106 - home S2/R3: assembled stacks flush at the 2.5 mm profile and exploded adds the study gaps
   ---
-  duration_ms: 0.157779
+  duration_ms: 0.189164
   type: 'test'
   ...
 # Subtest: home S2/R3: the home client takes positions from the one model and re-declares none of its constants
 ok 107 - home S2/R3: the home client takes positions from the one model and re-declares none of its constants
   ---
-  duration_ms: 1.523412
+  duration_ms: 1.88085
   type: 'test'
   ...
 # Subtest: home S5/R6: the home client uses the model focus semantics (focusTransform and materialState) and wires hover, focus and clear
 ok 108 - home S5/R6: the home client uses the model focus semantics (focusTransform and materialState) and wires hover, focus and clear
   ---
-  duration_ms: 0.875673
+  duration_ms: 1.389393
   type: 'test'
   ...
 # Subtest: home S3/R4/R12: a labelled range slider 0..100 sits in the section, 44 px tall
 ok 109 - home S3/R4/R12: a labelled range slider 0..100 sits in the section, 44 px tall
   ---
-  duration_ms: 0.406384
+  duration_ms: 0.478187
   type: 'test'
   ...
 # Subtest: home S4/R5: the client runs the first view animation once, honours reduced motion, and stops on interaction
 ok 110 - home S4/R5: the client runs the first view animation once, honours reduced motion, and stops on interaction
   ---
-  duration_ms: 0.76754
+  duration_ms: 0.943274
   type: 'test'
   ...
 # Subtest: home S6/R8: the document has no eager reference to the 3D chain: no script src, link preload or static import
 ok 111 - home S6/R8: the document has no eager reference to the 3D chain: no script src, link preload or static import
   ---
-  duration_ms: 0.516561
+  duration_ms: 0.687561
   type: 'test'
   ...
 # Subtest: home S6/R8: the document carries no three, loader, utils or GLB bytes
 ok 112 - home S6/R8: the document carries no three, loader, utils or GLB bytes
   ---
-  duration_ms: 11.097928
+  duration_ms: 16.385815
   type: 'test'
   ...
 # Subtest: home S6/R8: the take apart import map pattern is present and the gate is an IntersectionObserver with a dynamic import
 ok 113 - home S6/R8: the take apart import map pattern is present and the gate is an IntersectionObserver with a dynamic import
   ---
-  duration_ms: 0.971989
+  duration_ms: 1.108773
   type: 'test'
   ...
 # Subtest: home R2/R8: no new vendored copy and no second GLB anywhere in the repo
 ok 114 - home R2/R8: no new vendored copy and no second GLB anywhere in the repo
   ---
-  duration_ms: 108.093393
+  duration_ms: 121.761309
   type: 'test'
   ...
 # Subtest: home R8: the 3D chain routes serve the base bytes: three, loader, utils and the GLB
 ok 115 - home R8: the 3D chain routes serve the base bytes: three, loader, utils and the GLB
   ---
-  duration_ms: 127.421637
+  duration_ms: 157.659565
   type: 'test'
   ...
 # Subtest: home S7/R9: the section HTML carries the exploded render as an image from a new site route, never inlined
 ok 116 - home S7/R9: the section HTML carries the exploded render as an image from a new site route, never inlined
   ---
-  duration_ms: 0.454116
+  duration_ms: 0.375292
   type: 'test'
   ...
 # Subtest: home S7/R9/R11: the fallback image route serves a derived re-encode of the exploded render, at most 400 KB, cached
-ok 117 - home S7/R9/R11: the fallback image route serves a derived re-encode of the exploded render, at most 400 KB, cached
+not ok 117 - home S7/R9/R11: the fallback image route serves a derived re-encode of the exploded render, at most 400 KB, cached
   ---
-  duration_ms: 3.324503
+  duration_ms: 3.815029
   type: 'test'
+  location: '/home/runner/work/sentia/sentia/tests/home-layered-view.test.js:367:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the frozen source render on this branch (including PNG metadata)
+    
+    752674 !== 752703
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 752703
+  actual: 752674
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/runner/work/sentia/sentia/tests/home-layered-view.test.js:377:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
   ...
 # Subtest: home S7/R9: the image bytes live in a new module, and src/images.js keeps its four exports
 ok 118 - home S7/R9: the image bytes live in a new module, and src/images.js keeps its four exports
   ---
-  duration_ms: 33.553737
+  duration_ms: 34.896666
   type: 'test'
   ...
 # Subtest: home S7/R9: without JavaScript the section reads complete: image, five names with details, copy, link
 ok 119 - home S7/R9: without JavaScript the section reads complete: image, five names with details, copy, link
   ---
-  duration_ms: 0.365903
+  duration_ms: 0.385348
   type: 'test'
   ...
 # Subtest: home S7/R9: a WebGL or GLB failure is caught, and the client never removes the layer list
 ok 120 - home S7/R9: a WebGL or GLB failure is caught, and the client never removes the layer list
   ---
-  duration_ms: 0.865778
+  duration_ms: 0.822774
   type: 'test'
   ...
 # Subtest: home S7/SEO: the facts generated head, JSON-LD and llms files do not depend on the canvas and are unchanged
 ok 121 - home S7/SEO: the facts generated head, JSON-LD and llms files do not depend on the canvas and are unchanged
   ---
-  duration_ms: 1.156697
+  duration_ms: 1.211977
   type: 'test'
   ...
 # Subtest: home S8/R10: page title and footer credit paragraph are byte identical
 ok 122 - home S8/R10: page title and footer credit paragraph are byte identical
   ---
-  duration_ms: 0.166422
+  duration_ms: 0.187772
   type: 'test'
   ...
 # Subtest: home S8/R10: every pre existing section is byte identical to the base head
 ok 123 - home S8/R10: every pre existing section is byte identical to the base head
   ---
-  duration_ms: 0.316208
+  duration_ms: 0.334651
   type: 'test'
   ...
 # Subtest: home S8/R10: the four image routes serve byte identical responses
 ok 124 - home S8/R10: the four image routes serve byte identical responses
   ---
-  duration_ms: 1.808763
+  duration_ms: 2.293539
   type: 'test'
   ...
 # Subtest: home S8/R10: /take-apart page, client, model twin and the GLB route are byte identical to the base head
 ok 125 - home S8/R10: /take-apart page, client, model twin and the GLB route are byte identical to the base head
   ---
-  duration_ms: 60.622184
+  duration_ms: 94.984436
   type: 'test'
   ...
 # Subtest: home S8/R10: the model module values the home view reuses are unchanged
 ok 126 - home S8/R10: the model module values the home view reuses are unchanged
   ---
-  duration_ms: 0.170537
+  duration_ms: 0.207601
   type: 'test'
   ...
 # Subtest: home S9/R11: served home document grows by at most 48 KB over the base head 44,434 bytes
 ok 127 - home S9/R11: served home document grows by at most 48 KB over the base head 44,434 bytes
   ---
-  duration_ms: 0.060141
+  duration_ms: 0.1265
   type: 'test'
   ...
 # Subtest: home S9/R11: lazy 3D payload with the GLB counted once, plus any gated home script, is at most 1,250,000 bytes
 ok 128 - home S9/R11: lazy 3D payload with the GLB counted once, plus any gated home script, is at most 1,250,000 bytes
   ---
-  duration_ms: 108.966453
+  duration_ms: 152.910235
   type: 'test'
   ...
 # Subtest: home S9/R11: the pre existing eager scripts are the only script routes, so no 3D weight reaches the first render
 ok 129 - home S9/R11: the pre existing eager scripts are the only script routes, so no 3D weight reaches the first render
   ---
-  duration_ms: 0.263739
+  duration_ms: 0.323024
   type: 'test'
   ...
 # Subtest: home R12: layer buttons reach 44 px, the 3 px focus ring stays, contrast pairs meet 4.5 to 1, tokens only
 ok 130 - home R12: layer buttons reach 44 px, the 3 px focus ring stays, contrast pairs meet 4.5 to 1, tokens only
   ---
-  duration_ms: 0.772798
+  duration_ms: 0.953269
   type: 'test'
   ...
 # Subtest: home R12: the canvas is hidden or labelled, reduced motion is honoured in CSS and script, no positive tabindex
 ok 131 - home R12: the canvas is hidden or labelled, reduced motion is honoured in CSS and script, no positive tabindex
   ---
-  duration_ms: 0.6222
+  duration_ms: 0.723614
   type: 'test'
   ...
 # Subtest: home R12: spacing follows the 8 px rhythm in the section inline styles
 ok 132 - home R12: spacing follows the 8 px rhythm in the section inline styles
   ---
-  duration_ms: 0.159521
+  duration_ms: 0.214432
   type: 'test'
   ...
 # Subtest: home S10/R13: bundle-build.log records the production bundle with exit status 0 and zero local patches
 ok 133 - home S10/R13: bundle-build.log records the production bundle with exit status 0 and zero local patches
   ---
-  duration_ms: 0.757735
+  duration_ms: 0.864697
   type: 'test'
   ...
 # Subtest: home S10/R13: browser-pass.log records zero errors, the section, the lazy gate, one GLB fetch, slider, reduced motion, legend
 ok 134 - home S10/R13: browser-pass.log records zero errors, the section, the lazy gate, one GLB fetch, slider, reduced motion, legend
   ---
-  duration_ms: 0.64219
+  duration_ms: 0.71369
   type: 'test'
   ...
 # Subtest: home S10/R11/R13: the browser pass states the measured payload figures
 ok 135 - home S10/R11/R13: the browser pass states the measured payload figures
   ---
-  duration_ms: 0.237159
+  duration_ms: 0.99404
   type: 'test'
   ...
 # Subtest: home S10/R13: assembled and exploded screenshots of the section exist, show a rendered product, and differ
 ok 136 - home S10/R13: assembled and exploded screenshots of the section exist, show a rendered product, and differ
   ---
-  duration_ms: 209.644971
+  duration_ms: 383.611446
   type: 'test'
   ...
 # Subtest: home S10/R13: scripts/capture-home.mjs is the bundled capture of record and does not import the unbundled Worker
 ok 137 - home S10/R13: scripts/capture-home.mjs is the bundled capture of record and does not import the unbundled Worker
   ---
-  duration_ms: 0.537187
+  duration_ms: 0.615032
   type: 'test'
   ...
 # Subtest: home R13: wrangler.toml still points at src/index.js and no source carries a deploy patch marker
 ok 138 - home R13: wrangler.toml still points at src/index.js and no source carries a deploy patch marker
   ---
-  duration_ms: 1.667667
+  duration_ms: 2.515871
   type: 'test'
   ...
 # Subtest: home R14: the product test inputs exist and the fallback is the model exploded render
 ok 139 - home R14: the product test inputs exist and the fallback is the model exploded render
   ---
-  duration_ms: 0.122664
+  duration_ms: 0.171186
   type: 'test'
   ...
 # Subtest: home S12/R16: the new section label computes to 11 px, uppercase, 0.16 em, system mono
 ok 140 - home S12/R16: the new section label computes to 11 px, uppercase, 0.16 em, system mono
   ---
-  duration_ms: 1.372242
+  duration_ms: 2.034169
   type: 'test'
   ...
 # Subtest: home S12/R16: the label colour is a design token with contrast at or above 4.5 to 1 on paper
 ok 141 - home S12/R16: the label colour is a design token with contrast at or above 4.5 to 1 on paper
   ---
-  duration_ms: 0.687133
+  duration_ms: 1.138667
   type: 'test'
   ...
 # Subtest: home S12/R16: the label rule is scoped to the new section, so existing label rules and sections stay unchanged
 ok 142 - home S12/R16: the label rule is scoped to the new section, so existing label rules and sections stay unchanged
   ---
-  duration_ms: 1.083759
+  duration_ms: 0.852228
   type: 'test'
   ...
 # Subtest: home S11/R14: the scene has a directional key, a shaping fill that is not the only ambient, and an environment
 ok 143 - home S11/R14: the scene has a directional key, a shaping fill that is not the only ambient, and an environment
   ---
-  duration_ms: 0.767464
+  duration_ms: 1.005677
   type: 'test'
   ...
 # Subtest: home S11/R14: the films are handled as translucent materials, and the model fade rules still apply
 ok 144 - home S11/R14: the films are handled as translucent materials, and the model fade rules still apply
   ---
-  duration_ms: 0.511939
+  duration_ms: 0.632669
   type: 'test'
   ...
 # Subtest: home S11/R14: no GLB, model, take apart or vendored source is touched by the round
 ok 145 - home S11/R14: no GLB, model, take apart or vendored source is touched by the round
   ---
-  duration_ms: 15.443603
+  duration_ms: 9.222376
   type: 'test'
   ...
 # Subtest: home S13/R13: .gitignore negations let the evidence logs be tracked
 ok 146 - home S13/R13: .gitignore negations let the evidence logs be tracked
   ---
-  duration_ms: 34.947999
+  duration_ms: 28.986915
   type: 'test'
   ...
 # Subtest: home S13/R13: the evidence logs are tracked or staged in git, in full
 ok 147 - home S13/R13: the evidence logs are tracked or staged in git, in full
   ---
-  duration_ms: 17.59782
+  duration_ms: 10.573871
   type: 'test'
   ...
 # Subtest: home S13/R11/R13: the run report states the three measured figures against their budgets, matching the final tree
 ok 148 - home S13/R11/R13: the run report states the three measured figures against their budgets, matching the final tree
   ---
-  duration_ms: 106.475502
+  duration_ms: 141.694121
   type: 'test'
   ...
 # Subtest: home S13/R15: the run report itemizes all three baseline suite failures by name as settlement exceptions
 ok 149 - home S13/R15: the run report itemizes all three baseline suite failures by name as settlement exceptions
   ---
-  duration_ms: 0.438309
+  duration_ms: 0.510365
   type: 'test'
   ...
 # Subtest: home S13/R15: the sibling stack evidence this order must not edit is still byte identical to the base
 ok 150 - home S13/R15: the sibling stack evidence this order must not edit is still byte identical to the base
   ---
-  duration_ms: 15.380438
+  duration_ms: 9.558079
   type: 'test'
   ...
 # Subtest: mcp-server S1: initialize returns the protocol version and server name
 ok 151 - mcp-server S1: initialize returns the protocol version and server name
   ---
-  duration_ms: 23.029715
+  duration_ms: 24.577656
   type: 'test'
   ...
 # Subtest: mcp-server S2: tools/list returns exactly the 6 tools with schemas
 ok 152 - mcp-server S2: tools/list returns exactly the 6 tools with schemas
   ---
-  duration_ms: 1.156236
+  duration_ms: 1.428001
   type: 'test'
   ...
 # Subtest: mcp-server S3: get_patch_status returns the patch and its battery
 ok 153 - mcp-server S3: get_patch_status returns the patch and its battery
   ---
-  duration_ms: 1.973592
+  duration_ms: 2.416513
   type: 'test'
   ...
 # Subtest: mcp-server S4: simulate_uplink round trips on both paths
 ok 154 - mcp-server S4: simulate_uplink round trips on both paths
   ---
-  duration_ms: 3.20323
+  duration_ms: 4.042079
   type: 'test'
   ...
 # Subtest: mcp-server S5: errors are proper JSON-RPC errors, notifications get 202 empty
 ok 155 - mcp-server S5: errors are proper JSON-RPC errors, notifications get 202 empty
   ---
-  duration_ms: 2.889285
+  duration_ms: 5.827637
   type: 'test'
   ...
 # Subtest: mcp-server: ping returns an empty result
 ok 156 - mcp-server: ping returns an empty result
   ---
-  duration_ms: 0.696542
+  duration_ms: 0.903634
   type: 'test'
   ...
 # Subtest: site-credit S1: the served home page footer carries the new credit byte exact
 ok 157 - site-credit S1: the served home page footer carries the new credit byte exact
   ---
-  duration_ms: 22.711004
+  duration_ms: 24.163335
   type: 'test'
   ...
 # Subtest: site-credit S1: the ANVIL link is intact and the sentence sits in one footer paragraph
 ok 158 - site-credit S1: the ANVIL link is intact and the sentence sits in one footer paragraph
   ---
-  duration_ms: 0.401517
+  duration_ms: 0.454762
   type: 'test'
   ...
 # Subtest: site-credit S2: the old sentence no longer ends the credit; related sentences are unchanged
 ok 159 - site-credit S2: the old sentence no longer ends the credit; related sentences are unchanged
   ---
-  duration_ms: 0.533466
+  duration_ms: 0.57374
   type: 'test'
   ...
 # Subtest: site-credit S2: /llms.txt does not carry the credit sentence and still answers 200
 ok 160 - site-credit S2: /llms.txt does not carry the credit sentence and still answers 200
   ---
-  duration_ms: 0.635269
+  duration_ms: 0.801802
   type: 'test'
   ...
 # Subtest: site-credit S2: /img/patch-hero.webp still answers 200 image/webp
 ok 161 - site-credit S2: /img/patch-hero.webp still answers 200 image/webp
   ---
-  duration_ms: 3.239695
+  duration_ms: 3.399456
   type: 'test'
   ...
 # Subtest: site-credit S2: /img/patch-exploded.webp still answers 200 image/webp
 ok 162 - site-credit S2: /img/patch-exploded.webp still answers 200 image/webp
   ---
-  duration_ms: 0.724745
+  duration_ms: 0.922553
   type: 'test'
   ...
 # Subtest: site-credit S2: /img/patch-on-skin.webp still answers 200 image/webp
 ok 163 - site-credit S2: /img/patch-on-skin.webp still answers 200 image/webp
   ---
-  duration_ms: 0.548389
+  duration_ms: 0.642783
   type: 'test'
   ...
 # Subtest: site-credit S2: /img/network-scene.webp still answers 200 image/webp
 ok 164 - site-credit S2: /img/network-scene.webp still answers 200 image/webp
   ---
-  duration_ms: 0.625365
+  duration_ms: 0.872698
   type: 'test'
   ...
 # Subtest: bundling R1: no source stringifies a function to produce served bytes
 ok 165 - bundling R1: no source stringifies a function to produce served bytes
   ---
-  duration_ms: 105.949129
+  duration_ms: 147.548247
   type: 'test'
   ...
 # Subtest: bundling R1: served client and model text carry no bundler helper and no renamed collision
 ok 166 - bundling R1: served client and model text carry no bundler helper and no renamed collision
   ---
-  duration_ms: 15.949057
+  duration_ms: 21.37884
   type: 'test'
   ...
 # Subtest: bundling R1: served model text installs in a bare browser-like global with nothing from Worker scope
 ok 167 - bundling R1: served model text installs in a bare browser-like global with nothing from Worker scope
   ---
-  duration_ms: 1.240835
+  duration_ms: 1.88123
   type: 'test'
   ...
 # Subtest: bundling R1: served client text is a standalone script that parses and names no Worker scope identifier
 ok 168 - bundling R1: served client text is a standalone script that parses and names no Worker scope identifier
   ---
-  duration_ms: 1.683113
+  duration_ms: 2.470994
   type: 'test'
   ...
 # Subtest: bundling R2: no module the Worker bundles holds a statically resolvable import of the vendor route
 ok 169 - bundling R2: no module the Worker bundles holds a statically resolvable import of the vendor route
   ---
-  duration_ms: 32.312682
+  duration_ms: 53.456439
   type: 'test'
   ...
 # Subtest: bundling R2/S3: the served client loads three.js from the /vendor/three.module.min.js route
 ok 170 - bundling R2/S3: the served client loads three.js from the /vendor/three.module.min.js route
   ---
-  duration_ms: 0.696372
+  duration_ms: 0.961031
   type: 'test'
   ...
 # Subtest: bundling R2/R3: the vendor route is unchanged: 200, 670681 decoded bytes, pinned sha256, long cache
 ok 171 - bundling R2/R3: the vendor route is unchanged: 200, 670681 decoded bytes, pinned sha256, long cache
   ---
-  duration_ms: 39.099706
+  duration_ms: 84.875221
   type: 'test'
   ...
 # Subtest: bundling R3: take apart routes keep their response shapes
 ok 172 - bundling R3: take apart routes keep their response shapes
   ---
-  duration_ms: 2.620849
+  duration_ms: 5.400376
   type: 'test'
   ...
 # Subtest: bundling S4: served model matches the Worker model at sampled inputs (parity survives the new mechanism)
 ok 173 - bundling S4: served model matches the Worker model at sampled inputs (parity survives the new mechanism)
   ---
-  duration_ms: 3.910929
+  duration_ms: 4.56951
   type: 'test'
   ...
 # Subtest: bundling S4: no route outside the take apart surface changes: main page keeps its single take apart link
 ok 174 - bundling S4: no route outside the take apart surface changes: main page keeps its single take apart link
   ---
-  duration_ms: 1.789674
+  duration_ms: 1.925086
   type: 'test'
   ...
 # Subtest: bundling S1/R4: bundle-build.log records the real production bundle command with exit status 0 and no patches
 ok 175 - bundling S1/R4: bundle-build.log records the real production bundle command with exit status 0 and no patches
   ---
-  duration_ms: 3.188808
+  duration_ms: 0.82006
   type: 'test'
   ...
 # Subtest: bundling S1/R4: wrangler.toml still points at src/index.js and the repo source carries no deploy patch marker
 ok 176 - bundling S1/R4: wrangler.toml still points at src/index.js and the repo source carries no deploy patch marker
   ---
-  duration_ms: 2.409971
+  duration_ms: 2.678175
   type: 'test'
   ...
 # Subtest: bundling S2/R5: browser-pass.log records the bundled run with zero errors, model defined, scene ready, canvas sized
 ok 177 - bundling S2/R5: browser-pass.log records the bundled run with zero errors, model defined, scene ready, canvas sized
   ---
-  duration_ms: 0.547167
+  duration_ms: 0.63378
   type: 'test'
   ...
 # Subtest: bundling S3: browser-pass.log records the vendor route answering 200 with 670681 decoded bytes
 ok 178 - bundling S3: browser-pass.log records the vendor route answering 200 with 670681 decoded bytes
   ---
-  duration_ms: 0.232612
+  duration_ms: 0.274581
   type: 'test'
   ...
 # Subtest: bundling S2/R5: a committed bundled screenshot shows rendered content in the scene region, not an empty viewport
 ok 179 - bundling S2/R5: a committed bundled screenshot shows rendered content in the scene region, not an empty viewport
   ---
-  duration_ms: 415.925474
+  duration_ms: 600.663937
   type: 'test'
   ...
 # Subtest: bundling R6: the repo records which capture is the evidence of record and it serves the bundled shape
 ok 180 - bundling R6: the repo records which capture is the evidence of record and it serves the bundled shape
   ---
-  duration_ms: 0.807013
+  duration_ms: 1.05363
   type: 'test'
   ...
 # \# patch-one.glb measured size: 386708 bytes (377.6 KB), budget 819200 bytes
 # Subtest: product-model S1: top level nodes are exactly the five layer names in stack order, each parenting meshes, at layerCenterMm(t=0)
 ok 181 - product-model S1: top level nodes are exactly the five layer names in stack order, each parenting meshes, at layerCenterMm(t=0)
   ---
-  duration_ms: 6.994718
+  duration_ms: 5.989409
   type: 'test'
   ...
 # Subtest: product-model S2: true scale, 36 by 36 footprint, 2.5 high, layer thickness order matches the model table
 ok 182 - product-model S2: true scale, 36 by 36 footprint, 2.5 high, layer thickness order matches the model table
   ---
-  duration_ms: 3.837347
+  duration_ms: 3.527768
   type: 'test'
   ...
 # Subtest: product-model S3: /models/patch-one.glb serves the module bytes as model/gltf-binary at or under 800 KB
 ok 183 - product-model S3: /models/patch-one.glb serves the module bytes as model/gltf-binary at or under 800 KB
   ---
-  duration_ms: 74.290687
+  duration_ms: 84.630024
   type: 'test'
   ...
 # Subtest: product-model R4: the asset module follows the codebase binary pattern (one base64 constant, no logic)
 ok 184 - product-model R4: the asset module follows the codebase binary pattern (one base64 constant, no logic)
   ---
-  duration_ms: 6.160628
+  duration_ms: 5.142349
   type: 'test'
   ...
 # Subtest: product-model R4: unknown model routes and the existing routes keep their shape
 ok 185 - product-model R4: unknown model routes and the existing routes keep their shape
   ---
-  duration_ms: 69.801133
+  duration_ms: 75.233967
   type: 'test'
   ...
 # Subtest: product-model S4: the cover carries wordmark and LED as separate elements (at least three meshes or a cover texture)
 ok 186 - product-model S4: the cover carries wordmark and LED as separate elements (at least three meshes or a cover texture)
   ---
-  duration_ms: 1.367856
+  duration_ms: 1.104135
   type: 'test'
   ...
 # Subtest: product-model S5: the board carries a substrate plus components (at least six meshes) inside its envelope
 ok 187 - product-model S5: the board carries a substrate plus components (at least six meshes) inside its envelope
   ---
-  duration_ms: 0.994532
+  duration_ms: 2.385737
   type: 'test'
   ...
 # Subtest: product-model R6: foam is rough, adhesive is translucent, liner is a thin film; no other layer gains text
 ok 188 - product-model R6: foam is rough, adhesive is translucent, liner is a thin film; no other layer gains text
   ---
-  duration_ms: 1.796649
+  duration_ms: 0.637565
   type: 'test'
   ...
 # Subtest: product-model R3: the asset is self contained (no external image or buffer URIs)
 ok 189 - product-model R3: the asset is self contained (no external image or buffer URIs)
   ---
-  duration_ms: 0.925509
+  duration_ms: 0.711536
   type: 'test'
   ...
 # Subtest: product-model R1/S9: the Blender build is committed, deterministic and pinned
 ok 190 - product-model R1/S9: the Blender build is committed, deterministic and pinned
   ---
-  duration_ms: 0.790334
+  duration_ms: 0.63973
   type: 'test'
   ...
 # Subtest: product-model R7: the node name mapping is exported by the model and mirrored byte equal by the browser twin
 ok 191 - product-model R7: the node name mapping is exported by the model and mirrored byte equal by the browser twin
   ---
-  duration_ms: 1.478414
+  duration_ms: 1.268321
   type: 'test'
   ...
 # Subtest: product-model R7/R9: the client loads the GLB route, binds by node name, keeps a procedural fallback
 ok 192 - product-model R7/R9: the client loads the GLB route, binds by node name, keeps a procedural fallback
   ---
-  duration_ms: 0.495679
+  duration_ms: 0.434662
   type: 'test'
   ...
 # Subtest: product-model R8: three stays the pinned vendored core; any loader addon is served and import mapped in the page itself
 ok 193 - product-model R8: three stays the pinned vendored core; any loader addon is served and import mapped in the page itself
   ---
-  duration_ms: 121.571137
+  duration_ms: 123.76972
   type: 'test'
   ...
 # Subtest: product-model R5: no layer other than the cover gains text in the page chrome contract
 ok 194 - product-model R5: no layer other than the cover gains text in the page chrome contract
   ---
-  duration_ms: 0.66151
+  duration_ms: 0.583044
   type: 'test'
   ...
 # Subtest: product-model R11/S6: render-assembled.png exists, is at least 800 by 800, sits on the brand paper \#FAFAF6 and shows a rendered product
 ok 195 - product-model R11/S6: render-assembled.png exists, is at least 800 by 800, sits on the brand paper \#FAFAF6 and shows a rendered product
   ---
-  duration_ms: 91.204106
+  duration_ms: 77.377741
   type: 'test'
   ...
 # Subtest: product-model R11/S6: render-exploded.png exists, is at least 800 by 800, sits on the brand paper \#FAFAF6 and shows a rendered product
 ok 196 - product-model R11/S6: render-exploded.png exists, is at least 800 by 800, sits on the brand paper \#FAFAF6 and shows a rendered product
   ---
-  duration_ms: 78.415903
+  duration_ms: 61.589933
   type: 'test'
   ...
 # Subtest: product-model R11: fidelity-comparison.md records the six comparison points and the adjustments between attempts
 ok 197 - product-model R11: fidelity-comparison.md records the six comparison points and the adjustments between attempts
   ---
-  duration_ms: 0.724148
+  duration_ms: 0.580861
   type: 'test'
   ...
 # Subtest: product-model S7/R13: the bundled browser pass records zero errors, scene ready, the GLB fetched and the five node names
 not ok 198 - product-model S7/R13: the bundled browser pass records zero errors, scene ready, the GLB fetched and the five node names
   ---
-  duration_ms: 1.370419
+  duration_ms: 1.290545
   type: 'test'
   location: '/home/runner/work/sentia/sentia/tests/take-apart-product-model.test.js:394:1'
   failureType: 'testCodeFailure'
@@ -1252,7 +1269,7 @@ not ok 198 - product-model S7/R13: the bundled browser pass records zero errors,
 # Subtest: product-model S7/R13: bundle-build.log records the production bundle command, exit 0, zero local patches
 not ok 199 - product-model S7/R13: bundle-build.log records the production bundle command, exit 0, zero local patches
   ---
-  duration_ms: 3.43329
+  duration_ms: 0.338898
   type: 'test'
   location: '/home/runner/work/sentia/sentia/tests/take-apart-product-model.test.js:409:1'
   failureType: 'testCodeFailure'
@@ -1274,237 +1291,237 @@ not ok 199 - product-model S7/R13: bundle-build.log records the production bundl
 # Subtest: product-model S7/R13: a bundled screenshot in the new evidence folder shows the rendered product, and the contact sheet is regenerated
 ok 200 - product-model S7/R13: a bundled screenshot in the new evidence folder shows the rendered product, and the contact sheet is regenerated
   ---
-  duration_ms: 67.462039
+  duration_ms: 55.837689
   type: 'test'
   ...
 # Subtest: product-model R13: the capture script asserts the asset route and the five node names
 ok 201 - product-model R13: the capture script asserts the asset route and the five node names
   ---
-  duration_ms: 0.300271
+  duration_ms: 0.30658
   type: 'test'
   ...
 # Subtest: product-model S8/R10: the frozen surfaces are untouched (facts layers, model outputs)
 ok 202 - product-model S8/R10: the frozen surfaces are untouched (facts layers, model outputs)
   ---
-  duration_ms: 0.45278
+  duration_ms: 0.391948
   type: 'test'
   ...
 # Subtest: take-apart S1: five study thicknesses sum to exactly 2.5 mm and names equal FACTS.layers
 ok 203 - take-apart S1: five study thicknesses sum to exactly 2.5 mm and names equal FACTS.layers
   ---
-  duration_ms: 1.662318
+  duration_ms: 1.929062
   type: 'test'
   ...
 # Subtest: take-apart S2: at t=0 every adjacent pair is flush within 0.001 mm
 ok 204 - take-apart S2: at t=0 every adjacent pair is flush within 0.001 mm
   ---
-  duration_ms: 0.287783
+  duration_ms: 0.345558
   type: 'test'
   ...
 # Subtest: take-apart S3: at t=1 each adjacent centre distance is the assembled one plus GAP_MM
 ok 205 - take-apart S3: at t=1 each adjacent centre distance is the assembled one plus GAP_MM
   ---
-  duration_ms: 0.188784
+  duration_ms: 0.246309
   type: 'test'
   ...
 # Subtest: take-apart S4: wear numbers behave across 0..336
 ok 206 - take-apart S4: wear numbers behave across 0..336
   ---
-  duration_ms: 0.618009
+  duration_ms: 0.75322
   type: 'test'
   ...
 # Subtest: take-apart S4: wear time is clamped to 0..336
 ok 207 - take-apart S4: wear time is clamped to 0..336
   ---
-  duration_ms: 0.104487
+  duration_ms: 0.149545
   type: 'test'
   ...
 # Subtest: take-apart S5: gaugeReadout strings equal the model values at sampled hours
 ok 208 - take-apart S5: gaugeReadout strings equal the model values at sampled hours
   ---
-  duration_ms: 0.91799
+  duration_ms: 1.047921
   type: 'test'
   ...
 # Subtest: take-apart S6: focus lifts the board and steps the others aside with signs
 ok 209 - take-apart S6: focus lifts the board and steps the others aside with signs
   ---
-  duration_ms: 0.529656
+  duration_ms: 0.580781
   type: 'test'
   ...
 # Subtest: take-apart S6: fade and x ray compose to the stated cover opacities
 ok 210 - take-apart S6: fade and x ray compose to the stated cover opacities
   ---
-  duration_ms: 0.258829
+  duration_ms: 0.302123
   type: 'test'
   ...
 # Subtest: take-apart S7: qualityFor returns the stated tiers including boundaries
 ok 211 - take-apart S7: qualityFor returns the stated tiers including boundaries
   ---
-  duration_ms: 0.423988
+  duration_ms: 0.544166
   type: 'test'
   ...
 # Subtest: take-apart browser twin: identical outputs to the module at sampled inputs
 ok 212 - take-apart browser twin: identical outputs to the module at sampled inputs
   ---
-  duration_ms: 3.530977
+  duration_ms: 4.06899
   type: 'test'
   ...
 # Subtest: take-apart routes: page, model twin, app and vendor library are served
 ok 213 - take-apart routes: page, model twin, app and vendor library are served
   ---
-  duration_ms: 153.237464
+  duration_ms: 159.381627
   type: 'test'
   ...
 # Subtest: take-apart S10: main page has exactly one anchor to /take-apart, labelled Take apart
 ok 214 - take-apart S10: main page has exactly one anchor to /take-apart, labelled Take apart
   ---
-  duration_ms: 1.333805
+  duration_ms: 1.450735
   type: 'test'
   ...
 # Subtest: take-apart S9: first party payload under 150 KB, vendor 400 KB to 1.3 MB with license
 ok 215 - take-apart S9: first party payload under 150 KB, vendor 400 KB to 1.3 MB with license
   ---
-  duration_ms: 40.791802
+  duration_ms: 58.250932
   type: 'test'
   ...
 # Subtest: take-apart S8: five beat stills and the contact sheet exist as PNGs of at least 20 KB
 ok 216 - take-apart S8: five beat stills and the contact sheet exist as PNGs of at least 20 KB
   ---
-  duration_ms: 1.026653
+  duration_ms: 1.410545
   type: 'test'
   ...
 # Subtest: take-apart S8: browser-pass.log records zero console errors, a passing gauge comparison and the vendor size
 ok 217 - take-apart S8: browser-pass.log records zero console errors, a passing gauge comparison and the vendor size
   ---
-  duration_ms: 0.262375
+  duration_ms: 0.344637
   type: 'test'
   ...
 # Subtest: take-apart S10: src/page.js is unchanged against the loopback baseline (the anchor already exists)
 ok 218 - take-apart S10: src/page.js is unchanged against the loopback baseline (the anchor already exists)
   ---
-  duration_ms: 4.160423
+  duration_ms: 5.071858
   type: 'test'
   ...
 # Subtest: take-apart scope: the run touches no file outside the allowed list
 ok 219 - take-apart scope: the run touches no file outside the allowed list
   ---
-  duration_ms: 2.905807
+  duration_ms: 3.662892
   type: 'test'
   ...
 # Subtest: take-apart chrome: only design token colours appear in page, client and capture sources
 ok 220 - take-apart chrome: only design token colours appear in page, client and capture sources
   ---
-  duration_ms: 0.812852
+  duration_ms: 1.504134
   type: 'test'
   ...
 # Subtest: take-apart chrome: documented text pairs measure at or above 4.5 to 1
 ok 221 - take-apart chrome: documented text pairs measure at or above 4.5 to 1
   ---
-  duration_ms: 0.232239
+  duration_ms: 0.348623
   type: 'test'
   ...
 # Subtest: take-apart chrome: font stylesheet link matches the main page, with preconnect and swap
 ok 222 - take-apart chrome: font stylesheet link matches the main page, with preconnect and swap
   ---
-  duration_ms: 1.05163
+  duration_ms: 1.517054
   type: 'test'
   ...
 # Subtest: take-apart chrome: skip link targets a focusable main landmark
 ok 223 - take-apart chrome: skip link targets a focusable main landmark
   ---
-  duration_ms: 0.603096
+  duration_ms: 0.782573
   type: 'test'
   ...
 # Subtest: take-apart chrome: served HTML reads without script (explanation, layers, gaugeReadout(0), note, noscript override)
 ok 224 - take-apart chrome: served HTML reads without script (explanation, layers, gaugeReadout(0), note, noscript override)
   ---
-  duration_ms: 0.626201
+  duration_ms: 0.991276
   type: 'test'
   ...
 # Subtest: take-apart chrome: container at most 1440 px and 3 px focus rings are declared
 ok 225 - take-apart chrome: container at most 1440 px and 3 px focus rings are declared
   ---
-  duration_ms: 0.45231
+  duration_ms: 0.65412
   type: 'test'
   ...
 # Subtest: ui-elevation S1: DESIGN.md has tokens, type scale, spacing, hero, motion and quality bars
 ok 226 - ui-elevation S1: DESIGN.md has tokens, type scale, spacing, hero, motion and quality bars
   ---
-  duration_ms: 2.419907
+  duration_ms: 2.350564
   type: 'test'
   ...
 # Subtest: ui-elevation S1: page follows DESIGN.md tokens and typefaces
 ok 227 - ui-elevation S1: page follows DESIGN.md tokens and typefaces
   ---
-  duration_ms: 0.426741
+  duration_ms: 0.492769
   type: 'test'
   ...
 # Subtest: ui-elevation S2: sections, demo/dashboard hooks and single h1 are preserved
 ok 228 - ui-elevation S2: sections, demo/dashboard hooks and single h1 are preserved
   ---
-  duration_ms: 0.65867
+  duration_ms: 0.771156
   type: 'test'
   ...
 # Subtest: ui-elevation S2: content facts and SEO/GEO layer are preserved
 ok 229 - ui-elevation S2: content facts and SEO/GEO layer are preserved
   ---
-  duration_ms: 0.168493
+  duration_ms: 0.228974
   type: 'test'
   ...
 # Subtest: ui-elevation S4: codec, data, mcp and index are untouched by the run
 ok 230 - ui-elevation S4: codec, data, mcp and index are untouched by the run # SKIP no main ref to diff against
   ---
-  duration_ms: 9.801763
+  duration_ms: 9.162536
   type: 'test'
   ...
 # Subtest: ui-elevation S5: no hype words in page or DESIGN.md
 ok 231 - ui-elevation S5: no hype words in page or DESIGN.md
   ---
-  duration_ms: 1.197029
+  duration_ms: 1.301671
   type: 'test'
   ...
 # Subtest: ui-elevation S5: product names match BRAND.md exactly
 ok 232 - ui-elevation S5: product names match BRAND.md exactly
   ---
-  duration_ms: 0.357858
+  duration_ms: 0.381863
   type: 'test'
   ...
 # Subtest: ui-elevation S6 C1: hero type never drops below 56 px at any width
 ok 233 - ui-elevation S6 C1: hero type never drops below 56 px at any width
   ---
-  duration_ms: 0.621744
+  duration_ms: 0.754171
   type: 'test'
   ...
 # Subtest: ui-elevation S6 C1: body copy never drops below 17 px
 ok 234 - ui-elevation S6 C1: body copy never drops below 17 px
   ---
-  duration_ms: 0.669807
+  duration_ms: 0.806309
   type: 'test'
   ...
 # Subtest: ui-elevation S6 C2: spacing avoids the off-rhythm 30, 15, 28 and 26 px values
 ok 235 - ui-elevation S6 C2: spacing avoids the off-rhythm 30, 15, 28 and 26 px values
   ---
-  duration_ms: 1.625803
+  duration_ms: 1.956954
   type: 'test'
   ...
 # Subtest: ui-elevation S6 C3: SVG annotations use \#53685C and the toggle has no white background
 ok 236 - ui-elevation S6 C3: SVG annotations use \#53685C and the toggle has no white background
   ---
-  duration_ms: 0.403397
+  duration_ms: 0.516985
   type: 'test'
   ...
 # Subtest: ui-elevation S6 C4: .rv starts hidden and reveals over 800 ms ease-out
 ok 237 - ui-elevation S6 C4: .rv starts hidden and reveals over 800 ms ease-out
   ---
-  duration_ms: 0.397988
+  duration_ms: 0.541913
   type: 'test'
   ...
 1..237
 # tests 237
 # suites 0
-# pass 233
-# fail 3
+# pass 232
+# fail 4
 # cancelled 0
 # skipped 1
 # todo 0
-# duration_ms 1269.592886
+# duration_ms 1552.238645

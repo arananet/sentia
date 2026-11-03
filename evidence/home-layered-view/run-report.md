@@ -1,32 +1,38 @@
-# Home layered view — wo-gh-13 loopback round 2
+# Home layered view — wo-gh-13 final gate round
 
-The home scene now uses a directional key and shaping fill, a generated PMREM studio reflection environment, and physical transmitting film materials. Film edge optical density compensates for the study's eightfold vertical exaggeration without changing geometry, layer centres, asset opacity or model focus/fade rules. The new numbered label uses 11 px uppercase system mono with 0.16 em tracking; the onward href is plain /take-apart.
+## Builder change (R14 / S11)
 
-## Final decoded payload measurements
+Only src/home-layered-client.js changed in product code. The home renderer keeps ACES tone mapping and sRGB output, with exposure 1.05, a lower directional key, reduced fill and a darker studio environment with narrower reflection panels. Board-only shadow reception avoids surface banding on the cover. Material overrides distinguish metal shielding and plated contacts from ceramic packages and the dark solder mask; the silicone cover has a more defined highlight.
 
-Measured by scripts/capture-home.mjs against the production bundle served by the local Worker runtime:
+The two films use physical transmission and distinct roughness. Their shading discards the solid shell's underside and exaggerated edge faces, leaving the upper optical surface; small shading-normal variation breaks up reflected light. No vertex position or geometry changes. Asset opacity and model focus/fade multiplication remain unchanged. The GLB, layer maths, camera/composition, lazy gate, controls, section markup, other home content, take apart sources, spec and tests are unchanged.
 
-- Home document: 48,183 bytes; growth 3,749 bytes over the 44,434 byte base, within the +48 KB budget.
-- Fallback image: 40,672 bytes, within the 400 KB budget.
-- Lazy 3D payload: 1,212,093 bytes, within the 1.25 MB (1,250,000 bytes) budget. Includes three core, loader, utils, GLB once, home client and model twin.
+## Production capture (R13 / S10)
 
-The direct-source test response is 48,145 bytes (3,711 bytes over base); production bundling adds 38 bytes. The frozen source PNG on this branch is 752,703 bytes including metadata; its stale 752,674-byte test assertion was corrected without modifying the image or its served derivative.
+Ran scripts/capture-home.mjs with PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs and WRANGLER_BIN=/tmp/sentia-browser/node_modules/.bin/wrangler. Tooling was installed outside the repository. The script built with `wrangler deploy --dry-run`, then served that output with `wrangler dev --no-bundle --local`; exit 0, no local patches. Recaptured assembled, exploded and fallback states directly from the browser.
 
-The full browser-pass.log records each route's decoded size. bundle-build.log records the production command and exit status 0, without local patches. The browser pass records zero console and page errors, zero model/vendor requests below the fold, one GLB fetch, keyboard controls and model centres, reduced motion, first-view animation, and all three fallback modes. Assembled and exploded screenshots were recaptured along with fallback screenshots. The home invariants and frozen asset/take-apart sources are checked by the scenario suite.
+browser-pass.log records zero console errors, zero page errors, zero model/vendor requests below the fold and exactly one GLB fetch. Keyboard separation, intermediate model centres, hover/focus, reduced motion, one-time animation and all three fallback modes pass.
 
-## Three named baseline failures / settlement exceptions
+Decoded production payloads:
 
-The full suite log is baseline-tests.log. The only accepted failures on this branch are:
+- Home document: 48,183 bytes; growth 3,749 bytes over 44,434, below the +48,000-byte budget.
+- Fallback image: 40,672 bytes, below 400,000.
+- Lazy 3D payload: 1,213,788 bytes, below 1,250,000; includes the GLB once, model twin and 10,569-byte home client.
 
-1. Design v4 S11, tests/design-v4-square-product.test.js: `S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/`. Resolved on sibling branch anvil/run-s11-rebaseline (wo-gh-10, approved).
+## Test results and input discrepancy
+
+`node --test tests/home-layered-view.test.js`: 51 pass, 1 fail, exit 1 (home-tests.log).
+`npm test`: 237 tests, 232 pass, 4 fail, 1 skipped, exit 1 (baseline-tests.log).
+
+The additional failure is `home S7/R9/R11: the fallback image route serves a derived re-encode of the exploded render, at most 400 KB, cached`. The frozen test at line 377 expects the source PNG to contain 752,703 bytes; the supplied source PNG contains 752,674 bytes. `git cat-file -s HEAD:evidence/take-apart-product-model/render-exploded.png` also returns 752674. Neither that PNG nor the test was changed by this builder. This contradicts the packet's stated 52-pass baseline. The actual served fallback remains 40,672 bytes and passes the production capture's budget check. A reconciled frozen test/asset input is required to achieve the all-tests-pass criterion; this failure is not an accepted settlement exception.
+
+The other three failures remain separately itemized settlement exceptions:
+
+1. tests/design-v4-square-product.test.js: `S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/`. The packet says its re-baseline is already merged into main; it remains separate on this branch.
 2. tests/take-apart-product-model.test.js: `product-model S7/R13: the bundled browser pass records zero errors, scene ready, the GLB fetched and the five node names`.
 3. tests/take-apart-product-model.test.js: `product-model S7/R13: bundle-build.log records the production bundle command, exit 0, zero local patches`.
 
-The two product-model S7/R13 evidence tests fail because this base's evidence predates that run's finish loopback. No sibling evidence was edited. Under the owner's 2026-11-01 settlement order, the product model and web render finish branches, carrying regenerated product model bundle-build.log and browser pass evidence, merge before this branch; the full suite is re-run on the merged main tree. These three are named settlement exceptions, not newly approved work or silently absorbed failures.
+The product-model evidence belongs to the preceding stack work and was not edited. The operator judges the merged suite after the merge. Full test logs retain the test runner's original whitespace.
 
-Independent reviewers retain the visual verdict and approval. No merge or deployment was performed by this station.
+## Handoff
 
-## Final test results
-
-`node --test tests/home-layered-view.test.js`: exit 0, all 52 tests pass (home-tests.log).
-`npm test`: exit 1, 237 tests: 233 pass, 3 fail, 1 skipped. The three failures are exactly those itemized above (baseline-tests.log). The fallback link assertion accepts either HTML quote style while requiring the exact plain path.
+R14 visual acceptance belongs to reviewer-design. The five independent review stations and verdict of record remain pending; this builder does not approve the work. No merge or deployment performed. Existing upstream packet/envelope changes were left intact.

@@ -1,4 +1,4 @@
-WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-j6eut0uz"))
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-c751tamd"))
 Reading additional input from stdin...
 OpenAI Codex v0.166.0
 --------
@@ -9,7 +9,7 @@ approval: never
 sandbox: danger-full-access
 reasoning effort: none
 reasoning summaries: none
-session id: 01a19a4b-cd37-7960-b33a-56c6919a5021
+session id: 01a19fa6-5af3-78d0-8fc4-bf04e002a322
 --------
 user
 You are executing an ANVIL reviewer station packet inside this repository. You are read only: inspect the files the packet refers to, judge the work against the packet, and do not change anything. The wrapper verifies the tree is unchanged after your run and fails this station if it is not.
@@ -98,26 +98,27 @@ Return a JSON object with this structure:
 - kind: feature
 - title: Home layered view: the Patch One in layers on the main home page
 - source: github-issue
-- description: LOOPBACK ROUND (gate loopback, ordered by the product owner on 2026-11-01 as part of the full stack settlement: finish the open orders, merge the branch stack to main, deploy production from main). Round 1 built the section and closed changes_requested on a short, named list. This round closes that list and nothing else.
+- description: CONTINUATION ROUND (final gate round, ordered by the product owner on 2026-11-02 as part of finishing everything pending: termina lo pendiente). The home layered view is built, and after the first gate loopback every round 1 finding is closed except one. This round exists for that one finding, and to complete the formal review set the previous round could not produce: four reviewer stations died at the executor on Cloudflare AI Gateway 402 errors, so its counted verdict of 1 of 5 is not a verdict of record.
 
-Round 1 record, the baseline of this round: the home layered section is built and working (branch head 8786b360): one new section between #patch and #how presenting the same product GLB exploded into its five layers, driven by the take apart model (layer centres equal layerCenterMm(i, t) at t=0 and t=1), five FACTS layer buttons, a keyboard operable separation slider, the lazy gate proven (IntersectionObserver, 200 px margin, no /models/ or /vendor/ request below the fold), the fallback proven three ways (no JavaScript, no WebGL, bad GLB), the bundle clean with zero console and page errors, the home invariants byte stable, the take apart page untouched, and all 41 tests in tests/home-layered-view.test.js passing. Payloads measured inside budget: home document 48,037 B (+3,603 over the 44,434 base, budget +48 KB), fallback image 40,672 B (budget 400 KB), lazy 3D payload 1,209,685 B with the GLB counted once (budget 1.25 MB). The spec at .openspec/specs/home-layered-view/spec.md as it now reads, including the round 1 in-flight tightenings of R8, R9, R11 and S6, is the baseline text of this round.
+State of record, the baseline of this round: the loopback round's builder work stands on this branch (commit f87cfc1, run head 3b64e2df): home lighting and film materials refined, the section label in DESIGN.md's 11 px uppercase mono treatment, the onward href plain /take-apart, .gitignore negations with the full evidence logs committed, and the payload figures stated in the committed run report evidence/home-layered-view/run-report.md. All 52 tests in tests/home-layered-view.test.js pass. reviewer-design executed in that round, confirmed those items landed, and still returns changes_requested on R14 alone, in these two findings, quoted verbatim:
+1. evidence/home-layered-view/home-exploded.png still shows the adhesive as a thick, pale rimmed slab and the release liner as a flat gray plate. Neither convincingly reads as translucent film against design/reference/quality-board-1.png and quality-board-2.png. Adjust the home scene's material handling and lighting in src/home-layered-client.js, preserving the frozen GLB and model semantics, and recapture both states.
+2. The recaptured exploded view still renders PCB components as uniformly shaded blocks with weak metallic highlights and little visible fine detail compared with both reference boards. The assembled cover also remains broadly flat-lit. Refine the home environment and lighting so existing board detail and physical material differences survive at the displayed size; the required production-quality product test remains unmet.
 
-Findings to close, exactly these:
-1. Home scene rendering (reviewer-design, R14, the product test): evidence/home-layered-view/home-exploded.png shows the adhesive and the release liner as solid rimmed slabs rather than translucent films, with flat lighting and simplified PCB components that read as a toy-like render, against design/reference/quality-board-1.png and quality-board-2.png and design/DESIGN.md's production quality bar. The wordmark, the teal LED and the layer order are present, and the same GLB passes on the study page, so this is a home scene problem: work the home client's lighting rig, material handling and environment (the home scene code only) until the two films read as translucent films and the board detail survives, preserving the asset and the model semantics. The GLB asset itself is frozen. Recapture the assembled and exploded states.
-2. Section label (reviewer-design): src/home-layered.js renders the section label as ordinary mixed-case body text. design/DESIGN.md requires recurring numbered mono section labels: 11 px uppercase system mono with 0.16 em tracking. Apply that treatment to the new section's label; existing sections' markup does not change.
-3. Onward link (reviewer-spec, R7 minor): the onward href is /take-apart?from=home; the spec says plain /take-apart. Make it plain /take-apart and update the affected test expectation to match.
-4. Evidence completeness (reviewer-spec, R11/R13): the measured payload figures must be stated in a run report file committed in the repo, not only in logs and the builder summary. Commit a run report file under evidence/home-layered-view/ stating the three measured figures against their budgets, and state them in the builder output as well. The evidence logs themselves must be committed: add the .gitignore negations needed so the evidence/home-layered-view/ logs (browser pass, baseline tests, bundle build) are tracked, and commit them in full this round.
-5. Suite itemization (reviewer-spec R15, reviewer-tests): the full suite on this branch has three failures, and the run report must itemize ALL of them by name: the design v4 S11 failure (resolved on the sibling branch anvil/run-s11-rebaseline, wo-gh-10 approved), and the two product-model S7/R13 evidence tests in tests/take-apart-product-model.test.js (the bundled browser pass test and the bundle-build.log test), which fail on this branch's base because evidence/take-apart-product-model/ here predates the product model finish loopback. Those two belong to the sibling stack's evidence: this order must NOT edit another run's evidence to fix them. Under the owner's settlement order they stand as named, accepted exceptions on this branch, because the product model branch and the web render finish branch, whose trees carry the regenerated product model evidence (bundle-build.log and the browser pass log included), merge into main BEFORE this branch in the settlement stack, and the suite is re-run on the merged tree there.
+Scope of this round, narrow and frozen everywhere else: the home scene's lighting and material handling in src/home-layered-client.js (its renderer setup, environment, exposure and on-load material adjustments), the recaptured evidence under evidence/home-layered-view/, and this run's own evidence. Everything else is frozen: the GLB asset, the model semantics and layer maths, src/home-layered.js and its label treatment, the section's placement in src/page.js, the src/index.js wiring, the take apart page and its client, the tests in tests/home-layered-view.test.js, the payload budgets, and the spec at .openspec/specs/home-layered-view/spec.md exactly as it now reads. spec-writer and test-writer confirm the committed spec and tests as this round's contract and test base; they do not rewrite them.
 
-Routing fact for the builder station, established by the operator and not open to re-verification: your session is launched and verified by the operator's wrapper (tools/astra_station.py, Codex) on gpt-6-astra through the Cloudflare AI Gateway, and the workflow runs the Astra smoke gate before the line inside the same job. A builder session that is running is already on the verified route. Do not record a blocker about the model route and do not spend the session checking it: your task is to implement the spec. The no fallback rule means one thing only: never silently switch to another model.
+Operator guidance, from evidence already in this repository: the same GLB reads correctly on the study page, and the web render finish order closed its in-page finish problems through the take apart client's handling (tone mapping, exposure, environment lighting, on-load material adjustments in src/take-apart-client.js). Compare the home client's renderer setup against that proven handling and align the home scene so the two films read as translucent films, the board's detail and metallic differences survive at the displayed size, and the assembled cover is no longer flat-lit, while preserving the home scene's own composition and the lazy gate behaviour. Recapture the assembled and exploded states into evidence/home-layered-view/ the same way as the previous rounds (scripts/capture-home.mjs), from the bundled production shape with zero console and page errors.
 
-Home discipline from round 1 stays binding: nothing WebGL blocks the home page's first render; the served home document carries no three, loader or GLB bytes; the 3D chain is fetched only when the section approaches the viewport, through the existing vendored routes, with no new vendored copies; the fallback stays complete without JavaScript or WebGL; home invariants stay byte stable (page title, footer credit paragraph, every pre existing section's markup, the four image routes); the /take-apart page is untouched; payload budgets unchanged (home document +48 KB over 44,434 B, fallback at most 400 KB, lazy 3D payload at most 1.25 MB with the GLB counted once), re-measured and stated after the changes. Accessibility as round 1: keyboard operable labelled slider, layer names as real buttons at 44 px targets, DESIGN.md tokens, contrast at or above 4.5 to 1, 3 px focus rings.
+The five reviewers each review the final tree of this round and produce their review in the established output form, so this round's record is complete in itself.
 
-Model routing for this run: builder and reviewer-design on GPT-6 Astra (gpt-6-astra) through the Cloudflare AI Gateway; spec writer, test writer and the other reviewer stations on claude-sonnet-5-5 through the same gateway. No fallback to another model for the builder.
+Routing fact for the builder station, established by the operator and not open to re-verification (this declaration stands across the settlement orders): your session is launched and verified by the operator's wrapper (tools/astra_station.py, Codex) on gpt-6-astra through the Cloudflare AI Gateway, and the workflow runs the Astra smoke gate before the line inside the same job. If that gate fails, the job stops before you are ever started, so a builder session that is running is already on the verified route. Your session exposes no control to select or verify the route because selection and verification are the wrapper's job, not the station's. Do not record a blocker about the model route and do not spend the session checking it. The no fallback rule means one thing only: never silently switch to another model.
 
-Deployment and merge: none inside the run. On the owner's settlement order of 2026-11-01, an approved verdict in this round sends this branch into the merge stack, and the operator deploys production from merged main and commits the owner acceptance record on main citing the approval and the deploy. If the verdict is not approved, this order stops and is reported; nothing of it merges or deploys.
+Model routing for this run: builder and reviewer-design on GPT-6 Astra (gpt-6-astra) through the Cloudflare AI Gateway; spec writer, test writer and the other reviewer stations on claude-sonnet-5-5 through the same gateway. The brain's verified learnings L-1 to L-7 are part of the run's packets.
 
-Done criteria: verdict approved with all five expected reviews counted and no parse failures; reviewer-design passing the same product test on the recaptured home section (films reading as translucent films, board detail surviving, label in the DESIGN.md mono treatment); the onward href plain /take-apart; the evidence logs committed and the payload figures stated in a committed run report file; the suite itemization naming all three baseline failures with the two product-model evidence tests standing as named settlement exceptions; home invariants byte stable; the take apart page untouched.
+The design v4 S11 suite item predates the re-baseline already merged into main; on this branch it remains itemized apart, never absorbed, never fixed by editing evidence. The merged tree's suite is judged by the operator after the merge.
+
+Deployment: none inside the run; the deployer station stays a packet. On the owner's order of 2026-11-02, an approved verdict of record in this round sends this branch into the merge stack (after web render finish, before possible applications): the operator merges it into main, deploys production from merged main (Git Database pull, blob hashes recomputed, no local patches), verifies from the public URL including the home page showing the layered view section, and commits the owner acceptance record on main citing the approval and the deploy. If this round does not approve, the order is reported with the surviving finding as its outcome; nothing of it merges or deploys.
+
+Done criteria: verdict approved with all five expected reviews counted and no parse failures; reviewer-design passing R14 on the recaptured home beats (the adhesive and the liner read as translucent films, board detail and metallic differences survive, the assembled cover is not flat-lit); all home layered view tests passing; payloads inside their budgets; home invariants outside the new section byte stable; the take apart page untouched; run diff inside this round's scope.
 
 GitHub issue: https://github.com/arananet/sentia/issues/13
 
@@ -130,10 +131,10 @@ GitHub issue: https://github.com/arananet/sentia/issues/13
 - spec-writer: executed
 - test-writer: executed
 - builder: executed
-- reviewer-spec: failed
-- reviewer-security: failed
-- reviewer-tests: failed
-- reviewer-architecture: failed
+- reviewer-spec: executed
+- reviewer-security: executed
+- reviewer-tests: executed
+- reviewer-architecture: executed
 
 ## Verified learnings
 
@@ -154,34 +155,41 @@ Answer with a single JSON object and nothing else, in exactly this shape:
 The verdict must be one of: pass, fail, changes_requested. Findings must be concrete and checkable against the spec, the code and the tests.
 
 codex
-I’ll inspect the design rules, home scene code, and recaptured images without changing files.
+I’ll inspect the design rules, home scene code, and captured images against the reference boards without changing any files.
 
 exec
-/bin/bash -lc "pwd; rg --files -g 'AGENTS.md' -g 'design/**' -g '*home-layered*' -g 'evidence/home-layered-view/**' -g '*home*client*' " in /home/runner/work/sentia/sentia
+/bin/bash -lc "pwd; rg --files -g 'AGENTS.md' -g 'DESIGN.md' -g 'tokens.json' -g '*home*' -g '*quality-board*' -g '*report*' -g '*take-apart-client*'" in /home/runner/work/sentia/sentia
  succeeded in 0ms:
 /home/runner/work/sentia/sentia
 tests/home-layered-view.test.js
+scripts/capture-home.mjs
 src/home-layered-client.js
+src/take-apart-client.js
 src/home-layered-image.js
 src/home-layered.js
 design/DESIGN.md
-design/reference/product-reference.png
 design/reference/quality-board-2.png
 design/reference/quality-board-1.png
-design/reference/README.md
-evidence/home-layered-view/fallback-no-javascript.png
 evidence/home-layered-view/run-report.md
-evidence/home-layered-view/baseline-tests.log
 evidence/home-layered-view/home-tests.log
 evidence/home-layered-view/home-exploded.png
 evidence/home-layered-view/home-assembled.png
-evidence/home-layered-view/fallback-no-webgl.png
-evidence/home-layered-view/browser-pass.log
-evidence/home-layered-view/fallback-bad-glb.png
-evidence/home-layered-view/bundle-build.log
+runs/wo-gh-1/report.json
+runs/wo-gh-9/report.json
+runs/wo-gh-5/report.json
+runs/wo-gh-3/report.json
+runs/wo-gh-7/report.json
+runs/wo-gh-12/report.json
+runs/wo-gh-13/report.json
+runs/wo-gh-11/report.json
+runs/wo-gh-4/report.json
+runs/wo-gh-2/report.json
+runs/wo-gh-8/report.json
+runs/wo-sentia-001/report.json
+runs/wo-gh-6/report.json
 
 exec
-/bin/bash -lc 'cat design/DESIGN.md; cat design/tokens.json; cat src/home-layered.js; cat src/home-layered-client.js; cat evidence/home-layered-view/run-report.md' in /home/runner/work/sentia/sentia
+/bin/bash -lc 'cat design/DESIGN.md; cat evidence/home-layered-view/run-report.md; cat src/home-layered-client.js' in /home/runner/work/sentia/sentia
  succeeded in 0ms:
 # Sentia design system v4
 
@@ -357,7 +365,237 @@ both the initial and revealed states visible and stationary.
 - S6: At small widths retain a 56 px hero minimum and 17 px body minimum.
   Use #53685C for SVG annotations and paper for the simulation toggle.
   Check the hidden reveal state, 800 ms ease-out transition and motion fallback.
-cat: design/tokens.json: No such file or directory
+# Home layered view — wo-gh-13 final gate round
+
+## Builder change (R14 / S11)
+
+Only src/home-layered-client.js changed in product code. The home renderer keeps ACES tone mapping and sRGB output, with exposure 1.05, a lower directional key, reduced fill and a darker studio environment with narrower reflection panels. Board-only shadow reception avoids surface banding on the cover. Material overrides distinguish metal shielding and plated contacts from ceramic packages and the dark solder mask; the silicone cover has a more defined highlight.
+
+The two films use physical transmission and distinct roughness. Their shading discards the solid shell's underside and exaggerated edge faces, leaving the upper optical surface; small shading-normal variation breaks up reflected light. No vertex position or geometry changes. Asset opacity and model focus/fade multiplication remain unchanged. The GLB, layer maths, camera/composition, lazy gate, controls, section markup, other home content, take apart sources, spec and tests are unchanged.
+
+## Production capture (R13 / S10)
+
+Ran scripts/capture-home.mjs with PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs and WRANGLER_BIN=/tmp/sentia-browser/node_modules/.bin/wrangler. Tooling was installed outside the repository. The script built with `wrangler deploy --dry-run`, then served that output with `wrangler dev --no-bundle --local`; exit 0, no local patches. Recaptured assembled, exploded and fallback states directly from the browser.
+
+browser-pass.log records zero console errors, zero page errors, zero model/vendor requests below the fold and exactly one GLB fetch. Keyboard separation, intermediate model centres, hover/focus, reduced motion, one-time animation and all three fallback modes pass.
+
+Decoded production payloads:
+
+- Home document: 48,183 bytes; growth 3,749 bytes over 44,434, below the +48,000-byte budget.
+- Fallback image: 40,672 bytes, below 400,000.
+- Lazy 3D payload: 1,213,788 bytes, below 1,250,000; includes the GLB once, model twin and 10,569-byte home client.
+
+## Test results and input discrepancy
+
+`node --test tests/home-layered-view.test.js`: 51 pass, 1 fail, exit 1 (home-tests.log).
+`npm test`: 237 tests, 232 pass, 4 fail, 1 skipped, exit 1 (baseline-tests.log).
+
+The additional failure is `home S7/R9/R11: the fallback image route serves a derived re-encode of the exploded render, at most 400 KB, cached`. The frozen test at line 377 expects the source PNG to contain 752,703 bytes; the supplied source PNG contains 752,674 bytes. `git cat-file -s HEAD:evidence/take-apart-product-model/render-exploded.png` also returns 752674. Neither that PNG nor the test was changed by this builder. This contradicts the packet's stated 52-pass baseline. The actual served fallback remains 40,672 bytes and passes the production capture's budget check. A reconciled frozen test/asset input is required to achieve the all-tests-pass criterion; this failure is not an accepted settlement exception.
+
+The other three failures remain separately itemized settlement exceptions:
+
+1. tests/design-v4-square-product.test.js: `S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/`. The packet says its re-baseline is already merged into main; it remains separate on this branch.
+2. tests/take-apart-product-model.test.js: `product-model S7/R13: the bundled browser pass records zero errors, scene ready, the GLB fetched and the five node names`.
+3. tests/take-apart-product-model.test.js: `product-model S7/R13: bundle-build.log records the production bundle command, exit 0, zero local patches`.
+
+The product-model evidence belongs to the preceding stack work and was not edited. The operator judges the merged suite after the merge. Full test logs retain the test runner's original whitespace.
+
+## Handoff
+
+R14 visual acceptance belongs to reviewer-design. The five independent review stations and verdict of record remain pending; this builder does not approve the work. No merge or deployment performed. Existing upstream packet/envelope changes were left intact.
+// Literal browser module: production bundling cannot rewrite its dynamic imports.
+export const HOME_LAYERED_CLIENT_JS = `
+export async function mount(root) {
+  const slider = root.querySelector('input');
+  const visual = root.querySelector('.home-layers-visual');
+  const buttons = [...root.querySelectorAll('button')];
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  let renderer, canvas, ready = false, visible = false, played = false, start = null;
+  let t = Number(slider.value)/100, selected = null, hovered = null, focused = null;
+  let draw = () => {}, raf = 0;
+  function stop() { root.dataset.interacted = 'true'; start = null; }
+  function focus() { return hovered ?? focused ?? selected; }
+  function update() {
+    buttons.forEach((button,i) => button.setAttribute('aria-pressed', String(i === focus())));
+    draw();
+  }
+  for (const event of ['pointerdown','keydown','focusin']) root.addEventListener(event, stop);
+  slider.addEventListener('input', () => { stop(); t = Number(slider.value)/100; update(); });
+  buttons.forEach((button,i) => {
+    button.addEventListener('mouseenter', () => { stop(); hovered=i; update(); });
+    button.addEventListener('mouseleave', () => { hovered=null; update(); });
+    button.addEventListener('focus', () => { stop(); focused=i; update(); });
+    button.addEventListener('blur', () => { focused=null; update(); });
+    button.addEventListener('click', () => { stop(); selected=selected===i?null:i; focused=null; hovered=null; update(); });
+    button.addEventListener('keydown', event => { if(event.key==='Escape'){selected=null;focused=null;hovered=null;update();} });
+  });
+  function animate(now) {
+    raf = 0;
+    if (!ready || !visible || root.dataset.interacted || motion.matches) { start=null; return; }
+    if(start===null) start=now;
+    const progress=Math.min(1,(now-start)/2000);
+    t=progress*progress*(3-2*progress);slider.value=String(t*100);draw();
+    if(progress<1) raf=requestAnimationFrame(animate);
+  }
+  function firstView() {
+    if(!ready || !visible || played) return;
+    played=true;
+    if(!motion.matches && !root.dataset.interacted) raf=requestAnimationFrame(animate);
+  }
+  const view = new IntersectionObserver(entries => { visible=entries[0].isIntersecting;firstView(); }, {threshold:0.15});
+  view.observe(root);
+  motion.addEventListener('change', () => { if(motion.matches) stop(); });
+  try {
+    // Probe before creating a Three renderer: unsupported WebGL keeps the image.
+    canvas=document.createElement('canvas');
+    const context=canvas.getContext('webgl2',{antialias:true});
+    if(!context) return;
+    const [THREE, {GLTFLoader}] = await Promise.all([import('three'),import('GLTFLoader'),import('/take-apart-model.js')]);
+    const M=globalThis.TakeApartModel;
+    const quality=M.qualityFor({devicePixelRatio,hardwareConcurrency:navigator.hardwareConcurrency,coarsePointer:matchMedia('(pointer:coarse)').matches});
+    renderer=new THREE.WebGLRenderer({canvas,context,antialias:true});
+    renderer.setPixelRatio(quality.pixelRatioCap);renderer.setClearColor(0xfafaf6);
+    renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
+    renderer.shadowMap.enabled=quality.shadowMapSize>0;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+    renderer.outputColorSpace=THREE.SRGBColorSpace;
+    const scene=new THREE.Scene();
+    scene.background=new THREE.Color(0xfafaf6);
+    const camera=new THREE.OrthographicCamera(-50,50,80,-40,.1,1000);
+    camera.position.set(52,42,62);camera.lookAt(0,10,0);camera.updateMatrixWorld();
+    // A local studio environment supplies broad reflections without another download.
+    const studio=new THREE.Scene();
+    studio.background=new THREE.Color(0x181c1b);
+    const panel=(color,intensity,x,y,z,w,h)=>{
+      const mesh=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({color,side:THREE.DoubleSide}));
+      mesh.material.color.multiplyScalar(intensity);mesh.position.set(x,y,z);mesh.lookAt(0,0,0);studio.add(mesh);
+    };
+    panel(0xfff5df,7,-65,80,-55,45,130);
+    panel(0xffffff,3,75,35,-65,20,110);
+    panel(0xffffff,.7,-20,90,75,90,100);
+    const pmrem=new THREE.PMREMGenerator(renderer);
+    const environment=pmrem.fromScene(studio,.04);
+    scene.environment=environment.texture;
+    pmrem.dispose();
+    studio.traverse(object=>{object.geometry?.dispose();object.material?.dispose();});
+    scene.add(new THREE.HemisphereLight(0xfafaf6,0x53685c,.25));
+    const fill=new THREE.DirectionalLight(0xffffff,.35);fill.position.set(70,35,-60);scene.add(fill);
+    const light=new THREE.DirectionalLight(0xfff5df,2.8);light.position.set(-65,65,45);
+    light.castShadow=quality.shadowMapSize>0;
+    light.shadow.mapSize.set(quality.shadowMapSize,quality.shadowMapSize);
+    Object.assign(light.shadow.camera,{left:-65,right:65,top:100,bottom:-65,near:.1,far:300});
+    light.shadow.bias=-.001;light.shadow.normalBias=.2;scene.add(light);
+    const gltf=await new GLTFLoader().loadAsync('/models/patch-one.glb');
+    const nodes=M.NODE_NAMES.map(name=>{
+      const node=gltf.scene.children.find(child=>(child.userData.name||child.name)===name);
+      if(!node) throw new Error('Missing product layer');
+      node.scale.y=8;
+      node.traverse(object=>{
+        if(!object.material)return;
+        const clone=material=>{
+          const film=/adhesive film|release film/i.test(material.name);
+          const copy=film ? new THREE.MeshPhysicalMaterial({
+            name:material.name,color:material.color,opacity:material.opacity,
+            roughness:/adhesive/i.test(material.name)?.12:.26,
+            metalness:0,transmission:.82,ior:1.46,thickness:.015,
+            transparent:true,depthWrite:false,side:THREE.FrontSide,
+            envMapIntensity:1.25
+          }) : material.clone();
+          // Preserve the asset opacity; model focus fade multiplies this below.
+          copy.userData.baseOpacity=material.opacity;
+          if(film) {
+            // The frozen study exaggerates thickness eightfold. Render the film's
+            // upper optical surface only, avoiding a second rim from the solid shell.
+            // Geometry, layer transforms and model opacity remain unchanged.
+            copy.onBeforeCompile=shader=>{
+              shader.vertexShader='varying float filmFace; varying vec3 filmPosition;\\n'+shader.vertexShader;
+              shader.vertexShader=shader.vertexShader.replace('#include <beginnormal_vertex>',
+                '#include <beginnormal_vertex>\\nfilmFace=objectNormal.y; filmPosition=position;');
+              shader.fragmentShader='varying float filmFace; varying vec3 filmPosition;\\n'+shader.fragmentShader;
+              shader.fragmentShader=shader.fragmentShader.replace('#include <alphamap_fragment>',
+                '#include <alphamap_fragment>\\nif(filmFace < 0.85) discard;');
+              // Small optical waviness breaks up the studio reflection across a film;
+              // it changes the shading normal, never the frozen mesh or its bounds.
+              shader.fragmentShader=shader.fragmentShader.replace('#include <normal_fragment_maps>',
+                '#include <normal_fragment_maps>\\nnormal = normalize(normal + vec3(0.12 * sin(filmPosition.x * 0.22 + filmPosition.z * 0.13), 0.06 * cos(filmPosition.z * 0.3), 0.0));');
+            };
+          } else {
+            copy.envMapIntensity=1;
+            if(/silicone/i.test(material.name)) copy.roughness=.48;
+            if(/shielding/i.test(material.name)) {copy.metalness=.95;copy.roughness=.24;}
+            if(/plated contacts/i.test(material.name)) {copy.metalness=.9;copy.roughness=.22;}
+            if(/ceramic/i.test(material.name)) copy.roughness=.38;
+            if(/solder mask/i.test(material.name)) {copy.roughness=.65;copy.envMapIntensity=.25;}
+          }
+          return copy;
+        };
+        object.material=Array.isArray(object.material)?object.material.map(clone):clone(object.material);
+        // Transparent films do not cast opaque slab shadows.
+        const materials=Array.isArray(object.material)?object.material:[object.material];
+        object.castShadow=materials.every(material=>material.opacity===1);
+        object.receiveShadow=object.castShadow && /board/i.test(name);
+      });
+      scene.add(node);return node;
+    });
+    draw=()=>{
+      const {width,height}=visual.getBoundingClientRect();
+      renderer.setSize(width,height,false);
+      const bounds=new THREE.Box3();
+      nodes.forEach((node,i)=>{
+        const center=M.layerCenterMm(i,t), transform=M.focusTransform(i,t,focus());
+        node.position.set(transform.asideMm,(center+transform.liftMm)*8,0);
+        const state=M.materialState(i,focus(),false);
+        node.traverse(object=>{
+          if(!object.material)return;
+          for(const material of Array.isArray(object.material)?object.material:[object.material]){
+            const opacity=material.userData.baseOpacity*state.opacity,transparent=opacity<1;
+            if(material.transparent!==transparent){material.transparent=transparent;material.needsUpdate=true;}
+            material.opacity=opacity;material.depthWrite=!transparent;
+          }
+        });
+        for(const x of [-18,18]) for(const z of [-18,18]) for(const dy of [-M.LAYERS[i].thicknessMm*4,M.LAYERS[i].thicknessMm*4])
+          bounds.expandByPoint(new THREE.Vector3(node.position.x+x,node.position.y+dy,z).applyMatrix4(camera.matrixWorldInverse));
+      });
+      const center=bounds.getCenter(new THREE.Vector3()),size=bounds.getSize(new THREE.Vector3()),aspect=width/height;
+      const heightMm=Math.max(size.y/.82,size.x/(aspect*.82));
+      camera.left=center.x-heightMm*aspect/2;camera.right=center.x+heightMm*aspect/2;
+      camera.top=center.y+heightMm/2;camera.bottom=center.y-heightMm/2;camera.updateProjectionMatrix();
+      renderer.render(scene,camera);
+      // Observability of actual rendered transforms for the scenario capture.
+      root.dataset.centers=JSON.stringify(nodes.map(n=>n.position.y/8));
+      root.dataset.opacities=JSON.stringify(nodes.map((n,i)=>M.materialState(i,focus(),false).opacity));
+      root.dataset.focus=String(focus());root.dataset.separation=String(t);
+    };
+    canvas.setAttribute('aria-hidden','true');visual.append(canvas);
+    draw();ready=true;root.dataset.sceneReady='true';
+    new ResizeObserver(()=>draw()).observe(visual);
+    canvas.addEventListener('webglcontextlost',()=>{ready=false;cancelAnimationFrame(raf);root.removeAttribute('data-scene-ready');canvas.remove();});
+    firstView();
+  } catch {
+    cancelAnimationFrame(raf);view.disconnect();renderer?.dispose();canvas?.remove();
+    root.removeAttribute('data-scene-ready');
+  }
+}
+`;
+
+exec
+/bin/bash -lc 'rg --files design .openspec/specs/home-layered-view evidence/home-layered-view; cat src/home-layered.js; cat src/take-apart-client.js' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+design/DESIGN.md
+evidence/home-layered-view/fallback-no-javascript.png
+evidence/home-layered-view/run-report.md
+evidence/home-layered-view/baseline-tests.log
+evidence/home-layered-view/home-tests.log
+evidence/home-layered-view/home-exploded.png
+evidence/home-layered-view/home-assembled.png
+evidence/home-layered-view/fallback-no-webgl.png
+evidence/home-layered-view/browser-pass.log
+evidence/home-layered-view/fallback-bad-glb.png
+evidence/home-layered-view/bundle-build.log
+design/reference/product-reference.png
+design/reference/quality-board-2.png
+design/reference/quality-board-1.png
+design/reference/README.md
+.openspec/specs/home-layered-view/spec.md
 import { FACTS } from './facts.js';
 
 export const HOME_LAYERED_CSS = `
@@ -412,85 +650,361 @@ export const HOME_LAYERED_GATE = `(() => {
   }, {rootMargin:'200px'});
   gate.observe(root);
 })();`;
-// Literal browser module: production bundling cannot rewrite its dynamic imports.
-export const HOME_LAYERED_CLIENT_JS = `
-export async function mount(root) {
-  const slider = root.querySelector('input');
-  const visual = root.querySelector('.home-layers-visual');
-  const buttons = [...root.querySelectorAll('button')];
-  const motion = matchMedia('(prefers-reduced-motion: reduce)');
-  let renderer, canvas, ready = false, visible = false, played = false, start = null;
-  let t = Number(slider.value)/100, selected = null, hovered = null, focused = null;
-  let draw = () => {}, raf = 0;
-  function stop() { root.dataset.interacted = 'true'; start = null; }
-  function focus() { return hovered ?? focused ?? selected; }
-  function update() {
-    buttons.forEach((button,i) => button.setAttribute('aria-pressed', String(i === focus())));
-    draw();
-  }
-  for (const event of ['pointerdown','keydown','focusin']) root.addEventListener(event, stop);
-  slider.addEventListener('input', () => { stop(); t = Number(slider.value)/100; update(); });
-  buttons.forEach((button,i) => {
-    button.addEventListener('mouseenter', () => { stop(); hovered=i; update(); });
-    button.addEventListener('mouseleave', () => { hovered=null; update(); });
-    button.addEventListener('focus', () => { stop(); focused=i; update(); });
-    button.addEventListener('blur', () => { focused=null; update(); });
-    button.addEventListener('click', () => { stop(); selected=selected===i?null:i; focused=null; hovered=null; update(); });
-    button.addEventListener('keydown', event => { if(event.key==='Escape'){selected=null;focused=null;hovered=null;update();} });
+// Literal browser source: Worker bundlers must treat this as data, not executable code.
+export const TAKE_APART_CLIENT_JS = `(async function takeApartApp() {
+const THREE = await import('/vendor/three.module.min.js');
+const M = globalThis.TakeApartModel;
+const $ = s => document.querySelector(s);
+const root = $('#take-apart'), canvas = $('#scene'), overlay = $('#callouts');
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fast = new URLSearchParams(location.search).get('tour') === 'fast';
+const IDLE_SECONDS = fast ? 1.5 : 20, BEAT_SECONDS = fast ? .9 : 2.4;
+const Z_SCALE = 8;
+const quality = M.qualityFor({ devicePixelRatio, hardwareConcurrency: navigator.hardwareConcurrency, coarsePointer: matchMedia('(pointer: coarse)').matches });
+const state = { t: 0, h: 0, focus: null, xray: false };
+let renderer, scene, camera, meshes = [], lastPanel = -Infinity, lastChartHour = -Infinity;
+let lastInteraction = performance.now(), tourStart = null, tourBeat = -1, drag = null;
+let azimuth = Math.atan2(52,62), elevation = Math.atan2(32, Math.hypot(52,62)), zoom = 1;
+let targetAzimuth = azimuth, targetElevation = elevation, targetZoom = zoom;
+const cursor = $('#tour-cursor');
+const presets = { Hero: [52,42,62], Top: [0,95,1], Side: [95,18,0] };
+let radius = Math.hypot(52,32,62);
+function stopTour() {
+  lastInteraction = performance.now(); tourStart = null; tourBeat = -1;
+  root.dataset.tourBeat = 'off'; cursor.hidden = true;
+  $('#tour-status').textContent = reducedMotion ? 'Explore freely · Reduced motion' : 'Explore freely · Tour begins when idle';
+}
+for (const event of ['pointerdown','wheel','keydown','touchstart']) window.addEventListener(event, stopTour, { passive: true });
+$('#separation').addEventListener('input', e => { state.t = +e.target.value; stopTour(); });
+$('#wear').addEventListener('input', e => { state.h = +e.target.value; stopTour(); });
+for (const button of document.querySelectorAll('[data-layer]')) button.addEventListener('click', () => {
+  const index = +button.dataset.layer;
+  state.focus = state.focus === index ? null : index;
+  if (state.focus != null) state.t = Math.max(.55, state.t);
+});
+$('#xray').addEventListener('click', () => { state.xray = !state.xray; });
+function setCamera(name) {
+  const [x,y,z] = presets[name];
+  targetAzimuth = Math.atan2(x,z); targetElevation = Math.atan2(y-10,Math.hypot(x,z));
+  radius = Math.hypot(x,y-10,z); targetZoom = 1;
+  for (const b of document.querySelectorAll('[data-camera]')) b.setAttribute('aria-pressed', String(b.dataset.camera === name));
+}
+for (const b of document.querySelectorAll('[data-camera]')) b.addEventListener('click', () => setCamera(b.dataset.camera));
+canvas.addEventListener('pointerdown', e => { drag = { x:e.clientX,y:e.clientY }; canvas.setPointerCapture(e.pointerId); });
+canvas.addEventListener('pointermove', e => {
+  if (!drag) return;
+  targetAzimuth -= (e.clientX-drag.x)*.008;
+  targetElevation = Math.max(.08,Math.min(Math.PI/2-.01,targetElevation+(e.clientY-drag.y)*.006));
+  drag = { x:e.clientX,y:e.clientY };
+});
+for (const event of ['pointerup','pointercancel','lostpointercapture']) canvas.addEventListener(event, () => { drag = null; });
+canvas.addEventListener('wheel', e => { e.preventDefault(); targetZoom = Math.max(.65, Math.min(1.65,targetZoom*Math.exp(-e.deltaY*.001))); }, { passive:false });
+function roundedGeometry(thickness) {
+  const s = new THREE.Shape(), r = M.CORNER_RADIUS_MM, a = M.FOOTPRINT_MM/2;
+  s.moveTo(-a+r,-a); s.lineTo(a-r,-a); s.quadraticCurveTo(a,-a,a,-a+r);
+  s.lineTo(a,a-r); s.quadraticCurveTo(a,a,a-r,a); s.lineTo(-a+r,a);
+  s.quadraticCurveTo(-a,a,-a,a-r); s.lineTo(-a,-a+r); s.quadraticCurveTo(-a,-a,-a+r,-a);
+  const bevel = .12;
+  const g = new THREE.ExtrudeGeometry(s, { depth:thickness-2*bevel, bevelEnabled:true, bevelSegments:3, steps:1, bevelSize:bevel, bevelThickness:bevel, curveSegments:16 });
+  g.translate(0,0,-(thickness-2*bevel)/2); g.rotateX(-Math.PI/2);
+  return g;
+}
+function box(parent, size, position, color, roughness=.65) {
+  const mesh = new THREE.Mesh(new THREE.BoxGeometry(...size), new THREE.MeshStandardMaterial({ color,roughness }));
+  mesh.position.set(...position); mesh.castShadow = true; parent.add(mesh); return mesh;
+}
+function buildProceduralFallback() {
+  const colors = [0xeeeae0,0xd1cfc3,0x12211c,0xe2e8d9,0xf0eee7];
+  meshes = M.LAYERS.map((layer,i) => {
+    const mesh = new THREE.Mesh(roundedGeometry(layer.thicknessMm*Z_SCALE),new THREE.MeshStandardMaterial({ color:colors[i], roughness:i===2?.58:.82, transparent:true }));
+    mesh.castShadow=true; mesh.receiveShadow=true; return mesh;
   });
-  function animate(now) {
-    raf = 0;
-    if (!ready || !visible || root.dataset.interacted || motion.matches) { start=null; return; }
-    if(start===null) start=now;
-    const progress=Math.min(1,(now-start)/2000);
-    t=progress*progress*(3-2*progress);slider.value=String(t*100);draw();
-    if(progress<1) raf=requestAnimationFrame(animate);
+  box(meshes[0],[12,.06,.38],[0,M.LAYERS[0].thicknessMm*Z_SCALE/2+.04,8],0x0e7c66);
+  const boardTop = M.LAYERS[2].thicknessMm*Z_SCALE/2+.04;
+  // Printed traces and flush components stay inside the study layer envelope.
+  for (let i=0;i<6;i++) {
+    box(meshes[2],[.15,.04,15],[i*2.3-6,boardTop,-1],0x389887);
+    box(meshes[2],[10,.04,.15],[1,boardTop,i*2.1-5],0x389887);
   }
-  function firstView() {
-    if(!ready || !visible || played) return;
-    played=true;
-    if(!motion.matches && !root.dataset.interacted) raf=requestAnimationFrame(animate);
-  }
-  const view = new IntersectionObserver(entries => { visible=entries[0].isIntersecting;firstView(); }, {threshold:0.15});
-  view.observe(root);
-  motion.addEventListener('change', () => { if(motion.matches) stop(); });
+  box(meshes[2],[7,.08,7],[0,boardTop,0],0x0e2722);
+  box(meshes[2],[5,.08,8],[-10,boardTop,3],0xa4b2a1);
+  for(let i=0;i<4;i++) box(meshes[2],[2,.06,1.2],[7,boardTop,i*3-4],0x8fa68d);
+}
+async function initScene() {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
+  renderer.setPixelRatio(quality.pixelRatioCap); renderer.setClearColor(0xfafaf6);
+  renderer.shadowMap.enabled = quality.shadowMapSize > 0; renderer.shadowMap.type = THREE.VSMShadowMap;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  scene = new THREE.Scene(); camera = new THREE.OrthographicCamera(-50,50,80,-40,.1,1000);
+  scene.add(new THREE.AmbientLight(0xffffff,1.3));
+  const key = new THREE.DirectionalLight(0xfff5df,2.5); key.position.set(-65,160,65); key.castShadow = quality.shadowMapSize > 0;
+  key.shadow.mapSize.set(quality.shadowMapSize, quality.shadowMapSize);
+  Object.assign(key.shadow.camera, { left:-100,right:100,top:170,bottom:-100,near:.1,far:400 });
+  key.shadow.bias = -.0003; key.shadow.normalBias = .15; key.shadow.radius = 5; key.shadow.blurSamples = 8; scene.add(key);
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(1000,1000),new THREE.ShadowMaterial({ opacity:.12 }));
+  ground.rotation.x = -Math.PI/2; ground.position.y=-.15; ground.receiveShadow=true; scene.add(ground);
   try {
-    // Probe before creating a Three renderer: unsupported WebGL keeps the image.
-    canvas=document.createElement('canvas');
-    const context=canvas.getContext('webgl2',{antialias:true});
-    if(!context) return;
-    const [THREE, {GLTFLoader}] = await Promise.all([import('three'),import('GLTFLoader'),import('/take-apart-model.js')]);
-    const M=globalThis.TakeApartModel;
-    const quality=M.qualityFor({devicePixelRatio,hardwareConcurrency:navigator.hardwareConcurrency,coarsePointer:matchMedia('(pointer:coarse)').matches});
-    renderer=new THREE.WebGLRenderer({canvas,context,antialias:true});
-    renderer.setPixelRatio(quality.pixelRatioCap);renderer.setClearColor(0xfafaf6);
-    renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1;
-    renderer.outputColorSpace=THREE.SRGBColorSpace;
-    const scene=new THREE.Scene();
-    scene.background=new THREE.Color(0xfafaf6);
-    const camera=new THREE.OrthographicCamera(-50,50,80,-40,.1,1000);
-    camera.position.set(52,42,62);camera.lookAt(0,10,0);camera.updateMatrixWorld();
-    // A local studio environment supplies broad reflections without another download.
-    const studio=new THREE.Scene();
-    studio.background=new THREE.Color(0x626860);
-    const panel=(color,intensity,x,y,z,w,h)=>{
-      const mesh=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({color,side:THREE.DoubleSide}));
-      mesh.material.color.multiplyScalar(intensity);mesh.position.set(x,y,z);mesh.lookAt(0,0,0);studio.add(mesh);
-    };
-    panel(0xfff5df,5,-70,100,60,100,140);
-    panel(0xffffff,2,90,40,-40,50,120);
-    panel(0xffffff,.5,0,-80,0,160,160);
-    const pmrem=new THREE.PMREMGenerator(renderer);
-    const environment=pmrem.fromScene(studio,.04);
-    scene.environment=environment.texture;
-    pmrem.dispose();
-    studio.traverse(object=>{object.geometry?.dispose();object.material?.dispose();});
-    scene.add(new THREE.HemisphereLight(0xfafaf6,0x53685c,.45));
-    const fill=new THREE.DirectionalLight(0xffffff,.7);fill.position.set(70,35,-60);scene.add(fill);
-    const light=new THREE.DirectionalLight(0xfff5df,3);light.position.set(-65,160,65);scene.add(light);
-    const gltf=await new GLTFLoader().loadAsync('/models/patch-one.glb');
-    const nodes=M.NODE_NAMES.map(name=>{
-      const node=gltf.scene.children.find(child=>(child.userData.name||child.name)===name);
+    const { GLTFLoader } = await import('GLTFLoader');
+    const gltf = await new GLTFLoader().loadAsync('/models/patch-one.glb');
+    if (gltf.scene.children.length !== M.NODE_NAMES.length) throw new Error('Invalid layer count');
+    meshes = M.NODE_NAMES.map(name => {
+      const node = gltf.scene.children.find(child => (child.userData.name || child.name) === name);
+      if (!node) throw new Error('Missing layer: '+name);
+      node.name = name;
+      node.scale.y = Z_SCALE;
+      return node;
+    });
+    root.dataset.modelNodes = JSON.stringify(meshes.map(node => node.name));
+    root.dataset.modelSource = 'glb';
+  } catch (error) {
+    // Asset/network/parser failure keeps the original study usable.
+    buildProceduralFallback();
+    root.dataset.modelSource = 'procedural';
+  }
+  meshes.forEach(node => {
+    node.traverse(object => {
+      if (!object.material) return;
+      const materials = Array.isArray(object.material) ? object.material : [object.material];
+      // A layer owns its material state even when glTF shares a material.
+      const owned = materials.map(material => {
+        const copy = material.clone(); copy.userData.baseOpacity = copy.opacity; return copy;
+      });
+      object.material = Array.isArray(object.material) ? owned : owned[0];
+      object.castShadow = true; object.receiveShadow = true;
+    });
+    scene.add(node);
+  });
+  const ns='http://www.w3.org/2000/svg';
+  M.LAYERS.forEach((layer,i) => {
+    const group=document.createElementNS(ns,'g'); group.dataset.layer=i;
+    const path=document.createElementNS(ns,'path'); path.setAttribute('fill','none'); path.setAttribute('stroke-width','1'); group.append(path);
+    const dot=document.createElementNS(ns,'circle'); dot.setAttribute('r','2.5'); group.append(dot);
+    const label=document.createElementNS(ns,'text'); label.setAttribute('font-size','11');
+    const words = i===2 ? ['Sensing and','processing board'] : [layer.name];
+    words.forEach((word,j)=> {const line=document.createElementNS(ns,'tspan');line.textContent=word;line.setAttribute('dy',j?'15':'0');label.append(line);});
+    group.append(label); overlay.append(group);
+  });
+  await renderer.compileAsync(scene,camera); updateScene(true);
+}
+function updateScene(instant=false) {
+  if (!renderer) return;
+  const {width:w,height:h}=canvas.getBoundingClientRect();
+  if (canvas.width!==Math.round(w*quality.pixelRatioCap)||canvas.height!==Math.round(h*quality.pixelRatioCap)) renderer.setSize(w,h,false);
+  const blend = reducedMotion||instant ? 1 : .12;
+  azimuth+=(targetAzimuth-azimuth)*blend; elevation+=(targetElevation-elevation)*blend; zoom+=(targetZoom-zoom)*blend;
+  camera.position.set(radius*Math.cos(elevation)*Math.sin(azimuth),10+radius*Math.sin(elevation),radius*Math.cos(elevation)*Math.cos(azimuth));
+  camera.lookAt(0,10,0); camera.updateMatrixWorld();
+  const model=M.sceneState(state.t,state.h,state.focus,state.xray);
+  const bounds = new THREE.Box3();
+  meshes.forEach((mesh,i)=> {
+    const layer=model.layers[i]; mesh.position.set(layer.asideMm,(layer.centerMm+layer.liftMm)*Z_SCALE,0);
+    mesh.traverse(object=> { if(object.material){
+      const materials=Array.isArray(object.material)?object.material:[object.material];
+      for(const material of materials){
+        const opacity=material.userData.baseOpacity*layer.opacity, transparent=opacity<1;
+        if(material.transparent!==transparent){material.transparent=transparent;material.needsUpdate=true;}
+        material.opacity=opacity;material.depthWrite=!transparent;
+      }
+      object.castShadow=materials.every(material=>material.opacity===1);
+    } });
+    // The projection frames the same model bounds, with a stable margin for labels.
+    for(const x of [-18,18]) for(const z of [-18,18]) for(const dy of [-layer.thicknessMm*4,layer.thicknessMm*4]) {
+      bounds.expandByPoint(new THREE.Vector3(mesh.position.x+x,mesh.position.y+dy,z).applyMatrix4(camera.matrixWorldInverse));
+    }
+  });
+  const center=bounds.getCenter(new THREE.Vector3()), size=bounds.getSize(new THREE.Vector3());
+  const aspect=w/h, usableWidth=w<720?.78:.49;
+  const viewHeight=Math.max(size.y/.66,size.x/(aspect*usableWidth))/zoom;
+  camera.left=center.x-viewHeight*aspect/2;camera.right=center.x+viewHeight*aspect/2;
+  camera.top=center.y+viewHeight/2;camera.bottom=center.y-viewHeight/2;camera.updateProjectionMatrix();
+  const labels=[];
+  meshes.forEach((mesh,i)=> {
+    const left=i%2===0, point=new THREE.Vector3(left?0:18,0,left?18:0).add(mesh.position).project(camera);
+    labels.push({i,left,x:(point.x+1)*w/2,y:(1-point.y)*h/2});
+  });
+  for(const left of [true,false]) {
+    let previous=36;
+    const side=labels.filter(l=>l.left===left).sort((a,b)=>a.y-b.y);
+    side.forEach((l,j)=>{l.labelY=Math.max(previous,Math.min(h-60-(side.length-j-1)*52,l.y));previous=l.labelY+52;});
+  }
+  labels.forEach(l=> {
+    const g=overlay.children[l.i], x=l.left?8:w-8, elbow=l.left?150:w-150;
+    const color=state.focus===l.i?'#0E7C66':'#53685C';
+    g.setAttribute('fill',color);g.querySelector('path').setAttribute('stroke',color);
+    g.querySelector('path').setAttribute('d',\`M \${l.x} \${l.y} L \${elbow} \${l.labelY} L \${l.left?x+3:x-3} \${l.labelY}\`);
+    const circle=g.querySelector('circle');circle.setAttribute('cx',l.x);circle.setAttribute('cy',l.y);
+    const text=g.querySelector('text');text.setAttribute('text-anchor',l.left?'start':'end');text.setAttribute('y',l.labelY-9-(l.i===2?15:0));
+    text.querySelectorAll('tspan').forEach(t=>t.setAttribute('x',x));
+  });
+  renderer.render(scene,camera);
+}
+function drawChart() {
+  const chart=$('#chart'), rect=chart.getBoundingClientRect(), dpr=quality.pixelRatioCap;
+  chart.width=Math.round(rect.width*dpr);chart.height=Math.round(rect.height*dpr);
+  const ctx=chart.getContext('2d');ctx.scale(dpr,dpr);
+  const w=rect.width,h=rect.height, series=M.tempSeries(), low=Math.min(...series)-.1,high=Math.max(...series)+.1;
+  const px=i=>4+(w-8)*i/56, py=v=>h-8-(v-low)/(high-low)*(h-16);
+  ctx.strokeStyle='#DFE7DF';ctx.lineWidth=1;
+  for(const y of [12,h/2,h-12]){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+  ctx.beginPath();series.forEach((v,i)=>i?ctx.lineTo(px(i),py(v)):ctx.moveTo(px(i),py(v)));
+  ctx.strokeStyle='#0E7C66';ctx.lineWidth=1.5;ctx.stroke();
+  const idx=state.h/6, base=Math.floor(idx), next=Math.min(56,base+1);
+  const value=series[base]+(series[next]-series[base])*(idx-base),x=px(idx),y=py(value);
+  ctx.strokeStyle='#12211C';ctx.beginPath();ctx.moveTo(x,4);ctx.lineTo(x,h-4);ctx.stroke();
+  ctx.fillStyle='#0E7C66';ctx.beginPath();ctx.arc(x,y,3.5,0,Math.PI*2);ctx.fill();
+  lastChartHour=state.h;
+}
+function updatePanel(now) {
+  if(now-lastPanel<1000/quality.panelUpdateHz)return;
+  lastPanel=now; const gauges=M.gaugeReadout(state.h);
+  for(const [key,value] of Object.entries(gauges)) $('[data-gauge="'+key+'"]').textContent=value;
+  $('#wear-day').textContent=gauges.day;
+  $('#separation').value=state.t;$('#wear').value=state.h;
+  document.querySelectorAll('[data-layer]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.layer===state.focus)));
+  $('#xray').setAttribute('aria-pressed',String(state.xray));
+  if(Math.abs(state.h-lastChartHour)>=.25)drawChart();
+}
+const beats = [
+  ['assembled','Assemble','#separation',()=>{Object.assign(state,{t:0,h:0,focus:null,xray:false});setCamera('Hero');}],
+  ['apart','Explode','#separation',()=>{state.t=1;}],
+  ['board','Isolate the board','[data-layer="2"]',()=>{state.focus=2;}],
+  ['xray','X ray','#xray',()=>{state.xray=true;}],
+  ['settle','Settle','#wear',()=>{Object.assign(state,{t:.35,h:156,focus:null,xray:false});}],
+];
+function tour(now) {
+  if(reducedMotion || now-lastInteraction<IDLE_SECONDS*1000)return;
+  if(tourStart===null)tourStart=now;
+  const index=Math.floor((now-tourStart)/(BEAT_SECONDS*1000))%beats.length;
+  const phase=(now-tourStart)%(BEAT_SECONDS*1000);
+  if(index!==tourBeat){
+    tourBeat=index;const beat=beats[index];
+    const rect=$(beat[2]).getBoundingClientRect();cursor.hidden=false;cursor.style.left=rect.left+rect.width/2+'px';cursor.style.top=rect.top+rect.height/2+'px';
+    root.dataset.tourBeat='off';
+  }
+  cursor.classList.toggle('pressing',phase>=200&&phase<400);
+  if(phase>=220 && root.dataset.tourBeat!==beats[index][0]) {
+    beats[index][3]();root.dataset.tourBeat=beats[index][0];$('#tour-status').textContent='Guided tour · '+beats[index][1];
+  }
+}
+try { await initScene(); root.dataset.sceneReady = 'true'; } catch (error) {
+  if(renderer)renderer.dispose();renderer=null;canvas.hidden=true;overlay.hidden=true;$('#fallback').textContent='3D is unavailable on this device. Explore the layers and simulated readings with the controls below.';$('#fallback').hidden=false;
+  // WebGL capability failure leaves the model and accessible controls operational.
+}
+window.addEventListener('resize',()=> {lastChartHour=-Infinity;});
+function frame(now){tour(now);updateScene();updatePanel(now);requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+
+})();`;
+
+exec
+/bin/bash -lc "cat .openspec/specs/home-layered-view/spec.md; sed -n '85,190p' src/home-layered-client.js; cat evidence/home-layered-view/browser-pass.log; cat design/reference/README.md" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+# Sentia: Home Layered View
+
+Status: active for wo-gh-13, loopback round 2 (gate loopback, changes_requested closed on five named findings)
+Slug: home-layered-view
+
+## Roles
+- implementer: builds the change described here
+- reviewer: checks the change against this spec
+- qa: checks the scenarios below with tests
+- product_owner: owns the purpose and accepts the result
+
+## Purpose
+
+The Patch One's layered view lives only on the /take-apart study page. The product owner ordered on 2026-10-31 that the layered vision also belongs on the main home page: a visitor who never clicks through to the study should still meet the product in its five layers. This order adds one section to the home page that presents the same Blender built product model (wo-gh-12), exploded by the same model idea as the take apart page, with a visitor control, and links onward to the full study. Everything else about the home page is frozen. The builder and reviewer-design run on GPT-6 Astra; the spec writer, test writer and the other reviewers run on claude-sonnet-5-5, per ANVIL policy.
+
+Base and stack position: this order branches from anvil/run-take-apart-product-model at d7056f1e2855c719fa10269b4e05dd66094154b7, the head recorded when the order was filed. A finish loopback runs on that branch in parallel and may land commits after this base (it touches the Blender build, the GLB module and one footer line of the take apart page); no file conflict is expected because this order touches the home page, and the stack merge reconciles in order. Governing documents: .openspec/specs/take-apart/spec.md, .openspec/specs/take-apart-bundling/spec.md, .openspec/specs/take-apart-product-model/spec.md, design/DESIGN.md, brand/BRAND.md, and brain/learnings.md L-1 to L-7.
+
+### Loopback round 2 (baseline and scope)
+
+Round 1 (branch head 8786b360) is the baseline: the section, the take apart model driven positions, the five layer buttons, the slider, the lazy gate, the three way fallback, the clean bundle, the byte stable home invariants, the untouched take apart page and all 41 tests in tests/home-layered-view.test.js pass, with payloads inside budget (document 48,037 B, +3,603 over 44,434; fallback image 40,672 B; lazy 3D payload 1,209,685 B with the GLB once). The spec text above and below, including the round 1 tightenings of R8, R9, R11 and S6, is the baseline text. This round closes exactly five findings (R14 scene rendering, R16 label, R7 onward link, R13 evidence completeness, R15 suite itemization) and changes nothing else. The product owner's 2026-11-01 settlement order (finish open orders, merge the stack to main, deploy production from main) governs the merge position of R15. Routing facts (builder on gpt-6-astra via the Cloudflare AI Gateway, verified by the operator's wrapper) are the operator's and are not spec requirements.
+
+## References
+
+- design/reference/product-reference.png and the two quality boards: the product identity and quality anchors; the rendered section is judged against them with the same product test.
+- src/facts.js FACTS.layers: the five layer names, in stack order, with their product descriptions; FACTS.thicknessMm 2.5 and FACTS.definition carry the profile fact. The facts file is not edited by this order.
+- evidence/take-apart-product-model/render-exploded.png: the exploded beauty render of the product model; it is the section's fallback image (R6).
+- src/take-apart-model.js: the one simulation model. Layer thicknesses (0.6, 0.7, 0.5, 0.4, 0.3), layerCenterMm(layer, t) and the focus and material rules are the positions and highlight semantics the home view reuses; the model file is not edited by this order.
+
+## Requirements
+
+### The section
+
+- R1 (one new home section): src/page.js gains exactly one new section inside main, placed after the existing patch section (#patch) and before How it works (#how), with its own aria-label. The section presents the Patch One in layers: a 3D view of the product GLB beside the five layer names. No other home section is added, moved or edited; the nav is unchanged.
+- R2 (the one asset): The 3D view loads the product from the existing route /models/patch-one.glb, the asset wo-gh-12 built. The GLB is never duplicated: no second copy as a file, a constant module or an inline payload anywhere in the repo, and the run's browser pass records the GLB fetched exactly once for the section. src/patch-one-glb.js and the take apart sources are not edited by this order.
+
+### The model idea on the home page
+
+- R3 (one separation state): The view's layer positions derive from the take apart model: at separation t the layers sit at layerCenterMm(i, t) under the same study treatment the take apart client applies, so assembled (t = 0) stacks flush at the 2.5 mm profile and exploded (t = 1) matches the study page's exploded state. However the client obtains the model outputs (the served model twin, a shared module, or an import of the same source), a project test proves the home view's assembled and exploded layer centres equal the model's, and a drift between the home math and src/take-apart-model.js fails the suite.
+- R4 (the visitor control): A separation slider (a real input of type range, 0 to 100, mapped to t) lets the visitor move the layers apart and back. Moving it updates the scene on the same frame budget the take apart page keeps; once the visitor uses the slider, no automatic animation fights the chosen value.
+- R5 (first view animation): When the section first scrolls into view, the separation animates gently from assembled to exploded over roughly two seconds, once. If the visitor's system prefers reduced motion, no animation runs: the view rests assembled and the slider remains available. Focus and keyboard use never trigger the animation against the visitor's intent: it runs at most once, only from the scroll into view, and stops the moment the visitor interacts with the section's controls.
+
+### Layers named beside the view
+
+- R6 (legend and sync): The five FACTS layer names appear beside the view in stack order as real buttons (a list of buttons). Hovering, focusing or selecting a layer name highlights that layer in the scene using the model's own focus semantics (the focused layer lifts and the others fade to the model's FADE_OPACITY, as in src/take-apart-model.js materialState and focusTransform); clearing the hover or selection restores the unhighlighted state. Each button also carries the layer's FACTS detail as its description text or an adjacent caption.
+- R7 (copy and onward link): The section copy stays in the site's voice and factual register, generated from or consistent with src/facts.js: it states the five layers and the 2.5 mm assembled profile, and names no capability the facts do not carry. A link in the section leads to /take-apart for the full interactive study, in the site link style. The href is exactly the plain path /take-apart, with no query string or fragment (round 2 removes the ?from=home suffix); the test expectation that encoded the suffix is updated to match.
+
+### Home discipline
+
+- R8 (lazy loading): Nothing WebGL blocks or delays the home page's first render. The served home document contains no three.js bytes, no loader bytes and no GLB bytes; the 3D module chain (the vendored three core, the GLTFLoader, the GLB) is fetched only when the section approaches the viewport (an IntersectionObserver gate or an equivalent lazy mechanism), following the take apart stack's vendored routes and import map pattern: /vendor/three.module.min.js, /vendor/loaders/GLTFLoader.js (which pulls /vendor/utils/BufferGeometryUtils.js), /models/patch-one.glb. No new vendored copy of three, the loader or the utils is introduced. The home client obeys the take apart bundling spec (R1, R2): no served byte is produced by stringifying a function the production bundler can rewrite, and the dynamic import of the vendor routes is written so the production bundle builds with no local patch. The run's browser capture proves no request for /models/ or /vendor/ fires while the section is below the fold on initial load. Whatever script the section needs is either small and inline in the document (counted in the R11 document budget) or fetched under the same gate (counted in the R11 lazy payload).
+- R9 (fallback without canvas): The section's server rendered HTML carries the complete content without any canvas: the exploded beauty render (evidence/take-apart-product-model/render-exploded.png) served from the site itself as the section's image, following the codebase's image serving pattern (bytes carried in a module and served from a new route; the image is never inlined in the document). The source PNG is 752,674 bytes, over the R11 image budget, so the served image is a derived re-encode of that render (for example WebP like the existing image routes) that stays recognisably the same render; src/images.js and the four existing image routes are not edited, with alt text naming the product and its five layers, plus the layer list in HTML with the FACTS details. With JavaScript disabled, with WebGL unavailable, or if the GLB fails to load, the section still shows that image and list, and the copy and the onward link remain. When the 3D view does initialise, it replaces the fallback image visually without removing the layer list or the copy from the document. The SEO and GEO layer (the facts generated head content, JSON-LD, llms files) never depends on the canvas and is unchanged by this order.
+- R10 (home invariants, byte stable): Outside the added section and its wiring, the home page is byte stable: the page title is byte identical, the footer credit paragraph (Sentia is a concept product, designed and built end to end by ANVIL, an open source software factory. Developed by Eduardo Arana.) is byte identical, every pre existing section's markup is unchanged, and the four image routes serve byte identical responses. The /take-apart page and all its routes are unchanged. Project tests assert the title, the footer paragraph, the pre existing section ids in order with the new section inserted only at its R1 position, and the image route bytes.
+- R11 (payload budget): Measured on the final tree and stated in the run report: the served home document grows by at most 48 KB over the base head's 44,434 bytes; the served fallback image is at most 400 KB; the lazy 3D payload (three core, GLTFLoader, BufferGeometryUtils, and the GLB counted once, plus any home client script fetched under the gate) is at most 1.25 MB and is fetched only under the R8 gate. Sizes are decoded bytes as served, and 1.25 MB is read as 1,250,000 bytes. Known base figures: three 670,681, GLTFLoader 109,610, BufferGeometryUtils 32,994, GLB 386,708, total 1,199,993, which leaves about 50 KB for any home client code, so no additional vendored dependency fits. If a figure exceeds its budget the implementation is tightened until it fits; the budgets are not raised by this order.
+
+### Accessibility and design
+
+- R12 (accessibility): The slider is keyboard operable and labelled (a visible label or aria-label naming the separation control). Layer names are real buttons with 44 px minimum targets. Text contrast is at or above 4.5 to 1, type follows design/DESIGN.md, focus rings are the 3 px treatment the take apart chrome uses, and spacing follows the 8 px rhythm with colours from the design tokens only. The canvas is decorative beside real content: it is hidden from assistive technology or exposed as a labelled image, and everything it shows is available in the HTML layer list. Reduced motion is honoured per R5.
+
+### Evidence
+
+- R13 (production shape and evidence completeness): The production bundle command succeeds on the final tree with zero local patches, command and exit status recorded. The bundled output is served by a local Worker runtime and a real browser pass against it records zero console errors and zero page errors, the section present, the lazy gate honoured (R8), the GLB fetched once, and screenshots of the home section in the assembled state and in the exploded state with the product recognisably rendered. The capture of record follows the scripts/capture-take-apart.mjs bundled pattern, as scripts/capture-home.mjs, and its output lives under evidence/home-layered-view/. No evidence step imports the unbundled source. Evidence is committed, not just produced: .gitignore gains the negations needed (the existing *.log rule otherwise hides them, for example !evidence/home-layered-view/*.log) so the evidence/home-layered-view/ logs (browser pass, baseline tests, bundle build) are tracked, and they are committed in full. A run report file under evidence/home-layered-view/ (for example run-report.md) states the three measured payload figures against their budgets (R11) and the suite itemization (R15); the builder output states the figures as well. Figures in logs or the builder summary alone do not satisfy this.
+- R14 (the same product test on the section): Reviewer-design judges the section against design/DESIGN.md and runs the same product test from the take apart product model spec against the captured section screenshots: the rendered product must be recognisable as the Patch One of design/reference/product-reference.png (silhouette, proportions, wordmark and LED, layer order and materials). A section rendering that reads as generic blocks, or a fallback image that is not the product model's exploded render, fails the run. Round 2 adds the rendering bar for the live scene, judged on recaptured assembled and exploded screenshots against design/reference/quality-board-1.png, quality-board-2.png and DESIGN.md's production quality bar: the adhesive and the release liner read as translucent films (not solid rimmed slabs), the lighting is not flat (a directional key with shaping fill and a believable environment), and the board detail (components, wordmark, teal LED) survives. The remedy is confined to the home scene code (the home client's lighting rig, material handling and environment): the GLB asset, src/patch-one-glb.js, the take apart sources and the model semantics (layer positions, focus and fade rules, R3 to R6) stay frozen, and the take apart page stays untouched. The same GLB already passes on the study page, so a fix that edits the asset fails. Payload budgets (R11) are re-measured after the change, and the screenshots are recaptured by the R13 pass.
+- R15 (suite): The project suite passes on the final tree, including the new home layered view tests and all pre existing tests in their original meaning. The full suite on this branch has exactly three known failures, all pre existing on this branch's base, and the run report itemizes ALL of them by name: (1) the design v4 S11 test, resolved on the sibling branch anvil/run-s11-rebaseline (wo-gh-10, approved); (2) and (3) the two product model S7/R13 evidence tests in tests/take-apart-product-model.test.js, the bundled browser pass test and the bundle-build.log test, which fail because evidence/take-apart-product-model/ on this base predates that branch's finish loopback. Those evidence files belong to the sibling stack: this order never edits another run's evidence to fix any of the three, and never silently absorbs them. Under the owner's settlement order they stand as named, accepted exceptions on this branch, because the product model branch and the web render finish branch (whose trees carry the regenerated product model evidence, bundle-build.log and browser pass log included) merge to main before this branch, and the suite is re-run on the merged tree there. Any failure beyond these three, or any home layered view test failing, is not excepted.
+
+- R16 (section label, mono treatment): The new section's label (the recurring numbered section label the design system calls for) is rendered in the DESIGN.md system mono label treatment: 11 px, uppercase, 0.16 em letter spacing, system mono font stack from the design tokens, with contrast at or above 4.5 to 1. This is applied inside the new section's markup and styles only; existing sections' markup is unchanged (R10).
+
+## Scenarios
+
+### Scenario: The section on the home page
+- S1: Given the final tree, when the home page is rendered, then exactly one new section exists between the #patch section and the #how section, carrying the layered view, the five FACTS layer names in stack order, copy stating the five layers and the 2.5 mm assembled profile, and a link to /take-apart.
+
+### Scenario: Positions come from the one model
+- S2: Given the home view, when its layer centres are read at t = 0 and at t = 1, then they equal layerCenterMm(i, 0) and layerCenterMm(i, 1) from src/take-apart-model.js for every layer i, under the same study treatment the take apart client applies.
+
+### Scenario: The slider drives the separation
+- S3: Given the loaded section in a browser, when the slider is set to its maximum by keyboard or pointer, then the scene shows the five layers exploded in stack order; when it is set back to zero, then the product rests assembled and flush.
+
+### Scenario: First view animation and reduced motion
+- S4: Given a browser without a reduced motion preference, when the section first scrolls into view, then the separation animates once from assembled to exploded and stops. Given a browser with prefers-reduced-motion, when the section scrolls into view, then no animation runs, the view rests assembled, and the slider still drives the separation.
+
+### Scenario: Legend highlights in sync
+- S5: Given the loaded section, when a layer name button is hovered, focused or selected, then that layer is highlighted in the scene under the model's focus semantics and the others fade; when the hover or selection clears, then the scene restores the unhighlighted state.
+
+### Scenario: Lazy loading gate
+- S6: Given the bundled site served locally, when the home page loads with the section below the fold, then no request fires for /models/patch-one.glb, /vendor/three.module.min.js, /vendor/loaders/GLTFLoader.js or /vendor/utils/BufferGeometryUtils.js; when the section approaches the viewport, then the chain loads and the GLB is fetched exactly once.
+
+### Scenario: Fallback without JavaScript or WebGL
+- S7: Given the served home HTML read without executing JavaScript, then the section contains the exploded beauty render as an image with alt text naming the product and its layers, the five layer names with their FACTS details in HTML, the section copy and the /take-apart link. Given a browser with WebGL disabled, the same content remains visible and no error surfaces.
+
+### Scenario: Home invariants hold
+- S8: Given the final tree, when the home page and the image routes are compared against the base head, then the title, the footer credit paragraph, every pre existing section's markup and the four image responses are byte identical, and the /take-apart page responses are unchanged.
+
+### Scenario: Payload within budget
+- S9: Given the final tree, when the served home document, the served fallback image and the lazy 3D payload are measured, then the document is at most 48 KB over the base head's 44,434 bytes, the fallback image is at most 400 KB, and the lazy payload with the GLB counted once is at most 1.25 MB, with every figure stated in the run report.
+
+### Scenario: Scene reads as the product (round 2)
+- S11: Given the recaptured home-assembled and home-exploded screenshots, when reviewer-design compares them to the quality boards and DESIGN.md, then the adhesive and release liner read as translucent films, the lighting has directional shaping, the board detail, wordmark and teal LED survive, and the layer order is correct; and the diff of the round touches no GLB, take apart source or model file.
+
+### Scenario: Label and onward link (round 2)
+- S12: Given the home HTML, when the new section is read, then its label computes to 11 px, uppercase, 0.16 em tracking in the mono stack, and the onward link's href is exactly /take-apart; the updated test asserts that href.
+
+### Scenario: Evidence committed and itemized (round 2)
+- S13: Given the final tree, when evidence/home-layered-view/ is listed from git, then the browser pass, baseline tests and bundle build logs are tracked, and the committed run report states the document, fallback image and lazy payload figures against budgets and names the three suite failures (design v4 S11 and the two product model S7/R13 evidence tests) as settlement exceptions, with no other run's evidence edited.
+
+### Scenario: Production shape browser pass
+- S10: Given the production bundle built clean from the final tree, when it is served locally and driven in a real browser, then the pass records zero console errors and zero page errors, the assembled and exploded screenshots of the section show the rendered product, and the pass log records the lazy gate and the single GLB fetch.
       if(!node) throw new Error('Missing product layer');
       node.scale.y=8;
       node.traverse(object=>{
@@ -499,28 +1013,44 @@ export async function mount(root) {
           const film=/adhesive film|release film/i.test(material.name);
           const copy=film ? new THREE.MeshPhysicalMaterial({
             name:material.name,color:material.color,opacity:material.opacity,
-            roughness:/adhesive/i.test(material.name)?.22:.38,
-            metalness:0,transmission:.88,ior:1.36,thickness:.08,
+            roughness:/adhesive/i.test(material.name)?.12:.26,
+            metalness:0,transmission:.82,ior:1.46,thickness:.015,
             transparent:true,depthWrite:false,side:THREE.FrontSide,
-            envMapIntensity:.8
+            envMapIntensity:1.25
           }) : material.clone();
           // Preserve the asset opacity; model focus fade multiplies this below.
           copy.userData.baseOpacity=material.opacity;
           if(film) {
-            // The study exaggerates vertical thickness eightfold. Keep its transforms,
-            // but suppress the optical density of those exaggerated edge faces.
+            // The frozen study exaggerates thickness eightfold. Render the film's
+            // upper optical surface only, avoiding a second rim from the solid shell.
+            // Geometry, layer transforms and model opacity remain unchanged.
             copy.onBeforeCompile=shader=>{
-              shader.vertexShader='varying float filmFace;\\n'+shader.vertexShader;
+              shader.vertexShader='varying float filmFace; varying vec3 filmPosition;\\n'+shader.vertexShader;
               shader.vertexShader=shader.vertexShader.replace('#include <beginnormal_vertex>',
-                '#include <beginnormal_vertex>\\nfilmFace=abs(objectNormal.y);');
-              shader.fragmentShader='varying float filmFace;\\n'+shader.fragmentShader;
+                '#include <beginnormal_vertex>\\nfilmFace=objectNormal.y; filmPosition=position;');
+              shader.fragmentShader='varying float filmFace; varying vec3 filmPosition;\\n'+shader.fragmentShader;
               shader.fragmentShader=shader.fragmentShader.replace('#include <alphamap_fragment>',
-                '#include <alphamap_fragment>\\ndiffuseColor.a *= mix(0.06, 1.0, smoothstep(0.2, 0.85, filmFace));');
+                '#include <alphamap_fragment>\\nif(filmFace < 0.85) discard;');
+              // Small optical waviness breaks up the studio reflection across a film;
+              // it changes the shading normal, never the frozen mesh or its bounds.
+              shader.fragmentShader=shader.fragmentShader.replace('#include <normal_fragment_maps>',
+                '#include <normal_fragment_maps>\\nnormal = normalize(normal + vec3(0.12 * sin(filmPosition.x * 0.22 + filmPosition.z * 0.13), 0.06 * cos(filmPosition.z * 0.3), 0.0));');
             };
-          } else copy.envMapIntensity=.65;
+          } else {
+            copy.envMapIntensity=1;
+            if(/silicone/i.test(material.name)) copy.roughness=.48;
+            if(/shielding/i.test(material.name)) {copy.metalness=.95;copy.roughness=.24;}
+            if(/plated contacts/i.test(material.name)) {copy.metalness=.9;copy.roughness=.22;}
+            if(/ceramic/i.test(material.name)) copy.roughness=.38;
+            if(/solder mask/i.test(material.name)) {copy.roughness=.65;copy.envMapIntensity=.25;}
+          }
           return copy;
         };
         object.material=Array.isArray(object.material)?object.material.map(clone):clone(object.material);
+        // Transparent films do not cast opaque slab shadows.
+        const materials=Array.isArray(object.material)?object.material:[object.material];
+        object.castShadow=materials.every(material=>material.opacity===1);
+        object.receiveShadow=object.castShadow && /board/i.test(name);
       });
       scene.add(node);return node;
     });
@@ -564,55 +1094,98 @@ export async function mount(root) {
   }
 }
 `;
-# Home layered view — wo-gh-13 loopback round 2
+Bundled Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-bundle-m3HCKu/index.js --no-bundle --local --ip 127.0.0.1 --port 8791
+console errors: 0
+page errors: 0
+section present: true
+lazy gate: PASS; below the fold: 0 /models/ or /vendor/ requests
+reduced motion: rests assembled; no animation
+slider: keyboard Home assembled and End 100 exploded; model centers match at 0, .25, .5, .75, 1
+hover and focus: layer button highlights match model; selection clears
+GLB fetches: 1
+first view animation: PASS once, reaches exploded in 2000 ms; interaction and revisit retain chosen value
+fallback no-javascript: PASS image, five buttons, copy, link; 375px no overflow
+fallback no-webgl: PASS image, five buttons, copy, link; 375px no overflow
+fallback bad-glb: PASS image, five buttons, copy, link; 375px no overflow
+/vendor/three.module.min.js: 670681 decoded bytes
+/vendor/loaders/GLTFLoader.js: 109610 decoded bytes
+/vendor/utils/BufferGeometryUtils.js: 32994 decoded bytes
+/models/patch-one.glb: 386708 decoded bytes
+/home-layers.js: 10569 decoded bytes
+/take-apart-model.js: 3226 decoded bytes
+home document: 48183 bytes; growth: 3749 bytes
+fallback image: 40672 bytes
+lazy 3D payload: 1213788 bytes (including model twin and home client, GLB once)
 
-The home scene now uses a directional key and shaping fill, a generated PMREM studio reflection environment, and physical transmitting film materials. Film edge optical density compensates for the study's eightfold vertical exaggeration without changing geometry, layer centres, asset opacity or model focus/fade rules. The new numbered label uses 11 px uppercase system mono with 0.16 em tracking; the onward href is plain /take-apart.
 
-## Final decoded payload measurements
+# Reference boards: the production quality anchor
 
-Measured by scripts/capture-home.mjs against the production bundle served by the local Worker runtime:
+The two boards in this folder are the quality anchor for Sentia product
+imagery. The product owner supplied them on 2026-10-30 as the standard
+that every product image for Sentia is measured against.
 
-- Home document: 48,183 bytes; growth 3,749 bytes over the 44,434 byte base, within the +48 KB budget.
-- Fallback image: 40,672 bytes, within the 400 KB budget.
-- Lazy 3D payload: 1,212,093 bytes, within the 1.25 MB (1,250,000 bytes) budget. Includes three core, loader, utils, GLB once, home client and model twin.
+## What the boards anchor
 
-The direct-source test response is 48,145 bytes (3,711 bytes over base); production bundling adds 38 bytes. The frozen source PNG on this branch is 752,703 bytes including metadata; its stale 752,674-byte test assertion was corrected without modifying the image or its served derivative.
+- Photorealistic studio product photography: real materials, real light,
+  real skin. The patch reads as a physical object a camera photographed,
+  never as a stylized or toy-like render.
+- The exploded view shows each layer with believable materials: a matte
+  silicone top cover, porous comfort foam, a detailed PCB with real
+  components, and translucent adhesive and release liner films.
+- On-skin shots look like skin and product in the same photograph:
+  natural skin texture, a soft contact shadow, and the patch sitting
+  into the surface it is applied to.
+- Studio light and shadow are physically consistent across every view:
+  one light logic, soft falloff, no pasted-on look.
 
-The full browser-pass.log records each route's decoded size. bundle-build.log records the production command and exit status 0, without local patches. The browser pass records zero console and page errors, zero model/vendor requests below the fold, one GLB fetch, keyboard controls and model centres, reduced motion, first-view animation, and all three fallback modes. Assembled and exploded screenshots were recaptured along with fallback screenshots. The home invariants and frozen asset/take-apart sources are checked by the scenario suite.
+## What a reviewer checks in any new product image
 
-## Three named baseline failures / settlement exceptions
+- Materials read as what they are: silicone, foam, PCB, adhesive film,
+  skin.
+- Skin contact looks believable: the patch rests on the skin with a
+  contact shadow and a slight surface response, not floating above it.
+- Light and shadow stay physically consistent with the anchor boards.
+- Detail holds up at close range: fine texture on the cover, real
+  component detail on the board, clean edges.
 
-The full suite log is baseline-tests.log. The only accepted failures on this branch are:
+## Scope of the anchor
 
-1. Design v4 S11, tests/design-v4-square-product.test.js: `S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/`. Resolved on sibling branch anvil/run-s11-rebaseline (wo-gh-10, approved).
-2. tests/take-apart-product-model.test.js: `product-model S7/R13: the bundled browser pass records zero errors, scene ready, the GLB fetched and the five node names`.
-3. tests/take-apart-product-model.test.js: `product-model S7/R13: bundle-build.log records the production bundle command, exit 0, zero local patches`.
+The boards carry labels and marketing text because they are reference
+material. Website assets themselves stay free of text and labels. The
+anchor governs realism and finish, not layout or copy.
 
-The two product-model S7/R13 evidence tests fail because this base's evidence predates that run's finish loopback. No sibling evidence was edited. Under the owner's 2026-11-01 settlement order, the product model and web render finish branches, carrying regenerated product model bundle-build.log and browser pass evidence, merge before this branch; the full suite is re-run on the merged main tree. These three are named settlement exceptions, not newly approved work or silently absorbed failures.
+## The identity anchor: product-reference.png
 
-Independent reviewers retain the visual verdict and approval. No merge or deployment was performed by this station.
+product-reference.png is the hero image of the square product, added on
+2026-10-30 for work order wo-gh-8. The boards above anchor quality; this
+file anchors identity. The product it shows is the canonical Sentia
+Patch One: a flat, thin, matte off white square patch with strongly
+rounded corners, worn directly on the skin with no carrier or frame
+around it, the SENTIA wordmark in dark print, and a teal cyan LED line.
 
-## Final test results
-
-`node --test tests/home-layered-view.test.js`: exit 0, all 52 tests pass (home-tests.log).
-`npm test`: exit 1, 237 tests: 233 pass, 3 fail, 1 skipped. The three failures are exactly those itemized above (baseline-tests.log). The fallback link assertion accepts either HTML quote style while requiring the exact plain path.
+Every product image is compared against this reference for identity:
+same matte finish, same direct skin mounting, same teal LED, same flat
+proportions. An image whose LED glows amber, whose cover reads glossy,
+which shows a fabric carrier frame, or whose patch reads thick or
+domed depicts a different product and fails review, however good it
+looks against the quality boards.
 
 codex
 {
   "station": "reviewer-design",
   "verdict": "changes_requested",
   "findings": [
-    "R14 / design/DESIGN.md production quality: evidence/home-layered-view/home-exploded.png still shows the adhesive as a thick, pale rimmed slab and the release liner as a flat gray plate. Neither convincingly reads as translucent film against design/reference/quality-board-1.png and quality-board-2.png. Adjust the home scene's material handling and lighting in src/home-layered-client.js, preserving the frozen GLB and model semantics, and recapture both states.",
-    "R14 / design/DESIGN.md production quality: the recaptured exploded view still renders PCB components as uniformly shaded blocks with weak metallic highlights and little visible fine detail compared with both reference boards. The assembled cover also remains broadly flat-lit. Refine the home environment and lighting so existing board detail and physical material differences survive at the displayed size; the required production-quality product test remains unmet."
+    "R14/S11 and DESIGN.md's production-quality bar remain unmet in evidence/home-layered-view/home-exploded.png: the films no longer have thick rims, but appear as faint white silhouettes with broad reflection bands. Their edges and translucent material differences remain poorly resolved compared with both quality boards. Refine film shading and environment reflections in src/home-layered-client.js so both layers read convincingly as physical translucent films, then recapture.",
+    "R14/S11: metallic differentiation has improved, but the exploded PCB's large shields read as uniformly white faces with dark sides; fine contacts and component finishes remain weak at the displayed size compared with design/reference/quality-board-1.png and quality-board-2.png. Adjust the home environment and metal roughness to retain highlight gradients and existing component detail without clipping the shield faces. The assembled cover now has directional shaping, closing the previous flat-lighting concern."
   ]
 }
 tokens used
-29,432
+40,241
 {
   "station": "reviewer-design",
   "verdict": "changes_requested",
   "findings": [
-    "R14 / design/DESIGN.md production quality: evidence/home-layered-view/home-exploded.png still shows the adhesive as a thick, pale rimmed slab and the release liner as a flat gray plate. Neither convincingly reads as translucent film against design/reference/quality-board-1.png and quality-board-2.png. Adjust the home scene's material handling and lighting in src/home-layered-client.js, preserving the frozen GLB and model semantics, and recapture both states.",
-    "R14 / design/DESIGN.md production quality: the recaptured exploded view still renders PCB components as uniformly shaded blocks with weak metallic highlights and little visible fine detail compared with both reference boards. The assembled cover also remains broadly flat-lit. Refine the home environment and lighting so existing board detail and physical material differences survive at the displayed size; the required production-quality product test remains unmet."
+    "R14/S11 and DESIGN.md's production-quality bar remain unmet in evidence/home-layered-view/home-exploded.png: the films no longer have thick rims, but appear as faint white silhouettes with broad reflection bands. Their edges and translucent material differences remain poorly resolved compared with both quality boards. Refine film shading and environment reflections in src/home-layered-client.js so both layers read convincingly as physical translucent films, then recapture.",
+    "R14/S11: metallic differentiation has improved, but the exploded PCB's large shields read as uniformly white faces with dark sides; fine contacts and component finishes remain weak at the displayed size compared with design/reference/quality-board-1.png and quality-board-2.png. Adjust the home environment and metal roughness to retain highlight gradients and existing component detail without clipping the shield faces. The assembled cover now has directional shaping, closing the previous flat-lighting concern."
   ]
 }
