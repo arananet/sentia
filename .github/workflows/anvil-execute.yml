@@ -74,13 +74,21 @@ name: anvil-execute
 # possible applications section: glucose monitoring named as a possible
 # future application of the platform under strict exploratory wording
 # guardrails, insertion only, no deployment in the order).
+# and anvil/run-design-audit
+# runs wo-gh-16 (work-orders/issue-16.json, reports on issue 16, the
+# design audit: the current home and take apart pages judged against
+# the design system with the product tree frozen; this branch pins
+# the ANVIL factory checkout to anvil-factory main instead of
+# anvil/vendor-teardown, because main now carries both the vendored
+# teardown kit and the wo-gh-21 consumption mechanisms, and this
+# order is that fix's proof run on a real project).
 # The Select work order step
 # sets the file, id and issue
 # used by the line, commit back and comment steps. Model routing is the
 # same for both work orders.
 on:
   push:
-    branches: [anvil/run-ui-astra, anvil/run-design-v2, anvil/run-design-v2-1, anvil/run-credit-line, anvil/run-design-v3, anvil/run-design-v4, anvil/run-s11-fix, anvil/run-imagery-consistency, anvil/run-take-apart, anvil/run-take-apart-bundling, anvil/run-take-apart-product-model, anvil/run-s11-rebaseline, anvil/run-web-render-finish, anvil/run-possible-applications]
+    branches: [anvil/run-ui-astra, anvil/run-design-v2, anvil/run-design-v2-1, anvil/run-credit-line, anvil/run-design-v3, anvil/run-design-v4, anvil/run-s11-fix, anvil/run-imagery-consistency, anvil/run-take-apart, anvil/run-take-apart-bundling, anvil/run-take-apart-product-model, anvil/run-s11-rebaseline, anvil/run-web-render-finish, anvil/run-possible-applications, anvil/run-design-audit]
   workflow_dispatch:
 
 permissions:
@@ -111,7 +119,11 @@ jobs:
       - name: Select work order for this branch
         id: wo
         run: |
-          if [ "${GITHUB_REF_NAME}" = "anvil/run-web-render-finish" ]; then
+          if [ "${GITHUB_REF_NAME}" = "anvil/run-design-audit" ]; then
+            echo "file=work-orders/issue-16.json" >> "${GITHUB_OUTPUT}"
+            echo "id=wo-gh-16" >> "${GITHUB_OUTPUT}"
+            echo "issue=16" >> "${GITHUB_OUTPUT}"
+          elif [ "${GITHUB_REF_NAME}" = "anvil/run-web-render-finish" ]; then
             echo "file=work-orders/issue-14.json" >> "${GITHUB_OUTPUT}"
             echo "id=wo-gh-14" >> "${GITHUB_OUTPUT}"
             echo "issue=14" >> "${GITHUB_OUTPUT}"
@@ -170,17 +182,19 @@ jobs:
           fi
           echo "Selected: $(tr '\n' ' ' < "${GITHUB_OUTPUT}")"
 
-      # Loopback round of wo-gh-9: the factory is checked out at the
-      # anvil/vendor-teardown branch so the vendored simulator kit is
-      # present at .anvil-factory/third_party/teardown/ as a run input.
-      # That branch is factory main plus third_party/ only, so the line,
-      # the pipelines and the station registry are identical to main.
+      # The factory is checked out at anvil-factory main: the vendored
+      # teardown simulator kit merged to factory main, so the kit is
+      # present at .anvil-factory/third_party/teardown/ as a run input,
+      # and main also carries the current line, pipelines and station
+      # registry, including the wo-gh-21 consumption mechanisms (packet
+      # budgets, contact sheet, scoped reviewer-design packet, per
+      # station report measurements) that this order's proof run needs.
       - name: Check out the ANVIL factory
         uses: actions/checkout@v4
         with:
           repository: arananet/anvil-factory
           path: .anvil-factory
-          ref: anvil/vendor-teardown
+          ref: main
 
       - name: Set up Python
         uses: actions/setup-python@v5
