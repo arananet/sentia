@@ -3,14 +3,13 @@
   "from_station": "builder",
   "to_station": "reviewer-spec",
   "work_order_id": "wo-gh-14",
-  "artifact_path": "runs/wo-gh-14/builder.packet.md",
-  "status": "failed",
-  "created_at": "2026-11-02T03:29:18.577058+00:00",
-  "error": "command executor exited 2: astra wrapper: codex exited 1 for station builder; the full codex output is in runs/wo-gh-14/builder.output.md.codex.txt; tail:\nonment remain', 'board materials, studio lighting, exposure and environment remain');open(p,'w').write(s)\nPY\ncat evidence/web-render-finish/reproducibility.log; git diff --check\" in /home/runner/work/sentia/sentia\n succeeded in 0ms:\nBlender 4.5.15; two consecutive complete builds: blender --background --python blender/build_all.py\nexport 1 GLB SHA256 5a1438dae703eb3647d",
+  "artifact_path": "runs/wo-gh-14/builder.output.md",
+  "status": "executed",
+  "created_at": "2026-11-03T04:09:11.340686+00:00",
   "configured_model": "gpt-6-astra",
   "executor": {
     "kind": "command",
     "detail": "python3"
   },
-  "executed_model": null
+  "executed_model": "gpt-6-astra"
 }

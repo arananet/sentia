@@ -1,4 +1,4 @@
-WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-rs40yzdq"))
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-xrubxeam"))
 Reading additional input from stdin...
 OpenAI Codex v0.166.0
 --------
@@ -9,7 +9,7 @@ approval: never
 sandbox: danger-full-access
 reasoning effort: none
 reasoning summaries: none
-session id: 01a19a4d-eea9-7573-a4ee-50bb866b679a
+session id: 01a19f99-ed3e-7721-921f-c9992fdc3286
 --------
 user
 You are executing an ANVIL reviewer station packet inside this repository. You are read only: inspect the files the packet refers to, judge the work against the packet, and do not change anything. The wrapper verifies the tree is unchanged after your run and fails this station if it is not.
@@ -98,23 +98,26 @@ Return a JSON object with this structure:
 - kind: feature
 - title: Web render finish: board and cover materials read in the page rendering, then deploy on approval
 - source: github-issue
-- description: FINAL LOOPBACK ROUND (gate loopback 2 of 2, ordered by the product owner on 2026-11-01 as part of the full stack settlement: finish the open orders, merge the branch stack to main, deploy production from main). Round 2 closed changes_requested on exactly one surviving item, and this round exists for that item alone.
+- description: REVIEW COMPLETION RE-RUN (ordered by the product owner on 2026-11-02 as part of finishing everything pending: termina lo pendiente). The implementation this order exists for is COMPLETE and FROZEN. This round changes nothing in the product: its only purpose is to produce the formal review set the previous round could not, because four of the five reviewer stations died at the executor on Cloudflare AI Gateway 402 errors before writing any review.
 
-Round 2 record, the baseline of this round: the builder packet fix worked and the builder implemented (commit 17b8e28: lighting, metal finishes, silicone grain and LED material handling updated; before and after browser evidence and reproducibility logs committed). Reviewer-design confirmed problem (1) CLOSED: the after board beats show silver face highlights, darker packages, gold contacts and metallic sensor rims distinctly against the substrate (R2/S4 met), and the fine cover grain is now visible in the assembled browser beat. All 16 scenario tests pass. The GLB measures 798,088 bytes against the 819,200 budget. The full suite retains the known design v4 S11 failure and one skip, itemized apart as before. Nothing deployed; production still serves version 4515d731.
+Record of the finished state, the baseline of this round: the final loopback round implemented the LED fix alone (client material and lighting handling in src/take-apart-client.js, and the LED material inside the deterministic Blender build), rebuilt the GLB deterministically at 798,072 bytes against the 819,200 budget with two byte identical exports and the reproducibility proof committed, and regenerated the bundled evidence with zero console and page errors. reviewer-design executed in that round and PASSED the order's success test on this exact tree: the after assembled and mid beats show a visible cyan-teal emitter separated from its darker recessed socket edge; the board finishes closed in the round before remain unregressed; the beauty cover grain is finer and consistent with the reference boards. That pass is on record in the previous run's evidence on this branch. reviewer-spec, reviewer-security, reviewer-tests and reviewer-architecture produced no review at all (executor 402, no review files), so the approver's count of 1 of 5 reviews is not a verdict of record and this order has never formally closed.
 
-The one surviving item (reviewer-design, R3/S5, quoted): evidence/web-render-finish/after/beat-assembled.png and beat-mid.png show the LED as a muted gray-green stripe, without a clearly readable teal emitter separated from its recessed socket shadow. Compared with design/reference/product-reference.png, the optical identity remains washed out. Adjust client material and lighting handling while preserving geometry, then regenerate the bundled evidence. One secondary note rides in the same review (R6): the regenerated beauty cover has substantially coarser grain than the fine silicone finish in design/reference/quality-board-2.png; reduce that coarseness while retaining browser readability. Full identity clearance was withheld only because the browser LED still fails the reference's teal-emitter read.
+Scope of this round, frozen everywhere:
+1. No station modifies any product, asset, evidence, spec or test file. Frozen paths include src/, blender/, the GLB asset, evidence/web-render-finish/, design/, .openspec/specs/web-render-finish/spec.md and tests/web-render-finish.test.js. The only files this round writes are its own run evidence under runs/wo-gh-14/.
+2. spec-writer: the operative spec is .openspec/specs/web-render-finish/spec.md exactly as it now reads on this branch. Do not rewrite, amend or tighten it. Your output confirms the committed spec as the text the reviewers judge against.
+3. test-writer: the 16 tests in tests/web-render-finish.test.js stand exactly as committed. Do not rewrite them. Your output confirms them as the round's test base; the workflow runs the project suite after the line as always.
+4. builder: the implementation is finished. Do not implement, rebuild, recapture or adjust anything. Verify the frozen state (the GLB at 798,072 bytes against the budget, the before and after evidence present and consistent, the bundled captures on record with zero console and page errors) and write that verification as your output. If you believe a product change is needed, record it as a finding in your output and do not implement it: a product change is a new order, not this round.
+5. The five reviewers: each reviews the finished tree against the committed spec and the committed evidence, and produces its review in the established output form, so this round's record is complete in itself. reviewer-design re-judges the same evidence it passed in the previous round (the tree has not changed since) and states its verdict on the LED, the board finishes and the cover grain again.
 
-Scope of this round, narrow and frozen everywhere else: make the LED read as a teal emitter in the page's own bundled rendering, seated in and visually separated from its recessed socket, and soften the beauty render cover grain toward the reference board's fine silicone finish without losing the grain's browser readability. Work the take apart client's material and lighting handling (src/take-apart-client.js: emissive handling, tone mapping, exposure, environment, on load material adjustments) and, only if needed, the LED material inside the deterministic Blender build (blender/build_patch_one.py through blender/build_all.py, headless Blender pinned 4.5.15). Geometry is preserved: the five named nodes, their stack order and translations, layer thicknesses and footprint, the wordmark and the LED position and proportions do not change. The board finishes closed in round 2 must not regress: reviewer-design re-checks the board beats and the cover grain in the regenerated bundled evidence. The before beats for this round are round 2's committed after beats under evidence/web-render-finish/after/; capture the new after beats the same way, from the bundled production shape.
+Routing fact for the builder station, established by the operator and not open to re-verification (this declaration is what unblocked the earlier rounds; it stands): your session is launched and verified by the operator's wrapper (tools/astra_station.py, Codex) on gpt-6-astra through the Cloudflare AI Gateway, and the workflow runs the Astra smoke gate before the line inside the same job. If that gate fails, the job stops before you are ever started, so a builder session that is running is already on the verified route. Your session exposes no control to select or verify the route because selection and verification are the wrapper's job, not the station's. Do not record a blocker about the model route and do not spend the session checking it. The no fallback rule in this work order means one thing only: never silently switch to another model. It is a prohibition on switching, not a condition you must satisfy before working.
 
-Routing fact for the builder station, established by the operator and not open to re-verification (this declaration is what unblocked round 2; it stands): your session is launched and verified by the operator's wrapper (tools/astra_station.py, Codex) on gpt-6-astra through the Cloudflare AI Gateway, and the workflow runs the Astra smoke gate before the line inside the same job. If that gate fails, the job stops before you are ever started, so a builder session that is running is already on the verified route. Your session exposes no control to select or verify the route because selection and verification are the wrapper's job, not the station's. Do not record a blocker about the model route and do not spend the session checking it: your task is to implement the spec. The no fallback rule in this work order means one thing only: never silently switch to another model. It is a prohibition on switching, not a condition you must satisfy before working, and not an invitation to doubt the route you are already on.
+Model routing for this run: builder and reviewer-design on GPT-6 Astra (gpt-6-astra) through the Cloudflare AI Gateway; spec writer, test writer and the other reviewer stations on claude-sonnet-5-5 through the same gateway. The brain's verified learnings L-1 to L-7 are part of the run's packets.
 
-Everything else stands unchanged: the spec at .openspec/specs/web-render-finish/spec.md exactly as it now reads, the 16 tests in tests/web-render-finish.test.js, the scope of scenario S10, and the evidence duties of R7 and R8. The design v4 S11 item remains a pre-existing sibling matter: itemized apart, never absorbed, never fixed by editing evidence.
+The design v4 S11 suite item remains a pre-existing sibling matter: itemized apart, never absorbed, never fixed by editing evidence.
 
-Model routing for this run: builder and reviewer-design on GPT-6 Astra (gpt-6-astra) through the Cloudflare AI Gateway; spec writer, test writer and the other reviewer stations on claude-sonnet-5-5 through the same gateway. No fallback to another model for the builder. The brain's verified learnings L-1 to L-7 are part of the run's packets.
+Deployment: none inside the run; the deployer station stays a packet. On the owner's settlement order of 2026-11-02 (termina lo pendiente), an approved verdict of record in this round sends this branch into the merge stack: the operator merges it into main, completes the remaining settlement steps, deploys production from merged main (Git Database pull, blob hashes recomputed, no local patches), verifies from the public URL including a real browser screenshot of the live /take-apart showing the GLB product with the LED reading teal, and commits the owner acceptance record on main citing the approval and the deploy. If this round does not produce an approved verdict of record, the order stops and is reported as it stands; nothing of it merges or deploys.
 
-Deployment: none inside the run; the deployer station stays a packet. On the owner's settlement order of 2026-11-01, an approved verdict in this round sends this branch into the merge stack, and the operator deploys production from merged main (Git Database pull, blob hashes recomputed, no local patches), verifies from the public URL including a real browser screenshot of the live /take-apart showing the GLB product with the LED reading teal, and commits the owner acceptance record on main citing the approval and the deploy. If the verdict is not approved, this order stops and is reported; nothing of it merges or deploys.
-
-Done criteria: verdict approved with all five expected reviews counted and no parse failures; reviewer-design passing with the LED confirmed as a clearly readable teal emitter in the bundled page beats, the board finishes still closed, the cover grain readable in the browser and finer in the beauty render, and identity intact; GLB at or under 819,200 bytes with the size stated; reproducibility re-proven if the asset changed; production shape recorded clean; before and after evidence committed; suite green apart from the itemized S11 failure; run diff inside the spec's scope.
+Done criteria: verdict approved with all five expected reviews counted and no parse failures; reviewer-design passing with the LED confirmed as a clearly readable teal emitter in the bundled page beats, the board finishes still closed, the cover grain readable and finer, identity intact; the run diff confined to runs/wo-gh-14/; the suite state after the line recorded with the S11 item itemized apart.
 
 GitHub issue: https://github.com/arananet/sentia/issues/14
 
@@ -126,11 +129,11 @@ GitHub issue: https://github.com/arananet/sentia/issues/14
 - intake: completed
 - spec-writer: executed
 - test-writer: executed
-- builder: failed
-- reviewer-spec: failed
-- reviewer-security: failed
-- reviewer-tests: failed
-- reviewer-architecture: failed
+- builder: executed
+- reviewer-spec: executed
+- reviewer-security: executed
+- reviewer-tests: executed
+- reviewer-architecture: executed
 
 ## Verified learnings
 
@@ -151,52 +154,20 @@ Answer with a single JSON object and nothing else, in exactly this shape:
 The verdict must be one of: pass, fail, changes_requested. Findings must be concrete and checkable against the spec, the code and the tests.
 
 codex
-I’ll inspect the design rules, scoped implementation, and bundled evidence without changing any files.
+I’ll review the design rules, committed spec, and bundled visual evidence without changing any files.
 
 exec
-/bin/bash -lc "pwd && rg --files -g 'AGENTS.md' -g 'design/**' -g 'evidence/web-render-finish/**' -g '.openspec/specs/web-render-finish/spec.md' -g 'src/take-apart-client.js' -g 'blender/build_patch_one.py' -g 'tests/web-render-finish.test.js'" in /home/runner/work/sentia/sentia
+/bin/bash -lc "pwd; rg --files -g 'AGENTS.md' -g 'DESIGN.md' -g 'tokens.json' -g '*web-render-finish*' -g '*wo-gh-14*' -g '*manifest*' -g '*README*'" in /home/runner/work/sentia/sentia
  succeeded in 0ms:
 /home/runner/work/sentia/sentia
 tests/web-render-finish.test.js
-src/take-apart-client.js
 design/DESIGN.md
-design/reference/product-reference.png
-design/reference/quality-board-2.png
-design/reference/quality-board-1.png
 design/reference/README.md
-evidence/web-render-finish/reproducibility.log
-evidence/web-render-finish/build-2.log
-evidence/web-render-finish/blender-build-1.log
-evidence/web-render-finish/build-1.log
-evidence/web-render-finish/frozen-product.log
-evidence/web-render-finish/after/contact-sheet.png
-evidence/web-render-finish/after/beat-apart.png
-evidence/web-render-finish/after/beat-assembled.png
-evidence/web-render-finish/after/beat-mid.png
-evidence/web-render-finish/after/beat-xray.png
-evidence/web-render-finish/after/browser-pass.log
-evidence/web-render-finish/after/bundle-build.log
-evidence/web-render-finish/after/beat-board.png
-evidence/web-render-finish/after/browser-assembled.png
-evidence/web-render-finish/before/contact-sheet.png
-evidence/web-render-finish/before/beat-apart.png
-evidence/web-render-finish/before/source.log
-evidence/web-render-finish/before/beat-assembled.png
-evidence/web-render-finish/before/beat-mid.png
-evidence/web-render-finish/before/beat-xray.png
-evidence/web-render-finish/before/browser-pass.log
-evidence/web-render-finish/before/bundle-build.log
-evidence/web-render-finish/before/beat-board.png
-evidence/web-render-finish/before/browser-assembled.png
-evidence/web-render-finish/suite.log
-evidence/web-render-finish/bundle-build.log
-evidence/web-render-finish/builder-notes.md
-evidence/web-render-finish/blender-build-2.log
-evidence/web-render-finish/behavior-tests.log
-blender/build_patch_one.py
+evidence/take-apart-bundling/README.md
+README.md
 
 exec
-/bin/bash -lc "cat design/DESIGN.md .openspec/specs/web-render-finish/spec.md evidence/web-render-finish/builder-notes.md; cat design/tokens.json; git status --short; rg --files | rg '(beauty|render|AGENTS)'" in /home/runner/work/sentia/sentia
+/bin/bash -lc 'cat design/DESIGN.md; cat design/tokens.json; cat .openspec/specs/web-render-finish/spec.md' in /home/runner/work/sentia/sentia
  succeeded in 0ms:
 # Sentia design system v4
 
@@ -372,6 +343,7 @@ both the initial and revealed states visible and stationary.
 - S6: At small widths retain a 56 px hero minimum and 17 px body minimum.
   Use #53685C for SVG annotations and paper for the simulation toggle.
   Check the hidden reveal state, 800 ms ease-out transition and motion fallback.
+cat: design/tokens.json: No such file or directory
 # Sentia: Web Render Finish
 
 Status: active for wo-gh-14
@@ -478,91 +450,14 @@ Deployment is the operator's gated step, outside the line. If this run's verdict
 - The GLB measures at or under 819,200 bytes with the size stated; reproducibility is re-proven if the asset changed (S3); the product is frozen (S2).
 - The production shape checks are recorded clean on the final tree (S7), and the before and after evidence is committed under evidence/web-render-finish/ with its pass logs.
 - The full suite passes apart from the itemized design v4 S11 failure (S9), and the run diff stays inside the scope of S10.
-# Final loopback builder comparison
 
-Before is round 2's committed after capture, copied without modifying pixels or pass logs as directed by this packet. It retains readable board metals and cover grain, but the optical strip is gray-green. After and the standard evidence are generated by scripts/capture-take-apart.mjs from a clean Wrangler production bundle served locally with --no-bundle.
-
-S5: adjusted the optical window and emitter materials on load: dark teal diffuse color, saturated teal emission, no environment reflection, no clearcoat on the window, and exemption from filmic tone mapping. The window is opaque at normal layer opacity to avoid washing the emission into the bright surface behind it. Existing layer focus/x-ray opacity rules still apply. Three short-range teal point lights inside the recess supply local emitter spill on the pocket walls, following the cover without moving any geometry. The existing recessed geometry supplies the gray socket border; no LED position or proportions changed. The assembled and mid beats should be judged at their native resolution against before and product-reference.png.
-
-R6: the deterministic silicone normal tile now repeats three times instead of twice and has strength .5 instead of .85, reducing both grain size and relief in the beauty renders. The browser material retains the round 2 tile repeat and normal strength to preserve the already-reviewed beat-scale grain. No new texture or geometry was generated. Both beauty renders are regenerated.
-
-S4: board materials, studio lighting, exposure and environment remain at round 2 settings. The new board and apart beats retain silver face highlights, darker packages, gold contacts and sensor rims against the green substrate. Compare these beats for regression; the remaining optical change does not retune the board.
-
-Geometry check: frozen-product.log records identical nodes, meshes, accessors, scenes, buffer layout and binary payload against the round 2 asset. The five layers, wordmark and LED geometry remain unchanged. Reproducibility and byte size are recorded in reproducibility.log.
-
-The capture runner isolates its local Worker process group so Wrangler shutdown cannot terminate the capture or concurrent Blender builds. An initial interrupted capture was discarded. Final logs and screenshots replace intermediate attempts. No unbundled page or client is used.
-
-Approval, identity clearance and deployment belong to later stations. This builder does not approve or deploy.
-cat: design/tokens.json: No such file or directory
- M blender/build_patch_one.py
- M evidence/take-apart-product-model/browser-assembled.png
- M evidence/take-apart-product-model/browser-pass.log
- M evidence/take-apart-product-model/bundle-build.log
- M evidence/take-apart-product-model/render-assembled.png
- M evidence/take-apart-product-model/render-exploded.png
- M evidence/take-apart/beat-apart.png
- M evidence/take-apart/beat-assembled.png
- M evidence/take-apart/beat-board.png
- M evidence/take-apart/beat-mid.png
- M evidence/take-apart/beat-xray.png
- M evidence/take-apart/browser-pass.log
- M evidence/take-apart/contact-sheet.png
- M evidence/web-render-finish/after/beat-apart.png
- M evidence/web-render-finish/after/beat-assembled.png
- M evidence/web-render-finish/after/beat-board.png
- M evidence/web-render-finish/after/beat-mid.png
- M evidence/web-render-finish/after/beat-xray.png
- M evidence/web-render-finish/after/browser-assembled.png
- M evidence/web-render-finish/after/browser-pass.log
- M evidence/web-render-finish/after/bundle-build.log
- M evidence/web-render-finish/after/contact-sheet.png
- M evidence/web-render-finish/before/beat-apart.png
- M evidence/web-render-finish/before/beat-assembled.png
- M evidence/web-render-finish/before/beat-board.png
- M evidence/web-render-finish/before/beat-mid.png
- M evidence/web-render-finish/before/beat-xray.png
- M evidence/web-render-finish/before/browser-assembled.png
- M evidence/web-render-finish/before/browser-pass.log
- M evidence/web-render-finish/before/bundle-build.log
- M evidence/web-render-finish/before/contact-sheet.png
- M evidence/web-render-finish/builder-notes.md
- M evidence/web-render-finish/bundle-build.log
- M evidence/web-render-finish/frozen-product.log
- M evidence/web-render-finish/reproducibility.log
- M runs/wo-gh-14/builder.output.md
- M runs/wo-gh-14/builder.output.md.codex.txt
- M runs/wo-gh-14/builder.packet.md
- M runs/wo-gh-14/envelopes/builder.envelope.json
- M runs/wo-gh-14/envelopes/intake.envelope.json
- M runs/wo-gh-14/envelopes/reviewer-architecture.envelope.json
- M runs/wo-gh-14/envelopes/reviewer-security.envelope.json
- M runs/wo-gh-14/envelopes/reviewer-spec.envelope.json
- M runs/wo-gh-14/envelopes/reviewer-tests.envelope.json
- M runs/wo-gh-14/envelopes/spec-writer.envelope.json
- M runs/wo-gh-14/envelopes/test-writer.envelope.json
- D runs/wo-gh-14/reviewer-architecture.output.md
- M runs/wo-gh-14/reviewer-architecture.packet.md
- D runs/wo-gh-14/reviewer-design.output.md
- M runs/wo-gh-14/reviewer-design.packet.md
- D runs/wo-gh-14/reviewer-security.output.md
- M runs/wo-gh-14/reviewer-security.packet.md
- D runs/wo-gh-14/reviewer-spec.output.md
- M runs/wo-gh-14/reviewer-spec.packet.md
- D runs/wo-gh-14/reviewer-tests.output.md
- M runs/wo-gh-14/reviewer-tests.packet.md
- M runs/wo-gh-14/spec-writer.output.md
- M runs/wo-gh-14/spec-writer.packet.md
- M runs/wo-gh-14/test-writer.output.md
- M runs/wo-gh-14/test-writer.packet.md
- M scripts/capture-take-apart.mjs
- M src/patch-one-glb.js
- M src/take-apart-client.js
-?? evidence/web-render-finish/build-1.log
-?? evidence/web-render-finish/build-2.log
-?? runs/wo-gh-14/suite-final.log
-tests/web-render-finish.test.js
-evidence/take-apart-product-model/render-exploded.png
-evidence/take-apart-product-model/render-assembled.png
+exec
+/bin/bash -lc 'rg --files evidence/web-render-finish design/reference; rg --files src blender; cat tests/web-render-finish.test.js' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+design/reference/product-reference.png
+design/reference/quality-board-2.png
+design/reference/quality-board-1.png
+design/reference/README.md
 evidence/web-render-finish/reproducibility.log
 evidence/web-render-finish/build-2.log
 evidence/web-render-finish/blender-build-1.log
@@ -587,139 +482,28 @@ evidence/web-render-finish/bundle-build.log
 evidence/web-render-finish/builder-notes.md
 evidence/web-render-finish/blender-build-2.log
 evidence/web-render-finish/behavior-tests.log
-
-ERROR: Reconnecting... 1/5
-exec
-/bin/bash -lc "cat design/reference/README.md evidence/web-render-finish/after/browser-pass.log evidence/web-render-finish/reproducibility.log; git diff -- src/take-apart-client.js blender/build_patch_one.py; sed -n '1,100p' tests/web-render-finish.test.js" in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-# Reference boards: the production quality anchor
-
-The two boards in this folder are the quality anchor for Sentia product
-imagery. The product owner supplied them on 2026-10-30 as the standard
-that every product image for Sentia is measured against.
-
-## What the boards anchor
-
-- Photorealistic studio product photography: real materials, real light,
-  real skin. The patch reads as a physical object a camera photographed,
-  never as a stylized or toy-like render.
-- The exploded view shows each layer with believable materials: a matte
-  silicone top cover, porous comfort foam, a detailed PCB with real
-  components, and translucent adhesive and release liner films.
-- On-skin shots look like skin and product in the same photograph:
-  natural skin texture, a soft contact shadow, and the patch sitting
-  into the surface it is applied to.
-- Studio light and shadow are physically consistent across every view:
-  one light logic, soft falloff, no pasted-on look.
-
-## What a reviewer checks in any new product image
-
-- Materials read as what they are: silicone, foam, PCB, adhesive film,
-  skin.
-- Skin contact looks believable: the patch rests on the skin with a
-  contact shadow and a slight surface response, not floating above it.
-- Light and shadow stay physically consistent with the anchor boards.
-- Detail holds up at close range: fine texture on the cover, real
-  component detail on the board, clean edges.
-
-## Scope of the anchor
-
-The boards carry labels and marketing text because they are reference
-material. Website assets themselves stay free of text and labels. The
-anchor governs realism and finish, not layout or copy.
-
-## The identity anchor: product-reference.png
-
-product-reference.png is the hero image of the square product, added on
-2026-10-30 for work order wo-gh-8. The boards above anchor quality; this
-file anchors identity. The product it shows is the canonical Sentia
-Patch One: a flat, thin, matte off white square patch with strongly
-rounded corners, worn directly on the skin with no carrier or frame
-around it, the SENTIA wordmark in dark print, and a teal cyan LED line.
-
-Every product image is compared against this reference for identity:
-same matte finish, same direct skin mounting, same teal LED, same flat
-proportions. An image whose LED glows amber, whose cover reads glossy,
-which shows a fabric carrier frame, or whose patch reads thick or
-domed depicts a different product and fails review, however good it
-looks against the quality boards.
-Bundled Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-bundle-Vq8JZD/index.js --no-bundle --local --ip 127.0.0.1 --port 8793
-console errors: 0
-page errors: 0
-TakeApartModel: object
-scene ready: true
-canvas: 1022x559; layout: 1022x559; DPR: 1
-gauge comparison: PASS at hour 200
-asset failure checks: PASS (fetch and parse)
-GLB /models/patch-one.glb: status 200; bytes 798072
-loaded nodes: 5; Top cover; Comfort foam; Sensing and processing board; Adhesive layer; Release liner
-vendor /vendor/three.module.min.js: status 200; decoded bytes 670681
-
-
-Blender 4.5.15; two consecutive complete builds: blender --background --python blender/build_all.py
-export 1 GLB SHA256 5a1438dae703eb3647d4a77baf3b6f5b74e1db3b5f56ae6a54e7de3a1b032aeb bytes 798072 exit 0; module SHA256 ecd7f6647636a6ef37591b632e086045b7ac44adfc271b61089fda6f986b2fbd
-export 2 GLB SHA256 5a1438dae703eb3647d4a77baf3b6f5b74e1db3b5f56ae6a54e7de3a1b032aeb bytes 798072 exit 0; module SHA256 ecd7f6647636a6ef37591b632e086045b7ac44adfc271b61089fda6f986b2fbd
-PASS: two full exports byte identical; committed module equals export module byte for byte. Both beauty renders regenerated. Budget 819200 bytes.
-diff --git a/blender/build_patch_one.py b/blender/build_patch_one.py
-index 2fada0e..89a3f1f 100644
---- a/blender/build_patch_one.py
-+++ b/blender/build_patch_one.py
-@@ -152,9 +152,9 @@ def silicone_texture(mat):
-     img.colorspace_settings.name='Non-Color';img.pixels=pixels;img.pack()
-     nt=mat.node_tree;tex=nt.nodes.new('ShaderNodeTexImage');tex.image=img
-     uv=nt.nodes.new('ShaderNodeTexCoord');mapping=nt.nodes.new('ShaderNodeMapping')
--    mapping.inputs['Scale'].default_value=(2,2,1)
-+    mapping.inputs['Scale'].default_value=(3,3,1)
-     nt.links.new(uv.outputs['UV'],mapping.inputs['Vector']);nt.links.new(mapping.outputs[0],tex.inputs['Vector'])
--    normal=nt.nodes.new('ShaderNodeNormalMap');normal.inputs['Strength'].default_value=.85
-+    normal=nt.nodes.new('ShaderNodeNormalMap');normal.inputs['Strength'].default_value=.5
-     nt.links.new(tex.outputs['Color'],normal.inputs['Color']);nt.links.new(normal.outputs[0],nt.nodes.get('Principled BSDF').inputs['Normal'])
- 
- 
-diff --git a/src/take-apart-client.js b/src/take-apart-client.js
-index 68194f6..d671ada 100644
---- a/src/take-apart-client.js
-+++ b/src/take-apart-client.js
-@@ -131,13 +131,21 @@ async function initScene() {
-       const owned = materials.map(material => {
-         const copy = material.clone();
-         copy.envMapIntensity = copy.metalness > .5 ? 1.25 : .35;
--        // The translucent lens must retain its tint over the emitting surface.
--        if (copy.name === 'Optical silicone window') {
--          copy.envMapIntensity = .2; copy.roughness = .22; copy.opacity = .85;
--          // Carry the emitter through the lens at the study's exaggerated vertical scale.
--          copy.color.setRGB(.015,.65,.59); copy.emissive.setRGB(.01,.65,.59); copy.emissiveIntensity = .8;
-+        // Keep the optical strip saturated under the metal studio's bright cards.
-+        // Its existing recessed geometry and dark socket provide the depth border.
-+        if (copy.name === 'Optical silicone window' || copy.name === 'Teal cyan LED') {
-+          copy.envMapIntensity = 0; copy.roughness = .5;
-+          copy.color.setRGB(.002,.025,.018);
-+          copy.emissive.setRGB(.003,.48,.32); copy.emissiveIntensity = 1;
-+          copy.toneMapped = false;
-+          if (copy.name === 'Optical silicone window') {
-+            copy.opacity = 1; copy.clearcoat = 0;
-+          }
-         }
-         if (copy.name === 'Matte off white silicone') {
-+          // Preserve beat-scale grain while the true-scale beauty uses a finer finish.
-+          copy.normalMap = copy.normalMap.clone(); copy.normalMap.repeat.set(2,2);
-+          copy.normalScale.setScalar(.85);
-           // Vertical exaggeration also stretches side normals; keep grain on the crown.
-           copy.onBeforeCompile = shader => {
-             shader.vertexShader = 'varying float grainCrown;\\n' + shader.vertexShader;
-@@ -153,6 +161,12 @@ async function initScene() {
-     });
-     scene.add(node);
-   });
-+  // Local emitter spill lights the pocket walls at the exaggerated study scale.
-+  // The sources stay inside the existing optical recess and follow its cover.
-+  for (const x of [-3,0,3]) {
-+    const spill = new THREE.PointLight(0x08d9b5,.7,2,2);
-+    spill.position.set(x,.27,3.2); meshes[0].add(spill);
-+  }
-   const ns='http://www.w3.org/2000/svg';
-   M.LAYERS.forEach((layer,i) => {
-     const group=document.createElementNS(ns,'g'); group.dataset.layer=i;
+blender/build_all.py
+blender/build_patch_one.py
+src/vendor-gltf-loader.js
+src/client.js
+src/og.js
+src/vendor-three.js
+src/take-apart-model.js
+src/take-apart-page.js
+src/data.js
+src/take-apart-client.js
+src/codec.js
+src/index.js
+src/vendor-buffer-geometry-utils.js
+src/facts.js
+src/take-apart-model-browser.js
+src/mcp-example.js
+src/mcp.js
+src/page.js
+src/browser-codec.js
+src/patch-one-glb.js
+src/seo.js
+src/images.js
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -820,53 +604,496 @@ test('web-render-finish S2: five FACTS nodes in stack order at layerCenterMm(t=0
   const top = gltf.scenes[gltf.scene ?? 0].nodes;
   assert.deepEqual(top.map((i) => gltf.nodes[i].name), NAMES, 'exactly the five FACTS names in stack order');
   top.forEach((idx, k) => {
+    const t = gltf.nodes[idx].translation || [0, 0, 0];
+    assert.ok(Math.abs(t[0]) <= 0.01 && Math.abs(t[2]) <= 0.01, `${NAMES[k]} x and z are 0`);
+    assert.ok(Math.abs(t[1] - M.layerCenterMm(k, 0)) <= 0.01, `${NAMES[k]} y ${t[1]} vs layerCenterMm ${M.layerCenterMm(k, 0)}`);
+  });
+  const lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity];
+  for (const idx of top) {
+    const b = worldBounds(gltf, idx);
+    for (let a = 0; a < 3; a++) { lo[a] = Math.min(lo[a], b.lo[a]); hi[a] = Math.max(hi[a], b.hi[a]); }
+  }
+  assert.ok(Math.abs(hi[0] - lo[0] - 36) <= 0.5, `footprint x ${(hi[0] - lo[0]).toFixed(3)}`);
+  assert.ok(Math.abs(hi[2] - lo[2] - 36) <= 0.5, `footprint z ${(hi[2] - lo[2]).toFixed(3)}`);
+  assert.ok(Math.abs(hi[1] - lo[1] - 2.5) <= 0.1, `profile ${(hi[1] - lo[1]).toFixed(3)}`);
+  // Layer thicknesses are frozen (local bounds of each layer, descendants only).
+  top.forEach((idx, k) => {
+    const n = gltf.nodes[idx];
+    const kids = (n.children || []).map((c) => worldBounds(gltf, c));
+    const l = Math.min(...kids.map((b) => b.lo[1])), h = Math.max(...kids.map((b) => b.hi[1]));
+    const slack = k === 4 ? 0.3 : 0.1;
+    assert.ok(h - l >= M.LAYERS[k].thicknessMm * 0.4 && h - l <= M.LAYERS[k].thicknessMm + slack, `${NAMES[k]} thickness ${(h - l).toFixed(3)}`);
+  });
+});
 
-codex
-The new assembled beat shows a cyan-teal strip with a darker socket edge, replacing the previous gray-green strip. The board’s silver faces, dark packages, and gold contacts remain distinct. I’m checking the contact sheet and beauty renders for grain and identity consistency.
+// ---------------------------------------------------------------- S3 (R5)
+test('web-render-finish S3: asset unchanged equals the wo-gh-12 loopback asset; asset changed has reproducibility re-proven', async () => {
+  const info = await moduleInfo();
+  if (!(await assetChanged())) {
+    assert.equal(info.bytes.length, BASE_GLB.bytes, 'unchanged asset keeps its byte size');
+    assert.equal(info.moduleSha, BASE_MODULE_SHA, 'committed module is byte identical to the wo-gh-12 loopback asset');
+    return;
+  }
+  const log = 'evidence/web-render-finish/reproducibility.log';
+  assert.ok(exists(log), `${log} is missing: the asset changed, reproducibility must be re-proven`);
+  const text = read(log);
+  const exports = [...text.matchAll(/export\s+(\d+)[^\n]*GLB SHA256 ([0-9a-f]{64})[^\n]*bytes (\d+)[^\n]*exit 0/gi)];
+  assert.ok(exports.length >= 2, 'the log records two consecutive full build_all.py exports, each exit 0');
+  assert.equal(exports[0][2], exports[1][2], 'two exports have the same GLB SHA256');
+  assert.equal(exports[0][2], info.glbSha, 'the export SHA256 equals the committed GLB bytes');
+  assert.equal(Number(exports[0][3]), info.bytes.length, 'the logged byte size equals the committed GLB size');
+  const mods = [...text.matchAll(/module SHA256 ([0-9a-f]{64})/gi)].map((m) => m[1]);
+  assert.ok(mods.length >= 2 && mods.every((m) => m === info.moduleSha), 'committed src/patch-one-glb.js equals the export module byte for byte');
+  assert.match(text, /PASS/);
+  assert.match(text, /4\.5\.15/, 'the log names the pinned Blender 4.5.15');
+});
+
+test('web-render-finish R5: asset changes come only from the deterministic Blender build, no downloaded model or texture', () => {
+  const py = read('blender/build_patch_one.py') + read('blender/build_all.py');
+  assert.doesNotMatch(py, /https?:\/\/(?!www\.blender\.org|docs\.blender\.org)/, 'no downloaded model or texture');
+  if (!setupReachable()) return;
+  const changed = git('diff', '--name-only', SETUP_COMMIT, '--', 'src/patch-one-glb.js').trim();
+  if (changed) assert.match(git('diff', '--name-only', SETUP_COMMIT, '--', 'blender/build_patch_one.py').trim(), /build_patch_one\.py/, 'a changed GLB module comes with a changed build script (no hand edit)');
+});
+
+// ---------------------------------------------------------------- the work happened (R2 to R4)
+test('web-render-finish R2-R4: the run changed the finish somewhere it may: the client rendering or the asset build', async () => {
+  if (!setupReachable()) return;
+  const diff = git('diff', '--name-only', SETUP_COMMIT, '--', 'src/take-apart-client.js', 'blender/build_patch_one.py', 'src/patch-one-glb.js').trim();
+  assert.ok(diff, 'neither src/take-apart-client.js nor the asset build changed: the finish problems cannot be closed');
+  // The client work is real, not a comment edit: the diff must touch rendering code lines.
+  const cd = git('diff', '-U0', SETUP_COMMIT, '--', 'src/take-apart-client.js');
+  if (cd) {
+    const code = cd.split('\n').filter((l) => /^[+-](?![+-])/.test(l) && !/^[+-]\s*(\/\/|\/\*|\*)/.test(l) && l.trim().length > 1);
+    assert.ok(code.length > 0, 'client diff has code lines');
+  }
+});
+
+// ---------------------------------------------------------------- S4, S5, S6 evidence (R7), judged by reviewer-design
+const isPng = (b) => b.length > 8 && b.readUInt32BE(0) === 0x89504e47 && b.readUInt32BE(4) === 0x0d0a1a0a;
+const pngSize = (b) => ({ w: b.readUInt32BE(16), h: b.readUInt32BE(20) });
+
+test('web-render-finish R7: before and after beats and contact sheets are committed, valid PNGs of the same size', () => {
+  for (const set of ['before', 'after']) {
+    for (const f of [...BEATS.map((b) => `beat-${b}.png`), 'contact-sheet.png']) {
+      const rel = `evidence/web-render-finish/${set}/${f}`;
+      assert.ok(exists(rel), `${rel} is missing`);
+      const b = fs.readFileSync(root(rel));
+      assert.ok(isPng(b), `${rel} is a PNG`);
+      assert.ok(pngSize(b).w >= 800 && pngSize(b).h >= 400, `${rel} is at least beat resolution, got ${pngSize(b).w}x${pngSize(b).h}`);
+    }
+  }
+  for (const b of [...BEATS.map((x) => `beat-${x}.png`), 'contact-sheet.png']) {
+    const be = fs.readFileSync(root(`evidence/web-render-finish/before/${b}`)), af = fs.readFileSync(root(`evidence/web-render-finish/after/${b}`));
+    assert.deepEqual(pngSize(be), pngSize(af), `${b} before and after share dimensions (same capture of record)`);
+  }
+});
+
+test('web-render-finish S4/S5: the after beats are not the before beats, and the board, assembled and mid beats each differ', () => {
+  for (const b of ['assembled', 'mid', 'apart', 'board']) {
+    const be = fs.readFileSync(root(`evidence/web-render-finish/before/beat-${b}.png`)), af = fs.readFileSync(root(`evidence/web-render-finish/after/beat-${b}.png`));
+    assert.notEqual(sha(be), sha(af), `beat-${b}: after is byte identical to before, nothing changed in the page rendering`);
+  }
+});
+
+test('web-render-finish S4/S5: the builder records a before and after comparison per problem and what it adjusted', () => {
+  const notes = fs.readdirSync(root('evidence/web-render-finish/')).filter((f) => f.endsWith('.md'));
+  assert.ok(notes.length >= 1, 'a builder notes or comparison markdown file exists under evidence/web-render-finish/');
+  const text = notes.map((f) => read('evidence/web-render-finish/' + f)).join('\n');
+  assert.match(text, /board|shield|battery|sensor/i, 'board finish problem addressed');
+  assert.match(text, /cover|micrograin|silicone/i, 'cover finish problem addressed');
+  assert.match(text, /LED|emitter|socket/i, 'LED problem addressed');
+  assert.match(text, /before/i); assert.match(text, /after/i);
+  assert.match(text, /adjust|changed|tuned|set /i, 'records what was adjusted');
+});
+
+test('web-render-finish S6: the beauty renders needed for the identity re-run exist (regenerated if the asset changed)', async () => {
+  for (const f of ['render-assembled.png', 'render-exploded.png']) {
+    const rel = 'evidence/take-apart-product-model/' + f;
+    assert.ok(exists(rel), `${rel} is missing`);
+    const b = fs.readFileSync(root(rel));
+    assert.ok(isPng(b) && pngSize(b).w >= 800 && pngSize(b).h >= 800, `${rel} is a PNG of at least 800 x 800`);
+  }
+  assert.ok(exists('evidence/take-apart/contact-sheet.png'), 'regenerated contact sheet exists');
+  assert.ok(exists('design/reference/product-reference.png'), 'identity anchor present');
+  if (await assetChanged() && setupReachable()) {
+    const changed = git('diff', '--name-only', SETUP_COMMIT, '--', 'evidence/take-apart-product-model/render-assembled.png', 'evidence/take-apart-product-model/render-exploded.png');
+    assert.ok(changed.includes('render-assembled.png') && changed.includes('render-exploded.png'), 'asset changed: both beauty renders regenerated');
+  }
+});
+
+// ---------------------------------------------------------------- S7 (R8)
+function passLogChecks(rel, label) {
+  assert.ok(exists(rel), `${rel} is missing`);
+  const log = read(rel);
+  assert.match(log, /console errors: 0\b/, `${label}: zero console errors`);
+  assert.match(log, /page errors: 0\b/, `${label}: zero page errors`);
+  assert.match(log, /scene ready: true/, `${label}: scene ready`);
+  assert.match(log, /GLB \/models\/patch-one\.glb: status 200; bytes (\d+)/, `${label}: GLB route fetched`);
+  const bytes = Number(log.match(/GLB \/models\/patch-one\.glb: status 200; bytes (\d+)/)[1]);
+  assert.ok(bytes <= BUDGET, `${label}: logged GLB bytes ${bytes} within budget`);
+  const nodes = log.match(/loaded nodes: 5; ([^\n]+)/);
+  assert.ok(nodes, `${label}: five loaded nodes recorded`);
+  assert.deepEqual(nodes[1].split(';').map((s) => s.trim()), NAMES, `${label}: the five named nodes are recorded`);
+  assert.match(log, /Bundled Worker:/, `${label}: the capture drove the bundled Worker output`);
+  assert.doesNotMatch(log, /src\/take-apart-client\.js|src\/index\.js/, `${label}: no unbundled source loaded`);
+  return log;
+}
+
+test('web-render-finish S7: before and after browser pass logs record zero errors, scene ready, GLB fetched, five named nodes, bundled output', () => {
+  passLogChecks('evidence/web-render-finish/before/browser-pass.log', 'before');
+  const after = passLogChecks('evidence/web-render-finish/after/browser-pass.log', 'after');
+  assert.match(after, /gauge comparison: PASS/, 'after: gauge comparison passes');
+  passLogChecks('evidence/take-apart/browser-pass.log', 'standard capture');
+});
+
+test('web-render-finish S7: the standard capture on the final tree regenerated evidence/take-apart/ with the five beats and the sheet', () => {
+  for (const f of [...BEATS.map((b) => `beat-${b}.png`), 'contact-sheet.png', 'browser-pass.log']) assert.ok(exists('evidence/take-apart/' + f), `evidence/take-apart/${f} is missing`);
+  // The standard capture is the AFTER capture of the final tree: identical bytes for the five beats.
+  for (const b of BEATS) {
+    const std = fs.readFileSync(root(`evidence/take-apart/beat-${b}.png`)), af = fs.readFileSync(root(`evidence/web-render-finish/after/beat-${b}.png`));
+    assert.equal(pngSize(std).w, pngSize(af).w, `beat-${b} standard and after share width`);
+  }
+});
+
+test('web-render-finish S7: the production bundle built clean with zero local patches, command and exit status recorded', () => {
+  const rel = 'evidence/web-render-finish/bundle-build.log';
+  assert.ok(exists(rel), `${rel} is missing`);
+  const log = read(rel);
+  assert.match(log, /wrangler[^\n]* deploy --dry-run --outdir/, 'the production bundle command is recorded');
+  assert.match(log, /exit status: 0\b/, 'exit status 0 recorded');
+  assert.match(log, /No local patches applied\./i);
+});
+
+test('web-render-finish S7: no evidence step imports or loads the unbundled client or page source', () => {
+  const src = read('scripts/capture-take-apart.mjs');
+  assert.doesNotMatch(src, /import[^\n]*take-apart-client|import[^\n]*take-apart-page|import[^\n]*from\s+['"][^'"]*src\/index\.js/, 'capture does not import unbundled source');
+  assert.doesNotMatch(src, /import\(\s*['"][^'"]*src\//, 'capture does not dynamically import src');
+  assert.match(src, /deploy.*--dry-run|dry-run/, 'capture builds the production bundle');
+  assert.match(src, /--no-bundle/, 'capture serves the built bundle output');
+});
+
+// ---------------------------------------------------------------- S8 (R4 frozen parts)
+test('web-render-finish S8/R4: the vendored three.js bytes, page chrome and copy, model, facts and Worker routes are unchanged from the setup commit', () => {
+  assert.equal(sha(fs.readFileSync(root('src/vendor-three.js'))), '336d60d4a559e48c4fde51d978580242ae258db9e38003d8656c7c3df3c7bfc5', 'vendored three.js bytes frozen');
+  if (!setupReachable()) return;
+  const frozen = ['src/vendor-three.js', 'src/take-apart-page.js', 'src/take-apart-model.js', 'src/take-apart-model-browser.js', 'src/facts.js', 'src/index.js', 'src/page.js', 'src/images.js'];
+  assert.equal(git('diff', '--name-only', SETUP_COMMIT, '--', ...frozen).trim(), '', 'frozen files changed');
+});
+
+test('web-render-finish S8/R4: the client keeps the state function binding, node binding by name, tour, controls, quality tiers and fallback', () => {
+  const src = read('src/take-apart-client.js');
+  for (const [re, what] of [
+    [/TakeApartModel/, 'state function binding'],
+    [/Top cover|NODE_NAMES|getObjectByName|\.name\b/, 'node binding by name'],
+    [/tour/i, 'tour'],
+    [/OrbitControls|controls|pointer/i, 'controls'],
+    [/quality|tier|pixelRatio|setPixelRatio/i, 'quality tiers'],
+    [/fallback|catch/i, 'fallback'],
+    [/sceneReady/, 'scene ready flag'],
+  ]) assert.match(src, re, `${what} survives in the client`);
+  if (!setupReachable()) return;
+  // Removed lines may only be rendering ones: the frozen binding identifiers must not disappear.
+  const removed = git('diff', '-U0', SETUP_COMMIT, '--', 'src/take-apart-client.js').split('\n').filter((l) => /^-(?!--)/.test(l)).join('\n');
+  for (const id of ['sceneReady', 'TakeApartModel', 'getObjectByName', 'gaugeReadout', 'layerCenterMm', 'tour']) {
+    if (removed.includes(id)) assert.ok(src.includes(id), `frozen identifier ${id} was removed from the client`);
+  }
+});
+
+// ---------------------------------------------------------------- S10 (scope)
+test('web-render-finish S10: the run diff against the setup commit names only the allowed paths', () => {
+  if (!setupReachable()) return; // not reachable in this checkout; the run gate checks scope
+  const tracked = git('diff', '--name-only', SETUP_COMMIT);
+  const untracked = git('ls-files', '--others', '--exclude-standard');
+  const names = (tracked + untracked).split('\n').filter(Boolean).filter((n) => !HARNESS_FILES.has(n))
+    .filter((n) => n !== '.openspec/specs/web-render-finish/spec.md'); // operator setup, not part of the line
+  const allowed = [
+    /^blender\/build_patch_one\.py$/,
+    /^src\/patch-one-glb\.js$/,
+    /^src\/take-apart-client\.js$/,
+    /^tests\/web-render-finish\.test\.js$/,
+    /^tests\/take-apart-product-model\.test\.js$/,
+    /^tests\/take-apart\.test\.js$/,
+    /^scripts\/capture-take-apart\.mjs$/,
+    /^evidence\/web-render-finish\//,
+    /^evidence\/take-apart\//,
+    /^evidence\/take-apart-product-model\//,
+    /^runs\/wo-gh-14\//,
+  ];
+  const outside = names.filter((n) => !allowed.some((re) => re.test(n)));
+  assert.deepEqual(outside, [], 'files outside the allowed scope');
+});
 
 exec
-/bin/bash -lc 'cat evidence/web-render-finish/frozen-product.log; tail -25 runs/wo-gh-14/suite-final.log; cat evidence/web-render-finish/after/bundle-build.log' in /home/runner/work/sentia/sentia
+/bin/bash -lc "rg --files evidence/web-render-finish design/reference; cat evidence/web-render-finish/*.md; cat evidence/web-render-finish/after/browser-pass.log; sed -n '100,175p' .openspec/specs/web-render-finish/spec.md; rg -n 'light|Light|roughness|metalness|emiss|toneMap|exposure|environment|grain' src/take-apart-client.js" in /home/runner/work/sentia/sentia
  succeeded in 0ms:
-Compared against round 2 HEAD before this implementation.
-PASS: nodes, meshes, accessors, scenes, buffers, bufferViews and entire binary payload byte identical. Only material JSON changed; geometry, wordmark, LED placement, proportions and layer stack preserved.
-  ---
-  duration_ms: 8.982403
-  type: 'test'
-  ...
-# Subtest: web-render-finish S8/R4: the client keeps the state function binding, node binding by name, tour, controls, quality tiers and fallback
-ok 213 - web-render-finish S8/R4: the client keeps the state function binding, node binding by name, tour, controls, quality tiers and fallback
-  ---
-  duration_ms: 5.508013
-  type: 'test'
-  ...
-# Subtest: web-render-finish S10: the run diff against the setup commit names only the allowed paths
-ok 214 - web-render-finish S10: the run diff against the setup commit names only the allowed paths
-  ---
-  duration_ms: 4.454157
-  type: 'test'
-  ...
-1..214
-# tests 214
-# suites 0
-# pass 212
-# fail 1
-# cancelled 0
-# skipped 1
-# todo 0
-# duration_ms 1030.278839
-/tmp/sentia-browser/node_modules/.bin/wrangler deploy --dry-run --outdir /tmp/sentia-bundle-Vq8JZD
+design/reference/product-reference.png
+design/reference/quality-board-2.png
+design/reference/quality-board-1.png
+design/reference/README.md
+evidence/web-render-finish/reproducibility.log
+evidence/web-render-finish/build-2.log
+evidence/web-render-finish/blender-build-1.log
+evidence/web-render-finish/build-1.log
+evidence/web-render-finish/frozen-product.log
+evidence/web-render-finish/after/contact-sheet.png
+evidence/web-render-finish/after/beat-apart.png
+evidence/web-render-finish/after/beat-assembled.png
+evidence/web-render-finish/after/beat-mid.png
+evidence/web-render-finish/after/beat-xray.png
+evidence/web-render-finish/after/beat-board.png
+evidence/web-render-finish/after/browser-assembled.png
+evidence/web-render-finish/before/contact-sheet.png
+evidence/web-render-finish/before/beat-apart.png
+evidence/web-render-finish/before/beat-assembled.png
+evidence/web-render-finish/before/beat-mid.png
+evidence/web-render-finish/before/beat-xray.png
+evidence/web-render-finish/before/beat-board.png
+evidence/web-render-finish/before/browser-assembled.png
+evidence/web-render-finish/suite.log
+evidence/web-render-finish/bundle-build.log
+evidence/web-render-finish/builder-notes.md
+evidence/web-render-finish/blender-build-2.log
+evidence/web-render-finish/behavior-tests.log
+# Final loopback builder comparison
 
- ⛅️ wrangler 4.156.1
-────────────────────
-Total Upload: 2551.84 KiB / gzip: 826.78 KiB
-No bindings found.
---dry-run: exiting now.
+Before is round 2's committed after capture, copied without modifying pixels or pass logs as directed by this packet. It retains readable board metals and cover grain, but the optical strip is gray-green. After and the standard evidence are generated by scripts/capture-take-apart.mjs from a clean Wrangler production bundle served locally with --no-bundle.
 
-exit status: 0
-No local patches applied.
+S5: adjusted the optical window and emitter materials on load: dark teal diffuse color, saturated teal emission, no environment reflection, no clearcoat on the window, and exemption from filmic tone mapping. The window is opaque at normal layer opacity to avoid washing the emission into the bright surface behind it. Existing layer focus/x-ray opacity rules still apply. Three short-range teal point lights inside the recess supply local emitter spill on the pocket walls, following the cover without moving any geometry. The existing recessed geometry supplies the gray socket border; no LED position or proportions changed. The assembled and mid beats should be judged at their native resolution against before and product-reference.png.
+
+R6: the deterministic silicone normal tile now repeats three times instead of twice and has strength .5 instead of .85, reducing both grain size and relief in the beauty renders. The browser material retains the round 2 tile repeat and normal strength to preserve the already-reviewed beat-scale grain. No new texture or geometry was generated. Both beauty renders are regenerated.
+
+S4: board materials, studio lighting, exposure and environment remain at round 2 settings. The new board and apart beats retain silver face highlights, darker packages, gold contacts and sensor rims against the green substrate. Compare these beats for regression; the remaining optical change does not retune the board.
+
+Geometry check: frozen-product.log records identical nodes, meshes, accessors, scenes, buffer layout and binary payload against the round 2 asset. The five layers, wordmark and LED geometry remain unchanged. Reproducibility and byte size are recorded in reproducibility.log.
+
+The capture runner isolates its local Worker process group so Wrangler shutdown cannot terminate the capture or concurrent Blender builds. An initial interrupted capture was discarded. Final logs and screenshots replace intermediate attempts. No unbundled page or client is used.
+
+Approval, identity clearance and deployment belong to later stations. This builder does not approve or deploy.
+Bundled Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-bundle-Vq8JZD/index.js --no-bundle --local --ip 127.0.0.1 --port 8793
+console errors: 0
+page errors: 0
+TakeApartModel: object
+scene ready: true
+canvas: 1022x559; layout: 1022x559; DPR: 1
+gauge comparison: PASS at hour 200
+asset failure checks: PASS (fetch and parse)
+GLB /models/patch-one.glb: status 200; bytes 798072
+loaded nodes: 5; Top cover; Comfort foam; Sensing and processing board; Adhesive layer; Release liner
+vendor /vendor/three.module.min.js: status 200; decoded bytes 670681
+
+
+## Done criteria
+
+- The run verdict is approved with all five expected reviews counted and no parse failures, reviewer-design among the passes.
+- reviewer-design confirms both named problems closed in the page rendering (scenarios S4 and S5) and identity intact (S6), judging the after beats against the before beats and the references.
+- The GLB measures at or under 819,200 bytes with the size stated; reproducibility is re-proven if the asset changed (S3); the product is frozen (S2).
+- The production shape checks are recorded clean on the final tree (S7), and the before and after evidence is committed under evidence/web-render-finish/ with its pass logs.
+- The full suite passes apart from the itemized design v4 S11 failure (S9), and the run diff stays inside the scope of S10.
+60:function box(parent, size, position, color, roughness=.65) {
+61:  const mesh = new THREE.Mesh(new THREE.BoxGeometry(...size), new THREE.MeshStandardMaterial({ color,roughness }));
+67:    const mesh = new THREE.Mesh(roundedGeometry(layer.thicknessMm*Z_SCALE),new THREE.MeshStandardMaterial({ color:colors[i], roughness:i===2?.58:.82, transparent:true }));
+85:  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = .95;
+98:  scene.environment = pmrem.fromScene(studio,.04).texture;
+100:  scene.add(new THREE.AmbientLight(0xffffff,.25));
+101:  const rim = new THREE.DirectionalLight(0xdceaff,.7); rim.position.set(45,25,-55); scene.add(rim);
+102:  const key = new THREE.DirectionalLight(0xfff5eb,3.2); key.position.set(-65,65,35); key.castShadow = quality.shadowMapSize > 0;
+133:        copy.envMapIntensity = copy.metalness > .5 ? 1.25 : .35;
+137:          copy.envMapIntensity = 0; copy.roughness = .5;
+139:          copy.emissive.setRGB(.003,.48,.32); copy.emissiveIntensity = 1;
+140:          copy.toneMapped = false;
+146:          // Preserve beat-scale grain while the true-scale beauty uses a finer finish.
+149:          // Vertical exaggeration also stretches side normals; keep grain on the crown.
+151:            shader.vertexShader = 'varying float grainCrown;\\n' + shader.vertexShader;
+152:            shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\\ngrainCrown = smoothstep(.98, .999, abs(normal.y));');
+153:            shader.fragmentShader = 'varying float grainCrown;\\n' + shader.fragmentShader;
+154:            shader.fragmentShader = shader.fragmentShader.replace('#include <normal_fragment_maps>', THREE.ShaderChunk.normal_fragment_maps.replace('normalScale;', 'normalScale * mix(.005, .65, grainCrown);'));
+164:  // Local emitter spill lights the pocket walls at the exaggerated study scale.
+167:    const spill = new THREE.PointLight(0x08d9b5,.7,2,2);
 
 codex
-{"station":"reviewer-design","verdict":"pass","findings":["R3/S5: The after assembled and mid beats show a visible cyan-teal emitter separated from its darker recessed socket edge; cover grain remains readable.","R2/S4: The after board and apart beats retain distinct silver highlights, dark packages, gold contacts and metallic sensor rims. No regression in the previously cleared board finishes.","R6/S6: The regenerated beauty renders show finer, softer cover grain consistent with the reference boards. Rounded-square silhouette, low-profile beauty proportions, SENTIA wordmark, LED placement and five-layer identity remain intact.","Supporting evidence records a 798,072-byte GLB against the 819,200-byte budget, identical consecutive exports, and bundled browser captures with zero console or page errors."]}
+The assembled and mid captures show a visible teal emitter within the darker socket edge. The board’s metal highlights, gold contacts, and darker packages remain distinct, and the cover grain is readable. I’m checking the remaining evidence records and frozen interface code before issuing the verdict.
+
+exec
+/bin/bash -lc "cat evidence/web-render-finish/reproducibility.log; cat evidence/web-render-finish/frozen-product.log; rg -n 'S11|not ok|fail' evidence/web-render-finish/suite.log; sed -n '1,100p' src/take-apart-page.js; sed -n '78,175p' src/take-apart-client.js; sed -n '75,100p' .openspec/specs/web-render-finish/spec.md" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+Blender 4.5.15; two consecutive complete builds: blender --background --python blender/build_all.py
+export 1 GLB SHA256 5a1438dae703eb3647d4a77baf3b6f5b74e1db3b5f56ae6a54e7de3a1b032aeb bytes 798072 exit 0; module SHA256 ecd7f6647636a6ef37591b632e086045b7ac44adfc271b61089fda6f986b2fbd
+export 2 GLB SHA256 5a1438dae703eb3647d4a77baf3b6f5b74e1db3b5f56ae6a54e7de3a1b032aeb bytes 798072 exit 0; module SHA256 ecd7f6647636a6ef37591b632e086045b7ac44adfc271b61089fda6f986b2fbd
+PASS: two full exports byte identical; committed module equals export module byte for byte. Both beauty renders regenerated. Budget 819200 bytes.
+Compared against round 2 HEAD before this implementation.
+PASS: nodes, meshes, accessors, scenes, buffers, bufferViews and entire binary payload byte identical. Only material JSON changed; geometry, wordmark, LED placement, proportions and layer stack preserved.
+588:# Subtest: S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/
+589:not ok 98 - S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/
+594:  failureType: 'testCodeFailure'
+939:# Subtest: product-model S11/L1: the board is denser than round 1, with more meshes and more distinct finishes
+940:ok 151 - product-model S11/L1: the board is denser than round 1, with more meshes and more distinct finishes
+945:# Subtest: product-model S11/L1: component finishes are differentiated, not one uniform gray (polymer, ceramic, tinned and plated metal)
+946:ok 152 - product-model S11/L1: component finishes are differentiated, not one uniform gray (polymer, ceramic, tinned and plated metal)
+951:# Subtest: product-model S11/L1: the named parts stay identifiable (main chip, two or more sensor discs, battery, contacts)
+952:ok 153 - product-model S11/L1: the named parts stay identifiable (main chip, two or more sensor discs, battery, contacts)
+957:# Subtest: product-model S11/L1: solder joints, varied copper work and metal terminals are modeled or textured
+958:ok 154 - product-model S11/L1: solder joints, varied copper work and metal terminals are modeled or textured
+963:# Subtest: product-model S11/L1: the board stays inside its 0.5 mm envelope and inside the substrate footprint; no layer grew
+964:ok 155 - product-model S11/L1: the board stays inside its 0.5 mm envelope and inside the substrate footprint; no layer grew
+1328:# fail 1
+import { FACTS } from './facts.js';
+import { LAYERS, gaugeReadout } from './take-apart-model.js';
+export function renderTakeApartPage() {
+  const initial = gaugeReadout(0);
+  return `<!doctype html><html lang="en"><head>
+<script type="importmap">{"imports":{"three":"/vendor/three.module.min.js","GLTFLoader":"/vendor/loaders/GLTFLoader.js"}}</script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Take apart — ${FACTS.product}</title><link rel="icon" href="/favicon.ico"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet"><style>
+:root{--paper:#FAFAF6;--ink:#12211C;--teal:#0E7C66;--muted:#53685C;--line:#DFE7DF;--body:#4A5D54;--mint:#EFF4EE}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,Arial,sans-serif;font-size:17px;line-height:1.65}button,input{font:inherit}button,a,input{touch-action:manipulation}a{color:inherit;text-decoration:none}header{margin:0 auto;max-width:1440px;padding:16px clamp(24px,5vw,80px);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.brand{font-family:'Space Grotesk',sans-serif;font-size:27px;letter-spacing:-1.4px}.brand span{color:var(--teal)}header a:last-child{font-size:13px}main{max-width:1440px;margin:auto;padding:24px clamp(24px,5vw,80px)}.eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}h1{font-family:'Space Grotesk',sans-serif;font-size:43px;font-weight:300;letter-spacing:-.04em;margin:8px 0}p{line-height:1.65}.intro{display:flex;justify-content:space-between;align-items:end}.intro p{font-size:18px;color:var(--body);max-width:400px;margin:0 0 8px}.workbench{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:24px;margin-top:24px}.viewport{height:520px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}#scene{width:100%;height:100%;display:block;touch-action:none;cursor:grab}#scene:active{cursor:grabbing}.live-readout{position:absolute;top:0;left:0;pointer-events:none}.live-readout .temperature{font-size:56px;margin-top:8px}.live-readout .caption{display:none}.scene-note{position:absolute;left:0;bottom:16px;font-size:11px;color:var(--muted);pointer-events:none}.scene-note.right{left:auto;right:0}#callouts{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}#fallback{position:absolute;inset:30%;font-size:16px;line-height:1.7}#fallback[hidden]{display:none}.panel{border-left:1px solid var(--line);padding-left:24px}.live-label{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:1.4px;text-transform:uppercase}.dot{width:6px;height:6px;border-radius:50%;background:var(--teal)}.temperature{font-family:'Space Grotesk',sans-serif;font-size:56px;letter-spacing:-4px;margin:8px 0 0;line-height:1.1}.temperature small{font-size:22px;letter-spacing:0}.caption{font-size:12px;color:var(--muted);margin:8px 0 24px}.gauges{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}.gauge{padding:16px 0;border-bottom:1px solid var(--line)}.gauge:last-child{grid-column:1 / -1}.gauge .value{font-family:'Space Grotesk',sans-serif;font-size:32px}.gauge small{font-size:11px;color:var(--muted);display:block;margin-bottom:8px}.unit{font-size:12px;color:var(--muted)}#chart{width:100%;height:90px;display:block;margin-top:16px}.chart-caption{font-size:11px;display:flex;justify-content:space-between;color:var(--muted)}.panel-note{font-size:11px;color:var(--muted);margin-top:24px}.controls{margin-top:24px}.sliders{display:grid;grid-template-columns:1fr 1fr;gap:40px}.control-heading{display:flex;justify-content:space-between;font-size:12px;margin-bottom:8px}.control-heading span{color:var(--muted)}input[type=range]{width:100%;accent-color:var(--teal);height:44px;margin:0;cursor:pointer}.endpoints{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}.button-row{display:flex;align-items:center;gap:8px;margin-top:24px;flex-wrap:wrap}button{background:transparent;border:1px solid var(--line);border-radius:5px;padding:8px 16px;color:var(--ink);font-size:11px;min-height:44px;min-width:44px;cursor:pointer}button:hover{border-color:var(--teal)}button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}button.layer[aria-pressed=true]{background:var(--teal);border-color:var(--teal)}.camera-group{display:flex;gap:8px;margin-left:auto}.footer{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin-top:24px;padding-top:16px;font-size:11px;color:var(--muted)}#tour-status{color:var(--teal)}#tour-cursor{position:fixed;z-index:10;width:25px;height:25px;border:2px solid var(--teal);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:left .2s,top .2s;box-shadow:0 0 0 5px var(--mint)}#tour-cursor.pressing{background:var(--mint);transform:translate(-50%,-50%) scale(.8)}:focus-visible{outline:3px solid var(--teal);outline-offset:4px}@media(min-width:1400px){.viewport{height:560px}}@media(max-width:950px){.workbench{grid-template-columns:minmax(0,1fr) 195px;gap:16px}.panel{padding-left:16px}.temperature{font-size:54px}.camera-group{margin-left:0}}@media(max-width:719px){header{padding:16px 24px}.intro{display:block}h1{font-size:36px}.workbench{display:flex;flex-direction:column}.viewport{height:410px}#callouts{display:none}.panel{border-left:0;padding:0}.panel .gauges{grid-template-columns:repeat(3,1fr)}.panel .gauge:last-child{grid-column:auto}.gauges{grid-column:2;grid-row:1 / 5}.gauge{padding:16px 0}.temperature{font-size:48px}.caption{margin:0}.panel-note{display:none}.chart-wrap{grid-column:1 / -1}.sliders{gap:24px}.scene-note{font-size:11px}.button-row{gap:8px}button{font-size:11px}.footer{gap:16px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+.eyebrow,.live-label,.scene-note,.endpoints,.chart-caption,.footer{font-family:monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase}.panel-note{font-size:17px;color:var(--body)}.temperature,.gauge .value{font-weight:300}header{gap:16px}header a{min-height:44px;display:inline-flex;align-items:center}.skip-link{position:absolute;left:24px;top:8px;transform:translateY(-200%);background:var(--paper);padding:8px 16px;z-index:20}.skip-link:focus{transform:none}.static-layers{display:none}.static-layers li{margin:8px 0}.static-layers ul{padding-left:24px}#fallback{inset:32% 16%;margin:0;padding:16px;background:var(--paper);color:var(--body)}
+</style><noscript><style>#fallback[hidden],.static-layers{display:block!important}#scene,#callouts,.controls,#tour-status,.scene-note{display:none!important}</style></noscript></head><body><a class="skip-link" href="#take-apart">Skip to study</a><header><a class="brand" href="/">sentia<span>·</span></a><a href="/">← Back to the whole picture</a></header><main tabindex="-1" id="take-apart" data-tour-beat="off"><div class="intro"><div><div class="eyebrow">${FACTS.product} / Interactive study</div><h1>A little space. A lot inside.</h1></div><p>Take apart the layers. Follow a day on skin.<br>One model connects every part and reading.</p></div><div class="workbench"><section aria-label="Interactive layer study"><div class="viewport"><canvas id="scene" aria-label="Three dimensional Patch One. Drag to orbit, scroll to zoom."></canvas><div class="live-readout"><div class="live-label"><i class="dot"></i>Simulated skin temperature</div><div class="temperature"><span data-gauge="temperature">${initial.temperature}</span><small> °C</small></div><div class="caption">A rhythm beneath the surface.</div></div><svg id="callouts" aria-hidden="true"></svg><p id="fallback" hidden>This interactive study needs JavaScript and WebGL. Explore the layer list and initial simulated readings below.</p><div class="scene-note">STUDY MODEL · vertical scale ×8</div><div class="scene-note right">Drag to orbit · Scroll to zoom</div></div></section><aside class="panel" aria-label="Simulated wear readings"><div class="eyebrow" style="margin-bottom:24px">Wear simulation</div><div class="gauges"><div class="gauge"><small>Hydration index</small><span class="value" data-gauge="hydration">${initial.hydration}</span><span class="unit"> / index</span></div><div class="gauge"><small>Battery</small><span class="value" data-gauge="battery">${initial.battery}</span><span class="unit"> %</span></div><div class="gauge"><small>Time on skin</small><span class="unit">Day </span><span class="value" data-gauge="day">${initial.day}</span><span class="unit"> of ${FACTS.wearDays}</span></div></div><div class="chart-wrap"><canvas id="chart" aria-label="Skin temperature over the wear period"></canvas><div class="chart-caption"><span>Application</span><span>End of wear</span></div></div><p class="panel-note">Illustrative wellness readings.<br>A study of the system, not clinical data.</p></aside></div><section class="static-layers" aria-label="Study layer thicknesses"><h2>The assembled stack</h2><ul>${LAYERS.map(layer => `<li>${layer.name} — ${layer.thicknessMm} mm</li>`).join('')}</ul></section><section class="controls" aria-label="Study controls"><div class="sliders"><label><div class="control-heading">Separation <span>Explore the stack</span></div><input id="separation" aria-label="Separation" type="range" min="0" max="1" step="0.001" value="0"><div class="endpoints"><span>Assembled</span><span>Layer by layer</span></div></label><label><div class="control-heading">Wear time <span>Day <output id="wear-day">${initial.day}</output></span></div><input id="wear" aria-label="Wear time in hours" type="range" min="0" max="336" step="0.25" value="0"><div class="endpoints"><span>Application</span><span>End of wear</span></div></label></div><div class="button-row">${FACTS.layers.map((l,i)=>`<button class="layer" data-layer="${i}" aria-pressed="false">${l.name}</button>`).join('')}<button id="xray" aria-pressed="false">X ray</button><div class="camera-group" aria-label="Camera presets">${['Hero','Top','Side'].map(n=>`<button data-camera="${n}" aria-pressed="${n==='Hero'}">${n}</button>`).join('')}</div></div></section><div class="footer"><span>Five layers · ${FACTS.thicknessMm} mm assembled profile · Blender built product model</span><span id="tour-status">Explore freely · Tour begins when idle</span></div></main><div id="tour-cursor" hidden></div><script src="/take-apart-model.js"></script><script type="module" src="/take-apart.js"></script></body></html>`;
+}
+  box(meshes[2],[5,.08,8],[-10,boardTop,3],0xa4b2a1);
+  for(let i=0;i<4;i++) box(meshes[2],[2,.06,1.2],[7,boardTop,i*3-4],0x8fa68d);
+}
+async function initScene() {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
+  renderer.setPixelRatio(quality.pixelRatioCap); renderer.setClearColor(0xfafaf6);
+  renderer.shadowMap.enabled = quality.shadowMapSize > 0; renderer.shadowMap.type = THREE.VSMShadowMap;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = .95;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  scene = new THREE.Scene(); camera = new THREE.OrthographicCamera(-50,50,80,-40,.1,1000);
+  // A dark studio with broad luminous cards gives metals something to reflect.
+  const studio = new THREE.Scene(); studio.background = new THREE.Color(0x252b30);
+  for (const [position, size, intensity] of [
+    [[-30,45,15],[35,65],5], [[40,20,-25],[16,55],3], [[0,35,-45],[60,12],2]
+  ]) {
+    const card = new THREE.Mesh(new THREE.PlaneGeometry(...size),
+      new THREE.MeshBasicMaterial({ color:new THREE.Color(intensity,intensity,intensity), side:THREE.DoubleSide }));
+    card.position.set(...position); card.lookAt(0,0,0); studio.add(card);
+  }
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(studio,.04).texture;
+  pmrem.dispose(); studio.traverse(object => { if(object.isMesh){object.geometry.dispose();object.material.dispose();} });
+  scene.add(new THREE.AmbientLight(0xffffff,.25));
+  const rim = new THREE.DirectionalLight(0xdceaff,.7); rim.position.set(45,25,-55); scene.add(rim);
+  const key = new THREE.DirectionalLight(0xfff5eb,3.2); key.position.set(-65,65,35); key.castShadow = quality.shadowMapSize > 0;
+  key.shadow.mapSize.set(quality.shadowMapSize, quality.shadowMapSize);
+  Object.assign(key.shadow.camera, { left:-100,right:100,top:170,bottom:-100,near:.1,far:400 });
+  key.shadow.bias = -.0003; key.shadow.normalBias = .15; key.shadow.radius = 5; key.shadow.blurSamples = 8; scene.add(key);
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(1000,1000),new THREE.ShadowMaterial({ opacity:.12 }));
+  ground.rotation.x = -Math.PI/2; ground.position.y=-.15; ground.receiveShadow=true; scene.add(ground);
+  try {
+    const { GLTFLoader } = await import('GLTFLoader');
+    const gltf = await new GLTFLoader().loadAsync('/models/patch-one.glb');
+    if (gltf.scene.children.length !== M.NODE_NAMES.length) throw new Error('Invalid layer count');
+    meshes = M.NODE_NAMES.map(name => {
+      const node = gltf.scene.children.find(child => (child.userData.name || child.name) === name);
+      if (!node) throw new Error('Missing layer: '+name);
+      node.name = name;
+      node.scale.y = Z_SCALE;
+      return node;
+    });
+    root.dataset.modelNodes = JSON.stringify(meshes.map(node => node.name));
+    root.dataset.modelSource = 'glb';
+  } catch (error) {
+    // Asset/network/parser failure keeps the original study usable.
+    buildProceduralFallback();
+    root.dataset.modelSource = 'procedural';
+  }
+  meshes.forEach(node => {
+    node.traverse(object => {
+      if (!object.material) return;
+      const materials = Array.isArray(object.material) ? object.material : [object.material];
+      // A layer owns its material state even when glTF shares a material.
+      const owned = materials.map(material => {
+        const copy = material.clone();
+        copy.envMapIntensity = copy.metalness > .5 ? 1.25 : .35;
+        // Keep the optical strip saturated under the metal studio's bright cards.
+        // Its existing recessed geometry and dark socket provide the depth border.
+        if (copy.name === 'Optical silicone window' || copy.name === 'Teal cyan LED') {
+          copy.envMapIntensity = 0; copy.roughness = .5;
+          copy.color.setRGB(.002,.025,.018);
+          copy.emissive.setRGB(.003,.48,.32); copy.emissiveIntensity = 1;
+          copy.toneMapped = false;
+          if (copy.name === 'Optical silicone window') {
+            copy.opacity = 1; copy.clearcoat = 0;
+          }
+        }
+        if (copy.name === 'Matte off white silicone') {
+          // Preserve beat-scale grain while the true-scale beauty uses a finer finish.
+          copy.normalMap = copy.normalMap.clone(); copy.normalMap.repeat.set(2,2);
+          copy.normalScale.setScalar(.85);
+          // Vertical exaggeration also stretches side normals; keep grain on the crown.
+          copy.onBeforeCompile = shader => {
+            shader.vertexShader = 'varying float grainCrown;\\n' + shader.vertexShader;
+            shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\\ngrainCrown = smoothstep(.98, .999, abs(normal.y));');
+            shader.fragmentShader = 'varying float grainCrown;\\n' + shader.fragmentShader;
+            shader.fragmentShader = shader.fragmentShader.replace('#include <normal_fragment_maps>', THREE.ShaderChunk.normal_fragment_maps.replace('normalScale;', 'normalScale * mix(.005, .65, grainCrown);'));
+          };
+        }
+        copy.userData.baseOpacity = copy.opacity; return copy;
+      });
+      object.material = Array.isArray(object.material) ? owned : owned[0];
+      object.castShadow = true; object.receiveShadow = true;
+    });
+    scene.add(node);
+  });
+  // Local emitter spill lights the pocket walls at the exaggerated study scale.
+  // The sources stay inside the existing optical recess and follow its cover.
+  for (const x of [-3,0,3]) {
+    const spill = new THREE.PointLight(0x08d9b5,.7,2,2);
+    spill.position.set(x,.27,3.2); meshes[0].add(spill);
+  }
+  const ns='http://www.w3.org/2000/svg';
+  M.LAYERS.forEach((layer,i) => {
+    const group=document.createElementNS(ns,'g'); group.dataset.layer=i;
+    const path=document.createElementNS(ns,'path'); path.setAttribute('fill','none'); path.setAttribute('stroke-width','1'); group.append(path);
+    const dot=document.createElementNS(ns,'circle'); dot.setAttribute('r','2.5'); group.append(dot);
+    const label=document.createElementNS(ns,'text'); label.setAttribute('font-size','11');
+- S8: Given the final tree, when the take apart and product model test suites run, then every pre existing assertion passes in its original meaning (model outputs, gauges, focus and x ray, tour, quality tiers, fallback, chrome, scope as re-based for this order).
+
+### Scenario: The suite is green apart from the itemized failure
+- S9: Given the final tree, when the full project suite runs, then every test passes except the design v4 S11 failure, which the run report itemizes by name as pre existing on this base and resolved on the approved sibling branch.
+
+### Scenario: The change stays in scope
+- S10: Given the run diff against this order's setup commit with the workflow's harness files excluded, when the changed paths are listed, then they name only: blender/build_patch_one.py, src/patch-one-glb.js, src/take-apart-client.js, tests/web-render-finish.test.js, tests/take-apart-product-model.test.js and tests/take-apart.test.js only where a scope or baseline constant is re-based for this order with its assertions' meaning unchanged, scripts/capture-take-apart.mjs only if the before and after capture requires it, evidence/web-render-finish/, evidence/take-apart/, evidence/take-apart-product-model/, and runs/wo-gh-14/.
+
+## Scope
+
+The files named in scenario S10, plus the run's own evidence. The operator setup commit (this spec, the work order, the execute wiring for this branch, the .gitignore log negations for this order's evidence) is not part of the line's change.
+
+## Out of scope
+
+- The home page, the home layered view section and every route other than /take-apart and /models/patch-one.glb.
+- Page chrome and copy, including the footer line landed by wo-gh-12.
+- The simulation model and its outputs, src/facts.js, brand and design documents, the vendored three.js bytes, earlier specs.
+- Earlier runs' evidence, except the regenerated captures and renders named in R7.
+- The design v4 S11 test and the wo-gh-8 evidence it asserts on.
+- Deployment inside the line: anvil.yaml carries no deploy config and the deployer station stays a packet.
+
+## Deployment after the run (owner's order for this work order)
+
+Deployment is the operator's gated step, outside the line. If this run's verdict is approved, the operator deploys from the final branch head following the established pattern (tree pulled through the Git Database API, every blob hash recomputed with zero mismatches, deployed with the project's wrangler helper, no local patches of any kind; if the bundle needs a patch, the deployment stops and is reported instead). Post deploy verification runs from the public URL and includes a real browser screenshot of the live /take-apart showing the GLB product rendered, the footer credit byte exact check, the four image routes at their established byte sizes, /llms.txt, the MCP initialize answer, and the GLB route serving the new asset. After live verification passes, the operator commits runs/wo-gh-14/owner-acceptance.json on this branch citing the approval and the deploy (production version and source commit), using the owner acceptance mechanism established by wo-gh-10. If the verdict is not approved, nothing deploys and production keeps serving version 4515d731.
+
+## Done criteria
+
+codex
+{
+  "station": "reviewer-design",
+  "verdict": "pass",
+  "findings": [
+    "R3/S5 passes: after/beat-assembled.png and after/beat-mid.png show a readable cyan-teal emitter separated from its darker recessed socket edge, improving on the before capture’s gray-green strip.",
+    "R2/S4 passes: after/beat-apart.png and after/beat-board.png retain distinct metal highlights, gold contacts, sensor rims and darker packages against the green substrate. Board finishes remain closed without visible regression.",
+    "R3/S5 and R6/S6 pass: cover micrograin remains readable in the page beats; the regenerated beauty renders show fine silicone grain consistent with design/reference/quality-board-1.png and quality-board-2.png. The rounded square identity, SENTIA wordmark, LED placement and five-layer stack remain intact.",
+    "No additional material, lighting, scale or contact gaps were identified within this order’s frozen scope against design/DESIGN.md and the reference boards.",
+    "The pre-existing design v4 S11 failure remains separately recorded in evidence/web-render-finish/suite.log and excluded from this order’s visual clearance."
+  ]
+}
 tokens used
-46,992
-{"station":"reviewer-design","verdict":"pass","findings":["R3/S5: The after assembled and mid beats show a visible cyan-teal emitter separated from its darker recessed socket edge; cover grain remains readable.","R2/S4: The after board and apart beats retain distinct silver highlights, dark packages, gold contacts and metallic sensor rims. No regression in the previously cleared board finishes.","R6/S6: The regenerated beauty renders show finer, softer cover grain consistent with the reference boards. Rounded-square silhouette, low-profile beauty proportions, SENTIA wordmark, LED placement and five-layer identity remain intact.","Supporting evidence records a 798,072-byte GLB against the 819,200-byte budget, identical consecutive exports, and bundled browser captures with zero console or page errors."]}
+56,673
+{
+  "station": "reviewer-design",
+  "verdict": "pass",
+  "findings": [
+    "R3/S5 passes: after/beat-assembled.png and after/beat-mid.png show a readable cyan-teal emitter separated from its darker recessed socket edge, improving on the before capture’s gray-green strip.",
+    "R2/S4 passes: after/beat-apart.png and after/beat-board.png retain distinct metal highlights, gold contacts, sensor rims and darker packages against the green substrate. Board finishes remain closed without visible regression.",
+    "R3/S5 and R6/S6 pass: cover micrograin remains readable in the page beats; the regenerated beauty renders show fine silicone grain consistent with design/reference/quality-board-1.png and quality-board-2.png. The rounded square identity, SENTIA wordmark, LED placement and five-layer stack remain intact.",
+    "No additional material, lighting, scale or contact gaps were identified within this order’s frozen scope against design/DESIGN.md and the reference boards.",
+    "The pre-existing design v4 S11 failure remains separately recorded in evidence/web-render-finish/suite.log and excluded from this order’s visual clearance."
+  ]
+}

@@ -1,4 +1,4 @@
-WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-fx0ysm0a"))
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-0gy4p3ht"))
 Reading additional input from stdin...
 OpenAI Codex v0.166.0
 --------
@@ -9,7 +9,7 @@ approval: never
 sandbox: danger-full-access
 reasoning effort: none
 reasoning summaries: none
-session id: 01a19a45-a75d-72e3-983c-2378bc42275f
+session id: 01a19f98-111f-7863-9548-c3aa1f83540c
 --------
 user
 You are executing an ANVIL station packet inside this repository. Follow the packet exactly, edit the files it asks for, and finish with a brief plain text summary of what you changed.
@@ -42,23 +42,26 @@ Implement the spec so the scenario tests pass.
 - kind: feature
 - title: Web render finish: board and cover materials read in the page rendering, then deploy on approval
 - source: github-issue
-- description: FINAL LOOPBACK ROUND (gate loopback 2 of 2, ordered by the product owner on 2026-11-01 as part of the full stack settlement: finish the open orders, merge the branch stack to main, deploy production from main). Round 2 closed changes_requested on exactly one surviving item, and this round exists for that item alone.
+- description: REVIEW COMPLETION RE-RUN (ordered by the product owner on 2026-11-02 as part of finishing everything pending: termina lo pendiente). The implementation this order exists for is COMPLETE and FROZEN. This round changes nothing in the product: its only purpose is to produce the formal review set the previous round could not, because four of the five reviewer stations died at the executor on Cloudflare AI Gateway 402 errors before writing any review.
 
-Round 2 record, the baseline of this round: the builder packet fix worked and the builder implemented (commit 17b8e28: lighting, metal finishes, silicone grain and LED material handling updated; before and after browser evidence and reproducibility logs committed). Reviewer-design confirmed problem (1) CLOSED: the after board beats show silver face highlights, darker packages, gold contacts and metallic sensor rims distinctly against the substrate (R2/S4 met), and the fine cover grain is now visible in the assembled browser beat. All 16 scenario tests pass. The GLB measures 798,088 bytes against the 819,200 budget. The full suite retains the known design v4 S11 failure and one skip, itemized apart as before. Nothing deployed; production still serves version 4515d731.
+Record of the finished state, the baseline of this round: the final loopback round implemented the LED fix alone (client material and lighting handling in src/take-apart-client.js, and the LED material inside the deterministic Blender build), rebuilt the GLB deterministically at 798,072 bytes against the 819,200 budget with two byte identical exports and the reproducibility proof committed, and regenerated the bundled evidence with zero console and page errors. reviewer-design executed in that round and PASSED the order's success test on this exact tree: the after assembled and mid beats show a visible cyan-teal emitter separated from its darker recessed socket edge; the board finishes closed in the round before remain unregressed; the beauty cover grain is finer and consistent with the reference boards. That pass is on record in the previous run's evidence on this branch. reviewer-spec, reviewer-security, reviewer-tests and reviewer-architecture produced no review at all (executor 402, no review files), so the approver's count of 1 of 5 reviews is not a verdict of record and this order has never formally closed.
 
-The one surviving item (reviewer-design, R3/S5, quoted): evidence/web-render-finish/after/beat-assembled.png and beat-mid.png show the LED as a muted gray-green stripe, without a clearly readable teal emitter separated from its recessed socket shadow. Compared with design/reference/product-reference.png, the optical identity remains washed out. Adjust client material and lighting handling while preserving geometry, then regenerate the bundled evidence. One secondary note rides in the same review (R6): the regenerated beauty cover has substantially coarser grain than the fine silicone finish in design/reference/quality-board-2.png; reduce that coarseness while retaining browser readability. Full identity clearance was withheld only because the browser LED still fails the reference's teal-emitter read.
+Scope of this round, frozen everywhere:
+1. No station modifies any product, asset, evidence, spec or test file. Frozen paths include src/, blender/, the GLB asset, evidence/web-render-finish/, design/, .openspec/specs/web-render-finish/spec.md and tests/web-render-finish.test.js. The only files this round writes are its own run evidence under runs/wo-gh-14/.
+2. spec-writer: the operative spec is .openspec/specs/web-render-finish/spec.md exactly as it now reads on this branch. Do not rewrite, amend or tighten it. Your output confirms the committed spec as the text the reviewers judge against.
+3. test-writer: the 16 tests in tests/web-render-finish.test.js stand exactly as committed. Do not rewrite them. Your output confirms them as the round's test base; the workflow runs the project suite after the line as always.
+4. builder: the implementation is finished. Do not implement, rebuild, recapture or adjust anything. Verify the frozen state (the GLB at 798,072 bytes against the budget, the before and after evidence present and consistent, the bundled captures on record with zero console and page errors) and write that verification as your output. If you believe a product change is needed, record it as a finding in your output and do not implement it: a product change is a new order, not this round.
+5. The five reviewers: each reviews the finished tree against the committed spec and the committed evidence, and produces its review in the established output form, so this round's record is complete in itself. reviewer-design re-judges the same evidence it passed in the previous round (the tree has not changed since) and states its verdict on the LED, the board finishes and the cover grain again.
 
-Scope of this round, narrow and frozen everywhere else: make the LED read as a teal emitter in the page's own bundled rendering, seated in and visually separated from its recessed socket, and soften the beauty render cover grain toward the reference board's fine silicone finish without losing the grain's browser readability. Work the take apart client's material and lighting handling (src/take-apart-client.js: emissive handling, tone mapping, exposure, environment, on load material adjustments) and, only if needed, the LED material inside the deterministic Blender build (blender/build_patch_one.py through blender/build_all.py, headless Blender pinned 4.5.15). Geometry is preserved: the five named nodes, their stack order and translations, layer thicknesses and footprint, the wordmark and the LED position and proportions do not change. The board finishes closed in round 2 must not regress: reviewer-design re-checks the board beats and the cover grain in the regenerated bundled evidence. The before beats for this round are round 2's committed after beats under evidence/web-render-finish/after/; capture the new after beats the same way, from the bundled production shape.
+Routing fact for the builder station, established by the operator and not open to re-verification (this declaration is what unblocked the earlier rounds; it stands): your session is launched and verified by the operator's wrapper (tools/astra_station.py, Codex) on gpt-6-astra through the Cloudflare AI Gateway, and the workflow runs the Astra smoke gate before the line inside the same job. If that gate fails, the job stops before you are ever started, so a builder session that is running is already on the verified route. Your session exposes no control to select or verify the route because selection and verification are the wrapper's job, not the station's. Do not record a blocker about the model route and do not spend the session checking it. The no fallback rule in this work order means one thing only: never silently switch to another model. It is a prohibition on switching, not a condition you must satisfy before working.
 
-Routing fact for the builder station, established by the operator and not open to re-verification (this declaration is what unblocked round 2; it stands): your session is launched and verified by the operator's wrapper (tools/astra_station.py, Codex) on gpt-6-astra through the Cloudflare AI Gateway, and the workflow runs the Astra smoke gate before the line inside the same job. If that gate fails, the job stops before you are ever started, so a builder session that is running is already on the verified route. Your session exposes no control to select or verify the route because selection and verification are the wrapper's job, not the station's. Do not record a blocker about the model route and do not spend the session checking it: your task is to implement the spec. The no fallback rule in this work order means one thing only: never silently switch to another model. It is a prohibition on switching, not a condition you must satisfy before working, and not an invitation to doubt the route you are already on.
+Model routing for this run: builder and reviewer-design on GPT-6 Astra (gpt-6-astra) through the Cloudflare AI Gateway; spec writer, test writer and the other reviewer stations on claude-sonnet-5-5 through the same gateway. The brain's verified learnings L-1 to L-7 are part of the run's packets.
 
-Everything else stands unchanged: the spec at .openspec/specs/web-render-finish/spec.md exactly as it now reads, the 16 tests in tests/web-render-finish.test.js, the scope of scenario S10, and the evidence duties of R7 and R8. The design v4 S11 item remains a pre-existing sibling matter: itemized apart, never absorbed, never fixed by editing evidence.
+The design v4 S11 suite item remains a pre-existing sibling matter: itemized apart, never absorbed, never fixed by editing evidence.
 
-Model routing for this run: builder and reviewer-design on GPT-6 Astra (gpt-6-astra) through the Cloudflare AI Gateway; spec writer, test writer and the other reviewer stations on claude-sonnet-5-5 through the same gateway. No fallback to another model for the builder. The brain's verified learnings L-1 to L-7 are part of the run's packets.
+Deployment: none inside the run; the deployer station stays a packet. On the owner's settlement order of 2026-11-02 (termina lo pendiente), an approved verdict of record in this round sends this branch into the merge stack: the operator merges it into main, completes the remaining settlement steps, deploys production from merged main (Git Database pull, blob hashes recomputed, no local patches), verifies from the public URL including a real browser screenshot of the live /take-apart showing the GLB product with the LED reading teal, and commits the owner acceptance record on main citing the approval and the deploy. If this round does not produce an approved verdict of record, the order stops and is reported as it stands; nothing of it merges or deploys.
 
-Deployment: none inside the run; the deployer station stays a packet. On the owner's settlement order of 2026-11-01, an approved verdict in this round sends this branch into the merge stack, and the operator deploys production from merged main (Git Database pull, blob hashes recomputed, no local patches), verifies from the public URL including a real browser screenshot of the live /take-apart showing the GLB product with the LED reading teal, and commits the owner acceptance record on main citing the approval and the deploy. If the verdict is not approved, this order stops and is reported; nothing of it merges or deploys.
-
-Done criteria: verdict approved with all five expected reviews counted and no parse failures; reviewer-design passing with the LED confirmed as a clearly readable teal emitter in the bundled page beats, the board finishes still closed, the cover grain readable in the browser and finer in the beauty render, and identity intact; GLB at or under 819,200 bytes with the size stated; reproducibility re-proven if the asset changed; production shape recorded clean; before and after evidence committed; suite green apart from the itemized S11 failure; run diff inside the spec's scope.
+Done criteria: verdict approved with all five expected reviews counted and no parse failures; reviewer-design passing with the LED confirmed as a clearly readable teal emitter in the bundled page beats, the board finishes still closed, the cover grain readable and finer, identity intact; the run diff confined to runs/wo-gh-14/; the suite state after the line recorded with the S11 item itemized apart.
 
 GitHub issue: https://github.com/arananet/sentia/issues/14
 
@@ -83,14 +86,101 @@ GitHub issue: https://github.com/arananet/sentia/issues/14
 
 ## Project design
 codex
-I’ll read the spec and scenario tests, then adjust the LED and cover materials and regenerate the required evidence.
-
+I’ll verify the frozen asset and evidence, then write the builder verification under runs/wo-gh-14/ without changing product files.
 exec
-/bin/bash -lc "pwd; rg --files -g 'AGENTS.md' -g '*web-render*' -g '*evidence*' -g 'package.json'; cat .openspec/specs/web-render-finish/spec.md; cat tests/web-render-finish.test.js" in /home/runner/work/sentia/sentia
+/bin/bash -lc "pwd; rg --files -g 'AGENTS.md' -g '*wo-gh-14*' -g '*web-render-finish*' -g 'package.json' -g '*builder*' -g '*manifest*' -g '*repro*'" in /home/runner/work/sentia/sentia
  succeeded in 0ms:
 /home/runner/work/sentia/sentia
 tests/web-render-finish.test.js
+evidence/take-apart-product-model/reproducibility.log
+evidence/take-apart-product-model/builder-notes.md
 package.json
+evidence/web-render-finish/reproducibility.log
+evidence/web-render-finish/builder-notes.md
+runs/wo-sentia-001/envelopes/builder.envelope.json
+runs/wo-sentia-001/builder.packet.md
+runs/wo-gh-14/envelopes/builder.envelope.json
+runs/wo-gh-14/builder.packet.md
+runs/wo-gh-14/builder.output.md.codex.txt
+runs/wo-gh-6/envelopes/builder.envelope.json
+runs/wo-gh-6/builder.output.md
+runs/wo-gh-6/builder.packet.md
+runs/wo-gh-6/builder.output.md.codex.txt
+runs/wo-gh-1/envelopes/builder.envelope.json
+runs/wo-gh-1/builder.output.md
+runs/wo-gh-1/builder.packet.md
+runs/wo-gh-1/builder.output.md.codex.txt
+runs/wo-gh-11/envelopes/builder.envelope.json
+runs/wo-gh-7/envelopes/builder.envelope.json
+runs/wo-gh-11/builder.output.md
+runs/wo-gh-7/builder.output.md
+runs/wo-gh-11/builder.packet.md
+runs/wo-gh-7/builder.packet.md
+runs/wo-gh-11/builder.output.md.codex.txt
+runs/wo-gh-7/builder.output.md.codex.txt
+runs/wo-gh-2/envelopes/builder.envelope.json
+runs/wo-gh-2/builder.output.md
+runs/wo-gh-2/builder.packet.md
+runs/wo-gh-2/builder.output.md.codex.txt
+runs/wo-gh-12/builder.packet.md
+runs/wo-gh-12/builder.output.md.codex.txt
+runs/wo-gh-9/envelopes/builder.envelope.json
+runs/wo-gh-9/builder.output.md
+runs/wo-gh-9/builder.packet.md
+runs/wo-gh-9/builder-take-apart-test.log
+runs/wo-gh-9/builder.output.md.codex.txt
+runs/wo-gh-9/builder-noscript.log
+runs/wo-gh-9/builder-suite.log
+runs/wo-gh-4/envelopes/builder.envelope.json
+runs/wo-gh-4/builder.output.md
+runs/wo-gh-4/builder.packet.md
+runs/wo-gh-4/builder.output.md.codex.txt
+runs/wo-gh-12/envelopes/builder.envelope.json
+runs/wo-gh-12/builder.output.md
+runs/wo-gh-8/envelopes/builder.envelope.json
+runs/wo-gh-8/builder.output.md
+runs/wo-gh-8/builder.packet.md
+runs/wo-gh-8/builder.output.md.codex.txt
+runs/wo-gh-3/builder.output.md.codex.txt
+runs/wo-gh-5/builder.packet.md
+runs/wo-gh-5/builder.output.md.codex.txt
+runs/wo-gh-5/builder.output.md
+runs/wo-gh-5/envelopes/builder.envelope.json
+runs/wo-gh-3/envelopes/builder.envelope.json
+runs/wo-gh-3/builder.output.md
+runs/wo-gh-3/builder.packet.md
+
+exec
+/bin/bash -lc 'git status --short; ls runs/wo-gh-14; cat .openspec/specs/web-render-finish/spec.md; cat tests/web-render-finish.test.js' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+ D runs/wo-gh-14/builder.output.md
+ M runs/wo-gh-14/builder.packet.md
+ M runs/wo-gh-14/envelopes/intake.envelope.json
+ M runs/wo-gh-14/envelopes/spec-writer.envelope.json
+ M runs/wo-gh-14/envelopes/test-writer.envelope.json
+ M runs/wo-gh-14/spec-writer.output.md
+ M runs/wo-gh-14/spec-writer.packet.md
+ M runs/wo-gh-14/test-writer.output.md
+ M runs/wo-gh-14/test-writer.packet.md
+builder.output.md.codex.txt
+builder.packet.md
+deployer.packet.md
+envelopes
+observer.packet.md
+report.json
+reviewer-architecture.packet.md
+reviewer-design.output.md
+reviewer-design.output.md.codex.txt
+reviewer-design.packet.md
+reviewer-security.packet.md
+reviewer-spec.packet.md
+reviewer-tests.packet.md
+spec-writer.output.md
+spec-writer.packet.md
+suite-final.log
+swimlane.md
+test-writer.output.md
+test-writer.packet.md
 # Sentia: Web Render Finish
 
 Status: active for wo-gh-14
@@ -518,1007 +608,62 @@ test('web-render-finish S10: the run diff against the setup commit names only th
 });
 
 exec
-/bin/bash -lc "git status --short; cat package.json; cat blender/build_all.py; rg -n 'grain|noise|Noise|LED|emiss|Bump|rough' blender/build_patch_one.py; cat src/take-apart-client.js; cat scripts/capture-take-apart.mjs" in /home/runner/work/sentia/sentia
+/bin/bash -lc 'find .. -name AGENTS.md -print; cat runs/wo-gh-14/envelopes/builder.envelope.json; cat runs/wo-gh-14/spec-writer.output.md runs/wo-gh-14/test-writer.output.md; cat evidence/web-render-finish/reproducibility.log evidence/web-render-finish/bundle-build.log evidence/web-render-finish/before/browser-pass.log evidence/web-render-finish/after/browser-pass.log evidence/take-apart/browser-pass.log; cat package.json' in /home/runner/work/sentia/sentia
  succeeded in 0ms:
- D runs/wo-gh-14/builder.output.md
- M runs/wo-gh-14/builder.packet.md
- M runs/wo-gh-14/envelopes/intake.envelope.json
- M runs/wo-gh-14/envelopes/spec-writer.envelope.json
- M runs/wo-gh-14/envelopes/test-writer.envelope.json
- M runs/wo-gh-14/spec-writer.output.md
- M runs/wo-gh-14/spec-writer.packet.md
- M runs/wo-gh-14/test-writer.output.md
- M runs/wo-gh-14/test-writer.packet.md
 {
-  "name": "sentia",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "test": "node --test tests/*.test.js"
-  }
-}
-"""Deterministic entry: blender --background --python blender/build_all.py."""
-import sys
-sys.dont_write_bytecode = True
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-from build_patch_one import build
-build()
-19:def material(name, rgb, roughness=.7, metallic=0, alpha=1):
-24:    p.inputs['Roughness'].default_value = roughness
-141:    # Generated silicone grain: seeded normal tile, no silhouette displacement.
-151:    img=bpy.data.images.new('Generated silicone micrograin normals',width=size,height=size)
-176:    teal=material('Teal cyan LED',(.015,.65,.59),.3)
-196:    # Planar crown UVs keep the silicone grain isotropic across every ring.
-206:    mod=cover.modifiers.new('Recessed LED pocket','BOOLEAN');mod.operation='DIFFERENCE';mod.object=cutter
-208:    box('LED recessed socket',parents[0],ink,(0,-3.2,.155),(10,.82,.03),.012)
-209:    box('Teal LED line',parents[0],teal,(0,-3.2,.20),(9.6,.55,.018),.008)
-// Literal browser source: Worker bundlers must treat this as data, not executable code.
-export const TAKE_APART_CLIENT_JS = `(async function takeApartApp() {
-const THREE = await import('/vendor/three.module.min.js');
-const M = globalThis.TakeApartModel;
-const $ = s => document.querySelector(s);
-const root = $('#take-apart'), canvas = $('#scene'), overlay = $('#callouts');
-const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const fast = new URLSearchParams(location.search).get('tour') === 'fast';
-const IDLE_SECONDS = fast ? 1.5 : 20, BEAT_SECONDS = fast ? .9 : 2.4;
-const Z_SCALE = 8;
-const quality = M.qualityFor({ devicePixelRatio, hardwareConcurrency: navigator.hardwareConcurrency, coarsePointer: matchMedia('(pointer: coarse)').matches });
-const state = { t: 0, h: 0, focus: null, xray: false };
-let renderer, scene, camera, meshes = [], lastPanel = -Infinity, lastChartHour = -Infinity;
-let lastInteraction = performance.now(), tourStart = null, tourBeat = -1, drag = null;
-let azimuth = Math.atan2(52,62), elevation = Math.atan2(32, Math.hypot(52,62)), zoom = 1;
-let targetAzimuth = azimuth, targetElevation = elevation, targetZoom = zoom;
-const cursor = $('#tour-cursor');
-const presets = { Hero: [52,42,62], Top: [0,95,1], Side: [95,18,0] };
-let radius = Math.hypot(52,32,62);
-function stopTour() {
-  lastInteraction = performance.now(); tourStart = null; tourBeat = -1;
-  root.dataset.tourBeat = 'off'; cursor.hidden = true;
-  $('#tour-status').textContent = reducedMotion ? 'Explore freely · Reduced motion' : 'Explore freely · Tour begins when idle';
-}
-for (const event of ['pointerdown','wheel','keydown','touchstart']) window.addEventListener(event, stopTour, { passive: true });
-$('#separation').addEventListener('input', e => { state.t = +e.target.value; stopTour(); });
-$('#wear').addEventListener('input', e => { state.h = +e.target.value; stopTour(); });
-for (const button of document.querySelectorAll('[data-layer]')) button.addEventListener('click', () => {
-  const index = +button.dataset.layer;
-  state.focus = state.focus === index ? null : index;
-  if (state.focus != null) state.t = Math.max(.55, state.t);
-});
-$('#xray').addEventListener('click', () => { state.xray = !state.xray; });
-function setCamera(name) {
-  const [x,y,z] = presets[name];
-  targetAzimuth = Math.atan2(x,z); targetElevation = Math.atan2(y-10,Math.hypot(x,z));
-  radius = Math.hypot(x,y-10,z); targetZoom = 1;
-  for (const b of document.querySelectorAll('[data-camera]')) b.setAttribute('aria-pressed', String(b.dataset.camera === name));
-}
-for (const b of document.querySelectorAll('[data-camera]')) b.addEventListener('click', () => setCamera(b.dataset.camera));
-canvas.addEventListener('pointerdown', e => { drag = { x:e.clientX,y:e.clientY }; canvas.setPointerCapture(e.pointerId); });
-canvas.addEventListener('pointermove', e => {
-  if (!drag) return;
-  targetAzimuth -= (e.clientX-drag.x)*.008;
-  targetElevation = Math.max(.08,Math.min(Math.PI/2-.01,targetElevation+(e.clientY-drag.y)*.006));
-  drag = { x:e.clientX,y:e.clientY };
-});
-for (const event of ['pointerup','pointercancel','lostpointercapture']) canvas.addEventListener(event, () => { drag = null; });
-canvas.addEventListener('wheel', e => { e.preventDefault(); targetZoom = Math.max(.65, Math.min(1.65,targetZoom*Math.exp(-e.deltaY*.001))); }, { passive:false });
-function roundedGeometry(thickness) {
-  const s = new THREE.Shape(), r = M.CORNER_RADIUS_MM, a = M.FOOTPRINT_MM/2;
-  s.moveTo(-a+r,-a); s.lineTo(a-r,-a); s.quadraticCurveTo(a,-a,a,-a+r);
-  s.lineTo(a,a-r); s.quadraticCurveTo(a,a,a-r,a); s.lineTo(-a+r,a);
-  s.quadraticCurveTo(-a,a,-a,a-r); s.lineTo(-a,-a+r); s.quadraticCurveTo(-a,-a,-a+r,-a);
-  const bevel = .12;
-  const g = new THREE.ExtrudeGeometry(s, { depth:thickness-2*bevel, bevelEnabled:true, bevelSegments:3, steps:1, bevelSize:bevel, bevelThickness:bevel, curveSegments:16 });
-  g.translate(0,0,-(thickness-2*bevel)/2); g.rotateX(-Math.PI/2);
-  return g;
-}
-function box(parent, size, position, color, roughness=.65) {
-  const mesh = new THREE.Mesh(new THREE.BoxGeometry(...size), new THREE.MeshStandardMaterial({ color,roughness }));
-  mesh.position.set(...position); mesh.castShadow = true; parent.add(mesh); return mesh;
-}
-function buildProceduralFallback() {
-  const colors = [0xeeeae0,0xd1cfc3,0x12211c,0xe2e8d9,0xf0eee7];
-  meshes = M.LAYERS.map((layer,i) => {
-    const mesh = new THREE.Mesh(roundedGeometry(layer.thicknessMm*Z_SCALE),new THREE.MeshStandardMaterial({ color:colors[i], roughness:i===2?.58:.82, transparent:true }));
-    mesh.castShadow=true; mesh.receiveShadow=true; return mesh;
-  });
-  box(meshes[0],[12,.06,.38],[0,M.LAYERS[0].thicknessMm*Z_SCALE/2+.04,8],0x0e7c66);
-  const boardTop = M.LAYERS[2].thicknessMm*Z_SCALE/2+.04;
-  // Printed traces and flush components stay inside the study layer envelope.
-  for (let i=0;i<6;i++) {
-    box(meshes[2],[.15,.04,15],[i*2.3-6,boardTop,-1],0x389887);
-    box(meshes[2],[10,.04,.15],[1,boardTop,i*2.1-5],0x389887);
-  }
-  box(meshes[2],[7,.08,7],[0,boardTop,0],0x0e2722);
-  box(meshes[2],[5,.08,8],[-10,boardTop,3],0xa4b2a1);
-  for(let i=0;i<4;i++) box(meshes[2],[2,.06,1.2],[7,boardTop,i*3-4],0x8fa68d);
-}
-async function initScene() {
-  renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
-  renderer.setPixelRatio(quality.pixelRatioCap); renderer.setClearColor(0xfafaf6);
-  renderer.shadowMap.enabled = quality.shadowMapSize > 0; renderer.shadowMap.type = THREE.VSMShadowMap;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = .95;
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-  scene = new THREE.Scene(); camera = new THREE.OrthographicCamera(-50,50,80,-40,.1,1000);
-  // A dark studio with broad luminous cards gives metals something to reflect.
-  const studio = new THREE.Scene(); studio.background = new THREE.Color(0x252b30);
-  for (const [position, size, intensity] of [
-    [[-30,45,15],[35,65],5], [[40,20,-25],[16,55],3], [[0,35,-45],[60,12],2]
-  ]) {
-    const card = new THREE.Mesh(new THREE.PlaneGeometry(...size),
-      new THREE.MeshBasicMaterial({ color:new THREE.Color(intensity,intensity,intensity), side:THREE.DoubleSide }));
-    card.position.set(...position); card.lookAt(0,0,0); studio.add(card);
-  }
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  scene.environment = pmrem.fromScene(studio,.04).texture;
-  pmrem.dispose(); studio.traverse(object => { if(object.isMesh){object.geometry.dispose();object.material.dispose();} });
-  scene.add(new THREE.AmbientLight(0xffffff,.25));
-  const rim = new THREE.DirectionalLight(0xdceaff,.7); rim.position.set(45,25,-55); scene.add(rim);
-  const key = new THREE.DirectionalLight(0xfff5eb,3.2); key.position.set(-65,65,35); key.castShadow = quality.shadowMapSize > 0;
-  key.shadow.mapSize.set(quality.shadowMapSize, quality.shadowMapSize);
-  Object.assign(key.shadow.camera, { left:-100,right:100,top:170,bottom:-100,near:.1,far:400 });
-  key.shadow.bias = -.0003; key.shadow.normalBias = .15; key.shadow.radius = 5; key.shadow.blurSamples = 8; scene.add(key);
-  const ground = new THREE.Mesh(new THREE.PlaneGeometry(1000,1000),new THREE.ShadowMaterial({ opacity:.12 }));
-  ground.rotation.x = -Math.PI/2; ground.position.y=-.15; ground.receiveShadow=true; scene.add(ground);
-  try {
-    const { GLTFLoader } = await import('GLTFLoader');
-    const gltf = await new GLTFLoader().loadAsync('/models/patch-one.glb');
-    if (gltf.scene.children.length !== M.NODE_NAMES.length) throw new Error('Invalid layer count');
-    meshes = M.NODE_NAMES.map(name => {
-      const node = gltf.scene.children.find(child => (child.userData.name || child.name) === name);
-      if (!node) throw new Error('Missing layer: '+name);
-      node.name = name;
-      node.scale.y = Z_SCALE;
-      return node;
-    });
-    root.dataset.modelNodes = JSON.stringify(meshes.map(node => node.name));
-    root.dataset.modelSource = 'glb';
-  } catch (error) {
-    // Asset/network/parser failure keeps the original study usable.
-    buildProceduralFallback();
-    root.dataset.modelSource = 'procedural';
-  }
-  meshes.forEach(node => {
-    node.traverse(object => {
-      if (!object.material) return;
-      const materials = Array.isArray(object.material) ? object.material : [object.material];
-      // A layer owns its material state even when glTF shares a material.
-      const owned = materials.map(material => {
-        const copy = material.clone();
-        copy.envMapIntensity = copy.metalness > .5 ? 1.25 : .35;
-        // The translucent lens must retain its tint over the emitting surface.
-        if (copy.name === 'Optical silicone window') {
-          copy.envMapIntensity = .2; copy.roughness = .22; copy.opacity = .85;
-          // Carry the emitter through the lens at the study's exaggerated vertical scale.
-          copy.color.setRGB(.015,.65,.59); copy.emissive.setRGB(.01,.65,.59); copy.emissiveIntensity = .8;
-        }
-        if (copy.name === 'Matte off white silicone') {
-          // Vertical exaggeration also stretches side normals; keep grain on the crown.
-          copy.onBeforeCompile = shader => {
-            shader.vertexShader = 'varying float grainCrown;\\n' + shader.vertexShader;
-            shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\\ngrainCrown = smoothstep(.98, .999, abs(normal.y));');
-            shader.fragmentShader = 'varying float grainCrown;\\n' + shader.fragmentShader;
-            shader.fragmentShader = shader.fragmentShader.replace('#include <normal_fragment_maps>', THREE.ShaderChunk.normal_fragment_maps.replace('normalScale;', 'normalScale * mix(.005, .65, grainCrown);'));
-          };
-        }
-        copy.userData.baseOpacity = copy.opacity; return copy;
-      });
-      object.material = Array.isArray(object.material) ? owned : owned[0];
-      object.castShadow = true; object.receiveShadow = true;
-    });
-    scene.add(node);
-  });
-  const ns='http://www.w3.org/2000/svg';
-  M.LAYERS.forEach((layer,i) => {
-    const group=document.createElementNS(ns,'g'); group.dataset.layer=i;
-    const path=document.createElementNS(ns,'path'); path.setAttribute('fill','none'); path.setAttribute('stroke-width','1'); group.append(path);
-    const dot=document.createElementNS(ns,'circle'); dot.setAttribute('r','2.5'); group.append(dot);
-    const label=document.createElementNS(ns,'text'); label.setAttribute('font-size','11');
-    const words = i===2 ? ['Sensing and','processing board'] : [layer.name];
-    words.forEach((word,j)=> {const line=document.createElementNS(ns,'tspan');line.textContent=word;line.setAttribute('dy',j?'15':'0');label.append(line);});
-    group.append(label); overlay.append(group);
-  });
-  await renderer.compileAsync(scene,camera); updateScene(true);
-}
-function updateScene(instant=false) {
-  if (!renderer) return;
-  const {width:w,height:h}=canvas.getBoundingClientRect();
-  if (canvas.width!==Math.round(w*quality.pixelRatioCap)||canvas.height!==Math.round(h*quality.pixelRatioCap)) renderer.setSize(w,h,false);
-  const blend = reducedMotion||instant ? 1 : .12;
-  azimuth+=(targetAzimuth-azimuth)*blend; elevation+=(targetElevation-elevation)*blend; zoom+=(targetZoom-zoom)*blend;
-  camera.position.set(radius*Math.cos(elevation)*Math.sin(azimuth),10+radius*Math.sin(elevation),radius*Math.cos(elevation)*Math.cos(azimuth));
-  camera.lookAt(0,10,0); camera.updateMatrixWorld();
-  const model=M.sceneState(state.t,state.h,state.focus,state.xray);
-  const bounds = new THREE.Box3();
-  meshes.forEach((mesh,i)=> {
-    const layer=model.layers[i]; mesh.position.set(layer.asideMm,(layer.centerMm+layer.liftMm)*Z_SCALE,0);
-    mesh.traverse(object=> { if(object.material){
-      const materials=Array.isArray(object.material)?object.material:[object.material];
-      for(const material of materials){
-        const opacity=material.userData.baseOpacity*layer.opacity, transparent=opacity<1;
-        if(material.transparent!==transparent){material.transparent=transparent;material.needsUpdate=true;}
-        material.opacity=opacity;material.depthWrite=!transparent;
-      }
-      object.castShadow=materials.every(material=>material.opacity===1);
-    } });
-    // The projection frames the same model bounds, with a stable margin for labels.
-    for(const x of [-18,18]) for(const z of [-18,18]) for(const dy of [-layer.thicknessMm*4,layer.thicknessMm*4]) {
-      bounds.expandByPoint(new THREE.Vector3(mesh.position.x+x,mesh.position.y+dy,z).applyMatrix4(camera.matrixWorldInverse));
-    }
-  });
-  const center=bounds.getCenter(new THREE.Vector3()), size=bounds.getSize(new THREE.Vector3());
-  const aspect=w/h, usableWidth=w<720?.78:.49;
-  const viewHeight=Math.max(size.y/.66,size.x/(aspect*usableWidth))/zoom;
-  camera.left=center.x-viewHeight*aspect/2;camera.right=center.x+viewHeight*aspect/2;
-  camera.top=center.y+viewHeight/2;camera.bottom=center.y-viewHeight/2;camera.updateProjectionMatrix();
-  const labels=[];
-  meshes.forEach((mesh,i)=> {
-    const left=i%2===0, point=new THREE.Vector3(left?0:18,0,left?18:0).add(mesh.position).project(camera);
-    labels.push({i,left,x:(point.x+1)*w/2,y:(1-point.y)*h/2});
-  });
-  for(const left of [true,false]) {
-    let previous=36;
-    const side=labels.filter(l=>l.left===left).sort((a,b)=>a.y-b.y);
-    side.forEach((l,j)=>{l.labelY=Math.max(previous,Math.min(h-60-(side.length-j-1)*52,l.y));previous=l.labelY+52;});
-  }
-  labels.forEach(l=> {
-    const g=overlay.children[l.i], x=l.left?8:w-8, elbow=l.left?150:w-150;
-    const color=state.focus===l.i?'#0E7C66':'#53685C';
-    g.setAttribute('fill',color);g.querySelector('path').setAttribute('stroke',color);
-    g.querySelector('path').setAttribute('d',\`M \${l.x} \${l.y} L \${elbow} \${l.labelY} L \${l.left?x+3:x-3} \${l.labelY}\`);
-    const circle=g.querySelector('circle');circle.setAttribute('cx',l.x);circle.setAttribute('cy',l.y);
-    const text=g.querySelector('text');text.setAttribute('text-anchor',l.left?'start':'end');text.setAttribute('y',l.labelY-9-(l.i===2?15:0));
-    text.querySelectorAll('tspan').forEach(t=>t.setAttribute('x',x));
-  });
-  renderer.render(scene,camera);
-}
-function drawChart() {
-  const chart=$('#chart'), rect=chart.getBoundingClientRect(), dpr=quality.pixelRatioCap;
-  chart.width=Math.round(rect.width*dpr);chart.height=Math.round(rect.height*dpr);
-  const ctx=chart.getContext('2d');ctx.scale(dpr,dpr);
-  const w=rect.width,h=rect.height, series=M.tempSeries(), low=Math.min(...series)-.1,high=Math.max(...series)+.1;
-  const px=i=>4+(w-8)*i/56, py=v=>h-8-(v-low)/(high-low)*(h-16);
-  ctx.strokeStyle='#DFE7DF';ctx.lineWidth=1;
-  for(const y of [12,h/2,h-12]){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
-  ctx.beginPath();series.forEach((v,i)=>i?ctx.lineTo(px(i),py(v)):ctx.moveTo(px(i),py(v)));
-  ctx.strokeStyle='#0E7C66';ctx.lineWidth=1.5;ctx.stroke();
-  const idx=state.h/6, base=Math.floor(idx), next=Math.min(56,base+1);
-  const value=series[base]+(series[next]-series[base])*(idx-base),x=px(idx),y=py(value);
-  ctx.strokeStyle='#12211C';ctx.beginPath();ctx.moveTo(x,4);ctx.lineTo(x,h-4);ctx.stroke();
-  ctx.fillStyle='#0E7C66';ctx.beginPath();ctx.arc(x,y,3.5,0,Math.PI*2);ctx.fill();
-  lastChartHour=state.h;
-}
-function updatePanel(now) {
-  if(now-lastPanel<1000/quality.panelUpdateHz)return;
-  lastPanel=now; const gauges=M.gaugeReadout(state.h);
-  for(const [key,value] of Object.entries(gauges)) $('[data-gauge="'+key+'"]').textContent=value;
-  $('#wear-day').textContent=gauges.day;
-  $('#separation').value=state.t;$('#wear').value=state.h;
-  document.querySelectorAll('[data-layer]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.layer===state.focus)));
-  $('#xray').setAttribute('aria-pressed',String(state.xray));
-  if(Math.abs(state.h-lastChartHour)>=.25)drawChart();
-}
-const beats = [
-  ['assembled','Assemble','#separation',()=>{Object.assign(state,{t:0,h:0,focus:null,xray:false});setCamera('Hero');}],
-  ['apart','Explode','#separation',()=>{state.t=1;}],
-  ['board','Isolate the board','[data-layer="2"]',()=>{state.focus=2;}],
-  ['xray','X ray','#xray',()=>{state.xray=true;}],
-  ['settle','Settle','#wear',()=>{Object.assign(state,{t:.35,h:156,focus:null,xray:false});}],
-];
-function tour(now) {
-  if(reducedMotion || now-lastInteraction<IDLE_SECONDS*1000)return;
-  if(tourStart===null)tourStart=now;
-  const index=Math.floor((now-tourStart)/(BEAT_SECONDS*1000))%beats.length;
-  const phase=(now-tourStart)%(BEAT_SECONDS*1000);
-  if(index!==tourBeat){
-    tourBeat=index;const beat=beats[index];
-    const rect=$(beat[2]).getBoundingClientRect();cursor.hidden=false;cursor.style.left=rect.left+rect.width/2+'px';cursor.style.top=rect.top+rect.height/2+'px';
-    root.dataset.tourBeat='off';
-  }
-  cursor.classList.toggle('pressing',phase>=200&&phase<400);
-  if(phase>=220 && root.dataset.tourBeat!==beats[index][0]) {
-    beats[index][3]();root.dataset.tourBeat=beats[index][0];$('#tour-status').textContent='Guided tour · '+beats[index][1];
-  }
-}
-try { await initScene(); root.dataset.sceneReady = 'true'; } catch (error) {
-  if(renderer)renderer.dispose();renderer=null;canvas.hidden=true;overlay.hidden=true;$('#fallback').textContent='3D is unavailable on this device. Explore the layers and simulated readings with the controls below.';$('#fallback').hidden=false;
-  // WebGL capability failure leaves the model and accessible controls operational.
-}
-window.addEventListener('resize',()=> {lastChartHour=-Infinity;});
-function frame(now){tour(now);updateScene();updatePanel(now);requestAnimationFrame(frame);}
-requestAnimationFrame(frame);
-
-})();`;
-// Evidence of record: production shape capture of the Wrangler bundled Worker.
-// Runner tooling (not site dependencies): PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs
-// WRANGLER_BIN=/tmp/sentia-browser/node_modules/.bin/wrangler node scripts/capture-take-apart.mjs
-import { mkdir, writeFile, mkdtemp, rm } from 'node:fs/promises';
-import { spawn, spawnSync } from 'node:child_process';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
-import assert from 'node:assert/strict';
-import { pathToFileURL } from 'node:url';
-import { gaugeReadout, NODE_NAMES } from '../src/take-apart-model.js';
-const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ? pathToFileURL(process.env.PLAYWRIGHT_MODULE).href : 'playwright');
-const captureDir = process.env.CAPTURE_DIR;
-const out = new URL(captureDir ? '../' + captureDir.replace(/\/?$/, '/') : '../evidence/take-apart-product-model/', import.meta.url);
-await mkdir(out, { recursive: true });
-const beatsOut = captureDir ? out : new URL('../evidence/take-apart/', import.meta.url);
-await mkdir(beatsOut, { recursive: true });
-const buildDir = await mkdtemp(join(tmpdir(), 'sentia-bundle-'));
-const wrangler = process.env.WRANGLER_BIN || 'wrangler';
-const buildArgs = ['deploy', '--dry-run', '--outdir', buildDir];
-const build = spawnSync(wrangler, buildArgs, { encoding: 'utf8' });
-await writeFile(new URL('bundle-build.log', out), `${wrangler} ${buildArgs.join(' ')}
-${build.stdout || ''}${build.stderr || ''}
-exit status: ${build.status}
-No local patches applied.
-`);
-assert.equal(build.status, 0, build.error?.message || build.stderr);
-const port = Number(process.env.CAPTURE_PORT || 8791);
-const origin = `http://127.0.0.1:${port}`;
-const runtimeArgs = ['dev', join(buildDir, 'index.js'), '--no-bundle', '--local', '--ip', '127.0.0.1', '--port', String(port)];
-const runtime = spawn(wrangler, runtimeArgs, { stdio: ['ignore', 'pipe', 'pipe'] });
-let runtimeLog = '';
-runtime.stdout.on('data', chunk => { runtimeLog += chunk; });
-runtime.stderr.on('data', chunk => { runtimeLog += chunk; });
-let browser;
-const errors=[], pageErrors=[];
-let gaugePassed=false, sceneInfo, vendorStatus, vendorBytes, assetStatus, assetBytes, nodeNames, assetFailureChecks=false;
-try {
-  let ready = false;
-  for (let tries = 0; tries < 120; tries++) {
-    assert.equal(runtime.exitCode, null, runtimeLog);
-    try { ready = (await fetch(origin + '/take-apart')).ok; } catch {}
-    if (ready) break;
-    await new Promise(resolve => setTimeout(resolve, 500));
-  }
-  assert.ok(ready, 'Local bundled Worker did not start: ' + runtimeLog);
-browser = await chromium.launch({ executablePath: process.env.CHROME_BIN || '/usr/bin/google-chrome', headless:true,
-  args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'] });
-
-  const page=await browser.newPage({ viewport:{width:1440,height:1050}, deviceScaleFactor:1 });
-  const cdp=await page.context().newCDPSession(page);
-  page.on('console',msg=>{if(msg.type()==='error')errors.push(msg.text());});
-  page.on('pageerror',error=>pageErrors.push(String(error)));
-  const vendorResponse = page.waitForResponse(response => response.url() === origin + '/vendor/three.module.min.js');
-  const assetResponse = page.waitForResponse(response => response.url() === origin + '/models/patch-one.glb');
-  console.log('Loading study');
-  await page.goto(`${origin}/take-apart?tour=fast`);
-  await page.waitForFunction(()=>document.querySelector('#take-apart').dataset.sceneReady==='true');
-  await page.evaluate(()=>document.fonts.ready);
-  const asset = await assetResponse;
-  assetStatus = asset.status(); assetBytes = (await asset.body()).byteLength;
-  assert.equal(assetStatus, 200); assert.ok(assetBytes <= 800 * 1024);
-  nodeNames = await page.evaluate(() => JSON.parse(document.querySelector('#take-apart').dataset.modelNodes));
-  assert.deepEqual(nodeNames, NODE_NAMES);
-  assert.equal(await page.locator('#take-apart').getAttribute('data-model-source'), 'glb');
-  const vendor = await vendorResponse;
-  vendorStatus = vendor.status(); vendorBytes = (await vendor.body()).byteLength;
-  assert.equal(vendorStatus, 200); assert.equal(vendorBytes, 670681);
-  sceneInfo = await page.evaluate(() => {
-    const canvas = document.querySelector('#scene'), rect = canvas.getBoundingClientRect();
-    return { model: typeof globalThis.TakeApartModel, ready: document.querySelector('#take-apart').dataset.sceneReady,
-      width: canvas.width, height: canvas.height, layoutWidth: rect.width, layoutHeight: rect.height, dpr: devicePixelRatio };
-  });
-  assert.equal(sceneInfo.model, 'object'); assert.equal(sceneInfo.ready, 'true');
-  assert.equal(sceneInfo.width, Math.floor(sceneInfo.layoutWidth * sceneInfo.dpr));
-  assert.equal(sceneInfo.height, Math.floor(sceneInfo.layoutHeight * sceneInfo.dpr));
-  console.log('Study loaded');
-  assert.equal(await page.locator('#fallback').isVisible(),false,'WebGL scene must render for evidence');
-  const area=await page.locator('#scene').boundingBox();
-  await page.mouse.move(area.x+area.width/2,area.y+area.height/2);
-  await page.mouse.down();await page.mouse.move(area.x+area.width/2+75,area.y+area.height/2+25,{steps:8});await page.mouse.up();
-  await page.mouse.wheel(0,100);
-  await page.locator('#wear').evaluate(input=>{ input.value='200';input.dispatchEvent(new Event('input',{bubbles:true})); });
-  await page.waitForFunction(expected => [...document.querySelectorAll('[data-gauge]')].every(n => n.textContent === expected[n.dataset.gauge]), gaugeReadout(200));
-  const actual=await page.locator('[data-gauge]').evaluateAll(nodes=>Object.fromEntries(nodes.map(n=>[n.dataset.gauge,n.textContent])));
-  assert.deepEqual(actual,gaugeReadout(200));gaugePassed=true;
-  for(const name of ['Top','Side','Hero']){ await page.locator(`[data-camera="${name}"]`).click();await page.waitForTimeout(180); }
-  await page.locator('#xray').click();
-  await page.mouse.move(1400,60);
-  // Freeze the browser clock between controlled advances so software WebGL
-  // screenshot latency cannot advance to a different tour beat mid-capture.
-  const previousNow=await page.evaluate(()=>performance.now());
-  await page.clock.install();
-  console.log('Freezing capture clock');
-  await page.clock.pauseAt(new Date());
-  await page.clock.fastForward(previousNow+1000);
-  await page.evaluate(()=>window.dispatchEvent(new Event('pointerdown')));
-  console.log('Capture clock frozen');
-  const beats=[['assembled','Assembled'],['apart','Apart'],['board','Board'],['xray','X ray'],['settle','Mid / Settle']];
-  const sources=[];
-  for(const [beat,label] of beats) {
-    for(let ticks=0;;ticks++) {
-      if(await page.locator('#take-apart').getAttribute('data-tour-beat')===beat)break;
-      assert.ok(ticks<200,'tour must reach '+beat);
-      await page.clock.runFor(50);
-    }
-    await page.clock.runFor(260);
-    assert.equal(await page.locator('#take-apart').getAttribute('data-tour-beat'),beat);
-    const hour=beat==='settle'?156:0;
-    assert.deepEqual(await page.locator('[data-gauge]').evaluateAll(nodes=>Object.fromEntries(nodes.map(n=>[n.dataset.gauge,n.textContent]))),gaugeReadout(hour));
-    const file=beat==='settle'?'mid':beat;
-    const {data}=await cdp.send('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});
-    const png=Buffer.from(data,'base64');
-    await writeFile(new URL(`beat-${file}.png`,beatsOut),png);
-    if(beat==='assembled') await writeFile(new URL('browser-assembled.png',out),png);
-    console.log('Captured '+beat);
-    sources.push({label,src:'data:image/png;base64,'+png.toString('base64')});
-  }
-  // Composition happens in this browser session, from the captured pixels.
-  const sheet=await browser.newPage({viewport:{width:1440,height:1840},deviceScaleFactor:1});
-  await sheet.setContent('<body style="margin:0;background:#FAFAF6"><canvas id="sheet" width="1440" height="1840"></canvas></body>');
-  const composed=await sheet.evaluate(async sources=>{
-    const c=document.querySelector('canvas'),ctx=c.getContext('2d');ctx.fillStyle='#FAFAF6';ctx.fillRect(0,0,c.width,c.height);
-    ctx.fillStyle='#12211C';ctx.font='28px sans-serif';ctx.fillText('SENTIA / Take apart — tour contact sheet',24,40);
-    for(let i=0;i<sources.length;i++) {
-      const img=new Image();img.src=sources[i].src;await img.decode();
-      const x=(i%2)*720,y=64+Math.floor(i/2)*592;
-      ctx.drawImage(img,x,y,720,525);ctx.fillStyle='#12211C';ctx.font='18px sans-serif';ctx.fillText(sources[i].label,x+24,y+560);
-    }
-    return c.toDataURL('image/png').split(',')[1];
-  },sources);
-  await writeFile(new URL('contact-sheet.png',beatsOut),Buffer.from(composed,'base64'));
-  // Reduced-motion users retain controls without an automatic tour.
-  await page.clock.resume();
-  await page.emulateMedia({reducedMotion:'reduce'});await page.reload();await page.waitForTimeout(1800);
-  assert.equal(await page.locator('#take-apart').getAttribute('data-tour-beat'),'off');
-  await page.setViewportSize({width:390,height:844});
-  assert.equal(await page.locator('#callouts').isVisible(),false);
-  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'mobile fits viewport');
-  // Release the capture contexts before compiling the two asset-failure scenes.
-  await page.close();await sheet.close();
-  // Exercise both asset failure paths against the same production bundle.
-  for (const failure of ['fetch', 'parse']) {
-    console.log('Checking asset failure: '+failure);
-    const probe=await browser.newPage({ reducedMotion:'reduce' });
-    const probeErrors=[];probe.on('pageerror',error=>probeErrors.push(String(error)));
-    await probe.route('**/models/patch-one.glb',route=>failure==='fetch'
-      ? route.abort('failed')
-      : route.fulfill({status:200,contentType:'model/gltf-binary',body:'invalid GLB'}));
-    await probe.goto(origin+'/take-apart');
-    await probe.waitForFunction(()=>document.querySelector('#take-apart').dataset.sceneReady==='true', null, {timeout:60000});
-    assert.equal(await probe.locator('#take-apart').getAttribute('data-model-source'),'procedural');
-    assert.equal(await probe.locator('#fallback').isVisible(),false);
-    assert.deepEqual(probeErrors,[]);
-    await probe.close();
-  }
-  assetFailureChecks=true;
-  assert.equal(errors.length,0,errors.join('\n'));
-  assert.equal(pageErrors.length,0,pageErrors.join('\n'));
-} finally {
-  const passLog = `Bundled Worker: ${wrangler} ${runtimeArgs.join(' ')}
-console errors: ${errors.length}
-page errors: ${pageErrors.length}
-TakeApartModel: ${sceneInfo?.model}
-scene ready: ${sceneInfo?.ready}
-canvas: ${sceneInfo?.width}x${sceneInfo?.height}; layout: ${sceneInfo?.layoutWidth}x${sceneInfo?.layoutHeight}; DPR: ${sceneInfo?.dpr}
-gauge comparison: ${gaugePassed?'PASS':'FAIL'} at hour 200
-asset failure checks: ${assetFailureChecks?'PASS':'FAIL'} (fetch and parse)
-GLB /models/patch-one.glb: status ${assetStatus}; bytes ${assetBytes}
-loaded nodes: ${nodeNames?.length}; ${nodeNames?.join('; ')}
-vendor /vendor/three.module.min.js: status ${vendorStatus}; decoded bytes ${vendorBytes}
-${errors.join('\n')}
-${pageErrors.join('\n')}
-`;
-  await writeFile(new URL('browser-pass.log',out), passLog);
-  if (beatsOut !== out) await writeFile(new URL('browser-pass.log',beatsOut), passLog);
-  await browser?.close();
-  runtime.kill('SIGTERM');
-  await new Promise(resolve => runtime.exitCode !== null ? resolve() : runtime.once('exit', resolve));
-  await rm(buildDir, { recursive: true, force: true });
-}
-console.log('Browser pass complete: zero console errors; gauge comparison PASS.');
-
-exec
-/bin/bash -lc "sed -n '130,225p' blender/build_patch_one.py; sed -n '290,430p' blender/build_patch_one.py; cat evidence/web-render-finish/reproducibility.log; ls /tmp; which blender google-chrome; rg --files /opt | head; ls node_modules/.bin 2>/dev/null; cat evidence/web-render-finish/*.md" in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-            v=Vector((-dx,-dy,1)).normalized()
-            normals.extend((v.x*.5+.5,v.y*.5+.5,v.z*.5+.5,1))
-    normal_image.pixels=normals;normal_image.pack()
-    normal_tex=nt.nodes.new('ShaderNodeTexImage');normal_tex.image=normal_image
-    nt.links.new(mapping.outputs[0],normal_tex.inputs['Vector'])
-    normal=nt.nodes.new('ShaderNodeNormalMap');normal.inputs['Strength'].default_value=.45
-    nt.links.new(normal_tex.outputs['Color'],normal.inputs['Color']);nt.links.new(normal.outputs[0],p.inputs['Normal'])
-
-
-
-def silicone_texture(mat):
-    # Generated silicone grain: seeded normal tile, no silhouette displacement.
-    rng=random.Random(4515);size=128
-    heights=[rng.uniform(-1,1) for _ in range(size*size)]
-    pixels=[]
-    for y in range(size):
-        for x in range(size):
-            dx=heights[y*size+(x+1)%size]-heights[y*size+(x-1)%size]
-            dy=heights[((y+1)%size)*size+x]-heights[((y-1)%size)*size+x]
-            v=Vector((dx*.24,dy*.24,1)).normalized()
-            pixels.extend((v.x*.5+.5,v.y*.5+.5,v.z*.5+.5,1))
-    img=bpy.data.images.new('Generated silicone micrograin normals',width=size,height=size)
-    img.colorspace_settings.name='Non-Color';img.pixels=pixels;img.pack()
-    nt=mat.node_tree;tex=nt.nodes.new('ShaderNodeTexImage');tex.image=img
-    uv=nt.nodes.new('ShaderNodeTexCoord');mapping=nt.nodes.new('ShaderNodeMapping')
-    mapping.inputs['Scale'].default_value=(2,2,1)
-    nt.links.new(uv.outputs['UV'],mapping.inputs['Vector']);nt.links.new(mapping.outputs[0],tex.inputs['Vector'])
-    normal=nt.nodes.new('ShaderNodeNormalMap');normal.inputs['Strength'].default_value=.85
-    nt.links.new(tex.outputs['Color'],normal.inputs['Color']);nt.links.new(normal.outputs[0],nt.nodes.get('Principled BSDF').inputs['Normal'])
-
-
-def copper_run(parent,mat,points,width=.085):
-    for a,b in zip(points,points[1:]):
-        dx,dy=b[0]-a[0],b[1]-a[1]
-        o=box('Routed copper trace',parent,mat,((a[0]+b[0])/2,(a[1]+b[1])/2,-.043),(math.hypot(dx,dy)+width,width,.012),0)
-        o.rotation_euler.z=math.atan2(dy,dx)
-
-
-def build():
-    assert bpy.app.version == (4,5,15), bpy.app.version_string
-    bpy.ops.wm.read_factory_settings(use_empty=True)
-    OUT.mkdir(parents=True,exist_ok=True)
-    scene=bpy.context.scene
-    scene.unit_settings.system='METRIC';scene.unit_settings.scale_length=.001;scene.unit_settings.length_unit='MILLIMETERS'
-    silicone=material('Matte off white silicone',(.83,.82,.77),.82);silicone_texture(silicone)
-    ink=material('SENTIA charcoal ink',(.018,.024,.021),.9)
-    teal=material('Teal cyan LED',(.015,.65,.59),.3)
-    p=teal.node_tree.nodes.get('Principled BSDF');p.inputs['Emission Color'].default_value=(.01,.65,.59,1);p.inputs['Emission Strength'].default_value=1.4
-    foam=material('Porous warm gray foam',(.72,.70,.65),.95);foam_texture(foam)
-    pcb=material('Ink green solder mask',(.014,.052,.037),.65)
-    chip=material('Molded epoxy packages',(.018,.022,.021),.64)
-    ceramic=material('Warm ceramic capacitors',(.46,.35,.22),.52)
-    solder=material('Reflowed tin solder',(.72,.76,.74),.22,.92)
-    nickel=material('Nickel terminal plating',(.29,.32,.34),.31,.85)
-    resin=material('Ferrite inductors',(.095,.105,.11),.46)
-    copper=material('Copper under solder mask',(.16,.20,.10),.4,.65)
-    metal=material('Brushed component shielding',(.56,.59,.57),.27,.88)
-    trace=material('Muted plated contacts',(.58,.38,.12),.28,.85)
-    film=material('Translucent adhesive film',(.77,.83,.78),.28,alpha=.38)
-    liner=material('Frosted release film',(.9,.91,.86),.52,alpha=.82)
-    parents=[]
-    for i,name in enumerate(NAMES):
-        o=bpy.data.objects.new(name,None);bpy.context.collection.objects.link(o)
-        o.location.z=sum(THICKNESS[i+1:])+THICKNESS[i]/2;parents.append(o)
-    # Several cross sections roll the edge into a very gentle crown, not a box bevel.
-    cover=shell('Crowned silicone shell',parents[0],silicone,[(.985,-.3),(1,-.21),(1,-.06),(.994,.08),(.975,.19),(.90,.265),(.65,.29),(.35,.295)])
-    # Planar crown UVs keep the silicone grain isotropic across every ring.
-    for loop in cover.data.loops:
-        co=cover.data.vertices[loop.vertex_index].co
-        cover.data.uv_layers.active.data[loop.index].uv=((co.x+18)/36,(co.y+18)/36)
-    bpy.ops.object.text_add(location=(0,-.4,.298))
-    word=bpy.context.object;word.data.body='SENTIA';word.data.align_x='CENTER';word.data.size=4.2;word.data.space_character=1.18;word.data.resolution_u=5
-    bpy.ops.object.convert(target='MESH');attach(bpy.context.object,'SENTIA wordmark',parents[0],ink)
-    # A real pocket removes silicone above the optical assembly.
-    cutter=box('Pocket tool',parents[0],ink,(0,-3.2,.34),(10.04,.86,.4),.06)
-    bpy.context.view_layer.objects.active=cover
-    mod=cover.modifiers.new('Recessed LED pocket','BOOLEAN');mod.operation='DIFFERENCE';mod.object=cutter
-    bpy.ops.object.modifier_apply(modifier=mod.name);bpy.data.objects.remove(cutter,do_unlink=True)
-    box('LED recessed socket',parents[0],ink,(0,-3.2,.155),(10,.82,.03),.012)
-    box('Teal LED line',parents[0],teal,(0,-3.2,.20),(9.6,.55,.018),.008)
-    glass=material('Optical silicone window',(.72,.92,.89),.12,alpha=.24)
-    glass.node_tree.nodes.get('Principled BSDF').inputs['Coat Weight'].default_value=.8
-    box('Recessed optical lens',parents[0],glass,(0,-3.2,.242),(9.8,.67,.028),.012)
-    shell('Microcell comfort foam',parents[1],foam,[(.985,-.35),(1,-.28),(1,.27),(.985,.35)])
-    shell('PCB substrate',parents[2],pcb,[(.965,-.25),(.965,-.06)])
-    b=parents[2]
-    box('Main processing chip',b,chip,(-3,-2,.07),(7,7,.26),.045)
-    box('Chip shield',b,metal,(-3,-2,.217),(6.5,6.5,.036),.015)
-    box('Thin film battery',b,metal,(7,4,.075),(9,12,.3),.06)
-    box('Battery insulating rim',b,chip,(7,4,-.04),(9.6,12.6,.035),.01)
-    for x,y in [(-10,7),(-10,-10)]:
-        disc('Sensor plated rim',b,trace,x,y,2.5,.025,.16)
-        disc('Sensor disc',b,metal,x,y,2.15,.135,.12)
-        disc('Sensor aperture',b,chip,x,y,.35,.202,.008)
-    for side in [-1,1]:
-        for i in range(14):
-    with tempfile.TemporaryDirectory() as tmp:
-        path=Path(tmp)/'patch-one.glb'
-        bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_yup=True,export_apply=True,export_animations=False,export_cameras=False,export_lights=False,export_extras=False)
-        data=path.read_bytes()
-        assert len(data)<=800*1024, len(data)
-        (ROOT/'src/patch-one-glb.js').write_text("// Generated by blender/build_all.py (Blender 4.5.15).\nexport const PATCH_ONE_GLB_B64 = '"+base64.b64encode(data).decode()+"';\n")
-        print('patch-one.glb bytes:',len(data))
-    # Studio render uses the same exported geometry and materials, true scale.
-    scene.render.engine='CYCLES';scene.cycles.samples=48;scene.cycles.seed=12;scene.cycles.use_denoising=True
-    scene.render.resolution_x=1000;scene.render.resolution_y=1000;scene.render.resolution_percentage=100
-    scene.render.image_settings.file_format='PNG';scene.render.image_settings.color_mode='RGBA';scene.render.image_settings.color_depth='8'
-    scene.render.film_transparent=True
-    scene.world=bpy.data.worlds.new('Soft studio');scene.world.use_nodes=True
-    scene.world.node_tree.nodes['Background'].inputs[0].default_value=(.75,.78,.8,1)
-    scene.world.node_tree.nodes['Background'].inputs[1].default_value=.5
-    scene.view_settings.view_transform='Standard';scene.view_settings.look='None';scene.view_settings.exposure=0
-    bpy.ops.object.light_add(type='AREA',location=(-30,-35,65));key=bpy.context.object;key.data.energy=35000;key.data.shape='DISK';key.data.size=55
-    key.rotation_euler=(Vector((0,0,0))-key.location).to_track_quat('-Z','Y').to_euler()
-    bpy.ops.mesh.primitive_plane_add(size=200,location=(0,0,-.03))
-    floor=bpy.context.object;floor.is_shadow_catcher=True
-    floor.data.materials.append(material('Studio shadow surface',(.955973,.955973,.921582),.85))
-    bpy.ops.object.camera_add(location=(40,-62,54));cam=bpy.context.object;scene.camera=cam;cam.data.type='ORTHO';cam.data.ortho_scale=59
-    # Alpha over exact brand paper in linear space, no visible studio rectangle.
-    scene.use_nodes=True;nt=scene.node_tree;nt.nodes.clear()
-    layers=nt.nodes.new('CompositorNodeRLayers');over=nt.nodes.new('CompositorNodeAlphaOver');over.inputs[1].default_value=(.955973,.955973,.921582,1)
-    nt.links.new(layers.outputs['Image'],over.inputs[2]);comp=nt.nodes.new('CompositorNodeComposite');nt.links.new(over.outputs[0],comp.inputs[0])
-    for exploded,file in [(False,'render-assembled.png'),(True,'render-exploded.png')]:
-        for i,o in enumerate(parents):o.location.z=sum(THICKNESS[i+1:])+THICKNESS[i]/2+((4-i)*18 if exploded else 0)
-        target=Vector((0,0,36 if exploded else 1.25))
-        cam.location=target+Vector((40,-62,35 if exploded else 54));cam.rotation_euler=(target-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.ortho_scale=100 if exploded else 53
-        floor.hide_render=exploded
-        if exploded:
-            key.location=(-60,-70,150);key.data.energy=120000;key.data.size=100
-            key.rotation_euler=(target-key.location).to_track_quat('-Z','Y').to_euler()
-        scene.render.filepath=str(OUT/file);bpy.ops.render.render(write_still=True)
-
-if __name__=='__main__':build()
-Blender 4.5.15; command for both consecutive full builds: blender --background --python blender/build_all.py
-export 1 GLB SHA256 1b9bab70dd7e9d3af0224a4246be400856c8e372af63f27bc790befa0a407668 bytes 798088 exit 0; module SHA256 3ea15ceebff10ebd264afd4c64c412a37f04515d2a4d0fd73fb91749f9205bb3
-export 2 GLB SHA256 1b9bab70dd7e9d3af0224a4246be400856c8e372af63f27bc790befa0a407668 bytes 798088 exit 0; module SHA256 3ea15ceebff10ebd264afd4c64c412a37f04515d2a4d0fd73fb91749f9205bb3
-PASS: both generated modules byte identical, committed src/patch-one-glb.js equals export module byte for byte. Decoded exports equal served GLB. Budget 819200 bytes. Both beauty renders regenerated by each full build.
-anvil-codex-home-fx0ysm0a
-claude-1001
-clr-debug-pipe-1917-1271-in
-clr-debug-pipe-1917-1271-out
-clr-debug-pipe-1943-1428-in
-clr-debug-pipe-1943-1428-out
-dotnet-diagnostic-1917-1271-socket
-dotnet-diagnostic-1943-1428-socket
-node-compile-cache
-snap-private-tmp
-systemd-private-2cd4bbbb0e024e01b7f6ee3230adf126-ModemManager.service-9gHpkO
-systemd-private-2cd4bbbb0e024e01b7f6ee3230adf126-chrony.service-aVAhi9
-systemd-private-2cd4bbbb0e024e01b7f6ee3230adf126-haveged.service-6jpriD
-systemd-private-2cd4bbbb0e024e01b7f6ee3230adf126-polkit.service-dZA0pq
-systemd-private-2cd4bbbb0e024e01b7f6ee3230adf126-systemd-logind.service-MkIf8T
-systemd-private-2cd4bbbb0e024e01b7f6ee3230adf126-systemd-resolved.service-bVzAFw
-v8-compile-cache-1001
-/home/runner/blender-4.5.15/blender
-/usr/bin/google-chrome
-/opt/actionarchivecache/actions_upload-artifact/330a01c490aca151604b8cf639adc76d48f6c5d4.tar.gz
-/opt/actionarchivecache/actions_upload-artifact/ea165f8d65b6e75b540449e92b4886f43607fa02.tar.gz
-/opt/actionarchivecache/actions_upload-artifact/26f96dfa697d77e81fd5907df203aa23a56210a8.tar.gz
-/opt/actionarchivecache/actions_upload-artifact/c7d193f32edcb7bfad88892161225aeda64e9392.tar.gz
-/opt/actionarchivecache/actions_upload-artifact/89ef406dd8d7e03cfd12d9e0a4a378f454709029.tar.gz
-/opt/actionarchivecache/actions_upload-artifact/65462800fd760344b1a7b4382951275a0abb4808.tar.gz
-/opt/actionarchivecache/actions_upload-artifact/1eb3cb2b3e0f29609092a73eb033bb759a334595.tar.gz
-/opt/actionarchivecache/actions_upload-artifact/4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1.tar.gz
-/opt/actionarchivecache/actions_upload-artifact/5d5d22a31266ced268874388b861e4b58bb5c2f3.tar.gz
-/opt/actionarchivecache/actions_upload-artifact/6f51ac03b9356f520e9adb1b1b7802705f340c2b.tar.gz
-# Web render finish — builder evidence
-
-The implementation changes only material settings and client rendering (S4/S5), with the capture output selection and scope baselines required by S7/S10. Approval and the product identity judgement belong to reviewer-design; this report does not approve the work. No deployment was performed.
-
-Before: the bundled setup client used ambient intensity 1.3, one overhead key and no reflection environment. The cover was smooth at beat resolution and the recessed LED appeared gray. Board metal faces were uniformly gray with weak differentiation from packages.
-
-After: a generated PMREM studio environment supplies three luminous reflection cards against a dark surround. Ambient fill is .25, the key is lower and a cool rim separates edges; exposure is .95. Metals receive stronger environment reflections than dielectric materials. The shield and battery now have bright bevels and darker reflective faces; solder highlights, gold pads and sensor edges separate from the dark substrate and epoxy packages. The Blender plated-contact material has warmer gold color and lower roughness. The lighting is generated locally without external images or changes to vendored three.js.
-
-Cover: the same seeded normal tile repeats twice instead of eight times, preventing its grain being averaged away at beat resolution, and exported normal strength is .85. Client shading attenuates side grain to compensate for the study's frozen ×8 vertical exaggeration while retaining fine crown grain. The emitter's exported strength increases from .5 to 1.4. The optical lens carries teal emission and has increased optical opacity, so the emitter's color survives the deep, vertically exaggerated pocket in the hero view. Its geometry, position and proportions are unchanged; the socket border remains recessed. The wordmark is untouched.
-
-The GLB is 798,088 bytes (budget 819,200), four bytes smaller than the baseline. Two consecutive full Blender 4.5.15 builds exited 0 and generated byte-identical modules. See reproducibility.log and the full build logs. frozen-product.log compares nodes, meshes, accessors, scenes and the entire binary payload against setup: all identical. Only GLB material JSON differs. Both beauty renders were regenerated.
-
-Before evidence is captured from an archive of operator setup 62f98b32144b2e64fd0227d4ff403d67e777bec3, with its original client and original 798,092-byte asset. The only capture-script changes select an output directory and also record the standard browser log. The first baseline browser process closed before completing the tour; the complete rerun replaces that partial evidence. Intermediate finish captures are replaced by the final capture. All captures build with Wrangler deploy --dry-run and serve that built Worker with --no-bundle; none imports the unbundled page or client.
-
-The test setup constants now point to this round's actual operator setup, 62f98b3. The previous 4de668a and 7748273 objects are unavailable in this checkout, which otherwise silently skips scope assertions. The take-apart scope whitelist is rebased to S10; all behavior assertions retain their original meaning.
-
-Known suite exception, untouched: "S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/" in tests/design-v4-square-product.test.js. This is pre-existing on this base and resolved on the approved sibling anvil/run-s11-rebaseline (wo-gh-10).
-
-Final validation: npm test reports 214 tests: 212 pass, the one named pre-existing S11 failure, and one existing skip (ui-elevation S4: codec, data, mcp and index are untouched by the run — no main ref to diff against). All 16 web-render-finish tests pass. Before, after and standard browser logs record zero console/page errors, scene ready, 200 GLB fetch, all five named nodes, gauges PASS and both asset-failure fallback checks PASS. Production bundle exits 0 with no local patches. The capture runner printed its successful completion after all assertions; the execution wrapper reported 143 on shutdown for the final captures, after the browser pass was complete.
-
-exec
-/bin/bash -lc "rg --files /home/runner | rg '(playwright/index.mjs|bin/wrangler|AGENTS.md)"'$'"' | head; which wrangler; rg -n 'material.name|sanitizeNodeName' src/*loader*; ls -a | head; env | rg 'PLAYWRIGHT|WRANGLER|CHROME'" in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-.
-..
-.anvil-factory
-.git
-.github
-.gitignore
-.openspec
-BLUEPRINT.md
-LICENSE
-PIPELINES.md
-CHROMEWEBDRIVER=/usr/local/share/chromedriver-linux64
-CHROME_BIN=/usr/bin/google-chrome
-
-exec
-/bin/bash -lc "rg --files src | rg 'gltf|three'; rg -n 'emissive|MeshStandardMaterial|material.name' src/gltf*; ls /home/runner; cat .gitignore; ls /home/runner/.npm/_npx/*/node_modules/.bin/wrangler 2>/dev/null" in /home/runner/work/sentia/sentia
- exited 2 in 0ms:
-src/vendor-gltf-loader.js
-src/vendor-three.js
-rg: src/gltf*: IO error for operation on src/gltf*: No such file or directory (os error 2)
-actions-runner
-blender-4.5.15
-work
-node_modules/
-.wrangler/
-.dev.vars
-.dev.vars.*
-*.log
-!evidence/take-apart/browser-pass.log
-!evidence/take-apart-bundling/*.log
-!runs/wo-gh-9/*.log
-!evidence/take-apart-product-model/*.log
-!evidence/web-render-finish/*.log
-!runs/wo-gh-14/*.log
-.anvil-factory/
-
-exec
-/bin/bash -lc "rg -n 'emissive|MeshStandardMaterial|name' src/vendor-gltf-loader.js | head" in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-exec
-/bin/bash -lc 'npm install --prefix /tmp/sentia-browser playwright wrangler' in /home/runner/work/sentia/sentia
-exec
-/bin/bash -lc "head -c 180 src/vendor-gltf-loader.js; node --input-type=module -e \"import * as m from './src/vendor-gltf-loader.js'; console.log(Object.keys(m)); for (const v of Object.values(m)) if(typeof v==='string') { const s=v.includes('export')?v:Buffer.from(v,'base64').toString(); console.log(s.match(/.{0,100}emissive.{0,200}/g)?.slice(0,10)); }\"" in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-// three.js 0.160.0 addon, MIT license included in decoded bytes.
-export const GLTF_LOADER_B64 = 'LyoKVGhlIE1JVCBMaWNlbnNlCgpDb3B5cmlnaHQgwqkgMjAxMC0yMDIzIHRocmVlLmpzIGF1dGhvcnMKCl[ 'GLTF_LOADER_B64' ]
-[
-  "\tKHR_MATERIALS_EMISSIVE_STRENGTH: 'KHR_materials_emissive_strength',",
-  'hronosGroup/glTF/blob/5768b3ce0ef32bc39cdf1bef10b948586635ead3/extensions/2.0/Khronos/KHR_materials_emissive_strength/README.md',
-  '\t\tconst emissiveStrength = materialDef.extensions[ this.name ].emissiveStrength;',
-  '\t\tif ( emissiveStrength !== undefined ) {',
-  '\t\t\tmaterialParams.emissiveIntensity = emissiveStrength;',
-  '\t\t\temissive: 0x000000,',
-  '\t\tif ( materialDef.emissiveFactor !== undefined && materialType !== MeshBasicMaterial ) {',
-  '\t\t\tconst emissiveFactor = materialDef.emissiveFactor;',
-  '\t\t\tmaterialParams.emissive = new Color().setRGB( emissiveFactor[ 0 ], emissiveFactor[ 1 ], emissiveFactor[ 2 ], LinearSRGBColorSpace );',
-  '\t\tif ( materialDef.emissiveTexture !== undefined && materialType !== MeshBasicMaterial ) {'
-]
-
- succeeded in 5804ms:
-
-added 40 packages in 6s
-
-7 packages are looking for funding
-  run `npm fund` for details
-
-codex
-The existing lens combines teal emission with strong surface reflections, which can wash out its color. I’ll adjust that material while keeping the board lighting unchanged. I’ll also make the silicone texture finer and shallower, then check whether it still reads in the browser.
-
-exec
-/bin/bash -lc "cp -a evidence/web-render-finish/after/. evidence/web-render-finish/before/; python - <<'PY'
-p='src/take-apart-client.js'
-s=open(p).read();a=s.index('        // The translucent lens');b=s.index(\"        if (copy.name === 'Matte\",a)
-s=s[:a]+'''        // Keep the optical strip saturated under the metal studio's bright cards.
-        // Its existing recessed geometry and dark socket provide the depth border.
-        if (copy.name === 'Optical silicone window' || copy.name === 'Teal cyan LED') {
-          copy.envMapIntensity = 0; copy.roughness = .5;
-          copy.color.setRGB(.002,.025,.018);
-          copy.emissive.setRGB(.003,.48,.32); copy.emissiveIntensity = 1;
-          copy.toneMapped = false;
-          if (copy.name === 'Optical silicone window') {
-            copy.opacity = 1; copy.clearcoat = 0;
-          }
-        }
-'''+s[b:];s=s.replace('mix(.005, .65, grainCrown)', 'mix(.005, .9, grainCrown)');open(p,'w').write(s)
-p='blender/build_patch_one.py';s=open(p).read().replace(\"mapping.inputs['Scale'].default_value=(2,2,1)\",\"mapping.inputs['Scale'].default_value=(3,3,1)\").replace(\"normal.inputs['Strength'].default_value=.85\",\"normal.inputs['Strength'].default_value=.5\");open(p,'w').write(s)
-PY
-blender --background --python blender/build_all.py > evidence/web-render-finish/build-1.log 2>&1" in /home/runner/work/sentia/sentia
-exec
-/bin/bash -lc 'tail -3 evidence/web-render-finish/build-1.log; git diff --stat' in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-03:20:54 | INFO: Extracting primitive: Cube.002
-03:20:54 | INFO: Primitives created: 1
-03:20:54 | INFO: Extracting primitive: Microcell comfort foam
- blender/build_patch_one.py                         |   4 ++--
- evidence/web-render-finish/before/beat-apart.png   | Bin 122677 -> 129799 bytes
- .../web-render-finish/before/beat-assembled.png    | Bin 174351 -> 207426 bytes
- evidence/web-render-finish/before/beat-board.png   | Bin 123248 -> 130427 bytes
- evidence/web-render-finish/before/beat-mid.png     | Bin 148771 -> 165887 bytes
- evidence/web-render-finish/before/beat-xray.png    | Bin 120819 -> 127142 bytes
- .../web-render-finish/before/browser-assembled.png | Bin 174351 -> 207426 bytes
- evidence/web-render-finish/before/browser-pass.log |   4 ++--
- evidence/web-render-finish/before/bundle-build.log |   4 ++--
- .../web-render-finish/before/contact-sheet.png     | Bin 374604 -> 403558 bytes
- runs/wo-gh-14/builder.output.md                    |   7 -------
- runs/wo-gh-14/builder.packet.md                    |  21 +++++++++------------
- runs/wo-gh-14/envelopes/intake.envelope.json       |   2 +-
- runs/wo-gh-14/envelopes/spec-writer.envelope.json  |   2 +-
- runs/wo-gh-14/envelopes/test-writer.envelope.json  |   2 +-
- runs/wo-gh-14/spec-writer.output.md                |  13 ++++++-------
- runs/wo-gh-14/spec-writer.packet.md                |  21 +++++++++------------
- runs/wo-gh-14/test-writer.output.md                |  16 +++++++++++++---
- runs/wo-gh-14/test-writer.packet.md                |  21 +++++++++------------
- src/take-apart-client.js                           |  17 +++++++++++------
- 20 files changed, 66 insertions(+), 68 deletions(-)
-
-exec
-/bin/bash -lc 'PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs WRANGLER_BIN=/tmp/sentia-browser/node_modules/.bin/wrangler CAPTURE_DIR=evidence/web-render-finish/after node scripts/capture-take-apart.mjs > /tmp/capture.log 2>&1' in /home/runner/work/sentia/sentia
-exec
-/bin/bash -lc 'tail -4 /tmp/capture.log; tail -3 evidence/web-render-finish/build-1.log' in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-Fra:1 Mem:27.30M (Peak 33.43M) | Time:00:00.03 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
-Fra:1 Mem:27.30M (Peak 33.43M) | Time:00:00.03 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Sample 0/48
-Fra:1 Mem:157.05M (Peak 157.05M) | Time:00:00.99 | Remaining:00:45.12 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 1/48
-
-exec
-/bin/bash -lc "node --input-type=module - <<'JS'
-import {PATCH_ONE_GLB_B64 as b} from './src/patch-one-glb.js'; const x=Buffer.from(b,'base64');const j=JSON.parse(x.subarray(20,20+x.readUInt32LE(12)));console.log(j.materials.map(m=>({name:m.name,emissive:m.emissiveFactor})));
-JS
-tail -6 /tmp/capture.log; tail -2 evidence/web-render-finish/build-1.log" in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-[
-  { name: 'Matte off white silicone', emissive: undefined },
-  { name: 'SENTIA charcoal ink', emissive: undefined },
-  { name: 'Optical silicone window', emissive: undefined },
-  {
-    name: 'Teal cyan LED',
-    emissive: [ 0.013999999448657041, 0.9099999511241919, 0.8259999492168433 ]
+  "schema": "anvil/envelope@1",
+  "from_station": "builder",
+  "to_station": "reviewer-spec",
+  "work_order_id": "wo-gh-14",
+  "artifact_path": "runs/wo-gh-14/builder.packet.md",
+  "status": "failed",
+  "created_at": "2026-11-02T03:29:18.577058+00:00",
+  "error": "command executor exited 2: astra wrapper: codex exited 1 for station builder; the full codex output is in runs/wo-gh-14/builder.output.md.codex.txt; tail:\nonment remain', 'board materials, studio lighting, exposure and environment remain');open(p,'w').write(s)\nPY\ncat evidence/web-render-finish/reproducibility.log; git diff --check\" in /home/runner/work/sentia/sentia\n succeeded in 0ms:\nBlender 4.5.15; two consecutive complete builds: blender --background --python blender/build_all.py\nexport 1 GLB SHA256 5a1438dae703eb3647d",
+  "configured_model": "gpt-6-astra",
+  "executor": {
+    "kind": "command",
+    "detail": "python3"
   },
-  { name: 'Porous warm gray foam', emissive: undefined },
-  { name: 'Molded epoxy packages', emissive: undefined },
-  { name: 'Muted plated contacts', emissive: undefined },
-  { name: 'Nickel terminal plating', emissive: undefined },
-  { name: 'Brushed component shielding', emissive: undefined },
-  { name: 'Warm ceramic capacitors', emissive: undefined },
-  { name: 'Ferrite inductors', emissive: undefined },
-  { name: 'Ink green solder mask', emissive: undefined },
-  { name: 'Copper under solder mask', emissive: undefined },
-  { name: 'Reflowed tin solder', emissive: undefined },
-  { name: 'Translucent adhesive film', emissive: undefined },
-  { name: 'Frosted release film', emissive: undefined }
-]
-Loading study
-Fra:1 Mem:27.30M (Peak 33.43M) | Time:00:00.03 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Sample 0/48
-Fra:1 Mem:157.05M (Peak 157.05M) | Time:00:00.99 | Remaining:00:45.12 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 1/48
+  "executed_model": null
+}
+I confirmed the committed spec as the text the reviewers judge against, and I did not change it. The confirmation is in `runs/wo-gh-14/spec-writer.output.md`, which is the only file I wrote.
 
-exec
-/bin/bash -lc 'sleep 20; tail -5 /tmp/capture.log; tail -2 evidence/web-render-finish/build-1.log' in /home/runner/work/sentia/sentia
-exec
-/bin/bash -lc 'git diff -- blender/build_patch_one.py src/take-apart-client.js; tail -3 /tmp/capture.log; tail -2 evidence/web-render-finish/build-1.log' in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-diff --git a/blender/build_patch_one.py b/blender/build_patch_one.py
-index 2fada0e..89a3f1f 100644
---- a/blender/build_patch_one.py
-+++ b/blender/build_patch_one.py
-@@ -152,9 +152,9 @@ def silicone_texture(mat):
-     img.colorspace_settings.name='Non-Color';img.pixels=pixels;img.pack()
-     nt=mat.node_tree;tex=nt.nodes.new('ShaderNodeTexImage');tex.image=img
-     uv=nt.nodes.new('ShaderNodeTexCoord');mapping=nt.nodes.new('ShaderNodeMapping')
--    mapping.inputs['Scale'].default_value=(2,2,1)
-+    mapping.inputs['Scale'].default_value=(3,3,1)
-     nt.links.new(uv.outputs['UV'],mapping.inputs['Vector']);nt.links.new(mapping.outputs[0],tex.inputs['Vector'])
--    normal=nt.nodes.new('ShaderNodeNormalMap');normal.inputs['Strength'].default_value=.85
-+    normal=nt.nodes.new('ShaderNodeNormalMap');normal.inputs['Strength'].default_value=.5
-     nt.links.new(tex.outputs['Color'],normal.inputs['Color']);nt.links.new(normal.outputs[0],nt.nodes.get('Principled BSDF').inputs['Normal'])
- 
- 
-diff --git a/src/take-apart-client.js b/src/take-apart-client.js
-index 68194f6..e572900 100644
---- a/src/take-apart-client.js
-+++ b/src/take-apart-client.js
-@@ -131,11 +131,16 @@ async function initScene() {
-       const owned = materials.map(material => {
-         const copy = material.clone();
-         copy.envMapIntensity = copy.metalness > .5 ? 1.25 : .35;
--        // The translucent lens must retain its tint over the emitting surface.
--        if (copy.name === 'Optical silicone window') {
--          copy.envMapIntensity = .2; copy.roughness = .22; copy.opacity = .85;
--          // Carry the emitter through the lens at the study's exaggerated vertical scale.
--          copy.color.setRGB(.015,.65,.59); copy.emissive.setRGB(.01,.65,.59); copy.emissiveIntensity = .8;
-+        // Keep the optical strip saturated under the metal studio's bright cards.
-+        // Its existing recessed geometry and dark socket provide the depth border.
-+        if (copy.name === 'Optical silicone window' || copy.name === 'Teal cyan LED') {
-+          copy.envMapIntensity = 0; copy.roughness = .5;
-+          copy.color.setRGB(.002,.025,.018);
-+          copy.emissive.setRGB(.003,.48,.32); copy.emissiveIntensity = 1;
-+          copy.toneMapped = false;
-+          if (copy.name === 'Optical silicone window') {
-+            copy.opacity = 1; copy.clearcoat = 0;
-+          }
-         }
-         if (copy.name === 'Matte off white silicone') {
-           // Vertical exaggeration also stretches side normals; keep grain on the crown.
-@@ -143,7 +148,7 @@ async function initScene() {
-             shader.vertexShader = 'varying float grainCrown;\\n' + shader.vertexShader;
-             shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\\ngrainCrown = smoothstep(.98, .999, abs(normal.y));');
-             shader.fragmentShader = 'varying float grainCrown;\\n' + shader.fragmentShader;
--            shader.fragmentShader = shader.fragmentShader.replace('#include <normal_fragment_maps>', THREE.ShaderChunk.normal_fragment_maps.replace('normalScale;', 'normalScale * mix(.005, .65, grainCrown);'));
-+            shader.fragmentShader = shader.fragmentShader.replace('#include <normal_fragment_maps>', THREE.ShaderChunk.normal_fragment_maps.replace('normalScale;', 'normalScale * mix(.005, .9, grainCrown);'));
-           };
-         }
-         copy.userData.baseOpacity = copy.opacity; return copy;
-Loading study
-Study loaded
-Fra:1 Mem:27.30M (Peak 33.43M) | Time:00:00.03 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Sample 0/48
-Fra:1 Mem:157.05M (Peak 157.05M) | Time:00:00.99 | Remaining:00:45.12 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 1/48
+- **Spec state:** `.openspec/specs/web-render-finish/spec.md` is as committed, 106 lines, sha256 `c5ed85fc…f8c5`. The output maps the requirements and scenarios the reviewers judge against, including the LED and cover grain in R3 and S5.
+- **GLB size mismatch:** The spec cites 798,092 bytes as the previous asset. The finished tree is 798,072 bytes. This isn't a conflict, because the budget check (S1) is the 819,200 ceiling. I flagged it for the reviewers.
+- **No grain criterion:** The spec has no numeric criterion for cover grain. Grain stays a reviewer-design judgement, and I did not add one.
+- **S11:** The design v4 S11 suite item is noted as a pre-existing sibling matter, to be itemized and not absorbed.
+- **Missing inputs:** None. Nothing was missing for this station, and I don't approve anything.
 
-codex
-The changes are limited to the optical materials and silicone grain. The deterministic Blender build and bundled browser capture are running; I’ll inspect the new beats before recording the comparison.
+I didn't commit.
 
-exec
-/bin/bash -lc 'ps -o pid,etime,pcpu,nlwp,cmd -C blender; tail -4 /tmp/capture.log; tail -3 evidence/web-render-finish/build-1.log' in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-    PID     ELAPSED %CPU NLWP CMD
-   3635       00:26  269   17 blender --background --python blender/build_all.py
-Loading study
-Study loaded
-Fra:1 Mem:27.30M (Peak 33.43M) | Time:00:00.03 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
-Fra:1 Mem:27.30M (Peak 33.43M) | Time:00:00.03 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Sample 0/48
-Fra:1 Mem:157.05M (Peak 157.05M) | Time:00:00.99 | Remaining:00:45.12 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 1/48
+`git status` also shows `spec-writer.output.md` as modified rather than deleted, because I wrote a new file at that path. `intake.envelope.json` and `spec-writer.packet.md` were already modified in the working tree, and I left them alone.
 
- succeeded in 19892ms:
-Loading study
-Study loaded
-Fra:1 Mem:27.30M (Peak 33.43M) | Time:00:00.03 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Sample 0/48
-Fra:1 Mem:157.05M (Peak 157.05M) | Time:00:00.99 | Remaining:00:45.12 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 1/48
+{"model": "claude-sonnet-5-5", "runtime": "claude-code"}
+I confirmed the 16 tests in `tests/web-render-finish.test.js` as this round's test base. I didn't change any test, product, asset, evidence or spec file. The only file I wrote is `runs/wo-gh-14/test-writer.output.md`.
 
-exec
-/bin/bash -lc 'node --test tests/web-render-finish.test.js > /tmp/scenario-pre.log 2>&1; tail -12 /tmp/scenario-pre.log' in /home/runner/work/sentia/sentia
- succeeded in 494ms:
-  duration_ms: 8.000872
-  type: 'test'
-  ...
-1..16
-# tests 16
-# suites 0
-# pass 14
-# fail 2
-# cancelled 0
-# skipped 0
-# todo 0
-# duration_ms 509.340762
+I ran that test file on its own: 16 pass, 0 fail. The GLB measures 798,072 bytes against the 819,200 budget. There's no `.glb` file on disk because the asset is embedded in `src/patch-one-glb.js`. The old output recorded 798,088 bytes, so I replaced it.
 
-exec
-/bin/bash -lc "tail -6 /tmp/capture.log; tail -3 evidence/web-render-finish/build-1.log; rg -A12 'not ok' /tmp/scenario-pre.log" in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-Loading study
-Study loaded
-Freezing capture clock
-Capture clock frozen
-Fra:1 Mem:27.30M (Peak 33.43M) | Time:00:00.03 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Sample 0/48
-Fra:1 Mem:157.05M (Peak 157.05M) | Time:00:00.99 | Remaining:00:45.12 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 1/48
-Fra:1 Mem:157.05M (Peak 157.05M) | Time:00:36.72 | Remaining:00:16.67 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 33/48
-not ok 3 - web-render-finish S3: asset unchanged equals the wo-gh-12 loopback asset; asset changed has reproducibility re-proven
-  ---
-  duration_ms: 10.325555
-  type: 'test'
-  location: '/home/runner/work/sentia/sentia/tests/web-render-finish.test.js:124:1'
-  failureType: 'testCodeFailure'
-  error: |-
-    the export SHA256 equals the committed GLB bytes
-    + actual - expected
-    
-    + '1b9bab70dd7e9d3af0224a4246be400856c8e372af63f27bc790befa0a407668'
-    - '5a1438dae703eb3647d4a77baf3b6f5b74e1db3b5f56ae6a54e7de3a1b032aeb'
-    
---
-not ok 7 - web-render-finish S4/S5: the after beats are not the before beats, and the board, assembled and mid beats each differ
-  ---
-  duration_ms: 0.887762
-  type: 'test'
-  location: '/home/runner/work/sentia/sentia/tests/web-render-finish.test.js:186:1'
-  failureType: 'testCodeFailure'
-  error: 'beat-assembled: after is byte identical to before, nothing changed in the page rendering'
-  code: 'ERR_ASSERTION'
-  name: 'AssertionError'
-  expected: 'c3cf5e45f29670014b16d31a625a5e736ed260f8c4202d6c1efb4673b5e56b7e'
-  actual: 'c3cf5e45f29670014b16d31a625a5e736ed260f8c4202d6c1efb4673b5e56b7e'
-  operator: 'notStrictEqual'
-  stack: |-
+- **Shallow-clone gap:** `SETUP_COMMIT` (`62f98b3`) isn't reachable in this clone, so four checks return early without comparing anything. They are the frozen-files check, the run-diff scope check, the "run changed the finish" check, and the asset-unchanged branch of S3. Those four only run in full with full history (`git fetch --unshallow`). Until then, the run gate has to enforce scope and frozen paths. I left `SETUP_COMMIT` alone because the tests are frozen.
+- **Not covered:** the tests check that the evidence is well formed. They can't judge whether the LED reads as a teal emitter, whether the board finishes stay closed, or whether the cover grain is finer. That is for reviewer-design.
+- **Scope:** I didn't run the full suite, so the S11 item stays itemized apart.
 
-exec
-/bin/bash -lc 'sleep 25; tail -6 /tmp/capture.log; tail -3 evidence/web-render-finish/build-1.log' in /home/runner/work/sentia/sentia
-exec
-/bin/bash -lc 'tail -8 /tmp/capture.log; tail -3 evidence/web-render-finish/build-1.log' in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-Loading study
-Study loaded
-Freezing capture clock
-Capture clock frozen
-Fra:1 Mem:27.30M (Peak 33.43M) | Time:00:00.03 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Sample 0/48
-Fra:1 Mem:157.05M (Peak 157.05M) | Time:00:00.99 | Remaining:00:45.12 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 1/48
-Fra:1 Mem:157.05M (Peak 157.05M) | Time:00:36.72 | Remaining:00:16.67 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 33/48
+I didn't commit.
 
- exited 143 in 62321ms:
- exited 143 in 66437ms:
-exec
-/bin/bash -lc 'cat /tmp/capture.log; tail -3 evidence/web-render-finish/build-1.log; cat evidence/web-render-finish/after/browser-pass.log' in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-Loading study
-Study loaded
-Freezing capture clock
-Capture clock frozen
-Fra:1 Mem:27.32M (Peak 33.38M) | Time:00:00.03 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
-Fra:1 Mem:27.32M (Peak 33.38M) | Time:00:00.03 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Sample 0/48
-Fra:1 Mem:99.84M (Peak 99.84M) | Time:00:00.36 | Remaining:00:15.58 | Mem:75.40M, Peak:75.40M | Scene, ViewLayer | Sample 1/48
+{"model": "claude-sonnet-5-5", "runtime": "claude-code"}
+Blender 4.5.15; two consecutive complete builds: blender --background --python blender/build_all.py
+export 1 GLB SHA256 5a1438dae703eb3647d4a77baf3b6f5b74e1db3b5f56ae6a54e7de3a1b032aeb bytes 798072 exit 0; module SHA256 ecd7f6647636a6ef37591b632e086045b7ac44adfc271b61089fda6f986b2fbd
+export 2 GLB SHA256 5a1438dae703eb3647d4a77baf3b6f5b74e1db3b5f56ae6a54e7de3a1b032aeb bytes 798072 exit 0; module SHA256 ecd7f6647636a6ef37591b632e086045b7ac44adfc271b61089fda6f986b2fbd
+PASS: two full exports byte identical; committed module equals export module byte for byte. Both beauty renders regenerated. Budget 819200 bytes.
+/tmp/sentia-browser/node_modules/.bin/wrangler deploy --dry-run --outdir /tmp/sentia-bundle-Vq8JZD
+
+ ⛅️ wrangler 4.156.1
+────────────────────
+Total Upload: 2551.84 KiB / gzip: 826.78 KiB
+No bindings found.
+--dry-run: exiting now.
+
+exit status: 0
+No local patches applied.
 Bundled Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-bundle-ndrMRX/index.js --no-bundle --local --ip 127.0.0.1 --port 8795
 console errors: 0
 page errors: 0
@@ -1532,264 +677,48 @@ loaded nodes: 5; Top cover; Comfort foam; Sensing and processing board; Adhesive
 vendor /vendor/three.module.min.js: status 200; decoded bytes 670681
 
 
+Bundled Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-bundle-Vq8JZD/index.js --no-bundle --local --ip 127.0.0.1 --port 8793
+console errors: 0
+page errors: 0
+TakeApartModel: object
+scene ready: true
+canvas: 1022x559; layout: 1022x559; DPR: 1
+gauge comparison: PASS at hour 200
+asset failure checks: PASS (fetch and parse)
+GLB /models/patch-one.glb: status 200; bytes 798072
+loaded nodes: 5; Top cover; Comfort foam; Sensing and processing board; Adhesive layer; Release liner
+vendor /vendor/three.module.min.js: status 200; decoded bytes 670681
 
- succeeded in 24893ms:
-Loading study
-Study loaded
-Freezing capture clock
-Capture clock frozen
-Fra:1 Mem:27.32M (Peak 33.38M) | Time:00:00.03 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
-Fra:1 Mem:27.32M (Peak 33.38M) | Time:00:00.03 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Sample 0/48
-Fra:1 Mem:99.84M (Peak 99.84M) | Time:00:00.36 | Remaining:00:15.58 | Mem:75.40M, Peak:75.40M | Scene, ViewLayer | Sample 1/48
 
-exec
-/bin/bash -lc "python - <<'PY'
-p='scripts/capture-take-apart.mjs';s=open(p).read().replace(\"{ stdio: ['ignore', 'pipe', 'pipe'] }\", \"{ detached: true, stdio: ['ignore', 'pipe', 'pipe'] }\");open(p,'w').write(s)
-PY
-PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs WRANGLER_BIN=/tmp/sentia-browser/node_modules/.bin/wrangler CAPTURE_DIR=evidence/web-render-finish/after node scripts/capture-take-apart.mjs > /tmp/capture.log 2>&1" in /home/runner/work/sentia/sentia
-exec
-/bin/bash -lc 'setsid blender --background --python blender/build_all.py > evidence/web-render-finish/build-1.log 2>&1' in /home/runner/work/sentia/sentia
-exec
-/bin/bash -lc 'sleep 25; tail -12 /tmp/capture.log; tail -2 evidence/web-render-finish/build-1.log' in /home/runner/work/sentia/sentia
-codex
-The capture runner was terminated during cleanup before it saved new beats. I’ve isolated the local Worker process so its shutdown cannot terminate the other evidence jobs, and I’m rerunning the capture and full Blender exports.
+Bundled Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-bundle-Vq8JZD/index.js --no-bundle --local --ip 127.0.0.1 --port 8793
+console errors: 0
+page errors: 0
+TakeApartModel: object
+scene ready: true
+canvas: 1022x559; layout: 1022x559; DPR: 1
+gauge comparison: PASS at hour 200
+asset failure checks: PASS (fetch and parse)
+GLB /models/patch-one.glb: status 200; bytes 798072
+loaded nodes: 5; Top cover; Comfort foam; Sensing and processing board; Adhesive layer; Release liner
+vendor /vendor/three.module.min.js: status 200; decoded bytes 670681
 
-exec
-/bin/bash -lc 'tail -15 /tmp/capture.log; tail -2 evidence/web-render-finish/build-1.log; ps -o pid,etime,pcpu,cmd -C blender' in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-Loading study
-Study loaded
-Fra:1 Mem:27.30M (Peak 33.43M) | Time:00:00.04 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Sample 0/48
-Fra:1 Mem:157.05M (Peak 157.05M) | Time:00:01.25 | Remaining:00:56.93 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 1/48
-    PID     ELAPSED %CPU CMD
-   4173       00:09  148 blender --background --python blender/build_all.py
 
-exec
-/bin/bash -lc "python - <<'PY'
-import subprocess,base64,json,struct
-from pathlib import Path
-old=subprocess.check_output(['git','show','HEAD:src/patch-one-glb.js']).decode();new=Path('src/patch-one-glb.js').read_text()
-def read(s):
- b=base64.b64decode(s.split(\"'\")[1]); n=struct.unpack_from('<I',b,12)[0];return json.loads(b[20:20+n]),b[20+n:]
-a,ab=read(old);b,bb=read(new)
-keys=['nodes','meshes','accessors','scenes','buffers','bufferViews']
-assert all(a[k]==b[k] for k in keys);assert ab==bb
-Path('evidence/web-render-finish/frozen-product.log').write_text('Compared against round 2 HEAD before this implementation.\\nPASS: nodes, meshes, accessors, scenes, buffers, bufferViews and entire binary payload byte identical. Only material JSON changed; geometry, wordmark, LED placement, proportions and layer stack preserved.\\n')
-PY" in /home/runner/work/sentia/sentia
- succeeded in 3ms:
-exec
-/bin/bash -lc 'sleep 40; tail -20 /tmp/capture.log; tail -3 evidence/web-render-finish/build-1.log' in /home/runner/work/sentia/sentia
- succeeded in 24892ms:
-Loading study
-Study loaded
-Freezing capture clock
-Capture clock frozen
-Fra:1 Mem:27.30M (Peak 33.43M) | Time:00:00.04 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Sample 0/48
-Fra:1 Mem:157.05M (Peak 157.05M) | Time:00:01.25 | Remaining:00:56.93 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 1/48
-
- succeeded in 39895ms:
-Loading study
-Study loaded
-Freezing capture clock
-Capture clock frozen
-Captured assembled
-Fra:1 Mem:27.30M (Peak 33.43M) | Time:00:00.04 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Sample 0/48
-Fra:1 Mem:157.05M (Peak 157.05M) | Time:00:01.25 | Remaining:00:56.93 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 1/48
-Fra:1 Mem:157.05M (Peak 157.05M) | Time:00:37.25 | Remaining:00:16.91 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 33/48
+{
+  "name": "sentia",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  }
+}
 
 exec
-/bin/bash -lc 'tail -22 /tmp/capture.log; tail -3 evidence/web-render-finish/build-1.log' in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-Loading study
-Study loaded
-Freezing capture clock
-Capture clock frozen
-Captured assembled
-Fra:1 Mem:27.30M (Peak 33.43M) | Time:00:00.04 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Sample 0/48
-Fra:1 Mem:157.05M (Peak 157.05M) | Time:00:01.25 | Remaining:00:56.93 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 1/48
-Fra:1 Mem:157.05M (Peak 157.05M) | Time:00:37.25 | Remaining:00:16.91 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 33/48
-
-exec
-/bin/bash -lc "python - <<'PY'
-p='src/take-apart-client.js';s=open(p).read().replace(\"          // Vertical exaggeration also stretches side normals; keep grain on the crown.\",\"          // Preserve beat-scale grain while the true-scale beauty uses a finer finish.\\n          copy.normalMap = copy.normalMap.clone(); copy.normalMap.repeat.set(2,2);\\n          copy.normalScale.setScalar(.85);\\n          // Vertical exaggeration also stretches side normals; keep grain on the crown.\").replace('mix(.005, .9, grainCrown)','mix(.005, .65, grainCrown)');open(p,'w').write(s)
-PY
-tail -4 evidence/web-render-finish/build-1.log; tail -8 /tmp/capture.log" in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-Fra:1 Mem:27.31M (Peak 33.37M) | Time:00:00.03 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Updating Device | Writing constant memory
-Fra:1 Mem:27.32M (Peak 33.37M) | Time:00:00.03 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
-Fra:1 Mem:27.32M (Peak 33.37M) | Time:00:00.03 | Mem:2.91M, Peak:2.91M | Scene, ViewLayer | Sample 0/48
-Fra:1 Mem:99.84M (Peak 99.84M) | Time:00:00.39 | Remaining:00:16.76 | Mem:75.40M, Peak:75.40M | Scene, ViewLayer | Sample 1/48
-Loading study
-Study loaded
-Freezing capture clock
-Capture clock frozen
-Captured assembled
-Captured apart
-
- succeeded in 89372ms:
-codex
-The new assembled beat shows a teal line within the gray socket border. The finer grain became too faint in the browser, so I’ve restored the prior browser grain scale and strength while keeping the softer finish for the beauty renders. Geometry and binary mesh data compare identically with round 2.
-
-exec
-/bin/bash -lc 'PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs WRANGLER_BIN=/tmp/sentia-browser/node_modules/.bin/wrangler CAPTURE_PORT=8792 node scripts/capture-take-apart.mjs > /tmp/capture-final.log 2>&1' in /home/runner/work/sentia/sentia
-exec
-/bin/bash -lc 'cp src/patch-one-glb.js /tmp/export-1.js; setsid blender --background --python blender/build_all.py > evidence/web-render-finish/build-2.log 2>&1' in /home/runner/work/sentia/sentia
-exec
-/bin/bash -lc 'tail -14 /tmp/capture.log; tail -14 /tmp/capture-final.log; tail -3 evidence/web-render-finish/build-2.log' in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-Loading study
-Study loaded
-Freezing capture clock
-Capture clock frozen
-Captured assembled
-Captured apart
-Captured board
-Captured xray
-Loading study
-Study loaded
-Freezing capture clock
-Capture clock frozen
-Captured assembled
-Fra:1 Mem:157.05M (Peak 157.05M) | Time:00:01.61 | Remaining:01:13.53 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 1/48
-Fra:1 Mem:157.05M (Peak 157.05M) | Time:00:23.61 | Remaining:00:42.97 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 17/48
-Fra:1 Mem:157.05M (Peak 157.05M) | Time:00:45.06 | Remaining:00:20.46 | Mem:132.62M, Peak:132.62M | Scene, ViewLayer | Sample 33/48
-
-exec
-/bin/bash -lc "cat > evidence/web-render-finish/comparison.md <<'EOF'
-# Final loopback builder comparison
-
-Before is round 2's committed after capture, copied without modifying pixels or pass logs as directed by this packet. It retains readable board metals and cover grain, but the optical strip is gray-green. After and the standard evidence are generated by scripts/capture-take-apart.mjs from a clean Wrangler production bundle served locally with --no-bundle.
-
-S5: adjusted only the optical window and emitter materials on load: dark teal diffuse color, saturated teal emission, no environment reflection, no clearcoat on the window, and exemption from filmic tone mapping. The window is opaque at normal layer opacity to avoid washing the emission into the bright surface behind it. Existing layer focus/x-ray opacity rules still apply. The existing recessed geometry supplies the gray socket border; no LED position or proportions changed. The assembled and mid beats should be judged at their native resolution against before and product-reference.png.
-
-R6: the deterministic silicone normal tile now repeats three times instead of twice and has strength .5 instead of .85, reducing both grain size and relief in the beauty renders. The browser material retains the round 2 tile repeat and normal strength to preserve the already-reviewed beat-scale grain. No new texture or geometry was generated. Both beauty renders are regenerated.
-
-S4: board materials, lighting, exposure and environment remain at round 2 settings. The new board and apart beats retain silver face highlights, darker packages, gold contacts and sensor rims against the green substrate. Compare these beats for regression; the remaining optical change does not retune the board.
-
-Geometry check: frozen-product.log records identical nodes, meshes, accessors, scenes, buffer layout and binary payload against the round 2 asset. The five layers, wordmark and LED geometry remain unchanged. Reproducibility and byte size are recorded in reproducibility.log.
-
-The capture runner isolates its local Worker process group so Wrangler shutdown cannot terminate the capture or concurrent Blender builds. An initial interrupted capture was discarded. Final logs and screenshots replace intermediate attempts. No unbundled page or client is used.
-
-Approval, identity clearance and deployment belong to later stations. This builder does not approve or deploy.
-EOF" in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-codex
-The first complete Blender build has finished. The second export is running to verify reproducibility. The final browser capture is also progressing through the five beats with the restored grain settings; afterward I’ll run the full suite and record any exceptions.
-
- succeeded in 207990ms:
- succeeded in 110595ms:
-exec
-/bin/bash -lc 'tail -8 /tmp/capture.log; tail -8 /tmp/capture-final.log; tail -4 evidence/web-render-finish/build-2.log; ls evidence/web-render-finish/*.md' in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-Captured assembled
-Captured apart
-Captured board
-Captured xray
-Captured settle
-Checking asset failure: fetch
-Checking asset failure: parse
-Browser pass complete: zero console errors; gauge comparison PASS.
-Loading study
-Study loaded
-Freezing capture clock
-Capture clock frozen
-Captured assembled
-Captured apart
-Captured board
-
-patch-one.glb bytes: 798072
-
-Blender quit
-evidence/web-render-finish/builder-notes.md
-evidence/web-render-finish/comparison.md
-
-exec
-/bin/bash -lc "python - <<'PY'
-from pathlib import Path
-import hashlib,base64
-p=Path('src/patch-one-glb.js').read_bytes();assert p==Path('/tmp/export-1.js').read_bytes();b=base64.b64decode(p.decode().split(\"'\")[1]);sha=lambda x:hashlib.sha256(x).hexdigest()
-s='Blender 4.5.15; two consecutive complete builds: blender --background --python blender/build_all.py\\n'
-for i in (1,2):s+=f'export {i} GLB SHA256 {sha(b)} bytes {len(b)} exit 0; module SHA256 {sha(p)}\\n'
-s+='PASS: two full exports byte identical; committed module equals export module byte for byte. Both beauty renders regenerated. Budget 819200 bytes.\\n'
-Path('evidence/web-render-finish/reproducibility.log').write_text(s)
-Path('evidence/web-render-finish/builder-notes.md').write_text(Path('evidence/web-render-finish/comparison.md').read_text());Path('evidence/web-render-finish/comparison.md').unlink()
-PY" in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-exec
-/bin/bash -lc 'tail -8 /tmp/capture-final.log; git status --short' in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-Loading study
-Study loaded
-Freezing capture clock
-Capture clock frozen
-Captured assembled
-Captured apart
-Captured board
-Captured xray
- M blender/build_patch_one.py
- M evidence/take-apart-product-model/browser-assembled.png
- M evidence/take-apart-product-model/bundle-build.log
- M evidence/take-apart-product-model/render-assembled.png
- M evidence/take-apart-product-model/render-exploded.png
- M evidence/take-apart/beat-apart.png
- M evidence/take-apart/beat-assembled.png
- M evidence/take-apart/beat-board.png
- M evidence/take-apart/beat-xray.png
- M evidence/web-render-finish/after/beat-apart.png
- M evidence/web-render-finish/after/beat-assembled.png
- M evidence/web-render-finish/after/beat-board.png
- M evidence/web-render-finish/after/beat-mid.png
- M evidence/web-render-finish/after/beat-xray.png
- M evidence/web-render-finish/after/browser-assembled.png
- M evidence/web-render-finish/after/browser-pass.log
- M evidence/web-render-finish/after/bundle-build.log
- M evidence/web-render-finish/after/contact-sheet.png
- M evidence/web-render-finish/before/beat-apart.png
- M evidence/web-render-finish/before/beat-assembled.png
- M evidence/web-render-finish/before/beat-board.png
- M evidence/web-render-finish/before/beat-mid.png
- M evidence/web-render-finish/before/beat-xray.png
- M evidence/web-render-finish/before/browser-assembled.png
- M evidence/web-render-finish/before/browser-pass.log
- M evidence/web-render-finish/before/bundle-build.log
- M evidence/web-render-finish/before/contact-sheet.png
- M evidence/web-render-finish/builder-notes.md
- M evidence/web-render-finish/frozen-product.log
- M evidence/web-render-finish/reproducibility.log
- D runs/wo-gh-14/builder.output.md
- M runs/wo-gh-14/builder.packet.md
- M runs/wo-gh-14/envelopes/intake.envelope.json
- M runs/wo-gh-14/envelopes/spec-writer.envelope.json
- M runs/wo-gh-14/envelopes/test-writer.envelope.json
- M runs/wo-gh-14/spec-writer.output.md
- M runs/wo-gh-14/spec-writer.packet.md
- M runs/wo-gh-14/test-writer.output.md
- M runs/wo-gh-14/test-writer.packet.md
- M scripts/capture-take-apart.mjs
- M src/patch-one-glb.js
- M src/take-apart-client.js
-?? evidence/web-render-finish/build-1.log
-?? evidence/web-render-finish/build-2.log
-
- succeeded in 149742ms:
-exec
-/bin/bash -lc 'tail -10 /tmp/capture-final.log' in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-Freezing capture clock
-Capture clock frozen
-Captured assembled
-Captured apart
-Captured board
-Captured xray
-Captured settle
-Checking asset failure: fetch
-Checking asset failure: parse
-Browser pass complete: zero console errors; gauge comparison PASS.
-
-exec
-/bin/bash -lc "cp evidence/take-apart/beat-*.png evidence/take-apart/contact-sheet.png evidence/take-apart/browser-pass.log evidence/web-render-finish/after/; cp evidence/take-apart-product-model/browser-assembled.png evidence/take-apart-product-model/bundle-build.log evidence/web-render-finish/after/; cp evidence/take-apart-product-model/bundle-build.log evidence/web-render-finish/bundle-build.log; npm test > runs/wo-gh-14/suite-final.log 2>&1; tail -12 runs/wo-gh-14/suite-final.log; rg 'not ok|# SKIP' runs/wo-gh-14/suite-final.log" in /home/runner/work/sentia/sentia
- succeeded in 1032ms:
-  duration_ms: 7.70187
+/bin/bash -lc "node --test tests/*.test.js > runs/wo-gh-14/builder-verification-tests.log 2>&1; tail -n 14 runs/wo-gh-14/builder-verification-tests.log; rg -n -A 18 '"'^not ok'"' runs/wo-gh-14/builder-verification-tests.log" in /home/runner/work/sentia/sentia
+ succeeded in 1648ms:
+ok 214 - web-render-finish S10: the run diff against the setup commit names only the allowed paths
+  ---
+  duration_ms: 4.221031
   type: 'test'
   ...
 1..214
@@ -1800,131 +729,163 @@ exec
 # cancelled 0
 # skipped 1
 # todo 0
-# duration_ms 1057.792954
-not ok 98 - S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/
-ok 191 - ui-elevation S4: codec, data, mcp and index are untouched by the run # SKIP no main ref to diff against
+# duration_ms 1733.033352
+585:not ok 98 - S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/
+586-  ---
+587-  duration_ms: 10.58305
+588-  type: 'test'
+589-  location: '/home/runner/work/sentia/sentia/tests/design-v4-square-product.test.js:431:1'
+590-  failureType: 'testCodeFailure'
+591-  error: |-
+592-    Expected values to be strictly deep-equal:
+593-    + actual - expected
+594-    
+595-    + [
+596-    +   'patch-exploded / mounting not cleared',
+597-    +   'patch-exploded has an uncleared gap',
+598-    +   'patch-exploded not cleared'
+599-    + ]
+600-    - []
+601-    
+602-  code: 'ERR_ASSERTION'
+603-  name: 'AssertionError'
 
 exec
-/bin/bash -lc "python - <<'PY'
-p='src/take-apart-client.js';s=open(p).read();needle='  const ns=\\'http://www.w3.org/2000/svg\\';';insert='''  // Local emitter spill lights the pocket walls at the exaggerated study scale.
-  // The sources stay inside the existing optical recess and follow its cover.
-  for (const x of [-3,0,3]) {
-    const spill = new THREE.PointLight(0x08d9b5,.7,2,2);
-    spill.position.set(x,.27,3.2); meshes[0].add(spill);
-  }
-''';assert needle in s;s=s.replace(needle,insert+needle);open(p,'w').write(s)
-PY
-PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs WRANGLER_BIN=/tmp/sentia-browser/node_modules/.bin/wrangler CAPTURE_PORT=8793 node scripts/capture-take-apart.mjs > /tmp/capture-final.log 2>&1" in /home/runner/work/sentia/sentia
+/bin/bash -lc "cat evidence/web-render-finish/builder-notes.md; git rev-parse HEAD; git cat-file -e '62f98b3"'^{commit}'"'; git diff --name-only HEAD; git ls-files --others --exclude-standard" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+# Final loopback builder comparison
+
+Before is round 2's committed after capture, copied without modifying pixels or pass logs as directed by this packet. It retains readable board metals and cover grain, but the optical strip is gray-green. After and the standard evidence are generated by scripts/capture-take-apart.mjs from a clean Wrangler production bundle served locally with --no-bundle.
+
+S5: adjusted the optical window and emitter materials on load: dark teal diffuse color, saturated teal emission, no environment reflection, no clearcoat on the window, and exemption from filmic tone mapping. The window is opaque at normal layer opacity to avoid washing the emission into the bright surface behind it. Existing layer focus/x-ray opacity rules still apply. Three short-range teal point lights inside the recess supply local emitter spill on the pocket walls, following the cover without moving any geometry. The existing recessed geometry supplies the gray socket border; no LED position or proportions changed. The assembled and mid beats should be judged at their native resolution against before and product-reference.png.
+
+R6: the deterministic silicone normal tile now repeats three times instead of twice and has strength .5 instead of .85, reducing both grain size and relief in the beauty renders. The browser material retains the round 2 tile repeat and normal strength to preserve the already-reviewed beat-scale grain. No new texture or geometry was generated. Both beauty renders are regenerated.
+
+S4: board materials, studio lighting, exposure and environment remain at round 2 settings. The new board and apart beats retain silver face highlights, darker packages, gold contacts and sensor rims against the green substrate. Compare these beats for regression; the remaining optical change does not retune the board.
+
+Geometry check: frozen-product.log records identical nodes, meshes, accessors, scenes, buffer layout and binary payload against the round 2 asset. The five layers, wordmark and LED geometry remain unchanged. Reproducibility and byte size are recorded in reproducibility.log.
+
+The capture runner isolates its local Worker process group so Wrangler shutdown cannot terminate the capture or concurrent Blender builds. An initial interrupted capture was discarded. Final logs and screenshots replace intermediate attempts. No unbundled page or client is used.
+
+Approval, identity clearance and deployment belong to later stations. This builder does not approve or deploy.
+44ea7e27515c4af49c55e3073ef77f526f5a2390
+fatal: Not a valid object name 62f98b3^{commit}
+runs/wo-gh-14/builder.output.md
+runs/wo-gh-14/builder.packet.md
+runs/wo-gh-14/envelopes/intake.envelope.json
+runs/wo-gh-14/envelopes/spec-writer.envelope.json
+runs/wo-gh-14/envelopes/test-writer.envelope.json
+runs/wo-gh-14/spec-writer.output.md
+runs/wo-gh-14/spec-writer.packet.md
+runs/wo-gh-14/test-writer.output.md
+runs/wo-gh-14/test-writer.packet.md
+runs/wo-gh-14/builder-verification-tests.log
+
 codex
-Both Blender exports match byte for byte, and the GLB is 798,072 bytes. The suite reports 212 passes, the known S11 failure, and one existing skip. I’m checking one final lighting adjustment: teal spill confined to the LED pocket, to make the emitter more distinct in the smaller mid beat.
-
+The recorded captures show zero console and page errors, and the after capture records the expected 798,072-byte GLB. The suite has 212 passes, one skip, and only the pre-existing design v4 S11 failure. I’ll record those results and the unavailable setup-commit comparison as a verification limitation.
 exec
-/bin/bash -lc 'tail -8 /tmp/capture-final.log' in /home/runner/work/sentia/sentia
+/bin/bash -lc "node --input-type=module <<'JS'
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import assert from 'node:assert/strict';
+import {execFileSync} from 'node:child_process';
+import * as mod from './src/patch-one-glb.js';
+const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+const bytes=Buffer.from(Object.values(mod).find(v=>typeof v==='string'),'base64');
+assert.equal(bytes.length,798072);
+console.log('GLB bytes:',bytes.length,'budget:',819200,'headroom:',819200-bytes.length,'SHA256:',sha(bytes));
+console.log('module SHA256:',sha(fs.readFileSync('src/patch-one-glb.js')));
+for(const name of ['beat-assembled.png','beat-mid.png','beat-apart.png','beat-board.png','beat-xray.png','contact-sheet.png','browser-pass.log']) {
+ const after=fs.readFileSync('evidence/web-render-finish/after/'+name);
+ assert.deepEqual(after,fs.readFileSync('evidence/take-apart/'+name));
+ for(const set of ['before','after']) {
+  const p='evidence/web-render-finish/'+set+'/'+name;
+  assert.deepEqual(fs.readFileSync(p),execFileSync('git',['show','HEAD:'+p],{maxBuffer:20*1024*1024}));
+ }
+ console.log(name+': committed before/after; after equals standard capture');
+}
+JS
+rg -n -B 2 -A 2 '# SKIP' runs/wo-gh-14/builder-verification-tests.log; git diff --quiet HEAD -- src blender evidence design .openspec tests; echo frozen_paths_diff_exit:"'$?' in /home/runner/work/sentia/sentia
  succeeded in 0ms:
-Loading study
-Study loaded
-Freezing capture clock
-Capture clock frozen
-Captured assembled
-Captured apart
-Captured board
+GLB bytes: 798072 budget: 819200 headroom: 21128 SHA256: 5a1438dae703eb3647d4a77baf3b6f5b74e1db3b5f56ae6a54e7de3a1b032aeb
+module SHA256: ecd7f6647636a6ef37591b632e086045b7ac44adfc271b61089fda6f986b2fbd
+beat-assembled.png: committed before/after; after equals standard capture
+beat-mid.png: committed before/after; after equals standard capture
+beat-apart.png: committed before/after; after equals standard capture
+beat-board.png: committed before/after; after equals standard capture
+beat-xray.png: committed before/after; after equals standard capture
+contact-sheet.png: committed before/after; after equals standard capture
+browser-pass.log: committed before/after; after equals standard capture
+1174-  ...
+1175-# Subtest: ui-elevation S4: codec, data, mcp and index are untouched by the run
+1176:ok 191 - ui-elevation S4: codec, data, mcp and index are untouched by the run # SKIP no main ref to diff against
+1177-  ---
+1178-  duration_ms: 10.206817
+frozen_paths_diff_exit:0
+
+apply patch
+patch: completed
+/home/runner/work/sentia/sentia/runs/wo-gh-14/builder.output.md
+diff --git a/runs/wo-gh-14/builder.output.md b/runs/wo-gh-14/builder.output.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..39bcf629bdf71aded95875ecbc823c78aa133904
+--- /dev/null
++++ b/runs/wo-gh-14/builder.output.md
+@@ -0,0 +1,33 @@
++# Builder frozen-state verification
++
++Work order: wo-gh-14. Verified 2026-11-03 against HEAD 44ea7e27515c4af49c55e3073ef77f526f5a2390. This is verification only, not an approval. No product, asset, spec, test or bundled evidence was changed; no rebuild, recapture or deployment was performed.
++
++## Asset and reproducibility (S1–S3)
++
++The decoded committed GLB measures 798,072 bytes against the 819,200-byte budget, leaving 21,128 bytes. The suite also verifies that the Worker route serves those same bytes and checks the five FACTS nodes, translations, footprint, profile and layer thicknesses.
++
++GLB SHA256: `5a1438dae703eb3647d4a77baf3b6f5b74e1db3b5f56ae6a54e7de3a1b032aeb`.
++
++Module SHA256: `ecd7f6647636a6ef37591b632e086045b7ac44adfc271b61089fda6f986b2fbd`.
++
++Both freshly measured hashes match evidence/web-render-finish/reproducibility.log. That committed proof records two consecutive Blender 4.5.15 build_all.py exports, each exit 0, with identical GLB and module hashes and the same byte size. Reproducibility was checked against the existing proof, not rerun.
++
++## Bundled evidence (S4–S7)
++
++Before and after each contain all five PNG beats, the contact sheet and browser-pass.log, byte identical to their committed HEAD versions. Tests verify PNG signatures, dimensions and differing before/after assembled, mid, apart and board beats. Every after beat, its contact sheet and browser log also match evidence/take-apart/ byte for byte. Supporting beauty renders and the identity reference are present and pass the evidence checks.
++
++Before records 798,088 GLB bytes; after and standard capture record 798,072. The existing builder notes explicitly identify before as the prior round's after capture. This is consistent with the final LED loopback baseline in the work order; the spec's 798,092 figure describes the older wo-gh-12 asset.
++
++All three browser logs record zero console errors, zero page errors, scene ready true, a successful GLB fetch, the five expected named nodes, passing gauge comparison and passing fetch/parse failure checks. They name locally served bundled Worker outputs with --no-bundle. The committed bundle-build.log records the Wrangler deploy --dry-run --outdir command, exit status 0 and no local patches. These are existing capture records, not a new browser execution.
++
++The frozen builder notes document the prior LED material/emission changes and local recessed lighting; they record unchanged board material/lighting settings, preserved browser grain and finer beauty-render grain. Visual clearance of LED readability, board finishes, cover grain and identity remains reviewer-design's task. No new product-change finding is raised by this verification.
++
++## Tests and limitations (S8–S10)
++
++Ran `node --test tests/*.test.js`; results are preserved in runs/wo-gh-14/builder-verification-tests.log: 214 tests, 212 passed, 1 failed, 1 skipped. All 16 web-render-finish tests report passing.
++
++The sole failure is the pre-existing sibling item, separately itemized: `S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/` at tests/design-v4-square-product.test.js:431. Its assertions report `patch-exploded / mounting not cleared`, `patch-exploded has an uncleared gap`, and `patch-exploded not cleared`. Per the work order, this belongs to the approved wo-gh-10 sibling branch; it was neither absorbed nor fixed here.
++
++The skip is `ui-elevation S4: codec, data, mcp and index are untouched by the run`, because no main ref is available. Setup commit 62f98b3 is also unavailable in this checkout: assertions guarded by setupReachable() return early, so historical scope, frozen-file and asset-change comparisons are not fully exercised. This includes conditional portions of R5, R2–R4, S6, S8 and S10; the hash-based S3 reproducibility proof does run. No history was fetched or baseline changed.
++
++Direct `git diff --quiet HEAD -- src blender evidence design .openspec tests` succeeds. All working-tree changed and untracked paths are confined to runs/wo-gh-14/. Existing upstream packet/output/envelope changes were left alone. This station writes only this verification and builder-verification-tests.log. The workflow's later after-line suite and the five formal reviews remain separate required records; this verification grants no approval and triggers no deployment.
 
 exec
-/bin/bash -lc "python - <<'PY'
-p='evidence/web-render-finish/builder-notes.md';s=open(p).read().replace('S5: adjusted only the optical window and emitter materials on load:', 'S5: adjusted the optical window and emitter materials on load:').replace('The existing recessed geometry supplies the gray socket border;', 'Three short-range teal point lights inside the recess supply local emitter spill on the pocket walls, following the cover without moving any geometry. The existing recessed geometry supplies the gray socket border;').replace('board materials, lighting, exposure and environment remain', 'board materials, studio lighting, exposure and environment remain');open(p,'w').write(s)
-PY
-cat evidence/web-render-finish/reproducibility.log; git diff --check" in /home/runner/work/sentia/sentia
+/bin/bash -lc 'git diff --check; git status --short' in /home/runner/work/sentia/sentia
  succeeded in 0ms:
-Blender 4.5.15; two consecutive complete builds: blender --background --python blender/build_all.py
-export 1 GLB SHA256 5a1438dae703eb3647d4a77baf3b6f5b74e1db3b5f56ae6a54e7de3a1b032aeb bytes 798072 exit 0; module SHA256 ecd7f6647636a6ef37591b632e086045b7ac44adfc271b61089fda6f986b2fbd
-export 2 GLB SHA256 5a1438dae703eb3647d4a77baf3b6f5b74e1db3b5f56ae6a54e7de3a1b032aeb bytes 798072 exit 0; module SHA256 ecd7f6647636a6ef37591b632e086045b7ac44adfc271b61089fda6f986b2fbd
-PASS: two full exports byte identical; committed module equals export module byte for byte. Both beauty renders regenerated. Budget 819200 bytes.
+ M runs/wo-gh-14/builder.output.md
+ M runs/wo-gh-14/builder.packet.md
+ M runs/wo-gh-14/envelopes/intake.envelope.json
+ M runs/wo-gh-14/envelopes/spec-writer.envelope.json
+ M runs/wo-gh-14/envelopes/test-writer.envelope.json
+ M runs/wo-gh-14/spec-writer.output.md
+ M runs/wo-gh-14/spec-writer.packet.md
+ M runs/wo-gh-14/test-writer.output.md
+ M runs/wo-gh-14/test-writer.packet.md
+?? runs/wo-gh-14/builder-verification-tests.log
 
- succeeded in 76398ms:
-exec
-/bin/bash -lc 'tail -8 /tmp/capture-final.log' in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-Captured assembled
-Captured apart
-Captured board
-Captured xray
-Captured settle
-Checking asset failure: fetch
-Checking asset failure: parse
-Browser pass complete: zero console errors; gauge comparison PASS.
+codex
+Wrote verification and test results under runs/wo-gh-14/. Confirmed the 798,072-byte GLB and consistent committed evidence with zero recorded browser errors.
 
-exec
-/bin/bash -lc "cp evidence/take-apart/beat-*.png evidence/take-apart/contact-sheet.png evidence/take-apart/browser-pass.log evidence/web-render-finish/after/; cp evidence/take-apart-product-model/browser-assembled.png evidence/take-apart-product-model/bundle-build.log evidence/web-render-finish/after/; cp evidence/take-apart-product-model/bundle-build.log evidence/web-render-finish/bundle-build.log; npm test > runs/wo-gh-14/suite-final.log 2>&1; tail -10 runs/wo-gh-14/suite-final.log; rg 'not ok|# SKIP' runs/wo-gh-14/suite-final.log" in /home/runner/work/sentia/sentia
- succeeded in 995ms:
-  ...
-1..214
-# tests 214
-# suites 0
-# pass 212
-# fail 1
-# cancelled 0
-# skipped 1
-# todo 0
-# duration_ms 1030.278839
-not ok 98 - S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/
-ok 191 - ui-elevation S4: codec, data, mcp and index are untouched by the run # SKIP no main ref to diff against
-
-ERROR: Reconnecting... 1/5
-ERROR: Reconnecting... 2/5
-ERROR: Reconnecting... 3/5
-ERROR: Reconnecting... 4/5
-ERROR: Reconnecting... 5/5
-ERROR: unexpected status 402 Payment Required: Insufficient unified billing balance for this request. Your available balance is $0.55. Add credits on the AI Gateway Cloudflare dashboard, or use your own provider key (BYOK)., url: https://api.cloudflare.com/client/v4/accounts/693ae9c587f1f2c34328bb47447366b0/ai/v1/responses, cf-ray: a5400dd8194db32d-MSP
-ERROR: unexpected status 402 Payment Required: Insufficient unified billing balance for this request. Your available balance is $0.55. Add credits on the AI Gateway Cloudflare dashboard, or use your own provider key (BYOK)., url: https://api.cloudflare.com/client/v4/accounts/693ae9c587f1f2c34328bb47447366b0/ai/v1/responses, cf-ray: a5400dd8194db32d-MSP
+Suite: 212 passed, one skipped, only the known S11 failure. Product files remain unchanged; no approval or deployment performed.
 tokens used
-79,823
+31,273
+Wrote verification and test results under runs/wo-gh-14/. Confirmed the 798,072-byte GLB and consistent committed evidence with zero recorded browser errors.
 
-[astra wrapper failure]
-astra wrapper: codex exited 1 for station builder; the full codex output is in runs/wo-gh-14/builder.output.md.codex.txt; tail:
-onment remain', 'board materials, studio lighting, exposure and environment remain');open(p,'w').write(s)
-PY
-cat evidence/web-render-finish/reproducibility.log; git diff --check" in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-Blender 4.5.15; two consecutive complete builds: blender --background --python blender/build_all.py
-export 1 GLB SHA256 5a1438dae703eb3647d4a77baf3b6f5b74e1db3b5f56ae6a54e7de3a1b032aeb bytes 798072 exit 0; module SHA256 ecd7f6647636a6ef37591b632e086045b7ac44adfc271b61089fda6f986b2fbd
-export 2 GLB SHA256 5a1438dae703eb3647d4a77baf3b6f5b74e1db3b5f56ae6a54e7de3a1b032aeb bytes 798072 exit 0; module SHA256 ecd7f6647636a6ef37591b632e086045b7ac44adfc271b61089fda6f986b2fbd
-PASS: two full exports byte identical; committed module equals export module byte for byte. Both beauty renders regenerated. Budget 819200 bytes.
-
- succeeded in 76398ms:
-exec
-/bin/bash -lc 'tail -8 /tmp/capture-final.log' in /home/runner/work/sentia/sentia
- succeeded in 0ms:
-Captured assembled
-Captured apart
-Captured board
-Captured xray
-Captured settle
-Checking asset failure: fetch
-Checking asset failure: parse
-Browser pass complete: zero console errors; gauge comparison PASS.
-
-exec
-/bin/bash -lc "cp evidence/take-apart/beat-*.png evidence/take-apart/contact-sheet.png evidence/take-apart/browser-pass.log evidence/web-render-finish/after/; cp evidence/take-apart-product-model/browser-assembled.png evidence/take-apart-product-model/bundle-build.log evidence/web-render-finish/after/; cp evidence/take-apart-product-model/bundle-build.log evidence/web-render-finish/bundle-build.log; npm test > runs/wo-gh-14/suite-final.log 2>&1; tail -10 runs/wo-gh-14/suite-final.log; rg 'not ok|# SKIP' runs/wo-gh-14/suite-final.log" in /home/runner/work/sentia/sentia
- succeeded in 995ms:
-  ...
-1..214
-# tests 214
-# suites 0
-# pass 212
-# fail 1
-# cancelled 0
-# skipped 1
-# todo 0
-# duration_ms 1030.278839
-not ok 98 - S11: when reviewer-design has reviewed, it addresses and clears all four images against design/reference/
-ok 191 - ui-elevation S4: codec, data, mcp and index are untouched by the run # SKIP no main ref to diff against
-
-ERROR: Reconnecting... 1/5
-ERROR: Reconnecting... 2/5
-ERROR: Reconnecting... 3/5
-ERROR: Reconnecting... 4/5
-ERROR: Reconnecting... 5/5
-ERROR: unexpected status 402 Payment Required: Insufficient unified billing balance for this request. Your available balance is $0.55. Add credits on the AI Gateway Cloudflare dashboard, or use your own provider key (BYOK)., url: https://api.cloudflare.com/client/v4/accounts/693ae9c587f1f2c34328bb47447366b0/ai/v1/responses, cf-ray: a5400dd8194db32d-MSP
-ERROR: unexpected status 402 Payment Required: Insufficient unified billing balance for this request. Your available balance is $0.55. Add credits on the AI Gateway Cloudflare dashboard, or use your own provider key (BYOK)., url: https://api.cloudflare.com/client/v4/accounts/693ae9c587f1f2c34328bb47447366b0/ai/v1/responses, cf-ray: a5400dd8194db32d-MSP
-tokens used
-79,823
+Suite: 212 passed, one skipped, only the known S11 failure. Product files remain unchanged; no approval or deployment performed.
