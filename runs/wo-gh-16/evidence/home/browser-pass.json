@@ -1,0 +1,36 @@
+{
+  "capturedAt": "2026-11-03T09:24:20.542Z",
+  "command": [
+    "/tmp/sentia-browser/node_modules/.bin/wrangler",
+    "dev",
+    "/tmp/sentia-audit-home-asQe1w/index.js",
+    "--no-bundle",
+    "--local",
+    "--ip",
+    "127.0.0.1",
+    "--port",
+    "8792",
+    "--persist-to",
+    "/tmp/sentia-audit-state-bUeNvB"
+  ],
+  "results": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 1050,
+      "status": 200,
+      "fullHeight": 15427,
+      "errors": [],
+      "pageErrors": []
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "fullHeight": 20553,
+      "errors": [],
+      "pageErrors": []
+    }
+  ]
+}

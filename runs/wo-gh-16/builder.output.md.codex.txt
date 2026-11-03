@@ -1,0 +1,1536 @@
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-djkbnog7"))
+Reading additional input from stdin...
+OpenAI Codex v0.166.0
+--------
+workdir: /home/runner/work/sentia/sentia
+model: openai/gpt-6-astra
+provider: cloudflare
+approval: never
+sandbox: danger-full-access
+reasoning effort: none
+reasoning summaries: none
+session id: 01a1a0b4-b80e-7fc3-a049-43af2dfa5866
+--------
+user
+You are executing an ANVIL station packet inside this repository. Follow the packet exactly, edit the files it asks for, and finish with a brief plain text summary of what you changed.
+
+## Station prompt
+
+# Builder
+
+## Role
+Implement the spec so the scenario tests pass.
+
+## Inputs
+- spec
+- tests
+
+## Outputs
+- code change
+
+## Rules
+- Work only from the inputs listed above and the work order in the packet.
+- Produce the output as a file in the repo, not as chat text.
+- If the inputs are not enough, say what is missing instead of guessing.
+- Never approve your own work. Approval belongs to a different station.
+- Keep the change small and mapped to a spec scenario where one applies.
+
+
+## Project design
+
+
+## Verified learnings
+
+- L-1: Art direction is imagery first; flat SVG as the primary visual language was rejected by the product owner and must not return as a section's main visual. (provenance: run wo-gh-2, artifact design/DESIGN.md, evidence verdict approved)
+- L-2: Product imagery sits seamlessly on the brand paper #FAFAF6 (no studio backgrounds, no visible image rectangles), verified by corner and edge sampling within 3 per channel. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-3: The patch reads at true 38 mm scale with explicit scale anchors, and on-skin imagery is strict inner forearm framing only. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-4: The product is the protagonist: the patch appears large and early, the page must not read empty or editorial, and display type must not crowd out the product. (provenance: run wo-gh-3, artifact src/page.js, evidence verdict changes_requested)
+- L-5: The current product render set is owner approved, especially the patch render; composition iterations keep src/images.js byte identical and never regenerate product imagery. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-6: Product imagery for Sentia meets the production quality bar anchored in design/reference/: photorealistic studio quality with real materials and physically consistent light; stylized or toy-like renders fail review. Reviewer-design compares every new product image against the anchor boards and names the gaps. (provenance: run wo-gh-5, artifact src/images.js, evidence verdict changes_requested)
+- L-7: The product is the square low profile patch anchored in design/reference/ and the round disc renders are retired; L-2, L-3 and L-5 stand as amended by the design v4 spec: photographic treatment instead of seamless paper backgrounds, limb close ups (inner forearm or upper arm) instead of inner forearm only, and the render set replaceable through an owner decided work order instead of frozen byte identical. (provenance: run wo-gh-6, artifact src/images.js, evidence verdict approved)
+
+## Work order
+
+- id: wo-gh-16
+- kind: task
+- title: Design audit: home and take apart against the design system (proof run)
+- source: github-issue
+- description: Design audit of the current Sentia home page and take apart page against the design system, with the product tree frozen. The governing text is .openspec/specs/design-audit/spec.md; this work order summarises it and the spec wins any conflict.
+
+This is an audit, not a build. The builder implements NOTHING: no product file (src/, blender/, design/, package files, wrangler config) is created, modified or deleted. The builder's only tasks: (1) produce fresh captures of the current home page and take apart page from the current tree using the project's established capture tooling (the capture scripts and bundled page rendering used by wo-gh-14), placed in the run evidence at full resolution; (2) verify and record in its output that the product tree is byte unchanged (a git status and diff check against the base commit, run evidence and the workflow's own suite bookkeeping files excepted). If a capture cannot be produced without touching product code, the builder records that as a blocker instead of changing code.
+
+Reviewer-design judges the captures against design/DESIGN.md, design/tokens.json and the reference quality boards in design/reference/, and its verdict is on the CURRENT design state: findings name the documented quality bar, the evidence capture and the gap; a pass states the current pages meet the documented bars. The other reviewers verify scope discipline (frozen tree, genuine captures of the current tree, evidence complete) and the audit trail.
+
+Context for the line: this order is the proof run for anvil-factory issue 21 (design route consumption). This branch's workflow pins the ANVIL factory checkout to anvil-factory main, which carries the merged consumption mechanisms: packet budgets with a deterministic estimator, one contact sheet per design review round as the reviewer-design evidence image, a fresh scoped reviewer-design packet whose content is allowlist verified by provenance before any model call, a stable prefix packet layout, and per station measurements (configured and executed models, measured packet tokens, executor reported usage or null) in the run report. Work normally under those mechanisms; do not work around them. Nothing in this order's artifacts claims a consumption saving: the operator measures the design route from the gateway logs after the run, against the audited baseline of about 45,000 input tokens per request.
+
+Review channel discipline: each reviewer's review is exactly one JSON object in its own runs/wo-gh-16/<station>.review.json, written through the scoped channel its packet names; prose belongs in .output.md and is never a verdict.
+
+No deployment is part of this order. GitHub issue: https://github.com/arananet/sentia/issues/16
+- risk_hints: 
+- status: new
+
+## Upstream steps
+
+- intake: completed
+- spec-writer: failed
+- test-writer: failed
+codex
+I’ll read the governing spec and capture tooling, capture both current pages, and record whether the frozen product tree matches the base commit.
+exec
+/bin/bash -lc "pwd; rg --files -g 'AGENTS.md' -g '*capture*' -g '*spec*' -g '*test*' -g '*output*' -g 'package.json' -g '*wo-gh-14*' -g '*wo-gh-16*' -g '*packet*' -g '*render*' -g '*report*' -g '*base*' .openspec runs scripts .github package.json" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+/home/runner/work/sentia/sentia
+scripts/capture-take-apart.mjs
+.openspec/specs/s11-semantic-assertion/spec.md
+.openspec/specs/site-credit/spec.md
+.openspec/specs/imagery-consistency/spec.md
+.openspec/specs/ui-elevation/spec.md
+.openspec/specs/take-apart-product-model/spec.md
+.openspec/specs/design-v3-product-first/spec.md
+.openspec/specs/design-v2-imagery/spec.md
+.openspec/specs/take-apart/spec.md
+.openspec/specs/live-demo/spec.md
+.openspec/specs/mcp-server/spec.md
+.openspec/specs/take-apart-bundling/spec.md
+.openspec/specs/possible-applications/spec.md
+.openspec/specs/ingestion-api/spec.md
+.openspec/specs/dashboard-data/spec.md
+.openspec/specs/core-worker/spec.md
+.openspec/specs/packet-codec/spec.md
+.openspec/specs/web-render-finish/spec.md
+.openspec/specs/design-v4-square-product/spec.md
+.openspec/specs/s11-rebaseline/spec.md
+.openspec/specs/design-audit/spec.md
+package.json
+runs/wo-gh-8/observer.packet.md
+runs/wo-gh-8/builder.output.md.codex.txt
+runs/wo-gh-8/reviewer-spec.output.md
+runs/wo-gh-8/test-writer.packet.md
+runs/wo-gh-8/spec-writer.packet.md
+runs/wo-gh-8/test-writer.output.md
+runs/wo-gh-8/reviewer-security.packet.md
+runs/wo-gh-14/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-14/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-14/envelopes/spec-writer.envelope.json
+runs/wo-gh-14/envelopes/test-writer.envelope.json
+runs/wo-gh-14/reviewer-tests.packet.md
+runs/wo-gh-14/observer.output.md
+runs/wo-gh-14/reviewer-design.packet.md
+runs/wo-gh-14/deployer.packet.md
+runs/wo-gh-14/reviewer-architecture.packet.md
+runs/wo-gh-14/reviewer-architecture.output.md
+runs/wo-gh-14/builder.output.md
+runs/wo-gh-14/reviewer-security.output.md
+runs/wo-gh-14/builder.packet.md
+runs/wo-gh-14/reviewer-spec.packet.md
+runs/wo-gh-14/builder-verification-tests.log
+runs/wo-gh-14/reviewer-tests.output.md
+runs/wo-gh-14/report.json
+runs/wo-gh-14/reviewer-design.output.md
+runs/wo-gh-14/spec-writer.output.md
+runs/wo-gh-14/reviewer-design.output.md.codex.txt
+runs/wo-gh-14/observer.packet.md
+runs/wo-gh-14/builder.output.md.codex.txt
+runs/wo-gh-14/reviewer-spec.output.md
+runs/wo-gh-14/test-writer.packet.md
+runs/wo-gh-14/spec-writer.packet.md
+runs/wo-gh-14/test-writer.output.md
+runs/wo-gh-14/reviewer-security.packet.md
+runs/wo-gh-8/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-8/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-8/envelopes/spec-writer.envelope.json
+runs/wo-gh-8/envelopes/test-writer.envelope.json
+runs/wo-gh-8/reviewer-tests.packet.md
+runs/wo-gh-8/observer.output.md
+runs/wo-gh-8/reviewer-design.packet.md
+runs/wo-gh-8/deployer.packet.md
+runs/wo-gh-8/reviewer-architecture.packet.md
+runs/wo-gh-8/reviewer-architecture.output.md
+runs/wo-gh-8/builder.output.md
+runs/wo-gh-8/reviewer-security.output.md
+runs/wo-gh-8/builder.packet.md
+runs/wo-gh-8/reviewer-spec.packet.md
+runs/wo-gh-8/reviewer-tests.output.md
+runs/wo-gh-8/report.json
+runs/wo-gh-8/reviewer-design.output.md
+runs/wo-gh-8/spec-writer.output.md
+runs/wo-gh-8/reviewer-design.output.md.codex.txt
+runs/wo-gh-3/reviewer-design.output.md
+runs/wo-gh-3/spec-writer.output.md
+runs/wo-gh-3/reviewer-design.output.md.codex.txt
+runs/wo-gh-3/observer.packet.md
+runs/wo-gh-3/builder.output.md.codex.txt
+runs/wo-gh-3/reviewer-spec.output.md
+runs/wo-gh-3/test-writer.packet.md
+runs/wo-gh-3/spec-writer.packet.md
+runs/wo-gh-3/test-writer.output.md
+runs/wo-gh-3/reviewer-security.packet.md
+runs/wo-gh-10/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-10/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-10/envelopes/spec-writer.envelope.json
+runs/wo-gh-10/envelopes/test-writer.envelope.json
+runs/wo-gh-10/reviewer-tests.packet.md
+runs/wo-gh-10/builder-suite-output.txt
+runs/wo-gh-10/observer.output.md
+runs/wo-gh-10/reviewer-design.packet.md
+runs/wo-gh-10/deployer.packet.md
+runs/wo-gh-10/reviewer-architecture.packet.md
+runs/wo-gh-10/reviewer-architecture.output.md
+runs/wo-gh-10/builder.output.md
+runs/wo-gh-10/reviewer-security.output.md
+runs/wo-gh-10/builder.packet.md
+runs/wo-gh-10/reviewer-spec.packet.md
+runs/wo-gh-10/reviewer-tests.output.md
+runs/wo-gh-10/report.json
+runs/wo-gh-10/reviewer-design.output.md
+runs/wo-gh-10/spec-writer.output.md
+runs/wo-gh-10/builder-targeted-tests.txt
+runs/wo-gh-10/reviewer-design.output.md.codex.txt
+runs/wo-gh-10/observer.packet.md
+runs/wo-gh-10/builder.output.md.codex.txt
+runs/wo-gh-10/reviewer-spec.output.md
+runs/wo-gh-10/test-writer.packet.md
+runs/wo-gh-10/builder-baseline-suite.txt
+runs/wo-gh-10/spec-writer.packet.md
+runs/wo-gh-10/test-writer.output.md
+runs/wo-gh-10/reviewer-security.packet.md
+runs/wo-gh-3/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-3/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-3/envelopes/spec-writer.envelope.json
+runs/wo-gh-3/envelopes/test-writer.envelope.json
+runs/wo-gh-3/reviewer-tests.packet.md
+runs/wo-gh-3/observer.output.md
+runs/wo-gh-3/reviewer-design.packet.md
+runs/wo-gh-3/deployer.packet.md
+runs/wo-gh-3/reviewer-architecture.packet.md
+runs/wo-gh-7/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-7/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-7/envelopes/spec-writer.envelope.json
+runs/wo-gh-7/envelopes/test-writer.envelope.json
+runs/wo-gh-7/reviewer-tests.packet.md
+runs/wo-gh-7/observer.output.md
+runs/wo-gh-7/reviewer-design.packet.md
+runs/wo-gh-7/deployer.packet.md
+runs/wo-gh-7/reviewer-architecture.packet.md
+runs/wo-gh-7/reviewer-architecture.output.md
+runs/wo-gh-7/builder.output.md
+runs/wo-gh-7/reviewer-security.output.md
+runs/wo-gh-7/builder.packet.md
+runs/wo-gh-7/reviewer-spec.packet.md
+runs/wo-gh-7/reviewer-tests.output.md
+runs/wo-gh-7/report.json
+runs/wo-gh-7/reviewer-design.output.md
+runs/wo-gh-7/spec-writer.output.md
+runs/wo-gh-7/reviewer-design.output.md.codex.txt
+runs/wo-gh-7/observer.packet.md
+runs/wo-gh-7/builder.output.md.codex.txt
+runs/wo-gh-7/reviewer-spec.output.md
+runs/wo-gh-7/test-writer.packet.md
+runs/wo-gh-7/spec-writer.packet.md
+runs/wo-gh-7/test-writer.output.md
+runs/wo-gh-7/reviewer-security.packet.md
+runs/wo-gh-3/reviewer-architecture.output.md
+runs/wo-gh-3/builder.output.md
+runs/wo-gh-3/reviewer-security.output.md
+runs/wo-gh-3/builder.packet.md
+runs/wo-gh-3/reviewer-spec.packet.md
+runs/wo-gh-3/reviewer-tests.output.md
+runs/wo-gh-3/report.json
+runs/wo-gh-1/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-1/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-1/envelopes/spec-writer.envelope.json
+runs/wo-gh-1/envelopes/test-writer.envelope.json
+runs/wo-gh-1/reviewer-tests.packet.md
+runs/wo-gh-1/reviewer-tests.output.md
+runs/wo-gh-1/observer.output.md
+runs/wo-gh-1/reviewer-design.packet.md
+runs/wo-gh-1/report.json
+runs/wo-gh-1/deployer.packet.md
+runs/wo-gh-1/reviewer-architecture.packet.md
+runs/wo-gh-1/reviewer-design.output.md
+runs/wo-gh-1/reviewer-architecture.output.md
+runs/wo-gh-1/builder.output.md
+runs/wo-gh-1/spec-writer.output.md
+runs/wo-gh-1/reviewer-security.output.md
+runs/wo-gh-1/reviewer-design.output.md.codex.txt
+runs/wo-gh-1/builder.packet.md
+runs/wo-gh-1/reviewer-spec.packet.md
+runs/wo-gh-1/observer.packet.md
+runs/wo-gh-1/builder.output.md.codex.txt
+runs/wo-gh-1/reviewer-spec.output.md
+runs/wo-gh-1/test-writer.packet.md
+runs/wo-gh-1/spec-writer.packet.md
+runs/wo-gh-1/test-writer.output.md
+runs/wo-gh-1/reviewer-security.packet.md
+runs/wo-sentia-001/test-writer.packet.md
+runs/wo-sentia-001/spec-writer.packet.md
+runs/wo-sentia-001/reviewer-security.packet.md
+runs/wo-gh-12/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-12/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-12/envelopes/spec-writer.envelope.json
+runs/wo-gh-12/envelopes/test-writer.envelope.json
+runs/wo-gh-12/reviewer-tests.packet.md
+runs/wo-gh-12/observer.output.md
+runs/wo-gh-12/reviewer-design.packet.md
+runs/wo-gh-12/deployer.packet.md
+runs/wo-gh-12/reviewer-architecture.packet.md
+runs/wo-gh-12/reviewer-architecture.output.md
+runs/wo-gh-12/builder.output.md
+runs/wo-gh-12/reviewer-security.output.md
+runs/wo-gh-12/builder.packet.md
+runs/wo-gh-12/reviewer-spec.packet.md
+runs/wo-gh-12/reviewer-tests.output.md
+runs/wo-gh-12/report.json
+runs/wo-gh-12/reviewer-design.output.md
+runs/wo-gh-12/spec-writer.output.md
+runs/wo-gh-12/reviewer-design.output.md.codex.txt
+runs/wo-gh-12/observer.packet.md
+runs/wo-gh-12/builder.output.md.codex.txt
+runs/wo-gh-12/reviewer-spec.output.md
+runs/wo-gh-12/test-writer.packet.md
+runs/wo-gh-12/spec-writer.packet.md
+runs/wo-gh-12/test-writer.output.md
+runs/wo-gh-12/reviewer-security.packet.md
+runs/wo-sentia-001/envelopes/reviewer-tests.envelope.json
+runs/wo-sentia-001/envelopes/reviewer-spec.envelope.json
+runs/wo-sentia-001/envelopes/spec-writer.envelope.json
+runs/wo-sentia-001/envelopes/test-writer.envelope.json
+runs/wo-sentia-001/reviewer-tests.packet.md
+runs/wo-sentia-001/blueprint.packet.md
+runs/wo-sentia-001/deployer.packet.md
+runs/wo-sentia-001/reviewer-architecture.packet.md
+runs/wo-sentia-001/builder.packet.md
+runs/wo-sentia-001/reviewer-spec.packet.md
+runs/wo-sentia-001/report.json
+runs/wo-sentia-001/observer.packet.md
+runs/wo-gh-9/spec-writer.packet.md
+runs/wo-gh-9/test-writer.output.md
+runs/wo-gh-9/reviewer-security.packet.md
+runs/wo-gh-6/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-6/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-6/envelopes/spec-writer.envelope.json
+runs/wo-gh-6/envelopes/test-writer.envelope.json
+runs/wo-gh-6/reviewer-tests.packet.md
+runs/wo-gh-6/observer.output.md
+runs/wo-gh-6/reviewer-design.packet.md
+runs/wo-gh-6/deployer.packet.md
+runs/wo-gh-6/reviewer-architecture.packet.md
+runs/wo-gh-6/reviewer-architecture.output.md
+runs/wo-gh-6/builder.output.md
+runs/wo-gh-6/reviewer-security.output.md
+runs/wo-gh-6/builder.packet.md
+runs/wo-gh-6/reviewer-spec.packet.md
+runs/wo-gh-6/reviewer-tests.output.md
+runs/wo-gh-6/report.json
+runs/wo-gh-6/reviewer-design.output.md
+runs/wo-gh-6/spec-writer.output.md
+runs/wo-gh-6/reviewer-design.output.md.codex.txt
+runs/wo-gh-6/observer.packet.md
+runs/wo-gh-6/builder.output.md.codex.txt
+runs/wo-gh-6/reviewer-spec.output.md
+runs/wo-gh-6/test-writer.packet.md
+runs/wo-gh-6/spec-writer.packet.md
+runs/wo-gh-6/test-writer.output.md
+runs/wo-gh-6/reviewer-security.packet.md
+runs/wo-gh-16/envelopes/spec-writer.envelope.json
+runs/wo-gh-16/envelopes/test-writer.envelope.json
+runs/wo-gh-16/builder.packet.md
+runs/wo-gh-16/test-writer.packet.md
+runs/wo-gh-16/spec-writer.packet.md
+runs/wo-gh-9/reviewer-tests.output.md
+runs/wo-gh-9/builder-take-apart-test.log
+runs/wo-gh-9/report.json
+runs/wo-gh-9/reviewer-design.output.md
+runs/wo-gh-9/spec-writer.output.md
+runs/wo-gh-9/builder-loopback-tests.log
+runs/wo-gh-9/reviewer-design.output.md.codex.txt
+runs/wo-gh-9/observer.packet.md
+runs/wo-gh-9/builder-loopback-capture.log
+runs/wo-gh-9/builder.output.md.codex.txt
+runs/wo-gh-9/reviewer-spec.output.md
+runs/wo-gh-9/test-writer.packet.md
+runs/wo-gh-9/reviewer-architecture.packet.md
+runs/wo-gh-9/reviewer-architecture.output.md
+runs/wo-gh-9/builder.output.md
+runs/wo-gh-9/reviewer-security.output.md
+runs/wo-gh-9/builder.packet.md
+runs/wo-gh-9/reviewer-spec.packet.md
+runs/wo-gh-9/observer.output.md
+runs/wo-gh-9/reviewer-design.packet.md
+runs/wo-gh-9/deployer.packet.md
+runs/wo-gh-9/envelopes/test-writer.envelope.json
+runs/wo-gh-9/reviewer-tests.packet.md
+runs/wo-gh-9/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-9/envelopes/spec-writer.envelope.json
+runs/wo-gh-9/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-2/reviewer-design.output.md
+runs/wo-gh-2/spec-writer.output.md
+runs/wo-gh-2/reviewer-design.output.md.codex.txt
+runs/wo-gh-2/observer.packet.md
+runs/wo-gh-2/builder.output.md.codex.txt
+runs/wo-gh-2/reviewer-spec.output.md
+runs/wo-gh-2/test-writer.packet.md
+runs/wo-gh-2/spec-writer.packet.md
+runs/wo-gh-2/test-writer.output.md
+runs/wo-gh-2/reviewer-security.packet.md
+runs/wo-gh-2/builder.output.md
+runs/wo-gh-2/reviewer-security.output.md
+runs/wo-gh-2/builder.packet.md
+runs/wo-gh-2/reviewer-spec.packet.md
+runs/wo-gh-2/reviewer-tests.output.md
+runs/wo-gh-2/report.json
+runs/wo-gh-2/deployer.packet.md
+runs/wo-gh-2/reviewer-architecture.packet.md
+runs/wo-gh-2/reviewer-architecture.output.md
+runs/wo-gh-2/observer.output.md
+runs/wo-gh-2/reviewer-design.packet.md
+runs/wo-gh-2/reviewer-tests.packet.md
+runs/wo-gh-5/test-writer.output.md
+runs/wo-gh-5/reviewer-security.packet.md
+runs/wo-gh-5/spec-writer.packet.md
+runs/wo-gh-5/test-writer.packet.md
+runs/wo-gh-2/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-2/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-2/envelopes/spec-writer.envelope.json
+runs/wo-gh-2/envelopes/test-writer.envelope.json
+runs/wo-gh-5/reviewer-spec.output.md
+runs/wo-gh-11/reviewer-security.packet.md
+runs/wo-gh-11/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-11/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-11/envelopes/spec-writer.envelope.json
+runs/wo-gh-11/envelopes/test-writer.envelope.json
+runs/wo-gh-11/reviewer-tests.packet.md
+runs/wo-gh-11/observer.output.md
+runs/wo-gh-11/reviewer-design.packet.md
+runs/wo-gh-11/deployer.packet.md
+runs/wo-gh-11/reviewer-architecture.packet.md
+runs/wo-gh-11/reviewer-architecture.output.md
+runs/wo-gh-11/builder.output.md
+runs/wo-gh-11/reviewer-security.output.md
+runs/wo-gh-11/builder.packet.md
+runs/wo-gh-11/reviewer-spec.packet.md
+runs/wo-gh-11/reviewer-tests.output.md
+runs/wo-gh-11/report.json
+runs/wo-gh-11/reviewer-design.output.md
+runs/wo-gh-11/spec-writer.output.md
+runs/wo-gh-11/reviewer-design.output.md.codex.txt
+runs/wo-gh-11/observer.packet.md
+runs/wo-gh-11/builder.output.md.codex.txt
+runs/wo-gh-11/reviewer-spec.output.md
+runs/wo-gh-11/test-writer.packet.md
+runs/wo-gh-11/spec-writer.packet.md
+runs/wo-gh-11/test-writer.output.md
+runs/wo-gh-15/report.json
+runs/wo-gh-15/reviewer-design.output.md
+runs/wo-gh-15/spec-writer.output.md
+runs/wo-gh-15/reviewer-design.output.md.codex.txt
+runs/wo-gh-15/observer.packet.md
+runs/wo-gh-15/builder.output.md.codex.txt
+runs/wo-gh-15/reviewer-spec.output.md
+runs/wo-gh-15/test-writer.packet.md
+runs/wo-gh-15/spec-writer.packet.md
+runs/wo-gh-15/test-writer.output.md
+runs/wo-gh-15/reviewer-security.packet.md
+runs/wo-gh-15/reviewer-architecture.output.md
+runs/wo-gh-15/builder.output.md
+runs/wo-gh-15/reviewer-security.output.md
+runs/wo-gh-15/builder.packet.md
+runs/wo-gh-15/reviewer-spec.packet.md
+runs/wo-gh-15/reviewer-tests.output.md
+runs/wo-gh-15/reviewer-design.packet.md
+runs/wo-gh-15/deployer.packet.md
+runs/wo-gh-15/reviewer-architecture.packet.md
+runs/wo-gh-15/observer.output.md
+runs/wo-gh-15/reviewer-tests.packet.md
+runs/wo-gh-4/reviewer-tests.output.md
+runs/wo-gh-4/report.json
+runs/wo-gh-4/reviewer-design.output.md
+runs/wo-gh-4/spec-writer.output.md
+runs/wo-gh-4/reviewer-design.output.md.codex.txt
+runs/wo-gh-4/observer.packet.md
+runs/wo-gh-4/builder.output.md.codex.txt
+runs/wo-gh-4/reviewer-spec.output.md
+runs/wo-gh-4/test-writer.packet.md
+runs/wo-gh-4/spec-writer.packet.md
+runs/wo-gh-4/test-writer.output.md
+runs/wo-gh-4/reviewer-security.packet.md
+runs/wo-gh-4/reviewer-architecture.output.md
+runs/wo-gh-4/builder.output.md
+runs/wo-gh-4/reviewer-security.output.md
+runs/wo-gh-4/builder.packet.md
+runs/wo-gh-4/reviewer-spec.packet.md
+runs/wo-gh-4/reviewer-design.packet.md
+runs/wo-gh-4/deployer.packet.md
+runs/wo-gh-4/reviewer-architecture.packet.md
+runs/wo-gh-4/observer.output.md
+runs/wo-gh-4/reviewer-tests.packet.md
+runs/wo-gh-5/builder.packet.md
+runs/wo-gh-5/reviewer-spec.packet.md
+runs/wo-gh-5/reviewer-tests.output.md
+runs/wo-gh-5/report.json
+runs/wo-gh-5/reviewer-design.output.md
+runs/wo-gh-5/spec-writer.output.md
+runs/wo-gh-5/reviewer-design.output.md.codex.txt
+runs/wo-gh-5/observer.packet.md
+runs/wo-gh-5/builder.output.md.codex.txt
+runs/wo-gh-5/reviewer-architecture.packet.md
+runs/wo-gh-5/reviewer-architecture.output.md
+runs/wo-gh-5/builder.output.md
+runs/wo-gh-5/reviewer-security.output.md
+runs/wo-gh-5/reviewer-design.packet.md
+runs/wo-gh-5/deployer.packet.md
+runs/wo-gh-5/observer.output.md
+runs/wo-gh-5/reviewer-tests.packet.md
+runs/wo-gh-5/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-5/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-5/envelopes/spec-writer.envelope.json
+runs/wo-gh-5/envelopes/test-writer.envelope.json
+runs/wo-gh-15/envelopes/reviewer-tests.envelope.json
+runs/wo-gh-15/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-15/envelopes/spec-writer.envelope.json
+runs/wo-gh-15/envelopes/test-writer.envelope.json
+runs/wo-gh-4/envelopes/spec-writer.envelope.json
+runs/wo-gh-4/envelopes/test-writer.envelope.json
+runs/wo-gh-4/envelopes/reviewer-spec.envelope.json
+runs/wo-gh-4/envelopes/reviewer-tests.envelope.json
+
+exec
+/bin/bash -lc "cat .openspec/specs/design-audit/spec.md runs/wo-gh-16/builder.packet.md scripts/capture-take-apart.mjs package.json; rg --files -g AGENTS.md -g '*capture*' -g '*render*' -g '*audit*'; git status --short; git log -4 --oneline" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+# Design audit: current pages against the design system
+
+## Purpose
+
+Judge the current Sentia home page and take apart page against the project's
+own design system (design/DESIGN.md, design/tokens.json) and the reference
+quality boards in design/reference/, and record the verdict and findings as
+run evidence. This is an audit, not a build: the product tree is frozen.
+
+This order is also the proof run for anvil-factory issue 21 (design route
+consumption). Its workflow pins the ANVIL factory checkout to anvil-factory
+main, which carries the merged consumption mechanisms (packet budgets, one
+contact sheet per design review round, a fresh scoped reviewer-design
+packet, stable prefix layout, per station measurements in the run report).
+The audit therefore executes the design stations under the current line on
+a real project. Nothing in this spec claims a consumption saving; the
+operator measures the design route from the gateway logs afterwards.
+
+## Scenarios
+
+- S1, captures of the current state: the builder produces fresh captures of
+  the home page and the take apart page from the current tree, using the
+  project's established capture tooling, and places them in the run
+  evidence at full resolution. No product file is created, modified or
+  deleted to produce them.
+- S2, frozen tree: when the run ends, the product tree (src/, blender/,
+  design/, package files, wrangler config) is byte identical to the base
+  commit. The only writes in the run are run evidence under runs/wo-gh-16/,
+  the workflow's own suite bookkeeping files, and brain or status updates
+  the line itself records. Any product diff fails this audit's scope.
+- S3, design verdict on the current state: reviewer-design judges the
+  captures against design/DESIGN.md, design/tokens.json and the reference
+  boards, and records findings tied to the documented quality bars (brand
+  tokens, product fidelity to the boards, layer and material reading,
+  typography). A pass means the current pages meet the documented bars;
+  findings name the bar, the evidence capture and the gap.
+- S4, audit trail: the run report, the station outputs and the captures
+  are committed back to the run branch, so the audit can be re-read
+  without re-running the line. The run report carries the per station
+  measurements the factory runner records (configured and executed
+  models, measured packet tokens, executor reported usage or null).
+
+## Out of scope
+
+- Any product change, fix or deployment. Findings from this audit become
+  future work orders if Edu wants them fixed; this order fixes nothing.
+- Any change to the factory, its stations or its routing.
+# Task packet: builder
+
+## Station prompt
+
+# Builder
+
+## Role
+Implement the spec so the scenario tests pass.
+
+## Inputs
+- spec
+- tests
+
+## Outputs
+- code change
+
+## Rules
+- Work only from the inputs listed above and the work order in the packet.
+- Produce the output as a file in the repo, not as chat text.
+- If the inputs are not enough, say what is missing instead of guessing.
+- Never approve your own work. Approval belongs to a different station.
+- Keep the change small and mapped to a spec scenario where one applies.
+
+
+## Project design
+
+
+## Verified learnings
+
+- L-1: Art direction is imagery first; flat SVG as the primary visual language was rejected by the product owner and must not return as a section's main visual. (provenance: run wo-gh-2, artifact design/DESIGN.md, evidence verdict approved)
+- L-2: Product imagery sits seamlessly on the brand paper #FAFAF6 (no studio backgrounds, no visible image rectangles), verified by corner and edge sampling within 3 per channel. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-3: The patch reads at true 38 mm scale with explicit scale anchors, and on-skin imagery is strict inner forearm framing only. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-4: The product is the protagonist: the patch appears large and early, the page must not read empty or editorial, and display type must not crowd out the product. (provenance: run wo-gh-3, artifact src/page.js, evidence verdict changes_requested)
+- L-5: The current product render set is owner approved, especially the patch render; composition iterations keep src/images.js byte identical and never regenerate product imagery. (provenance: run wo-gh-3, artifact src/images.js, evidence verdict changes_requested)
+- L-6: Product imagery for Sentia meets the production quality bar anchored in design/reference/: photorealistic studio quality with real materials and physically consistent light; stylized or toy-like renders fail review. Reviewer-design compares every new product image against the anchor boards and names the gaps. (provenance: run wo-gh-5, artifact src/images.js, evidence verdict changes_requested)
+- L-7: The product is the square low profile patch anchored in design/reference/ and the round disc renders are retired; L-2, L-3 and L-5 stand as amended by the design v4 spec: photographic treatment instead of seamless paper backgrounds, limb close ups (inner forearm or upper arm) instead of inner forearm only, and the render set replaceable through an owner decided work order instead of frozen byte identical. (provenance: run wo-gh-6, artifact src/images.js, evidence verdict approved)
+
+## Work order
+
+- id: wo-gh-16
+- kind: task
+- title: Design audit: home and take apart against the design system (proof run)
+- source: github-issue
+- description: Design audit of the current Sentia home page and take apart page against the design system, with the product tree frozen. The governing text is .openspec/specs/design-audit/spec.md; this work order summarises it and the spec wins any conflict.
+
+This is an audit, not a build. The builder implements NOTHING: no product file (src/, blender/, design/, package files, wrangler config) is created, modified or deleted. The builder's only tasks: (1) produce fresh captures of the current home page and take apart page from the current tree using the project's established capture tooling (the capture scripts and bundled page rendering used by wo-gh-14), placed in the run evidence at full resolution; (2) verify and record in its output that the product tree is byte unchanged (a git status and diff check against the base commit, run evidence and the workflow's own suite bookkeeping files excepted). If a capture cannot be produced without touching product code, the builder records that as a blocker instead of changing code.
+
+Reviewer-design judges the captures against design/DESIGN.md, design/tokens.json and the reference quality boards in design/reference/, and its verdict is on the CURRENT design state: findings name the documented quality bar, the evidence capture and the gap; a pass states the current pages meet the documented bars. The other reviewers verify scope discipline (frozen tree, genuine captures of the current tree, evidence complete) and the audit trail.
+
+Context for the line: this order is the proof run for anvil-factory issue 21 (design route consumption). This branch's workflow pins the ANVIL factory checkout to anvil-factory main, which carries the merged consumption mechanisms: packet budgets with a deterministic estimator, one contact sheet per design review round as the reviewer-design evidence image, a fresh scoped reviewer-design packet whose content is allowlist verified by provenance before any model call, a stable prefix packet layout, and per station measurements (configured and executed models, measured packet tokens, executor reported usage or null) in the run report. Work normally under those mechanisms; do not work around them. Nothing in this order's artifacts claims a consumption saving: the operator measures the design route from the gateway logs after the run, against the audited baseline of about 45,000 input tokens per request.
+
+Review channel discipline: each reviewer's review is exactly one JSON object in its own runs/wo-gh-16/<station>.review.json, written through the scoped channel its packet names; prose belongs in .output.md and is never a verdict.
+
+No deployment is part of this order. GitHub issue: https://github.com/arananet/sentia/issues/16
+- risk_hints: 
+- status: new
+
+## Upstream steps
+
+- intake: completed
+- spec-writer: failed
+- test-writer: failed
+// Evidence of record: production shape capture of the Wrangler bundled Worker.
+// Runner tooling (not site dependencies): PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs
+// WRANGLER_BIN=/tmp/sentia-browser/node_modules/.bin/wrangler node scripts/capture-take-apart.mjs
+import { mkdir, writeFile, mkdtemp, rm } from 'node:fs/promises';
+import { spawn, spawnSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import assert from 'node:assert/strict';
+import { pathToFileURL } from 'node:url';
+import { gaugeReadout, NODE_NAMES } from '../src/take-apart-model.js';
+const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ? pathToFileURL(process.env.PLAYWRIGHT_MODULE).href : 'playwright');
+const captureDir = process.env.CAPTURE_DIR;
+const out = new URL(captureDir ? '../' + captureDir.replace(/\/?$/, '/') : '../evidence/take-apart-product-model/', import.meta.url);
+await mkdir(out, { recursive: true });
+const beatsOut = captureDir ? out : new URL('../evidence/take-apart/', import.meta.url);
+await mkdir(beatsOut, { recursive: true });
+const buildDir = await mkdtemp(join(tmpdir(), 'sentia-bundle-'));
+const wrangler = process.env.WRANGLER_BIN || 'wrangler';
+const buildArgs = ['deploy', '--dry-run', '--outdir', buildDir];
+const build = spawnSync(wrangler, buildArgs, { encoding: 'utf8' });
+await writeFile(new URL('bundle-build.log', out), `${wrangler} ${buildArgs.join(' ')}
+${build.stdout || ''}${build.stderr || ''}
+exit status: ${build.status}
+No local patches applied.
+`);
+assert.equal(build.status, 0, build.error?.message || build.stderr);
+const port = Number(process.env.CAPTURE_PORT || 8791);
+const origin = `http://127.0.0.1:${port}`;
+const runtimeArgs = ['dev', join(buildDir, 'index.js'), '--no-bundle', '--local', '--ip', '127.0.0.1', '--port', String(port)];
+const runtime = spawn(wrangler, runtimeArgs, { detached: true, stdio: ['ignore', 'pipe', 'pipe'] });
+let runtimeLog = '';
+runtime.stdout.on('data', chunk => { runtimeLog += chunk; });
+runtime.stderr.on('data', chunk => { runtimeLog += chunk; });
+let browser;
+const errors=[], pageErrors=[];
+let gaugePassed=false, sceneInfo, vendorStatus, vendorBytes, assetStatus, assetBytes, nodeNames, assetFailureChecks=false;
+try {
+  let ready = false;
+  for (let tries = 0; tries < 120; tries++) {
+    assert.equal(runtime.exitCode, null, runtimeLog);
+    try { ready = (await fetch(origin + '/take-apart')).ok; } catch {}
+    if (ready) break;
+    await new Promise(resolve => setTimeout(resolve, 500));
+  }
+  assert.ok(ready, 'Local bundled Worker did not start: ' + runtimeLog);
+browser = await chromium.launch({ executablePath: process.env.CHROME_BIN || '/usr/bin/google-chrome', headless:true,
+  args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'] });
+
+  const page=await browser.newPage({ viewport:{width:1440,height:1050}, deviceScaleFactor:1 });
+  const cdp=await page.context().newCDPSession(page);
+  page.on('console',msg=>{if(msg.type()==='error')errors.push(msg.text());});
+  page.on('pageerror',error=>pageErrors.push(String(error)));
+  const vendorResponse = page.waitForResponse(response => response.url() === origin + '/vendor/three.module.min.js');
+  const assetResponse = page.waitForResponse(response => response.url() === origin + '/models/patch-one.glb');
+  console.log('Loading study');
+  await page.goto(`${origin}/take-apart?tour=fast`);
+  await page.waitForFunction(()=>document.querySelector('#take-apart').dataset.sceneReady==='true');
+  await page.evaluate(()=>document.fonts.ready);
+  const asset = await assetResponse;
+  assetStatus = asset.status(); assetBytes = (await asset.body()).byteLength;
+  assert.equal(assetStatus, 200); assert.ok(assetBytes <= 800 * 1024);
+  nodeNames = await page.evaluate(() => JSON.parse(document.querySelector('#take-apart').dataset.modelNodes));
+  assert.deepEqual(nodeNames, NODE_NAMES);
+  assert.equal(await page.locator('#take-apart').getAttribute('data-model-source'), 'glb');
+  const vendor = await vendorResponse;
+  vendorStatus = vendor.status(); vendorBytes = (await vendor.body()).byteLength;
+  assert.equal(vendorStatus, 200); assert.equal(vendorBytes, 670681);
+  sceneInfo = await page.evaluate(() => {
+    const canvas = document.querySelector('#scene'), rect = canvas.getBoundingClientRect();
+    return { model: typeof globalThis.TakeApartModel, ready: document.querySelector('#take-apart').dataset.sceneReady,
+      width: canvas.width, height: canvas.height, layoutWidth: rect.width, layoutHeight: rect.height, dpr: devicePixelRatio };
+  });
+  assert.equal(sceneInfo.model, 'object'); assert.equal(sceneInfo.ready, 'true');
+  assert.equal(sceneInfo.width, Math.floor(sceneInfo.layoutWidth * sceneInfo.dpr));
+  assert.equal(sceneInfo.height, Math.floor(sceneInfo.layoutHeight * sceneInfo.dpr));
+  console.log('Study loaded');
+  assert.equal(await page.locator('#fallback').isVisible(),false,'WebGL scene must render for evidence');
+  const area=await page.locator('#scene').boundingBox();
+  await page.mouse.move(area.x+area.width/2,area.y+area.height/2);
+  await page.mouse.down();await page.mouse.move(area.x+area.width/2+75,area.y+area.height/2+25,{steps:8});await page.mouse.up();
+  await page.mouse.wheel(0,100);
+  await page.locator('#wear').evaluate(input=>{ input.value='200';input.dispatchEvent(new Event('input',{bubbles:true})); });
+  await page.waitForFunction(expected => [...document.querySelectorAll('[data-gauge]')].every(n => n.textContent === expected[n.dataset.gauge]), gaugeReadout(200));
+  const actual=await page.locator('[data-gauge]').evaluateAll(nodes=>Object.fromEntries(nodes.map(n=>[n.dataset.gauge,n.textContent])));
+  assert.deepEqual(actual,gaugeReadout(200));gaugePassed=true;
+  for(const name of ['Top','Side','Hero']){ await page.locator(`[data-camera="${name}"]`).click();await page.waitForTimeout(180); }
+  await page.locator('#xray').click();
+  await page.mouse.move(1400,60);
+  // Freeze the browser clock between controlled advances so software WebGL
+  // screenshot latency cannot advance to a different tour beat mid-capture.
+  const previousNow=await page.evaluate(()=>performance.now());
+  await page.clock.install();
+  console.log('Freezing capture clock');
+  await page.clock.pauseAt(new Date());
+  await page.clock.fastForward(previousNow+1000);
+  await page.evaluate(()=>window.dispatchEvent(new Event('pointerdown')));
+  console.log('Capture clock frozen');
+  const beats=[['assembled','Assembled'],['apart','Apart'],['board','Board'],['xray','X ray'],['settle','Mid / Settle']];
+  const sources=[];
+  for(const [beat,label] of beats) {
+    for(let ticks=0;;ticks++) {
+      if(await page.locator('#take-apart').getAttribute('data-tour-beat')===beat)break;
+      assert.ok(ticks<200,'tour must reach '+beat);
+      await page.clock.runFor(50);
+    }
+    await page.clock.runFor(260);
+    assert.equal(await page.locator('#take-apart').getAttribute('data-tour-beat'),beat);
+    const hour=beat==='settle'?156:0;
+    assert.deepEqual(await page.locator('[data-gauge]').evaluateAll(nodes=>Object.fromEntries(nodes.map(n=>[n.dataset.gauge,n.textContent]))),gaugeReadout(hour));
+    const file=beat==='settle'?'mid':beat;
+    const {data}=await cdp.send('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});
+    const png=Buffer.from(data,'base64');
+    await writeFile(new URL(`beat-${file}.png`,beatsOut),png);
+    if(beat==='assembled') await writeFile(new URL('browser-assembled.png',out),png);
+    console.log('Captured '+beat);
+    sources.push({label,src:'data:image/png;base64,'+png.toString('base64')});
+  }
+  // Composition happens in this browser session, from the captured pixels.
+  const sheet=await browser.newPage({viewport:{width:1440,height:1840},deviceScaleFactor:1});
+  await sheet.setContent('<body style="margin:0;background:#FAFAF6"><canvas id="sheet" width="1440" height="1840"></canvas></body>');
+  const composed=await sheet.evaluate(async sources=>{
+    const c=document.querySelector('canvas'),ctx=c.getContext('2d');ctx.fillStyle='#FAFAF6';ctx.fillRect(0,0,c.width,c.height);
+    ctx.fillStyle='#12211C';ctx.font='28px sans-serif';ctx.fillText('SENTIA / Take apart — tour contact sheet',24,40);
+    for(let i=0;i<sources.length;i++) {
+      const img=new Image();img.src=sources[i].src;await img.decode();
+      const x=(i%2)*720,y=64+Math.floor(i/2)*592;
+      ctx.drawImage(img,x,y,720,525);ctx.fillStyle='#12211C';ctx.font='18px sans-serif';ctx.fillText(sources[i].label,x+24,y+560);
+    }
+    return c.toDataURL('image/png').split(',')[1];
+  },sources);
+  await writeFile(new URL('contact-sheet.png',beatsOut),Buffer.from(composed,'base64'));
+  // Reduced-motion users retain controls without an automatic tour.
+  await page.clock.resume();
+  await page.emulateMedia({reducedMotion:'reduce'});await page.reload();await page.waitForTimeout(1800);
+  assert.equal(await page.locator('#take-apart').getAttribute('data-tour-beat'),'off');
+  await page.setViewportSize({width:390,height:844});
+  assert.equal(await page.locator('#callouts').isVisible(),false);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'mobile fits viewport');
+  // Release the capture contexts before compiling the two asset-failure scenes.
+  await page.close();await sheet.close();
+  // Exercise both asset failure paths against the same production bundle.
+  for (const failure of ['fetch', 'parse']) {
+    console.log('Checking asset failure: '+failure);
+    const probe=await browser.newPage({ reducedMotion:'reduce' });
+    const probeErrors=[];probe.on('pageerror',error=>probeErrors.push(String(error)));
+    await probe.route('**/models/patch-one.glb',route=>failure==='fetch'
+      ? route.abort('failed')
+      : route.fulfill({status:200,contentType:'model/gltf-binary',body:'invalid GLB'}));
+    await probe.goto(origin+'/take-apart');
+    await probe.waitForFunction(()=>document.querySelector('#take-apart').dataset.sceneReady==='true', null, {timeout:60000});
+    assert.equal(await probe.locator('#take-apart').getAttribute('data-model-source'),'procedural');
+    assert.equal(await probe.locator('#fallback').isVisible(),false);
+    assert.deepEqual(probeErrors,[]);
+    await probe.close();
+  }
+  assetFailureChecks=true;
+  assert.equal(errors.length,0,errors.join('\n'));
+  assert.equal(pageErrors.length,0,pageErrors.join('\n'));
+} finally {
+  const passLog = `Bundled Worker: ${wrangler} ${runtimeArgs.join(' ')}
+console errors: ${errors.length}
+page errors: ${pageErrors.length}
+TakeApartModel: ${sceneInfo?.model}
+scene ready: ${sceneInfo?.ready}
+canvas: ${sceneInfo?.width}x${sceneInfo?.height}; layout: ${sceneInfo?.layoutWidth}x${sceneInfo?.layoutHeight}; DPR: ${sceneInfo?.dpr}
+gauge comparison: ${gaugePassed?'PASS':'FAIL'} at hour 200
+asset failure checks: ${assetFailureChecks?'PASS':'FAIL'} (fetch and parse)
+GLB /models/patch-one.glb: status ${assetStatus}; bytes ${assetBytes}
+loaded nodes: ${nodeNames?.length}; ${nodeNames?.join('; ')}
+vendor /vendor/three.module.min.js: status ${vendorStatus}; decoded bytes ${vendorBytes}
+${errors.join('\n')}
+${pageErrors.join('\n')}
+`;
+  await writeFile(new URL('browser-pass.log',out), passLog);
+  if (beatsOut !== out) await writeFile(new URL('browser-pass.log',beatsOut), passLog);
+  await browser?.close();
+  runtime.kill('SIGTERM');
+  await new Promise(resolve => runtime.exitCode !== null ? resolve() : runtime.once('exit', resolve));
+  await rm(buildDir, { recursive: true, force: true });
+}
+console.log('Browser pass complete: zero console errors; gauge comparison PASS.');
+{
+  "name": "sentia",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  }
+}
+tests/web-render-finish.test.js
+scripts/capture-take-apart.mjs
+evidence/take-apart-product-model/render-exploded.png
+evidence/take-apart-product-model/render-assembled.png
+evidence/possible-applications/capture.mjs
+runs/wo-gh-9/builder-loopback-capture.log
+?? runs/wo-gh-16/
+e7973e0 wo-gh-16 setup: design audit spec, work order and execute workflow (issue 16); factory checkout pinned to anvil-factory main for the wo-gh-21 proof run
+
+exec
+/bin/bash -lc "cat runs/wo-gh-14/builder.output.md evidence/possible-applications/capture.mjs; rg -n 'home|capture|bundle|playwright' runs/wo-gh-14/builder.output.md.codex.txt | head -45; ls /tmp; cat wrangler.toml; rg --files tests | head -30; rg --files -g AGENTS.md /home/runner /tmp/anvil-codex-home-djkbnog7 2>/dev/null | head -20" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+Wrote verification and test results under runs/wo-gh-14/. Confirmed the 798,072-byte GLB and consistent committed evidence with zero recorded browser errors.
+
+Suite: 212 passed, one skipped, only the known S11 failure. Product files remain unchanged; no approval or deployment performed.
+
+{"model": "gpt-6-astra", "runtime": "codex"}
+import { spawn, spawnSync } from 'node:child_process';
+import { mkdir, writeFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import { chromium } from '/tmp/sentia-browser/node_modules/playwright/index.mjs';
+const root = process.cwd();
+const out = root + '/evidence/possible-applications';
+const wrangler = '/tmp/sentia-browser/node_modules/.bin/wrangler';
+await mkdir(out, { recursive: true });
+for (const phase of ['before', 'after']) {
+  const cwd = phase === 'before' ? '/tmp/sentia-applications-base' : root;
+  const bundle = '/tmp/sentia-applications-' + phase;
+  const args = ['deploy', '--dry-run', '--outdir', bundle];
+  const build = spawnSync(wrangler, args, { cwd, encoding: 'utf8' });
+  await writeFile(out + '/' + (phase === 'after' ? 'bundle-build.log' : 'base-build.log'),
+    `cwd: ${cwd}\n${wrangler} ${args.join(' ')}\n${build.stdout}${build.stderr}\nexit status: ${build.status}\nNo local patches applied.\n`);
+  assert.equal(build.status, 0);
+  const runtimeArgs = ['dev', bundle + '/index.js', '--no-bundle', '--local', '--ip', '127.0.0.1', '--port', '8791'];
+  const runtime = spawn(wrangler, runtimeArgs, { cwd, stdio: ['ignore', 'pipe', 'pipe'] });
+  let runtimeLog = '';
+  runtime.stdout.on('data', d => runtimeLog += d);
+  runtime.stderr.on('data', d => runtimeLog += d);
+  let browser;
+  const errors = [], pageErrors = [];
+  try {
+    let ready = false;
+    for (let i = 0; i < 120; i++) {
+      assert.equal(runtime.exitCode, null, runtimeLog);
+      try { ready = (await fetch('http://127.0.0.1:8791/')).ok; } catch {}
+      if (ready) break;
+      await new Promise(r => setTimeout(r, 500));
+    }
+    assert.ok(ready, runtimeLog);
+    browser = await chromium.launch({ executablePath: '/usr/bin/google-chrome', args: ['--no-sandbox'] });
+    const page = await browser.newPage({ viewport: { width: 1440, height: 1050 }, deviceScaleFactor: 1 });
+    page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
+    page.on('pageerror', e => pageErrors.push(String(e)));
+    await page.goto('http://127.0.0.1:8791/', { waitUntil: 'networkidle' });
+    await page.evaluate(() => document.fonts.ready);
+    assert.equal(await page.locator('#applications').count(), phase === 'after' ? 1 : 0);
+    const top = await page.locator('#faq').evaluate(el => el.getBoundingClientRect().top + scrollY);
+    // Scroll through the affected region so existing reveal observers show every item.
+    for (let y = top; y < await page.evaluate(() => document.documentElement.scrollHeight); y += 500) {
+      await page.evaluate(y => scrollTo(0, y), y);
+      await page.waitForTimeout(100);
+    }
+    await page.waitForTimeout(1000);
+    const height = await page.evaluate(() => document.documentElement.scrollHeight);
+    await page.evaluate(() => scrollTo(0, 0));
+    await page.waitForTimeout(100);
+    await page.screenshot({ fullPage: true, path: out + '/' + phase + '-desktop.png', clip: { x: 0, y: top, width: 1440, height: height - top } });
+    if (phase === 'after') {
+      assert.equal(await page.locator('#applications article').count(), 4);
+      await page.setViewportSize({ width: 375, height: 844 });
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    }
+    await writeFile(out + '/' + (phase === 'after' ? 'browser-pass.log' : 'base-browser.log'),
+      `Bundled local Worker: ${wrangler} ${runtimeArgs.join(' ')}\nHome page status: 200\napplications sections: ${phase === 'after' ? 1 : 0}\nconsole errors: ${errors.length}\npage errors: ${pageErrors.length}\nDesktop capture: 1440 x ${height - top}, FAQ through footer\n${phase === 'after' ? 'Four entries; mobile width 375: no horizontal overflow\n' : 'Base commit: c55bc1659a1b1f5f6adb66760faa4915dcd01aee\n'}${errors.join('\n')}\n${pageErrors.join('\n')}`);
+    assert.equal(errors.length, 0, errors.join('\n'));
+    assert.equal(pageErrors.length, 0, pageErrors.join('\n'));
+  } finally {
+    await browser?.close();
+    runtime.kill('SIGTERM');
+    await new Promise(r => runtime.exitCode !== null ? r() : runtime.once('exit', r));
+  }
+}
+1:WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/anvil-codex-home-0gy4p3ht"))
+5:workdir: /home/runner/work/sentia/sentia
+47:Record of the finished state, the baseline of this round: the final loopback round implemented the LED fix alone (client material and lighting handling in src/take-apart-client.js, and the LED material inside the deterministic Blender build), rebuilt the GLB deterministically at 798,072 bytes against the 819,200 budget with two byte identical exports and the reproducibility proof committed, and regenerated the bundled evidence with zero console and page errors. reviewer-design executed in that round and PASSED the order's success test on this exact tree: the after assembled and mid beats show a visible cyan-teal emitter separated from its darker recessed socket edge; the board finishes closed in the round before remain unregressed; the beauty cover grain is finer and consistent with the reference boards. That pass is on record in the previous run's evidence on this branch. reviewer-spec, reviewer-security, reviewer-tests and reviewer-architecture produced no review at all (executor 402, no review files), so the approver's count of 1 of 5 reviews is not a verdict of record and this order has never formally closed.
+53:4. builder: the implementation is finished. Do not implement, rebuild, recapture or adjust anything. Verify the frozen state (the GLB at 798,072 bytes against the budget, the before and after evidence present and consistent, the bundled captures on record with zero console and page errors) and write that verification as your output. If you believe a product change is needed, record it as a finding in your output and do not implement it: a product change is a new order, not this round.
+64:Done criteria: verdict approved with all five expected reviews counted and no parse failures; reviewer-design passing with the LED confirmed as a clearly readable teal emitter in the bundled page beats, the board finishes still closed, the cover grain readable and finer, identity intact; the run diff confined to runs/wo-gh-14/; the suite state after the line recorded with the S11 item itemized apart.
+91:/bin/bash -lc "pwd; rg --files -g 'AGENTS.md' -g '*wo-gh-14*' -g '*web-render-finish*' -g 'package.json' -g '*builder*' -g '*manifest*' -g '*repro*'" in /home/runner/work/sentia/sentia
+93:/home/runner/work/sentia/sentia
+154:/bin/bash -lc 'git status --short; ls runs/wo-gh-14; cat .openspec/specs/web-render-finish/spec.md; cat tests/web-render-finish.test.js' in /home/runner/work/sentia/sentia
+199:1. Board finishes. In the bundled browser rendering, the sensing and processing board's shield, battery and sensor faces read as flat gray surfaces with little metallic highlight variation, even though the board's geometry is now dense and manufactured (217 meshes, nine finishes in the asset).
+202:Production still serves the older procedural build (version 4515d731, from the wo-gh-11 bundling fix), so none of the modeled product is live yet. This order closes the two finish problems where they are judged, in the bundled browser rendering, and then deploys. The builder may work both sides of the problem: asset materials inside the deterministic Blender build, and the take apart client's lighting and material handling. This spec supersedes two clauses of .openspec/specs/take-apart-product-model/spec.md for this order only: its statement that the page's studio lighting does not change, and its no deployment stance (deployment here is the operator's gated step after an approved verdict, per the owner's order for this work order; it is still not part of the line). The governing specs otherwise stay .openspec/specs/take-apart/spec.md, .openspec/specs/take-apart-bundling/spec.md and .openspec/specs/take-apart-product-model/spec.md. The builder and reviewer-design run on GPT-6 Astra; the spec writer, test writer and the other reviewers run on claude-sonnet-5-5, per ANVIL policy.
+209:- runs/wo-gh-12/: the loopback round's reviewer-design output naming the two surviving problems, and the round's evidence (GLB at 798,092 bytes, reproducibility log, bundled browser pass).
+215:- R1 (the page rendering is the evidence): Both problems are judged on the bundled browser rendering of the take apart page (the production shape of wo-gh-11: the production bundle built clean, the bundled output served by a local Worker runtime, beats captured by scripts/capture-take-apart.mjs against that output). The Blender beauty renders are supporting evidence only; a finish that reads in a beauty render but not in the page beats is not closed.
+230:- R7 (before and after): The builder captures the bundled page beats twice through the capture of record: BEFORE, from the tree at this order's setup commit (unmodified client and asset), and AFTER, from the final tree. Both sets, with their browser pass logs recording zero console and page errors, are committed under evidence/web-render-finish/before/ and evidence/web-render-finish/after/, composed into contact sheets the same way as evidence/take-apart/. The standard capture also regenerates evidence/take-apart/ on the final tree, and the beauty renders under evidence/take-apart-product-model/ are regenerated if the asset changed. The builder's output compares before and after per problem and records what it adjusted.
+231:- R8 (production shape, standing): The production bundle command succeeds on the final tree with zero local patches, command and exit status recorded. The bundled output served locally records zero console errors and zero page errors, the scene ready flag set, the GLB route fetched, the five named nodes present in the loaded scene, and a screenshot whose scene region shows the rendered product. No evidence step (before beats, after beats, standard capture, pass logs) imports or loads the unbundled source; every capture drives the bundled output only.
+254:### Scenario: The bundled page renders clean
+255:- S7: Given the final tree, when the production bundle is built and the bundled output is served and driven in a browser, then the bundle command exits clean with no local patches, the pass records zero console errors and zero page errors, the scene ready flag is set, the GLB route is fetched, the five named nodes are recorded in the pass log, and the screenshot's scene region shows the rendered product, with every evidence step having driven the bundled output and none having imported the unbundled source.
+264:- S10: Given the run diff against this order's setup commit with the workflow's harness files excluded, when the changed paths are listed, then they name only: blender/build_patch_one.py, src/patch-one-glb.js, src/take-apart-client.js, tests/web-render-finish.test.js, tests/take-apart-product-model.test.js and tests/take-apart.test.js only where a scope or baseline constant is re-based for this order with its assertions' meaning unchanged, scripts/capture-take-apart.mjs only if the before and after capture requires it, evidence/web-render-finish/, evidence/take-apart/, evidence/take-apart-product-model/, and runs/wo-gh-14/.
+272:- The home page, the home layered view section and every route other than /take-apart and /models/patch-one.glb.
+275:- Earlier runs' evidence, except the regenerated captures and renders named in R7.
+281:Deployment is the operator's gated step, outside the line. If this run's verdict is approved, the operator deploys from the final branch head following the established pattern (tree pulled through the Git Database API, every blob hash recomputed with zero mismatches, deployed with the project's wrangler helper, no local patches of any kind; if the bundle needs a patch, the deployment stops and is reported instead). Post deploy verification runs from the public URL and includes a real browser screenshot of the live /take-apart showing the GLB product rendered, the footer credit byte exact check, the four image routes at their established byte sizes, /llms.txt, the MCP initialize answer, and the GLB route serving the new asset. After live verification passes, the operator commits runs/wo-gh-14/owner-acceptance.json on this branch citing the approval and the deploy (production version and source commit), using the owner acceptance mechanism established by wo-gh-10. If the verdict is not approved, nothing deploys and production keeps serving version 4515d731.
+310://   evidence/web-render-finish/after/   the same set, captured from the final tree
+312://   evidence/web-render-finish/bundle-build.log  production bundle command, exit 0, no local patches
+315://   evidence/take-apart/ regenerated by the standard capture on the final tree.
+471:    assert.deepEqual(pngSize(be), pngSize(af), `${b} before and after share dimensions (same capture of record)`);
+521:  assert.match(log, /Bundled Worker:/, `${label}: the capture drove the bundled Worker output`);
+522:  assert.doesNotMatch(log, /src\/take-apart-client\.js|src\/index\.js/, `${label}: no unbundled source loaded`);
+526:test('web-render-finish S7: before and after browser pass logs record zero errors, scene ready, GLB fetched, five named nodes, bundled output', () => {
+530:  passLogChecks('evidence/take-apart/browser-pass.log', 'standard capture');
+533:test('web-render-finish S7: the standard capture on the final tree regenerated evidence/take-apart/ with the five beats and the sheet', () => {
+535:  // The standard capture is the AFTER capture of the final tree: identical bytes for the five beats.
+542:test('web-render-finish S7: the production bundle built clean with zero local patches, command and exit status recorded', () => {
+543:  const rel = 'evidence/web-render-finish/bundle-build.log';
+546:  assert.match(log, /wrangler[^\n]* deploy --dry-run --outdir/, 'the production bundle command is recorded');
+551:test('web-render-finish S7: no evidence step imports or loads the unbundled client or page source', () => {
+552:  const src = read('scripts/capture-take-apart.mjs');
+553:  assert.doesNotMatch(src, /import[^\n]*take-apart-client|import[^\n]*take-apart-page|import[^\n]*from\s+['"][^'"]*src\/index\.js/, 'capture does not import unbundled source');
+554:  assert.doesNotMatch(src, /import\(\s*['"][^'"]*src\//, 'capture does not dynamically import src');
+555:  assert.match(src, /deploy.*--dry-run|dry-run/, 'capture builds the production bundle');
+556:  assert.match(src, /--no-bundle/, 'capture serves the built bundle output');
+600:    /^scripts\/capture-take-apart\.mjs$/,
+611:/bin/bash -lc 'find .. -name AGENTS.md -print; cat runs/wo-gh-14/envelopes/builder.envelope.json; cat runs/wo-gh-14/spec-writer.output.md runs/wo-gh-14/test-writer.output.md; cat evidence/web-render-finish/reproducibility.log evidence/web-render-finish/bundle-build.log evidence/web-render-finish/before/browser-pass.log evidence/web-render-finish/after/browser-pass.log evidence/take-apart/browser-pass.log; cat package.json' in /home/runner/work/sentia/sentia
+621:  "error": "command executor exited 2: astra wrapper: codex exited 1 for station builder; the full codex output is in runs/wo-gh-14/builder.output.md.codex.txt; tail:\nonment remain', 'board materials, studio lighting, exposure and environment remain');open(p,'w').write(s)\nPY\ncat evidence/web-render-finish/reproducibility.log; git diff --check\" in /home/runner/work/sentia/sentia\n succeeded in 0ms:\nBlender 4.5.15; two consecutive complete builds: blender --background --python blender/build_all.py\nexport 1 GLB SHA256 5a1438dae703eb3647d",
+657:/tmp/sentia-browser/node_modules/.bin/wrangler deploy --dry-run --outdir /tmp/sentia-bundle-Vq8JZD
+667:Bundled Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-bundle-ndrMRX/index.js --no-bundle --local --ip 127.0.0.1 --port 8795
+680:Bundled Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-bundle-Vq8JZD/index.js --no-bundle --local --ip 127.0.0.1 --port 8793
+anvil-codex-home-djkbnog7
+claude-1001
+clr-debug-pipe-2105-9066-in
+clr-debug-pipe-2105-9066-out
+clr-debug-pipe-2124-9229-in
+clr-debug-pipe-2124-9229-out
+dotnet-diagnostic-2105-9066-socket
+dotnet-diagnostic-2124-9229-socket
+node-compile-cache
+snap-private-tmp
+systemd-private-c42ea718fcab478f90de12a639309b2a-ModemManager.service-DXTMC8
+systemd-private-c42ea718fcab478f90de12a639309b2a-chrony.service-4zUrUU
+systemd-private-c42ea718fcab478f90de12a639309b2a-haveged.service-DGnnQS
+systemd-private-c42ea718fcab478f90de12a639309b2a-polkit.service-Cz80Xi
+systemd-private-c42ea718fcab478f90de12a639309b2a-systemd-logind.service-MbOjBW
+systemd-private-c42ea718fcab478f90de12a639309b2a-systemd-resolved.service-Bu9rbl
+v8-compile-cache-1001
+name = "sentia"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+workers_dev = true
+tests/take-apart-product-model.test.js
+tests/ui-elevation.test.js
+tests/api.test.js
+tests/design-v2-imagery.test.js
+tests/design-v2-1-corrections.test.js
+tests/site-credit.test.js
+tests/possible-applications.test.js
+tests/take-apart.test.js
+tests/fixtures/s11-rebaseline/F5-invalid-accepted-false/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F5-invalid-accepted-false/owner-acceptance.json
+tests/fixtures/s11-rebaseline/F4-axis-unmentioned-accepted/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F4-axis-unmentioned-accepted/owner-acceptance.json
+tests/fixtures/s11-rebaseline/F6-axis-failure-unaccepted/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F2-unaccepted-gap/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F5-invalid-not-json/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F5-invalid-not-json/owner-acceptance.json
+tests/fixtures/s11-rebaseline/F4-axis-unmentioned/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F1-accepted-gap/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F1-accepted-gap/owner-acceptance.json
+tests/fixtures/s11-rebaseline/F3-missing-anchor/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F3-missing-anchor/owner-acceptance.json
+tests/fixtures/s11-rebaseline/F3-missing-image/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F3-missing-image/owner-acceptance.json
+tests/fixtures/s11-rebaseline/F5-invalid-citation-missing/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F5-invalid-citation-missing/owner-acceptance.json
+tests/fixtures/s11-rebaseline/F4-not-applicable-but-failed/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F6-axis-failure-accepted/reviewer-design.output.md
+tests/fixtures/s11-rebaseline/F6-axis-failure-accepted/owner-acceptance.json
+tests/web-render-finish.test.js
+tests/design-v4-square-product.test.js
+
+exec
+/bin/bash -lc 'command -v google-chrome; node --version; cat .gitignore; git rev-parse HEAD; npm install --prefix /tmp/sentia-browser --no-package-lock playwright wrangler > runs/wo-gh-16/tooling-install.log 2>&1' in /home/runner/work/sentia/sentia
+codex
+The spec requires captures and an unchanged-tree check only. I found the established bundled-Worker capture script; I’ll use it for the take-apart views and the same rendering method for the home page. Browser tooling is being installed outside the repository.
+ succeeded in 5456ms:
+/usr/bin/google-chrome
+v22.23.4
+node_modules/
+.wrangler/
+.dev.vars
+.dev.vars.*
+*.log
+!evidence/take-apart/browser-pass.log
+!evidence/take-apart-bundling/*.log
+!evidence/possible-applications/*.log
+!runs/wo-gh-9/*.log
+!evidence/take-apart-product-model/*.log
+!evidence/web-render-finish/*.log
+!runs/wo-gh-14/*.log
+.anvil-factory/
+e7973e0e480d413bc895be257a02b58fe35111c0
+
+exec
+/bin/bash -lc "mkdir -p runs/wo-gh-16/evidence; git status --short --untracked-files=all > runs/wo-gh-16/evidence/status-before.txt; git diff e7973e0e480d413bc895be257a02b58fe35111c0 -- src blender design 'package*' 'wrangler*' > runs/wo-gh-16/evidence/product-before.diff; ls /tmp/sentia-browser/node_modules/.bin/wrangler" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+/tmp/sentia-browser/node_modules/.bin/wrangler
+
+exec
+/bin/bash -lc 'PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs WRANGLER_BIN=/tmp/sentia-browser/node_modules/.bin/wrangler CAPTURE_DIR=runs/wo-gh-16/evidence/take-apart WRANGLER_SEND_METRICS=false node scripts/capture-take-apart.mjs > runs/wo-gh-16/evidence/take-apart-capture.txt 2>&1' in /home/runner/work/sentia/sentia
+exec
+/bin/bash -lc "cat > runs/wo-gh-16/evidence/capture-home.mjs <<'EOF'
+// Current-tree adaptation of evidence/possible-applications/capture.mjs.
+// Bundled Worker only; outputs confined to this run, temporary bundle/runtime outside repo.
+import { spawn, spawnSync } from 'node:child_process';
+import { mkdir, writeFile, mkdtemp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import assert from 'node:assert/strict';
+import { chromium } from '/tmp/sentia-browser/node_modules/playwright/index.mjs';
+const out = new URL('./home/', import.meta.url);
+await mkdir(out, {recursive:true});
+const bundle = await mkdtemp(join(tmpdir(), 'sentia-audit-home-'));
+const wrangler = '/tmp/sentia-browser/node_modules/.bin/wrangler';
+const args = ['deploy','--dry-run','--outdir',bundle];
+const build = spawnSync(wrangler,args,{encoding:'utf8'});
+await writeFile(new URL('bundle-build.txt',out),"'`${wrangler} ${args.join('"' ')}\\n"'${build.stdout}${build.stderr}'"\\nexit status: "'${build.status}'"\\nNo local patches applied.\\n"'`);
+assert.equal(build.status,0);
+const runtimeArgs = ['"'dev',join(bundle,'index.js'),'--no-bundle','--local','--ip','127.0.0.1','--port','8792','--persist-to',join(bundle,'state')];
+const runtime = spawn(wrangler,runtimeArgs,{stdio:['ignore','pipe','pipe']});
+let runtimeLog='', browser;
+runtime.stdout.on('data',d=>runtimeLog+=d);runtime.stderr.on('data',d=>runtimeLog+=d);
+const results=[];
+try {
+  let ready=false;
+  for(let i=0;i<120;i++) {
+    assert.equal(runtime.exitCode,null,runtimeLog);
+    try {ready=(await fetch('http://127.0.0.1:8792/')).ok;} catch {}
+    if(ready)break;
+    await new Promise(r=>setTimeout(r,500));
+  }
+  assert.ok(ready,runtimeLog);
+  browser=await chromium.launch({executablePath:'/usr/bin/google-chrome',args:['--no-sandbox']});
+  for(const [name,width,height] of [['desktop',1440,1050],['mobile',390,844]]) {
+    const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1});
+    const errors=[],pageErrors=[];
+    page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+    page.on('pageerror',e=>pageErrors.push(String(e)));
+    const response=await page.goto('http://127.0.0.1:8792/',{waitUntil:'networkidle'});
+    assert.equal(response.status(),200);
+    await page.evaluate(()=>document.fonts.ready);
+    for(let y=0;y<await page.evaluate(()=>document.documentElement.scrollHeight);y+=500) {
+      await page.evaluate(y=>scrollTo(0,y),y);await page.waitForTimeout(100);
+    }
+    await page.waitForTimeout(1000);
+    await page.evaluate(()=>scrollTo(0,0));await page.waitForTimeout(300);
+    await page.screenshot({fullPage:true,path:new URL("'`${name}-full.png`,out).pathname});
+    await page.screenshot({path:new URL(`${name}-viewport.png`,out).pathname});
+    results.push({name,width,height,status:response.status(),fullHeight:await page.evaluate(()=>document.documentElement.scrollHeight),errors,pageErrors});
+    await page.close();
+  }
+  await writeFile(new URL('"'browser-pass.json',out),JSON.stringify({capturedAt:new Date().toISOString(),command:[wrangler,...runtimeArgs],results},null,2)+'\\n');
+  assert.ok(results.every(r=>"'!r.errors.length&&!r.pageErrors.length),JSON.stringify(results));
+} finally {
+  await browser?.close();runtime.kill('"'SIGTERM');
+  await new Promise(r=>runtime.exitCode"'!==null?r():runtime.once('"'exit',r));
+  await writeFile(new URL('runtime.txt',out),runtimeLog);
+  await rm(bundle,{recursive:true,force:true});
+}
+EOF
+WRANGLER_SEND_METRICS=false node runs/wo-gh-16/evidence/capture-home.mjs > runs/wo-gh-16/evidence/home-capture.txt 2>&1" in /home/runner/work/sentia/sentia
+exec
+/bin/bash -lc 'cat runs/wo-gh-16/evidence/take-apart-capture.txt' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+Loading study
+Study loaded
+
+ERROR: Reconnecting... 1/5
+ERROR: Reconnecting... 2/5
+exec
+/bin/bash -lc 'cat runs/wo-gh-16/evidence/take-apart-capture.txt runs/wo-gh-16/evidence/home-capture.txt; git status --short' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+Loading study
+Study loaded
+Freezing capture clock
+Capture clock frozen
+?? runs/wo-gh-16/
+
+codex
+The bundled take-apart page has loaded its WebGL scene, and capture is underway. The home capture will include full-page desktop and mobile images, with scrolling to reveal sections before capture. The product diff against the setup commit is empty so far.
+ exited 1 in 36946ms:
+exec
+/bin/bash -lc 'cat runs/wo-gh-16/evidence/take-apart-capture.txt runs/wo-gh-16/evidence/home-capture.txt; ls runs/wo-gh-16/evidence/home runs/wo-gh-16/evidence/take-apart' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+Loading study
+Study loaded
+Freezing capture clock
+Capture clock frozen
+Captured assembled
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "http://127.0.0.1:8792/", waiting until "networkidle"
+
+    at /home/runner/work/sentia/sentia/runs/wo-gh-16/evidence/capture-home.mjs:37:31 {
+  log: [
+    '  - navigating to "http://127.0.0.1:8792/", waiting until "networkidle"'
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v22.23.4
+runs/wo-gh-16/evidence/home:
+bundle-build.txt
+runtime.txt
+
+runs/wo-gh-16/evidence/take-apart:
+beat-assembled.png
+browser-assembled.png
+bundle-build.log
+
+exec
+/bin/bash -lc "python3 - <<'PY'
+p='runs/wo-gh-16/evidence/capture-home.mjs'
+s=open(p).read().replace(\"{waitUntil:'networkidle'}\", \"{waitUntil:'networkidle',timeout:120000}\")
+open(p,'w').write(s)
+PY
+mv runs/wo-gh-16/evidence/home-capture.txt runs/wo-gh-16/evidence/home-capture-attempt-1.txt
+mv runs/wo-gh-16/tooling-install.log runs/wo-gh-16/tooling-install.txt" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+exec
+/bin/bash -lc 'WRANGLER_SEND_METRICS=false node runs/wo-gh-16/evidence/capture-home.mjs > runs/wo-gh-16/evidence/home-capture.txt 2>&1' in /home/runner/work/sentia/sentia
+exec
+/bin/bash -lc 'cat runs/wo-gh-16/evidence/take-apart-capture.txt; ps -eo pid,comm,%cpu --sort=-%cpu | head -12' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+Loading study
+Study loaded
+Freezing capture clock
+Capture clock frozen
+Captured assembled
+    PID COMMAND         %CPU
+   3836 chrome           264
+   4430 ps               100
+   4421 node            87.5
+   4402 node            73.7
+   4428 bash            37.5
+   4414 node            10.8
+   2011 provjobd1703455 10.4
+   2124 Runner.Worker    3.2
+   3896 chrome           2.6
+   3772 node             2.3
+   3726 node             1.8
+
+exec
+/bin/bash -lc 'cat runs/wo-gh-16/evidence/take-apart-capture.txt; ls runs/wo-gh-16/evidence/home' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+Loading study
+Study loaded
+Freezing capture clock
+Capture clock frozen
+Captured assembled
+Captured apart
+bundle-build.txt
+runtime.txt
+
+ERROR: Reconnecting... 1/5
+ERROR: Reconnecting... 2/5
+ERROR: Reconnecting... 3/5
+ERROR: Reconnecting... 4/5
+codex
+The take-apart capture has saved the assembled and apart views. The first home attempt timed out waiting for network idle; I preserved the failure log and restarted it with a longer timeout. No product files have changed.
+exec
+/bin/bash -lc "python3 - <<'PY'
+import subprocess,json,pathlib,hashlib
+base='e7973e0e480d413bc895be257a02b58fe35111c0'
+rows=[]
+for entry in subprocess.check_output(['git','ls-tree','-r',base]).decode().splitlines():
+ meta,p=entry.split('\\t',1)
+ if p.startswith(('src/','blender/','design/')) or (('/' not in p) and p.startswith(('package','wrangler'))):
+  b=pathlib.Path(p).read_bytes(); blob=hashlib.sha1(b'blob '+str(len(b)).encode()+b'\\0'+b).hexdigest()
+  rows.append({'path':p,'baseBlob':meta.split()[2],'workingBlob':blob,'identical':blob==meta.split()[2]})
+pathlib.Path('runs/wo-gh-16/evidence/product-bytes.json').write_text(json.dumps({'baseCommit':base,'files':rows,'allIdentical':all(r['identical'] for r in rows)},indent=2)+'\\n')
+print(len(rows),'product files compared; identical:',all(r['identical'] for r in rows))
+PY" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+29 product files compared; identical: True
+
+exec
+/bin/bash -lc 'cat runs/wo-gh-16/evidence/take-apart-capture.txt runs/wo-gh-16/evidence/home-capture.txt; ls runs/wo-gh-16/evidence/home' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+Loading study
+Study loaded
+Freezing capture clock
+Capture clock frozen
+Captured assembled
+Captured apart
+Captured board
+bundle-build.txt
+runtime.txt
+
+exec
+/bin/bash -lc 'cat runs/wo-gh-16/evidence/home-capture.txt; ls runs/wo-gh-16/evidence/home; cat runs/wo-gh-16/evidence/take-apart-capture.txt' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+bundle-build.txt
+runtime.txt
+Loading study
+Study loaded
+Freezing capture clock
+Capture clock frozen
+Captured assembled
+Captured apart
+Captured board
+Captured xray
+
+exec
+/bin/bash -lc 'ps -eo pid,etime,comm,%cpu --sort=-%cpu | head -10; du -sh runs/wo-gh-16/evidence; cat runs/wo-gh-16/evidence/home-capture.txt' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+    PID     ELAPSED COMMAND         %CPU
+   3836       02:25 chrome           244
+   5170       00:00 workerd         83.3
+   5175       00:00 bash            75.0
+   4465       01:10 esbuild         56.2
+   4453       01:11 node            29.4
+   2011       05:09 provjobd1703455  9.9
+   5072       00:10 python3          4.7
+   4482       01:09 chrome           4.1
+   2124       03:51 Runner.Worker    2.3
+844K	runs/wo-gh-16/evidence
+
+codex
+Four take-apart views are captured, and all 29 tracked product files have byte-for-byte matches to the base commit. The remaining work is to finish the captures and write the evidence manifest and final scope check.
+exec
+/bin/bash -lc 'cat runs/wo-gh-16/evidence/take-apart-capture.txt runs/wo-gh-16/evidence/home-capture.txt; ls runs/wo-gh-16/evidence/home' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+Loading study
+Study loaded
+Freezing capture clock
+Capture clock frozen
+Captured assembled
+Captured apart
+Captured board
+Captured xray
+Captured settle
+bundle-build.txt
+runtime.txt
+
+ succeeded in 190733ms:
+ exited 1 in 126697ms:
+exec
+/bin/bash -lc 'cat runs/wo-gh-16/evidence/take-apart-capture.txt runs/wo-gh-16/evidence/home-capture.txt; ls runs/wo-gh-16/evidence/home' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+Loading study
+Study loaded
+Freezing capture clock
+Capture clock frozen
+Captured assembled
+Captured apart
+Captured board
+Captured xray
+Captured settle
+Checking asset failure: fetch
+Checking asset failure: parse
+Browser pass complete: zero console errors; gauge comparison PASS.
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+page.goto: Timeout 120000ms exceeded.
+Call log:
+  - navigating to "http://127.0.0.1:8792/", waiting until "networkidle"
+
+    at /home/runner/work/sentia/sentia/runs/wo-gh-16/evidence/capture-home.mjs:37:31 {
+  log: [
+    '  - navigating to "http://127.0.0.1:8792/", waiting until "networkidle"'
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v22.23.4
+bundle-build.txt
+runtime.txt
+
+exec
+/bin/bash -lc "rg -n 'EventSource|fetch\\(|setInterval|fonts.googleapis' src/page.js | head -20; cat runs/wo-gh-16/evidence/home/runtime.txt | tail -20" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+353:<link rel="preconnect" href="https://fonts.googleapis.com">
+355:<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+⎔ Local server updated and ready
+⎔ Reloading local server...
+⎔ Local server updated and ready
+⎔ Reloading local server...
+⎔ Local server updated and ready
+⎔ Reloading local server...
+⎔ Local server updated and ready
+⎔ Reloading local server...
+⎔ Local server updated and ready
+⎔ Reloading local server...
+⎔ Local server updated and ready
+⎔ Reloading local server...
+⎔ Local server updated and ready
+⎔ Reloading local server...
+⎔ Local server updated and ready
+⎔ Reloading local server...
+⎔ Local server updated and ready
+⎔ Reloading local server...
+⎔ Local server updated and ready
+⎔ Reloading local server...
+
+codex
+All five take-apart views completed, with zero browser errors and passing gauge and fallback checks. The home runtime log shows repeated reloads: its temporary state directory was inside the watched bundle directory. I’ll move that state outside the watched directory in the run’s capture helper and retry.
+exec
+/bin/bash -lc "python3 - <<'PY'
+p='runs/wo-gh-16/evidence/capture-home.mjs'
+s=open(p).read().replace(\"const wrangler =\", \"const state = await mkdtemp(join(tmpdir(), 'sentia-audit-state-'));\\nconst wrangler =\").replace(\"join(bundle,'state')\",'state').replace(\"await rm(bundle,{recursive:true,force:true});\", \"await rm(bundle,{recursive:true,force:true});\\n  await rm(state,{recursive:true,force:true});\")
+open(p,'w').write(s)
+PY
+mv runs/wo-gh-16/evidence/home-capture.txt runs/wo-gh-16/evidence/home-capture-attempt-2.txt
+mv runs/wo-gh-16/evidence/home/runtime.txt runs/wo-gh-16/evidence/home/runtime-attempt-2.txt
+WRANGLER_SEND_METRICS=false node runs/wo-gh-16/evidence/capture-home.mjs > runs/wo-gh-16/evidence/home-capture.txt 2>&1" in /home/runner/work/sentia/sentia
+exec
+/bin/bash -lc "python3 - <<'PY'
+from pathlib import Path
+for p in Path('runs/wo-gh-16/evidence/take-apart').glob('*.log'):
+ p.rename(p.with_suffix('.txt'))
+PY
+cat runs/wo-gh-16/evidence/take-apart/browser-pass.txt; git diff --exit-code e7973e0e480d413bc895be257a02b58fe35111c0 -- . ':"'!runs/wo-gh-16'"'" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+Bundled Worker: /tmp/sentia-browser/node_modules/.bin/wrangler dev /tmp/sentia-bundle-dzp4nX/index.js --no-bundle --local --ip 127.0.0.1 --port 8791
+console errors: 0
+page errors: 0
+TakeApartModel: object
+scene ready: true
+canvas: 1022x559; layout: 1022x559; DPR: 1
+gauge comparison: PASS at hour 200
+asset failure checks: PASS (fetch and parse)
+GLB /models/patch-one.glb: status 200; bytes 798072
+loaded nodes: 5; Top cover; Comfort foam; Sensing and processing board; Adhesive layer; Release liner
+vendor /vendor/three.module.min.js: status 200; decoded bytes 670681
+
+
+
+exec
+/bin/bash -lc "cat runs/wo-gh-16/evidence/home-capture.txt; ls runs/wo-gh-16/evidence/home; /tmp/sentia-browser/node_modules/.bin/wrangler --version; /usr/bin/google-chrome --version; node -p \"require('/tmp/sentia-browser/node_modules/playwright/package.json').version\"" in /home/runner/work/sentia/sentia
+ succeeded in 1035ms:
+bundle-build.txt
+runtime-attempt-2.txt
+4.156.2
+Google Chrome 156.0.8078.47 
+1.64.1
+
+ succeeded in 48801ms:
+exec
+/bin/bash -lc 'cat runs/wo-gh-16/evidence/home-capture.txt; ls runs/wo-gh-16/evidence/home' in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+browser-pass.json
+bundle-build.txt
+desktop-full.png
+desktop-viewport.png
+mobile-full.png
+mobile-viewport.png
+runtime-attempt-2.txt
+runtime.txt
+
+exec
+/bin/bash -lc "cat runs/wo-gh-16/evidence/home/browser-pass.json; python3 - <<'PY'
+import pathlib,hashlib,json,struct,subprocess,datetime
+root=pathlib.Path('runs/wo-gh-16/evidence')
+images=[]
+for p in sorted(root.rglob('*.png')):
+ b=p.read_bytes();w,h=struct.unpack('>II',b[16:24]);images.append({'path':str(p),'width':w,'height':h,'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()})
+(root/'capture-manifest.json').write_text(json.dumps({'baseCommit':subprocess.check_output(['git','rev-parse','HEAD']).decode().strip(),'recordedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'tools':{'wrangler':'4.156.2','playwright':'1.64.1','chrome':'156.0.8078.47'},'images':images},indent=2)+'\\n')
+print(json.dumps(images,indent=2))
+PY" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+{
+  "capturedAt": "2026-11-03T09:24:20.542Z",
+  "command": [
+    "/tmp/sentia-browser/node_modules/.bin/wrangler",
+    "dev",
+    "/tmp/sentia-audit-home-asQe1w/index.js",
+    "--no-bundle",
+    "--local",
+    "--ip",
+    "127.0.0.1",
+    "--port",
+    "8792",
+    "--persist-to",
+    "/tmp/sentia-audit-state-bUeNvB"
+  ],
+  "results": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 1050,
+      "status": 200,
+      "fullHeight": 15427,
+      "errors": [],
+      "pageErrors": []
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "fullHeight": 20553,
+      "errors": [],
+      "pageErrors": []
+    }
+  ]
+}
+[
+  {
+    "path": "runs/wo-gh-16/evidence/home/desktop-full.png",
+    "width": 1440,
+    "height": 15395,
+    "bytes": 2802932,
+    "sha256": "a6b26ae45505904f04574470270ff25fd5888a0ea153a1353b79ac7e735adaea"
+  },
+  {
+    "path": "runs/wo-gh-16/evidence/home/desktop-viewport.png",
+    "width": 1440,
+    "height": 1050,
+    "bytes": 353472,
+    "sha256": "4a7b0492902e495bbd14453cfa5b188c074de3cde24fb6901159f7ee83ec40df"
+  },
+  {
+    "path": "runs/wo-gh-16/evidence/home/mobile-full.png",
+    "width": 390,
+    "height": 20553,
+    "bytes": 1762589,
+    "sha256": "56024383b7925c5d7ea4fcd59d32c629d3ff166e02fbec0d1322da1eaec58db1"
+  },
+  {
+    "path": "runs/wo-gh-16/evidence/home/mobile-viewport.png",
+    "width": 390,
+    "height": 844,
+    "bytes": 131578,
+    "sha256": "10e103fa731cb3681e35b4da5648d22c39ba8ba2efaeca6c178fe050bfbcc747"
+  },
+  {
+    "path": "runs/wo-gh-16/evidence/take-apart/beat-apart.png",
+    "width": 1440,
+    "height": 1050,
+    "bytes": 129717,
+    "sha256": "cb37fef8a65518bdf269e8e62b09b724bc08051fcb245abc8c234843903de231"
+  },
+  {
+    "path": "runs/wo-gh-16/evidence/take-apart/beat-assembled.png",
+    "width": 1440,
+    "height": 1050,
+    "bytes": 206270,
+    "sha256": "3462cfbe1b5d149601ba89558f460e4ec7c9cca8ea64ba45825d22c3814d7b75"
+  },
+  {
+    "path": "runs/wo-gh-16/evidence/take-apart/beat-board.png",
+    "width": 1440,
+    "height": 1050,
+    "bytes": 130482,
+    "sha256": "be4e64ef4b46e7da981165fe358a4f64af623b2047d347772196808a2813b75b"
+  },
+  {
+    "path": "runs/wo-gh-16/evidence/take-apart/beat-mid.png",
+    "width": 1440,
+    "height": 1050,
+    "bytes": 165896,
+    "sha256": "ca7f475baedaf823fc1f39e3ca870ba35ed392fe0b1f78b18c7b5525580cebfc"
+  },
+  {
+    "path": "runs/wo-gh-16/evidence/take-apart/beat-xray.png",
+    "width": 1440,
+    "height": 1050,
+    "bytes": 127205,
+    "sha256": "68003c54d03d5d5cef3ca7032744d54440956cd245a5a9bc0fea57efc7a69c45"
+  },
+  {
+    "path": "runs/wo-gh-16/evidence/take-apart/browser-assembled.png",
+    "width": 1440,
+    "height": 1050,
+    "bytes": 206270,
+    "sha256": "3462cfbe1b5d149601ba89558f460e4ec7c9cca8ea64ba45825d22c3814d7b75"
+  },
+  {
+    "path": "runs/wo-gh-16/evidence/take-apart/contact-sheet.png",
+    "width": 1440,
+    "height": 1840,
+    "bytes": 403415,
+    "sha256": "f3f77370d0cd84f28493f8ae698d12bf4b62ba8f0b0a06b81226d6db8c859b13"
+  }
+]
+
+codex
+Both pages are now captured successfully with zero console or page errors. The evidence includes full-page desktop and mobile home captures and all five take-apart views at full resolution. I’m recording the final scope check; design approval remains with the reviewers.
+exec
+/bin/bash -lc "cat > runs/wo-gh-16/builder.output.md <<'EOF'
+# Builder evidence — wo-gh-16
+
+S1: Fresh captures were produced from base/current commit e7973e0e480d413bc895be257a02b58fe35111c0, using production dry-run bundles served locally with Wrangler --no-bundle. No product changes or deployment were made.
+
+- Home: evidence/home/desktop-full.png (1440 × 15395), mobile-full.png (390 × 20553), and corresponding viewport captures. The run-local evidence/capture-home.mjs adapts the established evidence/possible-applications/capture.mjs bundled rendering, font readiness and reveal scrolling to capture the entire current home page. Both viewports returned HTTP 200 with zero console/page errors. PNG dimensions are authoritative; the desktop document height measured after the viewport capture differs slightly as page layout settles.
+- Take apart: evidence/take-apart/beat-{assembled,apart,board,xray,mid}.png, each 1440 × 1050, plus the established script's assembled copy and contact sheet. Ran the unchanged scripts/capture-take-apart.mjs with PLAYWRIGHT_MODULE=/tmp/sentia-browser/node_modules/playwright/index.mjs WRANGLER_BIN=/tmp/sentia-browser/node_modules/.bin/wrangler CAPTURE_DIR=runs/wo-gh-16/evidence/take-apart WRANGLER_SEND_METRICS=false. Exit 0; zero console/page errors; scene ready; 798072-byte GLB; five expected nodes; gauges and both asset failure checks passed.
+- Build/runtime logs, capture command helper, tool versions, PNG sizes and SHA-256 digests are under evidence/. Generated .log files were renamed .txt so the repository's log ignore rule does not omit the audit evidence.
+
+The home capture's first two attempts timed out awaiting network idle. Their failure logs are retained. The temporary runtime state was inside the watched bundle directory, causing reloads; the run-local helper now uses a separate temporary state directory. The final capture exited 0 without product patches. Browser tooling was installed under /tmp/sentia-browser, outside the product tree.
+
+S2: All 29 tracked product files have Git blob hashes identical to the base commit, recorded in evidence/product-bytes.json. Final git status and diff checks are in evidence/scope-check.txt and evidence/status-after.txt. The diff against base outside runs/wo-gh-16/ is empty; the product diff is empty. No product file was created, modified or deleted.
+
+No audit-specific scenario tests were supplied by the failed upstream stations. Validation used the established capture assertions, successful home browser checks, PNG manifest and frozen-tree verification. No unrelated suite or product implementation was added.
+
+S3 belongs to reviewer-design; this output is evidence, not an approval or design verdict. S4 report measurements and committing the station artifacts remain the factory workflow's responsibility. No factory routing, packet mechanism, review channel or consumption claim was changed.
+EOF
+python3 - <<'PY'
+from pathlib import Path
+import subprocess
+base='e7973e0e480d413bc895be257a02b58fe35111c0'
+out=Path('runs/wo-gh-16/evidence')
+checks=[['git','diff','--exit-code',base,'--','src','blender','design','package*','wrangler*'],['git','diff','--exit-code',base,'--','.',':"'!runs/wo-gh-16/'"'],['git','diff','--check']]
+lines=[]
+for cmd in checks:
+ r=subprocess.run(cmd,capture_output=True,text=True)
+ lines.append('"'$ '"'+' '.join(cmd)+'\\n'+r.stdout+r.stderr+'exit status: '+str(r.returncode)+'\\n')
+ assert r.returncode==0
+(out/'scope-check.txt').write_text('\\n'.join(lines))
+(out/'status-after.txt').write_text(subprocess.check_output(['git','status','--short','--untracked-files=all']).decode())
+print('All final diff checks exited 0.')
+PY" in /home/runner/work/sentia/sentia
+ succeeded in 0ms:
+All final diff checks exited 0.
+
+codex
+Saved fresh home and take-apart captures, capture logs, and frozen-tree verification under runs/wo-gh-16/. Recorded the summary in builder.output.md.
+
+All 29 product files match the base commit byte-for-byte. No product changes or deployment were made.
+tokens used
+45,565
+Saved fresh home and take-apart captures, capture logs, and frozen-tree verification under runs/wo-gh-16/. Recorded the summary in builder.output.md.
+
+All 29 product files match the base commit byte-for-byte. No product changes or deployment were made.

@@ -1,0 +1,8 @@
+$ git diff --exit-code e7973e0e480d413bc895be257a02b58fe35111c0 -- src blender design package* wrangler*
+exit status: 0
+
+$ git diff --exit-code e7973e0e480d413bc895be257a02b58fe35111c0 -- . :!runs/wo-gh-16/
+exit status: 0
+
+$ git diff --check
+exit status: 0

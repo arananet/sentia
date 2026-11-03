@@ -1,0 +1,7 @@
+?? runs/wo-gh-16/builder.packet.md
+?? runs/wo-gh-16/envelopes/intake.envelope.json
+?? runs/wo-gh-16/envelopes/spec-writer.envelope.json
+?? runs/wo-gh-16/envelopes/test-writer.envelope.json
+?? runs/wo-gh-16/evidence/status-before.txt
+?? runs/wo-gh-16/spec-writer.packet.md
+?? runs/wo-gh-16/test-writer.packet.md

@@ -1,0 +1,180 @@
+{
+  "baseCommit": "e7973e0e480d413bc895be257a02b58fe35111c0",
+  "files": [
+    {
+      "path": "blender/build_all.py",
+      "baseBlob": "821a18dbdef9114cd0bbd61782ab424cc46a4efd",
+      "workingBlob": "821a18dbdef9114cd0bbd61782ab424cc46a4efd",
+      "identical": true
+    },
+    {
+      "path": "blender/build_patch_one.py",
+      "baseBlob": "89a3f1f183924547353ed3ebdfac29205d8b9cbd",
+      "workingBlob": "89a3f1f183924547353ed3ebdfac29205d8b9cbd",
+      "identical": true
+    },
+    {
+      "path": "design/DESIGN.md",
+      "baseBlob": "ebeca1bb68130e33051a17225cf8aba123762417",
+      "workingBlob": "ebeca1bb68130e33051a17225cf8aba123762417",
+      "identical": true
+    },
+    {
+      "path": "design/reference/README.md",
+      "baseBlob": "d24a1224d8fb7fa83b1bdcb79359a5018052651f",
+      "workingBlob": "d24a1224d8fb7fa83b1bdcb79359a5018052651f",
+      "identical": true
+    },
+    {
+      "path": "design/reference/product-reference.png",
+      "baseBlob": "9cf4c00507c83b8e14679960786b0735363af790",
+      "workingBlob": "9cf4c00507c83b8e14679960786b0735363af790",
+      "identical": true
+    },
+    {
+      "path": "design/reference/quality-board-1.png",
+      "baseBlob": "0cb4a5664c7bbd3284248fa384e86d62239ad92e",
+      "workingBlob": "0cb4a5664c7bbd3284248fa384e86d62239ad92e",
+      "identical": true
+    },
+    {
+      "path": "design/reference/quality-board-2.png",
+      "baseBlob": "c68d166940c99d302d3ec987f94bdf97a34c4e96",
+      "workingBlob": "c68d166940c99d302d3ec987f94bdf97a34c4e96",
+      "identical": true
+    },
+    {
+      "path": "package.json",
+      "baseBlob": "2a79f64baf2d37581c4b3bfeeedd6d9381ab3592",
+      "workingBlob": "2a79f64baf2d37581c4b3bfeeedd6d9381ab3592",
+      "identical": true
+    },
+    {
+      "path": "src/browser-codec.js",
+      "baseBlob": "ad28a0867d03a2f87e3d80b0149e8f033436cff6",
+      "workingBlob": "ad28a0867d03a2f87e3d80b0149e8f033436cff6",
+      "identical": true
+    },
+    {
+      "path": "src/client.js",
+      "baseBlob": "146e2774c8b798d1e7039f436e3c6eca08a486d1",
+      "workingBlob": "146e2774c8b798d1e7039f436e3c6eca08a486d1",
+      "identical": true
+    },
+    {
+      "path": "src/codec.js",
+      "baseBlob": "046dbf6d5c56991865ed0b964a67bd5bc33a1e02",
+      "workingBlob": "046dbf6d5c56991865ed0b964a67bd5bc33a1e02",
+      "identical": true
+    },
+    {
+      "path": "src/data.js",
+      "baseBlob": "d75673a149a3114274025648ef9017b7dbc5115d",
+      "workingBlob": "d75673a149a3114274025648ef9017b7dbc5115d",
+      "identical": true
+    },
+    {
+      "path": "src/facts.js",
+      "baseBlob": "85825e74ff9b762fedb7128b92c4b28a8beeb6ff",
+      "workingBlob": "85825e74ff9b762fedb7128b92c4b28a8beeb6ff",
+      "identical": true
+    },
+    {
+      "path": "src/images.js",
+      "baseBlob": "bd52698dbbe000cf8967e6ad681374f4aa57fbf9",
+      "workingBlob": "bd52698dbbe000cf8967e6ad681374f4aa57fbf9",
+      "identical": true
+    },
+    {
+      "path": "src/index.js",
+      "baseBlob": "746ffad1f53e550f20454660294fe02786a652bb",
+      "workingBlob": "746ffad1f53e550f20454660294fe02786a652bb",
+      "identical": true
+    },
+    {
+      "path": "src/mcp-example.js",
+      "baseBlob": "0cc3c53eb8e4329067681e6aa6fb379f2e003a81",
+      "workingBlob": "0cc3c53eb8e4329067681e6aa6fb379f2e003a81",
+      "identical": true
+    },
+    {
+      "path": "src/mcp.js",
+      "baseBlob": "550630b437e63e3cc1722be44e3383604c79dd6b",
+      "workingBlob": "550630b437e63e3cc1722be44e3383604c79dd6b",
+      "identical": true
+    },
+    {
+      "path": "src/og.js",
+      "baseBlob": "0b7db9c8ab465fea3faff25c7ac89c512fde674e",
+      "workingBlob": "0b7db9c8ab465fea3faff25c7ac89c512fde674e",
+      "identical": true
+    },
+    {
+      "path": "src/page.js",
+      "baseBlob": "75c9f2286de625eb091f76d5182ceaf5dff1e109",
+      "workingBlob": "75c9f2286de625eb091f76d5182ceaf5dff1e109",
+      "identical": true
+    },
+    {
+      "path": "src/patch-one-glb.js",
+      "baseBlob": "a2ff955ae4a265cd61530808451d6de69b593912",
+      "workingBlob": "a2ff955ae4a265cd61530808451d6de69b593912",
+      "identical": true
+    },
+    {
+      "path": "src/seo.js",
+      "baseBlob": "2f7e0a2e23aaaf3a4ebbaa0fba436ef0f8140147",
+      "workingBlob": "2f7e0a2e23aaaf3a4ebbaa0fba436ef0f8140147",
+      "identical": true
+    },
+    {
+      "path": "src/take-apart-client.js",
+      "baseBlob": "d671ada466786fdfabdcbc4a0416ee206c23337d",
+      "workingBlob": "d671ada466786fdfabdcbc4a0416ee206c23337d",
+      "identical": true
+    },
+    {
+      "path": "src/take-apart-model-browser.js",
+      "baseBlob": "43c1650b6d48b77544b48c6ad110d940015fc95b",
+      "workingBlob": "43c1650b6d48b77544b48c6ad110d940015fc95b",
+      "identical": true
+    },
+    {
+      "path": "src/take-apart-model.js",
+      "baseBlob": "95132c1583f89db3b4f97875193bf4d8d81a7136",
+      "workingBlob": "95132c1583f89db3b4f97875193bf4d8d81a7136",
+      "identical": true
+    },
+    {
+      "path": "src/take-apart-page.js",
+      "baseBlob": "40513eab71683239aeca75b5ede6151babe1187d",
+      "workingBlob": "40513eab71683239aeca75b5ede6151babe1187d",
+      "identical": true
+    },
+    {
+      "path": "src/vendor-buffer-geometry-utils.js",
+      "baseBlob": "20eb8e82aa00661714eb905215eb2504602d584f",
+      "workingBlob": "20eb8e82aa00661714eb905215eb2504602d584f",
+      "identical": true
+    },
+    {
+      "path": "src/vendor-gltf-loader.js",
+      "baseBlob": "0393e324c80d4c84c91a95c69a377bc3adbf1267",
+      "workingBlob": "0393e324c80d4c84c91a95c69a377bc3adbf1267",
+      "identical": true
+    },
+    {
+      "path": "src/vendor-three.js",
+      "baseBlob": "ff97c060371d573d573b3a23e39fc33ee8b1c365",
+      "workingBlob": "ff97c060371d573d573b3a23e39fc33ee8b1c365",
+      "identical": true
+    },
+    {
+      "path": "wrangler.toml",
+      "baseBlob": "948968121602cc07a504dc0f6810af4d545d6a69",
+      "workingBlob": "948968121602cc07a504dc0f6810af4d545d6a69",
+      "identical": true
+    }
+  ],
+  "allIdentical": true
+}
